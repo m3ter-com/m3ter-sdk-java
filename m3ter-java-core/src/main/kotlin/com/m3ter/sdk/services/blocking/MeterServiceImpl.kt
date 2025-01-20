@@ -20,7 +20,7 @@ import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 
 class MeterServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : MeterService {
 

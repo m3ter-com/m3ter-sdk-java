@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class ProductServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ProductServiceAsync {
 

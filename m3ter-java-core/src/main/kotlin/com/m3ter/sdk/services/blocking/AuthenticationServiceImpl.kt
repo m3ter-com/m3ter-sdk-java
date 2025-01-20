@@ -16,7 +16,7 @@ import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
 
 class AuthenticationServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AuthenticationService {
 
