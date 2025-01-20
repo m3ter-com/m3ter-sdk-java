@@ -22,7 +22,7 @@ import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class CompoundAggregationServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CompoundAggregationServiceAsync {
 
