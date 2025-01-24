@@ -72,20 +72,27 @@ class ErrorHandlingTest {
             ProductListPage.of(
                 service,
                 params,
-                Product.builder()
-                    .id("id")
-                    .version(0L)
-                    .code("code")
-                    .createdBy("createdBy")
-                    .customFields(
-                        Product.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
+                ProductListPage.Response.builder()
+                    .data(
+                        listOf(
+                            Product.builder()
+                                .id("id")
+                                .version(0L)
+                                .code("code")
+                                .createdBy("createdBy")
+                                .customFields(
+                                    Product.CustomFields.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                        .build()
+                                )
+                                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .lastModifiedBy("lastModifiedBy")
+                                .name("name")
+                                .build()
+                        )
                     )
-                    .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .lastModifiedBy("lastModifiedBy")
-                    .name("name")
+                    .nextToken("nextToken")
                     .build()
             )
 

@@ -7,11 +7,11 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationListParamsTest {
+class CompoundAggregationFunctionListParamsTest {
 
     @Test
-    fun createAggregationListParams() {
-        AggregationListParams.builder()
+    fun createCompoundAggregationListParams() {
+        CompoundAggregationListParams.builder()
             .orgId("orgId")
             .addCode("string")
             .addId("string")
@@ -24,7 +24,7 @@ class AggregationListParamsTest {
     @Test
     fun getQueryParams() {
         val params =
-            AggregationListParams.builder()
+            CompoundAggregationListParams.builder()
                 .orgId("orgId")
                 .addCode("string")
                 .addId("string")
@@ -37,20 +37,20 @@ class AggregationListParamsTest {
         expected.put("ids", "string")
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
-        expected.put("productId", JsonValue.from(mapOf<String, Any>()))
+        expected.put("productId", JsonValue.from(mapOf<String, Any>()).toString())
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = AggregationListParams.builder().orgId("orgId").build()
+        val params = CompoundAggregationListParams.builder().orgId("orgId").build()
         val expected = QueryParams.builder()
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getPathParam() {
-        val params = AggregationListParams.builder().orgId("orgId").build()
+        val params = CompoundAggregationListParams.builder().orgId("orgId").build()
         assertThat(params).isNotNull
         // path param "orgId"
         assertThat(params.getPathParam(0)).isEqualTo("orgId")

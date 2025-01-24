@@ -5,16 +5,16 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationRetrieveParamsTest {
+class CompoundAggregationFunctionRetrieveParamsTest {
 
     @Test
-    fun createAggregationRetrieveParams() {
-        AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
+    fun createCompoundAggregationRetrieveParams() {
+        CompoundAggregationRetrieveParams.builder().orgId("orgId").id("id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
+        val params = CompoundAggregationRetrieveParams.builder().orgId("orgId").id("id").build()
         assertThat(params).isNotNull
         // path param "orgId"
         assertThat(params.getPathParam(0)).isEqualTo("orgId")
