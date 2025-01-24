@@ -15,7 +15,7 @@ class AggregationTest {
             Aggregation.builder()
                 .id("id")
                 .version(0L)
-                .aggregation(Aggregation.Aggregation.SUM)
+                .aggregation(Aggregation.InnerAggregation.SUM)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -43,7 +43,7 @@ class AggregationTest {
         assertThat(aggregation).isNotNull
         assertThat(aggregation.id()).isEqualTo("id")
         assertThat(aggregation.version()).isEqualTo(0L)
-        assertThat(aggregation.aggregation()).contains(Aggregation.Aggregation.SUM)
+        assertThat(aggregation.aggregation()).contains(Aggregation.InnerAggregation.SUM)
         assertThat(aggregation.code()).contains("code")
         assertThat(aggregation.createdBy()).contains("createdBy")
         assertThat(aggregation.customFields())

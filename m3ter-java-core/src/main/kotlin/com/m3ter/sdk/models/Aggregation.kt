@@ -30,7 +30,7 @@ private constructor(
     private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("aggregation")
     @ExcludeMissing
-    private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
+    private val aggregation: JsonField<InnerAggregation> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
@@ -104,7 +104,7 @@ private constructor(
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
-    fun aggregation(): Optional<Aggregation> =
+    fun aggregation(): Optional<InnerAggregation> =
         Optional.ofNullable(aggregation.getNullable("aggregation"))
 
     /** Code of the Aggregation. A unique short code to identify the Aggregation. */
@@ -242,7 +242,7 @@ private constructor(
      */
     @JsonProperty("aggregation")
     @ExcludeMissing
-    fun _aggregation(): JsonField<Aggregation> = aggregation
+    fun _aggregation(): JsonField<InnerAggregation> = aggregation
 
     /** Code of the Aggregation. A unique short code to identify the Aggregation. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -395,7 +395,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
-        private var aggregation: JsonField<Aggregation> = JsonMissing.of()
+        private var aggregation: JsonField<InnerAggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -479,7 +479,7 @@ private constructor(
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
-        fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
+        fun aggregation(aggregation: InnerAggregation) = aggregation(JsonField.of(aggregation))
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -502,7 +502,7 @@ private constructor(
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
-        fun aggregation(aggregation: JsonField<Aggregation>) = apply {
+        fun aggregation(aggregation: JsonField<InnerAggregation>) = apply {
             this.aggregation = aggregation
         }
 
@@ -821,7 +821,7 @@ private constructor(
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
-    class Aggregation
+    class InnerAggregation
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
@@ -845,7 +845,7 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
-            @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
+            @JvmStatic fun of(value: String) = InnerAggregation(JsonField.of(value))
         }
 
         enum class Known {
@@ -890,7 +890,7 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
-                else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
+                else -> throw M3terInvalidDataException("Unknown InnerAggregation: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()
@@ -900,7 +900,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && value == other.value /* spotless:on */
+            return /* spotless:off */ other is InnerAggregation && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
