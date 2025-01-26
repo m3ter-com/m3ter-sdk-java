@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
 class MeterListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -78,7 +78,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var codes: MutableList<String>? = null

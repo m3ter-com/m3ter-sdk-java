@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** Get authentication token */
 class AuthenticationGetBearerTokenParams
-constructor(
+private constructor(
     private val body: AuthenticationGetBearerTokenBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -104,7 +104,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var grantType: JsonField<GrantType>? = null
             private var scope: JsonField<String> = JsonMissing.of()
@@ -184,7 +184,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: AuthenticationGetBearerTokenBody.Builder =
             AuthenticationGetBearerTokenBody.builder()

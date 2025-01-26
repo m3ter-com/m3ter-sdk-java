@@ -13,7 +13,7 @@ import java.util.Optional
 
 /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
 class AggregationListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -79,7 +79,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var codes: MutableList<String>? = null

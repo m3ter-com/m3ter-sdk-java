@@ -28,7 +28,7 @@ import java.util.Optional
  * request body must include all the necessary details such as the Calculation formula.
  */
 class CompoundAggregationCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: CompoundAggregationCreateBody,
     private val additionalHeaders: Headers,
@@ -471,7 +471,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var calculation: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -752,7 +752,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: CompoundAggregationCreateBody.Builder =
@@ -1190,7 +1190,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

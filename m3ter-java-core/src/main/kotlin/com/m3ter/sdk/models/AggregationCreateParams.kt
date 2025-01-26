@@ -23,7 +23,7 @@ import java.util.Optional
 
 /** Create a new Aggregation. */
 class AggregationCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: AggregationCreateBody,
     private val additionalHeaders: Headers,
@@ -630,7 +630,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var aggregation: JsonField<Aggregation>? = null
             private var meterId: JsonField<String>? = null
@@ -1043,7 +1043,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: AggregationCreateBody.Builder = AggregationCreateBody.builder()
@@ -1689,7 +1689,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1766,7 +1766,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
