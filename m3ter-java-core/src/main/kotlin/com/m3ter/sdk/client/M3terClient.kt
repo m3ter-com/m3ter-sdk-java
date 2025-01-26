@@ -25,6 +25,12 @@ import com.m3ter.sdk.services.blocking.ProductService
  */
 interface M3terClient {
 
+    /**
+     * Returns a version of this client that uses asynchronous execution.
+     *
+     * The returned client shares its resources, like its connection pool and thread pools, with
+     * this client.
+     */
     fun async(): M3terClientAsync
 
     fun authentication(): AuthenticationService
