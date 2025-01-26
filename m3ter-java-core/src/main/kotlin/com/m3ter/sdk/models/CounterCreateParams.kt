@@ -21,7 +21,7 @@ import java.util.Optional
 
 /** Create a new Counter. */
 class CounterCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: CounterCreateBody,
     private val additionalHeaders: Headers,
@@ -122,7 +122,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -202,7 +202,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: CounterCreateBody.Builder = CounterCreateBody.builder()

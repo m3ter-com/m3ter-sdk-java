@@ -30,7 +30,7 @@ import java.util.Optional
  * from the update request, they will be lost.
  */
 class ProductUpdateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val body: ProductUpdateBody,
@@ -242,7 +242,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -382,7 +382,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null
@@ -639,7 +639,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

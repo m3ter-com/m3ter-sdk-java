@@ -29,7 +29,7 @@ import java.util.Optional
  * omit them from the update request, they will be lost.
  */
 class AggregationUpdateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val body: AggregationUpdateBody,
@@ -640,7 +640,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var aggregation: JsonField<Aggregation>? = null
             private var meterId: JsonField<String>? = null
@@ -1053,7 +1053,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null
@@ -1704,7 +1704,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1781,7 +1781,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

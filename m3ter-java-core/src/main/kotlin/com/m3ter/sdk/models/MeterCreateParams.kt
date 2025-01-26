@@ -49,7 +49,7 @@ import java.util.Optional
  *   Options](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/reviewing-meter-options).
  */
 class MeterCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: MeterCreateBody,
     private val additionalHeaders: Headers,
@@ -387,7 +387,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
             private var dataFields: JsonField<MutableList<DataField>>? = null
@@ -644,7 +644,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: MeterCreateBody.Builder = MeterCreateBody.builder()
@@ -1021,7 +1021,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
@@ -1304,7 +1304,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
@@ -1543,7 +1543,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

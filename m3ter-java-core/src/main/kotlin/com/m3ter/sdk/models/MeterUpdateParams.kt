@@ -29,7 +29,7 @@ import java.util.Optional
  * update request, they will be lost.
  */
 class MeterUpdateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val body: MeterUpdateBody,
@@ -371,7 +371,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
             private var dataFields: JsonField<MutableList<DataField>>? = null
@@ -628,7 +628,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null
@@ -1010,7 +1010,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
@@ -1293,7 +1293,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
@@ -1532,7 +1532,7 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

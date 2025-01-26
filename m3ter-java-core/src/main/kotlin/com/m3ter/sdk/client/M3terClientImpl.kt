@@ -17,8 +17,7 @@ import com.m3ter.sdk.services.blocking.MeterServiceImpl
 import com.m3ter.sdk.services.blocking.ProductService
 import com.m3ter.sdk.services.blocking.ProductServiceImpl
 
-class M3terClientImpl
-constructor(
+class M3terClientImpl(
     private val clientOptions: ClientOptions,
 ) : M3terClient {
 
