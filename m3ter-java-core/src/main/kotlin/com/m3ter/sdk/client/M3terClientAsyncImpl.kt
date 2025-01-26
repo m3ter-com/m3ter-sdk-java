@@ -70,4 +70,6 @@ constructor(
     override fun meters(): MeterServiceAsync = meters
 
     override fun products(): ProductServiceAsync = products
+
+    override fun close() = clientOptions.httpClient.close()
 }
