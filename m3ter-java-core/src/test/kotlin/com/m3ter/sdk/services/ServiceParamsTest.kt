@@ -63,22 +63,24 @@ class ServiceParamsTest {
 
         val apiResponse =
             ProductListPage.Response.builder()
-                .addData(
-                    Product.builder()
-                        .id("id")
-                        .version(0L)
-                        .code("code")
-                        .createdBy("createdBy")
-                        .customFields(
-                            Product.CustomFields.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .build()
-                        )
-                        .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .lastModifiedBy("lastModifiedBy")
-                        .name("name")
-                        .build()
+                .data(
+                    listOf(
+                        Product.builder()
+                            .id("id")
+                            .version(0L)
+                            .code("code")
+                            .createdBy("createdBy")
+                            .customFields(
+                                Product.CustomFields.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
+                            .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .lastModifiedBy("lastModifiedBy")
+                            .name("name")
+                            .build()
+                    )
                 )
                 .nextToken("nextToken")
                 .build()

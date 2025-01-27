@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class CompoundAggregationServiceTest {
+class CompoundAggregationFunctionServiceTest {
 
     @Test
     fun callCreate() {
@@ -31,10 +31,10 @@ class CompoundAggregationServiceTest {
                     .orgId("orgId")
                     .calculation("x")
                     .name("x")
-                    .quantityPerUnit(0.0)
+                    .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationCreateParams.Rounding.UP)
                     .unit("x")
-                    .code("{1{}}_")
+                    .code("x")
                     .customFields(
                         CompoundAggregationCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -84,10 +84,10 @@ class CompoundAggregationServiceTest {
                     .id("id")
                     .calculation("x")
                     .name("x")
-                    .quantityPerUnit(0.0)
+                    .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                     .unit("x")
-                    .code("{1{}}_")
+                    .code("x")
                     .customFields(
                         CompoundAggregationUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
