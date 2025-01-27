@@ -122,6 +122,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
+        /** A builder for [CounterCreateBody]. */
         class Builder internal constructor() {
 
             private var version: JsonField<Long> = JsonMissing.of()
@@ -201,6 +202,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CounterCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

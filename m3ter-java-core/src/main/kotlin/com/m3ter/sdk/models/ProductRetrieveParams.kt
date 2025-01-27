@@ -49,6 +49,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ProductRetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

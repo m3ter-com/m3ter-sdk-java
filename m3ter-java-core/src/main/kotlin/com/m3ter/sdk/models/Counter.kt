@@ -171,6 +171,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [Counter]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null

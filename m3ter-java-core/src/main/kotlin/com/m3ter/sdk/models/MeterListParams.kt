@@ -77,6 +77,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [MeterListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
