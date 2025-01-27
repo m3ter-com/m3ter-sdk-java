@@ -93,6 +93,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CompoundAggregationListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
