@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
 class CompoundAggregationServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CompoundAggregationService {
 

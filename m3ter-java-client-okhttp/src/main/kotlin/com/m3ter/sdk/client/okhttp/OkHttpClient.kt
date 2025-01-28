@@ -1,6 +1,7 @@
 package com.m3ter.sdk.client.okhttp
 
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.HttpClient
 import com.m3ter.sdk.core.http.HttpMethod
@@ -170,7 +171,7 @@ private constructor(private val okHttpClient: okhttp3.OkHttpClient, private val 
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var baseUrl: HttpUrl? = null
         // The default timeout is 1 minute.
@@ -192,7 +193,7 @@ private constructor(private val okHttpClient: okhttp3.OkHttpClient, private val 
                     .callTimeout(if (timeout.seconds == 0L) timeout else timeout.plusSeconds(30))
                     .proxy(proxy)
                     .build(),
-                checkNotNull(baseUrl) { "`baseUrl` is required but was not set" },
+                checkRequired("baseUrl", baseUrl),
             )
     }
 }

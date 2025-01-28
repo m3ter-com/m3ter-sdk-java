@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.MeterUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class MeterServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : MeterServiceAsync {
 

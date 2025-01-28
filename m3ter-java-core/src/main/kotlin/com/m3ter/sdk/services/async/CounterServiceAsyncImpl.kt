@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class CounterServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CounterServiceAsync {
 

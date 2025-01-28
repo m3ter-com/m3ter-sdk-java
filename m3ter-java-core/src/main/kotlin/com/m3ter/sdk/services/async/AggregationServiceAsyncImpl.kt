@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.AggregationUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class AggregationServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AggregationServiceAsync {
 

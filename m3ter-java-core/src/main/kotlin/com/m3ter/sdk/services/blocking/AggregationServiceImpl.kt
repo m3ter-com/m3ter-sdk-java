@@ -20,7 +20,7 @@ import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 
 class AggregationServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AggregationService {
 

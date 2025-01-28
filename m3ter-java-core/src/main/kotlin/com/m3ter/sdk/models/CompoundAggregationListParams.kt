@@ -20,7 +20,7 @@ import java.util.Optional
  * CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
  */
 class CompoundAggregationListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -93,8 +93,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CompoundAggregationListParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var codes: MutableList<String>? = null

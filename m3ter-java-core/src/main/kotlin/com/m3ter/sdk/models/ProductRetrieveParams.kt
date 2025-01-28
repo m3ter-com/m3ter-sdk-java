@@ -15,7 +15,7 @@ import java.util.Objects
  * the Product UUID.
  */
 class ProductRetrieveParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val additionalHeaders: Headers,
@@ -49,8 +49,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ProductRetrieveParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null

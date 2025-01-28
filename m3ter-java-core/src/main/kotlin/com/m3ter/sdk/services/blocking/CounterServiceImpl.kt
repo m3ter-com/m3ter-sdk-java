@@ -20,7 +20,7 @@ import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 
 class CounterServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CounterService {
 

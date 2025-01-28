@@ -12,7 +12,7 @@ import java.util.Optional
 
 /** Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes. */
 class CounterListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -74,8 +74,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CounterListParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var codes: MutableList<String>? = null

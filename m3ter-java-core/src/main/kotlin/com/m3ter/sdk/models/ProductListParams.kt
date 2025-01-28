@@ -17,7 +17,7 @@ import java.util.Optional
  * be paginated, and supports filtering by specific Product IDs.
  */
 class ProductListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val ids: List<String>?,
     private val nextToken: String?,
@@ -70,8 +70,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ProductListParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var ids: MutableList<String>? = null

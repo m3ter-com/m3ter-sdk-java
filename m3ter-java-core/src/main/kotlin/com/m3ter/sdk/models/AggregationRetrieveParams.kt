@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** Retrieve the Aggregation with the given UUID. */
 class AggregationRetrieveParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val additionalHeaders: Headers,
@@ -44,8 +44,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [AggregationRetrieveParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null

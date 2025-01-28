@@ -26,7 +26,7 @@ import java.util.Optional
  * are provided in the request body.
  */
 class ProductCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: ProductCreateBody,
     private val additionalHeaders: Headers,
@@ -234,7 +234,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [ProductCreateBody]. */
+        class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -373,8 +374,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [ProductCreateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: ProductCreateBody.Builder = ProductCreateBody.builder()
@@ -626,7 +628,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [CustomFields]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

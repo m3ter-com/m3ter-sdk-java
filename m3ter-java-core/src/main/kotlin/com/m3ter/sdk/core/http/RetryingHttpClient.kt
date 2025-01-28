@@ -1,6 +1,7 @@
 package com.m3ter.sdk.core.http
 
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.errors.M3terIoException
 import java.io.IOException
 import java.time.Clock
@@ -242,7 +243,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var httpClient: HttpClient? = null
         private var clock: Clock = Clock.systemUTC()
@@ -259,7 +260,7 @@ private constructor(
 
         fun build(): HttpClient =
             RetryingHttpClient(
-                checkNotNull(httpClient) { "`httpClient` is required but was not set" },
+                checkRequired("httpClient", httpClient),
                 clock,
                 maxRetries,
                 idempotencyHeader,

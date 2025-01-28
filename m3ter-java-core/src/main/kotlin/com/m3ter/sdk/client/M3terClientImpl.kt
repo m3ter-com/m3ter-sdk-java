@@ -17,8 +17,7 @@ import com.m3ter.sdk.services.blocking.MeterServiceImpl
 import com.m3ter.sdk.services.blocking.ProductService
 import com.m3ter.sdk.services.blocking.ProductServiceImpl
 
-class M3terClientImpl
-constructor(
+class M3terClientImpl(
     private val clientOptions: ClientOptions,
 ) : M3terClient {
 
@@ -64,4 +63,6 @@ constructor(
     override fun meters(): MeterService = meters
 
     override fun products(): ProductService = products
+
+    override fun close() = clientOptions.httpClient.close()
 }

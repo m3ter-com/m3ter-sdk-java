@@ -20,7 +20,7 @@ import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 
 class ProductServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ProductService {
 

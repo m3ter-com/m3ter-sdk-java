@@ -17,7 +17,7 @@ import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
 import java.util.concurrent.CompletableFuture
 
 class AuthenticationServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AuthenticationServiceAsync {
 
