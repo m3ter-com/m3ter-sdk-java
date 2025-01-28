@@ -5,12 +5,14 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
 class AuthenticationServiceTest {
 
+    @Disabled("example missing required scope property")
     @Test
     fun callGetBearerToken() {
         val client =
