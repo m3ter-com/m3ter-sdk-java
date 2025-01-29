@@ -38,7 +38,7 @@ class AggregationFunctionUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AggregationUpdateParams.builder()
                 .orgId("orgId")
@@ -65,7 +65,7 @@ class AggregationFunctionUpdateParamsTest {
                 )
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -95,7 +95,7 @@ class AggregationFunctionUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AggregationUpdateParams.builder()
                 .orgId("orgId")
@@ -108,7 +108,7 @@ class AggregationFunctionUpdateParamsTest {
                 .targetField("x")
                 .unit("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

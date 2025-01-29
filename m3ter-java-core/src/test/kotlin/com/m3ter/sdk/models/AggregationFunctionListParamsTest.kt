@@ -22,7 +22,7 @@ class AggregationFunctionListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             AggregationListParams.builder()
                 .orgId("orgId")
@@ -38,14 +38,14 @@ class AggregationFunctionListParamsTest {
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
         expected.put("productId", JsonValue.from(mapOf<String, Any>()).toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = AggregationListParams.builder().orgId("orgId").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

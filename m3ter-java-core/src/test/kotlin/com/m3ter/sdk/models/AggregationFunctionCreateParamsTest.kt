@@ -37,7 +37,7 @@ class AggregationFunctionCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AggregationCreateParams.builder()
                 .orgId("orgId")
@@ -63,7 +63,7 @@ class AggregationFunctionCreateParamsTest {
                 )
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -93,7 +93,7 @@ class AggregationFunctionCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AggregationCreateParams.builder()
                 .orgId("orgId")
@@ -105,7 +105,7 @@ class AggregationFunctionCreateParamsTest {
                 .targetField("x")
                 .unit("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
