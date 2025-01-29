@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -21,7 +22,7 @@ private constructor(
     private val productId: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun orgId(): String = orgId
 
@@ -44,10 +45,9 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.codes?.let { queryParams.put("codes", listOf(it.joinToString(separator = ","))) }
         this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }

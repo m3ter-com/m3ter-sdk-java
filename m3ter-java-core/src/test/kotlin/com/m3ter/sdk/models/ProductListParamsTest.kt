@@ -19,7 +19,7 @@ class ProductListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             ProductListParams.builder()
                 .orgId("orgId")
@@ -31,14 +31,14 @@ class ProductListParamsTest {
         expected.put("ids", "string")
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = ProductListParams.builder().orgId("orgId").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

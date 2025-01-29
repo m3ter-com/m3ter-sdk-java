@@ -42,7 +42,7 @@ class MeterCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             MeterCreateParams.builder()
                 .orgId("orgId")
@@ -73,7 +73,7 @@ class MeterCreateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
@@ -111,7 +111,7 @@ class MeterCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             MeterCreateParams.builder()
                 .orgId("orgId")
@@ -132,7 +132,7 @@ class MeterCreateParamsTest {
                 )
                 .name("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())

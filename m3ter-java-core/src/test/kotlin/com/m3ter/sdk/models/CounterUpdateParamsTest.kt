@@ -13,17 +13,17 @@ class CounterUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params = CounterUpdateParams.builder().orgId("orgId").id("id").version(0L).build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.version()).contains(0L)
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = CounterUpdateParams.builder().orgId("orgId").id("id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

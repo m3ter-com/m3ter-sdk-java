@@ -31,7 +31,7 @@ class CompoundAggregationUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CompoundAggregationUpdateParams.builder()
                 .orgId("orgId")
@@ -51,7 +51,7 @@ class CompoundAggregationUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
@@ -71,7 +71,7 @@ class CompoundAggregationUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             CompoundAggregationUpdateParams.builder()
                 .orgId("orgId")
@@ -82,7 +82,7 @@ class CompoundAggregationUpdateParamsTest {
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
