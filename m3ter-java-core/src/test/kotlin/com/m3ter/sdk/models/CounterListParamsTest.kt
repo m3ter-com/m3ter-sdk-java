@@ -21,7 +21,7 @@ class CounterListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CounterListParams.builder()
                 .orgId("orgId")
@@ -37,14 +37,14 @@ class CounterListParamsTest {
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
         expected.put("productId", "string")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = CounterListParams.builder().orgId("orgId").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
