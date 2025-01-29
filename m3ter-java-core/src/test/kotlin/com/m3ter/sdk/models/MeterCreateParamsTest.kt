@@ -23,6 +23,7 @@ class MeterCreateParamsTest {
             )
             .addDerivedField(
                 MeterCreateParams.DerivedField.builder()
+                    .calculation("x")
                     .category(MeterCreateParams.DerivedField.Category.WHO)
                     .code("{1{}}_")
                     .name("x")
@@ -57,6 +58,7 @@ class MeterCreateParamsTest {
                 )
                 .addDerivedField(
                     MeterCreateParams.DerivedField.builder()
+                        .calculation("x")
                         .category(MeterCreateParams.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
@@ -91,6 +93,7 @@ class MeterCreateParamsTest {
             .isEqualTo(
                 listOf(
                     MeterCreateParams.DerivedField.builder()
+                        .calculation("x")
                         .category(MeterCreateParams.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
@@ -125,6 +128,7 @@ class MeterCreateParamsTest {
                 )
                 .addDerivedField(
                     MeterCreateParams.DerivedField.builder()
+                        .calculation("x")
                         .category(MeterCreateParams.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
@@ -149,6 +153,7 @@ class MeterCreateParamsTest {
             .isEqualTo(
                 listOf(
                     MeterCreateParams.DerivedField.builder()
+                        .calculation("x")
                         .category(MeterCreateParams.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
@@ -173,6 +178,7 @@ class MeterCreateParamsTest {
                 )
                 .addDerivedField(
                     MeterCreateParams.DerivedField.builder()
+                        .calculation("x")
                         .category(MeterCreateParams.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")

@@ -40,6 +40,7 @@ class MeterServiceTest {
                     )
                     .addDerivedField(
                         MeterCreateParams.DerivedField.builder()
+                            .calculation("x")
                             .category(MeterCreateParams.DerivedField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
@@ -103,6 +104,7 @@ class MeterServiceTest {
                     )
                     .addDerivedField(
                         MeterUpdateParams.DerivedField.builder()
+                            .calculation("x")
                             .category(MeterUpdateParams.DerivedField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
