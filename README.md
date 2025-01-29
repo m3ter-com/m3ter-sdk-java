@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.0.1-alpha.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.1)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter.sdk:m3ter-java:0.0.1-alpha.0")
+implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.1")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.m3ter.sdk:m3ter-java:0.0.1-alpha.0")
 <dependency>
     <groupId>com.m3ter.sdk</groupId>
     <artifactId>m3ter-java</artifactId>
-    <version>0.0.1-alpha.0</version>
+    <version>0.1.0-alpha.1</version>
 </dependency>
 ```
 
