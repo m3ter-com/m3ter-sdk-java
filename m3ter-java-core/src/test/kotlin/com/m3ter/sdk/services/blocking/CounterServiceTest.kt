@@ -25,7 +25,16 @@ class CounterServiceTest {
                 .build()
         val counterService = client.counters()
         val counter =
-            counterService.create(CounterCreateParams.builder().orgId("orgId").version(0L).build())
+            counterService.create(
+                CounterCreateParams.builder()
+                    .orgId("orgId")
+                    .name("x")
+                    .unit("x")
+                    .code("JS!?Q0]r] ]\$]")
+                    .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .version(0L)
+                    .build()
+            )
         println(counter)
         counter.validate()
     }
@@ -58,7 +67,15 @@ class CounterServiceTest {
         val counterService = client.counters()
         val counter =
             counterService.update(
-                CounterUpdateParams.builder().orgId("orgId").id("id").version(0L).build()
+                CounterUpdateParams.builder()
+                    .orgId("orgId")
+                    .id("id")
+                    .name("x")
+                    .unit("x")
+                    .code("JS!?Q0]r] ]\$]")
+                    .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .version(0L)
+                    .build()
             )
         println(counter)
         counter.validate()

@@ -905,6 +905,9 @@ private constructor(
     class DerivedField
     @JsonCreator
     private constructor(
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        private val calculation: JsonField<String> = JsonMissing.of(),
         @JsonProperty("category")
         @ExcludeMissing
         private val category: JsonField<Category> = JsonMissing.of(),
@@ -920,6 +923,13 @@ private constructor(
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        /**
+         * The calculation used to transform the value of submitted `dataFields` in usage data.
+         * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+         * _(Example: datafieldms datafieldgb)_
+         */
+        fun calculation(): String = calculation.getRequired("calculation")
 
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         fun category(): Category = category.getRequired("category")
@@ -940,6 +950,15 @@ private constructor(
          * (UCUM). Required only for numeric field categories.
          */
         fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+
+        /**
+         * The calculation used to transform the value of submitted `dataFields` in usage data.
+         * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+         * _(Example: datafieldms datafieldgb)_
+         */
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        fun _calculation(): JsonField<String> = calculation
 
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         @JsonProperty("category") @ExcludeMissing fun _category(): JsonField<Category> = category
@@ -972,6 +991,7 @@ private constructor(
                 return@apply
             }
 
+            calculation()
             category()
             code()
             name()
@@ -989,6 +1009,7 @@ private constructor(
         /** A builder for [DerivedField]. */
         class Builder internal constructor() {
 
+            private var calculation: JsonField<String>? = null
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -997,11 +1018,28 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(derivedField: DerivedField) = apply {
+                calculation = derivedField.calculation
                 category = derivedField.category
                 code = derivedField.code
                 name = derivedField.name
                 unit = derivedField.unit
                 additionalProperties = derivedField.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The calculation used to transform the value of submitted `dataFields` in usage data.
+             * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+             * _(Example: datafieldms datafieldgb)_
+             */
+            fun calculation(calculation: String) = calculation(JsonField.of(calculation))
+
+            /**
+             * The calculation used to transform the value of submitted `dataFields` in usage data.
+             * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+             * _(Example: datafieldms datafieldgb)_
+             */
+            fun calculation(calculation: JsonField<String>) = apply {
+                this.calculation = calculation
             }
 
             /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
@@ -1065,6 +1103,7 @@ private constructor(
 
             fun build(): DerivedField =
                 DerivedField(
+                    checkRequired("calculation", calculation),
                     checkRequired("category", category),
                     checkRequired("code", code),
                     checkRequired("name", name),
@@ -1209,17 +1248,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DerivedField && category == other.category && code == other.code && name == other.name && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is DerivedField && calculation == other.calculation && category == other.category && code == other.code && name == other.name && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(category, code, name, unit, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(calculation, category, code, name, unit, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "DerivedField{category=$category, code=$code, name=$name, unit=$unit, additionalProperties=$additionalProperties}"
+            "DerivedField{calculation=$calculation, category=$category, code=$code, name=$name, unit=$unit, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

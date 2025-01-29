@@ -32,6 +32,7 @@ class MeterTest {
                 )
                 .addDerivedField(
                     Meter.DerivedField.builder()
+                        .calculation("x")
                         .category(Meter.DerivedField.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
@@ -68,6 +69,7 @@ class MeterTest {
         assertThat(meter.derivedFields().get())
             .containsExactly(
                 Meter.DerivedField.builder()
+                    .calculation("x")
                     .category(Meter.DerivedField.Category.WHO)
                     .code("{1{}}_")
                     .name("x")
