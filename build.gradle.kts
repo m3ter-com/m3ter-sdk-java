@@ -1,5 +1,6 @@
 plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id("maven-publish")
 }
 
 allprojects {
@@ -16,5 +17,11 @@ nexusPublishing {
             username.set(System.getenv("SONATYPE_USERNAME"))
             password.set(System.getenv("SONATYPE_PASSWORD"))
         }
+    }
+}
+
+publishing {
+    repositories {
+        mavenLocal()
     }
 }
