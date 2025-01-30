@@ -11,7 +11,6 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.time.OffsetDateTime
@@ -23,9 +22,6 @@ class Counter
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
@@ -44,19 +40,14 @@ private constructor(
     @ExcludeMissing
     private val productId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("unit") @ExcludeMissing private val unit: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** The UUID of the entity. */
-    fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    fun version(): Long = version.getRequired("version")
+    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
     /** Code of the Counter. A unique short code to identify the Counter. */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
@@ -92,16 +83,16 @@ private constructor(
      */
     fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
-    /** The UUID of the entity. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
     /**
      * The version number:
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+    /** The UUID of the entity. */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /** Code of the Counter. A unique short code to identify the Counter. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -140,6 +131,14 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -152,7 +151,6 @@ private constructor(
         }
 
         id()
-        version()
         code()
         createdBy()
         dtCreated()
@@ -161,6 +159,7 @@ private constructor(
         name()
         productId()
         unit()
+        version()
         validated = true
     }
 
@@ -174,8 +173,7 @@ private constructor(
     /** A builder for [Counter]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
+        private var id: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -184,12 +182,12 @@ private constructor(
         private var name: JsonField<String> = JsonMissing.of()
         private var productId: JsonField<String> = JsonMissing.of()
         private var unit: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(counter: Counter) = apply {
             id = counter.id
-            version = counter.version
             code = counter.code
             createdBy = counter.createdBy
             dtCreated = counter.dtCreated
@@ -198,6 +196,7 @@ private constructor(
             name = counter.name
             productId = counter.productId
             unit = counter.unit
+            version = counter.version
             additionalProperties = counter.additionalProperties.toMutableMap()
         }
 
@@ -206,22 +205,6 @@ private constructor(
 
         /** The UUID of the entity. */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Code of the Counter. A unique short code to identify the Counter. */
         fun code(code: String) = code(JsonField.of(code))
@@ -290,6 +273,22 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -311,8 +310,7 @@ private constructor(
 
         fun build(): Counter =
             Counter(
-                checkRequired("id", id),
-                checkRequired("version", version),
+                id,
                 code,
                 createdBy,
                 dtCreated,
@@ -321,6 +319,7 @@ private constructor(
                 name,
                 productId,
                 unit,
+                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -330,15 +329,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Counter && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Counter && id == other.id && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, productId, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, productId, unit, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Counter{id=$id, version=$version, code=$code, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, unit=$unit, additionalProperties=$additionalProperties}"
+        "Counter{id=$id, code=$code, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, unit=$unit, version=$version, additionalProperties=$additionalProperties}"
 }

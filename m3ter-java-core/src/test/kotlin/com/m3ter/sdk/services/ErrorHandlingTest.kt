@@ -77,7 +77,6 @@ class ErrorHandlingTest {
                         listOf(
                             Product.builder()
                                 .id("id")
-                                .version(0L)
                                 .code("code")
                                 .createdBy("createdBy")
                                 .customFields(
@@ -89,6 +88,7 @@ class ErrorHandlingTest {
                                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .lastModifiedBy("lastModifiedBy")
                                 .name("name")
+                                .version(0L)
                                 .build()
                         )
                     )

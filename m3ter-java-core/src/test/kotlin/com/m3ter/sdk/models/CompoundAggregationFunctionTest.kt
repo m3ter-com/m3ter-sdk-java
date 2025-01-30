@@ -14,7 +14,6 @@ class CompoundAggregationFunctionTest {
         val compoundAggregation =
             CompoundAggregation.builder()
                 .id("id")
-                .version(0L)
                 .calculation("calculation")
                 .code("code")
                 .createdBy("createdBy")
@@ -37,10 +36,10 @@ class CompoundAggregationFunctionTest {
                         .build()
                 )
                 .unit("unit")
+                .version(0L)
                 .build()
         assertThat(compoundAggregation).isNotNull
-        assertThat(compoundAggregation.id()).isEqualTo("id")
-        assertThat(compoundAggregation.version()).isEqualTo(0L)
+        assertThat(compoundAggregation.id()).contains("id")
         assertThat(compoundAggregation.calculation()).contains("calculation")
         assertThat(compoundAggregation.code()).contains("code")
         assertThat(compoundAggregation.createdBy()).contains("createdBy")
@@ -67,5 +66,6 @@ class CompoundAggregationFunctionTest {
                     .build()
             )
         assertThat(compoundAggregation.unit()).contains("unit")
+        assertThat(compoundAggregation.version()).contains(0L)
     }
 }

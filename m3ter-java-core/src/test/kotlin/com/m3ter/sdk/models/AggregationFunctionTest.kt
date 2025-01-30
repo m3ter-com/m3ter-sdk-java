@@ -7,15 +7,14 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationFunctionTest {
+class AggregationTest {
 
     @Test
     fun createAggregation() {
         val aggregation =
             Aggregation.builder()
                 .id("id")
-                .version(0L)
-                .aggregation(Aggregation.AggregationFunction.SUM)
+                .aggregation(Aggregation.InnerAggregation.SUM)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -39,11 +38,11 @@ class AggregationFunctionTest {
                 )
                 .targetField("targetField")
                 .unit("unit")
+                .version(0L)
                 .build()
         assertThat(aggregation).isNotNull
-        assertThat(aggregation.id()).isEqualTo("id")
-        assertThat(aggregation.version()).isEqualTo(0L)
-        assertThat(aggregation.aggregation()).contains(Aggregation.AggregationFunction.SUM)
+        assertThat(aggregation.id()).contains("id")
+        assertThat(aggregation.aggregation()).contains(Aggregation.InnerAggregation.SUM)
         assertThat(aggregation.code()).contains("code")
         assertThat(aggregation.createdBy()).contains("createdBy")
         assertThat(aggregation.customFields())
@@ -71,5 +70,6 @@ class AggregationFunctionTest {
             )
         assertThat(aggregation.targetField()).contains("targetField")
         assertThat(aggregation.unit()).contains("unit")
+        assertThat(aggregation.version()).contains(0L)
     }
 }

@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
 
-/** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+/** Retrieve a list of Meter entities */
 class MeterListPageAsync
 private constructor(
     private val metersService: MeterServiceAsync,

@@ -84,7 +84,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     fun rounding(): Rounding = body.rounding()
 
@@ -167,7 +167,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     fun _rounding(): JsonField<Rounding> = body._rounding()
 
@@ -309,7 +309,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(): Rounding = rounding.getRequired("rounding")
 
@@ -400,7 +400,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         @JsonProperty("rounding") @ExcludeMissing fun _rounding(): JsonField<Rounding> = rounding
 
@@ -589,7 +589,7 @@ private constructor(
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
              *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
              *
-             * Enum: “UP” “DOWN” “NEAREST” “NONE”
+             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
             fun rounding(rounding: Rounding) = rounding(JsonField.of(rounding))
 
@@ -607,7 +607,7 @@ private constructor(
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
              *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
              *
-             * Enum: “UP” “DOWN” “NEAREST” “NONE”
+             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
             fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
@@ -858,7 +858,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: Rounding) = apply { body.rounding(rounding) }
 
@@ -874,7 +874,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: JsonField<Rounding>) = apply { body.rounding(rounding) }
 
@@ -1107,7 +1107,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     class Rounding
     @JsonCreator
