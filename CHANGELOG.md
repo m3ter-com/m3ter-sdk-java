@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-01-30)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** updated OpenAPI spec ([#35](https://github.com/m3ter-com/m3ter-sdk-java/issues/35)) ([6cf58a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/6cf58a6b224d57e5850f49833dbd4d93c120e52c))
+
 ## 0.1.0-alpha.1 (2025-01-29)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
