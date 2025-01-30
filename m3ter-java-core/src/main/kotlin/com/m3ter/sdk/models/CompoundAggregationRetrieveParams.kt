@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -15,12 +16,12 @@ import java.util.Objects
  * detailed information about the CompoundAggregation.
  */
 class CompoundAggregationRetrieveParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun orgId(): String = orgId
 
@@ -30,9 +31,9 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -49,8 +50,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CompoundAggregationRetrieveParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null

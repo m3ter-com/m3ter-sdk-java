@@ -16,13 +16,13 @@ class AuthenticationGetBearerTokenParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AuthenticationGetBearerTokenParams.builder()
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .scope("scope")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
@@ -30,12 +30,12 @@ class AuthenticationGetBearerTokenParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AuthenticationGetBearerTokenParams.builder()
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)

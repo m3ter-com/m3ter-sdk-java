@@ -15,7 +15,7 @@ class CompoundAggregationFunctionUpdateParamsTest {
             .id("id")
             .calculation("x")
             .name("x")
-            .quantityPerUnit(0.0)
+            .quantityPerUnit(1.0)
             .rounding(CompoundAggregationUpdateParams.Rounding.UP)
             .unit("x")
             .code("{1{}}_")
@@ -31,14 +31,14 @@ class CompoundAggregationFunctionUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CompoundAggregationUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
                 .calculation("x")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .code("{1{}}_")
@@ -51,11 +51,11 @@ class CompoundAggregationFunctionUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
-        assertThat(body.quantityPerUnit()).isEqualTo(0.0)
+        assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(CompoundAggregationUpdateParams.Rounding.UP)
         assertThat(body.unit()).isEqualTo("x")
         assertThat(body.code()).contains("{1{}}_")
@@ -71,22 +71,22 @@ class CompoundAggregationFunctionUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             CompoundAggregationUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
                 .calculation("x")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
-        assertThat(body.quantityPerUnit()).isEqualTo(0.0)
+        assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(CompoundAggregationUpdateParams.Rounding.UP)
         assertThat(body.unit()).isEqualTo("x")
     }
@@ -99,7 +99,7 @@ class CompoundAggregationFunctionUpdateParamsTest {
                 .id("id")
                 .calculation("x")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .build()

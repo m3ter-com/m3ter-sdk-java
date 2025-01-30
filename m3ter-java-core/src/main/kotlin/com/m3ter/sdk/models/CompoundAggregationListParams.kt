@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -20,7 +21,7 @@ import java.util.Optional
  * CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
  */
 class CompoundAggregationListParams
-constructor(
+private constructor(
     private val orgId: String,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -29,7 +30,7 @@ constructor(
     private val productId: List<JsonValue>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun orgId(): String = orgId
 
@@ -63,10 +64,9 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.codes?.let { queryParams.put("codes", listOf(it.joinToString(separator = ","))) }
         this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
@@ -93,8 +93,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CompoundAggregationListParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var codes: MutableList<String>? = null

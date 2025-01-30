@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -21,14 +22,33 @@ import java.util.Optional
 
 /** Create a new Counter. */
 class CounterCreateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val body: CounterCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun orgId(): String = orgId
+
+    /** Descriptive name for the Counter. */
+    fun name(): String = body.name()
+
+    /**
+     * User defined label for units shown on Bill line items, and indicating to your customers what
+     * they are being charged for.
+     */
+    fun unit(): String = body.unit()
+
+    /** Code for the Counter. A unique short code to identify the Counter. */
+    fun code(): Optional<String> = body.code()
+
+    /**
+     * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+     * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+     * Product.
+     */
+    fun productId(): Optional<String> = body.productId()
 
     /**
      * The version number of the entity:
@@ -39,6 +59,25 @@ constructor(
      *   incremented by 1 and listed in the response.
      */
     fun version(): Optional<Long> = body.version()
+
+    /** Descriptive name for the Counter. */
+    fun _name(): JsonField<String> = body._name()
+
+    /**
+     * User defined label for units shown on Bill line items, and indicating to your customers what
+     * they are being charged for.
+     */
+    fun _unit(): JsonField<String> = body._unit()
+
+    /** Code for the Counter. A unique short code to identify the Counter. */
+    fun _code(): JsonField<String> = body._code()
+
+    /**
+     * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+     * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+     * Product.
+     */
+    fun _productId(): JsonField<String> = body._productId()
 
     /**
      * The version number of the entity:
@@ -56,11 +95,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): CounterCreateBody = body
+    @JvmSynthetic internal fun _body(): CounterCreateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -73,12 +112,43 @@ constructor(
     class CounterCreateBody
     @JsonCreator
     internal constructor(
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("unit")
+        @ExcludeMissing
+        private val unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("code")
+        @ExcludeMissing
+        private val code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productId")
+        @ExcludeMissing
+        private val productId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("version")
         @ExcludeMissing
         private val version: JsonField<Long> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        /** Descriptive name for the Counter. */
+        fun name(): String = name.getRequired("name")
+
+        /**
+         * User defined label for units shown on Bill line items, and indicating to your customers
+         * what they are being charged for.
+         */
+        fun unit(): String = unit.getRequired("unit")
+
+        /** Code for the Counter. A unique short code to identify the Counter. */
+        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+
+        /**
+         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+         * Product.
+         */
+        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
         /**
          * The version number of the entity:
@@ -89,6 +159,25 @@ constructor(
          *   incremented by 1 and listed in the response.
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /** Descriptive name for the Counter. */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * User defined label for units shown on Bill line items, and indicating to your customers
+         * what they are being charged for.
+         */
+        @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
+
+        /** Code for the Counter. A unique short code to identify the Counter. */
+        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
+
+        /**
+         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+         * Product.
+         */
+        @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
         /**
          * The version number of the entity:
@@ -111,6 +200,10 @@ constructor(
                 return@apply
             }
 
+            name()
+            unit()
+            code()
+            productId()
             version()
             validated = true
         }
@@ -122,16 +215,63 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [CounterCreateBody]. */
+        class Builder internal constructor() {
 
+            private var name: JsonField<String>? = null
+            private var unit: JsonField<String>? = null
+            private var code: JsonField<String> = JsonMissing.of()
+            private var productId: JsonField<String> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(counterCreateBody: CounterCreateBody) = apply {
+                name = counterCreateBody.name
+                unit = counterCreateBody.unit
+                code = counterCreateBody.code
+                productId = counterCreateBody.productId
                 version = counterCreateBody.version
                 additionalProperties = counterCreateBody.additionalProperties.toMutableMap()
             }
+
+            /** Descriptive name for the Counter. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** Descriptive name for the Counter. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * User defined label for units shown on Bill line items, and indicating to your
+             * customers what they are being charged for.
+             */
+            fun unit(unit: String) = unit(JsonField.of(unit))
+
+            /**
+             * User defined label for units shown on Bill line items, and indicating to your
+             * customers what they are being charged for.
+             */
+            fun unit(unit: JsonField<String>) = apply { this.unit = unit }
+
+            /** Code for the Counter. A unique short code to identify the Counter. */
+            fun code(code: String) = code(JsonField.of(code))
+
+            /** Code for the Counter. A unique short code to identify the Counter. */
+            fun code(code: JsonField<String>) = apply { this.code = code }
+
+            /**
+             * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter
+             * is Global. A Global Counter can be used to price Plans or Plan Templates belonging to
+             * any Product.
+             */
+            fun productId(productId: String) = productId(JsonField.of(productId))
+
+            /**
+             * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter
+             * is Global. A Global Counter can be used to price Plans or Plan Templates belonging to
+             * any Product.
+             */
+            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
             /**
              * The version number of the entity:
@@ -173,7 +313,14 @@ constructor(
             }
 
             fun build(): CounterCreateBody =
-                CounterCreateBody(version, additionalProperties.toImmutable())
+                CounterCreateBody(
+                    checkRequired("name", name),
+                    checkRequired("unit", unit),
+                    code,
+                    productId,
+                    version,
+                    additionalProperties.toImmutable(),
+                )
         }
 
         override fun equals(other: Any?): Boolean {
@@ -181,17 +328,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterCreateBody && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CounterCreateBody && name == other.name && unit == other.unit && code == other.code && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(name, unit, code, productId, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterCreateBody{version=$version, additionalProperties=$additionalProperties}"
+            "CounterCreateBody{name=$name, unit=$unit, code=$code, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -201,8 +348,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [CounterCreateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var body: CounterCreateBody.Builder = CounterCreateBody.builder()
@@ -218,6 +366,44 @@ constructor(
         }
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
+
+        /** Descriptive name for the Counter. */
+        fun name(name: String) = apply { body.name(name) }
+
+        /** Descriptive name for the Counter. */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
+
+        /**
+         * User defined label for units shown on Bill line items, and indicating to your customers
+         * what they are being charged for.
+         */
+        fun unit(unit: String) = apply { body.unit(unit) }
+
+        /**
+         * User defined label for units shown on Bill line items, and indicating to your customers
+         * what they are being charged for.
+         */
+        fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
+
+        /** Code for the Counter. A unique short code to identify the Counter. */
+        fun code(code: String) = apply { body.code(code) }
+
+        /** Code for the Counter. A unique short code to identify the Counter. */
+        fun code(code: JsonField<String>) = apply { body.code(code) }
+
+        /**
+         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+         * Product.
+         */
+        fun productId(productId: String) = apply { body.productId(productId) }
+
+        /**
+         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
+         * Product.
+         */
+        fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
         /**
          * The version number of the entity:

@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -29,13 +30,13 @@ import java.util.Optional
  * update request, they will be lost.
  */
 class MeterUpdateParams
-constructor(
+private constructor(
     private val orgId: String,
     private val id: String,
     private val body: MeterUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun orgId(): String = orgId
 
@@ -167,11 +168,11 @@ constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun getBody(): MeterUpdateBody = body
+    @JvmSynthetic internal fun _body(): MeterUpdateBody = body
 
-    @JvmSynthetic internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    @JvmSynthetic internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -371,7 +372,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [MeterUpdateBody]. */
+        class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
             private var dataFields: JsonField<MutableList<DataField>>? = null
@@ -627,8 +629,9 @@ constructor(
         @JvmStatic fun builder() = Builder()
     }
 
+    /** A builder for [MeterUpdateParams]. */
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var orgId: String? = null
         private var id: String? = null
@@ -1010,7 +1013,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [DataField]. */
+        class Builder internal constructor() {
 
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
@@ -1103,6 +1107,14 @@ constructor(
             private val value: JsonField<String>,
         ) : Enum {
 
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
             companion object {
@@ -1126,6 +1138,7 @@ constructor(
                 @JvmStatic fun of(value: String) = Category(JsonField.of(value))
             }
 
+            /** An enum containing [Category]'s known values. */
             enum class Known {
                 WHO,
                 WHERE,
@@ -1137,6 +1150,15 @@ constructor(
                 COST,
             }
 
+            /**
+             * An enum containing [Category]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Category] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
             enum class Value {
                 WHO,
                 WHERE,
@@ -1146,9 +1168,19 @@ constructor(
                 MEASURE,
                 INCOME,
                 COST,
+                /**
+                 * An enum member indicating that [Category] was instantiated with an unknown value.
+                 */
                 _UNKNOWN,
             }
 
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
             fun value(): Value =
                 when (this) {
                     WHO -> Value.WHO
@@ -1162,6 +1194,15 @@ constructor(
                     else -> Value._UNKNOWN
                 }
 
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws M3terInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
             fun known(): Known =
                 when (this) {
                     WHO -> Known.WHO
@@ -1212,6 +1253,9 @@ constructor(
     class DerivedField
     @JsonCreator
     private constructor(
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        private val calculation: JsonField<String> = JsonMissing.of(),
         @JsonProperty("category")
         @ExcludeMissing
         private val category: JsonField<Category> = JsonMissing.of(),
@@ -1227,6 +1271,13 @@ constructor(
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        /**
+         * The calculation used to transform the value of submitted `dataFields` in usage data.
+         * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+         * _(Example: datafieldms datafieldgb)_
+         */
+        fun calculation(): String = calculation.getRequired("calculation")
 
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         fun category(): Category = category.getRequired("category")
@@ -1247,6 +1298,15 @@ constructor(
          * (UCUM). Required only for numeric field categories.
          */
         fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+
+        /**
+         * The calculation used to transform the value of submitted `dataFields` in usage data.
+         * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+         * _(Example: datafieldms datafieldgb)_
+         */
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        fun _calculation(): JsonField<String> = calculation
 
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         @JsonProperty("category") @ExcludeMissing fun _category(): JsonField<Category> = category
@@ -1279,6 +1339,7 @@ constructor(
                 return@apply
             }
 
+            calculation()
             category()
             code()
             name()
@@ -1293,8 +1354,10 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [DerivedField]. */
+        class Builder internal constructor() {
 
+            private var calculation: JsonField<String>? = null
             private var category: JsonField<Category>? = null
             private var code: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -1303,11 +1366,28 @@ constructor(
 
             @JvmSynthetic
             internal fun from(derivedField: DerivedField) = apply {
+                calculation = derivedField.calculation
                 category = derivedField.category
                 code = derivedField.code
                 name = derivedField.name
                 unit = derivedField.unit
                 additionalProperties = derivedField.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The calculation used to transform the value of submitted `dataFields` in usage data.
+             * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+             * _(Example: datafieldms datafieldgb)_
+             */
+            fun calculation(calculation: String) = calculation(JsonField.of(calculation))
+
+            /**
+             * The calculation used to transform the value of submitted `dataFields` in usage data.
+             * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
+             * _(Example: datafieldms datafieldgb)_
+             */
+            fun calculation(calculation: JsonField<String>) = apply {
+                this.calculation = calculation
             }
 
             /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
@@ -1371,6 +1451,7 @@ constructor(
 
             fun build(): DerivedField =
                 DerivedField(
+                    checkRequired("calculation", calculation),
                     checkRequired("category", category),
                     checkRequired("code", code),
                     checkRequired("name", name),
@@ -1386,6 +1467,14 @@ constructor(
             private val value: JsonField<String>,
         ) : Enum {
 
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
             companion object {
@@ -1409,6 +1498,7 @@ constructor(
                 @JvmStatic fun of(value: String) = Category(JsonField.of(value))
             }
 
+            /** An enum containing [Category]'s known values. */
             enum class Known {
                 WHO,
                 WHERE,
@@ -1420,6 +1510,15 @@ constructor(
                 COST,
             }
 
+            /**
+             * An enum containing [Category]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Category] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
             enum class Value {
                 WHO,
                 WHERE,
@@ -1429,9 +1528,19 @@ constructor(
                 MEASURE,
                 INCOME,
                 COST,
+                /**
+                 * An enum member indicating that [Category] was instantiated with an unknown value.
+                 */
                 _UNKNOWN,
             }
 
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
             fun value(): Value =
                 when (this) {
                     WHO -> Value.WHO
@@ -1445,6 +1554,15 @@ constructor(
                     else -> Value._UNKNOWN
                 }
 
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws M3terInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
             fun known(): Known =
                 when (this) {
                     WHO -> Known.WHO
@@ -1478,17 +1596,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DerivedField && category == other.category && code == other.code && name == other.name && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is DerivedField && calculation == other.calculation && category == other.category && code == other.code && name == other.name && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(category, code, name, unit, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(calculation, category, code, name, unit, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "DerivedField{category=$category, code=$code, name=$name, unit=$unit, additionalProperties=$additionalProperties}"
+            "DerivedField{calculation=$calculation, category=$category, code=$code, name=$name, unit=$unit, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1532,7 +1650,8 @@ constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        class Builder {
+        /** A builder for [CustomFields]. */
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

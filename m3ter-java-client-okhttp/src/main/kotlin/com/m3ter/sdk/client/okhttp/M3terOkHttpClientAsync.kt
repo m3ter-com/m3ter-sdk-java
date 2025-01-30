@@ -22,7 +22,8 @@ class M3terOkHttpClientAsync private constructor() {
         @JvmStatic fun fromEnv(): M3terClientAsync = builder().fromEnv().build()
     }
 
-    class Builder {
+    /** A builder for [M3terOkHttpClientAsync]. */
+    class Builder internal constructor() {
 
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()
         private var baseUrl: String = ClientOptions.PRODUCTION_URL

@@ -24,7 +24,7 @@ class ProductCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             ProductCreateParams.builder()
                 .orgId("orgId")
@@ -37,7 +37,7 @@ class ProductCreateParamsTest {
                 )
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
@@ -51,10 +51,10 @@ class ProductCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             ProductCreateParams.builder().orgId("orgId").code("JS!?Q0]r] ]\$]").name("x").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")

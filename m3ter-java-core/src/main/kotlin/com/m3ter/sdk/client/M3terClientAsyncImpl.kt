@@ -17,8 +17,7 @@ import com.m3ter.sdk.services.async.MeterServiceAsyncImpl
 import com.m3ter.sdk.services.async.ProductServiceAsync
 import com.m3ter.sdk.services.async.ProductServiceAsyncImpl
 
-class M3terClientAsyncImpl
-constructor(
+class M3terClientAsyncImpl(
     private val clientOptions: ClientOptions,
 ) : M3terClientAsync {
 
@@ -70,4 +69,6 @@ constructor(
     override fun meters(): MeterServiceAsync = meters
 
     override fun products(): ProductServiceAsync = products
+
+    override fun close() = clientOptions.httpClient.close()
 }

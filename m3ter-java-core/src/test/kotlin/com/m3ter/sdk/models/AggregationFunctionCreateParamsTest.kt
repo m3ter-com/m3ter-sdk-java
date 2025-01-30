@@ -15,7 +15,7 @@ class AggregationFunctionCreateParamsTest {
             .aggregation(AggregationCreateParams.Aggregation.SUM)
             .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .name("x")
-            .quantityPerUnit(0.0)
+            .quantityPerUnit(1.0)
             .rounding(AggregationCreateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
@@ -37,14 +37,14 @@ class AggregationFunctionCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AggregationCreateParams.builder()
                 .orgId("orgId")
                 .aggregation(AggregationCreateParams.Aggregation.SUM)
                 .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(AggregationCreateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
@@ -63,12 +63,12 @@ class AggregationFunctionCreateParamsTest {
                 )
                 .version(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
-        assertThat(body.quantityPerUnit()).isEqualTo(0.0)
+        assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(AggregationCreateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
@@ -93,24 +93,24 @@ class AggregationFunctionCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AggregationCreateParams.builder()
                 .orgId("orgId")
                 .aggregation(AggregationCreateParams.Aggregation.SUM)
                 .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(AggregationCreateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
-        assertThat(body.quantityPerUnit()).isEqualTo(0.0)
+        assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(AggregationCreateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
@@ -124,7 +124,7 @@ class AggregationFunctionCreateParamsTest {
                 .aggregation(AggregationCreateParams.Aggregation.SUM)
                 .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .name("x")
-                .quantityPerUnit(0.0)
+                .quantityPerUnit(1.0)
                 .rounding(AggregationCreateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")

@@ -22,7 +22,7 @@ class MeterListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             MeterListParams.builder()
                 .orgId("orgId")
@@ -38,14 +38,14 @@ class MeterListParamsTest {
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
         expected.put("productId", JsonValue.from(mapOf<String, Any>()).toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = MeterListParams.builder().orgId("orgId").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
