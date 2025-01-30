@@ -41,7 +41,7 @@ private constructor(
     fun expiresIn(): Long = expiresIn.getRequired("expires_in")
 
     /** Not used. */
-    fun scope(): String = scope.getRequired("scope")
+    fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
 
     /** The token type, which in this case is "bearer". */
     fun tokenType(): Optional<String> = Optional.ofNullable(tokenType.getNullable("token_type"))
@@ -90,7 +90,7 @@ private constructor(
 
         private var accessToken: JsonField<String>? = null
         private var expiresIn: JsonField<Long>? = null
-        private var scope: JsonField<String>? = null
+        private var scope: JsonField<String> = JsonMissing.of()
         private var tokenType: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -153,7 +153,7 @@ private constructor(
             AuthenticationGetBearerTokenResponse(
                 checkRequired("accessToken", accessToken),
                 checkRequired("expiresIn", expiresIn),
-                checkRequired("scope", scope),
+                scope,
                 tokenType,
                 additionalProperties.toImmutable(),
             )

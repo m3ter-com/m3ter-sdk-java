@@ -12,7 +12,6 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
@@ -25,9 +24,6 @@ class Aggregation
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("aggregation")
     @ExcludeMissing
     private val aggregation: JsonField<InnerAggregation> = JsonMissing.of(),
@@ -70,19 +66,14 @@ private constructor(
     @ExcludeMissing
     private val targetField: JsonField<String> = JsonMissing.of(),
     @JsonProperty("unit") @ExcludeMissing private val unit: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** The UUID of the entity. */
-    fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    fun version(): Long = version.getRequired("version")
+    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -95,10 +86,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -170,7 +163,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     fun rounding(): Optional<Rounding> = Optional.ofNullable(rounding.getNullable("rounding"))
 
@@ -209,16 +202,16 @@ private constructor(
      */
     fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
-    /** The UUID of the entity. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
     /**
      * The version number:
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+    /** The UUID of the entity. */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -231,10 +224,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -313,7 +308,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     @JsonProperty("rounding") @ExcludeMissing fun _rounding(): JsonField<Rounding> = rounding
 
@@ -352,6 +347,14 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -364,7 +367,6 @@ private constructor(
         }
 
         id()
-        version()
         aggregation()
         code()
         createdBy()
@@ -381,6 +383,7 @@ private constructor(
         segments().ifPresent { it.forEach { it.validate() } }
         targetField()
         unit()
+        version()
         validated = true
     }
 
@@ -394,8 +397,7 @@ private constructor(
     /** A builder for [Aggregation]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
+        private var id: JsonField<String> = JsonMissing.of()
         private var aggregation: JsonField<InnerAggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -412,12 +414,12 @@ private constructor(
         private var segments: JsonField<MutableList<Segment>>? = null
         private var targetField: JsonField<String> = JsonMissing.of()
         private var unit: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(aggregation: Aggregation) = apply {
             id = aggregation.id
-            version = aggregation.version
             this.aggregation = aggregation.aggregation
             code = aggregation.code
             createdBy = aggregation.createdBy
@@ -434,6 +436,7 @@ private constructor(
             segments = aggregation.segments.map { it.toMutableList() }
             targetField = aggregation.targetField
             unit = aggregation.unit
+            version = aggregation.version
             additionalProperties = aggregation.additionalProperties.toMutableMap()
         }
 
@@ -442,22 +445,6 @@ private constructor(
 
         /** The UUID of the entity. */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -471,10 +458,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -494,10 +483,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -621,7 +612,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: Rounding) = rounding(JsonField.of(rounding))
 
@@ -637,7 +628,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
@@ -759,6 +750,22 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -780,8 +787,7 @@ private constructor(
 
         fun build(): Aggregation =
             Aggregation(
-                checkRequired("id", id),
-                checkRequired("version", version),
+                id,
                 aggregation,
                 code,
                 createdBy,
@@ -798,6 +804,7 @@ private constructor(
                 (segments ?: JsonMissing.of()).map { it.toImmutable() },
                 targetField,
                 unit,
+                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -813,10 +820,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -1036,7 +1045,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     class Rounding
     @JsonCreator
@@ -1224,15 +1233,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Aggregation && id == other.id && version == other.version && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Aggregation && id == other.id && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, aggregation, code, createdBy, customFields, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, aggregation, code, createdBy, customFields, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Aggregation{id=$id, version=$version, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
+        "Aggregation{id=$id, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, version=$version, additionalProperties=$additionalProperties}"
 }

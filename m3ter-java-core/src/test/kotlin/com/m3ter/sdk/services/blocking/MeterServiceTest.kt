@@ -136,9 +136,9 @@ class MeterServiceTest {
                 .token("My Token")
                 .build()
         val meterService = client.meters()
-        val paginatedMeterResponse =
+        val paginatedDataMeterResponse =
             meterService.list(MeterListParams.builder().orgId("orgId").build())
-        println(paginatedMeterResponse)
-        paginatedMeterResponse.data().forEach { it.validate() }
+        println(paginatedDataMeterResponse)
+        paginatedDataMeterResponse.data().forEach { it.validate() }
     }
 }

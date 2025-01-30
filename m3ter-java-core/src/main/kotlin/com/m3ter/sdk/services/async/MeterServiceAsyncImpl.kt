@@ -158,7 +158,7 @@ internal constructor(
         jsonHandler<MeterListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
-    /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+    /** Retrieve a list of Meter entities */
     override fun list(
         params: MeterListParams,
         requestOptions: RequestOptions

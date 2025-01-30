@@ -141,7 +141,7 @@ internal constructor(
     private val listHandler: Handler<MeterListPage.Response> =
         jsonHandler<MeterListPage.Response>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+    /** Retrieve a list of Meter entities */
     override fun list(params: MeterListParams, requestOptions: RequestOptions): MeterListPage {
         val request =
             HttpRequest.builder()
