@@ -126,9 +126,9 @@ class AggregationServiceTest {
                 .token("My Token")
                 .build()
         val aggregationService = client.aggregations()
-        val paginatedAggregationResponse =
+        val paginatedDataAggregationResponse =
             aggregationService.list(AggregationListParams.builder().orgId("orgId").build())
-        println(paginatedAggregationResponse)
-        paginatedAggregationResponse.data().forEach { it.validate() }
+        println(paginatedDataAggregationResponse)
+        paginatedDataAggregationResponse.data().forEach { it.validate() }
     }
 }

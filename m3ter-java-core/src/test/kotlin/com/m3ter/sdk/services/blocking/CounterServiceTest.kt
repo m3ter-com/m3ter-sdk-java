@@ -91,9 +91,9 @@ class CounterServiceTest {
                 .token("My Token")
                 .build()
         val counterService = client.counters()
-        val paginatedCounterResponse =
+        val paginatedDataCounterResponse =
             counterService.list(CounterListParams.builder().orgId("orgId").build())
-        println(paginatedCounterResponse)
-        paginatedCounterResponse.data().forEach { it.validate() }
+        println(paginatedDataCounterResponse)
+        paginatedDataCounterResponse.data().forEach { it.validate() }
     }
 }

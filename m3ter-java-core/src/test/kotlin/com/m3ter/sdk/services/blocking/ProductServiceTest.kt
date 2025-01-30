@@ -98,9 +98,9 @@ class ProductServiceTest {
                 .token("My Token")
                 .build()
         val productService = client.products()
-        val paginatedProductResponse =
+        val paginatedDataProductResponse =
             productService.list(ProductListParams.builder().orgId("orgId").build())
-        println(paginatedProductResponse)
-        paginatedProductResponse.data().forEach { it.validate() }
+        println(paginatedDataProductResponse)
+        paginatedDataProductResponse.data().forEach { it.validate() }
     }
 }
