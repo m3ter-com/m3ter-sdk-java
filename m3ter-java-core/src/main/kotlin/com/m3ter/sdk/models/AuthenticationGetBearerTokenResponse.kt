@@ -41,7 +41,7 @@ private constructor(
     fun expiresIn(): Long = expiresIn.getRequired("expires_in")
 
     /** Not used. */
-    fun scope(): String = scope.getRequired("scope")
+    fun scope(): String? = scope.getNullable("scope")
 
     /** The token type, which in this case is "bearer". */
     fun tokenType(): Optional<String> = Optional.ofNullable(tokenType.getNullable("token_type"))
