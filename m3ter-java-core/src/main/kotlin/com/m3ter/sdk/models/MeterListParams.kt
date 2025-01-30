@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
@@ -12,7 +11,7 @@ import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 
-/** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+/** Retrieve a list of Meter entities */
 class MeterListParams
 private constructor(
     private val orgId: String,
@@ -20,29 +19,27 @@ private constructor(
     private val ids: List<String>?,
     private val nextToken: String?,
     private val pageSize: Long?,
-    private val productId: List<JsonValue>?,
+    private val productId: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun orgId(): String = orgId
 
-    /**
-     * List of Meter codes to retrieve. These are the unique short codes that identify each Meter.
-     */
+    /** list of codes to retrieve */
     fun codes(): Optional<List<String>> = Optional.ofNullable(codes)
 
-    /** List of Meter IDs to retrieve. */
+    /** list of ids to retrieve */
     fun ids(): Optional<List<String>> = Optional.ofNullable(ids)
 
-    /** `nextToken` for multi-page retrievals. */
+    /** nextToken for multi page retrievals */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
-    /** Number of Meters to retrieve per page. */
+    /** Number of Meters to retrieve per page */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
 
-    /** The UUIDs of the Products to retrieve Meters for. */
-    fun productId(): Optional<List<JsonValue>> = Optional.ofNullable(productId)
+    /** The UUIDs of the products to retrieve meters for */
+    fun productId(): Optional<List<String>> = Optional.ofNullable(productId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -86,7 +83,7 @@ private constructor(
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
         private var pageSize: Long? = null
-        private var productId: MutableList<JsonValue>? = null
+        private var productId: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -104,59 +101,50 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
-        /**
-         * List of Meter codes to retrieve. These are the unique short codes that identify each
-         * Meter.
-         */
+        /** list of codes to retrieve */
         fun codes(codes: List<String>?) = apply { this.codes = codes?.toMutableList() }
 
-        /**
-         * List of Meter codes to retrieve. These are the unique short codes that identify each
-         * Meter.
-         */
+        /** list of codes to retrieve */
         fun codes(codes: Optional<List<String>>) = codes(codes.orElse(null))
 
-        /**
-         * List of Meter codes to retrieve. These are the unique short codes that identify each
-         * Meter.
-         */
+        /** list of codes to retrieve */
         fun addCode(code: String) = apply { codes = (codes ?: mutableListOf()).apply { add(code) } }
 
-        /** List of Meter IDs to retrieve. */
+        /** list of ids to retrieve */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** List of Meter IDs to retrieve. */
+        /** list of ids to retrieve */
         fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
 
-        /** List of Meter IDs to retrieve. */
+        /** list of ids to retrieve */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
-        /** `nextToken` for multi-page retrievals. */
+        /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** `nextToken` for multi-page retrievals. */
+        /** nextToken for multi page retrievals */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
 
-        /** Number of Meters to retrieve per page. */
+        /** Number of Meters to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of Meters to retrieve per page. */
+        /** Number of Meters to retrieve per page */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of Meters to retrieve per page. */
+        /** Number of Meters to retrieve per page */
         @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
 
-        /** The UUIDs of the Products to retrieve Meters for. */
-        fun productId(productId: List<JsonValue>?) = apply {
+        /** The UUIDs of the products to retrieve meters for */
+        fun productId(productId: List<String>?) = apply {
             this.productId = productId?.toMutableList()
         }
 
-        /** The UUIDs of the Products to retrieve Meters for. */
-        fun productId(productId: Optional<List<JsonValue>>) = productId(productId.orElse(null))
+        /** The UUIDs of the products to retrieve meters for */
+        fun productId(productId: Optional<List<String>>) = productId(productId.orElse(null))
 
-        /** The UUIDs of the Products to retrieve Meters for. */
-        fun addProductId(productId: JsonValue) = apply {
+        /** The UUIDs of the products to retrieve meters for */
+        fun addProductId(productId: String) = apply {
             this.productId = (this.productId ?: mutableListOf()).apply { add(productId) }
         }
 

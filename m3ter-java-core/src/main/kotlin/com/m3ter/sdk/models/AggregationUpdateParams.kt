@@ -53,10 +53,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -96,7 +98,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     fun rounding(): Rounding = body.rounding()
 
@@ -172,10 +174,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -215,7 +219,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     fun _rounding(): JsonField<Rounding> = body._rounding()
 
@@ -359,10 +363,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -402,7 +408,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(): Rounding = rounding.getRequired("rounding")
 
@@ -484,10 +490,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -531,7 +539,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         @JsonProperty("rounding") @ExcludeMissing fun _rounding(): JsonField<Rounding> = rounding
 
@@ -689,10 +697,12 @@ private constructor(
              *   **Cost** `targetField`.
              * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
              *   **Cost** `targetField`.
-             * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-             *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
+             * - **COUNT**. Counts the number of values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
+             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
+             *   **Income**, or **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of
+             *   usage data measurement submissions. If using this method, please ensure _distinct_
+             *   `ts` values are used for usage data measurment submissions.
              * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
              * - **UNIQUE**. Uses unique values and returns a count of the number of unique values.
@@ -712,10 +722,12 @@ private constructor(
              *   **Cost** `targetField`.
              * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
              *   **Cost** `targetField`.
-             * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-             *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
+             * - **COUNT**. Counts the number of values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
+             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
+             *   **Income**, or **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of
+             *   usage data measurement submissions. If using this method, please ensure _distinct_
+             *   `ts` values are used for usage data measurment submissions.
              * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
              * - **UNIQUE**. Uses unique values and returns a count of the number of unique values.
@@ -784,7 +796,7 @@ private constructor(
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
              *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
              *
-             * Enum: “UP” “DOWN” “NEAREST” “NONE”
+             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
             fun rounding(rounding: Rounding) = rounding(JsonField.of(rounding))
 
@@ -802,7 +814,7 @@ private constructor(
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
              *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
              *
-             * Enum: “UP” “DOWN” “NEAREST” “NONE”
+             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
             fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
@@ -1089,10 +1101,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -1112,10 +1126,12 @@ private constructor(
          *   **Cost** `targetField`.
          * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**,
-         *   **Where**, **Measure**, **Income**, **Cost** or **Other** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
+         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
+         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   used for usage data measurment submissions.
          * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
@@ -1181,7 +1197,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: Rounding) = apply { body.rounding(rounding) }
 
@@ -1197,7 +1213,7 @@ private constructor(
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
-         * Enum: “UP” “DOWN” “NEAREST” “NONE”
+         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
         fun rounding(rounding: JsonField<Rounding>) = apply { body.rounding(rounding) }
 
@@ -1499,10 +1515,12 @@ private constructor(
      *   `targetField`.
      * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Who**, **What**, **Where**,
-     *   **Measure**, **Income**, **Cost** or **Other** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
+     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
+     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   data measurment submissions.
      * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
@@ -1643,7 +1661,7 @@ private constructor(
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
-     * Enum: “UP” “DOWN” “NEAREST” “NONE”
+     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
     class Rounding
     @JsonCreator

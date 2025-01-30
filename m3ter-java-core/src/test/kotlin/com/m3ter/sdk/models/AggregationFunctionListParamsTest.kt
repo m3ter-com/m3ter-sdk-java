@@ -2,12 +2,11 @@
 
 package com.m3ter.sdk.models
 
-import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationFunctionListParamsTest {
+class AggregationListParamsTest {
 
     @Test
     fun createAggregationListParams() {
@@ -17,7 +16,7 @@ class AggregationFunctionListParamsTest {
             .addId("string")
             .nextToken("nextToken")
             .pageSize(1L)
-            .addProductId(JsonValue.from(mapOf<String, Any>()))
+            .addProductId("string")
             .build()
     }
 
@@ -30,14 +29,14 @@ class AggregationFunctionListParamsTest {
                 .addId("string")
                 .nextToken("nextToken")
                 .pageSize(1L)
-                .addProductId(JsonValue.from(mapOf<String, Any>()))
+                .addProductId("string")
                 .build()
         val expected = QueryParams.builder()
         expected.put("codes", "string")
         expected.put("ids", "string")
         expected.put("nextToken", "nextToken")
         expected.put("pageSize", "1")
-        expected.put("productId", JsonValue.from(mapOf<String, Any>()).toString())
+        expected.put("productId", "string")
         assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 

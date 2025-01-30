@@ -19,7 +19,7 @@ import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
-/** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+/** Retrieve a list of Meter entities */
 class MeterListPage
 private constructor(
     private val metersService: MeterService,

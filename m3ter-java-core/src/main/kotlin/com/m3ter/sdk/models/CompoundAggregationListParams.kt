@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
@@ -27,7 +26,7 @@ private constructor(
     private val ids: List<String>?,
     private val nextToken: String?,
     private val pageSize: Long?,
-    private val productId: List<JsonValue>?,
+    private val productId: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -58,7 +57,7 @@ private constructor(
      * An optional parameter to filter the CompoundAggregations based on specific Product unique
      * identifiers (UUIDs).
      */
-    fun productId(): Optional<List<JsonValue>> = Optional.ofNullable(productId)
+    fun productId(): Optional<List<String>> = Optional.ofNullable(productId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -102,7 +101,7 @@ private constructor(
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
         private var pageSize: Long? = null
-        private var productId: MutableList<JsonValue>? = null
+        private var productId: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -182,7 +181,7 @@ private constructor(
          * An optional parameter to filter the CompoundAggregations based on specific Product unique
          * identifiers (UUIDs).
          */
-        fun productId(productId: List<JsonValue>?) = apply {
+        fun productId(productId: List<String>?) = apply {
             this.productId = productId?.toMutableList()
         }
 
@@ -190,13 +189,13 @@ private constructor(
          * An optional parameter to filter the CompoundAggregations based on specific Product unique
          * identifiers (UUIDs).
          */
-        fun productId(productId: Optional<List<JsonValue>>) = productId(productId.orElse(null))
+        fun productId(productId: Optional<List<String>>) = productId(productId.orElse(null))
 
         /**
          * An optional parameter to filter the CompoundAggregations based on specific Product unique
          * identifiers (UUIDs).
          */
-        fun addProductId(productId: JsonValue) = apply {
+        fun addProductId(productId: String) = apply {
             this.productId = (this.productId ?: mutableListOf()).apply { add(productId) }
         }
 

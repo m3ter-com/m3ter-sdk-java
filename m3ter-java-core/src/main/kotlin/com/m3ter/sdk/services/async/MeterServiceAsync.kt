@@ -69,7 +69,7 @@ interface MeterServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompletableFuture<Meter>
 
-    /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
+    /** Retrieve a list of Meter entities */
     @JvmOverloads
     fun list(
         params: MeterListParams,
