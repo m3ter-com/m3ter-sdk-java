@@ -14,6 +14,7 @@ class MeterTest {
         val meter =
             Meter.builder()
                 .id("id")
+                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -44,10 +45,10 @@ class MeterTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .productId("productId")
-                .version(0L)
                 .build()
         assertThat(meter).isNotNull
-        assertThat(meter.id()).contains("id")
+        assertThat(meter.id()).isEqualTo("id")
+        assertThat(meter.version()).isEqualTo(0L)
         assertThat(meter.code()).contains("code")
         assertThat(meter.createdBy()).contains("createdBy")
         assertThat(meter.customFields())
@@ -82,6 +83,5 @@ class MeterTest {
         assertThat(meter.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(meter.name()).contains("name")
         assertThat(meter.productId()).contains("productId")
-        assertThat(meter.version()).contains(0L)
     }
 }

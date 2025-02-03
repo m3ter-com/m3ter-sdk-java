@@ -19,7 +19,7 @@ class AggregationCreateParamsTest {
             .rounding(AggregationCreateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
-            .code("{1{}}_")
+            .code("example_code")
             .customFields(
                 AggregationCreateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -48,7 +48,7 @@ class AggregationCreateParamsTest {
                 .rounding(AggregationCreateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
-                .code("{1{}}_")
+                .code("example_code")
                 .customFields(
                     AggregationCreateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -72,7 +72,7 @@ class AggregationCreateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationCreateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 AggregationCreateParams.CustomFields.builder()
