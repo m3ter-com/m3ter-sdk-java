@@ -14,6 +14,7 @@ class ProductTest {
         val product =
             Product.builder()
                 .id("id")
+                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -25,10 +26,10 @@ class ProductTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
-                .version(0L)
                 .build()
         assertThat(product).isNotNull
-        assertThat(product.id()).contains("id")
+        assertThat(product.id()).isEqualTo("id")
+        assertThat(product.version()).isEqualTo(0L)
         assertThat(product.code()).contains("code")
         assertThat(product.createdBy()).contains("createdBy")
         assertThat(product.customFields())
@@ -42,6 +43,5 @@ class ProductTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(product.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(product.name()).contains("name")
-        assertThat(product.version()).contains(0L)
     }
 }

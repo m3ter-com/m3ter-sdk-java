@@ -67,6 +67,7 @@ class ServiceParamsTest {
                     listOf(
                         Product.builder()
                             .id("id")
+                            .version(0L)
                             .code("code")
                             .createdBy("createdBy")
                             .customFields(
@@ -78,7 +79,6 @@ class ServiceParamsTest {
                             .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .lastModifiedBy("lastModifiedBy")
                             .name("name")
-                            .version(0L)
                             .build()
                     )
                 )

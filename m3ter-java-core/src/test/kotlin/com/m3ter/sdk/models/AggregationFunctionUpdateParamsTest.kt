@@ -20,7 +20,7 @@ class AggregationFunctionUpdateParamsTest {
             .rounding(AggregationUpdateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
-            .code("{1{}}_")
+            .code("example_code")
             .customFields(
                 AggregationUpdateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -50,7 +50,7 @@ class AggregationFunctionUpdateParamsTest {
                 .rounding(AggregationUpdateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
-                .code("{1{}}_")
+                .code("example_code")
                 .customFields(
                     AggregationUpdateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -74,7 +74,7 @@ class AggregationFunctionUpdateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationUpdateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 AggregationUpdateParams.CustomFields.builder()

@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.time.OffsetDateTime
@@ -22,6 +23,9 @@ class Product
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
@@ -39,14 +43,19 @@ private constructor(
     @ExcludeMissing
     private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
     @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** The UUID of the entity. */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     */
+    fun version(): Long = version.getRequired("version")
 
     /**
      * A unique short code to identify the Product. It should not contain control chracters or
@@ -87,16 +96,16 @@ private constructor(
     /** Descriptive name for the Product providing context and information. */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
+    /** The UUID of the entity. */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
     /**
      * The version number:
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-    /** The UUID of the entity. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * A unique short code to identify the Product. It should not contain control chracters or
@@ -141,14 +150,6 @@ private constructor(
     /** Descriptive name for the Product providing context and information. */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -161,6 +162,7 @@ private constructor(
         }
 
         id()
+        version()
         code()
         createdBy()
         customFields().ifPresent { it.validate() }
@@ -168,7 +170,6 @@ private constructor(
         dtLastModified()
         lastModifiedBy()
         name()
-        version()
         validated = true
     }
 
@@ -182,7 +183,8 @@ private constructor(
     /** A builder for [Product]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var version: JsonField<Long>? = null
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -190,12 +192,12 @@ private constructor(
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
-        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(product: Product) = apply {
             id = product.id
+            version = product.version
             code = product.code
             createdBy = product.createdBy
             customFields = product.customFields
@@ -203,7 +205,6 @@ private constructor(
             dtLastModified = product.dtLastModified
             lastModifiedBy = product.lastModifiedBy
             name = product.name
-            version = product.version
             additionalProperties = product.additionalProperties.toMutableMap()
         }
 
@@ -212,6 +213,22 @@ private constructor(
 
         /** The UUID of the entity. */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * A unique short code to identify the Product. It should not contain control chracters or
@@ -290,22 +307,6 @@ private constructor(
         /** Descriptive name for the Product providing context and information. */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -327,7 +328,8 @@ private constructor(
 
         fun build(): Product =
             Product(
-                id,
+                checkRequired("id", id),
+                checkRequired("version", version),
                 code,
                 createdBy,
                 customFields,
@@ -335,7 +337,6 @@ private constructor(
                 dtLastModified,
                 lastModifiedBy,
                 name,
-                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -435,15 +436,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Product && id == other.id && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Product && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, customFields, dtCreated, dtLastModified, lastModifiedBy, name, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, customFields, dtCreated, dtLastModified, lastModifiedBy, name, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Product{id=$id, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, version=$version, additionalProperties=$additionalProperties}"
+        "Product{id=$id, version=$version, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, additionalProperties=$additionalProperties}"
 }

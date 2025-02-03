@@ -25,6 +25,9 @@ class Meter
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
@@ -54,14 +57,19 @@ private constructor(
     @JsonProperty("productId")
     @ExcludeMissing
     private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** The UUID of the entity. */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     */
+    fun version(): Long = version.getRequired("version")
 
     /** Code of the Meter - unique short code used to identify the Meter. */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
@@ -121,16 +129,16 @@ private constructor(
     /** UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global. */
     fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
+    /** The UUID of the entity. */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
     /**
      * The version number:
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-    /** The UUID of the entity. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /** Code of the Meter - unique short code used to identify the Meter. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -196,14 +204,6 @@ private constructor(
     /** UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global. */
     @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -216,6 +216,7 @@ private constructor(
         }
 
         id()
+        version()
         code()
         createdBy()
         customFields().ifPresent { it.validate() }
@@ -227,7 +228,6 @@ private constructor(
         lastModifiedBy()
         name()
         productId()
-        version()
         validated = true
     }
 
@@ -241,7 +241,8 @@ private constructor(
     /** A builder for [Meter]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var version: JsonField<Long>? = null
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -253,12 +254,12 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var productId: JsonField<String> = JsonMissing.of()
-        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(meter: Meter) = apply {
             id = meter.id
+            version = meter.version
             code = meter.code
             createdBy = meter.createdBy
             customFields = meter.customFields
@@ -270,7 +271,6 @@ private constructor(
             lastModifiedBy = meter.lastModifiedBy
             name = meter.name
             productId = meter.productId
-            version = meter.version
             additionalProperties = meter.additionalProperties.toMutableMap()
         }
 
@@ -279,6 +279,22 @@ private constructor(
 
         /** The UUID of the entity. */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Code of the Meter - unique short code used to identify the Meter. */
         fun code(code: String) = code(JsonField.of(code))
@@ -436,22 +452,6 @@ private constructor(
          */
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -473,7 +473,8 @@ private constructor(
 
         fun build(): Meter =
             Meter(
-                id,
+                checkRequired("id", id),
+                checkRequired("version", version),
                 code,
                 createdBy,
                 customFields,
@@ -485,7 +486,6 @@ private constructor(
                 lastModifiedBy,
                 name,
                 productId,
-                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -1266,15 +1266,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Meter && id == other.id && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dataFields == other.dataFields && derivedFields == other.derivedFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && groupId == other.groupId && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Meter && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dataFields == other.dataFields && derivedFields == other.derivedFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && groupId == other.groupId && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, customFields, dataFields, derivedFields, dtCreated, dtLastModified, groupId, lastModifiedBy, name, productId, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, customFields, dataFields, derivedFields, dtCreated, dtLastModified, groupId, lastModifiedBy, name, productId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Meter{id=$id, code=$code, createdBy=$createdBy, customFields=$customFields, dataFields=$dataFields, derivedFields=$derivedFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, groupId=$groupId, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
+        "Meter{id=$id, version=$version, code=$code, createdBy=$createdBy, customFields=$customFields, dataFields=$dataFields, derivedFields=$derivedFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, groupId=$groupId, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, additionalProperties=$additionalProperties}"
 }

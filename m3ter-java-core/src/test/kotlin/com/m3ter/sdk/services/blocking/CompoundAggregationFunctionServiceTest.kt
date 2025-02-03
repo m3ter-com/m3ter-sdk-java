@@ -34,7 +34,7 @@ class CompoundAggregationFunctionServiceTest {
                     .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationCreateParams.Rounding.UP)
                     .unit("x")
-                    .code("x")
+                    .code("example_code")
                     .customFields(
                         CompoundAggregationCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -87,7 +87,7 @@ class CompoundAggregationFunctionServiceTest {
                     .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                     .unit("x")
-                    .code("x")
+                    .code("example_code")
                     .customFields(
                         CompoundAggregationUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))

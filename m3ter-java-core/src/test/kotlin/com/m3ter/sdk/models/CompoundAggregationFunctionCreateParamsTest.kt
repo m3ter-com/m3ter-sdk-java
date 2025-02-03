@@ -17,7 +17,7 @@ class CompoundAggregationFunctionCreateParamsTest {
             .quantityPerUnit(1.0)
             .rounding(CompoundAggregationCreateParams.Rounding.UP)
             .unit("x")
-            .code("{1{}}_")
+            .code("example_code")
             .customFields(
                 CompoundAggregationCreateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -39,7 +39,7 @@ class CompoundAggregationFunctionCreateParamsTest {
                 .quantityPerUnit(1.0)
                 .rounding(CompoundAggregationCreateParams.Rounding.UP)
                 .unit("x")
-                .code("{1{}}_")
+                .code("example_code")
                 .customFields(
                     CompoundAggregationCreateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -56,7 +56,7 @@ class CompoundAggregationFunctionCreateParamsTest {
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(CompoundAggregationCreateParams.Rounding.UP)
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 CompoundAggregationCreateParams.CustomFields.builder()
