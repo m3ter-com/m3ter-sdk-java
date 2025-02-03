@@ -14,6 +14,7 @@ class AggregationTest {
         val aggregation =
             Aggregation.builder()
                 .id("id")
+                .version(0L)
                 .aggregation(Aggregation.InnerAggregation.SUM)
                 .code("code")
                 .createdBy("createdBy")
@@ -38,10 +39,10 @@ class AggregationTest {
                 )
                 .targetField("targetField")
                 .unit("unit")
-                .version(0L)
                 .build()
         assertThat(aggregation).isNotNull
-        assertThat(aggregation.id()).contains("id")
+        assertThat(aggregation.id()).isEqualTo("id")
+        assertThat(aggregation.version()).isEqualTo(0L)
         assertThat(aggregation.aggregation()).contains(Aggregation.InnerAggregation.SUM)
         assertThat(aggregation.code()).contains("code")
         assertThat(aggregation.createdBy()).contains("createdBy")
@@ -70,6 +71,5 @@ class AggregationTest {
             )
         assertThat(aggregation.targetField()).contains("targetField")
         assertThat(aggregation.unit()).contains("unit")
-        assertThat(aggregation.version()).contains(0L)
     }
 }

@@ -36,7 +36,7 @@ class AggregationServiceTest {
                     .rounding(AggregationCreateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
-                    .code("{1{}}_")
+                    .code("example_code")
                     .customFields(
                         AggregationCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -96,7 +96,7 @@ class AggregationServiceTest {
                     .rounding(AggregationUpdateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
-                    .code("{1{}}_")
+                    .code("example_code")
                     .customFields(
                         AggregationUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
