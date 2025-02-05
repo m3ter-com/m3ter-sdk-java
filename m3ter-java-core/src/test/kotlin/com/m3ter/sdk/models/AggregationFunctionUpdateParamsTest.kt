@@ -23,7 +23,7 @@ class AggregationFunctionUpdateParamsTest {
             .code("example_code")
             .customFields(
                 AggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .defaultValue(0.0)
@@ -53,7 +53,7 @@ class AggregationFunctionUpdateParamsTest {
                 .code("example_code")
                 .customFields(
                     AggregationUpdateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .defaultValue(0.0)
@@ -78,7 +78,7 @@ class AggregationFunctionUpdateParamsTest {
         assertThat(body.customFields())
             .contains(
                 AggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.defaultValue()).contains(0.0)

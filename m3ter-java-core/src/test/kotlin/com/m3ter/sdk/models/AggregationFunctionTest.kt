@@ -20,7 +20,7 @@ class AggregationTest {
                 .createdBy("createdBy")
                 .customFields(
                     Aggregation.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .defaultValue(0.0)
@@ -49,7 +49,7 @@ class AggregationTest {
         assertThat(aggregation.customFields())
             .contains(
                 Aggregation.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(aggregation.defaultValue()).contains(0.0)

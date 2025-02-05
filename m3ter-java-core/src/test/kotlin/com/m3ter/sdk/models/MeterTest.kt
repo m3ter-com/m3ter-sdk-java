@@ -19,7 +19,7 @@ class MeterTest {
                 .createdBy("createdBy")
                 .customFields(
                     Meter.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .addDataField(
@@ -54,7 +54,7 @@ class MeterTest {
         assertThat(meter.customFields())
             .contains(
                 Meter.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(meter.dataFields().get())

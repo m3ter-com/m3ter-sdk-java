@@ -17,7 +17,7 @@ class ProductUpdateParamsTest {
             .name("x")
             .customFields(
                 ProductUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .version(0L)
@@ -34,7 +34,7 @@ class ProductUpdateParamsTest {
                 .name("x")
                 .customFields(
                     ProductUpdateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .version(0L)
@@ -46,7 +46,7 @@ class ProductUpdateParamsTest {
         assertThat(body.customFields())
             .contains(
                 ProductUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.version()).contains(0L)

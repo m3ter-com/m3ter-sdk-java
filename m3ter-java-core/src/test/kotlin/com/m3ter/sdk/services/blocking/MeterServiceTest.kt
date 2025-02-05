@@ -50,7 +50,7 @@ class MeterServiceTest {
                     .name("x")
                     .customFields(
                         MeterCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -114,7 +114,7 @@ class MeterServiceTest {
                     .name("x")
                     .customFields(
                         MeterUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

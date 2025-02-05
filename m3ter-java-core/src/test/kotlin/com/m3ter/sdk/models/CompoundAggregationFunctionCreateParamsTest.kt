@@ -20,7 +20,7 @@ class CompoundAggregationFunctionCreateParamsTest {
             .code("example_code")
             .customFields(
                 CompoundAggregationCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .evaluateNullAggregations(true)
@@ -42,7 +42,7 @@ class CompoundAggregationFunctionCreateParamsTest {
                 .code("example_code")
                 .customFields(
                     CompoundAggregationCreateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .evaluateNullAggregations(true)
@@ -60,7 +60,7 @@ class CompoundAggregationFunctionCreateParamsTest {
         assertThat(body.customFields())
             .contains(
                 CompoundAggregationCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.evaluateNullAggregations()).contains(true)
