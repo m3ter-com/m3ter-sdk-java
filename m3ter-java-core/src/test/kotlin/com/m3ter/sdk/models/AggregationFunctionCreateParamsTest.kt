@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class AggregationFunctionCreateParamsTest {
 
     @Test
-    fun createAggregationCreateParams() {
+    fun create() {
         AggregationCreateParams.builder()
             .orgId("orgId")
             .aggregation(AggregationCreateParams.Aggregation.SUM)

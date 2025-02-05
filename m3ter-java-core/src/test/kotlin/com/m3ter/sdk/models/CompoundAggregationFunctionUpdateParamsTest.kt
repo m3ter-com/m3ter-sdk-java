@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CompoundAggregationFunctionUpdateParamsTest {
 
     @Test
-    fun createCompoundAggregationUpdateParams() {
+    fun create() {
         CompoundAggregationUpdateParams.builder()
             .orgId("orgId")
             .id("id")

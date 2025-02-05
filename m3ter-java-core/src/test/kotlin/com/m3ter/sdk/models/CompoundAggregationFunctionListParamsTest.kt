@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CompoundAggregationListParamsTest {
 
     @Test
-    fun createCompoundAggregationListParams() {
+    fun create() {
         CompoundAggregationListParams.builder()
             .orgId("orgId")
             .addCode("string")
