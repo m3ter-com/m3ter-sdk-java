@@ -33,7 +33,7 @@ class ProductServiceTest {
                     .name("x")
                     .customFields(
                         ProductCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .version(0L)
@@ -78,7 +78,7 @@ class ProductServiceTest {
                     .name("x")
                     .customFields(
                         ProductUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .version(0L)

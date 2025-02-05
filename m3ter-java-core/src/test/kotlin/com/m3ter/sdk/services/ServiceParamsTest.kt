@@ -72,7 +72,7 @@ class ServiceParamsTest {
                             .createdBy("createdBy")
                             .customFields(
                                 Product.CustomFields.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

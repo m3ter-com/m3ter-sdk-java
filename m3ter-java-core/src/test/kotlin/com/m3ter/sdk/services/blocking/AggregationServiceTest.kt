@@ -39,7 +39,7 @@ class AggregationServiceTest {
                     .code("example_code")
                     .customFields(
                         AggregationCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .defaultValue(0.0)
@@ -99,7 +99,7 @@ class AggregationServiceTest {
                     .code("example_code")
                     .customFields(
                         AggregationUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .defaultValue(0.0)

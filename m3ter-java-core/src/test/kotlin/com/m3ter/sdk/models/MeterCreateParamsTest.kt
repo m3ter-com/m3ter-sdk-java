@@ -33,7 +33,7 @@ class MeterCreateParamsTest {
             .name("x")
             .customFields(
                 MeterCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -68,7 +68,7 @@ class MeterCreateParamsTest {
                 .name("x")
                 .customFields(
                     MeterCreateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -105,7 +105,7 @@ class MeterCreateParamsTest {
         assertThat(body.customFields())
             .contains(
                 MeterCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.groupId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

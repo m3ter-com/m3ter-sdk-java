@@ -20,7 +20,7 @@ class CompoundAggregationTest {
                 .createdBy("createdBy")
                 .customFields(
                     CompoundAggregation.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -47,7 +47,7 @@ class CompoundAggregationTest {
         assertThat(compoundAggregation.customFields())
             .contains(
                 CompoundAggregation.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(compoundAggregation.dtCreated())
