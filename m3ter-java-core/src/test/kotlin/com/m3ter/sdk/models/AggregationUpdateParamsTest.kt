@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class AggregationUpdateParamsTest {
 
     @Test
-    fun createAggregationUpdateParams() {
+    fun create() {
         AggregationUpdateParams.builder()
             .orgId("orgId")
             .id("id")

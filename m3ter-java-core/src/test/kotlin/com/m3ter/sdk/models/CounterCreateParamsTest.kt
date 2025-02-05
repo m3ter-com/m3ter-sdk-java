@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CounterCreateParamsTest {
 
     @Test
-    fun createCounterCreateParams() {
+    fun create() {
         CounterCreateParams.builder()
             .orgId("orgId")
             .name("x")

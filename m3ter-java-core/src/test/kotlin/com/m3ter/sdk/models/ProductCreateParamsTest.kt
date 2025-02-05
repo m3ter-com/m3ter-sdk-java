@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class ProductCreateParamsTest {
 
     @Test
-    fun createProductCreateParams() {
+    fun create() {
         ProductCreateParams.builder()
             .orgId("orgId")
             .code("JS!?Q0]r] ]\$]")
