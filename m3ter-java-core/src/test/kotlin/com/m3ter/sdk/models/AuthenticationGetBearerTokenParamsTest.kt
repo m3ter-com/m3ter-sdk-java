@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AuthenticationGetBearerTokenParamsTest {
 
     @Test
-    fun createAuthenticationGetBearerTokenParams() {
+    fun create() {
         AuthenticationGetBearerTokenParams.builder()
             .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
             .scope("scope")

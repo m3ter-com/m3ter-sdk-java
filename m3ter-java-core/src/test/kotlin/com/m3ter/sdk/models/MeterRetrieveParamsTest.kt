@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class MeterRetrieveParamsTest {
 
     @Test
-    fun createMeterRetrieveParams() {
+    fun create() {
         MeterRetrieveParams.builder().orgId("orgId").id("id").build()
     }
 

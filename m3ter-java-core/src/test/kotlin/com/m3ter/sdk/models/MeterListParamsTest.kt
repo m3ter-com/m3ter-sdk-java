@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class MeterListParamsTest {
 
     @Test
-    fun createMeterListParams() {
+    fun create() {
         MeterListParams.builder()
             .orgId("orgId")
             .addCode("string")
