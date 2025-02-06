@@ -5,6 +5,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.models.CounterCreateParams
+import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListParams
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
@@ -95,5 +96,21 @@ class CounterServiceTest {
             counterService.list(CounterListParams.builder().orgId("orgId").build())
         println(paginatedDataCounterResponse)
         paginatedDataCounterResponse.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callDelete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .build()
+        val counterService = client.counters()
+        val counter =
+            counterService.delete(CounterDeleteParams.builder().orgId("orgId").id("id").build())
+        println(counter)
+        counter.validate()
     }
 }

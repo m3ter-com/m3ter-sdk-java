@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
+import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPage
 import com.m3ter.sdk.models.AggregationListParams
 import com.m3ter.sdk.models.AggregationRetrieveParams
@@ -141,5 +142,35 @@ internal constructor(
                 }
             }
             .let { AggregationListPage.of(this, params, it) }
+    }
+
+    private val deleteHandler: Handler<Aggregation> =
+        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Delete the Aggregation with the given UUID. */
+    override fun delete(
+        params: AggregationDeleteParams,
+        requestOptions: RequestOptions
+    ): Aggregation {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "aggregations",
+                    params.getPathParam(1)
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepare(clientOptions, params)
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { deleteHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
+                }
+            }
     }
 }

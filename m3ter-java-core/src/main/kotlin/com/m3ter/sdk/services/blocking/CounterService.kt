@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
+import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPage
 import com.m3ter.sdk.models.CounterListParams
 import com.m3ter.sdk.models.CounterRetrieveParams
@@ -43,4 +44,11 @@ interface CounterService {
         params: CounterListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CounterListPage
+
+    /** Delete a Counter for the given UUID. */
+    @JvmOverloads
+    fun delete(
+        params: CounterDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Counter
 }
