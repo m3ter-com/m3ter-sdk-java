@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
+import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListParams
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
@@ -118,5 +119,23 @@ class CompoundAggregationServiceTest {
             )
         println(paginatedDataCompoundAggregationResponse)
         paginatedDataCompoundAggregationResponse.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callDelete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .build()
+        val compoundAggregationService = client.compoundAggregations()
+        val compoundAggregation =
+            compoundAggregationService.delete(
+                CompoundAggregationDeleteParams.builder().orgId("orgId").id("id").build()
+            )
+        println(compoundAggregation)
+        compoundAggregation.validate()
     }
 }

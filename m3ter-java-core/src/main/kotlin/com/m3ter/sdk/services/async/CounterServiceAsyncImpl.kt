@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
+import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPageAsync
 import com.m3ter.sdk.models.CounterListParams
 import com.m3ter.sdk.models.CounterRetrieveParams
@@ -149,6 +150,39 @@ internal constructor(
                         }
                     }
                     .let { CounterListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val deleteHandler: Handler<Counter> =
+        jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Delete a Counter for the given UUID. */
+    override fun delete(
+        params: CounterDeleteParams,
+        requestOptions: RequestOptions
+    ): CompletableFuture<Counter> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "counters",
+                    params.getPathParam(1)
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }

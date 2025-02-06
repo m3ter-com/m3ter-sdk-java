@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
+import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPage
 import com.m3ter.sdk.models.MeterListParams
 import com.m3ter.sdk.models.MeterRetrieveParams
@@ -74,4 +75,11 @@ interface MeterService {
         params: MeterListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): MeterListPage
+
+    /** Delete the Meter with the given UUID. */
+    @JvmOverloads
+    fun delete(
+        params: MeterDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Meter
 }

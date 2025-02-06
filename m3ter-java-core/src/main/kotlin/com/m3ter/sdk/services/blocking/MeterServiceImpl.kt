@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
+import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPage
 import com.m3ter.sdk.models.MeterListParams
 import com.m3ter.sdk.models.MeterRetrieveParams
@@ -155,5 +156,32 @@ internal constructor(
                 }
             }
             .let { MeterListPage.of(this, params, it) }
+    }
+
+    private val deleteHandler: Handler<Meter> =
+        jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Delete the Meter with the given UUID. */
+    override fun delete(params: MeterDeleteParams, requestOptions: RequestOptions): Meter {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "meters",
+                    params.getPathParam(1)
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepare(clientOptions, params)
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { deleteHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
+                }
+            }
     }
 }
