@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
+import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPage
 import com.m3ter.sdk.models.CounterListParams
 import com.m3ter.sdk.models.CounterRetrieveParams
@@ -125,5 +126,32 @@ internal constructor(
                 }
             }
             .let { CounterListPage.of(this, params, it) }
+    }
+
+    private val deleteHandler: Handler<Counter> =
+        jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Delete a Counter for the given UUID. */
+    override fun delete(params: CounterDeleteParams, requestOptions: RequestOptions): Counter {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "counters",
+                    params.getPathParam(1)
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepare(clientOptions, params)
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { deleteHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
+                }
+            }
     }
 }

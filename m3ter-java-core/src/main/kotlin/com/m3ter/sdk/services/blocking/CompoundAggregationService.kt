@@ -8,6 +8,7 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
+import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
@@ -69,4 +70,17 @@ interface CompoundAggregationService {
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): CompoundAggregationListPage
+
+    /**
+     * Delete a CompoundAggregation with the given UUID.
+     *
+     * This endpoint enables deletion of a specific CompoundAggregation associated with a specific
+     * Organization. Useful when you need to remove an existing CompoundAggregation that is no
+     * longer required, such as when changing pricing or planning models.
+     */
+    @JvmOverloads
+    fun delete(
+        params: CompoundAggregationDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CompoundAggregation
 }

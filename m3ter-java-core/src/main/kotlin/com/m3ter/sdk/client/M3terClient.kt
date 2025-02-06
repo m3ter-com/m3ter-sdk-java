@@ -2,12 +2,30 @@
 
 package com.m3ter.sdk.client
 
+import com.m3ter.sdk.services.blocking.AccountPlanService
+import com.m3ter.sdk.services.blocking.AccountService
 import com.m3ter.sdk.services.blocking.AggregationService
 import com.m3ter.sdk.services.blocking.AuthenticationService
+import com.m3ter.sdk.services.blocking.BalanceService
+import com.m3ter.sdk.services.blocking.BillConfigService
+import com.m3ter.sdk.services.blocking.CommitmentService
 import com.m3ter.sdk.services.blocking.CompoundAggregationService
+import com.m3ter.sdk.services.blocking.ContractService
+import com.m3ter.sdk.services.blocking.CounterAdjustmentService
+import com.m3ter.sdk.services.blocking.CounterPricingService
 import com.m3ter.sdk.services.blocking.CounterService
+import com.m3ter.sdk.services.blocking.CreditReasonService
+import com.m3ter.sdk.services.blocking.CurrencyService
+import com.m3ter.sdk.services.blocking.DebitReasonService
 import com.m3ter.sdk.services.blocking.MeterService
+import com.m3ter.sdk.services.blocking.OrganizationConfigService
+import com.m3ter.sdk.services.blocking.PlanGroupLinkService
+import com.m3ter.sdk.services.blocking.PlanGroupService
+import com.m3ter.sdk.services.blocking.PlanService
+import com.m3ter.sdk.services.blocking.PlanTemplateService
+import com.m3ter.sdk.services.blocking.PricingService
 import com.m3ter.sdk.services.blocking.ProductService
+import com.m3ter.sdk.services.blocking.TransactionTypeService
 
 /**
  * A client for interacting with the M3ter REST API synchronously. You can also switch to
@@ -35,15 +53,51 @@ interface M3terClient {
 
     fun authentication(): AuthenticationService
 
+    fun accounts(): AccountService
+
+    fun accountPlans(): AccountPlanService
+
     fun aggregations(): AggregationService
+
+    fun balances(): BalanceService
+
+    fun billConfig(): BillConfigService
+
+    fun commitments(): CommitmentService
 
     fun compoundAggregations(): CompoundAggregationService
 
+    fun contracts(): ContractService
+
     fun counters(): CounterService
+
+    fun counterAdjustments(): CounterAdjustmentService
+
+    fun counterPricings(): CounterPricingService
+
+    fun creditReasons(): CreditReasonService
+
+    fun currencies(): CurrencyService
+
+    fun debitReasons(): DebitReasonService
 
     fun meters(): MeterService
 
+    fun organizationConfig(): OrganizationConfigService
+
+    fun plans(): PlanService
+
+    fun planGroups(): PlanGroupService
+
+    fun planGroupLinks(): PlanGroupLinkService
+
+    fun planTemplates(): PlanTemplateService
+
+    fun pricings(): PricingService
+
     fun products(): ProductService
+
+    fun transactionTypes(): TransactionTypeService
 
     /**
      * Closes this client, relinquishing any underlying resources.

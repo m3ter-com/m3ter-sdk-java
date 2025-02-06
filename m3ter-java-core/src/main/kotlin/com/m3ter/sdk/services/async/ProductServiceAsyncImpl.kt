@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
+import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPageAsync
 import com.m3ter.sdk.models.ProductListParams
 import com.m3ter.sdk.models.ProductRetrieveParams
@@ -171,6 +172,44 @@ internal constructor(
                         }
                     }
                     .let { ProductListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val deleteHandler: Handler<Product> =
+        jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * Delete a Product with the given UUID.
+     *
+     * This endpoint deletes a specific Product within a specified Organization, using the Product
+     * UUID.
+     */
+    override fun delete(
+        params: ProductDeleteParams,
+        requestOptions: RequestOptions
+    ): CompletableFuture<Product> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "products",
+                    params.getPathParam(1)
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }
