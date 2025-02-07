@@ -51,7 +51,7 @@ class OrganizationConfigServiceTest {
                     .timezone("UTC")
                     .weekEpoch("2022-01-04")
                     .yearEpoch("2022-01-01")
-                    .autoApproveBillsGracePeriod(1L)
+                    .autoApproveBillsGracePeriod(2L)
                     .autoApproveBillsGracePeriodUnit("DAYS")
                     .autoGenerateStatementMode(
                         OrganizationConfigUpdateParams.AutoGenerateStatementMode.NONE
@@ -66,7 +66,7 @@ class OrganizationConfigServiceTest {
                         OrganizationConfigUpdateParams.CurrencyConversion.builder()
                             .from("EUR")
                             .to("USD")
-                            .multiplier(1.0)
+                            .multiplier(1.12)
                             .build()
                     )
                     .defaultStatementDefinitionId("defaultStatementDefinitionId")
