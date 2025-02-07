@@ -18,7 +18,7 @@ class OrganizationConfigUpdateParamsTest {
             .timezone("UTC")
             .weekEpoch("2022-01-04")
             .yearEpoch("2022-01-01")
-            .autoApproveBillsGracePeriod(1L)
+            .autoApproveBillsGracePeriod(2L)
             .autoApproveBillsGracePeriodUnit("DAYS")
             .autoGenerateStatementMode(
                 OrganizationConfigUpdateParams.AutoGenerateStatementMode.NONE
@@ -33,7 +33,7 @@ class OrganizationConfigUpdateParamsTest {
                 OrganizationConfigUpdateParams.CurrencyConversion.builder()
                     .from("EUR")
                     .to("USD")
-                    .multiplier(1.0)
+                    .multiplier(1.12)
                     .build()
             )
             .defaultStatementDefinitionId("defaultStatementDefinitionId")
@@ -59,7 +59,7 @@ class OrganizationConfigUpdateParamsTest {
                 .timezone("UTC")
                 .weekEpoch("2022-01-04")
                 .yearEpoch("2022-01-01")
-                .autoApproveBillsGracePeriod(1L)
+                .autoApproveBillsGracePeriod(2L)
                 .autoApproveBillsGracePeriodUnit("DAYS")
                 .autoGenerateStatementMode(
                     OrganizationConfigUpdateParams.AutoGenerateStatementMode.NONE
@@ -74,7 +74,7 @@ class OrganizationConfigUpdateParamsTest {
                     OrganizationConfigUpdateParams.CurrencyConversion.builder()
                         .from("EUR")
                         .to("USD")
-                        .multiplier(1.0)
+                        .multiplier(1.12)
                         .build()
                 )
                 .defaultStatementDefinitionId("defaultStatementDefinitionId")
@@ -95,7 +95,7 @@ class OrganizationConfigUpdateParamsTest {
         assertThat(body.timezone()).isEqualTo("UTC")
         assertThat(body.weekEpoch()).isEqualTo("2022-01-04")
         assertThat(body.yearEpoch()).isEqualTo("2022-01-01")
-        assertThat(body.autoApproveBillsGracePeriod()).contains(1L)
+        assertThat(body.autoApproveBillsGracePeriod()).contains(2L)
         assertThat(body.autoApproveBillsGracePeriodUnit()).contains("DAYS")
         assertThat(body.autoGenerateStatementMode())
             .contains(OrganizationConfigUpdateParams.AutoGenerateStatementMode.NONE)
@@ -110,7 +110,7 @@ class OrganizationConfigUpdateParamsTest {
                     OrganizationConfigUpdateParams.CurrencyConversion.builder()
                         .from("EUR")
                         .to("USD")
-                        .multiplier(1.0)
+                        .multiplier(1.12)
                         .build()
                 )
             )
