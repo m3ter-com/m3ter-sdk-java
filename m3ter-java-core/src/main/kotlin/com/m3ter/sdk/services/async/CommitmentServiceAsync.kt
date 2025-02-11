@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
-import com.m3ter.sdk.models.CommitmentListPageAsync
 import com.m3ter.sdk.models.CommitmentListParams
+import com.m3ter.sdk.models.CommitmentListResponse
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
 import com.m3ter.sdk.models.CommitmentSearchResponse
@@ -76,7 +76,7 @@ interface CommitmentServiceAsync {
     fun list(
         params: CommitmentListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CommitmentListPageAsync>
+    ): CompletableFuture<CommitmentListResponse>
 
     /**
      * Remove a specific Commitment.

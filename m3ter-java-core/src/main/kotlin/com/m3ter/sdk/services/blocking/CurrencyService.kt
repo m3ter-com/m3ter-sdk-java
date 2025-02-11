@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
-import com.m3ter.sdk.models.CurrencyListPage
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyListResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 
@@ -58,7 +58,7 @@ interface CurrencyService {
     fun list(
         params: CurrencyListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CurrencyListPage
+    ): CurrencyListResponse
 
     /**
      * Delete the Currency with the given UUID.

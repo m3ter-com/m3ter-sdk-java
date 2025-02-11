@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
-import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
+import com.m3ter.sdk.models.ProductListResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 
@@ -122,9 +122,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<ProductListPage.Response> =
-        jsonHandler<ProductListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<ProductListResponse> =
+        jsonHandler<ProductListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Products.
@@ -132,7 +131,10 @@ internal constructor(
      * This endpoint retrieves a list of all the Products within a specified Organization. The list
      * can be paginated, and supports filtering by specific Product IDs.
      */
-    override fun list(params: ProductListParams, requestOptions: RequestOptions): ProductListPage {
+    override fun list(
+        params: ProductListParams,
+        requestOptions: RequestOptions
+    ): ProductListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -147,7 +149,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { ProductListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Product> =

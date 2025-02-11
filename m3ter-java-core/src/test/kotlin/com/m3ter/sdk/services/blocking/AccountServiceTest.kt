@@ -158,10 +158,17 @@ class AccountServiceTest {
                 .token("My Token")
                 .build()
         val accountService = client.accounts()
-        val paginatedDataAccountResponse =
-            accountService.list(AccountListParams.builder().orgId("orgId").build())
-        println(paginatedDataAccountResponse)
-        paginatedDataAccountResponse.data().forEach { it.validate() }
+        val accountListResponse =
+            accountService.list(
+                AccountListParams.builder()
+                    .orgId("orgId")
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
+            )
+        println(accountListResponse)
     }
 
     @Test
@@ -226,6 +233,5 @@ class AccountServiceTest {
                     .build()
             )
         println(accountSearchResponse)
-        accountSearchResponse.validate()
     }
 }

@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
-import com.m3ter.sdk.models.PricingListPage
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingListResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 
@@ -113,12 +113,14 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PricingListPage.Response> =
-        jsonHandler<PricingListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<PricingListResponse> =
+        jsonHandler<PricingListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
-    override fun list(params: PricingListParams, requestOptions: RequestOptions): PricingListPage {
+    override fun list(
+        params: PricingListParams,
+        requestOptions: RequestOptions
+    ): PricingListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -133,7 +135,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { PricingListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Pricing> =

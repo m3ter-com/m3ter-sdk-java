@@ -92,10 +92,18 @@ class CreditReasonServiceTest {
                 .token("My Token")
                 .build()
         val creditReasonService = client.creditReasons()
-        val paginatedDataCreditReasonResponse =
-            creditReasonService.list(CreditReasonListParams.builder().orgId("orgId").build())
-        println(paginatedDataCreditReasonResponse)
-        paginatedDataCreditReasonResponse.data().forEach { it.validate() }
+        val creditReasonListResponse =
+            creditReasonService.list(
+                CreditReasonListParams.builder()
+                    .orgId("orgId")
+                    .archived(true)
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
+            )
+        println(creditReasonListResponse)
     }
 
     @Test

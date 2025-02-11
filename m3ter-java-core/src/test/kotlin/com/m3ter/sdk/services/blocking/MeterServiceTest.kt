@@ -137,10 +137,18 @@ class MeterServiceTest {
                 .token("My Token")
                 .build()
         val meterService = client.meters()
-        val paginatedDataMeterResponse =
-            meterService.list(MeterListParams.builder().orgId("orgId").build())
-        println(paginatedDataMeterResponse)
-        paginatedDataMeterResponse.data().forEach { it.validate() }
+        val meterListResponse =
+            meterService.list(
+                MeterListParams.builder()
+                    .orgId("orgId")
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .addProductId("string")
+                    .build()
+            )
+        println(meterListResponse)
     }
 
     @Test

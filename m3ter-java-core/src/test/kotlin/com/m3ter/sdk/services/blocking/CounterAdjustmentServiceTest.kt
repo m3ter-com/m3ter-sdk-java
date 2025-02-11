@@ -96,12 +96,22 @@ class CounterAdjustmentServiceTest {
                 .token("My Token")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
-        val paginatedDataCounterAdjustmentResponse =
+        val counterAdjustmentListResponse =
             counterAdjustmentService.list(
-                CounterAdjustmentListParams.builder().orgId("orgId").build()
+                CounterAdjustmentListParams.builder()
+                    .orgId("orgId")
+                    .accountId("accountId")
+                    .counterId("counterId")
+                    .date("date")
+                    .dateEnd("dateEnd")
+                    .dateStart("dateStart")
+                    .endDateEnd("endDateEnd")
+                    .endDateStart("endDateStart")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
             )
-        println(paginatedDataCounterAdjustmentResponse)
-        paginatedDataCounterAdjustmentResponse.data().forEach { it.validate() }
+        println(counterAdjustmentListResponse)
     }
 
     @Test

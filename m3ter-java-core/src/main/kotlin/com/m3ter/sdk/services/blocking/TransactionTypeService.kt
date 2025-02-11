@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
-import com.m3ter.sdk.models.TransactionTypeListPage
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeListResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
@@ -50,7 +50,7 @@ interface TransactionTypeService {
     fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): TransactionTypeListPage
+    ): TransactionTypeListResponse
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads

@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
-import com.m3ter.sdk.models.CurrencyListPageAsync
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyListResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -135,9 +135,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CurrencyListPageAsync.Response> =
-        jsonHandler<CurrencyListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<CurrencyListResponse> =
+        jsonHandler<CurrencyListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Currencies.
@@ -149,7 +148,7 @@ internal constructor(
     override fun list(
         params: CurrencyListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<CurrencyListPageAsync> {
+    ): CompletableFuture<CurrencyListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -166,7 +165,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { CurrencyListPageAsync.of(this, params, it) }
             }
     }
 
