@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Plan
 import com.m3ter.sdk.models.PlanCreateParams
 import com.m3ter.sdk.models.PlanDeleteParams
-import com.m3ter.sdk.models.PlanListPageAsync
 import com.m3ter.sdk.models.PlanListParams
+import com.m3ter.sdk.models.PlanListResponse
 import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -128,15 +128,14 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PlanListPageAsync.Response> =
-        jsonHandler<PlanListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<PlanListResponse> =
+        jsonHandler<PlanListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     override fun list(
         params: PlanListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<PlanListPageAsync> {
+    ): CompletableFuture<PlanListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -153,7 +152,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { PlanListPageAsync.of(this, params, it) }
             }
     }
 

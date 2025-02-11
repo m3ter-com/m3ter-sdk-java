@@ -112,10 +112,18 @@ class ContractServiceTest {
                 .token("My Token")
                 .build()
         val contractService = client.contracts()
-        val paginatedDataContractResponse =
-            contractService.list(ContractListParams.builder().orgId("orgId").build())
-        println(paginatedDataContractResponse)
-        paginatedDataContractResponse.data().forEach { it.validate() }
+        val contractListResponse =
+            contractService.list(
+                ContractListParams.builder()
+                    .orgId("orgId")
+                    .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
+            )
+        println(contractListResponse)
     }
 
     @Test

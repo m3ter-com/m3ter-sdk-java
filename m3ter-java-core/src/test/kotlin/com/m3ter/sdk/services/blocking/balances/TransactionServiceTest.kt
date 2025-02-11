@@ -52,11 +52,16 @@ class TransactionServiceTest {
                 .token("My Token")
                 .build()
         val transactionService = client.balances().transactions()
-        val paginatedDataBalanceTransactionResponse =
+        val balanceTransactionListResponse =
             transactionService.list(
-                BalanceTransactionListParams.builder().orgId("orgId").balanceId("balanceId").build()
+                BalanceTransactionListParams.builder()
+                    .orgId("orgId")
+                    .balanceId("balanceId")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .transactionTypeId("transactionTypeId")
+                    .build()
             )
-        println(paginatedDataBalanceTransactionResponse)
-        paginatedDataBalanceTransactionResponse.data().forEach { it.validate() }
+        println(balanceTransactionListResponse)
     }
 }

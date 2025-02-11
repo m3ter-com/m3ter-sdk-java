@@ -14,8 +14,8 @@ import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
-import com.m3ter.sdk.models.BalanceTransactionListPageAsync
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionListResponse
 import com.m3ter.sdk.models.Transaction
 import java.util.concurrent.CompletableFuture
 
@@ -76,8 +76,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<BalanceTransactionListPageAsync.Response> =
-        jsonHandler<BalanceTransactionListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<BalanceTransactionListResponse> =
+        jsonHandler<BalanceTransactionListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -89,7 +89,7 @@ internal constructor(
     override fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<BalanceTransactionListPageAsync> {
+    ): CompletableFuture<BalanceTransactionListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -112,7 +112,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { BalanceTransactionListPageAsync.of(this, params, it) }
             }
     }
 }

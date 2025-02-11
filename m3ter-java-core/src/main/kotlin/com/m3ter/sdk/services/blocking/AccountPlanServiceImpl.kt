@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AccountPlan
 import com.m3ter.sdk.models.AccountPlanCreateParams
 import com.m3ter.sdk.models.AccountPlanDeleteParams
-import com.m3ter.sdk.models.AccountPlanListPage
 import com.m3ter.sdk.models.AccountPlanListParams
+import com.m3ter.sdk.models.AccountPlanListResponse
 import com.m3ter.sdk.models.AccountPlanRetrieveParams
 import com.m3ter.sdk.models.AccountPlanUpdateParams
 
@@ -135,8 +135,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<AccountPlanListPage.Response> =
-        jsonHandler<AccountPlanListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<AccountPlanListResponse> =
+        jsonHandler<AccountPlanListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -152,7 +152,7 @@ internal constructor(
     override fun list(
         params: AccountPlanListParams,
         requestOptions: RequestOptions
-    ): AccountPlanListPage {
+    ): AccountPlanListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -167,7 +167,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { AccountPlanListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<AccountPlan> =

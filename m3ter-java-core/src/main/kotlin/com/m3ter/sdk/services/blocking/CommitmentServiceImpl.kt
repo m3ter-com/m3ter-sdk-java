@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
-import com.m3ter.sdk.models.CommitmentListPage
 import com.m3ter.sdk.models.CommitmentListParams
+import com.m3ter.sdk.models.CommitmentListResponse
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
 import com.m3ter.sdk.models.CommitmentSearchResponse
@@ -140,9 +140,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CommitmentListPage.Response> =
-        jsonHandler<CommitmentListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<CommitmentListResponse> =
+        jsonHandler<CommitmentListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Commitments.
@@ -154,7 +153,7 @@ internal constructor(
     override fun list(
         params: CommitmentListParams,
         requestOptions: RequestOptions
-    ): CommitmentListPage {
+    ): CommitmentListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -169,7 +168,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { CommitmentListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Commitment> =

@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
-import com.m3ter.sdk.models.PlanTemplateListPage
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateListResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 
@@ -68,7 +68,7 @@ interface PlanTemplateService {
     fun list(
         params: PlanTemplateListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): PlanTemplateListPage
+    ): PlanTemplateListResponse
 
     /**
      * Delete a specific PlanTemplate.

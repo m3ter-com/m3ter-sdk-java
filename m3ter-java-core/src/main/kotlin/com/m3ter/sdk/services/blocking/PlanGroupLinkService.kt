@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
-import com.m3ter.sdk.models.PlanGroupLinkListPage
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkListResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
@@ -41,7 +41,7 @@ interface PlanGroupLinkService {
     fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): PlanGroupLinkListPage
+    ): PlanGroupLinkListResponse
 
     /** Delete a PlanGroupLink for the given UUID. */
     @JvmOverloads

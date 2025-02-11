@@ -113,10 +113,18 @@ class BalanceServiceTest {
                 .token("My Token")
                 .build()
         val balanceService = client.balances()
-        val paginatedDataBalanceResponse =
-            balanceService.list(BalanceListParams.builder().orgId("orgId").build())
-        println(paginatedDataBalanceResponse)
-        paginatedDataBalanceResponse.data().forEach { it.validate() }
+        val balanceListResponse =
+            balanceService.list(
+                BalanceListParams.builder()
+                    .orgId("orgId")
+                    .accountId("accountId")
+                    .endDateEnd("endDateEnd")
+                    .endDateStart("endDateStart")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
+            )
+        println(balanceListResponse)
     }
 
     @Test

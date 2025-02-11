@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
-import com.m3ter.sdk.models.PlanGroupListPage
 import com.m3ter.sdk.models.PlanGroupListParams
+import com.m3ter.sdk.models.PlanGroupListResponse
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
@@ -123,9 +123,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PlanGroupListPage.Response> =
-        jsonHandler<PlanGroupListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<PlanGroupListResponse> =
+        jsonHandler<PlanGroupListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of PlanGroups.
@@ -136,7 +135,7 @@ internal constructor(
     override fun list(
         params: PlanGroupListParams,
         requestOptions: RequestOptions
-    ): PlanGroupListPage {
+    ): PlanGroupListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -151,7 +150,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { PlanGroupListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<PlanGroup> =

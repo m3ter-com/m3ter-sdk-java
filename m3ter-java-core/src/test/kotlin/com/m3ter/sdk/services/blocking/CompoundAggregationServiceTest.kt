@@ -113,12 +113,18 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
-        val paginatedDataCompoundAggregationResponse =
+        val compoundAggregationListResponse =
             compoundAggregationService.list(
-                CompoundAggregationListParams.builder().orgId("orgId").build()
+                CompoundAggregationListParams.builder()
+                    .orgId("orgId")
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .addProductId("string")
+                    .build()
             )
-        println(paginatedDataCompoundAggregationResponse)
-        paginatedDataCompoundAggregationResponse.data().forEach { it.validate() }
+        println(compoundAggregationListResponse)
     }
 
     @Test

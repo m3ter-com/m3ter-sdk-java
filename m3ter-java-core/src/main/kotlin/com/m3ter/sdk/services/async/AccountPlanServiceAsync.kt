@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.AccountPlan
 import com.m3ter.sdk.models.AccountPlanCreateParams
 import com.m3ter.sdk.models.AccountPlanDeleteParams
-import com.m3ter.sdk.models.AccountPlanListPageAsync
 import com.m3ter.sdk.models.AccountPlanListParams
+import com.m3ter.sdk.models.AccountPlanListResponse
 import com.m3ter.sdk.models.AccountPlanRetrieveParams
 import com.m3ter.sdk.models.AccountPlanUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -74,7 +74,7 @@ interface AccountPlanServiceAsync {
     fun list(
         params: AccountPlanListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AccountPlanListPageAsync>
+    ): CompletableFuture<AccountPlanListResponse>
 
     /**
      * Delete the AccountPlan or AccountPlanGroup with the given UUID.

@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
-import com.m3ter.sdk.models.PlanGroupListPage
 import com.m3ter.sdk.models.PlanGroupListParams
+import com.m3ter.sdk.models.PlanGroupListResponse
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
@@ -63,7 +63,7 @@ interface PlanGroupService {
     fun list(
         params: PlanGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): PlanGroupListPage
+    ): PlanGroupListResponse
 
     /**
      * Delete a PlanGroup with the given UUID.

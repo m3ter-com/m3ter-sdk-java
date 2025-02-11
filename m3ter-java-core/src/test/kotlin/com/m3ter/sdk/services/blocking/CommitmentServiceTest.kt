@@ -153,10 +153,22 @@ class CommitmentServiceTest {
                 .token("My Token")
                 .build()
         val commitmentService = client.commitments()
-        val paginatedDataCommitmentResponse =
-            commitmentService.list(CommitmentListParams.builder().orgId("orgId").build())
-        println(paginatedDataCommitmentResponse)
-        paginatedDataCommitmentResponse.data().forEach { it.validate() }
+        val commitmentListResponse =
+            commitmentService.list(
+                CommitmentListParams.builder()
+                    .orgId("orgId")
+                    .accountId("accountId")
+                    .contractId("contractId")
+                    .date("date")
+                    .endDateEnd("endDateEnd")
+                    .endDateStart("endDateStart")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .productId("productId")
+                    .build()
+            )
+        println(commitmentListResponse)
     }
 
     @Test
@@ -200,6 +212,5 @@ class CommitmentServiceTest {
                     .build()
             )
         println(commitmentSearchResponse)
-        commitmentSearchResponse.validate()
     }
 }

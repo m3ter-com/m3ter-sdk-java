@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
-import com.m3ter.sdk.models.PricingListPageAsync
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingListResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -132,15 +132,14 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PricingListPageAsync.Response> =
-        jsonHandler<PricingListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<PricingListResponse> =
+        jsonHandler<PricingListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     override fun list(
         params: PricingListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<PricingListPageAsync> {
+    ): CompletableFuture<PricingListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -157,7 +156,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { PricingListPageAsync.of(this, params, it) }
             }
     }
 

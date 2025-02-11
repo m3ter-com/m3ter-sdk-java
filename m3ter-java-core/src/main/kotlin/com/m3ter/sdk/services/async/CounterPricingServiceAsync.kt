@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
-import com.m3ter.sdk.models.CounterPricingListPageAsync
 import com.m3ter.sdk.models.CounterPricingListParams
+import com.m3ter.sdk.models.CounterPricingListResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -55,7 +55,7 @@ interface CounterPricingServiceAsync {
     fun list(
         params: CounterPricingListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CounterPricingListPageAsync>
+    ): CompletableFuture<CounterPricingListResponse>
 
     /** Delete a CounterPricing for the given UUID. */
     @JvmOverloads

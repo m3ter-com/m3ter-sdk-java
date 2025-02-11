@@ -16,10 +16,7 @@ import com.m3ter.sdk.client.M3terClient
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.jsonMapper
-import com.m3ter.sdk.models.Product
-import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
-import java.time.OffsetDateTime
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -61,29 +58,7 @@ class ServiceParamsTest {
                 .additionalQueryParams(additionalQueryParams)
                 .build()
 
-        val apiResponse =
-            ProductListPage.Response.builder()
-                .data(
-                    listOf(
-                        Product.builder()
-                            .id("id")
-                            .version(0L)
-                            .code("code")
-                            .createdBy("createdBy")
-                            .customFields(
-                                Product.CustomFields.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
-                            .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .lastModifiedBy("lastModifiedBy")
-                            .name("name")
-                            .build()
-                    )
-                )
-                .nextToken("nextToken")
-                .build()
+        val apiResponse = JsonValue.from(mapOf<String, Any>())
 
         stubFor(
             get(anyUrl())

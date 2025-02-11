@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
-import com.m3ter.sdk.models.PlanGroupLinkListPage
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkListResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
@@ -112,15 +112,15 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PlanGroupLinkListPage.Response> =
-        jsonHandler<PlanGroupLinkListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<PlanGroupLinkListResponse> =
+        jsonHandler<PlanGroupLinkListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** Retrieve a list of PlanGroupLink entities */
     override fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions
-    ): PlanGroupLinkListPage {
+    ): PlanGroupLinkListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -135,7 +135,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { PlanGroupLinkListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<PlanGroupLink> =

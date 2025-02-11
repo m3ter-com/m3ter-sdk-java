@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
-import com.m3ter.sdk.models.CounterAdjustmentListPageAsync
 import com.m3ter.sdk.models.CounterAdjustmentListParams
+import com.m3ter.sdk.models.CounterAdjustmentListResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -132,8 +132,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CounterAdjustmentListPageAsync.Response> =
-        jsonHandler<CounterAdjustmentListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<CounterAdjustmentListResponse> =
+        jsonHandler<CounterAdjustmentListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -149,7 +149,7 @@ internal constructor(
     override fun list(
         params: CounterAdjustmentListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<CounterAdjustmentListPageAsync> {
+    ): CompletableFuture<CounterAdjustmentListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -166,7 +166,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { CounterAdjustmentListPageAsync.of(this, params, it) }
             }
     }
 
