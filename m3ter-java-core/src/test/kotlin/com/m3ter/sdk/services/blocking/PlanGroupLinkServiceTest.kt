@@ -90,18 +90,10 @@ class PlanGroupLinkServiceTest {
                 .token("My Token")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
-        val planGroupLinkListResponse =
-            planGroupLinkService.list(
-                PlanGroupLinkListParams.builder()
-                    .orgId("orgId")
-                    .addId("string")
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .plan("plan")
-                    .planGroup("planGroup")
-                    .build()
-            )
-        println(planGroupLinkListResponse)
+        val paginatedDataPlanGroupLinkResponse =
+            planGroupLinkService.list(PlanGroupLinkListParams.builder().orgId("orgId").build())
+        println(paginatedDataPlanGroupLinkResponse)
+        paginatedDataPlanGroupLinkResponse.data().forEach { it.validate() }
     }
 
     @Test

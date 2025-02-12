@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
+import com.m3ter.sdk.models.ContractListPage
 import com.m3ter.sdk.models.ContractListParams
-import com.m3ter.sdk.models.ContractListResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 
@@ -120,8 +120,9 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<ContractListResponse> =
-        jsonHandler<ContractListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<ContractListPage.Response> =
+        jsonHandler<ContractListPage.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
@@ -130,7 +131,7 @@ internal constructor(
     override fun list(
         params: ContractListParams,
         requestOptions: RequestOptions
-    ): ContractListResponse {
+    ): ContractListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -145,6 +146,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { ContractListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Contract> =

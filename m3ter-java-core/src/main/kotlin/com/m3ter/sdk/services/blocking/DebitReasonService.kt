@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.DebitReason
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
+import com.m3ter.sdk.models.DebitReasonListPage
 import com.m3ter.sdk.models.DebitReasonListParams
-import com.m3ter.sdk.models.DebitReasonListResponse
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 
@@ -49,7 +49,7 @@ interface DebitReasonService {
     fun list(
         params: DebitReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): DebitReasonListResponse
+    ): DebitReasonListPage
 
     /** Delete the Debit Reason with the given UUID. */
     @JvmOverloads

@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
+import com.m3ter.sdk.models.BalanceListPageAsync
 import com.m3ter.sdk.models.BalanceListParams
-import com.m3ter.sdk.models.BalanceListResponse
 import com.m3ter.sdk.models.BalanceRetrieveParams
 import com.m3ter.sdk.models.BalanceUpdateParams
 import com.m3ter.sdk.services.async.balances.TransactionServiceAsync
@@ -65,7 +65,7 @@ interface BalanceServiceAsync {
     fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<BalanceListResponse>
+    ): CompletableFuture<BalanceListPageAsync>
 
     /**
      * Delete a specific Balance.

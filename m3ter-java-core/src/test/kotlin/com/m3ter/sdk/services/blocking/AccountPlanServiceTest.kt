@@ -117,22 +117,10 @@ class AccountPlanServiceTest {
                 .token("My Token")
                 .build()
         val accountPlanService = client.accountPlans()
-        val accountPlanListResponse =
-            accountPlanService.list(
-                AccountPlanListParams.builder()
-                    .orgId("orgId")
-                    .account("account")
-                    .contract("contract")
-                    .date("date")
-                    .addId("string")
-                    .includeall(true)
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .plan("plan")
-                    .product("product")
-                    .build()
-            )
-        println(accountPlanListResponse)
+        val paginatedDataAccountPlanResponse =
+            accountPlanService.list(AccountPlanListParams.builder().orgId("orgId").build())
+        println(paginatedDataAccountPlanResponse)
+        paginatedDataAccountPlanResponse.data().forEach { it.validate() }
     }
 
     @Test

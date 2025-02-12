@@ -6,8 +6,8 @@ package com.m3ter.sdk.services.blocking.balances
 
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
+import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
-import com.m3ter.sdk.models.BalanceTransactionListResponse
 import com.m3ter.sdk.models.Transaction
 
 interface TransactionService {
@@ -45,5 +45,5 @@ interface TransactionService {
     fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): BalanceTransactionListResponse
+    ): BalanceTransactionListPage
 }

@@ -17,8 +17,8 @@ import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
+import com.m3ter.sdk.models.CompoundAggregationListPageAsync
 import com.m3ter.sdk.models.CompoundAggregationListParams
-import com.m3ter.sdk.models.CompoundAggregationListResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -143,8 +143,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CompoundAggregationListResponse> =
-        jsonHandler<CompoundAggregationListResponse>(clientOptions.jsonMapper)
+    private val listHandler: Handler<CompoundAggregationListPageAsync.Response> =
+        jsonHandler<CompoundAggregationListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -158,7 +158,7 @@ internal constructor(
     override fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<CompoundAggregationListResponse> {
+    ): CompletableFuture<CompoundAggregationListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -175,6 +175,7 @@ internal constructor(
                             it.validate()
                         }
                     }
+                    .let { CompoundAggregationListPageAsync.of(this, params, it) }
             }
     }
 

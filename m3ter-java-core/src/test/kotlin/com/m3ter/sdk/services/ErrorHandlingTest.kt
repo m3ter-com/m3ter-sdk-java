@@ -25,7 +25,10 @@ import com.m3ter.sdk.errors.RateLimitException
 import com.m3ter.sdk.errors.UnauthorizedException
 import com.m3ter.sdk.errors.UnexpectedStatusCodeException
 import com.m3ter.sdk.errors.UnprocessableEntityException
+import com.m3ter.sdk.models.Product
+import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
+import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.assertj.core.api.InstanceOfAssertFactories
@@ -55,6 +58,8 @@ class ErrorHandlingTest {
 
     @Test
     fun productsList200() {
+        val service = client.products()
+
         val params =
             ProductListParams.builder()
                 .orgId("orgId")
@@ -63,11 +68,30 @@ class ErrorHandlingTest {
                 .pageSize(1L)
                 .build()
 
-        val expected = JsonValue.from(mapOf<String, Any>())
+        val expected =
+            ProductListPage.of(
+                service,
+                params,
+                Product.builder()
+                    .id("id")
+                    .version(0L)
+                    .code("code")
+                    .createdBy("createdBy")
+                    .customFields(
+                        Product.CustomFields.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .lastModifiedBy("lastModifiedBy")
+                    .name("name")
+                    .build()
+            )
 
-        stubFor(get(anyUrl()).willReturn(ok().withBody(toJson(expected))))
+        stubFor(get(anyUrl()).willReturn(ok().withBody(toJson(expected.response()))))
 
-        assertThat(client.products().list(params)).isEqualTo(expected)
+        assertThat(client.products().list(params).response()).isEqualTo(expected.response())
     }
 
     @Test

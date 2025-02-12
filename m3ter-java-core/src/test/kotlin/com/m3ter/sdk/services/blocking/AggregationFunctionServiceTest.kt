@@ -127,18 +127,10 @@ class AggregationFunctionServiceTest {
                 .token("My Token")
                 .build()
         val aggregationService = client.aggregations()
-        val aggregationListResponse =
-            aggregationService.list(
-                AggregationListParams.builder()
-                    .orgId("orgId")
-                    .addCode("string")
-                    .addId("string")
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .addProductId("string")
-                    .build()
-            )
-        println(aggregationListResponse)
+        val paginatedDataAggregationResponse =
+            aggregationService.list(AggregationListParams.builder().orgId("orgId").build())
+        println(paginatedDataAggregationResponse)
+        paginatedDataAggregationResponse.data().forEach { it.validate() }
     }
 
     @Test

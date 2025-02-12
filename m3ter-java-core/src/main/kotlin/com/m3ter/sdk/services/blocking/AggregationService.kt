@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
+import com.m3ter.sdk.models.AggregationListPage
 import com.m3ter.sdk.models.AggregationListParams
-import com.m3ter.sdk.models.AggregationListResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 
@@ -47,7 +47,7 @@ interface AggregationService {
     fun list(
         params: AggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AggregationListResponse
+    ): AggregationListPage
 
     /** Delete the Aggregation with the given UUID. */
     @JvmOverloads

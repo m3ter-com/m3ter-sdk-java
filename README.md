@@ -84,14 +84,54 @@ Read the documentation for more configuration options.
 To create a new product, first use the `ProductListParams` builder to specify attributes, then pass that to the `list` method of the `products` service.
 
 ```java
+import com.m3ter.sdk.models.ProductListPage;
 import com.m3ter.sdk.models.ProductListParams;
-import com.m3ter.sdk.models.ProductListResponse;
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
     .build();
-ProductListResponse product = client.products().list(params);
+ProductListPage page = client.products().list(params);
 ```
+
+### Example: listing resources
+
+The M3ter API provides a `list` method to get a paginated list of products. You can retrieve the first page by:
+
+```java
+import com.m3ter.sdk.models.Product;
+import com.m3ter.sdk.models.ProductListPage;
+
+ProductListPage page = client.products().list();
+for (Product product : page.data()) {
+    System.out.println(product);
+}
+```
+
+Use the `ProductListParams` builder to set parameters:
+
+```java
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListParams params = ProductListParams.builder()
+    .orgId("ORG_ID")
+    .addId("string")
+    .nextToken("nextToken")
+    .pageSize(1L)
+    .build();
+ProductListPage page1 = client.products().list(params);
+
+// Using the `from` method of the builder you can reuse previous params values:
+ProductListPage page2 = client.products().list(ProductListParams.builder()
+    .from(params)
+    .nextToken("abc123...")
+    .build());
+
+// Or easily get params for the next page by using the helper `getNextPageParams`:
+ProductListPage page3 = client.products().list(params.getNextPageParams(page2));
+```
+
+See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
 
 ---
 
@@ -110,9 +150,9 @@ See [Undocumented request params](#undocumented-request-params) for how to send 
 When receiving a response, the M3ter Java SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Java type. If you directly access the mistaken property, the SDK will throw an unchecked `M3terInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
 
 ```java
-import com.m3ter.sdk.models.ProductListResponse;
+import com.m3ter.sdk.models.ProductListPage;
 
-ProductListResponse product = client.products().list().validate();
+ProductListPage page = client.products().list().validate();
 ```
 
 ### Response properties as JSON
@@ -150,6 +190,58 @@ JsonValue secret = authenticationGetBearerTokenResponse._additionalProperties().
 ```
 
 ---
+
+## Pagination
+
+For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+
+### Auto-pagination
+
+To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+
+### Synchronous
+
+```java
+import com.m3ter.sdk.models.Product;
+import com.m3ter.sdk.models.ProductListPage;
+
+// As an Iterable:
+ProductListPage page = client.products().list(params);
+for (Product product : page.autoPager()) {
+    System.out.println(product);
+};
+
+// As a Stream:
+client.products().list(params).autoPager().stream()
+    .limit(50)
+    .forEach(product -> System.out.println(product));
+```
+
+### Asynchronous
+
+```java
+// Using forEach, which returns CompletableFuture<Void>:
+asyncClient.products().list(params).autoPager()
+    .forEach(product -> System.out.println(product), executor);
+```
+
+### Manual pagination
+
+If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+
+```java
+import com.m3ter.sdk.models.Product;
+import com.m3ter.sdk.models.ProductListPage;
+
+ProductListPage page = client.products().list(params);
+while (page != null) {
+    for (Product product : page.data()) {
+        System.out.println(product);
+    }
+
+    page = page.getNextPage().orElse(null);
+}
+```
 
 ---
 

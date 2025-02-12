@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
+import com.m3ter.sdk.models.BalanceListPage
 import com.m3ter.sdk.models.BalanceListParams
-import com.m3ter.sdk.models.BalanceListResponse
 import com.m3ter.sdk.models.BalanceRetrieveParams
 import com.m3ter.sdk.models.BalanceUpdateParams
 import com.m3ter.sdk.services.blocking.balances.TransactionService
@@ -64,7 +64,7 @@ interface BalanceService {
     fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): BalanceListResponse
+    ): BalanceListPage
 
     /**
      * Delete a specific Balance.
