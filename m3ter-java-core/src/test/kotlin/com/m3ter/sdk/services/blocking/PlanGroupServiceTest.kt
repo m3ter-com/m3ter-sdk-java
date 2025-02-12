@@ -121,17 +121,10 @@ class PlanGroupServiceTest {
                 .token("My Token")
                 .build()
         val planGroupService = client.planGroups()
-        val planGroupListResponse =
-            planGroupService.list(
-                PlanGroupListParams.builder()
-                    .orgId("orgId")
-                    .addAccountId("string")
-                    .addId("string")
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .build()
-            )
-        println(planGroupListResponse)
+        val paginatedDataPlanGroupResponse =
+            planGroupService.list(PlanGroupListParams.builder().orgId("orgId").build())
+        println(paginatedDataPlanGroupResponse)
+        paginatedDataPlanGroupResponse.data().forEach { it.validate() }
     }
 
     @Test

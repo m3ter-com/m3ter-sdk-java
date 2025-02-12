@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.DebitReason
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
+import com.m3ter.sdk.models.DebitReasonListPage
 import com.m3ter.sdk.models.DebitReasonListParams
-import com.m3ter.sdk.models.DebitReasonListResponse
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 
@@ -123,8 +123,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<DebitReasonListResponse> =
-        jsonHandler<DebitReasonListResponse>(clientOptions.jsonMapper)
+    private val listHandler: Handler<DebitReasonListPage.Response> =
+        jsonHandler<DebitReasonListPage.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -135,7 +135,7 @@ internal constructor(
     override fun list(
         params: DebitReasonListParams,
         requestOptions: RequestOptions
-    ): DebitReasonListResponse {
+    ): DebitReasonListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -155,6 +155,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { DebitReasonListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<DebitReason> =

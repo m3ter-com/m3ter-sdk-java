@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Plan
 import com.m3ter.sdk.models.PlanCreateParams
 import com.m3ter.sdk.models.PlanDeleteParams
+import com.m3ter.sdk.models.PlanListPage
 import com.m3ter.sdk.models.PlanListParams
-import com.m3ter.sdk.models.PlanListResponse
 import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 
@@ -47,7 +47,7 @@ interface PlanService {
     fun list(
         params: PlanListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): PlanListResponse
+    ): PlanListPage
 
     /** Delete the Plan with the given UUID. */
     @JvmOverloads

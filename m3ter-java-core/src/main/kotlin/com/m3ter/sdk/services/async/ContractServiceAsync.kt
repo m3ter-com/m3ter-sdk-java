@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
+import com.m3ter.sdk.models.ContractListPageAsync
 import com.m3ter.sdk.models.ContractListParams
-import com.m3ter.sdk.models.ContractListResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -59,7 +59,7 @@ interface ContractServiceAsync {
     fun list(
         params: ContractListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<ContractListResponse>
+    ): CompletableFuture<ContractListPageAsync>
 
     /**
      * Deletes the Contract with the specified UUID. Used to remove an existing Contract from an

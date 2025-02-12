@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
+import com.m3ter.sdk.models.AggregationListPage
 import com.m3ter.sdk.models.AggregationListParams
-import com.m3ter.sdk.models.AggregationListResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 
@@ -118,15 +118,15 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<AggregationListResponse> =
-        jsonHandler<AggregationListResponse>(clientOptions.jsonMapper)
+    private val listHandler: Handler<AggregationListPage.Response> =
+        jsonHandler<AggregationListPage.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
     override fun list(
         params: AggregationListParams,
         requestOptions: RequestOptions
-    ): AggregationListResponse {
+    ): AggregationListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -141,6 +141,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { AggregationListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Aggregation> =

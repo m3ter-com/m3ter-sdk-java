@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
+import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
-import com.m3ter.sdk.models.ProductListResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 
@@ -65,7 +65,7 @@ interface ProductService {
     fun list(
         params: ProductListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): ProductListResponse
+    ): ProductListPage
 
     /**
      * Delete a Product with the given UUID.

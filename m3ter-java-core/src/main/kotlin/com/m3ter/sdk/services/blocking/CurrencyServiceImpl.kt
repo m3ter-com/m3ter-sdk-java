@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
+import com.m3ter.sdk.models.CurrencyListPage
 import com.m3ter.sdk.models.CurrencyListParams
-import com.m3ter.sdk.models.CurrencyListResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 
@@ -119,8 +119,9 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CurrencyListResponse> =
-        jsonHandler<CurrencyListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<CurrencyListPage.Response> =
+        jsonHandler<CurrencyListPage.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Currencies.
@@ -132,7 +133,7 @@ internal constructor(
     override fun list(
         params: CurrencyListParams,
         requestOptions: RequestOptions
-    ): CurrencyListResponse {
+    ): CurrencyListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -147,6 +148,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { CurrencyListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Currency> =

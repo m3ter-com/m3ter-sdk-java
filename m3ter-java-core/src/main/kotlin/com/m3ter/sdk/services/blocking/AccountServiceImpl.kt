@@ -17,8 +17,8 @@ import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountListChildrenParams
+import com.m3ter.sdk.models.AccountListPage
 import com.m3ter.sdk.models.AccountListParams
-import com.m3ter.sdk.models.AccountListResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -112,14 +112,12 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<AccountListResponse> =
-        jsonHandler<AccountListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<AccountListPage.Response> =
+        jsonHandler<AccountListPage.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
-    override fun list(
-        params: AccountListParams,
-        requestOptions: RequestOptions
-    ): AccountListResponse {
+    override fun list(params: AccountListParams, requestOptions: RequestOptions): AccountListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -134,6 +132,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { AccountListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Account> =

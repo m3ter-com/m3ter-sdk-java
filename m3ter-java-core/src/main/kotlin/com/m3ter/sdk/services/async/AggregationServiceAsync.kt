@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
+import com.m3ter.sdk.models.AggregationListPageAsync
 import com.m3ter.sdk.models.AggregationListParams
-import com.m3ter.sdk.models.AggregationListResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -48,7 +48,7 @@ interface AggregationServiceAsync {
     fun list(
         params: AggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AggregationListResponse>
+    ): CompletableFuture<AggregationListPageAsync>
 
     /** Delete the Aggregation with the given UUID. */
     @JvmOverloads

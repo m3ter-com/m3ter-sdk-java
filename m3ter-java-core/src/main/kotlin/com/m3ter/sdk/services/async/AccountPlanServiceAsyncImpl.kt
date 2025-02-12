@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AccountPlan
 import com.m3ter.sdk.models.AccountPlanCreateParams
 import com.m3ter.sdk.models.AccountPlanDeleteParams
+import com.m3ter.sdk.models.AccountPlanListPageAsync
 import com.m3ter.sdk.models.AccountPlanListParams
-import com.m3ter.sdk.models.AccountPlanListResponse
 import com.m3ter.sdk.models.AccountPlanRetrieveParams
 import com.m3ter.sdk.models.AccountPlanUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -145,8 +145,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<AccountPlanListResponse> =
-        jsonHandler<AccountPlanListResponse>(clientOptions.jsonMapper)
+    private val listHandler: Handler<AccountPlanListPageAsync.Response> =
+        jsonHandler<AccountPlanListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -162,7 +162,7 @@ internal constructor(
     override fun list(
         params: AccountPlanListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<AccountPlanListResponse> {
+    ): CompletableFuture<AccountPlanListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -179,6 +179,7 @@ internal constructor(
                             it.validate()
                         }
                     }
+                    .let { AccountPlanListPageAsync.of(this, params, it) }
             }
     }
 

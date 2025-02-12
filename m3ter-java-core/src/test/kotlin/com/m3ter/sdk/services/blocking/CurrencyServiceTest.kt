@@ -96,18 +96,10 @@ class CurrencyServiceTest {
                 .token("My Token")
                 .build()
         val currencyService = client.currencies()
-        val currencyListResponse =
-            currencyService.list(
-                CurrencyListParams.builder()
-                    .orgId("orgId")
-                    .archived(true)
-                    .addCode("string")
-                    .addId("string")
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .build()
-            )
-        println(currencyListResponse)
+        val paginatedDataCurrencyResponse =
+            currencyService.list(CurrencyListParams.builder().orgId("orgId").build())
+        println(paginatedDataCurrencyResponse)
+        paginatedDataCurrencyResponse.data().forEach { it.validate() }
     }
 
     @Test

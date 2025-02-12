@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
+import com.m3ter.sdk.models.CounterListPageAsync
 import com.m3ter.sdk.models.CounterListParams
-import com.m3ter.sdk.models.CounterListResponse
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -44,7 +44,7 @@ interface CounterServiceAsync {
     fun list(
         params: CounterListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CounterListResponse>
+    ): CompletableFuture<CounterListPageAsync>
 
     /** Delete a Counter for the given UUID. */
     @JvmOverloads

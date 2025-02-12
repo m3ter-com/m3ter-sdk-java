@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
+import com.m3ter.sdk.models.PlanTemplateListPageAsync
 import com.m3ter.sdk.models.PlanTemplateListParams
-import com.m3ter.sdk.models.PlanTemplateListResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -69,7 +69,7 @@ interface PlanTemplateServiceAsync {
     fun list(
         params: PlanTemplateListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<PlanTemplateListResponse>
+    ): CompletableFuture<PlanTemplateListPageAsync>
 
     /**
      * Delete a specific PlanTemplate.
