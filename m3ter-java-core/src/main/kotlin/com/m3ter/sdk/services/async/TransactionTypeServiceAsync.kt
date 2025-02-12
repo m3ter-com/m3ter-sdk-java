@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
+import com.m3ter.sdk.models.TransactionTypeListPageAsync
 import com.m3ter.sdk.models.TransactionTypeListParams
-import com.m3ter.sdk.models.TransactionTypeListResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -51,7 +51,7 @@ interface TransactionTypeServiceAsync {
     fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<TransactionTypeListResponse>
+    ): CompletableFuture<TransactionTypeListPageAsync>
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads

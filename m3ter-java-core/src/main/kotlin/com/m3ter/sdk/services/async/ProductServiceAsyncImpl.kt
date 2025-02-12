@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
+import com.m3ter.sdk.models.ProductListPageAsync
 import com.m3ter.sdk.models.ProductListParams
-import com.m3ter.sdk.models.ProductListResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -141,8 +141,9 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<ProductListResponse> =
-        jsonHandler<ProductListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<ProductListPageAsync.Response> =
+        jsonHandler<ProductListPageAsync.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Products.
@@ -153,7 +154,7 @@ internal constructor(
     override fun list(
         params: ProductListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<ProductListResponse> {
+    ): CompletableFuture<ProductListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -170,6 +171,7 @@ internal constructor(
                             it.validate()
                         }
                     }
+                    .let { ProductListPageAsync.of(this, params, it) }
             }
     }
 

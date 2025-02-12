@@ -9,8 +9,8 @@ import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
+import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
-import com.m3ter.sdk.models.CompoundAggregationListResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
@@ -69,7 +69,7 @@ interface CompoundAggregationService {
     fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompoundAggregationListResponse
+    ): CompoundAggregationListPage
 
     /**
      * Delete a CompoundAggregation with the given UUID.

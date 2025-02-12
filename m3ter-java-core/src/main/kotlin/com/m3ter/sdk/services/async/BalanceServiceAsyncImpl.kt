@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
+import com.m3ter.sdk.models.BalanceListPageAsync
 import com.m3ter.sdk.models.BalanceListParams
-import com.m3ter.sdk.models.BalanceListResponse
 import com.m3ter.sdk.models.BalanceRetrieveParams
 import com.m3ter.sdk.models.BalanceUpdateParams
 import com.m3ter.sdk.services.async.balances.TransactionServiceAsync
@@ -144,8 +144,9 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<BalanceListResponse> =
-        jsonHandler<BalanceListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<BalanceListPageAsync.Response> =
+        jsonHandler<BalanceListPageAsync.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of all Balances for your Organization.
@@ -157,7 +158,7 @@ internal constructor(
     override fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<BalanceListResponse> {
+    ): CompletableFuture<BalanceListPageAsync> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -174,6 +175,7 @@ internal constructor(
                             it.validate()
                         }
                     }
+                    .let { BalanceListPageAsync.of(this, params, it) }
             }
     }
 

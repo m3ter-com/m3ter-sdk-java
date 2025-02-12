@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
+import com.m3ter.sdk.models.PlanGroupLinkListPageAsync
 import com.m3ter.sdk.models.PlanGroupLinkListParams
-import com.m3ter.sdk.models.PlanGroupLinkListResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -42,7 +42,7 @@ interface PlanGroupLinkServiceAsync {
     fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<PlanGroupLinkListResponse>
+    ): CompletableFuture<PlanGroupLinkListPageAsync>
 
     /** Delete a PlanGroupLink for the given UUID. */
     @JvmOverloads

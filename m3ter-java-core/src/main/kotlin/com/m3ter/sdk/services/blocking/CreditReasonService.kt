@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
+import com.m3ter.sdk.models.CreditReasonListPage
 import com.m3ter.sdk.models.CreditReasonListParams
-import com.m3ter.sdk.models.CreditReasonListResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 
@@ -49,7 +49,7 @@ interface CreditReasonService {
     fun list(
         params: CreditReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CreditReasonListResponse
+    ): CreditReasonListPage
 
     /** Delete the Credit Reason with the given UUID. */
     @JvmOverloads

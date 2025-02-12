@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
+import com.m3ter.sdk.models.CreditReasonListPageAsync
 import com.m3ter.sdk.models.CreditReasonListParams
-import com.m3ter.sdk.models.CreditReasonListResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -50,7 +50,7 @@ interface CreditReasonServiceAsync {
     fun list(
         params: CreditReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CreditReasonListResponse>
+    ): CompletableFuture<CreditReasonListPageAsync>
 
     /** Delete the Credit Reason with the given UUID. */
     @JvmOverloads

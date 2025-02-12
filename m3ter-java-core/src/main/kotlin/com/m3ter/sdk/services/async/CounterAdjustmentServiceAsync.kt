@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
+import com.m3ter.sdk.models.CounterAdjustmentListPageAsync
 import com.m3ter.sdk.models.CounterAdjustmentListParams
-import com.m3ter.sdk.models.CounterAdjustmentListResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -61,7 +61,7 @@ interface CounterAdjustmentServiceAsync {
     fun list(
         params: CounterAdjustmentListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CounterAdjustmentListResponse>
+    ): CompletableFuture<CounterAdjustmentListPageAsync>
 
     /** Delete a CounterAdjustment for the given UUID. */
     @JvmOverloads

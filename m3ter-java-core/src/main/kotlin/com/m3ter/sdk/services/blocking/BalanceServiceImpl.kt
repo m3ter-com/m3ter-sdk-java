@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
+import com.m3ter.sdk.models.BalanceListPage
 import com.m3ter.sdk.models.BalanceListParams
-import com.m3ter.sdk.models.BalanceListResponse
 import com.m3ter.sdk.models.BalanceRetrieveParams
 import com.m3ter.sdk.models.BalanceUpdateParams
 import com.m3ter.sdk.services.blocking.balances.TransactionService
@@ -123,8 +123,9 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<BalanceListResponse> =
-        jsonHandler<BalanceListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val listHandler: Handler<BalanceListPage.Response> =
+        jsonHandler<BalanceListPage.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of all Balances for your Organization.
@@ -133,10 +134,7 @@ internal constructor(
      * filter the Balances by the end customer's Account UUID and end dates, and paginate through
      * them using the `pageSize` and `nextToken` parameters.
      */
-    override fun list(
-        params: BalanceListParams,
-        requestOptions: RequestOptions
-    ): BalanceListResponse {
+    override fun list(params: BalanceListParams, requestOptions: RequestOptions): BalanceListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -151,6 +149,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { BalanceListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Balance> =

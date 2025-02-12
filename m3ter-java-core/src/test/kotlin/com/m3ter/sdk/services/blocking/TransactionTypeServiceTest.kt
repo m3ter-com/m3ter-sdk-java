@@ -92,18 +92,10 @@ class TransactionTypeServiceTest {
                 .token("My Token")
                 .build()
         val transactionTypeService = client.transactionTypes()
-        val transactionTypeListResponse =
-            transactionTypeService.list(
-                TransactionTypeListParams.builder()
-                    .orgId("orgId")
-                    .archived(true)
-                    .addCode("string")
-                    .addId("string")
-                    .nextToken("nextToken")
-                    .pageSize(1L)
-                    .build()
-            )
-        println(transactionTypeListResponse)
+        val paginatedDataTransactionTypeResponse =
+            transactionTypeService.list(TransactionTypeListParams.builder().orgId("orgId").build())
+        println(paginatedDataTransactionTypeResponse)
+        paginatedDataTransactionTypeResponse.data().forEach { it.validate() }
     }
 
     @Test

@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
+import com.m3ter.sdk.models.CounterPricingListPage
 import com.m3ter.sdk.models.CounterPricingListParams
-import com.m3ter.sdk.models.CounterPricingListResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 
@@ -54,7 +54,7 @@ interface CounterPricingService {
     fun list(
         params: CounterPricingListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CounterPricingListResponse
+    ): CounterPricingListPage
 
     /** Delete a CounterPricing for the given UUID. */
     @JvmOverloads

@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
+import com.m3ter.sdk.models.CreditReasonListPage
 import com.m3ter.sdk.models.CreditReasonListParams
-import com.m3ter.sdk.models.CreditReasonListResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 
@@ -123,8 +123,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CreditReasonListResponse> =
-        jsonHandler<CreditReasonListResponse>(clientOptions.jsonMapper)
+    private val listHandler: Handler<CreditReasonListPage.Response> =
+        jsonHandler<CreditReasonListPage.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -135,7 +135,7 @@ internal constructor(
     override fun list(
         params: CreditReasonListParams,
         requestOptions: RequestOptions
-    ): CreditReasonListResponse {
+    ): CreditReasonListPage {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -155,6 +155,7 @@ internal constructor(
                     it.validate()
                 }
             }
+            .let { CreditReasonListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<CreditReason> =
