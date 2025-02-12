@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
-import com.m3ter.sdk.models.PlanTemplateListPage
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateListResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 
@@ -133,8 +133,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PlanTemplateListPage.Response> =
-        jsonHandler<PlanTemplateListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<PlanTemplateListResponse> =
+        jsonHandler<PlanTemplateListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -147,7 +147,7 @@ internal constructor(
     override fun list(
         params: PlanTemplateListParams,
         requestOptions: RequestOptions
-    ): PlanTemplateListPage {
+    ): PlanTemplateListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -162,7 +162,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { PlanTemplateListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<PlanTemplate> =

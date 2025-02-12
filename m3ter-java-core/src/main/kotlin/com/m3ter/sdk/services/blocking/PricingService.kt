@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
-import com.m3ter.sdk.models.PricingListPage
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingListResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 
@@ -51,7 +51,7 @@ interface PricingService {
     fun list(
         params: PricingListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): PricingListPage
+    ): PricingListResponse
 
     /** Delete the Pricing with the given UUID. */
     @JvmOverloads

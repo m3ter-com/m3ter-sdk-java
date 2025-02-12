@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
-import com.m3ter.sdk.models.PlanGroupLinkListPageAsync
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkListResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -122,15 +122,15 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<PlanGroupLinkListPageAsync.Response> =
-        jsonHandler<PlanGroupLinkListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<PlanGroupLinkListResponse> =
+        jsonHandler<PlanGroupLinkListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /** Retrieve a list of PlanGroupLink entities */
     override fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<PlanGroupLinkListPageAsync> {
+    ): CompletableFuture<PlanGroupLinkListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -147,7 +147,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { PlanGroupLinkListPageAsync.of(this, params, it) }
             }
     }
 

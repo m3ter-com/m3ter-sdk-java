@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
-import com.m3ter.sdk.models.CounterAdjustmentListPage
 import com.m3ter.sdk.models.CounterAdjustmentListParams
+import com.m3ter.sdk.models.CounterAdjustmentListResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 
@@ -60,7 +60,7 @@ interface CounterAdjustmentService {
     fun list(
         params: CounterAdjustmentListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CounterAdjustmentListPage
+    ): CounterAdjustmentListResponse
 
     /** Delete a CounterAdjustment for the given UUID. */
     @JvmOverloads

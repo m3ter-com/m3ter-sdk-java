@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
-import com.m3ter.sdk.models.CounterListPageAsync
 import com.m3ter.sdk.models.CounterListParams
+import com.m3ter.sdk.models.CounterListResponse
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -122,9 +122,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CounterListPageAsync.Response> =
-        jsonHandler<CounterListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<CounterListResponse> =
+        jsonHandler<CounterListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes.
@@ -132,7 +131,7 @@ internal constructor(
     override fun list(
         params: CounterListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<CounterListPageAsync> {
+    ): CompletableFuture<CounterListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -149,7 +148,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { CounterListPageAsync.of(this, params, it) }
             }
     }
 

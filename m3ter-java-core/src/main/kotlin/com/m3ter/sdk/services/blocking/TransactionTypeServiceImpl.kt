@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
-import com.m3ter.sdk.models.TransactionTypeListPage
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeListResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
@@ -125,8 +125,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<TransactionTypeListPage.Response> =
-        jsonHandler<TransactionTypeListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<TransactionTypeListResponse> =
+        jsonHandler<TransactionTypeListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -136,7 +136,7 @@ internal constructor(
     override fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions
-    ): TransactionTypeListPage {
+    ): TransactionTypeListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -156,7 +156,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { TransactionTypeListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<TransactionType> =

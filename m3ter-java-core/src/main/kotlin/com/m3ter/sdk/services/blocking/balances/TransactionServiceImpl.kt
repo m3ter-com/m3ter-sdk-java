@@ -14,8 +14,8 @@ import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
-import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionListResponse
 import com.m3ter.sdk.models.Transaction
 
 class TransactionServiceImpl
@@ -72,8 +72,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<BalanceTransactionListPage.Response> =
-        jsonHandler<BalanceTransactionListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<BalanceTransactionListResponse> =
+        jsonHandler<BalanceTransactionListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -85,7 +85,7 @@ internal constructor(
     override fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions
-    ): BalanceTransactionListPage {
+    ): BalanceTransactionListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -106,6 +106,5 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { BalanceTransactionListPage.of(this, params, it) }
     }
 }

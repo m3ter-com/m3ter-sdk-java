@@ -9,8 +9,8 @@ import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
-import com.m3ter.sdk.models.CompoundAggregationListPageAsync
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationListResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -70,7 +70,7 @@ interface CompoundAggregationServiceAsync {
     fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<CompoundAggregationListPageAsync>
+    ): CompletableFuture<CompoundAggregationListResponse>
 
     /**
      * Delete a CompoundAggregation with the given UUID.

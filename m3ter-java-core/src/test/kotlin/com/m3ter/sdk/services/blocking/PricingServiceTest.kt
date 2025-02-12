@@ -160,10 +160,19 @@ class PricingServiceTest {
                 .token("My Token")
                 .build()
         val pricingService = client.pricings()
-        val paginatedDataPricingResponse =
-            pricingService.list(PricingListParams.builder().orgId("orgId").build())
-        println(paginatedDataPricingResponse)
-        paginatedDataPricingResponse.data().forEach { it.validate() }
+        val pricingListResponse =
+            pricingService.list(
+                PricingListParams.builder()
+                    .orgId("orgId")
+                    .date("date")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .planId("planId")
+                    .planTemplateId("planTemplateId")
+                    .build()
+            )
+        println(pricingListResponse)
     }
 
     @Test

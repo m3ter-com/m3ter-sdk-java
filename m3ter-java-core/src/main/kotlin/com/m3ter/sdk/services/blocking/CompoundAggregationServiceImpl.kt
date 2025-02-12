@@ -17,8 +17,8 @@ import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
-import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationListResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
@@ -133,8 +133,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CompoundAggregationListPage.Response> =
-        jsonHandler<CompoundAggregationListPage.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<CompoundAggregationListResponse> =
+        jsonHandler<CompoundAggregationListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -148,7 +148,7 @@ internal constructor(
     override fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions
-    ): CompoundAggregationListPage {
+    ): CompoundAggregationListResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -163,7 +163,6 @@ internal constructor(
                     it.validate()
                 }
             }
-            .let { CompoundAggregationListPage.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<CompoundAggregation> =

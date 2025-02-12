@@ -9,8 +9,8 @@ import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountListChildrenParams
-import com.m3ter.sdk.models.AccountListPageAsync
 import com.m3ter.sdk.models.AccountListParams
+import com.m3ter.sdk.models.AccountListResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -51,7 +51,7 @@ interface AccountServiceAsync {
     fun list(
         params: AccountListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<AccountListPageAsync>
+    ): CompletableFuture<AccountListResponse>
 
     /**
      * Delete the Account with the given UUID. This may fail if there are any AccountPlans that

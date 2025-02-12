@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
-import com.m3ter.sdk.models.TransactionTypeListPageAsync
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeListResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -135,8 +135,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<TransactionTypeListPageAsync.Response> =
-        jsonHandler<TransactionTypeListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<TransactionTypeListResponse> =
+        jsonHandler<TransactionTypeListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -146,7 +146,7 @@ internal constructor(
     override fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<TransactionTypeListPageAsync> {
+    ): CompletableFuture<TransactionTypeListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -168,7 +168,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { TransactionTypeListPageAsync.of(this, params, it) }
             }
     }
 

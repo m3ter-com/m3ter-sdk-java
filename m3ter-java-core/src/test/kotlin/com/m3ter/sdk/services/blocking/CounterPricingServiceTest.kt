@@ -129,10 +129,19 @@ class CounterPricingServiceTest {
                 .token("My Token")
                 .build()
         val counterPricingService = client.counterPricings()
-        val paginatedDataCounterPricingResponse =
-            counterPricingService.list(CounterPricingListParams.builder().orgId("orgId").build())
-        println(paginatedDataCounterPricingResponse)
-        paginatedDataCounterPricingResponse.data().forEach { it.validate() }
+        val counterPricingListResponse =
+            counterPricingService.list(
+                CounterPricingListParams.builder()
+                    .orgId("orgId")
+                    .date("date")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .planId("planId")
+                    .planTemplateId("planTemplateId")
+                    .build()
+            )
+        println(counterPricingListResponse)
     }
 
     @Test

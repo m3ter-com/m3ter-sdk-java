@@ -8,8 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Plan
 import com.m3ter.sdk.models.PlanCreateParams
 import com.m3ter.sdk.models.PlanDeleteParams
-import com.m3ter.sdk.models.PlanListPageAsync
 import com.m3ter.sdk.models.PlanListParams
+import com.m3ter.sdk.models.PlanListResponse
 import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -48,7 +48,7 @@ interface PlanServiceAsync {
     fun list(
         params: PlanListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<PlanListPageAsync>
+    ): CompletableFuture<PlanListResponse>
 
     /** Delete the Plan with the given UUID. */
     @JvmOverloads

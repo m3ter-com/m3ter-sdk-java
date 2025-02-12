@@ -92,10 +92,18 @@ class DebitReasonServiceTest {
                 .token("My Token")
                 .build()
         val debitReasonService = client.debitReasons()
-        val paginatedDataDebitReasonResponse =
-            debitReasonService.list(DebitReasonListParams.builder().orgId("orgId").build())
-        println(paginatedDataDebitReasonResponse)
-        paginatedDataDebitReasonResponse.data().forEach { it.validate() }
+        val debitReasonListResponse =
+            debitReasonService.list(
+                DebitReasonListParams.builder()
+                    .orgId("orgId")
+                    .archived(true)
+                    .addCode("string")
+                    .addId("string")
+                    .nextToken("nextToken")
+                    .pageSize(1L)
+                    .build()
+            )
+        println(debitReasonListResponse)
     }
 
     @Test

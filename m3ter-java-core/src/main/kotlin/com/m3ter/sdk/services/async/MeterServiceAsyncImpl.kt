@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
-import com.m3ter.sdk.models.MeterListPageAsync
 import com.m3ter.sdk.models.MeterListParams
+import com.m3ter.sdk.models.MeterListResponse
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -155,15 +155,14 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<MeterListPageAsync.Response> =
-        jsonHandler<MeterListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listHandler: Handler<MeterListResponse> =
+        jsonHandler<MeterListResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve a list of Meter entities */
     override fun list(
         params: MeterListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<MeterListPageAsync> {
+    ): CompletableFuture<MeterListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -180,7 +179,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { MeterListPageAsync.of(this, params, it) }
             }
     }
 

@@ -6,8 +6,8 @@ package com.m3ter.sdk.services.async.balances
 
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
-import com.m3ter.sdk.models.BalanceTransactionListPageAsync
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionListResponse
 import com.m3ter.sdk.models.Transaction
 import java.util.concurrent.CompletableFuture
 
@@ -46,5 +46,5 @@ interface TransactionServiceAsync {
     fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): CompletableFuture<BalanceTransactionListPageAsync>
+    ): CompletableFuture<BalanceTransactionListResponse>
 }

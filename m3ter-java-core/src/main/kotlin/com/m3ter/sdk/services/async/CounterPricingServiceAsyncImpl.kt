@@ -16,8 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
-import com.m3ter.sdk.models.CounterPricingListPageAsync
 import com.m3ter.sdk.models.CounterPricingListParams
+import com.m3ter.sdk.models.CounterPricingListResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -132,8 +132,8 @@ internal constructor(
             }
     }
 
-    private val listHandler: Handler<CounterPricingListPageAsync.Response> =
-        jsonHandler<CounterPricingListPageAsync.Response>(clientOptions.jsonMapper)
+    private val listHandler: Handler<CounterPricingListResponse> =
+        jsonHandler<CounterPricingListResponse>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
     /**
@@ -143,7 +143,7 @@ internal constructor(
     override fun list(
         params: CounterPricingListParams,
         requestOptions: RequestOptions
-    ): CompletableFuture<CounterPricingListPageAsync> {
+    ): CompletableFuture<CounterPricingListResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -160,7 +160,6 @@ internal constructor(
                             it.validate()
                         }
                     }
-                    .let { CounterPricingListPageAsync.of(this, params, it) }
             }
     }
 
