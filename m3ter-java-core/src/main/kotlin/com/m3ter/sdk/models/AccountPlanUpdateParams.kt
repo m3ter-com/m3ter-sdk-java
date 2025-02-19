@@ -42,7 +42,7 @@ class AccountPlanUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: AccountPlanUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -239,7 +239,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): AccountPlanUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -254,9 +254,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AccountPlanUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("accountId")
         @ExcludeMissing
         private val accountId: JsonField<String> = JsonMissing.of(),
@@ -500,7 +500,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AccountPlanUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -526,7 +526,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [AccountPlanUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var accountId: JsonField<String>? = null
@@ -543,19 +543,19 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(accountPlanUpdateBody: AccountPlanUpdateBody) = apply {
-                accountId = accountPlanUpdateBody.accountId
-                startDate = accountPlanUpdateBody.startDate
-                billEpoch = accountPlanUpdateBody.billEpoch
-                childBillingMode = accountPlanUpdateBody.childBillingMode
-                code = accountPlanUpdateBody.code
-                contractId = accountPlanUpdateBody.contractId
-                customFields = accountPlanUpdateBody.customFields
-                endDate = accountPlanUpdateBody.endDate
-                planGroupId = accountPlanUpdateBody.planGroupId
-                planId = accountPlanUpdateBody.planId
-                version = accountPlanUpdateBody.version
-                additionalProperties = accountPlanUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                accountId = body.accountId
+                startDate = body.startDate
+                billEpoch = body.billEpoch
+                childBillingMode = body.childBillingMode
+                code = body.code
+                contractId = body.contractId
+                customFields = body.customFields
+                endDate = body.endDate
+                planGroupId = body.planGroupId
+                planId = body.planId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The unique identifier (UUID) for the Account. */
@@ -770,8 +770,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AccountPlanUpdateBody =
-                AccountPlanUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("accountId", accountId),
                     checkRequired("startDate", startDate),
                     billEpoch,
@@ -792,7 +792,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountPlanUpdateBody && accountId == other.accountId && startDate == other.startDate && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && customFields == other.customFields && endDate == other.endDate && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && startDate == other.startDate && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && customFields == other.customFields && endDate == other.endDate && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -802,7 +802,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountPlanUpdateBody{accountId=$accountId, startDate=$startDate, billEpoch=$billEpoch, childBillingMode=$childBillingMode, code=$code, contractId=$contractId, customFields=$customFields, endDate=$endDate, planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, startDate=$startDate, billEpoch=$billEpoch, childBillingMode=$childBillingMode, code=$code, contractId=$contractId, customFields=$customFields, endDate=$endDate, planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -818,7 +818,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: AccountPlanUpdateBody.Builder = AccountPlanUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

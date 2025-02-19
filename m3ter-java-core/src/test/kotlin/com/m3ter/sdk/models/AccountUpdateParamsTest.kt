@@ -92,7 +92,9 @@ class AccountUpdateParamsTest {
                 .statementDefinitionId("statementDefinitionId")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainlessapi.com")
@@ -145,7 +147,9 @@ class AccountUpdateParamsTest {
                 .emailAddress("dev@stainlessapi.com")
                 .name("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainlessapi.com")

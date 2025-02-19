@@ -29,7 +29,7 @@ import java.util.Optional
 class ProductCreateParams
 private constructor(
     private val orgId: String,
-    private val body: ProductCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -108,7 +108,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ProductCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -122,9 +122,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ProductCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -216,7 +216,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ProductCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -235,7 +235,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ProductCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
@@ -245,12 +245,12 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(productCreateBody: ProductCreateBody) = apply {
-                code = productCreateBody.code
-                name = productCreateBody.name
-                customFields = productCreateBody.customFields
-                version = productCreateBody.version
-                additionalProperties = productCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                code = body.code
+                name = body.name
+                customFields = body.customFields
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -340,8 +340,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ProductCreateBody =
-                ProductCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("code", code),
                     checkRequired("name", name),
                     customFields,
@@ -355,7 +355,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ProductCreateBody && code == other.code && name == other.name && customFields == other.customFields && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && code == other.code && name == other.name && customFields == other.customFields && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -365,7 +365,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ProductCreateBody{code=$code, name=$name, customFields=$customFields, version=$version, additionalProperties=$additionalProperties}"
+            "Body{code=$code, name=$name, customFields=$customFields, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -380,7 +380,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: ProductCreateBody.Builder = ProductCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

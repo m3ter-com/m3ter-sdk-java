@@ -100,7 +100,9 @@ class PricingCreateParamsTest {
                 .type(PricingCreateParams.Type.DEBIT)
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.pricingBands())
             .isEqualTo(
@@ -164,7 +166,9 @@ class PricingCreateParamsTest {
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.pricingBands())
             .isEqualTo(

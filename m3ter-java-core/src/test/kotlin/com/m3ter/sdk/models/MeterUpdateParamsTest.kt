@@ -77,7 +77,9 @@ class MeterUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
@@ -139,7 +141,9 @@ class MeterUpdateParamsTest {
                 )
                 .name("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())

@@ -26,7 +26,7 @@ import java.util.Optional
 class OrganizationConfigUpdateParams
 private constructor(
     private val orgId: String,
-    private val body: OrganizationConfigUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -524,7 +524,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): OrganizationConfigUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -538,9 +538,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class OrganizationConfigUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("currency")
         @ExcludeMissing
         private val currency: JsonField<String> = JsonMissing.of(),
@@ -1167,7 +1167,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): OrganizationConfigUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -1205,7 +1205,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [OrganizationConfigUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -1236,38 +1236,31 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(organizationConfigUpdateBody: OrganizationConfigUpdateBody) = apply {
-                currency = organizationConfigUpdateBody.currency
-                dayEpoch = organizationConfigUpdateBody.dayEpoch
-                daysBeforeBillDue = organizationConfigUpdateBody.daysBeforeBillDue
-                monthEpoch = organizationConfigUpdateBody.monthEpoch
-                timezone = organizationConfigUpdateBody.timezone
-                weekEpoch = organizationConfigUpdateBody.weekEpoch
-                yearEpoch = organizationConfigUpdateBody.yearEpoch
-                autoApproveBillsGracePeriod =
-                    organizationConfigUpdateBody.autoApproveBillsGracePeriod
-                autoApproveBillsGracePeriodUnit =
-                    organizationConfigUpdateBody.autoApproveBillsGracePeriodUnit
-                autoGenerateStatementMode = organizationConfigUpdateBody.autoGenerateStatementMode
-                billPrefix = organizationConfigUpdateBody.billPrefix
-                commitmentFeeBillInAdvance = organizationConfigUpdateBody.commitmentFeeBillInAdvance
-                consolidateBills = organizationConfigUpdateBody.consolidateBills
-                creditApplicationOrder =
-                    organizationConfigUpdateBody.creditApplicationOrder.map { it.toMutableList() }
-                currencyConversions =
-                    organizationConfigUpdateBody.currencyConversions.map { it.toMutableList() }
-                defaultStatementDefinitionId =
-                    organizationConfigUpdateBody.defaultStatementDefinitionId
-                externalInvoiceDate = organizationConfigUpdateBody.externalInvoiceDate
-                minimumSpendBillInAdvance = organizationConfigUpdateBody.minimumSpendBillInAdvance
-                scheduledBillInterval = organizationConfigUpdateBody.scheduledBillInterval
-                sequenceStartNumber = organizationConfigUpdateBody.sequenceStartNumber
-                standingChargeBillInAdvance =
-                    organizationConfigUpdateBody.standingChargeBillInAdvance
-                suppressedEmptyBills = organizationConfigUpdateBody.suppressedEmptyBills
-                version = organizationConfigUpdateBody.version
-                additionalProperties =
-                    organizationConfigUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                dayEpoch = body.dayEpoch
+                daysBeforeBillDue = body.daysBeforeBillDue
+                monthEpoch = body.monthEpoch
+                timezone = body.timezone
+                weekEpoch = body.weekEpoch
+                yearEpoch = body.yearEpoch
+                autoApproveBillsGracePeriod = body.autoApproveBillsGracePeriod
+                autoApproveBillsGracePeriodUnit = body.autoApproveBillsGracePeriodUnit
+                autoGenerateStatementMode = body.autoGenerateStatementMode
+                billPrefix = body.billPrefix
+                commitmentFeeBillInAdvance = body.commitmentFeeBillInAdvance
+                consolidateBills = body.consolidateBills
+                creditApplicationOrder = body.creditApplicationOrder.map { it.toMutableList() }
+                currencyConversions = body.currencyConversions.map { it.toMutableList() }
+                defaultStatementDefinitionId = body.defaultStatementDefinitionId
+                externalInvoiceDate = body.externalInvoiceDate
+                minimumSpendBillInAdvance = body.minimumSpendBillInAdvance
+                scheduledBillInterval = body.scheduledBillInterval
+                sequenceStartNumber = body.sequenceStartNumber
+                standingChargeBillInAdvance = body.standingChargeBillInAdvance
+                suppressedEmptyBills = body.suppressedEmptyBills
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1886,8 +1879,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): OrganizationConfigUpdateBody =
-                OrganizationConfigUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("currency", currency),
                     checkRequired("dayEpoch", dayEpoch),
                     checkRequired("daysBeforeBillDue", daysBeforeBillDue),
@@ -1920,7 +1913,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is OrganizationConfigUpdateBody && currency == other.currency && dayEpoch == other.dayEpoch && daysBeforeBillDue == other.daysBeforeBillDue && monthEpoch == other.monthEpoch && timezone == other.timezone && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod && autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit && autoGenerateStatementMode == other.autoGenerateStatementMode && billPrefix == other.billPrefix && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && consolidateBills == other.consolidateBills && creditApplicationOrder == other.creditApplicationOrder && currencyConversions == other.currencyConversions && defaultStatementDefinitionId == other.defaultStatementDefinitionId && externalInvoiceDate == other.externalInvoiceDate && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && scheduledBillInterval == other.scheduledBillInterval && sequenceStartNumber == other.sequenceStartNumber && standingChargeBillInAdvance == other.standingChargeBillInAdvance && suppressedEmptyBills == other.suppressedEmptyBills && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && dayEpoch == other.dayEpoch && daysBeforeBillDue == other.daysBeforeBillDue && monthEpoch == other.monthEpoch && timezone == other.timezone && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod && autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit && autoGenerateStatementMode == other.autoGenerateStatementMode && billPrefix == other.billPrefix && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && consolidateBills == other.consolidateBills && creditApplicationOrder == other.creditApplicationOrder && currencyConversions == other.currencyConversions && defaultStatementDefinitionId == other.defaultStatementDefinitionId && externalInvoiceDate == other.externalInvoiceDate && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && scheduledBillInterval == other.scheduledBillInterval && sequenceStartNumber == other.sequenceStartNumber && standingChargeBillInAdvance == other.standingChargeBillInAdvance && suppressedEmptyBills == other.suppressedEmptyBills && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1930,7 +1923,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "OrganizationConfigUpdateBody{currency=$currency, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, monthEpoch=$monthEpoch, timezone=$timezone, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, creditApplicationOrder=$creditApplicationOrder, currencyConversions=$currencyConversions, defaultStatementDefinitionId=$defaultStatementDefinitionId, externalInvoiceDate=$externalInvoiceDate, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, version=$version, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, monthEpoch=$monthEpoch, timezone=$timezone, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, creditApplicationOrder=$creditApplicationOrder, currencyConversions=$currencyConversions, defaultStatementDefinitionId=$defaultStatementDefinitionId, externalInvoiceDate=$externalInvoiceDate, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1945,8 +1938,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: OrganizationConfigUpdateBody.Builder =
-            OrganizationConfigUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

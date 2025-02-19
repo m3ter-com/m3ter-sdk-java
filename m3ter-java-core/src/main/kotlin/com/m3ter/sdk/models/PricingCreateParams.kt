@@ -32,7 +32,7 @@ import java.util.Optional
 class PricingCreateParams
 private constructor(
     private val orgId: String,
-    private val body: PricingCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -297,7 +297,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): PricingCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -311,9 +311,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PricingCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("pricingBands")
         @ExcludeMissing
         private val pricingBands: JsonField<List<PricingBand>> = JsonMissing.of(),
@@ -669,7 +669,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PricingCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -703,7 +703,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [PricingCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var pricingBands: JsonField<MutableList<PricingBand>>? = null
@@ -728,28 +728,27 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(pricingCreateBody: PricingCreateBody) = apply {
-                pricingBands = pricingCreateBody.pricingBands.map { it.toMutableList() }
-                startDate = pricingCreateBody.startDate
-                accountingProductId = pricingCreateBody.accountingProductId
-                aggregationId = pricingCreateBody.aggregationId
-                code = pricingCreateBody.code
-                compoundAggregationId = pricingCreateBody.compoundAggregationId
-                cumulative = pricingCreateBody.cumulative
-                description = pricingCreateBody.description
-                endDate = pricingCreateBody.endDate
-                minimumSpend = pricingCreateBody.minimumSpend
-                minimumSpendBillInAdvance = pricingCreateBody.minimumSpendBillInAdvance
-                minimumSpendDescription = pricingCreateBody.minimumSpendDescription
-                overagePricingBands =
-                    pricingCreateBody.overagePricingBands.map { it.toMutableList() }
-                planId = pricingCreateBody.planId
-                planTemplateId = pricingCreateBody.planTemplateId
-                segment = pricingCreateBody.segment
-                tiersSpanPlan = pricingCreateBody.tiersSpanPlan
-                type = pricingCreateBody.type
-                version = pricingCreateBody.version
-                additionalProperties = pricingCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                pricingBands = body.pricingBands.map { it.toMutableList() }
+                startDate = body.startDate
+                accountingProductId = body.accountingProductId
+                aggregationId = body.aggregationId
+                code = body.code
+                compoundAggregationId = body.compoundAggregationId
+                cumulative = body.cumulative
+                description = body.description
+                endDate = body.endDate
+                minimumSpend = body.minimumSpend
+                minimumSpendBillInAdvance = body.minimumSpendBillInAdvance
+                minimumSpendDescription = body.minimumSpendDescription
+                overagePricingBands = body.overagePricingBands.map { it.toMutableList() }
+                planId = body.planId
+                planTemplateId = body.planTemplateId
+                segment = body.segment
+                tiersSpanPlan = body.tiersSpanPlan
+                type = body.type
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             fun pricingBands(pricingBands: List<PricingBand>) =
@@ -1089,8 +1088,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PricingCreateBody =
-                PricingCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("pricingBands", pricingBands).map { it.toImmutable() },
                     checkRequired("startDate", startDate),
                     accountingProductId,
@@ -1119,7 +1118,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PricingCreateBody && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1129,7 +1128,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PricingCreateBody{pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, aggregationId=$aggregationId, code=$code, compoundAggregationId=$compoundAggregationId, cumulative=$cumulative, description=$description, endDate=$endDate, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, segment=$segment, tiersSpanPlan=$tiersSpanPlan, type=$type, version=$version, additionalProperties=$additionalProperties}"
+            "Body{pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, aggregationId=$aggregationId, code=$code, compoundAggregationId=$compoundAggregationId, cumulative=$cumulative, description=$description, endDate=$endDate, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, segment=$segment, tiersSpanPlan=$tiersSpanPlan, type=$type, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1144,7 +1143,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: PricingCreateBody.Builder = PricingCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

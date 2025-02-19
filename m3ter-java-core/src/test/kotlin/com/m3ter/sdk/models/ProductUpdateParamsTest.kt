@@ -39,7 +39,9 @@ class ProductUpdateParamsTest {
                 )
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
@@ -61,7 +63,9 @@ class ProductUpdateParamsTest {
                 .code("JS!?Q0]r] ]\$]")
                 .name("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")

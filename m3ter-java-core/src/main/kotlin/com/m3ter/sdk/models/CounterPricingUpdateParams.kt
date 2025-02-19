@@ -31,7 +31,7 @@ class CounterPricingUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: CounterPricingUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -244,7 +244,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CounterPricingUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -259,9 +259,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CounterPricingUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("counterId")
         @ExcludeMissing
         private val counterId: JsonField<String> = JsonMissing.of(),
@@ -544,7 +544,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CounterPricingUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -574,7 +574,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CounterPricingUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var counterId: JsonField<String>? = null
@@ -595,23 +595,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(counterPricingUpdateBody: CounterPricingUpdateBody) = apply {
-                counterId = counterPricingUpdateBody.counterId
-                pricingBands = counterPricingUpdateBody.pricingBands.map { it.toMutableList() }
-                startDate = counterPricingUpdateBody.startDate
-                accountingProductId = counterPricingUpdateBody.accountingProductId
-                code = counterPricingUpdateBody.code
-                cumulative = counterPricingUpdateBody.cumulative
-                description = counterPricingUpdateBody.description
-                endDate = counterPricingUpdateBody.endDate
-                planId = counterPricingUpdateBody.planId
-                planTemplateId = counterPricingUpdateBody.planTemplateId
-                proRateAdjustmentCredit = counterPricingUpdateBody.proRateAdjustmentCredit
-                proRateAdjustmentDebit = counterPricingUpdateBody.proRateAdjustmentDebit
-                proRateRunningTotal = counterPricingUpdateBody.proRateRunningTotal
-                runningTotalBillInAdvance = counterPricingUpdateBody.runningTotalBillInAdvance
-                version = counterPricingUpdateBody.version
-                additionalProperties = counterPricingUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                counterId = body.counterId
+                pricingBands = body.pricingBands.map { it.toMutableList() }
+                startDate = body.startDate
+                accountingProductId = body.accountingProductId
+                code = body.code
+                cumulative = body.cumulative
+                description = body.description
+                endDate = body.endDate
+                planId = body.planId
+                planTemplateId = body.planTemplateId
+                proRateAdjustmentCredit = body.proRateAdjustmentCredit
+                proRateAdjustmentDebit = body.proRateAdjustmentDebit
+                proRateRunningTotal = body.proRateRunningTotal
+                runningTotalBillInAdvance = body.runningTotalBillInAdvance
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** UUID of the Counter used to create the pricing. */
@@ -871,8 +871,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CounterPricingUpdateBody =
-                CounterPricingUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("counterId", counterId),
                     checkRequired("pricingBands", pricingBands).map { it.toImmutable() },
                     checkRequired("startDate", startDate),
@@ -897,7 +897,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterPricingUpdateBody && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -907,7 +907,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterPricingUpdateBody{counterId=$counterId, pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, code=$code, cumulative=$cumulative, description=$description, endDate=$endDate, planId=$planId, planTemplateId=$planTemplateId, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, version=$version, additionalProperties=$additionalProperties}"
+            "Body{counterId=$counterId, pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, code=$code, cumulative=$cumulative, description=$description, endDate=$endDate, planId=$planId, planTemplateId=$planTemplateId, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -923,7 +923,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: CounterPricingUpdateBody.Builder = CounterPricingUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

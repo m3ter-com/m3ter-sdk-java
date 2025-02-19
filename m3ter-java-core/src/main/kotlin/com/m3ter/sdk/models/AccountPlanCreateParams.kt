@@ -38,7 +38,7 @@ import java.util.Optional
 class AccountPlanCreateParams
 private constructor(
     private val orgId: String,
-    private val body: AccountPlanCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -233,7 +233,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): AccountPlanCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -247,9 +247,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AccountPlanCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("accountId")
         @ExcludeMissing
         private val accountId: JsonField<String> = JsonMissing.of(),
@@ -493,7 +493,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AccountPlanCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -519,7 +519,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [AccountPlanCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var accountId: JsonField<String>? = null
@@ -536,19 +536,19 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(accountPlanCreateBody: AccountPlanCreateBody) = apply {
-                accountId = accountPlanCreateBody.accountId
-                startDate = accountPlanCreateBody.startDate
-                billEpoch = accountPlanCreateBody.billEpoch
-                childBillingMode = accountPlanCreateBody.childBillingMode
-                code = accountPlanCreateBody.code
-                contractId = accountPlanCreateBody.contractId
-                customFields = accountPlanCreateBody.customFields
-                endDate = accountPlanCreateBody.endDate
-                planGroupId = accountPlanCreateBody.planGroupId
-                planId = accountPlanCreateBody.planId
-                version = accountPlanCreateBody.version
-                additionalProperties = accountPlanCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                accountId = body.accountId
+                startDate = body.startDate
+                billEpoch = body.billEpoch
+                childBillingMode = body.childBillingMode
+                code = body.code
+                contractId = body.contractId
+                customFields = body.customFields
+                endDate = body.endDate
+                planGroupId = body.planGroupId
+                planId = body.planId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The unique identifier (UUID) for the Account. */
@@ -763,8 +763,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AccountPlanCreateBody =
-                AccountPlanCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("accountId", accountId),
                     checkRequired("startDate", startDate),
                     billEpoch,
@@ -785,7 +785,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountPlanCreateBody && accountId == other.accountId && startDate == other.startDate && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && customFields == other.customFields && endDate == other.endDate && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && startDate == other.startDate && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && customFields == other.customFields && endDate == other.endDate && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -795,7 +795,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountPlanCreateBody{accountId=$accountId, startDate=$startDate, billEpoch=$billEpoch, childBillingMode=$childBillingMode, code=$code, contractId=$contractId, customFields=$customFields, endDate=$endDate, planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, startDate=$startDate, billEpoch=$billEpoch, childBillingMode=$childBillingMode, code=$code, contractId=$contractId, customFields=$customFields, endDate=$endDate, planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -810,7 +810,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: AccountPlanCreateBody.Builder = AccountPlanCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

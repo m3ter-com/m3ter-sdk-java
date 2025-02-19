@@ -30,7 +30,7 @@ import java.util.Optional
 class ContractCreateParams
 private constructor(
     private val orgId: String,
-    private val body: ContractCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -145,7 +145,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): ContractCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -159,9 +159,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ContractCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("accountId")
         @ExcludeMissing
         private val accountId: JsonField<String> = JsonMissing.of(),
@@ -312,7 +312,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ContractCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -336,7 +336,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [ContractCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var accountId: JsonField<String>? = null
@@ -351,17 +351,17 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(contractCreateBody: ContractCreateBody) = apply {
-                accountId = contractCreateBody.accountId
-                endDate = contractCreateBody.endDate
-                name = contractCreateBody.name
-                startDate = contractCreateBody.startDate
-                code = contractCreateBody.code
-                customFields = contractCreateBody.customFields
-                description = contractCreateBody.description
-                purchaseOrderNumber = contractCreateBody.purchaseOrderNumber
-                version = contractCreateBody.version
-                additionalProperties = contractCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                accountId = body.accountId
+                endDate = body.endDate
+                name = body.name
+                startDate = body.startDate
+                code = body.code
+                customFields = body.customFields
+                description = body.description
+                purchaseOrderNumber = body.purchaseOrderNumber
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The unique identifier (UUID) of the Account associated with this Contract. */
@@ -492,8 +492,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ContractCreateBody =
-                ContractCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("accountId", accountId),
                     checkRequired("endDate", endDate),
                     checkRequired("name", name),
@@ -512,7 +512,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ContractCreateBody && accountId == other.accountId && endDate == other.endDate && name == other.name && startDate == other.startDate && code == other.code && customFields == other.customFields && description == other.description && purchaseOrderNumber == other.purchaseOrderNumber && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && endDate == other.endDate && name == other.name && startDate == other.startDate && code == other.code && customFields == other.customFields && description == other.description && purchaseOrderNumber == other.purchaseOrderNumber && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -522,7 +522,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ContractCreateBody{accountId=$accountId, endDate=$endDate, name=$name, startDate=$startDate, code=$code, customFields=$customFields, description=$description, purchaseOrderNumber=$purchaseOrderNumber, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, endDate=$endDate, name=$name, startDate=$startDate, code=$code, customFields=$customFields, description=$description, purchaseOrderNumber=$purchaseOrderNumber, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -537,7 +537,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: ContractCreateBody.Builder = ContractCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

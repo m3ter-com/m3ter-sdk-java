@@ -28,7 +28,9 @@ class PlanGroupLinkUpdateParamsTest {
                 .planId("x")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")
@@ -44,7 +46,9 @@ class PlanGroupLinkUpdateParamsTest {
                 .planGroupId("x")
                 .planId("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")

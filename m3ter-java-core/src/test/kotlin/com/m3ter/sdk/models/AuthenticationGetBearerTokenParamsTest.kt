@@ -22,7 +22,9 @@ class AuthenticationGetBearerTokenParamsTest {
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .scope("scope")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
@@ -35,7 +37,9 @@ class AuthenticationGetBearerTokenParamsTest {
             AuthenticationGetBearerTokenParams.builder()
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)

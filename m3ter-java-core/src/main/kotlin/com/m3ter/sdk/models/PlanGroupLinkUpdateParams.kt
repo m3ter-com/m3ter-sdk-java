@@ -25,7 +25,7 @@ class PlanGroupLinkUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: PlanGroupLinkUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -68,7 +68,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): PlanGroupLinkUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -83,9 +83,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PlanGroupLinkUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("planGroupId")
         @ExcludeMissing
         private val planGroupId: JsonField<String> = JsonMissing.of(),
@@ -135,7 +135,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PlanGroupLinkUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -153,7 +153,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [PlanGroupLinkUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var planGroupId: JsonField<String>? = null
@@ -162,11 +162,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(planGroupLinkUpdateBody: PlanGroupLinkUpdateBody) = apply {
-                planGroupId = planGroupLinkUpdateBody.planGroupId
-                planId = planGroupLinkUpdateBody.planId
-                version = planGroupLinkUpdateBody.version
-                additionalProperties = planGroupLinkUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                planGroupId = body.planGroupId
+                planId = body.planId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             fun planGroupId(planGroupId: String) = planGroupId(JsonField.of(planGroupId))
@@ -218,8 +218,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PlanGroupLinkUpdateBody =
-                PlanGroupLinkUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("planGroupId", planGroupId),
                     checkRequired("planId", planId),
                     version,
@@ -232,7 +232,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanGroupLinkUpdateBody && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -242,7 +242,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanGroupLinkUpdateBody{planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{planGroupId=$planGroupId, planId=$planId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -258,7 +258,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: PlanGroupLinkUpdateBody.Builder = PlanGroupLinkUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

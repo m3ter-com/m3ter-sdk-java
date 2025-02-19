@@ -32,7 +32,9 @@ class CounterAdjustmentCreateParamsTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
@@ -52,7 +54,9 @@ class CounterAdjustmentCreateParamsTest {
                 .date("2022-01-04")
                 .value(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")

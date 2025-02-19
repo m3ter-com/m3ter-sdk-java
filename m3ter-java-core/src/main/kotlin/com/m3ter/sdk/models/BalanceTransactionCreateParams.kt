@@ -42,7 +42,7 @@ class BalanceTransactionCreateParams
 private constructor(
     private val orgId: String,
     private val balanceId: String,
-    private val body: BalanceTransactionCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -131,7 +131,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): BalanceTransactionCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -146,9 +146,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class BalanceTransactionCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
@@ -272,7 +272,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): BalanceTransactionCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -295,7 +295,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [BalanceTransactionCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
@@ -309,17 +309,16 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(balanceTransactionCreateBody: BalanceTransactionCreateBody) = apply {
-                amount = balanceTransactionCreateBody.amount
-                appliedDate = balanceTransactionCreateBody.appliedDate
-                currencyPaid = balanceTransactionCreateBody.currencyPaid
-                description = balanceTransactionCreateBody.description
-                paid = balanceTransactionCreateBody.paid
-                transactionDate = balanceTransactionCreateBody.transactionDate
-                transactionTypeId = balanceTransactionCreateBody.transactionTypeId
-                version = balanceTransactionCreateBody.version
-                additionalProperties =
-                    balanceTransactionCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                appliedDate = body.appliedDate
+                currencyPaid = body.currencyPaid
+                description = body.description
+                paid = body.paid
+                transactionDate = body.transactionDate
+                transactionTypeId = body.transactionTypeId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The financial value of the transaction. */
@@ -427,8 +426,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): BalanceTransactionCreateBody =
-                BalanceTransactionCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("amount", amount),
                     appliedDate,
                     currencyPaid,
@@ -446,7 +445,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceTransactionCreateBody && amount == other.amount && appliedDate == other.appliedDate && currencyPaid == other.currencyPaid && description == other.description && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && amount == other.amount && appliedDate == other.appliedDate && currencyPaid == other.currencyPaid && description == other.description && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -456,7 +455,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BalanceTransactionCreateBody{amount=$amount, appliedDate=$appliedDate, currencyPaid=$currencyPaid, description=$description, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, appliedDate=$appliedDate, currencyPaid=$currencyPaid, description=$description, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -472,8 +471,7 @@ private constructor(
 
         private var orgId: String? = null
         private var balanceId: String? = null
-        private var body: BalanceTransactionCreateBody.Builder =
-            BalanceTransactionCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

@@ -32,7 +32,9 @@ class CounterUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
@@ -45,7 +47,9 @@ class CounterUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CounterUpdateParams.builder().orgId("orgId").id("id").name("x").unit("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")

@@ -28,7 +28,9 @@ class CreditReasonCreateParamsTest {
                 .code("{1{}}_")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
@@ -39,7 +41,9 @@ class CreditReasonCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = CreditReasonCreateParams.builder().orgId("orgId").name("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
     }

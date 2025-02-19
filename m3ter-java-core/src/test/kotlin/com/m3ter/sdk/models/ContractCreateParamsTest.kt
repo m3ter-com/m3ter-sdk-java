@@ -48,7 +48,9 @@ class ContractCreateParamsTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
@@ -76,7 +78,9 @@ class ContractCreateParamsTest {
                 .name("x")
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
