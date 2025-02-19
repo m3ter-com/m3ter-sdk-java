@@ -24,7 +24,7 @@ import java.util.Optional
 class PlanCreateParams
 private constructor(
     private val orgId: String,
-    private val body: PlanCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -266,7 +266,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): PlanCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -280,9 +280,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PlanCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -607,7 +607,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PlanCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -638,7 +638,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [PlanCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
@@ -660,24 +660,24 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(planCreateBody: PlanCreateBody) = apply {
-                code = planCreateBody.code
-                name = planCreateBody.name
-                planTemplateId = planCreateBody.planTemplateId
-                accountId = planCreateBody.accountId
-                bespoke = planCreateBody.bespoke
-                customFields = planCreateBody.customFields
-                minimumSpend = planCreateBody.minimumSpend
-                minimumSpendAccountingProductId = planCreateBody.minimumSpendAccountingProductId
-                minimumSpendBillInAdvance = planCreateBody.minimumSpendBillInAdvance
-                minimumSpendDescription = planCreateBody.minimumSpendDescription
-                ordinal = planCreateBody.ordinal
-                standingCharge = planCreateBody.standingCharge
-                standingChargeAccountingProductId = planCreateBody.standingChargeAccountingProductId
-                standingChargeBillInAdvance = planCreateBody.standingChargeBillInAdvance
-                standingChargeDescription = planCreateBody.standingChargeDescription
-                version = planCreateBody.version
-                additionalProperties = planCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                code = body.code
+                name = body.name
+                planTemplateId = body.planTemplateId
+                accountId = body.accountId
+                bespoke = body.bespoke
+                customFields = body.customFields
+                minimumSpend = body.minimumSpend
+                minimumSpendAccountingProductId = body.minimumSpendAccountingProductId
+                minimumSpendBillInAdvance = body.minimumSpendBillInAdvance
+                minimumSpendDescription = body.minimumSpendDescription
+                ordinal = body.ordinal
+                standingCharge = body.standingCharge
+                standingChargeAccountingProductId = body.standingChargeAccountingProductId
+                standingChargeBillInAdvance = body.standingChargeBillInAdvance
+                standingChargeDescription = body.standingChargeDescription
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** Unique short code reference for the Plan. */
@@ -960,8 +960,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PlanCreateBody =
-                PlanCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("code", code),
                     checkRequired("name", name),
                     checkRequired("planTemplateId", planTemplateId),
@@ -987,7 +987,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanCreateBody && code == other.code && name == other.name && planTemplateId == other.planTemplateId && accountId == other.accountId && bespoke == other.bespoke && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && code == other.code && name == other.name && planTemplateId == other.planTemplateId && accountId == other.accountId && bespoke == other.bespoke && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -997,7 +997,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanCreateBody{code=$code, name=$name, planTemplateId=$planTemplateId, accountId=$accountId, bespoke=$bespoke, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendAccountingProductId=$minimumSpendAccountingProductId, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingCharge=$standingCharge, standingChargeAccountingProductId=$standingChargeAccountingProductId, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
+            "Body{code=$code, name=$name, planTemplateId=$planTemplateId, accountId=$accountId, bespoke=$bespoke, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendAccountingProductId=$minimumSpendAccountingProductId, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingCharge=$standingCharge, standingChargeAccountingProductId=$standingChargeAccountingProductId, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1012,7 +1012,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: PlanCreateBody.Builder = PlanCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

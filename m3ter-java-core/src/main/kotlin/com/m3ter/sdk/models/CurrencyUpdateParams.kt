@@ -31,7 +31,7 @@ class CurrencyUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: CurrencyUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -104,7 +104,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CurrencyUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -119,9 +119,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CurrencyUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("name")
         @ExcludeMissing
         private val name: JsonField<String> = JsonMissing.of(),
@@ -214,7 +214,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CurrencyUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -235,7 +235,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CurrencyUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -247,14 +247,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(currencyUpdateBody: CurrencyUpdateBody) = apply {
-                name = currencyUpdateBody.name
-                archived = currencyUpdateBody.archived
-                code = currencyUpdateBody.code
-                maxDecimalPlaces = currencyUpdateBody.maxDecimalPlaces
-                roundingMode = currencyUpdateBody.roundingMode
-                version = currencyUpdateBody.version
-                additionalProperties = currencyUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                name = body.name
+                archived = body.archived
+                code = body.code
+                maxDecimalPlaces = body.maxDecimalPlaces
+                roundingMode = body.roundingMode
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The name of the entity. */
@@ -339,8 +339,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CurrencyUpdateBody =
-                CurrencyUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("name", name),
                     archived,
                     code,
@@ -356,7 +356,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CurrencyUpdateBody && name == other.name && archived == other.archived && code == other.code && maxDecimalPlaces == other.maxDecimalPlaces && roundingMode == other.roundingMode && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && name == other.name && archived == other.archived && code == other.code && maxDecimalPlaces == other.maxDecimalPlaces && roundingMode == other.roundingMode && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -366,7 +366,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CurrencyUpdateBody{name=$name, archived=$archived, code=$code, maxDecimalPlaces=$maxDecimalPlaces, roundingMode=$roundingMode, version=$version, additionalProperties=$additionalProperties}"
+            "Body{name=$name, archived=$archived, code=$code, maxDecimalPlaces=$maxDecimalPlaces, roundingMode=$roundingMode, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -382,7 +382,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: CurrencyUpdateBody.Builder = CurrencyUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

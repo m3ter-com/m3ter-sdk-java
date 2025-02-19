@@ -88,7 +88,9 @@ class CommitmentCreateParamsTest {
                 .separateOverageUsage(true)
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)
@@ -142,7 +144,9 @@ class CommitmentCreateParamsTest {
                 .endDate(LocalDate.parse("2019-12-27"))
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)

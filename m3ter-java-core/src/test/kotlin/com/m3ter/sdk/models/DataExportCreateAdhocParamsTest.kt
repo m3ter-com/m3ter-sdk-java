@@ -10,32 +10,94 @@ class DataExportCreateAdhocParamsTest {
     @Test
     fun create() {
         DataExportCreateAdhocParams.builder()
-            .forAdHocOperationalDataRequest(
+            .orgId("orgId")
+            .body(
                 AdHocOperationalDataRequest.builder()
-                    .operationalDataTypes(
-                        listOf(AdHocOperationalDataRequest.OperationalDataType.BILLS)
-                    )
+                    .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
                     .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
                     .version(0L)
                     .build()
             )
-            .orgId("orgId")
             .build()
+    }
+
+    @Test
+    fun body() {
+        val params =
+            DataExportCreateAdhocParams.builder()
+                .orgId("orgId")
+                .body(
+                    AdHocOperationalDataRequest.builder()
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
+                        )
+                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .version(0L)
+                        .build()
+                )
+                .build()
+
+        val body = params._body()
+
+        assertThat(body).isNotNull
+        assertThat(body)
+            .isEqualTo(
+                DataExportCreateAdhocParams.Body.ofAdHocOperationalDataRequest(
+                    AdHocOperationalDataRequest.builder()
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
+                        )
+                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .version(0L)
+                        .build()
+                )
+            )
+    }
+
+    @Test
+    fun bodyWithoutOptionalFields() {
+        val params =
+            DataExportCreateAdhocParams.builder()
+                .orgId("orgId")
+                .body(
+                    AdHocOperationalDataRequest.builder()
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
+                        )
+                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .build()
+                )
+                .build()
+
+        val body = params._body()
+
+        assertThat(body).isNotNull
+        assertThat(body)
+            .isEqualTo(
+                DataExportCreateAdhocParams.Body.ofAdHocOperationalDataRequest(
+                    AdHocOperationalDataRequest.builder()
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
+                        )
+                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .build()
+                )
+            )
     }
 
     @Test
     fun getPathParam() {
         val params =
             DataExportCreateAdhocParams.builder()
-                .forAdHocOperationalDataRequest(
+                .orgId("orgId")
+                .body(
                     AdHocOperationalDataRequest.builder()
-                        .operationalDataTypes(
-                            listOf(AdHocOperationalDataRequest.OperationalDataType.BILLS)
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
                         .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
                         .build()
                 )
-                .orgId("orgId")
                 .build()
         assertThat(params).isNotNull
         // path param "orgId"

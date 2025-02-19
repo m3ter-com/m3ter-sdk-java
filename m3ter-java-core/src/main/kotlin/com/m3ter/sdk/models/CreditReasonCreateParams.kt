@@ -28,7 +28,7 @@ import java.util.Optional
 class CreditReasonCreateParams
 private constructor(
     private val orgId: String,
-    private val body: CreditReasonCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -89,7 +89,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CreditReasonCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -103,9 +103,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CreditReasonCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("name")
         @ExcludeMissing
         private val name: JsonField<String> = JsonMissing.of(),
@@ -176,7 +176,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CreditReasonCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -195,7 +195,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CreditReasonCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -205,12 +205,12 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(creditReasonCreateBody: CreditReasonCreateBody) = apply {
-                name = creditReasonCreateBody.name
-                archived = creditReasonCreateBody.archived
-                code = creditReasonCreateBody.code
-                version = creditReasonCreateBody.version
-                additionalProperties = creditReasonCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                name = body.name
+                archived = body.archived
+                code = body.code
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The name of the entity. */
@@ -280,8 +280,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CreditReasonCreateBody =
-                CreditReasonCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("name", name),
                     archived,
                     code,
@@ -295,7 +295,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditReasonCreateBody && name == other.name && archived == other.archived && code == other.code && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && name == other.name && archived == other.archived && code == other.code && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -305,7 +305,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreditReasonCreateBody{name=$name, archived=$archived, code=$code, version=$version, additionalProperties=$additionalProperties}"
+            "Body{name=$name, archived=$archived, code=$code, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -320,7 +320,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: CreditReasonCreateBody.Builder = CreditReasonCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

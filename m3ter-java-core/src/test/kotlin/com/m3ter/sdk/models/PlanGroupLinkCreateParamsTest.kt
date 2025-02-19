@@ -26,7 +26,9 @@ class PlanGroupLinkCreateParamsTest {
                 .planId("x")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")
@@ -37,7 +39,9 @@ class PlanGroupLinkCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PlanGroupLinkCreateParams.builder().orgId("orgId").planGroupId("x").planId("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")

@@ -61,7 +61,9 @@ class PlanCreateParamsTest {
                 .standingChargeDescription("standingChargeDescription")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
@@ -97,7 +99,9 @@ class PlanCreateParamsTest {
                 .name("x")
                 .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")

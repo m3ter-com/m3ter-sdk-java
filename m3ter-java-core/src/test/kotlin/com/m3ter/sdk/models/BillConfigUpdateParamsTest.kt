@@ -25,7 +25,9 @@ class BillConfigUpdateParamsTest {
                 .billLockDate(LocalDate.parse("2019-12-27"))
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.billLockDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.version()).contains(0L)
@@ -34,7 +36,9 @@ class BillConfigUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = BillConfigUpdateParams.builder().orgId("orgId").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

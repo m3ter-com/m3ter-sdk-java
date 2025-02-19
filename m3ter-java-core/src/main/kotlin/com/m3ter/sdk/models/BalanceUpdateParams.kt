@@ -33,7 +33,7 @@ class BalanceUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: BalanceUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -271,7 +271,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): BalanceUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -286,9 +286,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class BalanceUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("accountId")
         @ExcludeMissing
         private val accountId: JsonField<String> = JsonMissing.of(),
@@ -616,7 +616,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): BalanceUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -648,7 +648,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [BalanceUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var accountId: JsonField<String>? = null
@@ -671,25 +671,25 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(balanceUpdateBody: BalanceUpdateBody) = apply {
-                accountId = balanceUpdateBody.accountId
-                currency = balanceUpdateBody.currency
-                endDate = balanceUpdateBody.endDate
-                startDate = balanceUpdateBody.startDate
-                balanceDrawDownDescription = balanceUpdateBody.balanceDrawDownDescription
-                code = balanceUpdateBody.code
-                consumptionsAccountingProductId = balanceUpdateBody.consumptionsAccountingProductId
-                description = balanceUpdateBody.description
-                feesAccountingProductId = balanceUpdateBody.feesAccountingProductId
-                lineItemTypes = balanceUpdateBody.lineItemTypes.map { it.toMutableList() }
-                name = balanceUpdateBody.name
-                overageDescription = balanceUpdateBody.overageDescription
-                overageSurchargePercent = balanceUpdateBody.overageSurchargePercent
-                productIds = balanceUpdateBody.productIds.map { it.toMutableList() }
-                rolloverAmount = balanceUpdateBody.rolloverAmount
-                rolloverEndDate = balanceUpdateBody.rolloverEndDate
-                version = balanceUpdateBody.version
-                additionalProperties = balanceUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                accountId = body.accountId
+                currency = body.currency
+                endDate = body.endDate
+                startDate = body.startDate
+                balanceDrawDownDescription = body.balanceDrawDownDescription
+                code = body.code
+                consumptionsAccountingProductId = body.consumptionsAccountingProductId
+                description = body.description
+                feesAccountingProductId = body.feesAccountingProductId
+                lineItemTypes = body.lineItemTypes.map { it.toMutableList() }
+                name = body.name
+                overageDescription = body.overageDescription
+                overageSurchargePercent = body.overageSurchargePercent
+                productIds = body.productIds.map { it.toMutableList() }
+                rolloverAmount = body.rolloverAmount
+                rolloverEndDate = body.rolloverEndDate
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The unique identifier (UUID) for the end customer Account. */
@@ -1023,8 +1023,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): BalanceUpdateBody =
-                BalanceUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("accountId", accountId),
                     checkRequired("currency", currency),
                     checkRequired("endDate", endDate),
@@ -1051,7 +1051,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceUpdateBody && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1061,7 +1061,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BalanceUpdateBody{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1077,7 +1077,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: BalanceUpdateBody.Builder = BalanceUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

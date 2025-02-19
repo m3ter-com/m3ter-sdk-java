@@ -53,7 +53,9 @@ class CompoundAggregationUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
@@ -85,7 +87,9 @@ class CompoundAggregationUpdateParamsTest {
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")

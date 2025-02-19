@@ -25,16 +25,16 @@ class DataExportServiceTest {
         val adhocExport =
             dataExportService.createAdhoc(
                 DataExportCreateAdhocParams.builder()
-                    .forAdHocOperationalDataRequest(
+                    .orgId("orgId")
+                    .body(
                         AdHocOperationalDataRequest.builder()
-                            .operationalDataTypes(
-                                listOf(AdHocOperationalDataRequest.OperationalDataType.BILLS)
+                            .addOperationalDataType(
+                                AdHocOperationalDataRequest.OperationalDataType.BILLS
                             )
                             .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
                             .version(0L)
                             .build()
                     )
-                    .orgId("orgId")
                     .build()
             )
         println(adhocExport)

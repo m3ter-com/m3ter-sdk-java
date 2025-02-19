@@ -52,7 +52,7 @@ import java.util.Optional
 class MeterCreateParams
 private constructor(
     private val orgId: String,
-    private val body: MeterCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -185,7 +185,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): MeterCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -199,9 +199,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class MeterCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -365,7 +365,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): MeterCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -388,7 +388,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [MeterCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
@@ -402,16 +402,16 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(meterCreateBody: MeterCreateBody) = apply {
-                code = meterCreateBody.code
-                dataFields = meterCreateBody.dataFields.map { it.toMutableList() }
-                derivedFields = meterCreateBody.derivedFields.map { it.toMutableList() }
-                name = meterCreateBody.name
-                customFields = meterCreateBody.customFields
-                groupId = meterCreateBody.groupId
-                productId = meterCreateBody.productId
-                version = meterCreateBody.version
-                additionalProperties = meterCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                code = body.code
+                dataFields = body.dataFields.map { it.toMutableList() }
+                derivedFields = body.derivedFields.map { it.toMutableList() }
+                name = body.name
+                customFields = body.customFields
+                groupId = body.groupId
+                productId = body.productId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -606,8 +606,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): MeterCreateBody =
-                MeterCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("code", code),
                     checkRequired("dataFields", dataFields).map { it.toImmutable() },
                     checkRequired("derivedFields", derivedFields).map { it.toImmutable() },
@@ -625,7 +625,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MeterCreateBody && code == other.code && dataFields == other.dataFields && derivedFields == other.derivedFields && name == other.name && customFields == other.customFields && groupId == other.groupId && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && code == other.code && dataFields == other.dataFields && derivedFields == other.derivedFields && name == other.name && customFields == other.customFields && groupId == other.groupId && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -635,7 +635,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MeterCreateBody{code=$code, dataFields=$dataFields, derivedFields=$derivedFields, name=$name, customFields=$customFields, groupId=$groupId, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{code=$code, dataFields=$dataFields, derivedFields=$derivedFields, name=$name, customFields=$customFields, groupId=$groupId, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -650,7 +650,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: MeterCreateBody.Builder = MeterCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

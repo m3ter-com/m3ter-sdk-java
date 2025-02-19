@@ -76,7 +76,7 @@ import kotlin.jvm.optionals.getOrNull
 class DataExportCreateAdhocParams
 private constructor(
     private val orgId: String,
-    private val body: DataExportCreateAdhocBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -84,17 +84,13 @@ private constructor(
     fun orgId(): String = orgId
 
     /** Request representing an operational data export configuration. */
-    fun adHocOperationalDataRequest(): Optional<AdHocOperationalDataRequest> =
-        body.adHocOperationalDataRequest()
-
-    /** Request representing an usage data export configuration. */
-    fun adHocUsageDataRequest(): Optional<AdHocUsageDataRequest> = body.adHocUsageDataRequest()
+    fun body(): Body = body
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): DataExportCreateAdhocBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -108,10 +104,10 @@ private constructor(
     }
 
     /** Request representing an operational data export configuration. */
-    @JsonDeserialize(using = DataExportCreateAdhocBody.Deserializer::class)
-    @JsonSerialize(using = DataExportCreateAdhocBody.Serializer::class)
-    class DataExportCreateAdhocBody
-    internal constructor(
+    @JsonDeserialize(using = Body.Deserializer::class)
+    @JsonSerialize(using = Body.Serializer::class)
+    class Body
+    private constructor(
         private val adHocOperationalDataRequest: AdHocOperationalDataRequest? = null,
         private val adHocUsageDataRequest: AdHocUsageDataRequest? = null,
         private val _json: JsonValue? = null,
@@ -149,12 +145,37 @@ private constructor(
             }
         }
 
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitAdHocOperationalDataRequest(
+                        adHocOperationalDataRequest: AdHocOperationalDataRequest
+                    ) {
+                        adHocOperationalDataRequest.validate()
+                    }
+
+                    override fun visitAdHocUsageDataRequest(
+                        adHocUsageDataRequest: AdHocUsageDataRequest
+                    ) {
+                        adHocUsageDataRequest.validate()
+                    }
+                }
+            )
+            validated = true
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is DataExportCreateAdhocBody && adHocOperationalDataRequest == other.adHocOperationalDataRequest && adHocUsageDataRequest == other.adHocUsageDataRequest /* spotless:on */
+            return /* spotless:off */ other is Body && adHocOperationalDataRequest == other.adHocOperationalDataRequest && adHocUsageDataRequest == other.adHocUsageDataRequest /* spotless:on */
         }
 
         override fun hashCode(): Int = /* spotless:off */ Objects.hash(adHocOperationalDataRequest, adHocUsageDataRequest) /* spotless:on */
@@ -162,11 +183,11 @@ private constructor(
         override fun toString(): String =
             when {
                 adHocOperationalDataRequest != null ->
-                    "DataExportCreateAdhocBody{adHocOperationalDataRequest=$adHocOperationalDataRequest}"
+                    "Body{adHocOperationalDataRequest=$adHocOperationalDataRequest}"
                 adHocUsageDataRequest != null ->
-                    "DataExportCreateAdhocBody{adHocUsageDataRequest=$adHocUsageDataRequest}"
-                _json != null -> "DataExportCreateAdhocBody{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid DataExportCreateAdhocBody")
+                    "Body{adHocUsageDataRequest=$adHocUsageDataRequest}"
+                _json != null -> "Body{_unknown=$_json}"
+                else -> throw IllegalStateException("Invalid Body")
             }
 
         companion object {
@@ -175,18 +196,15 @@ private constructor(
             @JvmStatic
             fun ofAdHocOperationalDataRequest(
                 adHocOperationalDataRequest: AdHocOperationalDataRequest
-            ) = DataExportCreateAdhocBody(adHocOperationalDataRequest = adHocOperationalDataRequest)
+            ) = Body(adHocOperationalDataRequest = adHocOperationalDataRequest)
 
             /** Request representing an usage data export configuration. */
             @JvmStatic
             fun ofAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest) =
-                DataExportCreateAdhocBody(adHocUsageDataRequest = adHocUsageDataRequest)
+                Body(adHocUsageDataRequest = adHocUsageDataRequest)
         }
 
-        /**
-         * An interface that defines how to map each variant of [DataExportCreateAdhocBody] to a
-         * value of type [T].
-         */
+        /** An interface that defines how to map each variant of [Body] to a value of type [T]. */
         interface Visitor<out T> {
 
             /** Request representing an operational data export configuration. */
@@ -198,46 +216,47 @@ private constructor(
             fun visitAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest): T
 
             /**
-             * Maps an unknown variant of [DataExportCreateAdhocBody] to a value of type [T].
+             * Maps an unknown variant of [Body] to a value of type [T].
              *
-             * An instance of [DataExportCreateAdhocBody] can contain an unknown variant if it was
-             * deserialized from data that doesn't match any known variant. For example, if the SDK
-             * is on an older version than the API, then the API may respond with new variants that
-             * the SDK is unaware of.
+             * An instance of [Body] can contain an unknown variant if it was deserialized from data
+             * that doesn't match any known variant. For example, if the SDK is on an older version
+             * than the API, then the API may respond with new variants that the SDK is unaware of.
              *
              * @throws M3terInvalidDataException in the default implementation.
              */
             fun unknown(json: JsonValue?): T {
-                throw M3terInvalidDataException("Unknown DataExportCreateAdhocBody: $json")
+                throw M3terInvalidDataException("Unknown Body: $json")
             }
         }
 
-        internal class Deserializer :
-            BaseDeserializer<DataExportCreateAdhocBody>(DataExportCreateAdhocBody::class) {
+        internal class Deserializer : BaseDeserializer<Body>(Body::class) {
 
-            override fun ObjectCodec.deserialize(node: JsonNode): DataExportCreateAdhocBody {
+            override fun ObjectCodec.deserialize(node: JsonNode): Body {
                 val json = JsonValue.fromJsonNode(node)
                 val sourceType =
                     json.asObject().getOrNull()?.get("sourceType")?.asString()?.getOrNull()
 
                 when (sourceType) {}
 
-                tryDeserialize(node, jacksonTypeRef<AdHocOperationalDataRequest>())?.let {
-                    return DataExportCreateAdhocBody(adHocOperationalDataRequest = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<AdHocUsageDataRequest>())?.let {
-                    return DataExportCreateAdhocBody(adHocUsageDataRequest = it, _json = json)
-                }
+                tryDeserialize(node, jacksonTypeRef<AdHocOperationalDataRequest>()) {
+                        it.validate()
+                    }
+                    ?.let {
+                        return Body(adHocOperationalDataRequest = it, _json = json)
+                    }
+                tryDeserialize(node, jacksonTypeRef<AdHocUsageDataRequest>()) { it.validate() }
+                    ?.let {
+                        return Body(adHocUsageDataRequest = it, _json = json)
+                    }
 
-                return DataExportCreateAdhocBody(_json = json)
+                return Body(_json = json)
             }
         }
 
-        internal class Serializer :
-            BaseSerializer<DataExportCreateAdhocBody>(DataExportCreateAdhocBody::class) {
+        internal class Serializer : BaseSerializer<Body>(Body::class) {
 
             override fun serialize(
-                value: DataExportCreateAdhocBody,
+                value: Body,
                 generator: JsonGenerator,
                 provider: SerializerProvider,
             ) {
@@ -247,7 +266,7 @@ private constructor(
                     value.adHocUsageDataRequest != null ->
                         generator.writeObject(value.adHocUsageDataRequest)
                     value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid DataExportCreateAdhocBody")
+                    else -> throw IllegalStateException("Invalid Body")
                 }
             }
         }
@@ -265,7 +284,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: DataExportCreateAdhocBody? = null
+        private var body: Body? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -280,17 +299,15 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         /** Request representing an operational data export configuration. */
-        fun forAdHocOperationalDataRequest(
-            adHocOperationalDataRequest: AdHocOperationalDataRequest
-        ) = apply {
-            body =
-                DataExportCreateAdhocBody.ofAdHocOperationalDataRequest(adHocOperationalDataRequest)
-        }
+        fun body(body: Body) = apply { this.body = body }
+
+        /** Request representing an operational data export configuration. */
+        fun body(adHocOperationalDataRequest: AdHocOperationalDataRequest) =
+            body(Body.ofAdHocOperationalDataRequest(adHocOperationalDataRequest))
 
         /** Request representing an usage data export configuration. */
-        fun forAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest) = apply {
-            body = DataExportCreateAdhocBody.ofAdHocUsageDataRequest(adHocUsageDataRequest)
-        }
+        fun body(adHocUsageDataRequest: AdHocUsageDataRequest) =
+            body(Body.ofAdHocUsageDataRequest(adHocUsageDataRequest))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -393,7 +410,7 @@ private constructor(
         fun build(): DataExportCreateAdhocParams =
             DataExportCreateAdhocParams(
                 checkRequired("orgId", orgId),
-                body ?: DataExportCreateAdhocBody(),
+                checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )

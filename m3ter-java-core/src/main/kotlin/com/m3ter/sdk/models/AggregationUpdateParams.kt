@@ -33,7 +33,7 @@ class AggregationUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: AggregationUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -300,7 +300,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): AggregationUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -315,9 +315,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AggregationUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("aggregation")
         @ExcludeMissing
         private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
@@ -650,7 +650,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AggregationUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -680,7 +680,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [AggregationUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var aggregation: JsonField<Aggregation>? = null
@@ -701,23 +701,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(aggregationUpdateBody: AggregationUpdateBody) = apply {
-                aggregation = aggregationUpdateBody.aggregation
-                meterId = aggregationUpdateBody.meterId
-                name = aggregationUpdateBody.name
-                quantityPerUnit = aggregationUpdateBody.quantityPerUnit
-                rounding = aggregationUpdateBody.rounding
-                targetField = aggregationUpdateBody.targetField
-                unit = aggregationUpdateBody.unit
-                accountingProductId = aggregationUpdateBody.accountingProductId
-                code = aggregationUpdateBody.code
-                customFields = aggregationUpdateBody.customFields
-                customSql = aggregationUpdateBody.customSql
-                defaultValue = aggregationUpdateBody.defaultValue
-                segmentedFields = aggregationUpdateBody.segmentedFields.map { it.toMutableList() }
-                segments = aggregationUpdateBody.segments.map { it.toMutableList() }
-                version = aggregationUpdateBody.version
-                additionalProperties = aggregationUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                aggregation = body.aggregation
+                meterId = body.meterId
+                name = body.name
+                quantityPerUnit = body.quantityPerUnit
+                rounding = body.rounding
+                targetField = body.targetField
+                unit = body.unit
+                accountingProductId = body.accountingProductId
+                code = body.code
+                customFields = body.customFields
+                customSql = body.customSql
+                defaultValue = body.defaultValue
+                segmentedFields = body.segmentedFields.map { it.toMutableList() }
+                segments = body.segments.map { it.toMutableList() }
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1074,8 +1074,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AggregationUpdateBody =
-                AggregationUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("aggregation", aggregation),
                     checkRequired("meterId", meterId),
                     checkRequired("name", name),
@@ -1100,7 +1100,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AggregationUpdateBody && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1110,7 +1110,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AggregationUpdateBody{aggregation=$aggregation, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, targetField=$targetField, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, segmentedFields=$segmentedFields, segments=$segments, version=$version, additionalProperties=$additionalProperties}"
+            "Body{aggregation=$aggregation, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, targetField=$targetField, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, segmentedFields=$segmentedFields, segments=$segments, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1126,7 +1126,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: AggregationUpdateBody.Builder = AggregationUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

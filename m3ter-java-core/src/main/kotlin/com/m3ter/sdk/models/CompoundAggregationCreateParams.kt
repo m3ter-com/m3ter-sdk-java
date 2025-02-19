@@ -31,7 +31,7 @@ import java.util.Optional
 class CompoundAggregationCreateParams
 private constructor(
     private val orgId: String,
-    private val body: CompoundAggregationCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -216,7 +216,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CompoundAggregationCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -230,9 +230,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CompoundAggregationCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("calculation")
         @ExcludeMissing
         private val calculation: JsonField<String> = JsonMissing.of(),
@@ -465,7 +465,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CompoundAggregationCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -491,7 +491,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CompoundAggregationCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var calculation: JsonField<String>? = null
@@ -508,23 +508,20 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(compoundAggregationCreateBody: CompoundAggregationCreateBody) =
-                apply {
-                    calculation = compoundAggregationCreateBody.calculation
-                    name = compoundAggregationCreateBody.name
-                    quantityPerUnit = compoundAggregationCreateBody.quantityPerUnit
-                    rounding = compoundAggregationCreateBody.rounding
-                    unit = compoundAggregationCreateBody.unit
-                    accountingProductId = compoundAggregationCreateBody.accountingProductId
-                    code = compoundAggregationCreateBody.code
-                    customFields = compoundAggregationCreateBody.customFields
-                    evaluateNullAggregations =
-                        compoundAggregationCreateBody.evaluateNullAggregations
-                    productId = compoundAggregationCreateBody.productId
-                    version = compoundAggregationCreateBody.version
-                    additionalProperties =
-                        compoundAggregationCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                calculation = body.calculation
+                name = body.name
+                quantityPerUnit = body.quantityPerUnit
+                rounding = body.rounding
+                unit = body.unit
+                accountingProductId = body.accountingProductId
+                code = body.code
+                customFields = body.customFields
+                evaluateNullAggregations = body.evaluateNullAggregations
+                productId = body.productId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /**
              * String that represents the formula for the calculation. This formula determines how
@@ -746,8 +743,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CompoundAggregationCreateBody =
-                CompoundAggregationCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("calculation", calculation),
                     checkRequired("name", name),
                     checkRequired("quantityPerUnit", quantityPerUnit),
@@ -768,7 +765,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CompoundAggregationCreateBody && calculation == other.calculation && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && evaluateNullAggregations == other.evaluateNullAggregations && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && calculation == other.calculation && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && evaluateNullAggregations == other.evaluateNullAggregations && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -778,7 +775,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CompoundAggregationCreateBody{calculation=$calculation, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, evaluateNullAggregations=$evaluateNullAggregations, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{calculation=$calculation, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, evaluateNullAggregations=$evaluateNullAggregations, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -793,8 +790,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: CompoundAggregationCreateBody.Builder =
-            CompoundAggregationCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

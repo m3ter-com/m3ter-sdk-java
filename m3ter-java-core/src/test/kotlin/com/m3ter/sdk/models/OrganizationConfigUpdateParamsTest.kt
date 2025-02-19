@@ -86,7 +86,9 @@ class OrganizationConfigUpdateParamsTest {
                 .suppressedEmptyBills(true)
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")
@@ -137,7 +139,9 @@ class OrganizationConfigUpdateParamsTest {
                 .weekEpoch("2022-01-04")
                 .yearEpoch("2022-01-01")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")

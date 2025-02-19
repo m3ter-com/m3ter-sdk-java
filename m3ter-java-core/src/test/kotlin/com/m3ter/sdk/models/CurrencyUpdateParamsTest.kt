@@ -34,7 +34,9 @@ class CurrencyUpdateParamsTest {
                 .roundingMode(CurrencyUpdateParams.RoundingMode.UP)
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
@@ -47,7 +49,9 @@ class CurrencyUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = CurrencyUpdateParams.builder().orgId("orgId").id("id").name("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
     }

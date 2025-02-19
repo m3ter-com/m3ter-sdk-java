@@ -30,7 +30,9 @@ class CounterCreateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
@@ -42,7 +44,9 @@ class CounterCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = CounterCreateParams.builder().orgId("orgId").name("x").unit("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")

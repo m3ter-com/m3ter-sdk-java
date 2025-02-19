@@ -31,7 +31,7 @@ import java.util.Optional
 class PlanTemplateCreateParams
 private constructor(
     private val orgId: String,
-    private val body: PlanTemplateCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -310,7 +310,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): PlanTemplateCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -324,9 +324,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PlanTemplateCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("billFrequency")
         @ExcludeMissing
         private val billFrequency: JsonField<BillFrequency> = JsonMissing.of(),
@@ -693,7 +693,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PlanTemplateCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -725,7 +725,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [PlanTemplateCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var billFrequency: JsonField<BillFrequency>? = null
@@ -748,25 +748,25 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(planTemplateCreateBody: PlanTemplateCreateBody) = apply {
-                billFrequency = planTemplateCreateBody.billFrequency
-                currency = planTemplateCreateBody.currency
-                name = planTemplateCreateBody.name
-                productId = planTemplateCreateBody.productId
-                standingCharge = planTemplateCreateBody.standingCharge
-                billFrequencyInterval = planTemplateCreateBody.billFrequencyInterval
-                code = planTemplateCreateBody.code
-                customFields = planTemplateCreateBody.customFields
-                minimumSpend = planTemplateCreateBody.minimumSpend
-                minimumSpendBillInAdvance = planTemplateCreateBody.minimumSpendBillInAdvance
-                minimumSpendDescription = planTemplateCreateBody.minimumSpendDescription
-                ordinal = planTemplateCreateBody.ordinal
-                standingChargeBillInAdvance = planTemplateCreateBody.standingChargeBillInAdvance
-                standingChargeDescription = planTemplateCreateBody.standingChargeDescription
-                standingChargeInterval = planTemplateCreateBody.standingChargeInterval
-                standingChargeOffset = planTemplateCreateBody.standingChargeOffset
-                version = planTemplateCreateBody.version
-                additionalProperties = planTemplateCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                billFrequency = body.billFrequency
+                currency = body.currency
+                name = body.name
+                productId = body.productId
+                standingCharge = body.standingCharge
+                billFrequencyInterval = body.billFrequencyInterval
+                code = body.code
+                customFields = body.customFields
+                minimumSpend = body.minimumSpend
+                minimumSpendBillInAdvance = body.minimumSpendBillInAdvance
+                minimumSpendDescription = body.minimumSpendDescription
+                ordinal = body.ordinal
+                standingChargeBillInAdvance = body.standingChargeBillInAdvance
+                standingChargeDescription = body.standingChargeDescription
+                standingChargeInterval = body.standingChargeInterval
+                standingChargeOffset = body.standingChargeOffset
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1094,8 +1094,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PlanTemplateCreateBody =
-                PlanTemplateCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("billFrequency", billFrequency),
                     checkRequired("currency", currency),
                     checkRequired("name", name),
@@ -1122,7 +1122,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanTemplateCreateBody && billFrequency == other.billFrequency && currency == other.currency && name == other.name && productId == other.productId && standingCharge == other.standingCharge && billFrequencyInterval == other.billFrequencyInterval && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && billFrequency == other.billFrequency && currency == other.currency && name == other.name && productId == other.productId && standingCharge == other.standingCharge && billFrequencyInterval == other.billFrequencyInterval && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1132,7 +1132,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanTemplateCreateBody{billFrequency=$billFrequency, currency=$currency, name=$name, productId=$productId, standingCharge=$standingCharge, billFrequencyInterval=$billFrequencyInterval, code=$code, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, standingChargeInterval=$standingChargeInterval, standingChargeOffset=$standingChargeOffset, version=$version, additionalProperties=$additionalProperties}"
+            "Body{billFrequency=$billFrequency, currency=$currency, name=$name, productId=$productId, standingCharge=$standingCharge, billFrequencyInterval=$billFrequencyInterval, code=$code, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, standingChargeInterval=$standingChargeInterval, standingChargeOffset=$standingChargeOffset, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1147,7 +1147,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: PlanTemplateCreateBody.Builder = PlanTemplateCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

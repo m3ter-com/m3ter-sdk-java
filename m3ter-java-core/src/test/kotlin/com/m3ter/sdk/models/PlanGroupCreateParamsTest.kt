@@ -57,7 +57,9 @@ class PlanGroupCreateParamsTest {
                 .standingChargeDescription("standingChargeDescription")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
@@ -86,7 +88,9 @@ class PlanGroupCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PlanGroupCreateParams.builder().orgId("orgId").currency("xxx").name("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
