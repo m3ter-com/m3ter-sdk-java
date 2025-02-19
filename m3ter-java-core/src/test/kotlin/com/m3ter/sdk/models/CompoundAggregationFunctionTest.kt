@@ -15,6 +15,7 @@ class CompoundAggregationFunctionTest {
             CompoundAggregation.builder()
                 .id("id")
                 .version(0L)
+                .accountingProductId("accountingProductId")
                 .calculation("calculation")
                 .code("code")
                 .createdBy("createdBy")
@@ -41,6 +42,7 @@ class CompoundAggregationFunctionTest {
         assertThat(compoundAggregation).isNotNull
         assertThat(compoundAggregation.id()).isEqualTo("id")
         assertThat(compoundAggregation.version()).isEqualTo(0L)
+        assertThat(compoundAggregation.accountingProductId()).contains("accountingProductId")
         assertThat(compoundAggregation.calculation()).contains("calculation")
         assertThat(compoundAggregation.code()).contains("code")
         assertThat(compoundAggregation.createdBy()).contains("createdBy")

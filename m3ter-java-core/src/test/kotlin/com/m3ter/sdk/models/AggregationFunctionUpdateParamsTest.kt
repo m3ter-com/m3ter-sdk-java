@@ -20,12 +20,14 @@ class AggregationFunctionUpdateParamsTest {
             .rounding(AggregationUpdateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
+            .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .code("example_code")
             .customFields(
                 AggregationUpdateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .customSql("customSql")
             .defaultValue(0.0)
             .addSegmentedField("string")
             .addSegment(
@@ -50,12 +52,14 @@ class AggregationFunctionUpdateParamsTest {
                 .rounding(AggregationUpdateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
+                .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .code("example_code")
                 .customFields(
                     AggregationUpdateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .customSql("customSql")
                 .defaultValue(0.0)
                 .addSegmentedField("string")
                 .addSegment(
@@ -74,6 +78,7 @@ class AggregationFunctionUpdateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationUpdateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
+        assertThat(body.accountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
@@ -81,6 +86,7 @@ class AggregationFunctionUpdateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.customSql()).contains("customSql")
         assertThat(body.defaultValue()).contains(0.0)
         assertThat(body.segmentedFields()).contains(listOf("string"))
         assertThat(body.segments())

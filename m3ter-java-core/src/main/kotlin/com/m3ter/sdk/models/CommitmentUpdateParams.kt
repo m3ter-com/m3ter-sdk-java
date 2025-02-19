@@ -141,6 +141,12 @@ private constructor(
     fun contractId(): Optional<String> = body.contractId()
 
     /**
+     * Optional Product ID this Commitment consumptions should be attributed to for accounting
+     * purposes
+     */
+    fun drawdownsAccountingProductId(): Optional<String> = body.drawdownsAccountingProductId()
+
+    /**
      * Used for billing any outstanding Commitment fees _on a schedule_.
      *
      * Create an array to define a series of bill dates and amounts covering specified service
@@ -157,6 +163,9 @@ private constructor(
      *   receiving an error, but _please be sure_ your Commitment billing use case requires this.
      */
     fun feeDates(): Optional<List<FeeDate>> = body.feeDates()
+
+    /** Optional Product ID this Commitment fees should be attributed to for accounting purposes */
+    fun feesAccountingProductId(): Optional<String> = body.feesAccountingProductId()
 
     /**
      * Specify the line item charge types that can draw-down at billing against the Commitment
@@ -318,6 +327,12 @@ private constructor(
     fun _contractId(): JsonField<String> = body._contractId()
 
     /**
+     * Optional Product ID this Commitment consumptions should be attributed to for accounting
+     * purposes
+     */
+    fun _drawdownsAccountingProductId(): JsonField<String> = body._drawdownsAccountingProductId()
+
+    /**
      * Used for billing any outstanding Commitment fees _on a schedule_.
      *
      * Create an array to define a series of bill dates and amounts covering specified service
@@ -334,6 +349,9 @@ private constructor(
      *   receiving an error, but _please be sure_ your Commitment billing use case requires this.
      */
     fun _feeDates(): JsonField<List<FeeDate>> = body._feeDates()
+
+    /** Optional Product ID this Commitment fees should be attributed to for accounting purposes */
+    fun _feesAccountingProductId(): JsonField<String> = body._feesAccountingProductId()
 
     /**
      * Specify the line item charge types that can draw-down at billing against the Commitment
@@ -473,9 +491,15 @@ private constructor(
         @JsonProperty("contractId")
         @ExcludeMissing
         private val contractId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("drawdownsAccountingProductId")
+        @ExcludeMissing
+        private val drawdownsAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("feeDates")
         @ExcludeMissing
         private val feeDates: JsonField<List<FeeDate>> = JsonMissing.of(),
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("lineItemTypes")
         @ExcludeMissing
         private val lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
@@ -615,6 +639,15 @@ private constructor(
             Optional.ofNullable(contractId.getNullable("contractId"))
 
         /**
+         * Optional Product ID this Commitment consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun drawdownsAccountingProductId(): Optional<String> =
+            Optional.ofNullable(
+                drawdownsAccountingProductId.getNullable("drawdownsAccountingProductId")
+            )
+
+        /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
          *
          * Create an array to define a series of bill dates and amounts covering specified service
@@ -633,6 +666,12 @@ private constructor(
          */
         fun feeDates(): Optional<List<FeeDate>> =
             Optional.ofNullable(feeDates.getNullable("feeDates"))
+
+        /**
+         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         */
+        fun feesAccountingProductId(): Optional<String> =
+            Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Commitment
@@ -829,6 +868,14 @@ private constructor(
         fun _contractId(): JsonField<String> = contractId
 
         /**
+         * Optional Product ID this Commitment consumptions should be attributed to for accounting
+         * purposes
+         */
+        @JsonProperty("drawdownsAccountingProductId")
+        @ExcludeMissing
+        fun _drawdownsAccountingProductId(): JsonField<String> = drawdownsAccountingProductId
+
+        /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
          *
          * Create an array to define a series of bill dates and amounts covering specified service
@@ -848,6 +895,13 @@ private constructor(
         @JsonProperty("feeDates")
         @ExcludeMissing
         fun _feeDates(): JsonField<List<FeeDate>> = feeDates
+
+        /**
+         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         */
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Commitment
@@ -950,7 +1004,9 @@ private constructor(
             commitmentFeeDescription()
             commitmentUsageDescription()
             contractId()
+            drawdownsAccountingProductId()
             feeDates().ifPresent { it.forEach { it.validate() } }
+            feesAccountingProductId()
             lineItemTypes()
             overageDescription()
             overageSurchargePercent()
@@ -987,7 +1043,9 @@ private constructor(
             private var commitmentFeeDescription: JsonField<String> = JsonMissing.of()
             private var commitmentUsageDescription: JsonField<String> = JsonMissing.of()
             private var contractId: JsonField<String> = JsonMissing.of()
+            private var drawdownsAccountingProductId: JsonField<String> = JsonMissing.of()
             private var feeDates: JsonField<MutableList<FeeDate>>? = null
+            private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
             private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
             private var overageDescription: JsonField<String> = JsonMissing.of()
             private var overageSurchargePercent: JsonField<Double> = JsonMissing.of()
@@ -1015,7 +1073,9 @@ private constructor(
                 commitmentFeeDescription = commitmentUpdateBody.commitmentFeeDescription
                 commitmentUsageDescription = commitmentUpdateBody.commitmentUsageDescription
                 contractId = commitmentUpdateBody.contractId
+                drawdownsAccountingProductId = commitmentUpdateBody.drawdownsAccountingProductId
                 feeDates = commitmentUpdateBody.feeDates.map { it.toMutableList() }
+                feesAccountingProductId = commitmentUpdateBody.feesAccountingProductId
                 lineItemTypes = commitmentUpdateBody.lineItemTypes.map { it.toMutableList() }
                 overageDescription = commitmentUpdateBody.overageDescription
                 overageSurchargePercent = commitmentUpdateBody.overageSurchargePercent
@@ -1259,6 +1319,22 @@ private constructor(
             fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
             /**
+             * Optional Product ID this Commitment consumptions should be attributed to for
+             * accounting purposes
+             */
+            fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
+                drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
+
+            /**
+             * Optional Product ID this Commitment consumptions should be attributed to for
+             * accounting purposes
+             */
+            fun drawdownsAccountingProductId(drawdownsAccountingProductId: JsonField<String>) =
+                apply {
+                    this.drawdownsAccountingProductId = drawdownsAccountingProductId
+                }
+
+            /**
              * Used for billing any outstanding Commitment fees _on a schedule_.
              *
              * Create an array to define a series of bill dates and amounts covering specified
@@ -1326,6 +1402,21 @@ private constructor(
                             }
                             .add(feeDate)
                     }
+            }
+
+            /**
+             * Optional Product ID this Commitment fees should be attributed to for accounting
+             * purposes
+             */
+            fun feesAccountingProductId(feesAccountingProductId: String) =
+                feesAccountingProductId(JsonField.of(feesAccountingProductId))
+
+            /**
+             * Optional Product ID this Commitment fees should be attributed to for accounting
+             * purposes
+             */
+            fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+                this.feesAccountingProductId = feesAccountingProductId
             }
 
             /**
@@ -1553,7 +1644,9 @@ private constructor(
                     commitmentFeeDescription,
                     commitmentUsageDescription,
                     contractId,
+                    drawdownsAccountingProductId,
                     (feeDates ?: JsonMissing.of()).map { it.toImmutable() },
+                    feesAccountingProductId,
                     (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
                     overageDescription,
                     overageSurchargePercent,
@@ -1569,17 +1662,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CommitmentUpdateBody && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && feeDates == other.feeDates && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CommitmentUpdateBody && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && drawdownsAccountingProductId == other.drawdownsAccountingProductId && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, amount, currency, endDate, startDate, accountingProductId, amountFirstBill, amountPrePaid, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, feeDates, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountId, amount, currency, endDate, startDate, accountingProductId, amountFirstBill, amountPrePaid, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, drawdownsAccountingProductId, feeDates, feesAccountingProductId, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CommitmentUpdateBody{accountId=$accountId, amount=$amount, currency=$currency, endDate=$endDate, startDate=$startDate, accountingProductId=$accountingProductId, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, feeDates=$feeDates, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, version=$version, additionalProperties=$additionalProperties}"
+            "CommitmentUpdateBody{accountId=$accountId, amount=$amount, currency=$currency, endDate=$endDate, startDate=$startDate, accountingProductId=$accountingProductId, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, drawdownsAccountingProductId=$drawdownsAccountingProductId, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1845,6 +1938,22 @@ private constructor(
         fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
 
         /**
+         * Optional Product ID this Commitment consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) = apply {
+            body.drawdownsAccountingProductId(drawdownsAccountingProductId)
+        }
+
+        /**
+         * Optional Product ID this Commitment consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun drawdownsAccountingProductId(drawdownsAccountingProductId: JsonField<String>) = apply {
+            body.drawdownsAccountingProductId(drawdownsAccountingProductId)
+        }
+
+        /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
          *
          * Create an array to define a series of bill dates and amounts covering specified service
@@ -1900,6 +2009,20 @@ private constructor(
          *   requires this.
          */
         fun addFeeDate(feeDate: FeeDate) = apply { body.addFeeDate(feeDate) }
+
+        /**
+         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         */
+        fun feesAccountingProductId(feesAccountingProductId: String) = apply {
+            body.feesAccountingProductId(feesAccountingProductId)
+        }
+
+        /**
+         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         */
+        fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+            body.feesAccountingProductId(feesAccountingProductId)
+        }
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Commitment

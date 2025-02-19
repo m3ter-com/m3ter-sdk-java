@@ -28,6 +28,9 @@ private constructor(
     @JsonProperty("version")
     @ExcludeMissing
     private val version: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("aggregation")
     @ExcludeMissing
     private val aggregation: JsonField<InnerAggregation> = JsonMissing.of(),
@@ -38,6 +41,9 @@ private constructor(
     @JsonProperty("customFields")
     @ExcludeMissing
     private val customFields: JsonField<CustomFields> = JsonMissing.of(),
+    @JsonProperty("customSql")
+    @ExcludeMissing
+    private val customSql: JsonField<String> = JsonMissing.of(),
     @JsonProperty("defaultValue")
     @ExcludeMissing
     private val defaultValue: JsonField<Double> = JsonMissing.of(),
@@ -84,6 +90,9 @@ private constructor(
      */
     fun version(): Long = version.getRequired("version")
 
+    fun accountingProductId(): Optional<String> =
+        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
      * Aggregation unit value depends on the **Category** configured for the selected targetField.
@@ -117,6 +126,8 @@ private constructor(
 
     fun customFields(): Optional<CustomFields> =
         Optional.ofNullable(customFields.getNullable("customFields"))
+
+    fun customSql(): Optional<String> = Optional.ofNullable(customSql.getNullable("customSql"))
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -222,6 +233,10 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
+
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
      * Aggregation unit value depends on the **Category** configured for the selected targetField.
@@ -257,6 +272,8 @@ private constructor(
     @JsonProperty("customFields")
     @ExcludeMissing
     fun _customFields(): JsonField<CustomFields> = customFields
+
+    @JsonProperty("customSql") @ExcludeMissing fun _customSql(): JsonField<String> = customSql
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -369,10 +386,12 @@ private constructor(
 
         id()
         version()
+        accountingProductId()
         aggregation()
         code()
         createdBy()
         customFields().ifPresent { it.validate() }
+        customSql()
         defaultValue()
         dtCreated()
         dtLastModified()
@@ -400,10 +419,12 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var aggregation: JsonField<InnerAggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
+        private var customSql: JsonField<String> = JsonMissing.of()
         private var defaultValue: JsonField<Double> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -422,10 +443,12 @@ private constructor(
         internal fun from(aggregation: Aggregation) = apply {
             id = aggregation.id
             version = aggregation.version
+            accountingProductId = aggregation.accountingProductId
             this.aggregation = aggregation.aggregation
             code = aggregation.code
             createdBy = aggregation.createdBy
             customFields = aggregation.customFields
+            customSql = aggregation.customSql
             defaultValue = aggregation.defaultValue
             dtCreated = aggregation.dtCreated
             dtLastModified = aggregation.dtLastModified
@@ -462,6 +485,13 @@ private constructor(
          * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -532,6 +562,10 @@ private constructor(
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             this.customFields = customFields
         }
+
+        fun customSql(customSql: String) = customSql(JsonField.of(customSql))
+
+        fun customSql(customSql: JsonField<String>) = apply { this.customSql = customSql }
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -790,10 +824,12 @@ private constructor(
             Aggregation(
                 checkRequired("id", id),
                 checkRequired("version", version),
+                accountingProductId,
                 aggregation,
                 code,
                 createdBy,
                 customFields,
+                customSql,
                 defaultValue,
                 dtCreated,
                 dtLastModified,
@@ -1234,15 +1270,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Aggregation && id == other.id && version == other.version && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Aggregation && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, aggregation, code, createdBy, customFields, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, aggregation, code, createdBy, customFields, customSql, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Aggregation{id=$id, version=$version, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
+        "Aggregation{id=$id, version=$version, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
 }

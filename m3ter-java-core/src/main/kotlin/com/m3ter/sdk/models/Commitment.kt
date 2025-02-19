@@ -80,6 +80,9 @@ private constructor(
     @JsonProperty("currency")
     @ExcludeMissing
     private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("drawdownsAccountingProductId")
+    @ExcludeMissing
+    private val drawdownsAccountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("dtCreated")
     @ExcludeMissing
     private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -92,6 +95,9 @@ private constructor(
     @JsonProperty("feeDates")
     @ExcludeMissing
     private val feeDates: JsonField<List<FeeDate>> = JsonMissing.of(),
+    @JsonProperty("feesAccountingProductId")
+    @ExcludeMissing
+    private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
@@ -221,6 +227,11 @@ private constructor(
     /** The currency used for the Commitment. For example, 'USD'. */
     fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
 
+    fun drawdownsAccountingProductId(): Optional<String> =
+        Optional.ofNullable(
+            drawdownsAccountingProductId.getNullable("drawdownsAccountingProductId")
+        )
+
     /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
@@ -242,6 +253,9 @@ private constructor(
      *   covers _(in ISO-8601 format)_.
      */
     fun feeDates(): Optional<List<FeeDate>> = Optional.ofNullable(feeDates.getNullable("feeDates"))
+
+    fun feesAccountingProductId(): Optional<String> =
+        Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
     /** The unique identifier (UUID) of the user who last modified this Commitment. */
     fun lastModifiedBy(): Optional<String> =
@@ -405,6 +419,10 @@ private constructor(
     /** The currency used for the Commitment. For example, 'USD'. */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+    @JsonProperty("drawdownsAccountingProductId")
+    @ExcludeMissing
+    fun _drawdownsAccountingProductId(): JsonField<String> = drawdownsAccountingProductId
+
     /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
     @JsonProperty("dtCreated")
     @ExcludeMissing
@@ -428,6 +446,10 @@ private constructor(
      *   covers _(in ISO-8601 format)_.
      */
     @JsonProperty("feeDates") @ExcludeMissing fun _feeDates(): JsonField<List<FeeDate>> = feeDates
+
+    @JsonProperty("feesAccountingProductId")
+    @ExcludeMissing
+    fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
     /** The unique identifier (UUID) of the user who last modified this Commitment. */
     @JsonProperty("lastModifiedBy")
@@ -513,10 +535,12 @@ private constructor(
         contractId()
         createdBy()
         currency()
+        drawdownsAccountingProductId()
         dtCreated()
         dtLastModified()
         endDate()
         feeDates().ifPresent { it.forEach { it.validate() } }
+        feesAccountingProductId()
         lastModifiedBy()
         lineItemTypes()
         overageDescription()
@@ -556,10 +580,12 @@ private constructor(
         private var contractId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
+        private var drawdownsAccountingProductId: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var endDate: JsonField<LocalDate> = JsonMissing.of()
         private var feeDates: JsonField<MutableList<FeeDate>>? = null
+        private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
         private var overageDescription: JsonField<String> = JsonMissing.of()
@@ -590,10 +616,12 @@ private constructor(
             contractId = commitment.contractId
             createdBy = commitment.createdBy
             currency = commitment.currency
+            drawdownsAccountingProductId = commitment.drawdownsAccountingProductId
             dtCreated = commitment.dtCreated
             dtLastModified = commitment.dtLastModified
             endDate = commitment.endDate
             feeDates = commitment.feeDates.map { it.toMutableList() }
+            feesAccountingProductId = commitment.feesAccountingProductId
             lastModifiedBy = commitment.lastModifiedBy
             lineItemTypes = commitment.lineItemTypes.map { it.toMutableList() }
             overageDescription = commitment.overageDescription
@@ -824,6 +852,13 @@ private constructor(
         /** The currency used for the Commitment. For example, 'USD'. */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+        fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
+            drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
+
+        fun drawdownsAccountingProductId(drawdownsAccountingProductId: JsonField<String>) = apply {
+            this.drawdownsAccountingProductId = drawdownsAccountingProductId
+        }
+
         /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
@@ -889,6 +924,13 @@ private constructor(
                         }
                         .add(feeDate)
                 }
+        }
+
+        fun feesAccountingProductId(feesAccountingProductId: String) =
+            feesAccountingProductId(JsonField.of(feesAccountingProductId))
+
+        fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+            this.feesAccountingProductId = feesAccountingProductId
         }
 
         /** The unique identifier (UUID) of the user who last modified this Commitment. */
@@ -1077,10 +1119,12 @@ private constructor(
                 contractId,
                 createdBy,
                 currency,
+                drawdownsAccountingProductId,
                 dtCreated,
                 dtLastModified,
                 endDate,
                 (feeDates ?: JsonMissing.of()).map { it.toImmutable() },
+                feesAccountingProductId,
                 lastModifiedBy,
                 (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
                 overageDescription,
@@ -1471,15 +1515,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Commitment && id == other.id && version == other.version && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Commitment && id == other.id && version == other.version && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && drawdownsAccountingProductId == other.drawdownsAccountingProductId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, dtCreated, dtLastModified, endDate, feeDates, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, drawdownsAccountingProductId, dtCreated, dtLastModified, endDate, feeDates, feesAccountingProductId, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Commitment{id=$id, version=$version, accountId=$accountId, accountingProductId=$accountingProductId, amount=$amount, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, amountSpent=$amountSpent, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, createdBy=$createdBy, currency=$currency, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feeDates=$feeDates, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "Commitment{id=$id, version=$version, accountId=$accountId, accountingProductId=$accountingProductId, amount=$amount, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, amountSpent=$amountSpent, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, createdBy=$createdBy, currency=$currency, drawdownsAccountingProductId=$drawdownsAccountingProductId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

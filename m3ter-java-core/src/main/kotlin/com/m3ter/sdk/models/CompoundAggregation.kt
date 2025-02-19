@@ -28,6 +28,9 @@ private constructor(
     @JsonProperty("version")
     @ExcludeMissing
     private val version: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("calculation")
     @ExcludeMissing
     private val calculation: JsonField<String> = JsonMissing.of(),
@@ -77,6 +80,9 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     fun version(): Long = version.getRequired("version")
+
+    fun accountingProductId(): Optional<String> =
+        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
     /**
      * This field is a string that represents the formula for the calculation. This formula
@@ -176,6 +182,10 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
 
     /**
      * This field is a string that represents the formula for the calculation. This formula
@@ -283,6 +293,7 @@ private constructor(
 
         id()
         version()
+        accountingProductId()
         calculation()
         code()
         createdBy()
@@ -312,6 +323,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var calculation: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -332,6 +344,7 @@ private constructor(
         internal fun from(compoundAggregation: CompoundAggregation) = apply {
             id = compoundAggregation.id
             version = compoundAggregation.version
+            accountingProductId = compoundAggregation.accountingProductId
             calculation = compoundAggregation.calculation
             code = compoundAggregation.code
             createdBy = compoundAggregation.createdBy
@@ -370,6 +383,13 @@ private constructor(
          * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
 
         /**
          * This field is a string that represents the formula for the calculation. This formula
@@ -597,6 +617,7 @@ private constructor(
             CompoundAggregation(
                 checkRequired("id", id),
                 checkRequired("version", version),
+                accountingProductId,
                 calculation,
                 code,
                 createdBy,
@@ -893,15 +914,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregation && id == other.id && version == other.version && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CompoundAggregation && id == other.id && version == other.version && accountingProductId == other.accountingProductId && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CompoundAggregation{id=$id, version=$version, calculation=$calculation, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, evaluateNullAggregations=$evaluateNullAggregations, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segments=$segments, unit=$unit, additionalProperties=$additionalProperties}"
+        "CompoundAggregation{id=$id, version=$version, accountingProductId=$accountingProductId, calculation=$calculation, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, evaluateNullAggregations=$evaluateNullAggregations, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segments=$segments, unit=$unit, additionalProperties=$additionalProperties}"
 }

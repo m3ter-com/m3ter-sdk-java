@@ -14,6 +14,7 @@ class CounterPricingTest {
             CounterPricing.builder()
                 .id("id")
                 .version(0L)
+                .accountingProductId("accountingProductId")
                 .code("code")
                 .counterId("counterId")
                 .createdBy("createdBy")
@@ -43,6 +44,7 @@ class CounterPricingTest {
         assertThat(counterPricing).isNotNull
         assertThat(counterPricing.id()).isEqualTo("id")
         assertThat(counterPricing.version()).isEqualTo(0L)
+        assertThat(counterPricing.accountingProductId()).contains("accountingProductId")
         assertThat(counterPricing.code()).contains("code")
         assertThat(counterPricing.counterId()).contains("counterId")
         assertThat(counterPricing.createdBy()).contains("createdBy")
