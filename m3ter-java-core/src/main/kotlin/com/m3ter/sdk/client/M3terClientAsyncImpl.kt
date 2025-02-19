@@ -32,6 +32,8 @@ import com.m3ter.sdk.services.async.CreditReasonServiceAsync
 import com.m3ter.sdk.services.async.CreditReasonServiceAsyncImpl
 import com.m3ter.sdk.services.async.CurrencyServiceAsync
 import com.m3ter.sdk.services.async.CurrencyServiceAsyncImpl
+import com.m3ter.sdk.services.async.DataExportServiceAsync
+import com.m3ter.sdk.services.async.DataExportServiceAsyncImpl
 import com.m3ter.sdk.services.async.DebitReasonServiceAsync
 import com.m3ter.sdk.services.async.DebitReasonServiceAsyncImpl
 import com.m3ter.sdk.services.async.MeterServiceAsync
@@ -162,6 +164,10 @@ class M3terClientAsyncImpl(
         TransactionTypeServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val dataExports: DataExportServiceAsync by lazy {
+        DataExportServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): M3terClient = sync
 
     override fun authentication(): AuthenticationServiceAsync = authentication
@@ -211,6 +217,8 @@ class M3terClientAsyncImpl(
     override fun products(): ProductServiceAsync = products
 
     override fun transactionTypes(): TransactionTypeServiceAsync = transactionTypes
+
+    override fun dataExports(): DataExportServiceAsync = dataExports
 
     override fun close() = clientOptions.httpClient.close()
 }

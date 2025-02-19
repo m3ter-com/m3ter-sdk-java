@@ -37,12 +37,14 @@ class AggregationServiceTest {
                     .rounding(AggregationCreateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
                         AggregationCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .customSql("customSql")
                     .defaultValue(0.0)
                     .addSegmentedField("string")
                     .addSegment(
@@ -97,12 +99,14 @@ class AggregationServiceTest {
                     .rounding(AggregationUpdateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
                         AggregationUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .customSql("customSql")
                     .defaultValue(0.0)
                     .addSegmentedField("string")
                     .addSegment(

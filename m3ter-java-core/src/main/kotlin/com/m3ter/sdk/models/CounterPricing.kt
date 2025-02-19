@@ -26,6 +26,9 @@ private constructor(
     @JsonProperty("version")
     @ExcludeMissing
     private val version: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("counterId")
     @ExcludeMissing
@@ -88,6 +91,9 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     fun version(): Long = version.getRequired("version")
+
+    fun accountingProductId(): Optional<String> =
+        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
     /** Unique short code for the Pricing. */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
@@ -197,6 +203,10 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
 
     /** Unique short code for the Pricing. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -318,6 +328,7 @@ private constructor(
 
         id()
         version()
+        accountingProductId()
         code()
         counterId()
         createdBy()
@@ -350,6 +361,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var counterId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -373,6 +385,7 @@ private constructor(
         internal fun from(counterPricing: CounterPricing) = apply {
             id = counterPricing.id
             version = counterPricing.version
+            accountingProductId = counterPricing.accountingProductId
             code = counterPricing.code
             counterId = counterPricing.counterId
             createdBy = counterPricing.createdBy
@@ -414,6 +427,13 @@ private constructor(
          * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
 
         /** Unique short code for the Pricing. */
         fun code(code: String) = code(JsonField.of(code))
@@ -646,6 +666,7 @@ private constructor(
             CounterPricing(
                 checkRequired("id", id),
                 checkRequired("version", version),
+                accountingProductId,
                 code,
                 counterId,
                 createdBy,
@@ -856,15 +877,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterPricing && id == other.id && version == other.version && code == other.code && counterId == other.counterId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CounterPricing && id == other.id && version == other.version && accountingProductId == other.accountingProductId && code == other.code && counterId == other.counterId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, code, counterId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, planId, planTemplateId, pricingBands, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, code, counterId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, planId, planTemplateId, pricingBands, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CounterPricing{id=$id, version=$version, code=$code, counterId=$counterId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "CounterPricing{id=$id, version=$version, accountingProductId=$accountingProductId, code=$code, counterId=$counterId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

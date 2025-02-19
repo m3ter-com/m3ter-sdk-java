@@ -67,8 +67,16 @@ private constructor(
     /** Unique short code for the Balance. */
     fun code(): Optional<String> = body.code()
 
+    /**
+     * Optional Product ID this Balance Consumptions should be attributed to for accounting purposes
+     */
+    fun consumptionsAccountingProductId(): Optional<String> = body.consumptionsAccountingProductId()
+
     /** A description of the Balance. */
     fun description(): Optional<String> = body.description()
+
+    /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+    fun feesAccountingProductId(): Optional<String> = body.feesAccountingProductId()
 
     /**
      * Specify the line item charge types that can draw-down at billing against the Balance amount.
@@ -170,8 +178,17 @@ private constructor(
     /** Unique short code for the Balance. */
     fun _code(): JsonField<String> = body._code()
 
+    /**
+     * Optional Product ID this Balance Consumptions should be attributed to for accounting purposes
+     */
+    fun _consumptionsAccountingProductId(): JsonField<String> =
+        body._consumptionsAccountingProductId()
+
     /** A description of the Balance. */
     fun _description(): JsonField<String> = body._description()
+
+    /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+    fun _feesAccountingProductId(): JsonField<String> = body._feesAccountingProductId()
 
     /**
      * Specify the line item charge types that can draw-down at billing against the Balance amount.
@@ -286,9 +303,15 @@ private constructor(
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("consumptionsAccountingProductId")
+        @ExcludeMissing
+        private val consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("description")
         @ExcludeMissing
         private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("lineItemTypes")
         @ExcludeMissing
         private val lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
@@ -348,9 +371,22 @@ private constructor(
         /** Unique short code for the Balance. */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
+        /**
+         * Optional Product ID this Balance Consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun consumptionsAccountingProductId(): Optional<String> =
+            Optional.ofNullable(
+                consumptionsAccountingProductId.getNullable("consumptionsAccountingProductId")
+            )
+
         /** A description of the Balance. */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
+
+        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        fun feesAccountingProductId(): Optional<String> =
+            Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Balance
@@ -465,10 +501,23 @@ private constructor(
         /** Unique short code for the Balance. */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
+        /**
+         * Optional Product ID this Balance Consumptions should be attributed to for accounting
+         * purposes
+         */
+        @JsonProperty("consumptionsAccountingProductId")
+        @ExcludeMissing
+        fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
+
         /** A description of the Balance. */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
+
+        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Balance
@@ -574,7 +623,9 @@ private constructor(
             startDate()
             balanceDrawDownDescription()
             code()
+            consumptionsAccountingProductId()
             description()
+            feesAccountingProductId()
             lineItemTypes()
             name()
             overageDescription()
@@ -602,7 +653,9 @@ private constructor(
             private var startDate: JsonField<OffsetDateTime>? = null
             private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
+            private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
+            private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
             private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
             private var name: JsonField<String> = JsonMissing.of()
             private var overageDescription: JsonField<String> = JsonMissing.of()
@@ -621,7 +674,9 @@ private constructor(
                 startDate = balanceCreateBody.startDate
                 balanceDrawDownDescription = balanceCreateBody.balanceDrawDownDescription
                 code = balanceCreateBody.code
+                consumptionsAccountingProductId = balanceCreateBody.consumptionsAccountingProductId
                 description = balanceCreateBody.description
+                feesAccountingProductId = balanceCreateBody.feesAccountingProductId
                 lineItemTypes = balanceCreateBody.lineItemTypes.map { it.toMutableList() }
                 name = balanceCreateBody.name
                 overageDescription = balanceCreateBody.overageDescription
@@ -694,12 +749,40 @@ private constructor(
             /** Unique short code for the Balance. */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
+            /**
+             * Optional Product ID this Balance Consumptions should be attributed to for accounting
+             * purposes
+             */
+            fun consumptionsAccountingProductId(consumptionsAccountingProductId: String) =
+                consumptionsAccountingProductId(JsonField.of(consumptionsAccountingProductId))
+
+            /**
+             * Optional Product ID this Balance Consumptions should be attributed to for accounting
+             * purposes
+             */
+            fun consumptionsAccountingProductId(
+                consumptionsAccountingProductId: JsonField<String>
+            ) = apply { this.consumptionsAccountingProductId = consumptionsAccountingProductId }
+
             /** A description of the Balance. */
             fun description(description: String) = description(JsonField.of(description))
 
             /** A description of the Balance. */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
+            }
+
+            /**
+             * Optional Product ID this Balance Fees should be attributed to for accounting purposes
+             */
+            fun feesAccountingProductId(feesAccountingProductId: String) =
+                feesAccountingProductId(JsonField.of(feesAccountingProductId))
+
+            /**
+             * Optional Product ID this Balance Fees should be attributed to for accounting purposes
+             */
+            fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+                this.feesAccountingProductId = feesAccountingProductId
             }
 
             /**
@@ -944,7 +1027,9 @@ private constructor(
                     checkRequired("startDate", startDate),
                     balanceDrawDownDescription,
                     code,
+                    consumptionsAccountingProductId,
                     description,
+                    feesAccountingProductId,
                     (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
                     name,
                     overageDescription,
@@ -962,17 +1047,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceCreateBody && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && description == other.description && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BalanceCreateBody && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, description, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BalanceCreateBody{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, description=$description, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+            "BalanceCreateBody{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1061,11 +1146,38 @@ private constructor(
         /** Unique short code for the Balance. */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
+        /**
+         * Optional Product ID this Balance Consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun consumptionsAccountingProductId(consumptionsAccountingProductId: String) = apply {
+            body.consumptionsAccountingProductId(consumptionsAccountingProductId)
+        }
+
+        /**
+         * Optional Product ID this Balance Consumptions should be attributed to for accounting
+         * purposes
+         */
+        fun consumptionsAccountingProductId(consumptionsAccountingProductId: JsonField<String>) =
+            apply {
+                body.consumptionsAccountingProductId(consumptionsAccountingProductId)
+            }
+
         /** A description of the Balance. */
         fun description(description: String) = apply { body.description(description) }
 
         /** A description of the Balance. */
         fun description(description: JsonField<String>) = apply { body.description(description) }
+
+        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        fun feesAccountingProductId(feesAccountingProductId: String) = apply {
+            body.feesAccountingProductId(feesAccountingProductId)
+        }
+
+        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+            body.feesAccountingProductId(feesAccountingProductId)
+        }
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Balance

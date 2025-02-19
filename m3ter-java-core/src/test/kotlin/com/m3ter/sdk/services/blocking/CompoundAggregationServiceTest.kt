@@ -35,6 +35,7 @@ class CompoundAggregationServiceTest {
                     .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationCreateParams.Rounding.UP)
                     .unit("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
                         CompoundAggregationCreateParams.CustomFields.builder()
@@ -88,6 +89,7 @@ class CompoundAggregationServiceTest {
                     .quantityPerUnit(1.0)
                     .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                     .unit("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
                         CompoundAggregationUpdateParams.CustomFields.builder()

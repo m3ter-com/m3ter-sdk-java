@@ -105,10 +105,15 @@ private constructor(
      */
     fun unit(): String = body.unit()
 
+    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    fun accountingProductId(): Optional<String> = body.accountingProductId()
+
     /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
     fun code(): Optional<String> = body.code()
 
     fun customFields(): Optional<CustomFields> = body.customFields()
+
+    fun customSql(): Optional<String> = body.customSql()
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -226,10 +231,15 @@ private constructor(
      */
     fun _unit(): JsonField<String> = body._unit()
 
+    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    fun _accountingProductId(): JsonField<String> = body._accountingProductId()
+
     /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
     fun _code(): JsonField<String> = body._code()
 
     fun _customFields(): JsonField<CustomFields> = body._customFields()
+
+    fun _customSql(): JsonField<String> = body._customSql()
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -319,12 +329,18 @@ private constructor(
         @JsonProperty("unit")
         @ExcludeMissing
         private val unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        private val accountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("customFields")
         @ExcludeMissing
         private val customFields: JsonField<CustomFields> = JsonMissing.of(),
+        @JsonProperty("customSql")
+        @ExcludeMissing
+        private val customSql: JsonField<String> = JsonMissing.of(),
         @JsonProperty("defaultValue")
         @ExcludeMissing
         private val defaultValue: JsonField<Double> = JsonMissing.of(),
@@ -414,11 +430,17 @@ private constructor(
          */
         fun unit(): String = unit.getRequired("unit")
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(): Optional<String> =
+            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
+
+        fun customSql(): Optional<String> = Optional.ofNullable(customSql.getNullable("customSql"))
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -547,12 +569,19 @@ private constructor(
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        fun _accountingProductId(): JsonField<String> = accountingProductId
+
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
+
+        @JsonProperty("customSql") @ExcludeMissing fun _customSql(): JsonField<String> = customSql
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -623,8 +652,10 @@ private constructor(
             rounding()
             targetField()
             unit()
+            accountingProductId()
             code()
             customFields().ifPresent { it.validate() }
+            customSql()
             defaultValue()
             segmentedFields()
             segments().ifPresent { it.forEach { it.validate() } }
@@ -649,8 +680,10 @@ private constructor(
             private var rounding: JsonField<Rounding>? = null
             private var targetField: JsonField<String>? = null
             private var unit: JsonField<String>? = null
+            private var accountingProductId: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
+            private var customSql: JsonField<String> = JsonMissing.of()
             private var defaultValue: JsonField<Double> = JsonMissing.of()
             private var segmentedFields: JsonField<MutableList<String>>? = null
             private var segments: JsonField<MutableList<Segment>>? = null
@@ -666,8 +699,10 @@ private constructor(
                 rounding = aggregationCreateBody.rounding
                 targetField = aggregationCreateBody.targetField
                 unit = aggregationCreateBody.unit
+                accountingProductId = aggregationCreateBody.accountingProductId
                 code = aggregationCreateBody.code
                 customFields = aggregationCreateBody.customFields
+                customSql = aggregationCreateBody.customSql
                 defaultValue = aggregationCreateBody.defaultValue
                 segmentedFields = aggregationCreateBody.segmentedFields.map { it.toMutableList() }
                 segments = aggregationCreateBody.segments.map { it.toMutableList() }
@@ -834,6 +869,19 @@ private constructor(
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+            /**
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             */
+            fun accountingProductId(accountingProductId: String) =
+                accountingProductId(JsonField.of(accountingProductId))
+
+            /**
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             */
+            fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+                this.accountingProductId = accountingProductId
+            }
+
             /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
             fun code(code: String) = code(JsonField.of(code))
 
@@ -845,6 +893,10 @@ private constructor(
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
             }
+
+            fun customSql(customSql: String) = customSql(JsonField.of(customSql))
+
+            fun customSql(customSql: JsonField<String>) = apply { this.customSql = customSql }
 
             /**
              * Aggregation value used when no usage data is available to be aggregated.
@@ -1021,8 +1073,10 @@ private constructor(
                     checkRequired("rounding", rounding),
                     checkRequired("targetField", targetField),
                     checkRequired("unit", unit),
+                    accountingProductId,
                     code,
                     customFields,
+                    customSql,
                     defaultValue,
                     (segmentedFields ?: JsonMissing.of()).map { it.toImmutable() },
                     (segments ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1036,17 +1090,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AggregationCreateBody && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && code == other.code && customFields == other.customFields && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AggregationCreateBody && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregation, meterId, name, quantityPerUnit, rounding, targetField, unit, code, customFields, defaultValue, segmentedFields, segments, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(aggregation, meterId, name, quantityPerUnit, rounding, targetField, unit, accountingProductId, code, customFields, customSql, defaultValue, segmentedFields, segments, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AggregationCreateBody{aggregation=$aggregation, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, targetField=$targetField, unit=$unit, code=$code, customFields=$customFields, defaultValue=$defaultValue, segmentedFields=$segmentedFields, segments=$segments, version=$version, additionalProperties=$additionalProperties}"
+            "AggregationCreateBody{aggregation=$aggregation, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, targetField=$targetField, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, segmentedFields=$segmentedFields, segments=$segments, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1227,6 +1281,16 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: String) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(code: String) = apply { body.code(code) }
 
@@ -1238,6 +1302,10 @@ private constructor(
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
         }
+
+        fun customSql(customSql: String) = apply { body.customSql(customSql) }
+
+        fun customSql(customSql: JsonField<String>) = apply { body.customSql(customSql) }
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.

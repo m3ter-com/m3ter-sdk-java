@@ -48,6 +48,9 @@ private constructor(
      */
     fun startDate(): OffsetDateTime = body.startDate()
 
+    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    fun accountingProductId(): Optional<String> = body.accountingProductId()
+
     /** Unique short code for the Pricing. */
     fun code(): Optional<String> = body.code()
 
@@ -143,6 +146,9 @@ private constructor(
      * of Plan Template._(Required)_
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
+
+    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
     /** Unique short code for the Pricing. */
     fun _code(): JsonField<String> = body._code()
@@ -261,6 +267,9 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        private val accountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -308,6 +317,10 @@ private constructor(
          * Plan of Plan Template._(Required)_
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(): Optional<String> =
+            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
         /** Unique short code for the Pricing. */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
@@ -416,6 +429,11 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        fun _accountingProductId(): JsonField<String> = accountingProductId
 
         /** Unique short code for the Pricing. */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -530,6 +548,7 @@ private constructor(
             counterId()
             pricingBands().forEach { it.validate() }
             startDate()
+            accountingProductId()
             code()
             cumulative()
             description()
@@ -557,6 +576,7 @@ private constructor(
             private var counterId: JsonField<String>? = null
             private var pricingBands: JsonField<MutableList<PricingBand>>? = null
             private var startDate: JsonField<OffsetDateTime>? = null
+            private var accountingProductId: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var cumulative: JsonField<Boolean> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
@@ -575,6 +595,7 @@ private constructor(
                 counterId = counterPricingCreateBody.counterId
                 pricingBands = counterPricingCreateBody.pricingBands.map { it.toMutableList() }
                 startDate = counterPricingCreateBody.startDate
+                accountingProductId = counterPricingCreateBody.accountingProductId
                 code = counterPricingCreateBody.code
                 cumulative = counterPricingCreateBody.cumulative
                 description = counterPricingCreateBody.description
@@ -627,6 +648,15 @@ private constructor(
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
+            }
+
+            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            fun accountingProductId(accountingProductId: String) =
+                accountingProductId(JsonField.of(accountingProductId))
+
+            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+                this.accountingProductId = accountingProductId
             }
 
             /** Unique short code for the Pricing. */
@@ -842,6 +872,7 @@ private constructor(
                     checkRequired("counterId", counterId),
                     checkRequired("pricingBands", pricingBands).map { it.toImmutable() },
                     checkRequired("startDate", startDate),
+                    accountingProductId,
                     code,
                     cumulative,
                     description,
@@ -862,17 +893,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CounterPricingCreateBody && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CounterPricingCreateBody && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(counterId, pricingBands, startDate, code, cumulative, description, endDate, planId, planTemplateId, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(counterId, pricingBands, startDate, accountingProductId, code, cumulative, description, endDate, planId, planTemplateId, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CounterPricingCreateBody{counterId=$counterId, pricingBands=$pricingBands, startDate=$startDate, code=$code, cumulative=$cumulative, description=$description, endDate=$endDate, planId=$planId, planTemplateId=$planTemplateId, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, version=$version, additionalProperties=$additionalProperties}"
+            "CounterPricingCreateBody{counterId=$counterId, pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, code=$code, cumulative=$cumulative, description=$description, endDate=$endDate, planId=$planId, planTemplateId=$planTemplateId, proRateAdjustmentCredit=$proRateAdjustmentCredit, proRateAdjustmentDebit=$proRateAdjustmentDebit, proRateRunningTotal=$proRateRunningTotal, runningTotalBillInAdvance=$runningTotalBillInAdvance, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -928,6 +959,16 @@ private constructor(
          * Plan of Plan Template._(Required)_
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: String) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            body.accountingProductId(accountingProductId)
+        }
 
         /** Unique short code for the Pricing. */
         fun code(code: String) = apply { body.code(code) }

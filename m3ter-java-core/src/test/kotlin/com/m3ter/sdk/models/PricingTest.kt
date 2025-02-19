@@ -15,6 +15,7 @@ class PricingTest {
             Pricing.builder()
                 .id("id")
                 .version(0L)
+                .accountingProductId("accountingProductId")
                 .aggregationId("aggregationId")
                 .aggregationType(Pricing.AggregationType.SIMPLE)
                 .code("code")
@@ -62,6 +63,7 @@ class PricingTest {
         assertThat(pricing).isNotNull
         assertThat(pricing.id()).isEqualTo("id")
         assertThat(pricing.version()).isEqualTo(0L)
+        assertThat(pricing.accountingProductId()).contains("accountingProductId")
         assertThat(pricing.aggregationId()).contains("aggregationId")
         assertThat(pricing.aggregationType()).contains(Pricing.AggregationType.SIMPLE)
         assertThat(pricing.code()).contains("code")

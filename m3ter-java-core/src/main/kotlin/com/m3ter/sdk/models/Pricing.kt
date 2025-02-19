@@ -28,6 +28,9 @@ private constructor(
     @JsonProperty("version")
     @ExcludeMissing
     private val version: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("aggregationId")
     @ExcludeMissing
     private val aggregationId: JsonField<String> = JsonMissing.of(),
@@ -106,6 +109,9 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     fun version(): Long = version.getRequired("version")
+
+    fun accountingProductId(): Optional<String> =
+        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
     /**
      * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
@@ -251,6 +257,10 @@ private constructor(
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
 
     /**
      * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
@@ -413,6 +423,7 @@ private constructor(
 
         id()
         version()
+        accountingProductId()
         aggregationId()
         aggregationType()
         code()
@@ -451,6 +462,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var aggregationId: JsonField<String> = JsonMissing.of()
         private var aggregationType: JsonField<AggregationType> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -480,6 +492,7 @@ private constructor(
         internal fun from(pricing: Pricing) = apply {
             id = pricing.id
             version = pricing.version
+            accountingProductId = pricing.accountingProductId
             aggregationId = pricing.aggregationId
             aggregationType = pricing.aggregationType
             code = pricing.code
@@ -527,6 +540,13 @@ private constructor(
          * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
 
         /**
          * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
@@ -849,6 +869,7 @@ private constructor(
             Pricing(
                 checkRequired("id", id),
                 checkRequired("version", version),
+                accountingProductId,
                 aggregationId,
                 aggregationType,
                 code,
@@ -1535,15 +1556,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Pricing && id == other.id && version == other.version && aggregationId == other.aggregationId && aggregationType == other.aggregationType && code == other.code && compoundAggregationId == other.compoundAggregationId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && segment == other.segment && segmentString == other.segmentString && startDate == other.startDate && tiersSpanPlan == other.tiersSpanPlan && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Pricing && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && aggregationType == other.aggregationType && code == other.code && compoundAggregationId == other.compoundAggregationId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && segment == other.segment && segmentString == other.segmentString && startDate == other.startDate && tiersSpanPlan == other.tiersSpanPlan && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, aggregationId, aggregationType, code, compoundAggregationId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, pricingBands, segment, segmentString, startDate, tiersSpanPlan, type, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, aggregationId, aggregationType, code, compoundAggregationId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, pricingBands, segment, segmentString, startDate, tiersSpanPlan, type, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Pricing{id=$id, version=$version, aggregationId=$aggregationId, aggregationType=$aggregationType, code=$code, compoundAggregationId=$compoundAggregationId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, segment=$segment, segmentString=$segmentString, startDate=$startDate, tiersSpanPlan=$tiersSpanPlan, type=$type, additionalProperties=$additionalProperties}"
+        "Pricing{id=$id, version=$version, accountingProductId=$accountingProductId, aggregationId=$aggregationId, aggregationType=$aggregationType, code=$code, compoundAggregationId=$compoundAggregationId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, segment=$segment, segmentString=$segmentString, startDate=$startDate, tiersSpanPlan=$tiersSpanPlan, type=$type, additionalProperties=$additionalProperties}"
 }
