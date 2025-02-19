@@ -16,10 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 
-class DataExportServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DataExportService {
+class DataExportServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    DataExportService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -78,7 +76,7 @@ internal constructor(
      */
     override fun createAdhoc(
         params: DataExportCreateAdhocParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AdhocExport {
         val request =
             HttpRequest.builder()

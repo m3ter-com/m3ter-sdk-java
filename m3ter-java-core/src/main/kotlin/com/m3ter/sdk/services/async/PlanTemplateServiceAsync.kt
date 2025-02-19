@@ -26,7 +26,7 @@ interface PlanTemplateServiceAsync {
     @JvmOverloads
     fun create(
         params: PlanTemplateCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplate>
 
     /**
@@ -38,7 +38,7 @@ interface PlanTemplateServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: PlanTemplateRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplate>
 
     /**
@@ -55,7 +55,7 @@ interface PlanTemplateServiceAsync {
     @JvmOverloads
     fun update(
         params: PlanTemplateUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplate>
 
     /**
@@ -68,7 +68,7 @@ interface PlanTemplateServiceAsync {
     @JvmOverloads
     fun list(
         params: PlanTemplateListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplateListPageAsync>
 
     /**
@@ -80,6 +80,6 @@ interface PlanTemplateServiceAsync {
     @JvmOverloads
     fun delete(
         params: PlanTemplateDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplate>
 }

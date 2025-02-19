@@ -23,14 +23,14 @@ interface TransactionTypeServiceAsync {
     @JvmOverloads
     fun create(
         params: TransactionTypeCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionType>
 
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads
     fun retrieve(
         params: TransactionTypeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionType>
 
     /**
@@ -40,7 +40,7 @@ interface TransactionTypeServiceAsync {
     @JvmOverloads
     fun update(
         params: TransactionTypeUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionType>
 
     /**
@@ -50,13 +50,13 @@ interface TransactionTypeServiceAsync {
     @JvmOverloads
     fun list(
         params: TransactionTypeListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeListPageAsync>
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads
     fun delete(
         params: TransactionTypeDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionType>
 }

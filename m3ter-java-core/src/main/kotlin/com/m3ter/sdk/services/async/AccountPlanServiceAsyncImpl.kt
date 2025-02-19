@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.AccountPlanRetrieveParams
 import com.m3ter.sdk.models.AccountPlanUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class AccountPlanServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AccountPlanServiceAsync {
+class AccountPlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    AccountPlanServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -45,7 +43,7 @@ internal constructor(
      */
     override fun create(
         params: AccountPlanCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountPlan> {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
     /** Retrieve the AccountPlan or AccountPlanGroup details corresponding to the given UUID. */
     override fun retrieve(
         params: AccountPlanRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountPlan> {
         val request =
             HttpRequest.builder()
@@ -82,7 +80,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accountplans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -118,7 +116,7 @@ internal constructor(
      */
     override fun update(
         params: AccountPlanUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountPlan> {
         val request =
             HttpRequest.builder()
@@ -127,7 +125,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accountplans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -161,7 +159,7 @@ internal constructor(
      */
     override fun list(
         params: AccountPlanListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountPlanListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -194,7 +192,7 @@ internal constructor(
      */
     override fun delete(
         params: AccountPlanDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AccountPlan> {
         val request =
             HttpRequest.builder()
@@ -203,7 +201,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accountplans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

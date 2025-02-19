@@ -85,13 +85,8 @@ private constructor(
         fun of(
             commitmentsService: CommitmentService,
             params: CommitmentListParams,
-            response: Response
-        ) =
-            CommitmentListPage(
-                commitmentsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CommitmentListPage(commitmentsService, params, response)
     }
 
     @NoAutoDetect
@@ -175,18 +170,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CommitmentListPage,
-    ) : Iterable<Commitment> {
+    class AutoPager(private val firstPage: CommitmentListPage) : Iterable<Commitment> {
 
         override fun iterator(): Iterator<Commitment> = iterator {
             var page = firstPage

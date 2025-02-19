@@ -85,13 +85,8 @@ private constructor(
         fun of(
             transactionTypesService: TransactionTypeServiceAsync,
             params: TransactionTypeListParams,
-            response: Response
-        ) =
-            TransactionTypeListPageAsync(
-                transactionTypesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = TransactionTypeListPageAsync(transactionTypesService, params, response)
     }
 
     @NoAutoDetect
@@ -175,26 +170,19 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: TransactionTypeListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: TransactionTypeListPageAsync) {
 
         fun forEach(
             action: Predicate<TransactionType>,
-            executor: Executor
+            executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<TransactionTypeListPageAsync>>.forEach(
                 action: (TransactionType) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -203,7 +191,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

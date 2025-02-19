@@ -18,10 +18,8 @@ import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class BillConfigServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BillConfigServiceAsync {
+class BillConfigServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    BillConfigServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Retrieve the Organization-wide BillConfig. */
     override fun retrieve(
         params: BillConfigRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BillConfig> {
         val request =
             HttpRequest.builder()
@@ -64,7 +62,7 @@ internal constructor(
      */
     override fun update(
         params: BillConfigUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BillConfig> {
         val request =
             HttpRequest.builder()

@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.CounterPricingListParams
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 
-class CounterPricingServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CounterPricingService {
+class CounterPricingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    CounterPricingService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +37,7 @@ internal constructor(
      */
     override fun create(
         params: CounterPricingCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CounterPricing {
         val request =
             HttpRequest.builder()
@@ -64,7 +62,7 @@ internal constructor(
     /** Retrieve a CounterPricing for the given UUID. */
     override fun retrieve(
         params: CounterPricingRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CounterPricing {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counterpricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -98,7 +96,7 @@ internal constructor(
      */
     override fun update(
         params: CounterPricingUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CounterPricing {
         val request =
             HttpRequest.builder()
@@ -107,7 +105,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counterpricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -132,7 +130,7 @@ internal constructor(
      */
     override fun list(
         params: CounterPricingListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CounterPricingListPage {
         val request =
             HttpRequest.builder()
@@ -157,7 +155,7 @@ internal constructor(
     /** Delete a CounterPricing for the given UUID. */
     override fun delete(
         params: CounterPricingDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CounterPricing {
         val request =
             HttpRequest.builder()
@@ -166,7 +164,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counterpricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

@@ -19,9 +19,7 @@ import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class OrganizationConfigServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : OrganizationConfigServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : OrganizationConfigServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Retrieve the Organization-wide configuration details. */
     override fun retrieve(
         params: OrganizationConfigRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<OrganizationConfig> {
         val request =
             HttpRequest.builder()
@@ -58,7 +56,7 @@ internal constructor(
     /** Update the Organization-wide configuration details. */
     override fun update(
         params: OrganizationConfigUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<OrganizationConfig> {
         val request =
             HttpRequest.builder()

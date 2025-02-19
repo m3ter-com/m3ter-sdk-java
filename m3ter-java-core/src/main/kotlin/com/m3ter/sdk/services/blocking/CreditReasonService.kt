@@ -23,21 +23,21 @@ interface CreditReasonService {
     @JvmOverloads
     fun create(
         params: CreditReasonCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReason
 
     /** Retrieve the Credit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CreditReasonRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReason
 
     /** Update the Credit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: CreditReasonUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReason
 
     /**
@@ -48,13 +48,13 @@ interface CreditReasonService {
     @JvmOverloads
     fun list(
         params: CreditReasonListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonListPage
 
     /** Delete the Credit Reason with the given UUID. */
     @JvmOverloads
     fun delete(
         params: CreditReasonDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReason
 }

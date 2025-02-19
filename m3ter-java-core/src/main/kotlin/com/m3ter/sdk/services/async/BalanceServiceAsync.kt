@@ -28,7 +28,7 @@ interface BalanceServiceAsync {
     @JvmOverloads
     fun create(
         params: BalanceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 
     /**
@@ -39,7 +39,7 @@ interface BalanceServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: BalanceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 
     /**
@@ -51,7 +51,7 @@ interface BalanceServiceAsync {
     @JvmOverloads
     fun update(
         params: BalanceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 
     /**
@@ -64,7 +64,7 @@ interface BalanceServiceAsync {
     @JvmOverloads
     fun list(
         params: BalanceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceListPageAsync>
 
     /**
@@ -75,6 +75,6 @@ interface BalanceServiceAsync {
     @JvmOverloads
     fun delete(
         params: BalanceDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 }

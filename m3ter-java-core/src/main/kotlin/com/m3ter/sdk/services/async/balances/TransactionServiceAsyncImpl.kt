@@ -19,10 +19,8 @@ import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.Transaction
 import java.util.concurrent.CompletableFuture
 
-class TransactionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TransactionServiceAsync {
+class TransactionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    TransactionServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -48,7 +46,7 @@ internal constructor(
      */
     override fun create(
         params: BalanceTransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Transaction> {
         val request =
             HttpRequest.builder()
@@ -58,7 +56,7 @@ internal constructor(
                     params.getPathParam(0),
                     "balances",
                     params.getPathParam(1),
-                    "transactions"
+                    "transactions",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -88,7 +86,7 @@ internal constructor(
      */
     override fun list(
         params: BalanceTransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BalanceTransactionListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -98,7 +96,7 @@ internal constructor(
                     params.getPathParam(0),
                     "balances",
                     params.getPathParam(1),
-                    "transactions"
+                    "transactions",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

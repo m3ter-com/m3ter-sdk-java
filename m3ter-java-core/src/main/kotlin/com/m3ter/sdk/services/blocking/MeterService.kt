@@ -46,14 +46,14 @@ interface MeterService {
     @JvmOverloads
     fun create(
         params: MeterCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Meter
 
     /** Retrieve the Meter with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: MeterRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Meter
 
     /**
@@ -66,20 +66,20 @@ interface MeterService {
     @JvmOverloads
     fun update(
         params: MeterUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Meter
 
     /** Retrieve a list of Meter entities */
     @JvmOverloads
     fun list(
         params: MeterListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterListPage
 
     /** Delete the Meter with the given UUID. */
     @JvmOverloads
     fun delete(
         params: MeterDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Meter
 }

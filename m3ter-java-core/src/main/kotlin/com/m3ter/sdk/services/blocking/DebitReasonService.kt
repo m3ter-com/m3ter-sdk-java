@@ -23,21 +23,21 @@ interface DebitReasonService {
     @JvmOverloads
     fun create(
         params: DebitReasonCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReason
 
     /** Retrieve the Debit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: DebitReasonRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReason
 
     /** Update the Debit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: DebitReasonUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReason
 
     /**
@@ -48,13 +48,13 @@ interface DebitReasonService {
     @JvmOverloads
     fun list(
         params: DebitReasonListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonListPage
 
     /** Delete the Debit Reason with the given UUID. */
     @JvmOverloads
     fun delete(
         params: DebitReasonDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReason
 }

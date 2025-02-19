@@ -191,9 +191,7 @@ private constructor(
 
     class OperationalDataType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -379,11 +377,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class SourceType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class SourceType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -35,7 +35,7 @@ interface CommitmentService {
     @JvmOverloads
     fun create(
         params: CommitmentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Commitment
 
     /**
@@ -48,7 +48,7 @@ interface CommitmentService {
     @JvmOverloads
     fun retrieve(
         params: CommitmentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Commitment
 
     /**
@@ -61,7 +61,7 @@ interface CommitmentService {
     @JvmOverloads
     fun update(
         params: CommitmentUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Commitment
 
     /**
@@ -74,7 +74,7 @@ interface CommitmentService {
     @JvmOverloads
     fun list(
         params: CommitmentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentListPage
 
     /**
@@ -86,7 +86,7 @@ interface CommitmentService {
     @JvmOverloads
     fun delete(
         params: CommitmentDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Commitment
 
     /**
@@ -99,6 +99,6 @@ interface CommitmentService {
     @JvmOverloads
     fun search(
         params: CommitmentSearchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentSearchResponse
 }

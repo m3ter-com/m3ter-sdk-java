@@ -24,10 +24,8 @@ import com.m3ter.sdk.services.async.balances.TransactionServiceAsync
 import com.m3ter.sdk.services.async.balances.TransactionServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
-class BalanceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BalanceServiceAsync {
+class BalanceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    BalanceServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -48,7 +46,7 @@ internal constructor(
      */
     override fun create(
         params: BalanceCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Balance> {
         val request =
             HttpRequest.builder()
@@ -80,7 +78,7 @@ internal constructor(
      */
     override fun retrieve(
         params: BalanceRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Balance> {
         val request =
             HttpRequest.builder()
@@ -89,7 +87,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "balances",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -117,7 +115,7 @@ internal constructor(
      */
     override fun update(
         params: BalanceUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Balance> {
         val request =
             HttpRequest.builder()
@@ -126,7 +124,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "balances",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -157,7 +155,7 @@ internal constructor(
      */
     override fun list(
         params: BalanceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<BalanceListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -189,7 +187,7 @@ internal constructor(
      */
     override fun delete(
         params: BalanceDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Balance> {
         val request =
             HttpRequest.builder()
@@ -198,7 +196,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "balances",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

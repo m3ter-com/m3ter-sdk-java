@@ -17,10 +17,8 @@ import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import java.util.concurrent.CompletableFuture
 
-class DataExportServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DataExportServiceAsync {
+class DataExportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    DataExportServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -79,7 +77,7 @@ internal constructor(
      */
     override fun createAdhoc(
         params: DataExportCreateAdhocParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AdhocExport> {
         val request =
             HttpRequest.builder()

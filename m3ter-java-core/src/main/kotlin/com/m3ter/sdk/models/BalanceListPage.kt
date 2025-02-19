@@ -83,11 +83,7 @@ private constructor(
 
         @JvmStatic
         fun of(balancesService: BalanceService, params: BalanceListParams, response: Response) =
-            BalanceListPage(
-                balancesService,
-                params,
-                response,
-            )
+            BalanceListPage(balancesService, params, response)
     }
 
     @NoAutoDetect
@@ -171,18 +167,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: BalanceListPage,
-    ) : Iterable<Balance> {
+    class AutoPager(private val firstPage: BalanceListPage) : Iterable<Balance> {
 
         override fun iterator(): Iterator<Balance> = iterator {
             var page = firstPage

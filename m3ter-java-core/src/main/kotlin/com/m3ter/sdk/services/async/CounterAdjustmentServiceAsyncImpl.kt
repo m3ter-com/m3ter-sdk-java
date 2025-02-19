@@ -23,9 +23,7 @@ import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class CounterAdjustmentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CounterAdjustmentServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : CounterAdjustmentServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -45,7 +43,7 @@ internal constructor(
      */
     override fun create(
         params: CounterAdjustmentCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterAdjustment> {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
     /** Retrieve a CounterAdjustment for the given UUID. */
     override fun retrieve(
         params: CounterAdjustmentRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterAdjustment> {
         val request =
             HttpRequest.builder()
@@ -82,7 +80,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counteradjustments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -105,7 +103,7 @@ internal constructor(
     /** Update a CounterAdjustment for an Account. */
     override fun update(
         params: CounterAdjustmentUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterAdjustment> {
         val request =
             HttpRequest.builder()
@@ -114,7 +112,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counteradjustments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -148,7 +146,7 @@ internal constructor(
      */
     override fun list(
         params: CounterAdjustmentListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterAdjustmentListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -176,7 +174,7 @@ internal constructor(
     /** Delete a CounterAdjustment for the given UUID. */
     override fun delete(
         params: CounterAdjustmentDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterAdjustment> {
         val request =
             HttpRequest.builder()
@@ -185,7 +183,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counteradjustments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

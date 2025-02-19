@@ -10,7 +10,7 @@ constructor(
     private val body: String,
     private val error: M3terError,
     message: String = "$statusCode: $error",
-    cause: Throwable? = null
+    cause: Throwable? = null,
 ) : M3terException(message, cause) {
 
     fun statusCode(): Int = statusCode

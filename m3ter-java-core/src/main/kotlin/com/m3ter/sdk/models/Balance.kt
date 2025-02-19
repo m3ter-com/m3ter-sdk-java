@@ -688,11 +688,8 @@ private constructor(
     }
 
     /** Available line item types for Balances */
-    class LineItemType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -25,7 +25,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -37,7 +37,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -53,7 +53,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -65,7 +65,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductListPageAsync>
 
     /**
@@ -77,6 +77,6 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun delete(
         params: ProductDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 }

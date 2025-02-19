@@ -86,13 +86,8 @@ private constructor(
         fun of(
             compoundAggregationsService: CompoundAggregationService,
             params: CompoundAggregationListParams,
-            response: Response
-        ) =
-            CompoundAggregationListPage(
-                compoundAggregationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CompoundAggregationListPage(compoundAggregationsService, params, response)
     }
 
     @NoAutoDetect
@@ -177,18 +172,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CompoundAggregationListPage,
-    ) : Iterable<CompoundAggregation> {
+    class AutoPager(private val firstPage: CompoundAggregationListPage) :
+        Iterable<CompoundAggregation> {
 
         override fun iterator(): Iterator<CompoundAggregation> = iterator {
             var page = firstPage

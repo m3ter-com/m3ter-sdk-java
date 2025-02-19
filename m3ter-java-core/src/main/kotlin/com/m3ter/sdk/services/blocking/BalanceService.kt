@@ -27,7 +27,7 @@ interface BalanceService {
     @JvmOverloads
     fun create(
         params: BalanceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 
     /**
@@ -38,7 +38,7 @@ interface BalanceService {
     @JvmOverloads
     fun retrieve(
         params: BalanceRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 
     /**
@@ -50,7 +50,7 @@ interface BalanceService {
     @JvmOverloads
     fun update(
         params: BalanceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 
     /**
@@ -63,7 +63,7 @@ interface BalanceService {
     @JvmOverloads
     fun list(
         params: BalanceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPage
 
     /**
@@ -74,6 +74,6 @@ interface BalanceService {
     @JvmOverloads
     fun delete(
         params: BalanceDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 }

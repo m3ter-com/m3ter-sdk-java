@@ -25,14 +25,14 @@ interface ContractServiceAsync {
     @JvmOverloads
     fun create(
         params: ContractCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Contract>
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     @JvmOverloads
     fun retrieve(
         params: ContractRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Contract>
 
     /**
@@ -48,7 +48,7 @@ interface ContractServiceAsync {
     @JvmOverloads
     fun update(
         params: ContractUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Contract>
 
     /**
@@ -58,7 +58,7 @@ interface ContractServiceAsync {
     @JvmOverloads
     fun list(
         params: ContractListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractListPageAsync>
 
     /**
@@ -71,6 +71,6 @@ interface ContractServiceAsync {
     @JvmOverloads
     fun delete(
         params: ContractDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Contract>
 }

@@ -55,9 +55,7 @@ import com.m3ter.sdk.services.async.ProductServiceAsyncImpl
 import com.m3ter.sdk.services.async.TransactionTypeServiceAsync
 import com.m3ter.sdk.services.async.TransactionTypeServiceAsyncImpl
 
-class M3terClientAsyncImpl(
-    private val clientOptions: ClientOptions,
-) : M3terClientAsync {
+class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClientAsync {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions

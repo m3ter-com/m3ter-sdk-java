@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class CreditReasonServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CreditReasonServiceAsync {
+class CreditReasonServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CreditReasonServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +37,7 @@ internal constructor(
      */
     override fun create(
         params: CreditReasonCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CreditReason> {
         val request =
             HttpRequest.builder()
@@ -48,7 +46,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "creditreasons"
+                    "creditreasons",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -72,7 +70,7 @@ internal constructor(
     /** Retrieve the Credit Reason with the given UUID. */
     override fun retrieve(
         params: CreditReasonRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CreditReason> {
         val request =
             HttpRequest.builder()
@@ -82,7 +80,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -105,7 +103,7 @@ internal constructor(
     /** Update the Credit Reason with the given UUID. */
     override fun update(
         params: CreditReasonUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CreditReason> {
         val request =
             HttpRequest.builder()
@@ -115,7 +113,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -144,7 +142,7 @@ internal constructor(
      */
     override fun list(
         params: CreditReasonListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CreditReasonListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "creditreasons"
+                    "creditreasons",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -177,7 +175,7 @@ internal constructor(
     /** Delete the Credit Reason with the given UUID. */
     override fun delete(
         params: CreditReasonDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CreditReason> {
         val request =
             HttpRequest.builder()
@@ -187,7 +185,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

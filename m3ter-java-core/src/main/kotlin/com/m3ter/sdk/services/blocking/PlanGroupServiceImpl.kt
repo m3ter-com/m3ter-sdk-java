@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.PlanGroupListParams
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
-class PlanGroupServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PlanGroupService {
+class PlanGroupServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    PlanGroupService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -64,7 +62,7 @@ internal constructor(
      */
     override fun retrieve(
         params: PlanGroupRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroup {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangroups",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -108,7 +106,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangroups",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -135,7 +133,7 @@ internal constructor(
      */
     override fun list(
         params: PlanGroupListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupListPage {
         val request =
             HttpRequest.builder()
@@ -172,7 +170,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangroups",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

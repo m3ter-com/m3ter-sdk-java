@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class PlanServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PlanServiceAsync {
+class PlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PlanServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** Create a new Plan. */
     override fun create(
         params: PlanCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Plan> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** Retrieve the Plan with the given UUID. */
     override fun retrieve(
         params: PlanRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Plan> {
         val request =
             HttpRequest.builder()
@@ -72,7 +70,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -101,7 +99,7 @@ internal constructor(
      */
     override fun update(
         params: PlanUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Plan> {
         val request =
             HttpRequest.builder()
@@ -110,7 +108,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -135,7 +133,7 @@ internal constructor(
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     override fun list(
         params: PlanListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PlanListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -163,7 +161,7 @@ internal constructor(
     /** Delete the Plan with the given UUID. */
     override fun delete(
         params: PlanDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Plan> {
         val request =
             HttpRequest.builder()
@@ -172,7 +170,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plans",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
