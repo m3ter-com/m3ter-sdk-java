@@ -39,7 +39,9 @@ class BalanceTransactionCreateParamsTest {
                 .transactionTypeId("transactionTypeId")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo(0.0)
         assertThat(body.appliedDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -60,7 +62,9 @@ class BalanceTransactionCreateParamsTest {
                 .balanceId("balanceId")
                 .amount(0.0)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo(0.0)
     }

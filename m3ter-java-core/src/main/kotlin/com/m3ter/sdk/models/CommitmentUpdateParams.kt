@@ -35,7 +35,7 @@ class CommitmentUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: CommitmentUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -422,7 +422,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CommitmentUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -437,9 +437,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CommitmentUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("accountId")
         @ExcludeMissing
         private val accountId: JsonField<String> = JsonMissing.of(),
@@ -982,7 +982,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CommitmentUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -1023,7 +1023,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CommitmentUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var accountId: JsonField<String>? = null
@@ -1055,34 +1055,34 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(commitmentUpdateBody: CommitmentUpdateBody) = apply {
-                accountId = commitmentUpdateBody.accountId
-                amount = commitmentUpdateBody.amount
-                currency = commitmentUpdateBody.currency
-                endDate = commitmentUpdateBody.endDate
-                startDate = commitmentUpdateBody.startDate
-                accountingProductId = commitmentUpdateBody.accountingProductId
-                amountFirstBill = commitmentUpdateBody.amountFirstBill
-                amountPrePaid = commitmentUpdateBody.amountPrePaid
-                billEpoch = commitmentUpdateBody.billEpoch
-                billingInterval = commitmentUpdateBody.billingInterval
-                billingOffset = commitmentUpdateBody.billingOffset
-                billingPlanId = commitmentUpdateBody.billingPlanId
-                childBillingMode = commitmentUpdateBody.childBillingMode
-                commitmentFeeBillInAdvance = commitmentUpdateBody.commitmentFeeBillInAdvance
-                commitmentFeeDescription = commitmentUpdateBody.commitmentFeeDescription
-                commitmentUsageDescription = commitmentUpdateBody.commitmentUsageDescription
-                contractId = commitmentUpdateBody.contractId
-                drawdownsAccountingProductId = commitmentUpdateBody.drawdownsAccountingProductId
-                feeDates = commitmentUpdateBody.feeDates.map { it.toMutableList() }
-                feesAccountingProductId = commitmentUpdateBody.feesAccountingProductId
-                lineItemTypes = commitmentUpdateBody.lineItemTypes.map { it.toMutableList() }
-                overageDescription = commitmentUpdateBody.overageDescription
-                overageSurchargePercent = commitmentUpdateBody.overageSurchargePercent
-                productIds = commitmentUpdateBody.productIds.map { it.toMutableList() }
-                separateOverageUsage = commitmentUpdateBody.separateOverageUsage
-                version = commitmentUpdateBody.version
-                additionalProperties = commitmentUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                accountId = body.accountId
+                amount = body.amount
+                currency = body.currency
+                endDate = body.endDate
+                startDate = body.startDate
+                accountingProductId = body.accountingProductId
+                amountFirstBill = body.amountFirstBill
+                amountPrePaid = body.amountPrePaid
+                billEpoch = body.billEpoch
+                billingInterval = body.billingInterval
+                billingOffset = body.billingOffset
+                billingPlanId = body.billingPlanId
+                childBillingMode = body.childBillingMode
+                commitmentFeeBillInAdvance = body.commitmentFeeBillInAdvance
+                commitmentFeeDescription = body.commitmentFeeDescription
+                commitmentUsageDescription = body.commitmentUsageDescription
+                contractId = body.contractId
+                drawdownsAccountingProductId = body.drawdownsAccountingProductId
+                feeDates = body.feeDates.map { it.toMutableList() }
+                feesAccountingProductId = body.feesAccountingProductId
+                lineItemTypes = body.lineItemTypes.map { it.toMutableList() }
+                overageDescription = body.overageDescription
+                overageSurchargePercent = body.overageSurchargePercent
+                productIds = body.productIds.map { it.toMutableList() }
+                separateOverageUsage = body.separateOverageUsage
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1625,8 +1625,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CommitmentUpdateBody =
-                CommitmentUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("accountId", accountId),
                     checkRequired("amount", amount),
                     checkRequired("currency", currency),
@@ -1662,7 +1662,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CommitmentUpdateBody && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && drawdownsAccountingProductId == other.drawdownsAccountingProductId && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && drawdownsAccountingProductId == other.drawdownsAccountingProductId && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1672,7 +1672,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CommitmentUpdateBody{accountId=$accountId, amount=$amount, currency=$currency, endDate=$endDate, startDate=$startDate, accountingProductId=$accountingProductId, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, drawdownsAccountingProductId=$drawdownsAccountingProductId, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, amount=$amount, currency=$currency, endDate=$endDate, startDate=$startDate, accountingProductId=$accountingProductId, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, drawdownsAccountingProductId=$drawdownsAccountingProductId, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1688,7 +1688,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: CommitmentUpdateBody.Builder = CommitmentUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

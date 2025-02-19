@@ -30,7 +30,9 @@ class DebitReasonUpdateParamsTest {
                 .code("{1{}}_")
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
@@ -41,7 +43,9 @@ class DebitReasonUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = DebitReasonUpdateParams.builder().orgId("orgId").id("id").name("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("x")
     }

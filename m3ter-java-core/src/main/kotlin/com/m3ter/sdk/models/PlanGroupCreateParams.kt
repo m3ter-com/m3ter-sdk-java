@@ -26,7 +26,7 @@ import java.util.Optional
 class PlanGroupCreateParams
 private constructor(
     private val orgId: String,
-    private val body: PlanGroupCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -192,7 +192,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): PlanGroupCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -206,9 +206,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PlanGroupCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("currency")
         @ExcludeMissing
         private val currency: JsonField<String> = JsonMissing.of(),
@@ -451,7 +451,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PlanGroupCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -480,7 +480,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [PlanGroupCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -500,24 +500,22 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(planGroupCreateBody: PlanGroupCreateBody) = apply {
-                currency = planGroupCreateBody.currency
-                name = planGroupCreateBody.name
-                accountId = planGroupCreateBody.accountId
-                code = planGroupCreateBody.code
-                customFields = planGroupCreateBody.customFields
-                minimumSpend = planGroupCreateBody.minimumSpend
-                minimumSpendAccountingProductId =
-                    planGroupCreateBody.minimumSpendAccountingProductId
-                minimumSpendBillInAdvance = planGroupCreateBody.minimumSpendBillInAdvance
-                minimumSpendDescription = planGroupCreateBody.minimumSpendDescription
-                standingCharge = planGroupCreateBody.standingCharge
-                standingChargeAccountingProductId =
-                    planGroupCreateBody.standingChargeAccountingProductId
-                standingChargeBillInAdvance = planGroupCreateBody.standingChargeBillInAdvance
-                standingChargeDescription = planGroupCreateBody.standingChargeDescription
-                version = planGroupCreateBody.version
-                additionalProperties = planGroupCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                name = body.name
+                accountId = body.accountId
+                code = body.code
+                customFields = body.customFields
+                minimumSpend = body.minimumSpend
+                minimumSpendAccountingProductId = body.minimumSpendAccountingProductId
+                minimumSpendBillInAdvance = body.minimumSpendBillInAdvance
+                minimumSpendDescription = body.minimumSpendDescription
+                standingCharge = body.standingCharge
+                standingChargeAccountingProductId = body.standingChargeAccountingProductId
+                standingChargeBillInAdvance = body.standingChargeBillInAdvance
+                standingChargeDescription = body.standingChargeDescription
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** Currency code for the PlanGroup (For example, USD). */
@@ -725,8 +723,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PlanGroupCreateBody =
-                PlanGroupCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("currency", currency),
                     checkRequired("name", name),
                     accountId,
@@ -750,7 +748,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanGroupCreateBody && currency == other.currency && name == other.name && accountId == other.accountId && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && name == other.name && accountId == other.accountId && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -760,7 +758,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanGroupCreateBody{currency=$currency, name=$name, accountId=$accountId, code=$code, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendAccountingProductId=$minimumSpendAccountingProductId, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, standingCharge=$standingCharge, standingChargeAccountingProductId=$standingChargeAccountingProductId, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, name=$name, accountId=$accountId, code=$code, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendAccountingProductId=$minimumSpendAccountingProductId, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, standingCharge=$standingCharge, standingChargeAccountingProductId=$standingChargeAccountingProductId, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -775,7 +773,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: PlanGroupCreateBody.Builder = PlanGroupCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

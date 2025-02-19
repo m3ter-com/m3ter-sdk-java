@@ -55,7 +55,9 @@ class BalanceCreateParamsTest {
                 .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")
@@ -89,7 +91,9 @@ class BalanceCreateParamsTest {
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")

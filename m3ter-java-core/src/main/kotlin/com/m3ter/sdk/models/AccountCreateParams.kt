@@ -27,7 +27,7 @@ import java.util.Optional
 class AccountCreateParams
 private constructor(
     private val orgId: String,
-    private val body: AccountCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -312,7 +312,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): AccountCreateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -325,10 +325,11 @@ private constructor(
         }
     }
 
+    /** Account request for operations such as Create or Update Account. */
     @NoAutoDetect
-    class AccountCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -685,7 +686,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AccountCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -715,7 +716,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [AccountCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
@@ -738,24 +739,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(accountCreateBody: AccountCreateBody) = apply {
-                code = accountCreateBody.code
-                emailAddress = accountCreateBody.emailAddress
-                name = accountCreateBody.name
-                address = accountCreateBody.address
-                autoGenerateStatementMode = accountCreateBody.autoGenerateStatementMode
-                billEpoch = accountCreateBody.billEpoch
-                configData = accountCreateBody.configData
-                creditApplicationOrder =
-                    accountCreateBody.creditApplicationOrder.map { it.toMutableList() }
-                currency = accountCreateBody.currency
-                customFields = accountCreateBody.customFields
-                daysBeforeBillDue = accountCreateBody.daysBeforeBillDue
-                parentAccountId = accountCreateBody.parentAccountId
-                purchaseOrderNumber = accountCreateBody.purchaseOrderNumber
-                statementDefinitionId = accountCreateBody.statementDefinitionId
-                version = accountCreateBody.version
-                additionalProperties = accountCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                code = body.code
+                emailAddress = body.emailAddress
+                name = body.name
+                address = body.address
+                autoGenerateStatementMode = body.autoGenerateStatementMode
+                billEpoch = body.billEpoch
+                configData = body.configData
+                creditApplicationOrder = body.creditApplicationOrder.map { it.toMutableList() }
+                currency = body.currency
+                customFields = body.customFields
+                daysBeforeBillDue = body.daysBeforeBillDue
+                parentAccountId = body.parentAccountId
+                purchaseOrderNumber = body.purchaseOrderNumber
+                statementDefinitionId = body.statementDefinitionId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** Code of the Account. This is a unique short code used for the Account. */
@@ -1107,8 +1107,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AccountCreateBody =
-                AccountCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("code", code),
                     checkRequired("emailAddress", emailAddress),
                     checkRequired("name", name),
@@ -1133,7 +1133,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountCreateBody && code == other.code && emailAddress == other.emailAddress && name == other.name && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && configData == other.configData && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && code == other.code && emailAddress == other.emailAddress && name == other.name && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && configData == other.configData && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1143,7 +1143,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountCreateBody{code=$code, emailAddress=$emailAddress, name=$name, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, configData=$configData, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{code=$code, emailAddress=$emailAddress, name=$name, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, configData=$configData, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1158,7 +1158,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: AccountCreateBody.Builder = AccountCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

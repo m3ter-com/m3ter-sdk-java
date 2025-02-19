@@ -67,7 +67,9 @@ class AggregationCreateParamsTest {
                 )
                 .version(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -111,7 +113,9 @@ class AggregationCreateParamsTest {
                 .targetField("x")
                 .unit("x")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
