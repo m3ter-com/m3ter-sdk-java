@@ -24,14 +24,14 @@ interface PricingService {
     @JvmOverloads
     fun create(
         params: PricingCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Pricing
 
     /** Retrieve the Pricing with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PricingRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Pricing
 
     /**
@@ -43,20 +43,20 @@ interface PricingService {
     @JvmOverloads
     fun update(
         params: PricingUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Pricing
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     @JvmOverloads
     fun list(
         params: PricingListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingListPage
 
     /** Delete the Pricing with the given UUID. */
     @JvmOverloads
     fun delete(
         params: PricingDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Pricing
 }

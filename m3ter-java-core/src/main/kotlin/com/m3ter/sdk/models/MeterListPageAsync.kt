@@ -80,11 +80,7 @@ private constructor(
 
         @JvmStatic
         fun of(metersService: MeterServiceAsync, params: MeterListParams, response: Response) =
-            MeterListPageAsync(
-                metersService,
-                params,
-                response,
-            )
+            MeterListPageAsync(metersService, params, response)
     }
 
     @NoAutoDetect
@@ -168,23 +164,16 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: MeterListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: MeterListPageAsync) {
 
         fun forEach(action: Predicate<Meter>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<MeterListPageAsync>>.forEach(
                 action: (Meter) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -193,7 +182,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

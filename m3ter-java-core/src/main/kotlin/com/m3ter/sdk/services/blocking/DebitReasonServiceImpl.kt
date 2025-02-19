@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.DebitReasonListParams
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 
-class DebitReasonServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DebitReasonService {
+class DebitReasonServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    DebitReasonService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -38,7 +36,7 @@ internal constructor(
      */
     override fun create(
         params: DebitReasonCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DebitReason {
         val request =
             HttpRequest.builder()
@@ -47,7 +45,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "debitreasons"
+                    "debitreasons",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -68,7 +66,7 @@ internal constructor(
     /** Retrieve the Debit Reason with the given UUID. */
     override fun retrieve(
         params: DebitReasonRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DebitReason {
         val request =
             HttpRequest.builder()
@@ -78,7 +76,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "debitreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -98,7 +96,7 @@ internal constructor(
     /** Update the Debit Reason with the given UUID. */
     override fun update(
         params: DebitReasonUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DebitReason {
         val request =
             HttpRequest.builder()
@@ -108,7 +106,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "debitreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -134,7 +132,7 @@ internal constructor(
      */
     override fun list(
         params: DebitReasonListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DebitReasonListPage {
         val request =
             HttpRequest.builder()
@@ -143,7 +141,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "debitreasons"
+                    "debitreasons",
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -164,7 +162,7 @@ internal constructor(
     /** Delete the Debit Reason with the given UUID. */
     override fun delete(
         params: DebitReasonDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DebitReason {
         val request =
             HttpRequest.builder()
@@ -174,7 +172,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "debitreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

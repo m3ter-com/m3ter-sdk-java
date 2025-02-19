@@ -25,14 +25,14 @@ interface PricingServiceAsync {
     @JvmOverloads
     fun create(
         params: PricingCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Pricing>
 
     /** Retrieve the Pricing with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PricingRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Pricing>
 
     /**
@@ -44,20 +44,20 @@ interface PricingServiceAsync {
     @JvmOverloads
     fun update(
         params: PricingUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Pricing>
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     @JvmOverloads
     fun list(
         params: PricingListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingListPageAsync>
 
     /** Delete the Pricing with the given UUID. */
     @JvmOverloads
     fun delete(
         params: PricingDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Pricing>
 }

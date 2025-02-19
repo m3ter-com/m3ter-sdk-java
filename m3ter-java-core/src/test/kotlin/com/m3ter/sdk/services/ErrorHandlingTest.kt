@@ -86,7 +86,7 @@ class ErrorHandlingTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
-                    .build()
+                    .build(),
             )
 
         stubFor(get(anyUrl()).willReturn(ok().withBody(toJson(expected.response()))))
@@ -198,7 +198,7 @@ class ErrorHandlingTest {
                 assertUnprocessableEntity(
                     e,
                     Headers.builder().put("Foo", "Bar").build(),
-                    M3TER_ERROR
+                    M3TER_ERROR,
                 )
             })
     }
@@ -266,7 +266,7 @@ class ErrorHandlingTest {
                     e,
                     999,
                     Headers.builder().put("Foo", "Bar").build(),
-                    toJson(M3TER_ERROR)
+                    toJson(M3TER_ERROR),
                 )
             })
     }
@@ -317,7 +317,7 @@ class ErrorHandlingTest {
         throwable: Throwable,
         statusCode: Int,
         headers: Headers,
-        responseBody: ByteArray
+        responseBody: ByteArray,
     ) {
         assertThat(throwable)
             .asInstanceOf(
@@ -375,7 +375,7 @@ class ErrorHandlingTest {
     private fun assertUnprocessableEntity(
         throwable: Throwable,
         headers: Headers,
-        error: M3terError
+        error: M3terError,
     ) {
         assertThat(throwable)
             .asInstanceOf(

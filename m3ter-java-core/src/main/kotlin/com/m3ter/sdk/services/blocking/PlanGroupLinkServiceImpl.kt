@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.PlanGroupLinkListParams
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
-class PlanGroupLinkServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PlanGroupLinkService {
+class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    PlanGroupLinkService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
     /** Create a new PlanGroupLink. */
     override fun create(
         params: PlanGroupLinkCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupLink {
         val request =
             HttpRequest.builder()
@@ -59,7 +57,7 @@ internal constructor(
     /** Retrieve a PlanGroupLink for the given UUID. */
     override fun retrieve(
         params: PlanGroupLinkRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupLink {
         val request =
             HttpRequest.builder()
@@ -68,7 +66,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangrouplinks",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -88,7 +86,7 @@ internal constructor(
     /** Update PlanGroupLink for the given UUID. */
     override fun update(
         params: PlanGroupLinkUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupLink {
         val request =
             HttpRequest.builder()
@@ -97,7 +95,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangrouplinks",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -119,7 +117,7 @@ internal constructor(
     /** Retrieve a list of PlanGroupLink entities */
     override fun list(
         params: PlanGroupLinkListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupLinkListPage {
         val request =
             HttpRequest.builder()
@@ -144,7 +142,7 @@ internal constructor(
     /** Delete a PlanGroupLink for the given UUID. */
     override fun delete(
         params: PlanGroupLinkDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanGroupLink {
         val request =
             HttpRequest.builder()
@@ -153,7 +151,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "plangrouplinks",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

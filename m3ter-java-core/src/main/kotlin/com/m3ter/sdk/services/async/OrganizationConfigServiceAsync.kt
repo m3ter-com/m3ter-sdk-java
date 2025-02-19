@@ -16,13 +16,13 @@ interface OrganizationConfigServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: OrganizationConfigRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<OrganizationConfig>
 
     /** Update the Organization-wide configuration details. */
     @JvmOverloads
     fun update(
         params: OrganizationConfigUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<OrganizationConfig>
 }

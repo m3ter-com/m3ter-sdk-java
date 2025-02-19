@@ -339,11 +339,7 @@ private constructor(
     }
 
     /** Search Operator to be used while querying search */
-    class Operator
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Operator @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -431,11 +427,7 @@ private constructor(
     }
 
     /** Sorting order */
-    class SortOrder
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class SortOrder @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -82,13 +82,8 @@ private constructor(
         fun of(
             debitReasonsService: DebitReasonService,
             params: DebitReasonListParams,
-            response: Response
-        ) =
-            DebitReasonListPage(
-                debitReasonsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = DebitReasonListPage(debitReasonsService, params, response)
     }
 
     @NoAutoDetect
@@ -172,18 +167,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DebitReasonListPage,
-    ) : Iterable<DebitReason> {
+    class AutoPager(private val firstPage: DebitReasonListPage) : Iterable<DebitReason> {
 
         override fun iterator(): Iterator<DebitReason> = iterator {
             var page = firstPage

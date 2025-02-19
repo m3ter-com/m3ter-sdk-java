@@ -32,7 +32,7 @@ interface TransactionService {
     @JvmOverloads
     fun create(
         params: BalanceTransactionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
 
     /**
@@ -44,6 +44,6 @@ interface TransactionService {
     @JvmOverloads
     fun list(
         params: BalanceTransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionListPage
 }

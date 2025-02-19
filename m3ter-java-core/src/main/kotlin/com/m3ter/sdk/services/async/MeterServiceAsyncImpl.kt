@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class MeterServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : MeterServiceAsync {
+class MeterServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    MeterServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -62,7 +60,7 @@ internal constructor(
      */
     override fun create(
         params: MeterCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Meter> {
         val request =
             HttpRequest.builder()
@@ -90,7 +88,7 @@ internal constructor(
     /** Retrieve the Meter with the given UUID. */
     override fun retrieve(
         params: MeterRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Meter> {
         val request =
             HttpRequest.builder()
@@ -99,7 +97,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "meters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -128,7 +126,7 @@ internal constructor(
      */
     override fun update(
         params: MeterUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Meter> {
         val request =
             HttpRequest.builder()
@@ -137,7 +135,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "meters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -162,7 +160,7 @@ internal constructor(
     /** Retrieve a list of Meter entities */
     override fun list(
         params: MeterListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<MeterListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -190,7 +188,7 @@ internal constructor(
     /** Delete the Meter with the given UUID. */
     override fun delete(
         params: MeterDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Meter> {
         val request =
             HttpRequest.builder()
@@ -199,7 +197,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "meters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

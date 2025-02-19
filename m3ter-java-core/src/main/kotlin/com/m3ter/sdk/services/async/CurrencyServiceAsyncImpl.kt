@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class CurrencyServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CurrencyServiceAsync {
+class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CurrencyServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +37,7 @@ internal constructor(
      */
     override fun create(
         params: CurrencyCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Currency> {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
      */
     override fun retrieve(
         params: CurrencyRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Currency> {
         val request =
             HttpRequest.builder()
@@ -80,7 +78,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "currency",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -107,7 +105,7 @@ internal constructor(
      */
     override fun update(
         params: CurrencyUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Currency> {
         val request =
             HttpRequest.builder()
@@ -117,7 +115,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "currency",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -148,7 +146,7 @@ internal constructor(
      */
     override fun list(
         params: CurrencyListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CurrencyListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -180,7 +178,7 @@ internal constructor(
      */
     override fun delete(
         params: CurrencyDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Currency> {
         val request =
             HttpRequest.builder()
@@ -190,7 +188,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "currency",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

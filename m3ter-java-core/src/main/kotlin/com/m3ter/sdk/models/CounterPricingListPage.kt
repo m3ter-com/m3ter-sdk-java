@@ -82,13 +82,8 @@ private constructor(
         fun of(
             counterPricingsService: CounterPricingService,
             params: CounterPricingListParams,
-            response: Response
-        ) =
-            CounterPricingListPage(
-                counterPricingsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CounterPricingListPage(counterPricingsService, params, response)
     }
 
     @NoAutoDetect
@@ -172,18 +167,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CounterPricingListPage,
-    ) : Iterable<CounterPricing> {
+    class AutoPager(private val firstPage: CounterPricingListPage) : Iterable<CounterPricing> {
 
         override fun iterator(): Iterator<CounterPricing> = iterator {
             var page = firstPage

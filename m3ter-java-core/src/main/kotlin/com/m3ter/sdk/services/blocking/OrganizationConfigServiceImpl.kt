@@ -17,10 +17,8 @@ import com.m3ter.sdk.models.OrganizationConfig
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 
-class OrganizationConfigServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : OrganizationConfigService {
+class OrganizationConfigServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    OrganizationConfigService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Retrieve the Organization-wide configuration details. */
     override fun retrieve(
         params: OrganizationConfigRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): OrganizationConfig {
         val request =
             HttpRequest.builder()
@@ -54,7 +52,7 @@ internal constructor(
     /** Update the Organization-wide configuration details. */
     override fun update(
         params: OrganizationConfigUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): OrganizationConfig {
         val request =
             HttpRequest.builder()

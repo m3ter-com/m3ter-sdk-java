@@ -2325,11 +2325,8 @@ private constructor(
      * - **Parent Summary** - single bill line item for all Accounts.
      * - **Child** - the Child Account is billed.
      */
-    class ChildBillingMode
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ChildBillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2580,11 +2577,8 @@ private constructor(
     }
 
     /** Available line item types for Commitments */
-    class LineItemType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

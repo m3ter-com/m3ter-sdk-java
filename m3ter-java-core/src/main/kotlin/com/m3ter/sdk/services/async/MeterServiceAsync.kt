@@ -47,14 +47,14 @@ interface MeterServiceAsync {
     @JvmOverloads
     fun create(
         params: MeterCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /** Retrieve the Meter with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: MeterRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /**
@@ -67,20 +67,20 @@ interface MeterServiceAsync {
     @JvmOverloads
     fun update(
         params: MeterUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /** Retrieve a list of Meter entities */
     @JvmOverloads
     fun list(
         params: MeterListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterListPageAsync>
 
     /** Delete the Meter with the given UUID. */
     @JvmOverloads
     fun delete(
         params: MeterDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 }

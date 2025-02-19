@@ -29,21 +29,21 @@ interface CounterAdjustmentService {
     @JvmOverloads
     fun create(
         params: CounterAdjustmentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustment
 
     /** Retrieve a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustment
 
     /** Update a CounterAdjustment for an Account. */
     @JvmOverloads
     fun update(
         params: CounterAdjustmentUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustment
 
     /**
@@ -59,13 +59,13 @@ interface CounterAdjustmentService {
     @JvmOverloads
     fun list(
         params: CounterAdjustmentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentListPage
 
     /** Delete a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun delete(
         params: CounterAdjustmentDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustment
 }

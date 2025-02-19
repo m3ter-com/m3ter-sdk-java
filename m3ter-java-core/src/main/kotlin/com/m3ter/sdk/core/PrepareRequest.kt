@@ -51,7 +51,7 @@ internal fun HttpRequest.prepare(clientOptions: ClientOptions, params: Params): 
 @JvmSynthetic
 internal fun HttpRequest.prepareAsync(
     clientOptions: ClientOptions,
-    params: Params
+    params: Params,
 ): CompletableFuture<HttpRequest> =
     // This async version exists to make it easier to add async specific preparation logic in the
     // future.

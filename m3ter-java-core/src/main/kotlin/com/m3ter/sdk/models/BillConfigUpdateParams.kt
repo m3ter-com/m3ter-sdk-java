@@ -228,11 +228,7 @@ private constructor(
             }
 
             fun build(): BillConfigUpdateBody =
-                BillConfigUpdateBody(
-                    billLockDate,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
+                BillConfigUpdateBody(billLockDate, version, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

@@ -25,14 +25,14 @@ interface CounterPricingServiceAsync {
     @JvmOverloads
     fun create(
         params: CounterPricingCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricing>
 
     /** Retrieve a CounterPricing for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterPricingRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricing>
 
     /**
@@ -44,7 +44,7 @@ interface CounterPricingServiceAsync {
     @JvmOverloads
     fun update(
         params: CounterPricingUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricing>
 
     /**
@@ -54,13 +54,13 @@ interface CounterPricingServiceAsync {
     @JvmOverloads
     fun list(
         params: CounterPricingListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricingListPageAsync>
 
     /** Delete a CounterPricing for the given UUID. */
     @JvmOverloads
     fun delete(
         params: CounterPricingDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricing>
 }

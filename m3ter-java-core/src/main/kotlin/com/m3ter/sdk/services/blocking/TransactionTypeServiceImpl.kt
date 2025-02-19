@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.TransactionTypeListParams
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
-class TransactionTypeServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TransactionTypeService {
+class TransactionTypeServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    TransactionTypeService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -37,7 +35,7 @@ internal constructor(
      */
     override fun create(
         params: TransactionTypeCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TransactionType {
         val request =
             HttpRequest.builder()
@@ -46,7 +44,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "transactiontypes"
+                    "transactiontypes",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -67,7 +65,7 @@ internal constructor(
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
     override fun retrieve(
         params: TransactionTypeRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TransactionType {
         val request =
             HttpRequest.builder()
@@ -77,7 +75,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "transactiontypes",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -100,7 +98,7 @@ internal constructor(
      */
     override fun update(
         params: TransactionTypeUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TransactionType {
         val request =
             HttpRequest.builder()
@@ -110,7 +108,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "transactiontypes",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -135,7 +133,7 @@ internal constructor(
      */
     override fun list(
         params: TransactionTypeListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TransactionTypeListPage {
         val request =
             HttpRequest.builder()
@@ -144,7 +142,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "transactiontypes"
+                    "transactiontypes",
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -165,7 +163,7 @@ internal constructor(
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     override fun delete(
         params: TransactionTypeDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TransactionType {
         val request =
             HttpRequest.builder()
@@ -175,7 +173,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "transactiontypes",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

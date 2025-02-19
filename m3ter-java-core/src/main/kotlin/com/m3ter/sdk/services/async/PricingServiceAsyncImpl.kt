@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class PricingServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PricingServiceAsync {
+class PricingServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PricingServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: PricingCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Pricing> {
         val request =
             HttpRequest.builder()
@@ -68,7 +66,7 @@ internal constructor(
     /** Retrieve the Pricing with the given UUID. */
     override fun retrieve(
         params: PricingRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Pricing> {
         val request =
             HttpRequest.builder()
@@ -77,7 +75,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "pricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -105,7 +103,7 @@ internal constructor(
      */
     override fun update(
         params: PricingUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Pricing> {
         val request =
             HttpRequest.builder()
@@ -114,7 +112,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "pricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -139,7 +137,7 @@ internal constructor(
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     override fun list(
         params: PricingListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<PricingListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -167,7 +165,7 @@ internal constructor(
     /** Delete the Pricing with the given UUID. */
     override fun delete(
         params: PricingDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Pricing> {
         val request =
             HttpRequest.builder()
@@ -176,7 +174,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "pricings",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

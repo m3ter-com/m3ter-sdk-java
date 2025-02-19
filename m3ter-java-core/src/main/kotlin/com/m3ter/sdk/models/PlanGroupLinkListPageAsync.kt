@@ -82,13 +82,8 @@ private constructor(
         fun of(
             planGroupLinksService: PlanGroupLinkServiceAsync,
             params: PlanGroupLinkListParams,
-            response: Response
-        ) =
-            PlanGroupLinkListPageAsync(
-                planGroupLinksService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PlanGroupLinkListPageAsync(planGroupLinksService, params, response)
     }
 
     @NoAutoDetect
@@ -172,23 +167,16 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PlanGroupLinkListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: PlanGroupLinkListPageAsync) {
 
         fun forEach(action: Predicate<PlanGroupLink>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<PlanGroupLinkListPageAsync>>.forEach(
                 action: (PlanGroupLink) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -197,7 +185,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

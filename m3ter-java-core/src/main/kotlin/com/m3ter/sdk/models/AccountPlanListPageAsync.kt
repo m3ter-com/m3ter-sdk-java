@@ -90,13 +90,8 @@ private constructor(
         fun of(
             accountPlansService: AccountPlanServiceAsync,
             params: AccountPlanListParams,
-            response: Response
-        ) =
-            AccountPlanListPageAsync(
-                accountPlansService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = AccountPlanListPageAsync(accountPlansService, params, response)
     }
 
     @NoAutoDetect
@@ -180,23 +175,16 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AccountPlanListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: AccountPlanListPageAsync) {
 
         fun forEach(action: Predicate<AccountPlan>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<AccountPlanListPageAsync>>.forEach(
                 action: (AccountPlan) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -205,7 +193,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

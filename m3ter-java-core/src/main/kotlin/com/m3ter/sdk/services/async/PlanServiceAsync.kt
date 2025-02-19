@@ -20,14 +20,14 @@ interface PlanServiceAsync {
     @JvmOverloads
     fun create(
         params: PlanCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Plan>
 
     /** Retrieve the Plan with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Plan>
 
     /**
@@ -40,20 +40,20 @@ interface PlanServiceAsync {
     @JvmOverloads
     fun update(
         params: PlanUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Plan>
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     @JvmOverloads
     fun list(
         params: PlanListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanListPageAsync>
 
     /** Delete the Plan with the given UUID. */
     @JvmOverloads
     fun delete(
         params: PlanDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Plan>
 }

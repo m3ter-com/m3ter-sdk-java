@@ -23,9 +23,7 @@ import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
 class CompoundAggregationServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CompoundAggregationService {
+internal constructor(private val clientOptions: ClientOptions) : CompoundAggregationService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: CompoundAggregationCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Aggregation {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
      */
     override fun retrieve(
         params: CompoundAggregationRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompoundAggregation {
         val request =
             HttpRequest.builder()
@@ -79,7 +77,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -109,7 +107,7 @@ internal constructor(
      */
     override fun update(
         params: CompoundAggregationUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Aggregation {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -147,7 +145,7 @@ internal constructor(
      */
     override fun list(
         params: CompoundAggregationListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompoundAggregationListPage {
         val request =
             HttpRequest.builder()
@@ -178,7 +176,7 @@ internal constructor(
      */
     override fun delete(
         params: CompoundAggregationDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompoundAggregation {
         val request =
             HttpRequest.builder()
@@ -187,7 +185,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
