@@ -50,6 +50,9 @@ private constructor(
      */
     fun startDate(): OffsetDateTime = body.startDate()
 
+    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    fun accountingProductId(): Optional<String> = body.accountingProductId()
+
     /**
      * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
      * segmented aggregation.
@@ -172,6 +175,9 @@ private constructor(
      * of Plan Template._(Required)_
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
+
+    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
     /**
      * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
@@ -318,6 +324,9 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        private val accountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("aggregationId")
         @ExcludeMissing
         private val aggregationId: JsonField<String> = JsonMissing.of(),
@@ -375,6 +384,10 @@ private constructor(
          * Plan of Plan Template._(Required)_
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(): Optional<String> =
+            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
         /**
          * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
@@ -513,6 +526,11 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        fun _accountingProductId(): JsonField<String> = accountingProductId
 
         /**
          * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
@@ -662,6 +680,7 @@ private constructor(
 
             pricingBands().forEach { it.validate() }
             startDate()
+            accountingProductId()
             aggregationId()
             code()
             compoundAggregationId()
@@ -693,6 +712,7 @@ private constructor(
 
             private var pricingBands: JsonField<MutableList<PricingBand>>? = null
             private var startDate: JsonField<OffsetDateTime>? = null
+            private var accountingProductId: JsonField<String> = JsonMissing.of()
             private var aggregationId: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var compoundAggregationId: JsonField<String> = JsonMissing.of()
@@ -715,6 +735,7 @@ private constructor(
             internal fun from(pricingUpdateBody: PricingUpdateBody) = apply {
                 pricingBands = pricingUpdateBody.pricingBands.map { it.toMutableList() }
                 startDate = pricingUpdateBody.startDate
+                accountingProductId = pricingUpdateBody.accountingProductId
                 aggregationId = pricingUpdateBody.aggregationId
                 code = pricingUpdateBody.code
                 compoundAggregationId = pricingUpdateBody.compoundAggregationId
@@ -767,6 +788,15 @@ private constructor(
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
+            }
+
+            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            fun accountingProductId(accountingProductId: String) =
+                accountingProductId(JsonField.of(accountingProductId))
+
+            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+                this.accountingProductId = accountingProductId
             }
 
             /**
@@ -1067,6 +1097,7 @@ private constructor(
                 PricingUpdateBody(
                     checkRequired("pricingBands", pricingBands).map { it.toImmutable() },
                     checkRequired("startDate", startDate),
+                    accountingProductId,
                     aggregationId,
                     code,
                     compoundAggregationId,
@@ -1092,17 +1123,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PricingUpdateBody && pricingBands == other.pricingBands && startDate == other.startDate && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PricingUpdateBody && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(pricingBands, startDate, aggregationId, code, compoundAggregationId, cumulative, description, endDate, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, segment, tiersSpanPlan, type, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(pricingBands, startDate, accountingProductId, aggregationId, code, compoundAggregationId, cumulative, description, endDate, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, segment, tiersSpanPlan, type, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PricingUpdateBody{pricingBands=$pricingBands, startDate=$startDate, aggregationId=$aggregationId, code=$code, compoundAggregationId=$compoundAggregationId, cumulative=$cumulative, description=$description, endDate=$endDate, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, segment=$segment, tiersSpanPlan=$tiersSpanPlan, type=$type, version=$version, additionalProperties=$additionalProperties}"
+            "PricingUpdateBody{pricingBands=$pricingBands, startDate=$startDate, accountingProductId=$accountingProductId, aggregationId=$aggregationId, code=$code, compoundAggregationId=$compoundAggregationId, cumulative=$cumulative, description=$description, endDate=$endDate, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, segment=$segment, tiersSpanPlan=$tiersSpanPlan, type=$type, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1156,6 +1187,16 @@ private constructor(
          * Plan of Plan Template._(Required)_
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: String) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            body.accountingProductId(accountingProductId)
+        }
 
         /**
          * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for

@@ -16,6 +16,7 @@ import com.m3ter.sdk.services.async.CounterPricingServiceAsync
 import com.m3ter.sdk.services.async.CounterServiceAsync
 import com.m3ter.sdk.services.async.CreditReasonServiceAsync
 import com.m3ter.sdk.services.async.CurrencyServiceAsync
+import com.m3ter.sdk.services.async.DataExportServiceAsync
 import com.m3ter.sdk.services.async.DebitReasonServiceAsync
 import com.m3ter.sdk.services.async.MeterServiceAsync
 import com.m3ter.sdk.services.async.OrganizationConfigServiceAsync
@@ -98,6 +99,8 @@ interface M3terClientAsync {
     fun products(): ProductServiceAsync
 
     fun transactionTypes(): TransactionTypeServiceAsync
+
+    fun dataExports(): DataExportServiceAsync
 
     /**
      * Closes this client, relinquishing any underlying resources.

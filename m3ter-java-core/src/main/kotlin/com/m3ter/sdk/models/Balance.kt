@@ -38,6 +38,9 @@ private constructor(
     @ExcludeMissing
     private val balanceDrawDownDescription: JsonField<String> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("consumptionsAccountingProductId")
+    @ExcludeMissing
+    private val consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
     private val createdBy: JsonField<String> = JsonMissing.of(),
@@ -56,6 +59,9 @@ private constructor(
     @JsonProperty("endDate")
     @ExcludeMissing
     private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("feesAccountingProductId")
+    @ExcludeMissing
+    private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
@@ -108,6 +114,11 @@ private constructor(
     /** A unique short code assigned to the Balance. */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
+    fun consumptionsAccountingProductId(): Optional<String> =
+        Optional.ofNullable(
+            consumptionsAccountingProductId.getNullable("consumptionsAccountingProductId")
+        )
+
     /** The unique identifier (UUID) for the user who created the Balance. */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
@@ -128,6 +139,9 @@ private constructor(
 
     /** The date _(in ISO 8601 format)_ after which the Balance will no longer be active. */
     fun endDate(): Optional<OffsetDateTime> = Optional.ofNullable(endDate.getNullable("endDate"))
+
+    fun feesAccountingProductId(): Optional<String> =
+        Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
     /** The unique identifier (UUID) for the user who last modified the Balance. */
     fun lastModifiedBy(): Optional<String> =
@@ -202,6 +216,10 @@ private constructor(
     /** A unique short code assigned to the Balance. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
+    @JsonProperty("consumptionsAccountingProductId")
+    @ExcludeMissing
+    fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
+
     /** The unique identifier (UUID) for the user who created the Balance. */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
@@ -223,6 +241,10 @@ private constructor(
 
     /** The date _(in ISO 8601 format)_ after which the Balance will no longer be active. */
     @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+    @JsonProperty("feesAccountingProductId")
+    @ExcludeMissing
+    fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
     /** The unique identifier (UUID) for the user who last modified the Balance. */
     @JsonProperty("lastModifiedBy")
@@ -297,12 +319,14 @@ private constructor(
         amount()
         balanceDrawDownDescription()
         code()
+        consumptionsAccountingProductId()
         createdBy()
         currency()
         description()
         dtCreated()
         dtLastModified()
         endDate()
+        feesAccountingProductId()
         lastModifiedBy()
         lineItemTypes()
         name()
@@ -331,12 +355,14 @@ private constructor(
         private var amount: JsonField<Double> = JsonMissing.of()
         private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
+        private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var description: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
         private var name: JsonField<String> = JsonMissing.of()
@@ -356,12 +382,14 @@ private constructor(
             amount = balance.amount
             balanceDrawDownDescription = balance.balanceDrawDownDescription
             code = balance.code
+            consumptionsAccountingProductId = balance.consumptionsAccountingProductId
             createdBy = balance.createdBy
             currency = balance.currency
             description = balance.description
             dtCreated = balance.dtCreated
             dtLastModified = balance.dtLastModified
             endDate = balance.endDate
+            feesAccountingProductId = balance.feesAccountingProductId
             lastModifiedBy = balance.lastModifiedBy
             lineItemTypes = balance.lineItemTypes.map { it.toMutableList() }
             name = balance.name
@@ -423,6 +451,14 @@ private constructor(
         /** A unique short code assigned to the Balance. */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
+        fun consumptionsAccountingProductId(consumptionsAccountingProductId: String) =
+            consumptionsAccountingProductId(JsonField.of(consumptionsAccountingProductId))
+
+        fun consumptionsAccountingProductId(consumptionsAccountingProductId: JsonField<String>) =
+            apply {
+                this.consumptionsAccountingProductId = consumptionsAccountingProductId
+            }
+
         /** The unique identifier (UUID) for the user who created the Balance. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
@@ -461,6 +497,13 @@ private constructor(
 
         /** The date _(in ISO 8601 format)_ after which the Balance will no longer be active. */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+        fun feesAccountingProductId(feesAccountingProductId: String) =
+            feesAccountingProductId(JsonField.of(feesAccountingProductId))
+
+        fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
+            this.feesAccountingProductId = feesAccountingProductId
+        }
 
         /** The unique identifier (UUID) for the user who last modified the Balance. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
@@ -623,12 +666,14 @@ private constructor(
                 amount,
                 balanceDrawDownDescription,
                 code,
+                consumptionsAccountingProductId,
                 createdBy,
                 currency,
                 description,
                 dtCreated,
                 dtLastModified,
                 endDate,
+                feesAccountingProductId,
                 lastModifiedBy,
                 (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
                 name,
@@ -759,15 +804,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && createdBy == other.createdBy && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && createdBy == other.createdBy && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, createdBy, currency, description, dtCreated, dtLastModified, endDate, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, createdBy, currency, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, createdBy=$createdBy, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, createdBy=$createdBy, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

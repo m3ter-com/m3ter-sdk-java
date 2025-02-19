@@ -90,6 +90,11 @@ private constructor(
     fun minimumSpend(): Optional<Double> = body.minimumSpend()
 
     /**
+     * Optional Product ID this plan's minimum spend should be attributed to for accounting purposes
+     */
+    fun minimumSpendAccountingProductId(): Optional<String> = body.minimumSpendAccountingProductId()
+
+    /**
      * When TRUE, minimum spend is billed at the start of each billing period.
      *
      * When FALSE, minimum spend is billed at the end of each billing period.
@@ -118,6 +123,13 @@ private constructor(
      * _(Optional)_. Overrides PlanTemplate value.
      */
     fun standingCharge(): Optional<Double> = body.standingCharge()
+
+    /**
+     * Optional Product ID this plan's standing charge should be attributed to for accounting
+     * purposes
+     */
+    fun standingChargeAccountingProductId(): Optional<String> =
+        body.standingChargeAccountingProductId()
 
     /**
      * When TRUE, standing charge is billed at the start of each billing period.
@@ -192,6 +204,12 @@ private constructor(
     fun _minimumSpend(): JsonField<Double> = body._minimumSpend()
 
     /**
+     * Optional Product ID this plan's minimum spend should be attributed to for accounting purposes
+     */
+    fun _minimumSpendAccountingProductId(): JsonField<String> =
+        body._minimumSpendAccountingProductId()
+
+    /**
      * When TRUE, minimum spend is billed at the start of each billing period.
      *
      * When FALSE, minimum spend is billed at the end of each billing period.
@@ -220,6 +238,13 @@ private constructor(
      * _(Optional)_. Overrides PlanTemplate value.
      */
     fun _standingCharge(): JsonField<Double> = body._standingCharge()
+
+    /**
+     * Optional Product ID this plan's standing charge should be attributed to for accounting
+     * purposes
+     */
+    fun _standingChargeAccountingProductId(): JsonField<String> =
+        body._standingChargeAccountingProductId()
 
     /**
      * When TRUE, standing charge is billed at the start of each billing period.
@@ -289,6 +314,9 @@ private constructor(
         @JsonProperty("minimumSpend")
         @ExcludeMissing
         private val minimumSpend: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("minimumSpendAccountingProductId")
+        @ExcludeMissing
+        private val minimumSpendAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("minimumSpendBillInAdvance")
         @ExcludeMissing
         private val minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
@@ -301,6 +329,9 @@ private constructor(
         @JsonProperty("standingCharge")
         @ExcludeMissing
         private val standingCharge: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("standingChargeAccountingProductId")
+        @ExcludeMissing
+        private val standingChargeAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("standingChargeBillInAdvance")
         @ExcludeMissing
         private val standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
@@ -367,6 +398,15 @@ private constructor(
             Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
 
         /**
+         * Optional Product ID this plan's minimum spend should be attributed to for accounting
+         * purposes
+         */
+        fun minimumSpendAccountingProductId(): Optional<String> =
+            Optional.ofNullable(
+                minimumSpendAccountingProductId.getNullable("minimumSpendAccountingProductId")
+            )
+
+        /**
          * When TRUE, minimum spend is billed at the start of each billing period.
          *
          * When FALSE, minimum spend is billed at the end of each billing period.
@@ -398,6 +438,15 @@ private constructor(
          */
         fun standingCharge(): Optional<Double> =
             Optional.ofNullable(standingCharge.getNullable("standingCharge"))
+
+        /**
+         * Optional Product ID this plan's standing charge should be attributed to for accounting
+         * purposes
+         */
+        fun standingChargeAccountingProductId(): Optional<String> =
+            Optional.ofNullable(
+                standingChargeAccountingProductId.getNullable("standingChargeAccountingProductId")
+            )
 
         /**
          * When TRUE, standing charge is billed at the start of each billing period.
@@ -483,6 +532,14 @@ private constructor(
         fun _minimumSpend(): JsonField<Double> = minimumSpend
 
         /**
+         * Optional Product ID this plan's minimum spend should be attributed to for accounting
+         * purposes
+         */
+        @JsonProperty("minimumSpendAccountingProductId")
+        @ExcludeMissing
+        fun _minimumSpendAccountingProductId(): JsonField<String> = minimumSpendAccountingProductId
+
+        /**
          * When TRUE, minimum spend is billed at the start of each billing period.
          *
          * When FALSE, minimum spend is billed at the end of each billing period.
@@ -517,6 +574,15 @@ private constructor(
         @JsonProperty("standingCharge")
         @ExcludeMissing
         fun _standingCharge(): JsonField<Double> = standingCharge
+
+        /**
+         * Optional Product ID this plan's standing charge should be attributed to for accounting
+         * purposes
+         */
+        @JsonProperty("standingChargeAccountingProductId")
+        @ExcludeMissing
+        fun _standingChargeAccountingProductId(): JsonField<String> =
+            standingChargeAccountingProductId
 
         /**
          * When TRUE, standing charge is billed at the start of each billing period.
@@ -563,10 +629,12 @@ private constructor(
             bespoke()
             customFields().ifPresent { it.validate() }
             minimumSpend()
+            minimumSpendAccountingProductId()
             minimumSpendBillInAdvance()
             minimumSpendDescription()
             ordinal()
             standingCharge()
+            standingChargeAccountingProductId()
             standingChargeBillInAdvance()
             standingChargeDescription()
             version()
@@ -590,10 +658,12 @@ private constructor(
             private var bespoke: JsonField<Boolean> = JsonMissing.of()
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
             private var minimumSpend: JsonField<Double> = JsonMissing.of()
+            private var minimumSpendAccountingProductId: JsonField<String> = JsonMissing.of()
             private var minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of()
             private var minimumSpendDescription: JsonField<String> = JsonMissing.of()
             private var ordinal: JsonField<Long> = JsonMissing.of()
             private var standingCharge: JsonField<Double> = JsonMissing.of()
+            private var standingChargeAccountingProductId: JsonField<String> = JsonMissing.of()
             private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
             private var standingChargeDescription: JsonField<String> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
@@ -608,10 +678,12 @@ private constructor(
                 bespoke = planUpdateBody.bespoke
                 customFields = planUpdateBody.customFields
                 minimumSpend = planUpdateBody.minimumSpend
+                minimumSpendAccountingProductId = planUpdateBody.minimumSpendAccountingProductId
                 minimumSpendBillInAdvance = planUpdateBody.minimumSpendBillInAdvance
                 minimumSpendDescription = planUpdateBody.minimumSpendDescription
                 ordinal = planUpdateBody.ordinal
                 standingCharge = planUpdateBody.standingCharge
+                standingChargeAccountingProductId = planUpdateBody.standingChargeAccountingProductId
                 standingChargeBillInAdvance = planUpdateBody.standingChargeBillInAdvance
                 standingChargeDescription = planUpdateBody.standingChargeDescription
                 version = planUpdateBody.version
@@ -726,6 +798,21 @@ private constructor(
             }
 
             /**
+             * Optional Product ID this plan's minimum spend should be attributed to for accounting
+             * purposes
+             */
+            fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: String) =
+                minimumSpendAccountingProductId(JsonField.of(minimumSpendAccountingProductId))
+
+            /**
+             * Optional Product ID this plan's minimum spend should be attributed to for accounting
+             * purposes
+             */
+            fun minimumSpendAccountingProductId(
+                minimumSpendAccountingProductId: JsonField<String>
+            ) = apply { this.minimumSpendAccountingProductId = minimumSpendAccountingProductId }
+
+            /**
              * When TRUE, minimum spend is billed at the start of each billing period.
              *
              * When FALSE, minimum spend is billed at the end of each billing period.
@@ -795,6 +882,21 @@ private constructor(
             fun standingCharge(standingCharge: JsonField<Double>) = apply {
                 this.standingCharge = standingCharge
             }
+
+            /**
+             * Optional Product ID this plan's standing charge should be attributed to for
+             * accounting purposes
+             */
+            fun standingChargeAccountingProductId(standingChargeAccountingProductId: String) =
+                standingChargeAccountingProductId(JsonField.of(standingChargeAccountingProductId))
+
+            /**
+             * Optional Product ID this plan's standing charge should be attributed to for
+             * accounting purposes
+             */
+            fun standingChargeAccountingProductId(
+                standingChargeAccountingProductId: JsonField<String>
+            ) = apply { this.standingChargeAccountingProductId = standingChargeAccountingProductId }
 
             /**
              * When TRUE, standing charge is billed at the start of each billing period.
@@ -877,10 +979,12 @@ private constructor(
                     bespoke,
                     customFields,
                     minimumSpend,
+                    minimumSpendAccountingProductId,
                     minimumSpendBillInAdvance,
                     minimumSpendDescription,
                     ordinal,
                     standingCharge,
+                    standingChargeAccountingProductId,
                     standingChargeBillInAdvance,
                     standingChargeDescription,
                     version,
@@ -893,17 +997,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanUpdateBody && code == other.code && name == other.name && planTemplateId == other.planTemplateId && accountId == other.accountId && bespoke == other.bespoke && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingCharge == other.standingCharge && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PlanUpdateBody && code == other.code && name == other.name && planTemplateId == other.planTemplateId && accountId == other.accountId && bespoke == other.bespoke && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(code, name, planTemplateId, accountId, bespoke, customFields, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, ordinal, standingCharge, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(code, name, planTemplateId, accountId, bespoke, customFields, minimumSpend, minimumSpendAccountingProductId, minimumSpendBillInAdvance, minimumSpendDescription, ordinal, standingCharge, standingChargeAccountingProductId, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanUpdateBody{code=$code, name=$name, planTemplateId=$planTemplateId, accountId=$accountId, bespoke=$bespoke, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingCharge=$standingCharge, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
+            "PlanUpdateBody{code=$code, name=$name, planTemplateId=$planTemplateId, accountId=$accountId, bespoke=$bespoke, customFields=$customFields, minimumSpend=$minimumSpend, minimumSpendAccountingProductId=$minimumSpendAccountingProductId, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, ordinal=$ordinal, standingCharge=$standingCharge, standingChargeAccountingProductId=$standingChargeAccountingProductId, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1043,6 +1147,23 @@ private constructor(
         }
 
         /**
+         * Optional Product ID this plan's minimum spend should be attributed to for accounting
+         * purposes
+         */
+        fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: String) = apply {
+            body.minimumSpendAccountingProductId(minimumSpendAccountingProductId)
+        }
+
+        /**
+         * Optional Product ID this plan's minimum spend should be attributed to for accounting
+         * purposes
+         */
+        fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: JsonField<String>) =
+            apply {
+                body.minimumSpendAccountingProductId(minimumSpendAccountingProductId)
+            }
+
+        /**
          * When TRUE, minimum spend is billed at the start of each billing period.
          *
          * When FALSE, minimum spend is billed at the end of each billing period.
@@ -1111,6 +1232,22 @@ private constructor(
         fun standingCharge(standingCharge: JsonField<Double>) = apply {
             body.standingCharge(standingCharge)
         }
+
+        /**
+         * Optional Product ID this plan's standing charge should be attributed to for accounting
+         * purposes
+         */
+        fun standingChargeAccountingProductId(standingChargeAccountingProductId: String) = apply {
+            body.standingChargeAccountingProductId(standingChargeAccountingProductId)
+        }
+
+        /**
+         * Optional Product ID this plan's standing charge should be attributed to for accounting
+         * purposes
+         */
+        fun standingChargeAccountingProductId(
+            standingChargeAccountingProductId: JsonField<String>
+        ) = apply { body.standingChargeAccountingProductId(standingChargeAccountingProductId) }
 
         /**
          * When TRUE, standing charge is billed at the start of each billing period.

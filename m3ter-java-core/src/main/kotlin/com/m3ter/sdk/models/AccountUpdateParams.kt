@@ -94,8 +94,12 @@ private constructor(
      * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
      * - `"BALANCE"`. Only draw-down against Balance credit.
      *
-     * **NOTE:** Any setting you define here overrides the setting for credit application order at
-     * Organization level.
+     * **NOTES:**
+     * - Any setting you define here overrides the setting for credit application order at
+     *   Organization level.
+     * - If the Account belongs to a Parent/Child Account hierarchy, then the
+     *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+     *   always to Prepayment then Balance order.
      */
     fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
         body.creditApplicationOrder()
@@ -226,8 +230,12 @@ private constructor(
      * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
      * - `"BALANCE"`. Only draw-down against Balance credit.
      *
-     * **NOTE:** Any setting you define here overrides the setting for credit application order at
-     * Organization level.
+     * **NOTES:**
+     * - Any setting you define here overrides the setting for credit application order at
+     *   Organization level.
+     * - If the Account belongs to a Parent/Child Account hierarchy, then the
+     *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+     *   always to Prepayment then Balance order.
      */
     fun _creditApplicationOrder(): JsonField<List<CreditApplicationOrder>> =
         body._creditApplicationOrder()
@@ -435,8 +443,12 @@ private constructor(
          * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
-         * **NOTE:** Any setting you define here overrides the setting for credit application order
-         * at Organization level.
+         * **NOTES:**
+         * - Any setting you define here overrides the setting for credit application order at
+         *   Organization level.
+         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+         *   always to Prepayment then Balance order.
          */
         fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
             Optional.ofNullable(creditApplicationOrder.getNullable("creditApplicationOrder"))
@@ -580,8 +592,12 @@ private constructor(
          * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
-         * **NOTE:** Any setting you define here overrides the setting for credit application order
-         * at Organization level.
+         * **NOTES:**
+         * - Any setting you define here overrides the setting for credit application order at
+         *   Organization level.
+         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+         *   always to Prepayment then Balance order.
          */
         @JsonProperty("creditApplicationOrder")
         @ExcludeMissing
@@ -855,8 +871,12 @@ private constructor(
              * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
              * - `"BALANCE"`. Only draw-down against Balance credit.
              *
-             * **NOTE:** Any setting you define here overrides the setting for credit application
-             * order at Organization level.
+             * **NOTES:**
+             * - Any setting you define here overrides the setting for credit application order at
+             *   Organization level.
+             * - If the Account belongs to a Parent/Child Account hierarchy, then the
+             *   `creditApplicationOrder` settings are not available, and the draw-down order
+             *   defaults always to Prepayment then Balance order.
              */
             fun creditApplicationOrder(creditApplicationOrder: List<CreditApplicationOrder>) =
                 creditApplicationOrder(JsonField.of(creditApplicationOrder))
@@ -871,8 +891,12 @@ private constructor(
              * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
              * - `"BALANCE"`. Only draw-down against Balance credit.
              *
-             * **NOTE:** Any setting you define here overrides the setting for credit application
-             * order at Organization level.
+             * **NOTES:**
+             * - Any setting you define here overrides the setting for credit application order at
+             *   Organization level.
+             * - If the Account belongs to a Parent/Child Account hierarchy, then the
+             *   `creditApplicationOrder` settings are not available, and the draw-down order
+             *   defaults always to Prepayment then Balance order.
              */
             fun creditApplicationOrder(
                 creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
@@ -890,8 +914,12 @@ private constructor(
              * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
              * - `"BALANCE"`. Only draw-down against Balance credit.
              *
-             * **NOTE:** Any setting you define here overrides the setting for credit application
-             * order at Organization level.
+             * **NOTES:**
+             * - Any setting you define here overrides the setting for credit application order at
+             *   Organization level.
+             * - If the Account belongs to a Parent/Child Account hierarchy, then the
+             *   `creditApplicationOrder` settings are not available, and the draw-down order
+             *   defaults always to Prepayment then Balance order.
              */
             fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
                 this.creditApplicationOrder =
@@ -1257,8 +1285,12 @@ private constructor(
          * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
-         * **NOTE:** Any setting you define here overrides the setting for credit application order
-         * at Organization level.
+         * **NOTES:**
+         * - Any setting you define here overrides the setting for credit application order at
+         *   Organization level.
+         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+         *   always to Prepayment then Balance order.
          */
         fun creditApplicationOrder(creditApplicationOrder: List<CreditApplicationOrder>) = apply {
             body.creditApplicationOrder(creditApplicationOrder)
@@ -1272,8 +1304,12 @@ private constructor(
          * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
-         * **NOTE:** Any setting you define here overrides the setting for credit application order
-         * at Organization level.
+         * **NOTES:**
+         * - Any setting you define here overrides the setting for credit application order at
+         *   Organization level.
+         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+         *   always to Prepayment then Balance order.
          */
         fun creditApplicationOrder(
             creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
@@ -1287,8 +1323,12 @@ private constructor(
          * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
-         * **NOTE:** Any setting you define here overrides the setting for credit application order
-         * at Organization level.
+         * **NOTES:**
+         * - Any setting you define here overrides the setting for credit application order at
+         *   Organization level.
+         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
+         *   always to Prepayment then Balance order.
          */
         fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
             body.addCreditApplicationOrder(creditApplicationOrder)

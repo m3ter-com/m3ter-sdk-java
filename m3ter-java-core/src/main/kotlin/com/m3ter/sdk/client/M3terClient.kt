@@ -16,6 +16,7 @@ import com.m3ter.sdk.services.blocking.CounterPricingService
 import com.m3ter.sdk.services.blocking.CounterService
 import com.m3ter.sdk.services.blocking.CreditReasonService
 import com.m3ter.sdk.services.blocking.CurrencyService
+import com.m3ter.sdk.services.blocking.DataExportService
 import com.m3ter.sdk.services.blocking.DebitReasonService
 import com.m3ter.sdk.services.blocking.MeterService
 import com.m3ter.sdk.services.blocking.OrganizationConfigService
@@ -98,6 +99,8 @@ interface M3terClient {
     fun products(): ProductService
 
     fun transactionTypes(): TransactionTypeService
+
+    fun dataExports(): DataExportService
 
     /**
      * Closes this client, relinquishing any underlying resources.
