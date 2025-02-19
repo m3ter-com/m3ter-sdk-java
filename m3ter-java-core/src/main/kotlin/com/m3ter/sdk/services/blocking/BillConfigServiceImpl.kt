@@ -17,10 +17,8 @@ import com.m3ter.sdk.models.BillConfig
 import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 
-class BillConfigServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BillConfigService {
+class BillConfigServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    BillConfigService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Retrieve the Organization-wide BillConfig. */
     override fun retrieve(
         params: BillConfigRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillConfig {
         val request =
             HttpRequest.builder()
@@ -60,7 +58,7 @@ internal constructor(
      */
     override fun update(
         params: BillConfigUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillConfig {
         val request =
             HttpRequest.builder()

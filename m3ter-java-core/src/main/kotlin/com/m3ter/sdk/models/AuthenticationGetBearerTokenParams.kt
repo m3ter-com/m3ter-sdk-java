@@ -341,11 +341,7 @@ private constructor(
     }
 
     /** The grant type. */
-    class GrantType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class GrantType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -366,7 +362,7 @@ private constructor(
 
         /** An enum containing [GrantType]'s known values. */
         enum class Known {
-            CLIENT_CREDENTIALS,
+            CLIENT_CREDENTIALS
         }
 
         /**

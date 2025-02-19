@@ -22,14 +22,14 @@ interface TransactionTypeService {
     @JvmOverloads
     fun create(
         params: TransactionTypeCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionType
 
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads
     fun retrieve(
         params: TransactionTypeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionType
 
     /**
@@ -39,7 +39,7 @@ interface TransactionTypeService {
     @JvmOverloads
     fun update(
         params: TransactionTypeUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionType
 
     /**
@@ -49,13 +49,13 @@ interface TransactionTypeService {
     @JvmOverloads
     fun list(
         params: TransactionTypeListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeListPage
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads
     fun delete(
         params: TransactionTypeDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionType
 }

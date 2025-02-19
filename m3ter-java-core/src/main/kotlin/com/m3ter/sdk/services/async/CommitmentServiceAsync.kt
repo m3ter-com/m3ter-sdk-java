@@ -36,7 +36,7 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun create(
         params: CommitmentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Commitment>
 
     /**
@@ -49,7 +49,7 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: CommitmentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Commitment>
 
     /**
@@ -62,7 +62,7 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun update(
         params: CommitmentUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Commitment>
 
     /**
@@ -75,7 +75,7 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun list(
         params: CommitmentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CommitmentListPageAsync>
 
     /**
@@ -87,7 +87,7 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun delete(
         params: CommitmentDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Commitment>
 
     /**
@@ -100,6 +100,6 @@ interface CommitmentServiceAsync {
     @JvmOverloads
     fun search(
         params: CommitmentSearchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CommitmentSearchResponse>
 }

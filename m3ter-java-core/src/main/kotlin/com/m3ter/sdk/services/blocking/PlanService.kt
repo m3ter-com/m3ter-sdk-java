@@ -19,14 +19,14 @@ interface PlanService {
     @JvmOverloads
     fun create(
         params: PlanCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /** Retrieve the Plan with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /**
@@ -39,20 +39,20 @@ interface PlanService {
     @JvmOverloads
     fun update(
         params: PlanUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     @JvmOverloads
     fun list(
         params: PlanListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
 
     /** Delete the Plan with the given UUID. */
     @JvmOverloads
     fun delete(
         params: PlanDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 }

@@ -25,7 +25,7 @@ interface CompoundAggregationService {
     @JvmOverloads
     fun create(
         params: CompoundAggregationCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Aggregation
 
     /**
@@ -37,7 +37,7 @@ interface CompoundAggregationService {
     @JvmOverloads
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregation
 
     /**
@@ -54,7 +54,7 @@ interface CompoundAggregationService {
     @JvmOverloads
     fun update(
         params: CompoundAggregationUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Aggregation
 
     /**
@@ -68,7 +68,7 @@ interface CompoundAggregationService {
     @JvmOverloads
     fun list(
         params: CompoundAggregationListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationListPage
 
     /**
@@ -81,6 +81,6 @@ interface CompoundAggregationService {
     @JvmOverloads
     fun delete(
         params: CompoundAggregationDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregation
 }

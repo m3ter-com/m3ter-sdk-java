@@ -25,7 +25,7 @@ interface PlanTemplateService {
     @JvmOverloads
     fun create(
         params: PlanTemplateCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplate
 
     /**
@@ -37,7 +37,7 @@ interface PlanTemplateService {
     @JvmOverloads
     fun retrieve(
         params: PlanTemplateRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplate
 
     /**
@@ -54,7 +54,7 @@ interface PlanTemplateService {
     @JvmOverloads
     fun update(
         params: PlanTemplateUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplate
 
     /**
@@ -67,7 +67,7 @@ interface PlanTemplateService {
     @JvmOverloads
     fun list(
         params: PlanTemplateListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplateListPage
 
     /**
@@ -79,6 +79,6 @@ interface PlanTemplateService {
     @JvmOverloads
     fun delete(
         params: PlanTemplateDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplate
 }

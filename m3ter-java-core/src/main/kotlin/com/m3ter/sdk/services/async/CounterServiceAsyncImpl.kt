@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class CounterServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CounterServiceAsync {
+class CounterServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CounterServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
     /** Create a new Counter. */
     override fun create(
         params: CounterCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -63,7 +61,7 @@ internal constructor(
     /** Retrieve a Counter for the given UUID. */
     override fun retrieve(
         params: CounterRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -72,7 +70,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -95,7 +93,7 @@ internal constructor(
     /** Update Counter for the given UUID. */
     override fun update(
         params: CounterUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -104,7 +102,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -131,7 +129,7 @@ internal constructor(
      */
     override fun list(
         params: CounterListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -159,7 +157,7 @@ internal constructor(
     /** Delete a Counter for the given UUID. */
     override fun delete(
         params: CounterDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -168,7 +166,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

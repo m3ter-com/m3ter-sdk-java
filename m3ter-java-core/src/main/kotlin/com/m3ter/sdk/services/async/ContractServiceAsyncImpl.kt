@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class ContractServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ContractServiceAsync {
+class ContractServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ContractServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: ContractCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Contract> {
         val request =
             HttpRequest.builder()
@@ -68,7 +66,7 @@ internal constructor(
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     override fun retrieve(
         params: ContractRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Contract> {
         val request =
             HttpRequest.builder()
@@ -77,7 +75,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "contracts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -109,7 +107,7 @@ internal constructor(
      */
     override fun update(
         params: ContractUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Contract> {
         val request =
             HttpRequest.builder()
@@ -118,7 +116,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "contracts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -146,7 +144,7 @@ internal constructor(
      */
     override fun list(
         params: ContractListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ContractListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -180,7 +178,7 @@ internal constructor(
      */
     override fun delete(
         params: ContractDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Contract> {
         val request =
             HttpRequest.builder()
@@ -189,7 +187,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "contracts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

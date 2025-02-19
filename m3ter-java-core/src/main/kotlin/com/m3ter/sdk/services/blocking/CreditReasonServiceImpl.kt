@@ -21,10 +21,8 @@ import com.m3ter.sdk.models.CreditReasonListParams
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 
-class CreditReasonServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CreditReasonService {
+class CreditReasonServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    CreditReasonService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -38,7 +36,7 @@ internal constructor(
      */
     override fun create(
         params: CreditReasonCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditReason {
         val request =
             HttpRequest.builder()
@@ -47,7 +45,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "creditreasons"
+                    "creditreasons",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -68,7 +66,7 @@ internal constructor(
     /** Retrieve the Credit Reason with the given UUID. */
     override fun retrieve(
         params: CreditReasonRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditReason {
         val request =
             HttpRequest.builder()
@@ -78,7 +76,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -98,7 +96,7 @@ internal constructor(
     /** Update the Credit Reason with the given UUID. */
     override fun update(
         params: CreditReasonUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditReason {
         val request =
             HttpRequest.builder()
@@ -108,7 +106,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -134,7 +132,7 @@ internal constructor(
      */
     override fun list(
         params: CreditReasonListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditReasonListPage {
         val request =
             HttpRequest.builder()
@@ -143,7 +141,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "picklists",
-                    "creditreasons"
+                    "creditreasons",
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -164,7 +162,7 @@ internal constructor(
     /** Delete the Credit Reason with the given UUID. */
     override fun delete(
         params: CreditReasonDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditReason {
         val request =
             HttpRequest.builder()
@@ -174,7 +172,7 @@ internal constructor(
                     params.getPathParam(0),
                     "picklists",
                     "creditreasons",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

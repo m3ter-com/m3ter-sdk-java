@@ -22,7 +22,7 @@ interface PlanGroupService {
     @JvmOverloads
     fun create(
         params: PlanGroupCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroup
 
     /**
@@ -34,7 +34,7 @@ interface PlanGroupService {
     @JvmOverloads
     fun retrieve(
         params: PlanGroupRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroup
 
     /**
@@ -50,7 +50,7 @@ interface PlanGroupService {
     @JvmOverloads
     fun update(
         params: PlanGroupUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroup
 
     /**
@@ -62,7 +62,7 @@ interface PlanGroupService {
     @JvmOverloads
     fun list(
         params: PlanGroupListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupListPage
 
     /**
@@ -75,6 +75,6 @@ interface PlanGroupService {
     @JvmOverloads
     fun delete(
         params: PlanGroupDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroup
 }

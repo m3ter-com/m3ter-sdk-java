@@ -77,11 +77,7 @@ private constructor(
 
         @JvmStatic
         fun of(countersService: CounterService, params: CounterListParams, response: Response) =
-            CounterListPage(
-                countersService,
-                params,
-                response,
-            )
+            CounterListPage(countersService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +161,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CounterListPage,
-    ) : Iterable<Counter> {
+    class AutoPager(private val firstPage: CounterListPage) : Iterable<Counter> {
 
         override fun iterator(): Iterator<Counter> = iterator {
             var page = firstPage

@@ -77,11 +77,7 @@ private constructor(
 
         @JvmStatic
         fun of(metersService: MeterService, params: MeterListParams, response: Response) =
-            MeterListPage(
-                metersService,
-                params,
-                response,
-            )
+            MeterListPage(metersService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +161,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: MeterListPage,
-    ) : Iterable<Meter> {
+    class AutoPager(private val firstPage: MeterListPage) : Iterable<Meter> {
 
         override fun iterator(): Iterator<Meter> = iterator {
             var page = firstPage

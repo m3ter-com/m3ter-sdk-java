@@ -23,7 +23,7 @@ interface CurrencyService {
     @JvmOverloads
     fun create(
         params: CurrencyCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Currency
 
     /**
@@ -33,7 +33,7 @@ interface CurrencyService {
     @JvmOverloads
     fun retrieve(
         params: CurrencyRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Currency
 
     /**
@@ -44,7 +44,7 @@ interface CurrencyService {
     @JvmOverloads
     fun update(
         params: CurrencyUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Currency
 
     /**
@@ -57,7 +57,7 @@ interface CurrencyService {
     @JvmOverloads
     fun list(
         params: CurrencyListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CurrencyListPage
 
     /**
@@ -68,6 +68,6 @@ interface CurrencyService {
     @JvmOverloads
     fun delete(
         params: CurrencyDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Currency
 }

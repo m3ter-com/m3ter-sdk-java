@@ -22,10 +22,8 @@ import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class ProductServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ProductServiceAsync {
+class ProductServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ProductServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -73,7 +71,7 @@ internal constructor(
      */
     override fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -82,7 +80,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "products",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -114,7 +112,7 @@ internal constructor(
      */
     override fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -123,7 +121,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "products",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -153,7 +151,7 @@ internal constructor(
      */
     override fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ProductListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -186,7 +184,7 @@ internal constructor(
      */
     override fun delete(
         params: ProductDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -195,7 +193,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "products",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()

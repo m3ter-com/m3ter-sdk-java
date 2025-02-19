@@ -82,13 +82,8 @@ private constructor(
         fun of(
             aggregationsService: AggregationServiceAsync,
             params: AggregationListParams,
-            response: Response
-        ) =
-            AggregationListPageAsync(
-                aggregationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = AggregationListPageAsync(aggregationsService, params, response)
     }
 
     @NoAutoDetect
@@ -172,23 +167,16 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AggregationListPageAsync,
-    ) {
+    class AutoPager(private val firstPage: AggregationListPageAsync) {
 
         fun forEach(action: Predicate<Aggregation>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<AggregationListPageAsync>>.forEach(
                 action: (Aggregation) -> Boolean,
-                executor: Executor
+                executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
                     { page ->
@@ -197,7 +185,7 @@ private constructor(
                             .map { it.getNextPage().forEach(action, executor) }
                             .orElseGet { CompletableFuture.completedFuture(null) }
                     },
-                    executor
+                    executor,
                 )
             return CompletableFuture.completedFuture(Optional.of(firstPage))
                 .forEach(action::test, executor)

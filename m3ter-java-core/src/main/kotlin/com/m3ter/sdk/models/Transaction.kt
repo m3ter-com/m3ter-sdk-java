@@ -501,11 +501,7 @@ private constructor(
      * for the Transaction being added to the Balance - such as a **User**, a **Service User**, or a
      * **Bill**.
      */
-    class EntityType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class EntityType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

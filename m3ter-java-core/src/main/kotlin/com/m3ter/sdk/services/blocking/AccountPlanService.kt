@@ -29,14 +29,14 @@ interface AccountPlanService {
     @JvmOverloads
     fun create(
         params: AccountPlanCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlan
 
     /** Retrieve the AccountPlan or AccountPlanGroup details corresponding to the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: AccountPlanRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlan
 
     /**
@@ -56,7 +56,7 @@ interface AccountPlanService {
     @JvmOverloads
     fun update(
         params: AccountPlanUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlan
 
     /**
@@ -72,7 +72,7 @@ interface AccountPlanService {
     @JvmOverloads
     fun list(
         params: AccountPlanListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanListPage
 
     /**
@@ -84,6 +84,6 @@ interface AccountPlanService {
     @JvmOverloads
     fun delete(
         params: AccountPlanDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlan
 }

@@ -23,14 +23,14 @@ interface AccountServiceAsync {
     @JvmOverloads
     fun create(
         params: AccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Account>
 
     /** Retrieve the Account with the given Account UUID. */
     @JvmOverloads
     fun retrieve(
         params: AccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Account>
 
     /**
@@ -43,14 +43,14 @@ interface AccountServiceAsync {
     @JvmOverloads
     fun update(
         params: AccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Account>
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
     @JvmOverloads
     fun list(
         params: AccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountListPageAsync>
 
     /**
@@ -60,20 +60,20 @@ interface AccountServiceAsync {
     @JvmOverloads
     fun delete(
         params: AccountDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Account>
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
     @JvmOverloads
     fun listChildren(
         params: AccountListChildrenParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Account>
 
     /** Search for account entities */
     @JvmOverloads
     fun search(
         params: AccountSearchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountSearchResponse>
 }

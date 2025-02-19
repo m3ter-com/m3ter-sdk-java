@@ -30,21 +30,21 @@ interface CounterAdjustmentServiceAsync {
     @JvmOverloads
     fun create(
         params: CounterAdjustmentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustment>
 
     /** Retrieve a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustment>
 
     /** Update a CounterAdjustment for an Account. */
     @JvmOverloads
     fun update(
         params: CounterAdjustmentUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustment>
 
     /**
@@ -60,13 +60,13 @@ interface CounterAdjustmentServiceAsync {
     @JvmOverloads
     fun list(
         params: CounterAdjustmentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustmentListPageAsync>
 
     /** Delete a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun delete(
         params: CounterAdjustmentDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustment>
 }

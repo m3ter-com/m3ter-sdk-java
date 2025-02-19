@@ -15,13 +15,13 @@ interface OrganizationConfigService {
     @JvmOverloads
     fun retrieve(
         params: OrganizationConfigRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfig
 
     /** Update the Organization-wide configuration details. */
     @JvmOverloads
     fun update(
         params: OrganizationConfigUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfig
 }

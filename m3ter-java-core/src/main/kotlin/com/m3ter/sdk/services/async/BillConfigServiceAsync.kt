@@ -16,7 +16,7 @@ interface BillConfigServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: BillConfigRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfig>
 
     /**
@@ -29,6 +29,6 @@ interface BillConfigServiceAsync {
     @JvmOverloads
     fun update(
         params: BillConfigUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfig>
 }

@@ -23,7 +23,7 @@ interface PlanGroupServiceAsync {
     @JvmOverloads
     fun create(
         params: PlanGroupCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroup>
 
     /**
@@ -35,7 +35,7 @@ interface PlanGroupServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: PlanGroupRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroup>
 
     /**
@@ -51,7 +51,7 @@ interface PlanGroupServiceAsync {
     @JvmOverloads
     fun update(
         params: PlanGroupUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroup>
 
     /**
@@ -63,7 +63,7 @@ interface PlanGroupServiceAsync {
     @JvmOverloads
     fun list(
         params: PlanGroupListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupListPageAsync>
 
     /**
@@ -76,6 +76,6 @@ interface PlanGroupServiceAsync {
     @JvmOverloads
     fun delete(
         params: PlanGroupDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroup>
 }

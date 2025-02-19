@@ -79,13 +79,8 @@ private constructor(
         fun of(
             aggregationsService: AggregationService,
             params: AggregationListParams,
-            response: Response
-        ) =
-            AggregationListPage(
-                aggregationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = AggregationListPage(aggregationsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,18 +164,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AggregationListPage,
-    ) : Iterable<Aggregation> {
+    class AutoPager(private val firstPage: AggregationListPage) : Iterable<Aggregation> {
 
         override fun iterator(): Iterator<Aggregation> = iterator {
             var page = firstPage

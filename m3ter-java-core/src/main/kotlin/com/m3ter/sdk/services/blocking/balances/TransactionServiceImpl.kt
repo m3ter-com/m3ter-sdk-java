@@ -18,10 +18,8 @@ import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.Transaction
 
-class TransactionServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TransactionService {
+class TransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    TransactionService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -47,7 +45,7 @@ internal constructor(
      */
     override fun create(
         params: BalanceTransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Transaction {
         val request =
             HttpRequest.builder()
@@ -57,7 +55,7 @@ internal constructor(
                     params.getPathParam(0),
                     "balances",
                     params.getPathParam(1),
-                    "transactions"
+                    "transactions",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -84,7 +82,7 @@ internal constructor(
      */
     override fun list(
         params: BalanceTransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BalanceTransactionListPage {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
                     params.getPathParam(0),
                     "balances",
                     params.getPathParam(1),
-                    "transactions"
+                    "transactions",
                 )
                 .build()
                 .prepare(clientOptions, params)

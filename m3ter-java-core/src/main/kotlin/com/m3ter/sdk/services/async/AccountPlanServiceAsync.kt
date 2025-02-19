@@ -30,14 +30,14 @@ interface AccountPlanServiceAsync {
     @JvmOverloads
     fun create(
         params: AccountPlanCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlan>
 
     /** Retrieve the AccountPlan or AccountPlanGroup details corresponding to the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: AccountPlanRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlan>
 
     /**
@@ -57,7 +57,7 @@ interface AccountPlanServiceAsync {
     @JvmOverloads
     fun update(
         params: AccountPlanUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlan>
 
     /**
@@ -73,7 +73,7 @@ interface AccountPlanServiceAsync {
     @JvmOverloads
     fun list(
         params: AccountPlanListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlanListPageAsync>
 
     /**
@@ -85,6 +85,6 @@ interface AccountPlanServiceAsync {
     @JvmOverloads
     fun delete(
         params: AccountPlanDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlan>
 }

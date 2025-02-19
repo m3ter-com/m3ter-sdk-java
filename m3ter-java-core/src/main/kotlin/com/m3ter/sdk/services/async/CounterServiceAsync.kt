@@ -20,21 +20,21 @@ interface CounterServiceAsync {
     @JvmOverloads
     fun create(
         params: CounterCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counter>
 
     /** Retrieve a Counter for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counter>
 
     /** Update Counter for the given UUID. */
     @JvmOverloads
     fun update(
         params: CounterUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counter>
 
     /**
@@ -43,13 +43,13 @@ interface CounterServiceAsync {
     @JvmOverloads
     fun list(
         params: CounterListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterListPageAsync>
 
     /** Delete a Counter for the given UUID. */
     @JvmOverloads
     fun delete(
         params: CounterDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counter>
 }

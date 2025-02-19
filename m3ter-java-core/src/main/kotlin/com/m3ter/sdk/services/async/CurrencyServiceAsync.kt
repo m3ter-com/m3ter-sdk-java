@@ -24,7 +24,7 @@ interface CurrencyServiceAsync {
     @JvmOverloads
     fun create(
         params: CurrencyCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Currency>
 
     /**
@@ -34,7 +34,7 @@ interface CurrencyServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: CurrencyRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Currency>
 
     /**
@@ -45,7 +45,7 @@ interface CurrencyServiceAsync {
     @JvmOverloads
     fun update(
         params: CurrencyUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Currency>
 
     /**
@@ -58,7 +58,7 @@ interface CurrencyServiceAsync {
     @JvmOverloads
     fun list(
         params: CurrencyListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CurrencyListPageAsync>
 
     /**
@@ -69,6 +69,6 @@ interface CurrencyServiceAsync {
     @JvmOverloads
     fun delete(
         params: CurrencyDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Currency>
 }

@@ -15,7 +15,7 @@ interface BillConfigService {
     @JvmOverloads
     fun retrieve(
         params: BillConfigRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfig
 
     /**
@@ -28,6 +28,6 @@ interface BillConfigService {
     @JvmOverloads
     fun update(
         params: BillConfigUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfig
 }

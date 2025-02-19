@@ -24,7 +24,7 @@ interface ProductService {
     @JvmOverloads
     fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -36,7 +36,7 @@ interface ProductService {
     @JvmOverloads
     fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -52,7 +52,7 @@ interface ProductService {
     @JvmOverloads
     fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -64,7 +64,7 @@ interface ProductService {
     @JvmOverloads
     fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ProductListPage
 
     /**
@@ -76,6 +76,6 @@ interface ProductService {
     @JvmOverloads
     fun delete(
         params: ProductDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 }

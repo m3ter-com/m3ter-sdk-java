@@ -24,21 +24,21 @@ interface CreditReasonServiceAsync {
     @JvmOverloads
     fun create(
         params: CreditReasonCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReason>
 
     /** Retrieve the Credit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CreditReasonRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReason>
 
     /** Update the Credit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: CreditReasonUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReason>
 
     /**
@@ -49,13 +49,13 @@ interface CreditReasonServiceAsync {
     @JvmOverloads
     fun list(
         params: CreditReasonListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReasonListPageAsync>
 
     /** Delete the Credit Reason with the given UUID. */
     @JvmOverloads
     fun delete(
         params: CreditReasonDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReason>
 }

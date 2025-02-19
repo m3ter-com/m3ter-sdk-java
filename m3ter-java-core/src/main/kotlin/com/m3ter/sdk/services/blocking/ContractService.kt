@@ -24,14 +24,14 @@ interface ContractService {
     @JvmOverloads
     fun create(
         params: ContractCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Contract
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     @JvmOverloads
     fun retrieve(
         params: ContractRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Contract
 
     /**
@@ -47,7 +47,7 @@ interface ContractService {
     @JvmOverloads
     fun update(
         params: ContractUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Contract
 
     /**
@@ -57,7 +57,7 @@ interface ContractService {
     @JvmOverloads
     fun list(
         params: ContractListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractListPage
 
     /**
@@ -70,6 +70,6 @@ interface ContractService {
     @JvmOverloads
     fun delete(
         params: ContractDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Contract
 }

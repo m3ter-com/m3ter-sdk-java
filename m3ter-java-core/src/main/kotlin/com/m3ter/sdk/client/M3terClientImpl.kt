@@ -55,9 +55,7 @@ import com.m3ter.sdk.services.blocking.ProductServiceImpl
 import com.m3ter.sdk.services.blocking.TransactionTypeService
 import com.m3ter.sdk.services.blocking.TransactionTypeServiceImpl
 
-class M3terClientImpl(
-    private val clientOptions: ClientOptions,
-) : M3terClient {
+class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions

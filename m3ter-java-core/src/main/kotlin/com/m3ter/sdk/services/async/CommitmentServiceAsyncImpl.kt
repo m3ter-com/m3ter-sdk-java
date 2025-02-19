@@ -24,10 +24,8 @@ import com.m3ter.sdk.models.CommitmentSearchResponse
 import com.m3ter.sdk.models.CommitmentUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class CommitmentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CommitmentServiceAsync {
+class CommitmentServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CommitmentServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -51,7 +49,7 @@ internal constructor(
      */
     override fun create(
         params: CommitmentCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Commitment> {
         val request =
             HttpRequest.builder()
@@ -85,7 +83,7 @@ internal constructor(
      */
     override fun retrieve(
         params: CommitmentRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Commitment> {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "commitments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -123,7 +121,7 @@ internal constructor(
      */
     override fun update(
         params: CommitmentUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Commitment> {
         val request =
             HttpRequest.builder()
@@ -132,7 +130,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "commitments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -163,7 +161,7 @@ internal constructor(
      */
     override fun list(
         params: CommitmentListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CommitmentListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -196,7 +194,7 @@ internal constructor(
      */
     override fun delete(
         params: CommitmentDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Commitment> {
         val request =
             HttpRequest.builder()
@@ -205,7 +203,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "commitments",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -236,7 +234,7 @@ internal constructor(
      */
     override fun search(
         params: CommitmentSearchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CommitmentSearchResponse> {
         val request =
             HttpRequest.builder()

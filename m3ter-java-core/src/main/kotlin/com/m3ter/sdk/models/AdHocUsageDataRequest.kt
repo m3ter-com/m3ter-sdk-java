@@ -508,9 +508,7 @@ private constructor(
      */
     class AggregationFrequency
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -619,11 +617,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class SourceType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class SourceType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -724,11 +718,8 @@ private constructor(
      *   data measurement submissions. If using this method, please ensure _distinct_ `ts` values
      *   are used for usage data measurement submissions.
      */
-    class Aggregation
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -861,11 +852,7 @@ private constructor(
      * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
      * section in our main User Documentation.
      */
-    class TimePeriod
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TimePeriod @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

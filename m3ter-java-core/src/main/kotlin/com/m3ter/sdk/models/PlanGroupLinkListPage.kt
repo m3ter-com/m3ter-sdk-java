@@ -79,13 +79,8 @@ private constructor(
         fun of(
             planGroupLinksService: PlanGroupLinkService,
             params: PlanGroupLinkListParams,
-            response: Response
-        ) =
-            PlanGroupLinkListPage(
-                planGroupLinksService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = PlanGroupLinkListPage(planGroupLinksService, params, response)
     }
 
     @NoAutoDetect
@@ -169,18 +164,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    nextToken,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, nextToken, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PlanGroupLinkListPage,
-    ) : Iterable<PlanGroupLink> {
+    class AutoPager(private val firstPage: PlanGroupLinkListPage) : Iterable<PlanGroupLink> {
 
         override fun iterator(): Iterator<PlanGroupLink> = iterator {
             var page = firstPage

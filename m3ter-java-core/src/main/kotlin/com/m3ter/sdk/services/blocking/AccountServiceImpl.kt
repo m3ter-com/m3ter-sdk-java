@@ -24,10 +24,8 @@ import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
 import com.m3ter.sdk.models.AccountUpdateParams
 
-class AccountServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AccountService {
+class AccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    AccountService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -65,7 +63,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accounts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -97,7 +95,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accounts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -150,7 +148,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "accounts",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -171,7 +169,7 @@ internal constructor(
     /** Retrieve a list of Accounts that are children of the specified Account. */
     override fun listChildren(
         params: AccountListChildrenParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Account {
         val request =
             HttpRequest.builder()
@@ -181,7 +179,7 @@ internal constructor(
                     params.getPathParam(0),
                     "accounts",
                     params.getPathParam(1),
-                    "children"
+                    "children",
                 )
                 .build()
                 .prepare(clientOptions, params)
@@ -201,7 +199,7 @@ internal constructor(
     /** Search for account entities */
     override fun search(
         params: AccountSearchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AccountSearchResponse {
         val request =
             HttpRequest.builder()

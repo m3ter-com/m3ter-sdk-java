@@ -239,7 +239,7 @@ private constructor(
             override fun serialize(
                 value: DataExportCreateAdhocBody,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.adHocOperationalDataRequest != null ->
