@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -35,7 +36,7 @@ class CounterAdjustmentCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
@@ -57,7 +58,7 @@ class CounterAdjustmentCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")

@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -89,7 +90,7 @@ class OrganizationConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")
         assertThat(body.daysBeforeBillDue()).isEqualTo(1L)
@@ -142,7 +143,7 @@ class OrganizationConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")
         assertThat(body.daysBeforeBillDue()).isEqualTo(1L)

@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -31,7 +32,7 @@ class PlanGroupLinkUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")
         assertThat(body.version()).contains(0L)
@@ -49,7 +50,7 @@ class PlanGroupLinkUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.planGroupId()).isEqualTo("x")
         assertThat(body.planId()).isEqualTo("x")
     }

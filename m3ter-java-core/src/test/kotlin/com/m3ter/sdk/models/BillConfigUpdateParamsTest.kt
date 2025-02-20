@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.LocalDate
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -28,7 +29,7 @@ class BillConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.billLockDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.version()).contains(0L)
     }
@@ -39,7 +40,7 @@ class BillConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
     }
 
     @Test

@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -66,7 +67,7 @@ class PlanUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.planTemplateId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -105,7 +106,7 @@ class PlanUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.planTemplateId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

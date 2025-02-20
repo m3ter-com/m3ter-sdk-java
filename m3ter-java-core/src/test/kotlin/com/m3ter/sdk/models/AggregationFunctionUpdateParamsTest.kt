@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -72,7 +73,7 @@ class AggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
@@ -119,7 +120,7 @@ class AggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
