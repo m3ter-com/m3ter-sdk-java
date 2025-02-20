@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -93,7 +94,7 @@ class CommitmentUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.currency()).isEqualTo("x")
@@ -150,7 +151,7 @@ class CommitmentUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.currency()).isEqualTo("x")
