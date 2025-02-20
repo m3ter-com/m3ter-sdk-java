@@ -25,6 +25,7 @@ private constructor(
     @get:JvmName("apiKey") val apiKey: String,
     @get:JvmName("apiSecret") val apiSecret: String,
     @get:JvmName("token") val token: String?,
+    @get:JvmName("orgId") val orgId: String,
 ) {
 
     fun toBuilder() = Builder().from(this)
@@ -52,6 +53,7 @@ private constructor(
         private var apiKey: String? = null
         private var apiSecret: String? = null
         private var token: String? = null
+        private var orgId: String? = null
 
         @JvmSynthetic
         internal fun from(clientOptions: ClientOptions) = apply {
@@ -66,6 +68,7 @@ private constructor(
             apiKey = clientOptions.apiKey
             apiSecret = clientOptions.apiSecret
             token = clientOptions.token
+            orgId = clientOptions.orgId
         }
 
         fun httpClient(httpClient: HttpClient) = apply { this.httpClient = httpClient }
@@ -89,6 +92,8 @@ private constructor(
         fun token(token: String?) = apply { this.token = token }
 
         fun token(token: Optional<String>) = token(token.orElse(null))
+
+        fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         fun headers(headers: Headers) = apply {
             this.headers.clear()
@@ -180,6 +185,7 @@ private constructor(
             val httpClient = checkRequired("httpClient", httpClient)
             val apiKey = checkRequired("apiKey", apiKey)
             val apiSecret = checkRequired("apiSecret", apiSecret)
+            val orgId = checkRequired("orgId", orgId)
 
             val headers = Headers.builder()
             val queryParams = QueryParams.builder()
@@ -217,6 +223,7 @@ private constructor(
                 apiKey,
                 apiSecret,
                 token,
+                orgId,
             )
         }
     }

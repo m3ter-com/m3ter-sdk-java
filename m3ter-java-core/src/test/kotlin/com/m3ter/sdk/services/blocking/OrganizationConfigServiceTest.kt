@@ -20,6 +20,7 @@ class OrganizationConfigServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val organizationConfigService = client.organizationConfig()
         val organizationConfig =
@@ -38,6 +39,7 @@ class OrganizationConfigServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val organizationConfigService = client.organizationConfig()
         val organizationConfig =

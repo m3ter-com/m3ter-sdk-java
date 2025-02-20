@@ -26,6 +26,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val commitment =
@@ -81,6 +82,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val commitment =
@@ -99,6 +101,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val commitment =
@@ -155,6 +158,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val paginatedDataCommitmentResponse =
@@ -171,6 +175,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val commitment =
@@ -189,6 +194,7 @@ class CommitmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
         val commitmentSearchResponse =

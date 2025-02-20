@@ -23,6 +23,7 @@ class CounterAdjustmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
         val counterAdjustment =
@@ -49,6 +50,7 @@ class CounterAdjustmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
         val counterAdjustment =
@@ -67,6 +69,7 @@ class CounterAdjustmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
         val counterAdjustment =
@@ -94,6 +97,7 @@ class CounterAdjustmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
         val paginatedDataCounterAdjustmentResponse =
@@ -112,6 +116,7 @@ class CounterAdjustmentServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
         val counterAdjustment =

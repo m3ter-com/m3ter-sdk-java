@@ -26,6 +26,7 @@ class AccountPlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
         val accountPlan =
@@ -61,6 +62,7 @@ class AccountPlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
         val accountPlan =
@@ -79,6 +81,7 @@ class AccountPlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
         val accountPlan =
@@ -115,6 +118,7 @@ class AccountPlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
         val paginatedDataAccountPlanResponse =
@@ -131,6 +135,7 @@ class AccountPlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
         val accountPlan =

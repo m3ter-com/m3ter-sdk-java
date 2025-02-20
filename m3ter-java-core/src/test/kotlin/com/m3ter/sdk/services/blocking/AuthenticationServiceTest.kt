@@ -19,6 +19,7 @@ class AuthenticationServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val authenticationService = client.authentication()
         val authenticationGetBearerTokenResponse =

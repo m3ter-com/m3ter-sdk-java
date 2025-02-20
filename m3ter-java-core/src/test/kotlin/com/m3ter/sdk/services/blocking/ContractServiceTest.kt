@@ -25,6 +25,7 @@ class ContractServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val contractService = client.contracts()
         val contract =
@@ -58,6 +59,7 @@ class ContractServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val contractService = client.contracts()
         val contract =
@@ -76,6 +78,7 @@ class ContractServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val contractService = client.contracts()
         val contract =
@@ -110,6 +113,7 @@ class ContractServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val contractService = client.contracts()
         val paginatedDataContractResponse =
@@ -126,6 +130,7 @@ class ContractServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val contractService = client.contracts()
         val contract =

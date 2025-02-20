@@ -24,6 +24,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -71,6 +72,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -87,6 +89,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -135,6 +138,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val paginatedDataMeterResponse =
@@ -151,6 +155,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter = meterService.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
