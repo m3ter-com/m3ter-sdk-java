@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -31,7 +32,7 @@ class DebitReasonCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
         assertThat(body.code()).contains("{1{}}_")
@@ -44,7 +45,7 @@ class DebitReasonCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
     }
 

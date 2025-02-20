@@ -39,7 +39,6 @@ class DataExportCreateAdhocParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 DataExportCreateAdhocParams.Body.ofAdHocOperationalDataRequest(
@@ -71,7 +70,6 @@ class DataExportCreateAdhocParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 DataExportCreateAdhocParams.Body.ofAdHocOperationalDataRequest(

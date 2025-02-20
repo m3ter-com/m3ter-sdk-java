@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -35,7 +36,7 @@ class CounterUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
         assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
@@ -50,7 +51,7 @@ class CounterUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
     }
