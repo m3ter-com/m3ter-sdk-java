@@ -25,6 +25,7 @@ class PricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
         val pricing =
@@ -84,6 +85,7 @@ class PricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
         val pricing =
@@ -100,6 +102,7 @@ class PricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
         val pricing =
@@ -160,6 +163,7 @@ class PricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
         val paginatedDataPricingResponse =
@@ -176,6 +180,7 @@ class PricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
         val pricing =

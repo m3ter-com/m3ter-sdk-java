@@ -138,6 +138,8 @@ class M3terOkHttpClientAsync private constructor() {
 
         fun token(token: Optional<String>) = token(token.orElse(null))
 
+        fun orgId(orgId: String) = apply { clientOptions.orgId(orgId) }
+
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
         fun build(): M3terClientAsync =

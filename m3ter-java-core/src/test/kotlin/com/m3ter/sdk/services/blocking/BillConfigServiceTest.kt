@@ -21,6 +21,7 @@ class BillConfigServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val billConfigService = client.billConfig()
         val billConfig =
@@ -37,6 +38,7 @@ class BillConfigServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val billConfigService = client.billConfig()
         val billConfig =

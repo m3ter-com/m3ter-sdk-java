@@ -23,6 +23,7 @@ class CurrencyServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val currencyService = client.currencies()
         val currency =
@@ -49,6 +50,7 @@ class CurrencyServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val currencyService = client.currencies()
         val currency =
@@ -67,6 +69,7 @@ class CurrencyServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val currencyService = client.currencies()
         val currency =
@@ -94,6 +97,7 @@ class CurrencyServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val currencyService = client.currencies()
         val paginatedDataCurrencyResponse =
@@ -110,6 +114,7 @@ class CurrencyServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val currencyService = client.currencies()
         val currency =

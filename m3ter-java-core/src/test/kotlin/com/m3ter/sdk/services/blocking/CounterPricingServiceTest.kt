@@ -24,6 +24,7 @@ class CounterPricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
         val counterPricing =
@@ -67,6 +68,7 @@ class CounterPricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
         val counterPricing =
@@ -85,6 +87,7 @@ class CounterPricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
         val counterPricing =
@@ -129,6 +132,7 @@ class CounterPricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
         val paginatedDataCounterPricingResponse =
@@ -145,6 +149,7 @@ class CounterPricingServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
         val counterPricing =

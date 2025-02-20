@@ -24,6 +24,7 @@ class CompoundAggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
         val aggregation =
@@ -59,6 +60,7 @@ class CompoundAggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
         val compoundAggregation =
@@ -77,6 +79,7 @@ class CompoundAggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
         val aggregation =
@@ -113,6 +116,7 @@ class CompoundAggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
         val paginatedDataCompoundAggregationResponse =
@@ -131,6 +135,7 @@ class CompoundAggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
         val compoundAggregation =

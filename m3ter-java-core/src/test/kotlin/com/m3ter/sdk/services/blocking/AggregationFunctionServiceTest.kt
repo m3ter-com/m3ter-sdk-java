@@ -24,6 +24,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -67,6 +68,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -85,6 +87,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -129,6 +132,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val paginatedDataAggregationResponse =
@@ -145,6 +149,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =

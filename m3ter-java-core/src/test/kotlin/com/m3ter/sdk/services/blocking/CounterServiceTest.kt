@@ -23,6 +23,7 @@ class CounterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
         val counter =
@@ -48,6 +49,7 @@ class CounterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
         val counter =
@@ -64,6 +66,7 @@ class CounterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
         val counter =
@@ -90,6 +93,7 @@ class CounterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
         val paginatedDataCounterResponse =
@@ -106,6 +110,7 @@ class CounterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
         val counter =

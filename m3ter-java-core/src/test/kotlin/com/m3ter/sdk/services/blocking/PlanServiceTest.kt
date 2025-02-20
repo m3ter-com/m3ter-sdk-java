@@ -24,6 +24,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planService = client.plans()
         val plan =
@@ -64,6 +65,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planService = client.plans()
         val plan =
@@ -80,6 +82,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planService = client.plans()
         val plan =
@@ -121,6 +124,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planService = client.plans()
         val paginatedDataPlanResponse =
@@ -137,6 +141,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planService = client.plans()
         val plan = planService.delete(PlanDeleteParams.builder().orgId("orgId").id("id").build())

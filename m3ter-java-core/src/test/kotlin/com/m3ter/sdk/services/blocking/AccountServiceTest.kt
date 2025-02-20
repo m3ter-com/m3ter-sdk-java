@@ -27,6 +27,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val account =
@@ -83,6 +84,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val account =
@@ -99,6 +101,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val account =
@@ -156,6 +159,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val paginatedDataAccountResponse =
@@ -172,6 +176,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val account =
@@ -188,6 +193,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val account =
@@ -211,6 +217,7 @@ class AccountServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
         val accountSearchResponse =

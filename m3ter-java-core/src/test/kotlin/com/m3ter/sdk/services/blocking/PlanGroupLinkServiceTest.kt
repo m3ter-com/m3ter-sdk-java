@@ -23,6 +23,7 @@ class PlanGroupLinkServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
         val planGroupLink =
@@ -46,6 +47,7 @@ class PlanGroupLinkServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
         val planGroupLink =
@@ -64,6 +66,7 @@ class PlanGroupLinkServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
         val planGroupLink =
@@ -88,6 +91,7 @@ class PlanGroupLinkServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
         val paginatedDataPlanGroupLinkResponse =
@@ -104,6 +108,7 @@ class PlanGroupLinkServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
         val planGroupLink =

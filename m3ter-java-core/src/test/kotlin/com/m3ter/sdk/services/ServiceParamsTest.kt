@@ -37,6 +37,7 @@ class ServiceParamsTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .baseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .build()
     }

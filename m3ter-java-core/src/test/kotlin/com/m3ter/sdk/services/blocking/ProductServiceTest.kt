@@ -24,6 +24,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -52,6 +53,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -68,6 +70,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -97,6 +100,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val paginatedDataProductResponse =
@@ -113,6 +117,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
