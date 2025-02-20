@@ -345,9 +345,9 @@ To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQu
 
 ```java
 import com.m3ter.sdk.core.JsonValue;
-import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams;
+import com.m3ter.sdk.models.ProductListParams;
 
-AuthenticationGetBearerTokenParams params = AuthenticationGetBearerTokenParams.builder()
+ProductListParams params = ProductListParams.builder()
     .putAdditionalHeader("Secret-Header", "42")
     .putAdditionalQueryParam("secret_query_param", "42")
     .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))
@@ -359,10 +359,9 @@ These can be accessed on the built object later using the `_additionalHeaders()`
 To set a documented parameter or property to an undocumented or not yet supported _value_, pass a `JsonValue` object to its setter:
 
 ```java
-import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams;
 import com.m3ter.sdk.models.ProductListParams;
 
-AuthenticationGetBearerTokenParams params = ProductListParams.builder()
+ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
     .build();
 ```
