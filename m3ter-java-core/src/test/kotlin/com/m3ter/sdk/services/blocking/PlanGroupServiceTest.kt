@@ -24,6 +24,7 @@ class PlanGroupServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupService = client.planGroups()
         val planGroup =
@@ -62,6 +63,7 @@ class PlanGroupServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupService = client.planGroups()
         val planGroup =
@@ -80,6 +82,7 @@ class PlanGroupServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupService = client.planGroups()
         val planGroup =
@@ -119,6 +122,7 @@ class PlanGroupServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupService = client.planGroups()
         val paginatedDataPlanGroupResponse =
@@ -135,6 +139,7 @@ class PlanGroupServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planGroupService = client.planGroups()
         val planGroup =

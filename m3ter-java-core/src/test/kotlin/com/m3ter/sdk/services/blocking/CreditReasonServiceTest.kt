@@ -23,6 +23,7 @@ class CreditReasonServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
         val creditReason =
@@ -47,6 +48,7 @@ class CreditReasonServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
         val creditReason =
@@ -65,6 +67,7 @@ class CreditReasonServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
         val creditReason =
@@ -90,6 +93,7 @@ class CreditReasonServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
         val paginatedDataCreditReasonResponse =
@@ -106,6 +110,7 @@ class CreditReasonServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
         val creditReason =

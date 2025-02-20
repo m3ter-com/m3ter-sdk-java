@@ -23,6 +23,7 @@ class PlanTemplateServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
         val planTemplate =
@@ -60,6 +61,7 @@ class PlanTemplateServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
         val planTemplate =
@@ -78,6 +80,7 @@ class PlanTemplateServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
         val planTemplate =
@@ -116,6 +119,7 @@ class PlanTemplateServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
         val paginatedDataPlanTemplateResponse =
@@ -132,6 +136,7 @@ class PlanTemplateServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
         val planTemplate =

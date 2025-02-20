@@ -23,6 +23,7 @@ class TransactionTypeServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
         val transactionType =
@@ -47,6 +48,7 @@ class TransactionTypeServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
         val transactionType =
@@ -65,6 +67,7 @@ class TransactionTypeServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
         val transactionType =
@@ -90,6 +93,7 @@ class TransactionTypeServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
         val paginatedDataTransactionTypeResponse =
@@ -106,6 +110,7 @@ class TransactionTypeServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
         val transactionType =

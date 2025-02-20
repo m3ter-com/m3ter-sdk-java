@@ -24,6 +24,7 @@ class BalanceServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
         val balance =
@@ -61,6 +62,7 @@ class BalanceServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
         val balance =
@@ -77,6 +79,7 @@ class BalanceServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
         val balance =
@@ -115,6 +118,7 @@ class BalanceServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
         val paginatedDataBalanceResponse =
@@ -131,6 +135,7 @@ class BalanceServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
         val balance =
