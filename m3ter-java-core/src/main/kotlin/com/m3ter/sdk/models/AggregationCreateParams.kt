@@ -1608,6 +1608,8 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
+            @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
+
             @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
         }
 
@@ -1620,6 +1622,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
         }
 
         /**
@@ -1639,6 +1642,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
             /**
              * An enum member indicating that [Aggregation] was instantiated with an unknown value.
              */
@@ -1661,6 +1665,7 @@ private constructor(
                 LATEST -> Value.LATEST
                 MEAN -> Value.MEAN
                 UNIQUE -> Value.UNIQUE
+                CUSTOM_SQL -> Value.CUSTOM_SQL
                 else -> Value._UNKNOWN
             }
 
@@ -1681,6 +1686,7 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
+                CUSTOM_SQL -> Known.CUSTOM_SQL
                 else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
             }
 
