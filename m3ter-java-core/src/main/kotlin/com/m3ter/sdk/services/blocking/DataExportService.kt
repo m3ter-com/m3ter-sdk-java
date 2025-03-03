@@ -7,8 +7,17 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
+import com.m3ter.sdk.services.blocking.dataExports.DestinationService
+import com.m3ter.sdk.services.blocking.dataExports.JobService
+import com.m3ter.sdk.services.blocking.dataExports.ScheduleService
 
 interface DataExportService {
+
+    fun destinations(): DestinationService
+
+    fun jobs(): JobService
+
+    fun schedules(): ScheduleService
 
     /**
      * Trigger an ad-hoc Data Export. Each ad-hoc Export can be configured for exporting _only one

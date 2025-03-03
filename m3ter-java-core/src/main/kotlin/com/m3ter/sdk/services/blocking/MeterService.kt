@@ -69,7 +69,7 @@ interface MeterService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Meter
 
-    /** Retrieve a list of Meter entities */
+    /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     @JvmOverloads
     fun list(
         params: MeterListParams,

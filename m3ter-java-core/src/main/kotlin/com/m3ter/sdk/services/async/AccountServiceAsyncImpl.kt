@@ -16,7 +16,9 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
-import com.m3ter.sdk.models.AccountListChildrenParams
+import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
+import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
+import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPageAsync
 import com.m3ter.sdk.models.AccountListParams
 import com.m3ter.sdk.models.AccountRetrieveParams
@@ -194,12 +196,53 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
     }
 
-    private val listChildrenHandler: Handler<Account> =
+    private val endDateBillingEntitiesHandler: Handler<AccountEndDateBillingEntitiesResponse> =
+        jsonHandler<AccountEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /**
+     * Apply the specified end-date to billing entities associated with an Account.
+     *
+     * **NOTE:**
+     * - When you successfully end-date billing entities, the version number of each entity is
+     *   incremented.
+     */
+    override fun endDateBillingEntities(
+        params: AccountEndDateBillingEntitiesParams,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<AccountEndDateBillingEntitiesResponse> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.PUT)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "accounts",
+                    params.getPathParam(1),
+                    "enddatebillingentities",
+                )
+                .body(json(clientOptions.jsonMapper, params._body()))
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { endDateBillingEntitiesHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
+            }
+    }
+
+    private val getChildrenHandler: Handler<Account> =
         jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    override fun listChildren(
-        params: AccountListChildrenParams,
+    override fun getChildren(
+        params: AccountGetChildrenParams,
         requestOptions: RequestOptions,
     ): CompletableFuture<Account> {
         val request =
@@ -218,7 +261,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
             .thenApply { response ->
                 response
-                    .use { listChildrenHandler.handle(it) }
+                    .use { getChildrenHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                             it.validate()
@@ -230,7 +273,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
     private val searchHandler: Handler<AccountSearchResponse> =
         jsonHandler<AccountSearchResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /** Search for account entities */
+    /**
+     * Search for Account entities.
+     *
+     * This endpoint executes a search query for Accounts based on the user specified search
+     * criteria. The search query is customizable, allowing for complex nested conditions and
+     * sorting. The returned list of Accounts can be paginated for easier management.
+     */
     override fun search(
         params: AccountSearchParams,
         requestOptions: RequestOptions,

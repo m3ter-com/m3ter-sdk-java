@@ -15,7 +15,7 @@ class PricingCreateParamsTest {
         PricingCreateParams.builder()
             .orgId("orgId")
             .addPricingBand(
-                PricingCreateParams.PricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -35,7 +35,7 @@ class PricingCreateParamsTest {
             .minimumSpendBillInAdvance(true)
             .minimumSpendDescription("minimumSpendDescription")
             .addOveragePricingBand(
-                PricingCreateParams.OveragePricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -62,7 +62,7 @@ class PricingCreateParamsTest {
             PricingCreateParams.builder()
                 .orgId("orgId")
                 .addPricingBand(
-                    PricingCreateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -82,7 +82,7 @@ class PricingCreateParamsTest {
                 .minimumSpendBillInAdvance(true)
                 .minimumSpendDescription("minimumSpendDescription")
                 .addOveragePricingBand(
-                    PricingCreateParams.OveragePricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -108,7 +108,7 @@ class PricingCreateParamsTest {
         assertThat(body.pricingBands())
             .isEqualTo(
                 listOf(
-                    PricingCreateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -131,7 +131,7 @@ class PricingCreateParamsTest {
         assertThat(body.overagePricingBands())
             .contains(
                 listOf(
-                    PricingCreateParams.OveragePricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -159,11 +159,7 @@ class PricingCreateParamsTest {
             PricingCreateParams.builder()
                 .orgId("orgId")
                 .addPricingBand(
-                    PricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
@@ -173,13 +169,7 @@ class PricingCreateParamsTest {
         assertNotNull(body)
         assertThat(body.pricingBands())
             .isEqualTo(
-                listOf(
-                    PricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
-                )
+                listOf(PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build())
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
@@ -190,11 +180,7 @@ class PricingCreateParamsTest {
             PricingCreateParams.builder()
                 .orgId("orgId")
                 .addPricingBand(
-                    PricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()

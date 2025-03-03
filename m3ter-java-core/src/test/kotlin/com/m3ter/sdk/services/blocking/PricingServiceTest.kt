@@ -5,6 +5,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.models.PricingBand
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
 import com.m3ter.sdk.models.PricingListParams
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PricingServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -28,12 +29,13 @@ class PricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
+
         val pricing =
             pricingService.create(
                 PricingCreateParams.builder()
                     .orgId("orgId")
                     .addPricingBand(
-                        PricingCreateParams.PricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -53,7 +55,7 @@ class PricingServiceTest {
                     .minimumSpendBillInAdvance(true)
                     .minimumSpendDescription("minimumSpendDescription")
                     .addOveragePricingBand(
-                        PricingCreateParams.OveragePricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -73,12 +75,12 @@ class PricingServiceTest {
                     .version(0L)
                     .build()
             )
-        println(pricing)
+
         pricing.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -88,14 +90,15 @@ class PricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
+
         val pricing =
             pricingService.retrieve(PricingRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(pricing)
+
         pricing.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -105,13 +108,14 @@ class PricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
+
         val pricing =
             pricingService.update(
                 PricingUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .addPricingBand(
-                        PricingUpdateParams.PricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -131,7 +135,7 @@ class PricingServiceTest {
                     .minimumSpendBillInAdvance(true)
                     .minimumSpendDescription("minimumSpendDescription")
                     .addOveragePricingBand(
-                        PricingUpdateParams.OveragePricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -151,12 +155,12 @@ class PricingServiceTest {
                     .version(0L)
                     .build()
             )
-        println(pricing)
+
         pricing.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -166,14 +170,14 @@ class PricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
-        val paginatedDataPricingResponse =
-            pricingService.list(PricingListParams.builder().orgId("orgId").build())
-        println(paginatedDataPricingResponse)
-        paginatedDataPricingResponse.data().forEach { it.validate() }
+
+        val page = pricingService.list(PricingListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -183,9 +187,10 @@ class PricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val pricingService = client.pricings()
+
         val pricing =
             pricingService.delete(PricingDeleteParams.builder().orgId("orgId").id("id").build())
-        println(pricing)
+
         pricing.validate()
     }
 }

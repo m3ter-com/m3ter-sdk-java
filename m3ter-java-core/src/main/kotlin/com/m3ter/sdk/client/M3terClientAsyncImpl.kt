@@ -16,6 +16,10 @@ import com.m3ter.sdk.services.async.BalanceServiceAsync
 import com.m3ter.sdk.services.async.BalanceServiceAsyncImpl
 import com.m3ter.sdk.services.async.BillConfigServiceAsync
 import com.m3ter.sdk.services.async.BillConfigServiceAsyncImpl
+import com.m3ter.sdk.services.async.BillJobServiceAsync
+import com.m3ter.sdk.services.async.BillJobServiceAsyncImpl
+import com.m3ter.sdk.services.async.BillServiceAsync
+import com.m3ter.sdk.services.async.BillServiceAsyncImpl
 import com.m3ter.sdk.services.async.CommitmentServiceAsync
 import com.m3ter.sdk.services.async.CommitmentServiceAsyncImpl
 import com.m3ter.sdk.services.async.CompoundAggregationServiceAsync
@@ -32,14 +36,26 @@ import com.m3ter.sdk.services.async.CreditReasonServiceAsync
 import com.m3ter.sdk.services.async.CreditReasonServiceAsyncImpl
 import com.m3ter.sdk.services.async.CurrencyServiceAsync
 import com.m3ter.sdk.services.async.CurrencyServiceAsyncImpl
+import com.m3ter.sdk.services.async.CustomFieldServiceAsync
+import com.m3ter.sdk.services.async.CustomFieldServiceAsyncImpl
 import com.m3ter.sdk.services.async.DataExportServiceAsync
 import com.m3ter.sdk.services.async.DataExportServiceAsyncImpl
 import com.m3ter.sdk.services.async.DebitReasonServiceAsync
 import com.m3ter.sdk.services.async.DebitReasonServiceAsyncImpl
+import com.m3ter.sdk.services.async.EventServiceAsync
+import com.m3ter.sdk.services.async.EventServiceAsyncImpl
+import com.m3ter.sdk.services.async.ExternalMappingServiceAsync
+import com.m3ter.sdk.services.async.ExternalMappingServiceAsyncImpl
+import com.m3ter.sdk.services.async.IntegrationConfigurationServiceAsync
+import com.m3ter.sdk.services.async.IntegrationConfigurationServiceAsyncImpl
 import com.m3ter.sdk.services.async.MeterServiceAsync
 import com.m3ter.sdk.services.async.MeterServiceAsyncImpl
+import com.m3ter.sdk.services.async.NotificationConfigurationServiceAsync
+import com.m3ter.sdk.services.async.NotificationConfigurationServiceAsyncImpl
 import com.m3ter.sdk.services.async.OrganizationConfigServiceAsync
 import com.m3ter.sdk.services.async.OrganizationConfigServiceAsyncImpl
+import com.m3ter.sdk.services.async.PermissionPolicyServiceAsync
+import com.m3ter.sdk.services.async.PermissionPolicyServiceAsyncImpl
 import com.m3ter.sdk.services.async.PlanGroupLinkServiceAsync
 import com.m3ter.sdk.services.async.PlanGroupLinkServiceAsyncImpl
 import com.m3ter.sdk.services.async.PlanGroupServiceAsync
@@ -52,8 +68,18 @@ import com.m3ter.sdk.services.async.PricingServiceAsync
 import com.m3ter.sdk.services.async.PricingServiceAsyncImpl
 import com.m3ter.sdk.services.async.ProductServiceAsync
 import com.m3ter.sdk.services.async.ProductServiceAsyncImpl
+import com.m3ter.sdk.services.async.ResourceGroupServiceAsync
+import com.m3ter.sdk.services.async.ResourceGroupServiceAsyncImpl
+import com.m3ter.sdk.services.async.ScheduledEventConfigurationServiceAsync
+import com.m3ter.sdk.services.async.ScheduledEventConfigurationServiceAsyncImpl
 import com.m3ter.sdk.services.async.TransactionTypeServiceAsync
 import com.m3ter.sdk.services.async.TransactionTypeServiceAsyncImpl
+import com.m3ter.sdk.services.async.UsageServiceAsync
+import com.m3ter.sdk.services.async.UsageServiceAsyncImpl
+import com.m3ter.sdk.services.async.UserServiceAsync
+import com.m3ter.sdk.services.async.UserServiceAsyncImpl
+import com.m3ter.sdk.services.async.WebhookServiceAsync
+import com.m3ter.sdk.services.async.WebhookServiceAsyncImpl
 
 class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClientAsync {
 
@@ -88,12 +114,18 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         BalanceServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val bills: BillServiceAsync by lazy { BillServiceAsyncImpl(clientOptionsWithUserAgent) }
+
     private val billConfig: BillConfigServiceAsync by lazy {
         BillConfigServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val commitments: CommitmentServiceAsync by lazy {
         CommitmentServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val billJobs: BillJobServiceAsync by lazy {
+        BillJobServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val compoundAggregations: CompoundAggregationServiceAsync by lazy {
@@ -124,16 +156,44 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         CurrencyServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val customFields: CustomFieldServiceAsync by lazy {
+        CustomFieldServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val dataExports: DataExportServiceAsync by lazy {
+        DataExportServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val debitReasons: DebitReasonServiceAsync by lazy {
         DebitReasonServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val events: EventServiceAsync by lazy {
+        EventServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val externalMappings: ExternalMappingServiceAsync by lazy {
+        ExternalMappingServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val integrationConfigurations: IntegrationConfigurationServiceAsync by lazy {
+        IntegrationConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val meters: MeterServiceAsync by lazy {
         MeterServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val notificationConfigurations: NotificationConfigurationServiceAsync by lazy {
+        NotificationConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val organizationConfig: OrganizationConfigServiceAsync by lazy {
         OrganizationConfigServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val permissionPolicies: PermissionPolicyServiceAsync by lazy {
+        PermissionPolicyServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val plans: PlanServiceAsync by lazy { PlanServiceAsyncImpl(clientOptionsWithUserAgent) }
@@ -158,12 +218,26 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         ProductServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val resourceGroups: ResourceGroupServiceAsync by lazy {
+        ResourceGroupServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val scheduledEventConfigurations: ScheduledEventConfigurationServiceAsync by lazy {
+        ScheduledEventConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val transactionTypes: TransactionTypeServiceAsync by lazy {
         TransactionTypeServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
-    private val dataExports: DataExportServiceAsync by lazy {
-        DataExportServiceAsyncImpl(clientOptionsWithUserAgent)
+    private val usage: UsageServiceAsync by lazy {
+        UsageServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val users: UserServiceAsync by lazy { UserServiceAsyncImpl(clientOptionsWithUserAgent) }
+
+    private val webhooks: WebhookServiceAsync by lazy {
+        WebhookServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     override fun sync(): M3terClient = sync
@@ -178,9 +252,13 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun balances(): BalanceServiceAsync = balances
 
+    override fun bills(): BillServiceAsync = bills
+
     override fun billConfig(): BillConfigServiceAsync = billConfig
 
     override fun commitments(): CommitmentServiceAsync = commitments
+
+    override fun billJobs(): BillJobServiceAsync = billJobs
 
     override fun compoundAggregations(): CompoundAggregationServiceAsync = compoundAggregations
 
@@ -196,11 +274,27 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun currencies(): CurrencyServiceAsync = currencies
 
+    override fun customFields(): CustomFieldServiceAsync = customFields
+
+    override fun dataExports(): DataExportServiceAsync = dataExports
+
     override fun debitReasons(): DebitReasonServiceAsync = debitReasons
+
+    override fun events(): EventServiceAsync = events
+
+    override fun externalMappings(): ExternalMappingServiceAsync = externalMappings
+
+    override fun integrationConfigurations(): IntegrationConfigurationServiceAsync =
+        integrationConfigurations
 
     override fun meters(): MeterServiceAsync = meters
 
+    override fun notificationConfigurations(): NotificationConfigurationServiceAsync =
+        notificationConfigurations
+
     override fun organizationConfig(): OrganizationConfigServiceAsync = organizationConfig
+
+    override fun permissionPolicies(): PermissionPolicyServiceAsync = permissionPolicies
 
     override fun plans(): PlanServiceAsync = plans
 
@@ -214,9 +308,18 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun products(): ProductServiceAsync = products
 
+    override fun resourceGroups(): ResourceGroupServiceAsync = resourceGroups
+
+    override fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync =
+        scheduledEventConfigurations
+
     override fun transactionTypes(): TransactionTypeServiceAsync = transactionTypes
 
-    override fun dataExports(): DataExportServiceAsync = dataExports
+    override fun usage(): UsageServiceAsync = usage
+
+    override fun users(): UserServiceAsync = users
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun close() = clientOptions.httpClient.close()
 }

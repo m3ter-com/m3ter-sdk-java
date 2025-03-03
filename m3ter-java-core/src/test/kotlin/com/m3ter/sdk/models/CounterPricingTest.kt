@@ -27,7 +27,7 @@ class CounterPricingTest {
                 .planId("planId")
                 .planTemplateId("planTemplateId")
                 .addPricingBand(
-                    CounterPricing.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -61,7 +61,7 @@ class CounterPricingTest {
         assertThat(counterPricing.planTemplateId()).contains("planTemplateId")
         assertThat(counterPricing.pricingBands().get())
             .containsExactly(
-                CounterPricing.PricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)

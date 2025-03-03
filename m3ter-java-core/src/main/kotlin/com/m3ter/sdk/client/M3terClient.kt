@@ -8,6 +8,8 @@ import com.m3ter.sdk.services.blocking.AggregationService
 import com.m3ter.sdk.services.blocking.AuthenticationService
 import com.m3ter.sdk.services.blocking.BalanceService
 import com.m3ter.sdk.services.blocking.BillConfigService
+import com.m3ter.sdk.services.blocking.BillJobService
+import com.m3ter.sdk.services.blocking.BillService
 import com.m3ter.sdk.services.blocking.CommitmentService
 import com.m3ter.sdk.services.blocking.CompoundAggregationService
 import com.m3ter.sdk.services.blocking.ContractService
@@ -16,17 +18,28 @@ import com.m3ter.sdk.services.blocking.CounterPricingService
 import com.m3ter.sdk.services.blocking.CounterService
 import com.m3ter.sdk.services.blocking.CreditReasonService
 import com.m3ter.sdk.services.blocking.CurrencyService
+import com.m3ter.sdk.services.blocking.CustomFieldService
 import com.m3ter.sdk.services.blocking.DataExportService
 import com.m3ter.sdk.services.blocking.DebitReasonService
+import com.m3ter.sdk.services.blocking.EventService
+import com.m3ter.sdk.services.blocking.ExternalMappingService
+import com.m3ter.sdk.services.blocking.IntegrationConfigurationService
 import com.m3ter.sdk.services.blocking.MeterService
+import com.m3ter.sdk.services.blocking.NotificationConfigurationService
 import com.m3ter.sdk.services.blocking.OrganizationConfigService
+import com.m3ter.sdk.services.blocking.PermissionPolicyService
 import com.m3ter.sdk.services.blocking.PlanGroupLinkService
 import com.m3ter.sdk.services.blocking.PlanGroupService
 import com.m3ter.sdk.services.blocking.PlanService
 import com.m3ter.sdk.services.blocking.PlanTemplateService
 import com.m3ter.sdk.services.blocking.PricingService
 import com.m3ter.sdk.services.blocking.ProductService
+import com.m3ter.sdk.services.blocking.ResourceGroupService
+import com.m3ter.sdk.services.blocking.ScheduledEventConfigurationService
 import com.m3ter.sdk.services.blocking.TransactionTypeService
+import com.m3ter.sdk.services.blocking.UsageService
+import com.m3ter.sdk.services.blocking.UserService
+import com.m3ter.sdk.services.blocking.WebhookService
 
 /**
  * A client for interacting with the M3ter REST API synchronously. You can also switch to
@@ -62,9 +75,13 @@ interface M3terClient {
 
     fun balances(): BalanceService
 
+    fun bills(): BillService
+
     fun billConfig(): BillConfigService
 
     fun commitments(): CommitmentService
+
+    fun billJobs(): BillJobService
 
     fun compoundAggregations(): CompoundAggregationService
 
@@ -80,11 +97,25 @@ interface M3terClient {
 
     fun currencies(): CurrencyService
 
+    fun customFields(): CustomFieldService
+
+    fun dataExports(): DataExportService
+
     fun debitReasons(): DebitReasonService
+
+    fun events(): EventService
+
+    fun externalMappings(): ExternalMappingService
+
+    fun integrationConfigurations(): IntegrationConfigurationService
 
     fun meters(): MeterService
 
+    fun notificationConfigurations(): NotificationConfigurationService
+
     fun organizationConfig(): OrganizationConfigService
+
+    fun permissionPolicies(): PermissionPolicyService
 
     fun plans(): PlanService
 
@@ -98,9 +129,17 @@ interface M3terClient {
 
     fun products(): ProductService
 
+    fun resourceGroups(): ResourceGroupService
+
+    fun scheduledEventConfigurations(): ScheduledEventConfigurationService
+
     fun transactionTypes(): TransactionTypeService
 
-    fun dataExports(): DataExportService
+    fun usage(): UsageService
+
+    fun users(): UserService
+
+    fun webhooks(): WebhookService
 
     /**
      * Closes this client, relinquishing any underlying resources.

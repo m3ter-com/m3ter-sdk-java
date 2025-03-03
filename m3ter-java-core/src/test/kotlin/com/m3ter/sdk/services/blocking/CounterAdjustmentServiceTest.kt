@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CounterAdjustmentServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,6 +26,7 @@ class CounterAdjustmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
+
         val counterAdjustment =
             counterAdjustmentService.create(
                 CounterAdjustmentCreateParams.builder()
@@ -38,12 +39,12 @@ class CounterAdjustmentServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counterAdjustment)
+
         counterAdjustment.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -53,16 +54,17 @@ class CounterAdjustmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
+
         val counterAdjustment =
             counterAdjustmentService.retrieve(
                 CounterAdjustmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(counterAdjustment)
+
         counterAdjustment.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -72,6 +74,7 @@ class CounterAdjustmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
+
         val counterAdjustment =
             counterAdjustmentService.update(
                 CounterAdjustmentUpdateParams.builder()
@@ -85,12 +88,12 @@ class CounterAdjustmentServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counterAdjustment)
+
         counterAdjustment.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -100,16 +103,17 @@ class CounterAdjustmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
-        val paginatedDataCounterAdjustmentResponse =
+
+        val page =
             counterAdjustmentService.list(
                 CounterAdjustmentListParams.builder().orgId("orgId").build()
             )
-        println(paginatedDataCounterAdjustmentResponse)
-        paginatedDataCounterAdjustmentResponse.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -119,11 +123,12 @@ class CounterAdjustmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
+
         val counterAdjustment =
             counterAdjustmentService.delete(
                 CounterAdjustmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(counterAdjustment)
+
         counterAdjustment.validate()
     }
 }

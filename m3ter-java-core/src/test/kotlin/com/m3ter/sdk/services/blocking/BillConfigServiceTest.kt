@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class BillConfigServiceTest {
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -24,14 +24,15 @@ class BillConfigServiceTest {
                 .orgId("My Org ID")
                 .build()
         val billConfigService = client.billConfig()
+
         val billConfig =
             billConfigService.retrieve(BillConfigRetrieveParams.builder().orgId("orgId").build())
-        println(billConfig)
+
         billConfig.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -41,6 +42,7 @@ class BillConfigServiceTest {
                 .orgId("My Org ID")
                 .build()
         val billConfigService = client.billConfig()
+
         val billConfig =
             billConfigService.update(
                 BillConfigUpdateParams.builder()
@@ -49,7 +51,7 @@ class BillConfigServiceTest {
                     .version(0L)
                     .build()
             )
-        println(billConfig)
+
         billConfig.validate()
     }
 }

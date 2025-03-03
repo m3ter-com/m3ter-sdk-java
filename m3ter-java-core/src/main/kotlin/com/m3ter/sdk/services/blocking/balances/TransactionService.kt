@@ -8,6 +8,8 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
 import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionSummaryParams
+import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
 import com.m3ter.sdk.models.Transaction
 
 interface TransactionService {
@@ -46,4 +48,11 @@ interface TransactionService {
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionListPage
+
+    /** Retrieves the Balance Transactions Summary for a given Balance. */
+    @JvmOverloads
+    fun summary(
+        params: BalanceTransactionSummaryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BalanceTransactionSummaryResponse
 }

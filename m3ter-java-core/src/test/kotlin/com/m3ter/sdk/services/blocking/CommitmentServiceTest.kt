@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CommitmentServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -29,6 +29,7 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
+
         val commitment =
             commitmentService.create(
                 CommitmentCreateParams.builder()
@@ -70,12 +71,12 @@ class CommitmentServiceTest {
                     .version(0L)
                     .build()
             )
-        println(commitment)
+
         commitment.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -85,16 +86,17 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
+
         val commitment =
             commitmentService.retrieve(
                 CommitmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(commitment)
+
         commitment.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -104,6 +106,7 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
+
         val commitment =
             commitmentService.update(
                 CommitmentUpdateParams.builder()
@@ -146,12 +149,12 @@ class CommitmentServiceTest {
                     .version(0L)
                     .build()
             )
-        println(commitment)
+
         commitment.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -161,14 +164,14 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
-        val paginatedDataCommitmentResponse =
-            commitmentService.list(CommitmentListParams.builder().orgId("orgId").build())
-        println(paginatedDataCommitmentResponse)
-        paginatedDataCommitmentResponse.data().forEach { it.validate() }
+
+        val page = commitmentService.list(CommitmentListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -178,16 +181,17 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
+
         val commitment =
             commitmentService.delete(
                 CommitmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(commitment)
+
         commitment.validate()
     }
 
     @Test
-    fun callSearch() {
+    fun search() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -197,7 +201,8 @@ class CommitmentServiceTest {
                 .orgId("My Org ID")
                 .build()
         val commitmentService = client.commitments()
-        val commitmentSearchResponse =
+
+        val response =
             commitmentService.search(
                 CommitmentSearchParams.builder()
                     .orgId("orgId")
@@ -209,7 +214,7 @@ class CommitmentServiceTest {
                     .sortOrder(CommitmentSearchParams.SortOrder.ASC)
                     .build()
             )
-        println(commitmentSearchResponse)
-        commitmentSearchResponse.validate()
+
+        response.validate()
     }
 }
