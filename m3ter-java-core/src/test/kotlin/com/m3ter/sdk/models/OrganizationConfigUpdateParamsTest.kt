@@ -31,11 +31,7 @@ class OrganizationConfigUpdateParamsTest {
                 OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT
             )
             .addCurrencyConversion(
-                OrganizationConfigUpdateParams.CurrencyConversion.builder()
-                    .from("EUR")
-                    .to("USD")
-                    .multiplier(1.12)
-                    .build()
+                CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )
             .defaultStatementDefinitionId("defaultStatementDefinitionId")
             .externalInvoiceDate("LAST_DAY_OF_ARREARS")
@@ -72,11 +68,7 @@ class OrganizationConfigUpdateParamsTest {
                     OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT
                 )
                 .addCurrencyConversion(
-                    OrganizationConfigUpdateParams.CurrencyConversion.builder()
-                        .from("EUR")
-                        .to("USD")
-                        .multiplier(1.12)
-                        .build()
+                    CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
                 )
                 .defaultStatementDefinitionId("defaultStatementDefinitionId")
                 .externalInvoiceDate("LAST_DAY_OF_ARREARS")
@@ -109,13 +101,7 @@ class OrganizationConfigUpdateParamsTest {
             .contains(listOf(OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT))
         assertThat(body.currencyConversions())
             .contains(
-                listOf(
-                    OrganizationConfigUpdateParams.CurrencyConversion.builder()
-                        .from("EUR")
-                        .to("USD")
-                        .multiplier(1.12)
-                        .build()
-                )
+                listOf(CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build())
             )
         assertThat(body.defaultStatementDefinitionId()).contains("defaultStatementDefinitionId")
         assertThat(body.externalInvoiceDate()).contains("LAST_DAY_OF_ARREARS")

@@ -14,7 +14,13 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
-/** Search for account entities */
+/**
+ * Search for Account entities.
+ *
+ * This endpoint executes a search query for Accounts based on the user specified search criteria.
+ * The search query is customizable, allowing for complex nested conditions and sorting. The
+ * returned list of Accounts can be paginated for easier management.
+ */
 class AccountSearchParams
 private constructor(
     private val orgId: String,
@@ -30,29 +36,48 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** fromDocument for multi page retrievals */
+    /** `fromDocument` for multi page retrievals. */
     fun fromDocument(): Optional<Long> = Optional.ofNullable(fromDocument)
 
-    /** Search Operator to be used while querying search */
+    /** Search Operator to be used while querying search. */
     fun operator(): Optional<Operator> = Optional.ofNullable(operator)
 
-    /** Number of Accounts to retrieve per page */
+    /**
+     * Number of Accounts to retrieve per page.
+     *
+     * **NOTE:** If not defined, default is 10.
+     */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
 
     /**
-     * Query for data using special syntax. Query parameters should be delimited using $ Allowed
-     * comparators are > (greater than), >= (grater or equal than), : (equal), < (less than), <=
-     * (less than or equal), ~ (contains). Allowed parameters: name, code, currency,
-     * purchaseOrderNumber, parentAccountId, codes, id, createdBy, dtCreated, lastModifiedBy,
-     * ids.Query example: searchQuery=name~test$currency:USD. This query is translated into: find
-     * accounts that name contains 'test' AND currency is USD.
+     * Query for data using special syntax:
+     * - Query parameters should be delimited using the $ (dollar sign).
+     * - Allowed comparators are:
+     *     - (greater than) >
+     *     - (greater than or equal to) >=
+     *     - (equal to) :
+     *     - (less than) <
+     *     - (less than or equal to) <=
+     *     - (match phrase/prefix) ~
+     * - Allowed parameters are: name, code, currency, purchaseOrderNumber, parentAccountId, codes,
+     *   id, createdBy, dtCreated, lastModifiedBy, ids.
+     * - Query example:
+     *     - searchQuery=name~Premium On$currency:USD.
+     *     - This query is translated into: find accounts whose name contains the phrase/prefix
+     *       'Premium On' AND the account currency is USD.
+     *
+     * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend treating
+     * this as a "starts with" comparator for your search query.
      */
     fun searchQuery(): Optional<String> = Optional.ofNullable(searchQuery)
 
-    /** Name of the parameter on which sorting is performed */
+    /**
+     * Name of the parameter on which sorting is performed. Use any field available on the Account
+     * entity to sort by, such as `name`, `code`, and so on.
+     */
     fun sortBy(): Optional<String> = Optional.ofNullable(sortBy)
 
-    /** Sorting order */
+    /** Sorting order. */
     fun sortOrder(): Optional<SortOrder> = Optional.ofNullable(sortOrder)
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -116,63 +141,105 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         fun fromDocument(fromDocument: Long?) = apply { this.fromDocument = fromDocument }
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         fun fromDocument(fromDocument: Long) = fromDocument(fromDocument as Long?)
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun fromDocument(fromDocument: Optional<Long>) =
             fromDocument(fromDocument.orElse(null) as Long?)
 
-        /** Search Operator to be used while querying search */
+        /** Search Operator to be used while querying search. */
         fun operator(operator: Operator?) = apply { this.operator = operator }
 
-        /** Search Operator to be used while querying search */
+        /** Search Operator to be used while querying search. */
         fun operator(operator: Optional<Operator>) = operator(operator.orElse(null))
 
-        /** Number of Accounts to retrieve per page */
+        /**
+         * Number of Accounts to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of Accounts to retrieve per page */
+        /**
+         * Number of Accounts to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of Accounts to retrieve per page */
+        /**
+         * Number of Accounts to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
 
         /**
-         * Query for data using special syntax. Query parameters should be delimited using $ Allowed
-         * comparators are > (greater than), >= (grater or equal than), : (equal), < (less than), <=
-         * (less than or equal), ~ (contains). Allowed parameters: name, code, currency,
-         * purchaseOrderNumber, parentAccountId, codes, id, createdBy, dtCreated, lastModifiedBy,
-         * ids.Query example: searchQuery=name~test$currency:USD. This query is translated into:
-         * find accounts that name contains 'test' AND currency is USD.
+         * Query for data using special syntax:
+         * - Query parameters should be delimited using the $ (dollar sign).
+         * - Allowed comparators are:
+         *     - (greater than) >
+         *     - (greater than or equal to) >=
+         *     - (equal to) :
+         *     - (less than) <
+         *     - (less than or equal to) <=
+         *     - (match phrase/prefix) ~
+         * - Allowed parameters are: name, code, currency, purchaseOrderNumber, parentAccountId,
+         *   codes, id, createdBy, dtCreated, lastModifiedBy, ids.
+         * - Query example:
+         *     - searchQuery=name~Premium On$currency:USD.
+         *     - This query is translated into: find accounts whose name contains the phrase/prefix
+         *       'Premium On' AND the account currency is USD.
+         *
+         * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend
+         * treating this as a "starts with" comparator for your search query.
          */
         fun searchQuery(searchQuery: String?) = apply { this.searchQuery = searchQuery }
 
         /**
-         * Query for data using special syntax. Query parameters should be delimited using $ Allowed
-         * comparators are > (greater than), >= (grater or equal than), : (equal), < (less than), <=
-         * (less than or equal), ~ (contains). Allowed parameters: name, code, currency,
-         * purchaseOrderNumber, parentAccountId, codes, id, createdBy, dtCreated, lastModifiedBy,
-         * ids.Query example: searchQuery=name~test$currency:USD. This query is translated into:
-         * find accounts that name contains 'test' AND currency is USD.
+         * Query for data using special syntax:
+         * - Query parameters should be delimited using the $ (dollar sign).
+         * - Allowed comparators are:
+         *     - (greater than) >
+         *     - (greater than or equal to) >=
+         *     - (equal to) :
+         *     - (less than) <
+         *     - (less than or equal to) <=
+         *     - (match phrase/prefix) ~
+         * - Allowed parameters are: name, code, currency, purchaseOrderNumber, parentAccountId,
+         *   codes, id, createdBy, dtCreated, lastModifiedBy, ids.
+         * - Query example:
+         *     - searchQuery=name~Premium On$currency:USD.
+         *     - This query is translated into: find accounts whose name contains the phrase/prefix
+         *       'Premium On' AND the account currency is USD.
+         *
+         * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend
+         * treating this as a "starts with" comparator for your search query.
          */
         fun searchQuery(searchQuery: Optional<String>) = searchQuery(searchQuery.orElse(null))
 
-        /** Name of the parameter on which sorting is performed */
+        /**
+         * Name of the parameter on which sorting is performed. Use any field available on the
+         * Account entity to sort by, such as `name`, `code`, and so on.
+         */
         fun sortBy(sortBy: String?) = apply { this.sortBy = sortBy }
 
-        /** Name of the parameter on which sorting is performed */
+        /**
+         * Name of the parameter on which sorting is performed. Use any field available on the
+         * Account entity to sort by, such as `name`, `code`, and so on.
+         */
         fun sortBy(sortBy: Optional<String>) = sortBy(sortBy.orElse(null))
 
-        /** Sorting order */
+        /** Sorting order. */
         fun sortOrder(sortOrder: SortOrder?) = apply { this.sortOrder = sortOrder }
 
-        /** Sorting order */
+        /** Sorting order. */
         fun sortOrder(sortOrder: Optional<SortOrder>) = sortOrder(sortOrder.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -287,7 +354,7 @@ private constructor(
             )
     }
 
-    /** Search Operator to be used while querying search */
+    /** Search Operator to be used while querying search. */
     class Operator @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -385,7 +452,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Sorting order */
+    /** Sorting order. */
     class SortOrder @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

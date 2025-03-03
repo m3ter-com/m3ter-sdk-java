@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class DebitReasonServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,22 +26,23 @@ class DebitReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val debitReasonService = client.debitReasons()
+
         val debitReason =
             debitReasonService.create(
                 DebitReasonCreateParams.builder()
                     .orgId("orgId")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(debitReason)
+
         debitReason.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -51,16 +52,17 @@ class DebitReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val debitReasonService = client.debitReasons()
+
         val debitReason =
             debitReasonService.retrieve(
                 DebitReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(debitReason)
+
         debitReason.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -70,6 +72,7 @@ class DebitReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val debitReasonService = client.debitReasons()
+
         val debitReason =
             debitReasonService.update(
                 DebitReasonUpdateParams.builder()
@@ -77,16 +80,16 @@ class DebitReasonServiceTest {
                     .id("id")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(debitReason)
+
         debitReason.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -96,14 +99,14 @@ class DebitReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val debitReasonService = client.debitReasons()
-        val paginatedDataDebitReasonResponse =
-            debitReasonService.list(DebitReasonListParams.builder().orgId("orgId").build())
-        println(paginatedDataDebitReasonResponse)
-        paginatedDataDebitReasonResponse.data().forEach { it.validate() }
+
+        val page = debitReasonService.list(DebitReasonListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -113,11 +116,12 @@ class DebitReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val debitReasonService = client.debitReasons()
+
         val debitReason =
             debitReasonService.delete(
                 DebitReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(debitReason)
+
         debitReason.validate()
     }
 }

@@ -15,12 +15,32 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
+import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsync
+import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsyncImpl
+import com.m3ter.sdk.services.async.dataExports.JobServiceAsync
+import com.m3ter.sdk.services.async.dataExports.JobServiceAsyncImpl
+import com.m3ter.sdk.services.async.dataExports.ScheduleServiceAsync
+import com.m3ter.sdk.services.async.dataExports.ScheduleServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
 
 class DataExportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DataExportServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+    private val destinations: DestinationServiceAsync by lazy {
+        DestinationServiceAsyncImpl(clientOptions)
+    }
+
+    private val jobs: JobServiceAsync by lazy { JobServiceAsyncImpl(clientOptions) }
+
+    private val schedules: ScheduleServiceAsync by lazy { ScheduleServiceAsyncImpl(clientOptions) }
+
+    override fun destinations(): DestinationServiceAsync = destinations
+
+    override fun jobs(): JobServiceAsync = jobs
+
+    override fun schedules(): ScheduleServiceAsync = schedules
 
     private val createAdhocHandler: Handler<AdhocExport> =
         jsonHandler<AdhocExport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

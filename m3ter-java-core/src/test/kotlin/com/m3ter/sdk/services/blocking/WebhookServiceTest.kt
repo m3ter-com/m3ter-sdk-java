@@ -1,0 +1,167 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.m3ter.sdk.services.blocking
+
+import com.m3ter.sdk.TestServerExtension
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
+import com.m3ter.sdk.models.M3terSignedCredentialsReq
+import com.m3ter.sdk.models.WebhookCreateParams
+import com.m3ter.sdk.models.WebhookDeleteParams
+import com.m3ter.sdk.models.WebhookListParams
+import com.m3ter.sdk.models.WebhookRetrieveParams
+import com.m3ter.sdk.models.WebhookSetActiveParams
+import com.m3ter.sdk.models.WebhookUpdateParams
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+
+@ExtendWith(TestServerExtension::class)
+class WebhookServiceTest {
+
+    @Test
+    fun create() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val webhook =
+            webhookService.create(
+                WebhookCreateParams.builder()
+                    .orgId("orgId")
+                    .credentials(
+                        M3terSignedCredentialsReq.builder()
+                            .apiKey("x")
+                            .secret("x")
+                            .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                            .empty(true)
+                            .version(0L)
+                            .build()
+                    )
+                    .description("x")
+                    .name("x")
+                    .url("x")
+                    .active(true)
+                    .code("code")
+                    .version(0L)
+                    .build()
+            )
+
+        webhook.validate()
+    }
+
+    @Test
+    fun retrieve() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val webhook =
+            webhookService.retrieve(WebhookRetrieveParams.builder().orgId("orgId").id("id").build())
+
+        webhook.validate()
+    }
+
+    @Test
+    fun update() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val webhook =
+            webhookService.update(
+                WebhookUpdateParams.builder()
+                    .orgId("orgId")
+                    .id("id")
+                    .credentials(
+                        M3terSignedCredentialsReq.builder()
+                            .apiKey("x")
+                            .secret("x")
+                            .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                            .empty(true)
+                            .version(0L)
+                            .build()
+                    )
+                    .description("x")
+                    .name("x")
+                    .url("x")
+                    .active(true)
+                    .code("code")
+                    .version(0L)
+                    .build()
+            )
+
+        webhook.validate()
+    }
+
+    @Test
+    fun list() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val page = webhookService.list(WebhookListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
+    }
+
+    @Test
+    fun delete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val webhook =
+            webhookService.delete(WebhookDeleteParams.builder().orgId("orgId").id("id").build())
+
+        webhook.validate()
+    }
+
+    @Test
+    fun setActive() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val webhookService = client.webhooks()
+
+        val response =
+            webhookService.setActive(
+                WebhookSetActiveParams.builder().orgId("orgId").id("id").active(true).build()
+            )
+
+        response.validate()
+    }
+}

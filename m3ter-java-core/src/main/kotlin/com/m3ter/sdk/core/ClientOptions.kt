@@ -179,6 +179,7 @@ private constructor(
             System.getenv("M3TER_API_KEY")?.let { apiKey(it) }
             System.getenv("M3TER_API_SECRET")?.let { apiSecret(it) }
             System.getenv("M3TER_API_TOKEN")?.let { token(it) }
+            System.getenv("M3TER_ORG_ID")?.let { orgId(it) }
         }
 
         fun build(): ClientOptions {

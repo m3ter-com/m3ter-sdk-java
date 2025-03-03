@@ -7,12 +7,15 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
-import com.m3ter.sdk.models.AccountListChildrenParams
+import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
+import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListParams
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountUpdateParams
+import com.m3ter.sdk.models.Address
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class AccountServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -30,15 +33,16 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
+
         val account =
             accountService.create(
                 AccountCreateParams.builder()
                     .orgId("orgId")
                     .code("JS!?Q0]r] ]\$]")
-                    .emailAddress("dev@stainlessapi.com")
+                    .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(
-                        AccountCreateParams.Address.builder()
+                        Address.builder()
                             .addressLine1("addressLine1")
                             .addressLine2("addressLine2")
                             .addressLine3("addressLine3")
@@ -72,12 +76,12 @@ class AccountServiceTest {
                     .version(0L)
                     .build()
             )
-        println(account)
+
         account.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -87,14 +91,15 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
+
         val account =
             accountService.retrieve(AccountRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(account)
+
         account.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -104,16 +109,17 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
+
         val account =
             accountService.update(
                 AccountUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .code("JS!?Q0]r] ]\$]")
-                    .emailAddress("dev@stainlessapi.com")
+                    .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(
-                        AccountUpdateParams.Address.builder()
+                        Address.builder()
                             .addressLine1("addressLine1")
                             .addressLine2("addressLine2")
                             .addressLine3("addressLine3")
@@ -147,12 +153,12 @@ class AccountServiceTest {
                     .version(0L)
                     .build()
             )
-        println(account)
+
         account.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -162,14 +168,14 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
-        val paginatedDataAccountResponse =
-            accountService.list(AccountListParams.builder().orgId("orgId").build())
-        println(paginatedDataAccountResponse)
-        paginatedDataAccountResponse.data().forEach { it.validate() }
+
+        val page = accountService.list(AccountListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -179,14 +185,15 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
+
         val account =
             accountService.delete(AccountDeleteParams.builder().orgId("orgId").id("id").build())
-        println(account)
+
         account.validate()
     }
 
     @Test
-    fun callListChildren() {
+    fun endDateBillingEntities() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -196,21 +203,48 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
+
+        val response =
+            accountService.endDateBillingEntities(
+                AccountEndDateBillingEntitiesParams.builder()
+                    .orgId("orgId")
+                    .id("id")
+                    .addBillingEntity(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
+                    .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .applyToChildren(true)
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
+    fun getChildren() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val accountService = client.accounts()
+
         val account =
-            accountService.listChildren(
-                AccountListChildrenParams.builder()
+            accountService.getChildren(
+                AccountGetChildrenParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .nextToken("nextToken")
                     .pageSize(1L)
                     .build()
             )
-        println(account)
+
         account.validate()
     }
 
     @Test
-    fun callSearch() {
+    fun search() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -220,7 +254,8 @@ class AccountServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountService = client.accounts()
-        val accountSearchResponse =
+
+        val response =
             accountService.search(
                 AccountSearchParams.builder()
                     .orgId("orgId")
@@ -232,7 +267,7 @@ class AccountServiceTest {
                     .sortOrder(AccountSearchParams.SortOrder.ASC)
                     .build()
             )
-        println(accountSearchResponse)
-        accountSearchResponse.validate()
+
+        response.validate()
     }
 }

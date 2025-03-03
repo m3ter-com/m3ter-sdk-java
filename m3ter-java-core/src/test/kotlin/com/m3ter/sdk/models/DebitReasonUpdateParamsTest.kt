@@ -15,7 +15,7 @@ class DebitReasonUpdateParamsTest {
             .id("id")
             .name("x")
             .archived(true)
-            .code("{1{}}_")
+            .code("code")
             .version(0L)
             .build()
     }
@@ -28,7 +28,7 @@ class DebitReasonUpdateParamsTest {
                 .id("id")
                 .name("x")
                 .archived(true)
-                .code("{1{}}_")
+                .code("code")
                 .version(0L)
                 .build()
 
@@ -37,7 +37,7 @@ class DebitReasonUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.code()).contains("code")
         assertThat(body.version()).contains(0L)
     }
 

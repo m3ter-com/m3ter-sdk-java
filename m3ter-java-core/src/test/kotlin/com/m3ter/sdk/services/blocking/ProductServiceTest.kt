@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ProductServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -27,6 +27,7 @@ class ProductServiceTest {
                 .orgId("My Org ID")
                 .build()
         val productService = client.products()
+
         val product =
             productService.create(
                 ProductCreateParams.builder()
@@ -41,12 +42,12 @@ class ProductServiceTest {
                     .version(0L)
                     .build()
             )
-        println(product)
+
         product.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -56,14 +57,15 @@ class ProductServiceTest {
                 .orgId("My Org ID")
                 .build()
         val productService = client.products()
+
         val product =
             productService.retrieve(ProductRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(product)
+
         product.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -73,6 +75,7 @@ class ProductServiceTest {
                 .orgId("My Org ID")
                 .build()
         val productService = client.products()
+
         val product =
             productService.update(
                 ProductUpdateParams.builder()
@@ -88,12 +91,12 @@ class ProductServiceTest {
                     .version(0L)
                     .build()
             )
-        println(product)
+
         product.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -103,14 +106,14 @@ class ProductServiceTest {
                 .orgId("My Org ID")
                 .build()
         val productService = client.products()
-        val paginatedDataProductResponse =
-            productService.list(ProductListParams.builder().orgId("orgId").build())
-        println(paginatedDataProductResponse)
-        paginatedDataProductResponse.data().forEach { it.validate() }
+
+        val page = productService.list(ProductListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -120,9 +123,10 @@ class ProductServiceTest {
                 .orgId("My Org ID")
                 .build()
         val productService = client.products()
+
         val product =
             productService.delete(ProductDeleteParams.builder().orgId("orgId").id("id").build())
-        println(product)
+
         product.validate()
     }
 }

@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class TransactionServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -24,6 +25,7 @@ class TransactionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionService = client.balances().transactions()
+
         val transaction =
             transactionService.create(
                 BalanceTransactionCreateParams.builder()
@@ -39,12 +41,12 @@ class TransactionServiceTest {
                     .version(0L)
                     .build()
             )
-        println(transaction)
+
         transaction.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -54,11 +56,35 @@ class TransactionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionService = client.balances().transactions()
-        val paginatedDataBalanceTransactionResponse =
+
+        val page =
             transactionService.list(
                 BalanceTransactionListParams.builder().orgId("orgId").balanceId("balanceId").build()
             )
-        println(paginatedDataBalanceTransactionResponse)
-        paginatedDataBalanceTransactionResponse.data().forEach { it.validate() }
+
+        page.response().validate()
+    }
+
+    @Test
+    fun summary() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val transactionService = client.balances().transactions()
+
+        val response =
+            transactionService.summary(
+                BalanceTransactionSummaryParams.builder()
+                    .orgId("orgId")
+                    .balanceId("balanceId")
+                    .build()
+            )
+
+        response.validate()
     }
 }

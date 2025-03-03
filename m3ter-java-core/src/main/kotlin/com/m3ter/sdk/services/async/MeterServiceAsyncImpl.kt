@@ -157,7 +157,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
         jsonHandler<MeterListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
-    /** Retrieve a list of Meter entities */
+    /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     override fun list(
         params: MeterListParams,
         requestOptions: RequestOptions,

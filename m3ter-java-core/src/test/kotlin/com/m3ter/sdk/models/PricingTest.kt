@@ -31,7 +31,7 @@ class PricingTest {
                 .minimumSpendBillInAdvance(true)
                 .minimumSpendDescription("minimumSpendDescription")
                 .addOveragePricingBand(
-                    Pricing.OveragePricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -42,7 +42,7 @@ class PricingTest {
                 .planId("planId")
                 .planTemplateId("planTemplateId")
                 .addPricingBand(
-                    Pricing.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -81,7 +81,7 @@ class PricingTest {
         assertThat(pricing.minimumSpendDescription()).contains("minimumSpendDescription")
         assertThat(pricing.overagePricingBands().get())
             .containsExactly(
-                Pricing.OveragePricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -93,7 +93,7 @@ class PricingTest {
         assertThat(pricing.planTemplateId()).contains("planTemplateId")
         assertThat(pricing.pricingBands().get())
             .containsExactly(
-                Pricing.PricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)

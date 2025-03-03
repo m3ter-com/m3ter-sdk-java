@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PlanTemplateServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,6 +26,7 @@ class PlanTemplateServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
+
         val planTemplate =
             planTemplateService.create(
                 PlanTemplateCreateParams.builder()
@@ -49,12 +50,12 @@ class PlanTemplateServiceTest {
                     .version(0L)
                     .build()
             )
-        println(planTemplate)
+
         planTemplate.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -64,16 +65,17 @@ class PlanTemplateServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
+
         val planTemplate =
             planTemplateService.retrieve(
                 PlanTemplateRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(planTemplate)
+
         planTemplate.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -83,6 +85,7 @@ class PlanTemplateServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
+
         val planTemplate =
             planTemplateService.update(
                 PlanTemplateUpdateParams.builder()
@@ -107,12 +110,12 @@ class PlanTemplateServiceTest {
                     .version(0L)
                     .build()
             )
-        println(planTemplate)
+
         planTemplate.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -122,14 +125,14 @@ class PlanTemplateServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
-        val paginatedDataPlanTemplateResponse =
-            planTemplateService.list(PlanTemplateListParams.builder().orgId("orgId").build())
-        println(paginatedDataPlanTemplateResponse)
-        paginatedDataPlanTemplateResponse.data().forEach { it.validate() }
+
+        val page = planTemplateService.list(PlanTemplateListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -139,11 +142,12 @@ class PlanTemplateServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planTemplateService = client.planTemplates()
+
         val planTemplate =
             planTemplateService.delete(
                 PlanTemplateDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(planTemplate)
+
         planTemplate.validate()
     }
 }
