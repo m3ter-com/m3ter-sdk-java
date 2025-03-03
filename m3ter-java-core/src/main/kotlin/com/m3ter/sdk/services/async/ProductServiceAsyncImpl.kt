@@ -15,16 +15,15 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
+import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPageAsync
 import com.m3ter.sdk.models.ProductListParams
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class ProductServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ProductServiceAsync {
+class ProductServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ProductServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -53,9 +52,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -72,7 +71,7 @@ internal constructor(
      */
     override fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -81,7 +80,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "products",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -90,9 +89,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -113,7 +112,7 @@ internal constructor(
      */
     override fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Product> {
         val request =
             HttpRequest.builder()
@@ -122,7 +121,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "products",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -132,9 +131,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { updateHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -152,7 +151,7 @@ internal constructor(
      */
     override fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<ProductListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -165,12 +164,50 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
                     .let { ProductListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val deleteHandler: Handler<Product> =
+        jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * Delete a Product with the given UUID.
+     *
+     * This endpoint deletes a specific Product within a specified Organization, using the Product
+     * UUID.
+     */
+    override fun delete(
+        params: ProductDeleteParams,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<Product> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "products",
+                    params.getPathParam(1),
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }

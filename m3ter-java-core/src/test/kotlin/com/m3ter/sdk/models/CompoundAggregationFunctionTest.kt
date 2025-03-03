@@ -14,12 +14,14 @@ class CompoundAggregationFunctionTest {
         val compoundAggregation =
             CompoundAggregation.builder()
                 .id("id")
+                .version(0L)
+                .accountingProductId("accountingProductId")
                 .calculation("calculation")
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
                     CompoundAggregation.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -36,17 +38,18 @@ class CompoundAggregationFunctionTest {
                         .build()
                 )
                 .unit("unit")
-                .version(0L)
                 .build()
         assertThat(compoundAggregation).isNotNull
-        assertThat(compoundAggregation.id()).contains("id")
+        assertThat(compoundAggregation.id()).isEqualTo("id")
+        assertThat(compoundAggregation.version()).isEqualTo(0L)
+        assertThat(compoundAggregation.accountingProductId()).contains("accountingProductId")
         assertThat(compoundAggregation.calculation()).contains("calculation")
         assertThat(compoundAggregation.code()).contains("code")
         assertThat(compoundAggregation.createdBy()).contains("createdBy")
         assertThat(compoundAggregation.customFields())
             .contains(
                 CompoundAggregation.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(compoundAggregation.dtCreated())
@@ -66,6 +69,5 @@ class CompoundAggregationFunctionTest {
                     .build()
             )
         assertThat(compoundAggregation.unit()).contains("unit")
-        assertThat(compoundAggregation.version()).contains(0L)
     }
 }

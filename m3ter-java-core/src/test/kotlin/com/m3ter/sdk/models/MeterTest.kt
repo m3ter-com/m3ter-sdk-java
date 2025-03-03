@@ -14,11 +14,12 @@ class MeterTest {
         val meter =
             Meter.builder()
                 .id("id")
+                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
                     Meter.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .addDataField(
@@ -44,16 +45,16 @@ class MeterTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .productId("productId")
-                .version(0L)
                 .build()
         assertThat(meter).isNotNull
-        assertThat(meter.id()).contains("id")
+        assertThat(meter.id()).isEqualTo("id")
+        assertThat(meter.version()).isEqualTo(0L)
         assertThat(meter.code()).contains("code")
         assertThat(meter.createdBy()).contains("createdBy")
         assertThat(meter.customFields())
             .contains(
                 Meter.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(meter.dataFields().get())
@@ -82,6 +83,5 @@ class MeterTest {
         assertThat(meter.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(meter.name()).contains("name")
         assertThat(meter.productId()).contains("productId")
-        assertThat(meter.version()).contains(0L)
     }
 }

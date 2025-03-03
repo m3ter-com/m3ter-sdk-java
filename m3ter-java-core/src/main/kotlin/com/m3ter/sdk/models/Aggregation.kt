@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
@@ -24,6 +25,12 @@ class Aggregation
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("aggregation")
     @ExcludeMissing
     private val aggregation: JsonField<InnerAggregation> = JsonMissing.of(),
@@ -34,6 +41,9 @@ private constructor(
     @JsonProperty("customFields")
     @ExcludeMissing
     private val customFields: JsonField<CustomFields> = JsonMissing.of(),
+    @JsonProperty("customSql")
+    @ExcludeMissing
+    private val customSql: JsonField<String> = JsonMissing.of(),
     @JsonProperty("defaultValue")
     @ExcludeMissing
     private val defaultValue: JsonField<Double> = JsonMissing.of(),
@@ -66,14 +76,22 @@ private constructor(
     @ExcludeMissing
     private val targetField: JsonField<String> = JsonMissing.of(),
     @JsonProperty("unit") @ExcludeMissing private val unit: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** The UUID of the entity. */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): String = id.getRequired("id")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     */
+    fun version(): Long = version.getRequired("version")
+
+    fun accountingProductId(): Optional<String> =
+        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -108,6 +126,8 @@ private constructor(
 
     fun customFields(): Optional<CustomFields> =
         Optional.ofNullable(customFields.getNullable("customFields"))
+
+    fun customSql(): Optional<String> = Optional.ofNullable(customSql.getNullable("customSql"))
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -202,16 +222,20 @@ private constructor(
      */
     fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
+    /** The UUID of the entity. */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
     /**
      * The version number:
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The UUID of the entity. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -248,6 +272,8 @@ private constructor(
     @JsonProperty("customFields")
     @ExcludeMissing
     fun _customFields(): JsonField<CustomFields> = customFields
+
+    @JsonProperty("customSql") @ExcludeMissing fun _customSql(): JsonField<String> = customSql
 
     /**
      * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -347,14 +373,6 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -367,10 +385,13 @@ private constructor(
         }
 
         id()
+        version()
+        accountingProductId()
         aggregation()
         code()
         createdBy()
         customFields().ifPresent { it.validate() }
+        customSql()
         defaultValue()
         dtCreated()
         dtLastModified()
@@ -383,7 +404,6 @@ private constructor(
         segments().ifPresent { it.forEach { it.validate() } }
         targetField()
         unit()
-        version()
         validated = true
     }
 
@@ -397,11 +417,14 @@ private constructor(
     /** A builder for [Aggregation]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var version: JsonField<Long>? = null
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var aggregation: JsonField<InnerAggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
+        private var customSql: JsonField<String> = JsonMissing.of()
         private var defaultValue: JsonField<Double> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -414,16 +437,18 @@ private constructor(
         private var segments: JsonField<MutableList<Segment>>? = null
         private var targetField: JsonField<String> = JsonMissing.of()
         private var unit: JsonField<String> = JsonMissing.of()
-        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(aggregation: Aggregation) = apply {
             id = aggregation.id
+            version = aggregation.version
+            accountingProductId = aggregation.accountingProductId
             this.aggregation = aggregation.aggregation
             code = aggregation.code
             createdBy = aggregation.createdBy
             customFields = aggregation.customFields
+            customSql = aggregation.customSql
             defaultValue = aggregation.defaultValue
             dtCreated = aggregation.dtCreated
             dtLastModified = aggregation.dtLastModified
@@ -436,7 +461,6 @@ private constructor(
             segments = aggregation.segments.map { it.toMutableList() }
             targetField = aggregation.targetField
             unit = aggregation.unit
-            version = aggregation.version
             additionalProperties = aggregation.additionalProperties.toMutableMap()
         }
 
@@ -445,6 +469,29 @@ private constructor(
 
         /** The UUID of the entity. */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -515,6 +562,10 @@ private constructor(
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             this.customFields = customFields
         }
+
+        fun customSql(customSql: String) = customSql(JsonField.of(customSql))
+
+        fun customSql(customSql: JsonField<String>) = apply { this.customSql = customSql }
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -750,22 +801,6 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -787,11 +822,14 @@ private constructor(
 
         fun build(): Aggregation =
             Aggregation(
-                id,
+                checkRequired("id", id),
+                checkRequired("version", version),
+                accountingProductId,
                 aggregation,
                 code,
                 createdBy,
                 customFields,
+                customSql,
                 defaultValue,
                 dtCreated,
                 dtLastModified,
@@ -804,7 +842,6 @@ private constructor(
                 (segments ?: JsonMissing.of()).map { it.toImmutable() },
                 targetField,
                 unit,
-                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -831,11 +868,8 @@ private constructor(
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
-    class InnerAggregation
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class InnerAggregation @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -863,6 +897,8 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
+            @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
+
             @JvmStatic fun of(value: String) = InnerAggregation(JsonField.of(value))
         }
 
@@ -875,6 +911,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
         }
 
         /**
@@ -894,6 +931,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
             /**
              * An enum member indicating that [InnerAggregation] was instantiated with an unknown
              * value.
@@ -917,6 +955,7 @@ private constructor(
                 LATEST -> Value.LATEST
                 MEAN -> Value.MEAN
                 UNIQUE -> Value.UNIQUE
+                CUSTOM_SQL -> Value.CUSTOM_SQL
                 else -> Value._UNKNOWN
             }
 
@@ -937,10 +976,21 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
+                CUSTOM_SQL -> Known.CUSTOM_SQL
                 else -> throw M3terInvalidDataException("Unknown InnerAggregation: $value")
             }
 
-        fun asString(): String = _value().asStringOrThrow()
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -960,7 +1010,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -1047,11 +1097,7 @@ private constructor(
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
-    class Rounding
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Rounding @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1135,7 +1181,17 @@ private constructor(
                 else -> throw M3terInvalidDataException("Unknown Rounding: $value")
             }
 
-        fun asString(): String = _value().asStringOrThrow()
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1155,7 +1211,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -1233,15 +1289,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Aggregation && id == other.id && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Aggregation && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, aggregation, code, createdBy, customFields, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, aggregation, code, createdBy, customFields, customSql, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Aggregation{id=$id, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, version=$version, additionalProperties=$additionalProperties}"
+        "Aggregation{id=$id, version=$version, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
 }

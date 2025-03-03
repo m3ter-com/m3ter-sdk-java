@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.async
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
+import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPageAsync
 import com.m3ter.sdk.models.AggregationListParams
 import com.m3ter.sdk.models.AggregationRetrieveParams
@@ -19,14 +20,14 @@ interface AggregationServiceAsync {
     @JvmOverloads
     fun create(
         params: AggregationCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Aggregation>
 
     /** Retrieve the Aggregation with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: AggregationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Aggregation>
 
     /**
@@ -39,13 +40,20 @@ interface AggregationServiceAsync {
     @JvmOverloads
     fun update(
         params: AggregationUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Aggregation>
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
     @JvmOverloads
     fun list(
         params: AggregationListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AggregationListPageAsync>
+
+    /** Delete the Aggregation with the given UUID. */
+    @JvmOverloads
+    fun delete(
+        params: AggregationDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Aggregation>
 }

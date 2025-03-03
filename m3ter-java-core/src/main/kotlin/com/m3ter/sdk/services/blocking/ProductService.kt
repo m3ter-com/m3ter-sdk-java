@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
+import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
 import com.m3ter.sdk.models.ProductRetrieveParams
@@ -23,7 +24,7 @@ interface ProductService {
     @JvmOverloads
     fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -35,7 +36,7 @@ interface ProductService {
     @JvmOverloads
     fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -51,7 +52,7 @@ interface ProductService {
     @JvmOverloads
     fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Product
 
     /**
@@ -63,6 +64,18 @@ interface ProductService {
     @JvmOverloads
     fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ProductListPage
+
+    /**
+     * Delete a Product with the given UUID.
+     *
+     * This endpoint deletes a specific Product within a specified Organization, using the Product
+     * UUID.
+     */
+    @JvmOverloads
+    fun delete(
+        params: ProductDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Product
 }

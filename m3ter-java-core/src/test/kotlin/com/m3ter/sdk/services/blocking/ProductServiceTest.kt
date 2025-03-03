@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.models.ProductCreateParams
+import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListParams
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
@@ -23,6 +24,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -33,7 +35,7 @@ class ProductServiceTest {
                     .name("x")
                     .customFields(
                         ProductCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .version(0L)
@@ -51,6 +53,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -67,6 +70,7 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val product =
@@ -78,7 +82,7 @@ class ProductServiceTest {
                     .name("x")
                     .customFields(
                         ProductUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .version(0L)
@@ -96,11 +100,29 @@ class ProductServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val productService = client.products()
         val paginatedDataProductResponse =
             productService.list(ProductListParams.builder().orgId("orgId").build())
         println(paginatedDataProductResponse)
         paginatedDataProductResponse.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callDelete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val productService = client.products()
+        val product =
+            productService.delete(ProductDeleteParams.builder().orgId("orgId").id("id").build())
+        println(product)
+        product.validate()
     }
 }

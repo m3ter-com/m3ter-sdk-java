@@ -15,16 +15,15 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
+import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPageAsync
 import com.m3ter.sdk.models.CounterListParams
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
 
-class CounterServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CounterServiceAsync {
+class CounterServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CounterServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +33,7 @@ internal constructor(
     /** Create a new Counter. */
     override fun create(
         params: CounterCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -48,9 +47,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -62,7 +61,7 @@ internal constructor(
     /** Retrieve a Counter for the given UUID. */
     override fun retrieve(
         params: CounterRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -71,7 +70,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -80,9 +79,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -94,7 +93,7 @@ internal constructor(
     /** Update Counter for the given UUID. */
     override fun update(
         params: CounterUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Counter> {
         val request =
             HttpRequest.builder()
@@ -103,7 +102,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "counters",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -113,9 +112,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { updateHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -130,7 +129,7 @@ internal constructor(
      */
     override fun list(
         params: CounterListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CounterListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -143,12 +142,45 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
                     .let { CounterListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val deleteHandler: Handler<Counter> =
+        jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** Delete a Counter for the given UUID. */
+    override fun delete(
+        params: CounterDeleteParams,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<Counter> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "counters",
+                    params.getPathParam(1),
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }

@@ -2,13 +2,14 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CounterUpdateParamsTest {
 
     @Test
-    fun createCounterUpdateParams() {
+    fun create() {
         CounterUpdateParams.builder()
             .orgId("orgId")
             .id("id")
@@ -32,8 +33,10 @@ class CounterUpdateParamsTest {
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
         assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
@@ -45,8 +48,10 @@ class CounterUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CounterUpdateParams.builder().orgId("orgId").id("id").name("x").unit("x").build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
     }

@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.2)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.3)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.2")
+implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.3")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.2")
 <dependency>
     <groupId>com.m3ter.sdk</groupId>
     <artifactId>m3ter-java</artifactId>
-    <version>0.1.0-alpha.2</version>
+    <version>0.1.0-alpha.3</version>
 </dependency>
 ```
 
@@ -40,9 +40,40 @@ This library requires Java 8 or later.
 
 ## Usage
 
-### Configure the client
+```java
+import com.m3ter.sdk.client.M3terClient;
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
 
-Use `M3terOkHttpClient.builder()` to configure the client. At a minimum you need to set `.apiKey()` and `.apiSecret()`:
+M3terClient client = M3terOkHttpClient.builder()
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
+    .fromEnv()
+    .orgId("My Org ID")
+    .build();
+
+ProductListParams params = ProductListParams.builder()
+    .orgId("ORG_ID")
+    .build();
+ProductListPage page = client.products().list(params);
+```
+
+## Client configuration
+
+Configure the client using environment variables:
+
+```java
+import com.m3ter.sdk.client.M3terClient;
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
+
+M3terClient client = M3terOkHttpClient.builder()
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
+    .fromEnv()
+    .orgId("My Org ID")
+    .build();
+```
+
+Or manually:
 
 ```java
 import com.m3ter.sdk.client.M3terClient;
@@ -51,157 +82,119 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 M3terClient client = M3terOkHttpClient.builder()
     .apiKey("My API Key")
     .apiSecret("My API Secret")
+    .token("My Token")
+    .orgId("My Org ID")
     .build();
 ```
 
-Alternately, set the environment with `M3TER_API_KEY`, `M3TER_API_SECRET` or `M3TER_API_TOKEN`, and use `M3terOkHttpClient.fromEnv()` to read from the environment.
+Or using a combination of the two approaches:
 
 ```java
 import com.m3ter.sdk.client.M3terClient;
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
-M3terClient client = M3terOkHttpClient.fromEnv();
-
-// Note: you can also call fromEnv() from the client builder, for example if you need to set additional properties
 M3terClient client = M3terOkHttpClient.builder()
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
     .fromEnv()
-    // ... set properties on the builder
+    .orgId("My Org ID")
+    .orgId("My Org ID")
     .build();
 ```
 
-| Property  | Environment variable | Required | Default value |
-| --------- | -------------------- | -------- | ------------- |
-| apiKey    | `M3TER_API_KEY`      | true     | —             |
-| apiSecret | `M3TER_API_SECRET`   | true     | —             |
-| token     | `M3TER_API_TOKEN`    | false    | —             |
+See this table for the available options:
 
-Read the documentation for more configuration options.
+| Setter      | Environment variable | Required | Default value |
+| ----------- | -------------------- | -------- | ------------- |
+| `apiKey`    | `M3TER_API_KEY`      | true     | -             |
+| `apiSecret` | `M3TER_API_SECRET`   | true     | -             |
+| `token`     | `M3TER_API_TOKEN`    | false    | -             |
 
----
+> [!TIP]
+> Don't create more than one client in the same application. Each client has a connection pool and
+> thread pools, which are more efficient to share between requests.
 
-### Example: creating a resource
+## Requests and responses
 
-To create a new product, first use the `ProductListParams` builder to specify attributes, then pass that to the `list` method of the `products` service.
+To send a request to the M3ter API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a Java class.
+
+For example, `client.products().list(...)` should be called with an instance of `ProductListParams`, and it will return an instance of `ProductListPage`.
+
+## Immutability
+
+Each class in the SDK has an associated [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java) or factory method for constructing it.
+
+Each class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html) once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can be used to convert it back to a builder for making a modified copy.
+
+Because each class is immutable, builder modification will _never_ affect already built class instances.
+
+## Asynchronous execution
+
+The default client is synchronous. To switch to asynchronous execution, call the `async()` method:
 
 ```java
-import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.client.M3terClient;
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
+import com.m3ter.sdk.models.ProductListPageAsync;
 import com.m3ter.sdk.models.ProductListParams;
+import java.util.concurrent.CompletableFuture;
+
+M3terClient client = M3terOkHttpClient.builder()
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
+    .fromEnv()
+    .orgId("My Org ID")
+    .build();
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
     .build();
-ProductListPage page = client.products().list(params);
+CompletableFuture<ProductListPageAsync> page = client.async().products().list(params);
 ```
 
-### Example: listing resources
-
-The M3ter API provides a `list` method to get a paginated list of products. You can retrieve the first page by:
+Or create an asynchronous client from the beginning:
 
 ```java
-import com.m3ter.sdk.models.Product;
-import com.m3ter.sdk.models.ProductListPage;
-
-ProductListPage page = client.products().list();
-for (Product product : page.data()) {
-    System.out.println(product);
-}
-```
-
-Use the `ProductListParams` builder to set parameters:
-
-```java
-import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.client.M3terClientAsync;
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClientAsync;
+import com.m3ter.sdk.models.ProductListPageAsync;
 import com.m3ter.sdk.models.ProductListParams;
+import java.util.concurrent.CompletableFuture;
+
+M3terClientAsync client = M3terOkHttpClientAsync.builder()
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
+    .fromEnv()
+    .orgId("My Org ID")
+    .build();
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
-    .addId("string")
-    .nextToken("nextToken")
-    .pageSize(1L)
     .build();
-ProductListPage page1 = client.products().list(params);
-
-// Using the `from` method of the builder you can reuse previous params values:
-ProductListPage page2 = client.products().list(ProductListParams.builder()
-    .from(params)
-    .nextToken("abc123...")
-    .build());
-
-// Or easily get params for the next page by using the helper `getNextPageParams`:
-ProductListPage page3 = client.products().list(params.getNextPageParams(page2));
+CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 ```
 
-See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
+The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
 
----
+## Error handling
 
-## Requests
+The SDK throws custom unchecked exception types:
 
-### Parameters and bodies
+- [`M3terServiceException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-To make a request to the M3ter API, you generally build an instance of the appropriate `Params` class.
+  | Status | Exception                       |
+  | ------ | ------------------------------- |
+  | 400    | `BadRequestException`           |
+  | 401    | `AuthenticationException`       |
+  | 403    | `PermissionDeniedException`     |
+  | 404    | `NotFoundException`             |
+  | 422    | `UnprocessableEntityException`  |
+  | 429    | `RateLimitException`            |
+  | 5xx    | `InternalServerException`       |
+  | others | `UnexpectedStatusCodeException` |
 
-In [Example: creating a resource](#example-creating-a-resource) above, we used the `ProductListParams.builder()` to pass to the `list` method of the `products` service.
+- [`M3terIoException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terIoException.kt): I/O networking errors.
 
-Sometimes, the API may support other properties that are not yet supported in the Java SDK types. In that case, you can attach them using the `putAdditionalProperty` method.
+- [`M3terInvalidDataException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
-```java
-import com.m3ter.sdk.core.JsonValue;
-import com.m3ter.sdk.models.ProductListParams;
-
-ProductListParams params = ProductListParams.builder()
-    // ... normal properties
-    .putAdditionalProperty("secret_param", JsonValue.from("4242"))
-    .build();
-```
-
-## Responses
-
-### Response validation
-
-When receiving a response, the M3ter Java SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Java type. If you directly access the mistaken property, the SDK will throw an unchecked `M3terInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
-
-```java
-import com.m3ter.sdk.models.ProductListPage;
-
-ProductListPage page = client.products().list().validate();
-```
-
-### Response properties as JSON
-
-In rare cases, you may want to access the underlying JSON value for a response property rather than using the typed version provided by this SDK. Each model property has a corresponding JSON version, with an underscore before the method name, which returns a `JsonField` value.
-
-```java
-import com.m3ter.sdk.core.JsonField;
-import java.util.Optional;
-
-JsonField field = responseObj._field();
-
-if (field.isMissing()) {
-  // Value was not specified in the JSON response
-} else if (field.isNull()) {
-  // Value was provided as a literal null
-} else {
-  // See if value was provided as a string
-  Optional<String> jsonString = field.asString();
-
-  // If the value given by the API did not match the shape that the SDK expects
-  // you can deserialise into a custom type
-  MyClass myObj = responseObj._field().asUnknown().orElseThrow().convert(MyClass.class);
-}
-```
-
-### Additional model properties
-
-Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
-
-```java
-import com.m3ter.sdk.core.JsonValue;
-
-JsonValue secret = authenticationGetBearerTokenResponse._additionalProperties().get("secret_field");
-```
-
----
+- [`M3terException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
 
 ## Pagination
 
@@ -255,36 +248,39 @@ while (page != null) {
 }
 ```
 
----
+## Logging
 
-## Error handling
+The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
 
-This library throws exceptions in a single hierarchy for easy handling:
+Enable logging by setting the `M3TER_LOG` environment variable to `info`:
 
-- **`M3terException`** - Base exception for all exceptions
+```sh
+$ export M3TER_LOG=info
+```
 
-- **`M3terServiceException`** - HTTP errors with a well-formed response body we were able to parse. The exception message and the `.debuggingRequestId()` will be set by the server.
+Or to `debug` for more verbose logging:
 
-  | 400    | BadRequestException           |
-  | ------ | ----------------------------- |
-  | 401    | AuthenticationException       |
-  | 403    | PermissionDeniedException     |
-  | 404    | NotFoundException             |
-  | 422    | UnprocessableEntityException  |
-  | 429    | RateLimitException            |
-  | 5xx    | InternalServerException       |
-  | others | UnexpectedStatusCodeException |
-
-- **`M3terIoException`** - I/O networking errors
-- **`M3terInvalidDataException`** - any other exceptions on the client side, e.g.:
-  - We failed to serialize the request body
-  - We failed to parse the response body (has access to response code and body)
+```sh
+$ export M3TER_LOG=debug
+```
 
 ## Network options
 
 ### Retries
 
-Requests that experience certain errors are automatically retried 2 times by default, with a short exponential backoff. Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors will all be retried by default. You can provide a `maxRetries` on the client builder to configure this:
+The SDK automatically retries 2 times by default, with a short exponential backoff.
+
+Only the following error types are retried:
+
+- Connection errors (for example, due to a network connectivity problem)
+- 408 Request Timeout
+- 409 Conflict
+- 429 Rate Limit
+- 5xx Internal
+
+The API may also explicitly instruct the SDK to retry or not retry a response.
+
+To set a custom number of retries, configure the client using the `maxRetries` method:
 
 ```java
 import com.m3ter.sdk.client.M3terClient;
@@ -292,13 +288,27 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
+    .orgId("My Org ID")
     .maxRetries(4)
     .build();
 ```
 
 ### Timeouts
 
-Requests time out after 1 minute by default. You can configure this on the client builder:
+Requests time out after 1 minute by default.
+
+To set a custom timeout, configure the method call using the `timeout` method:
+
+```java
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListPage page = client.products().list(
+  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
+);
+```
+
+Or configure the default for all method calls at the client level:
 
 ```java
 import com.m3ter.sdk.client.M3terClient;
@@ -307,13 +317,14 @@ import java.time.Duration;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
+    .orgId("My Org ID")
     .timeout(Duration.ofSeconds(30))
     .build();
 ```
 
 ### Proxies
 
-Requests can be routed through a proxy. You can configure this on the client builder:
+To route requests through a proxy, configure the client using the `proxy` method:
 
 ```java
 import com.m3ter.sdk.client.M3terClient;
@@ -323,44 +334,167 @@ import java.net.Proxy;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
-    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("example.com", 8080)))
+    .orgId("My Org ID")
+    .proxy(new Proxy(
+      Proxy.Type.HTTP, new InetSocketAddress(
+        "https://example.com", 8080
+      )
+    ))
     .build();
 ```
 
-## Making custom/undocumented requests
+## Undocumented API functionality
 
-This library is typed for convenient access to the documented API. If you need to access undocumented params or response properties, the library can still be used.
+The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
 
-### Undocumented request params
+### Parameters
 
-To make requests using undocumented parameters, you can provide or override parameters on the params object while building it.
+To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or `putAdditionalBodyProperty` methods on any `Params` class:
 
 ```java
-FooCreateParams address = FooCreateParams.builder()
-    .id("my_id")
-    .putAdditionalProperty("secret_prop", JsonValue.from("hello"))
+import com.m3ter.sdk.core.JsonValue;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListParams params = ProductListParams.builder()
+    .putAdditionalHeader("Secret-Header", "42")
+    .putAdditionalQueryParam("secret_query_param", "42")
+    .putAdditionalBodyProperty("secretProperty", JsonValue.from("42"))
     .build();
 ```
 
-### Undocumented response properties
+These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
 
-To access undocumented response properties, you can use `res._additionalProperties()` on a response object to get a map of untyped fields of type `Map<String, JsonValue>`. You can then access fields like `._additionalProperties().get("secret_prop").asString()` or use other helpers defined on the `JsonValue` class to extract it to a desired type.
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/core/JsonValue.kt) object to its setter:
 
-## Logging
+```java
+import com.m3ter.sdk.models.ProductListParams;
 
-We use the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
-You can enable logging by setting the environment variable `M3TER_LOG` to `info`.
-
-```sh
-$ export M3TER_LOG=info
+ProductListParams params = ProductListParams.builder()
+    .orgId("ORG_ID")
+    .build();
 ```
 
-Or to `debug` for more verbose logging.
+### Response properties
 
-```sh
-$ export M3TER_LOG=debug
+To access undocumented response properties, call the `_additionalProperties()` method:
+
+```java
+import com.m3ter.sdk.core.JsonValue;
+import java.util.Map;
+
+Map<String, JsonValue> additionalProperties = client.authentication().getBearerToken(params)._additionalProperties();
+JsonValue secretPropertyValue = additionalProperties.get("secretProperty");
+
+String result = secretPropertyValue.accept(new JsonValue.Visitor<>() {
+    @Override
+    public String visitNull() {
+        return "It's null!";
+    }
+
+    @Override
+    public String visitBoolean(boolean value) {
+        return "It's a boolean!";
+    }
+
+    @Override
+    public String visitNumber(Number value) {
+        return "It's a number!";
+    }
+
+    // Other methods include `visitMissing`, `visitString`, `visitArray`, and `visitObject`
+    // The default implementation of each unimplemented method delegates to `visitDefault`, which throws by default, but can also be overridden
+});
 ```
+
+To access a property's raw JSON value, which may be undocumented, call its `_` prefixed method:
+
+```java
+import com.m3ter.sdk.core.JsonField;
+import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams;
+import java.util.Optional;
+
+JsonField<AuthenticationGetBearerTokenParams.GrantType> grantType = client.authentication().getBearerToken(params)._grantType();
+
+if (grantType.isMissing()) {
+  // The property is absent from the JSON response
+} else if (grantType.isNull()) {
+  // The property was set to literal null
+} else {
+  // Check if value was provided as a string
+  // Other methods include `asNumber()`, `asBoolean()`, etc.
+  Optional<String> jsonString = grantType.asString();
+
+  // Try to deserialize into a custom type
+  MyClass myObject = grantType.asUnknown().orElseThrow().convert(MyClass.class);
+}
+```
+
+### Response validation
+
+In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `String`, but the API could return something else.
+
+By default, the SDK will not throw an exception in this case. It will throw [`M3terInvalidDataException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terInvalidDataException.kt) only if you directly access the property.
+
+If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
+
+```java
+import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse;
+
+AuthenticationGetBearerTokenResponse response = client.authentication().getBearerToken(params).validate();
+```
+
+Or configure the method call to validate the response using the `responseValidation` method:
+
+```java
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListPage page = client.products().list(
+  params, RequestOptions.builder().responseValidation(true).build()
+);
+```
+
+Or configure the default for all method calls at the client level:
+
+```java
+import com.m3ter.sdk.client.M3terClient;
+import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
+
+M3terClient client = M3terOkHttpClient.builder()
+    .fromEnv()
+    .orgId("My Org ID")
+    .responseValidation(true)
+    .build();
+```
+
+## FAQ
+
+### Why don't you use plain `enum` classes?
+
+Java `enum` classes are not trivially [forwards compatible](https://www.stainless.com/blog/making-java-enums-forwards-compatible). Using them in the SDK could cause runtime exceptions if the API is updated to respond with a new enum value.
+
+### Why do you represent fields using `JsonField<T>` instead of just plain `T`?
+
+Using `JsonField<T>` enables a few features:
+
+- Allowing usage of [undocumented API functionality](#undocumented-api-functionality)
+- Lazily [validating the API response against the expected shape](#response-validation)
+- Representing absent vs explicitly null values
+
+### Why don't you use [`data` classes](https://kotlinlang.org/docs/data-classes.html)?
+
+It is not [backwards compatible to add new fields to a data class](https://kotlinlang.org/docs/api-guidelines-backward-compatibility.html#avoid-using-data-classes-in-your-api) and we don't want to introduce a breaking change every time we add a field to a class.
+
+### Why don't you use checked exceptions?
+
+Checked exceptions are widely considered a mistake in the Java programming language. In fact, they were omitted from Kotlin for this reason.
+
+Checked exceptions:
+
+- Are verbose to handle
+- Encourage error handling at the wrong level of abstraction, where nothing can be done about the error
+- Are tedious to propagate due to the [function coloring problem](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function)
+- Don't play well with lambdas (also due to the function coloring problem)
 
 ## Semantic versioning
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CounterListParamsTest {
 
     @Test
-    fun createCounterListParams() {
+    fun create() {
         CounterListParams.builder()
             .orgId("orgId")
             .addCode("string")

@@ -37,7 +37,7 @@ class CompoundAggregationUpdateParams
 private constructor(
     private val orgId: String,
     private val id: String,
-    private val body: CompoundAggregationUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -93,6 +93,9 @@ private constructor(
      * they are being charged for.
      */
     fun unit(): String = body.unit()
+
+    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    fun accountingProductId(): Optional<String> = body.accountingProductId()
 
     /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
     fun code(): Optional<String> = body.code()
@@ -177,6 +180,9 @@ private constructor(
      */
     fun _unit(): JsonField<String> = body._unit()
 
+    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    fun _accountingProductId(): JsonField<String> = body._accountingProductId()
+
     /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
     fun _code(): JsonField<String> = body._code()
 
@@ -218,7 +224,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): CompoundAggregationUpdateBody = body
+    @JvmSynthetic internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -233,9 +239,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CompoundAggregationUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("calculation")
         @ExcludeMissing
         private val calculation: JsonField<String> = JsonMissing.of(),
@@ -251,6 +257,9 @@ private constructor(
         @JsonProperty("unit")
         @ExcludeMissing
         private val unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        private val accountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -318,6 +327,10 @@ private constructor(
          * they are being charged for.
          */
         fun unit(): String = unit.getRequired("unit")
+
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(): Optional<String> =
+            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
@@ -410,6 +423,11 @@ private constructor(
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        fun _accountingProductId(): JsonField<String> = accountingProductId
+
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
@@ -456,7 +474,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CompoundAggregationUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -466,6 +484,7 @@ private constructor(
             quantityPerUnit()
             rounding()
             unit()
+            accountingProductId()
             code()
             customFields().ifPresent { it.validate() }
             evaluateNullAggregations()
@@ -481,7 +500,7 @@ private constructor(
             @JvmStatic fun builder() = Builder()
         }
 
-        /** A builder for [CompoundAggregationUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var calculation: JsonField<String>? = null
@@ -489,6 +508,7 @@ private constructor(
             private var quantityPerUnit: JsonField<Double>? = null
             private var rounding: JsonField<Rounding>? = null
             private var unit: JsonField<String>? = null
+            private var accountingProductId: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
             private var evaluateNullAggregations: JsonField<Boolean> = JsonMissing.of()
@@ -497,22 +517,20 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
-            internal fun from(compoundAggregationUpdateBody: CompoundAggregationUpdateBody) =
-                apply {
-                    calculation = compoundAggregationUpdateBody.calculation
-                    name = compoundAggregationUpdateBody.name
-                    quantityPerUnit = compoundAggregationUpdateBody.quantityPerUnit
-                    rounding = compoundAggregationUpdateBody.rounding
-                    unit = compoundAggregationUpdateBody.unit
-                    code = compoundAggregationUpdateBody.code
-                    customFields = compoundAggregationUpdateBody.customFields
-                    evaluateNullAggregations =
-                        compoundAggregationUpdateBody.evaluateNullAggregations
-                    productId = compoundAggregationUpdateBody.productId
-                    version = compoundAggregationUpdateBody.version
-                    additionalProperties =
-                        compoundAggregationUpdateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                calculation = body.calculation
+                name = body.name
+                quantityPerUnit = body.quantityPerUnit
+                rounding = body.rounding
+                unit = body.unit
+                accountingProductId = body.accountingProductId
+                code = body.code
+                customFields = body.customFields
+                evaluateNullAggregations = body.evaluateNullAggregations
+                productId = body.productId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /**
              * String that represents the formula for the calculation. This formula determines how
@@ -623,6 +641,19 @@ private constructor(
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+            /**
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             */
+            fun accountingProductId(accountingProductId: String) =
+                accountingProductId(JsonField.of(accountingProductId))
+
+            /**
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             */
+            fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+                this.accountingProductId = accountingProductId
+            }
+
             /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
             fun code(code: String) = code(JsonField.of(code))
 
@@ -721,13 +752,14 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CompoundAggregationUpdateBody =
-                CompoundAggregationUpdateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("calculation", calculation),
                     checkRequired("name", name),
                     checkRequired("quantityPerUnit", quantityPerUnit),
                     checkRequired("rounding", rounding),
                     checkRequired("unit", unit),
+                    accountingProductId,
                     code,
                     customFields,
                     evaluateNullAggregations,
@@ -742,17 +774,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CompoundAggregationUpdateBody && calculation == other.calculation && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && unit == other.unit && code == other.code && customFields == other.customFields && evaluateNullAggregations == other.evaluateNullAggregations && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && calculation == other.calculation && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && evaluateNullAggregations == other.evaluateNullAggregations && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(calculation, name, quantityPerUnit, rounding, unit, code, customFields, evaluateNullAggregations, productId, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(calculation, name, quantityPerUnit, rounding, unit, accountingProductId, code, customFields, evaluateNullAggregations, productId, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CompoundAggregationUpdateBody{calculation=$calculation, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, unit=$unit, code=$code, customFields=$customFields, evaluateNullAggregations=$evaluateNullAggregations, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{calculation=$calculation, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, unit=$unit, accountingProductId=$accountingProductId, code=$code, customFields=$customFields, evaluateNullAggregations=$evaluateNullAggregations, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -768,8 +800,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
-        private var body: CompoundAggregationUpdateBody.Builder =
-            CompoundAggregationUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -889,6 +920,16 @@ private constructor(
          * they are being charged for.
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
+
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: String) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            body.accountingProductId(accountingProductId)
+        }
 
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(code: String) = apply { body.code(code) }
@@ -1109,11 +1150,7 @@ private constructor(
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
-    class Rounding
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Rounding @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1197,7 +1234,17 @@ private constructor(
                 else -> throw M3terInvalidDataException("Unknown Rounding: $value")
             }
 
-        fun asString(): String = _value().asStringOrThrow()
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1217,7 +1264,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter

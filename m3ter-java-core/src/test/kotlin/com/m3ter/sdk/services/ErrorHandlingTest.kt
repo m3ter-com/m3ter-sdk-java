@@ -53,6 +53,7 @@ class ErrorHandlingTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
     }
 
@@ -72,28 +73,21 @@ class ErrorHandlingTest {
             ProductListPage.of(
                 service,
                 params,
-                ProductListPage.Response.builder()
-                    .data(
-                        listOf(
-                            Product.builder()
-                                .id("id")
-                                .code("code")
-                                .createdBy("createdBy")
-                                .customFields(
-                                    Product.CustomFields.builder()
-                                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                        .build()
-                                )
-                                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .lastModifiedBy("lastModifiedBy")
-                                .name("name")
-                                .version(0L)
-                                .build()
-                        )
+                Product.builder()
+                    .id("id")
+                    .version(0L)
+                    .code("code")
+                    .createdBy("createdBy")
+                    .customFields(
+                        Product.CustomFields.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
                     )
-                    .nextToken("nextToken")
-                    .build()
+                    .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .lastModifiedBy("lastModifiedBy")
+                    .name("name")
+                    .build(),
             )
 
         stubFor(get(anyUrl()).willReturn(ok().withBody(toJson(expected.response()))))
@@ -205,7 +199,7 @@ class ErrorHandlingTest {
                 assertUnprocessableEntity(
                     e,
                     Headers.builder().put("Foo", "Bar").build(),
-                    M3TER_ERROR
+                    M3TER_ERROR,
                 )
             })
     }
@@ -273,7 +267,7 @@ class ErrorHandlingTest {
                     e,
                     999,
                     Headers.builder().put("Foo", "Bar").build(),
-                    toJson(M3TER_ERROR)
+                    toJson(M3TER_ERROR),
                 )
             })
     }
@@ -324,7 +318,7 @@ class ErrorHandlingTest {
         throwable: Throwable,
         statusCode: Int,
         headers: Headers,
-        responseBody: ByteArray
+        responseBody: ByteArray,
     ) {
         assertThat(throwable)
             .asInstanceOf(
@@ -382,7 +376,7 @@ class ErrorHandlingTest {
     private fun assertUnprocessableEntity(
         throwable: Throwable,
         headers: Headers,
-        error: M3terError
+        error: M3terError,
     ) {
         assertThat(throwable)
             .asInstanceOf(

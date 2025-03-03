@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CompoundAggregationFunctionUpdateParamsTest {
 
     @Test
-    fun createCompoundAggregationUpdateParams() {
+    fun create() {
         CompoundAggregationUpdateParams.builder()
             .orgId("orgId")
             .id("id")
@@ -18,10 +19,11 @@ class CompoundAggregationFunctionUpdateParamsTest {
             .quantityPerUnit(1.0)
             .rounding(CompoundAggregationUpdateParams.Rounding.UP)
             .unit("x")
-            .code("{1{}}_")
+            .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            .code("example_code")
             .customFields(
                 CompoundAggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .evaluateNullAggregations(true)
@@ -41,28 +43,32 @@ class CompoundAggregationFunctionUpdateParamsTest {
                 .quantityPerUnit(1.0)
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
-                .code("{1{}}_")
+                .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .code("example_code")
                 .customFields(
                     CompoundAggregationUpdateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .evaluateNullAggregations(true)
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(CompoundAggregationUpdateParams.Rounding.UP)
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.accountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 CompoundAggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.evaluateNullAggregations()).contains(true)
@@ -82,8 +88,10 @@ class CompoundAggregationFunctionUpdateParamsTest {
                 .rounding(CompoundAggregationUpdateParams.Rounding.UP)
                 .unit("x")
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)

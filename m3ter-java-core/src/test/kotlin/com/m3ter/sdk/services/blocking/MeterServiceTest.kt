@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.models.MeterCreateParams
+import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListParams
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
@@ -23,6 +24,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -50,7 +52,7 @@ class MeterServiceTest {
                     .name("x")
                     .customFields(
                         MeterCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -70,6 +72,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -86,6 +89,7 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val meter =
@@ -114,7 +118,7 @@ class MeterServiceTest {
                     .name("x")
                     .customFields(
                         MeterUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -134,11 +138,28 @@ class MeterServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
         val paginatedDataMeterResponse =
             meterService.list(MeterListParams.builder().orgId("orgId").build())
         println(paginatedDataMeterResponse)
         paginatedDataMeterResponse.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callDelete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val meterService = client.meters()
+        val meter = meterService.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
+        println(meter)
+        meter.validate()
     }
 }

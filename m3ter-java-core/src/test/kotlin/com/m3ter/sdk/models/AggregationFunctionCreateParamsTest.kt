@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AggregationFunctionCreateParamsTest {
 
     @Test
-    fun createAggregationCreateParams() {
+    fun create() {
         AggregationCreateParams.builder()
             .orgId("orgId")
             .aggregation(AggregationCreateParams.Aggregation.SUM)
@@ -19,12 +20,14 @@ class AggregationFunctionCreateParamsTest {
             .rounding(AggregationCreateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
-            .code("{1{}}_")
+            .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            .code("example_code")
             .customFields(
                 AggregationCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .customSql("customSql")
             .defaultValue(0.0)
             .addSegmentedField("string")
             .addSegment(
@@ -48,12 +51,14 @@ class AggregationFunctionCreateParamsTest {
                 .rounding(AggregationCreateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
-                .code("{1{}}_")
+                .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .code("example_code")
                 .customFields(
                     AggregationCreateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .customSql("customSql")
                 .defaultValue(0.0)
                 .addSegmentedField("string")
                 .addSegment(
@@ -63,8 +68,10 @@ class AggregationFunctionCreateParamsTest {
                 )
                 .version(0L)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
@@ -72,13 +79,15 @@ class AggregationFunctionCreateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationCreateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.accountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 AggregationCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.customSql()).contains("customSql")
         assertThat(body.defaultValue()).contains(0.0)
         assertThat(body.segmentedFields()).contains(listOf("string"))
         assertThat(body.segments())
@@ -105,8 +114,10 @@ class AggregationFunctionCreateParamsTest {
                 .targetField("x")
                 .unit("x")
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationCreateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")

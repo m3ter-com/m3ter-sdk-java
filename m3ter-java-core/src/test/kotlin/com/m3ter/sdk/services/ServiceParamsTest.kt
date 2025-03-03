@@ -37,6 +37,7 @@ class ServiceParamsTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .baseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .build()
     }
@@ -67,18 +68,18 @@ class ServiceParamsTest {
                     listOf(
                         Product.builder()
                             .id("id")
+                            .version(0L)
                             .code("code")
                             .createdBy("createdBy")
                             .customFields(
                                 Product.CustomFields.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .lastModifiedBy("lastModifiedBy")
                             .name("name")
-                            .version(0L)
                             .build()
                     )
                 )

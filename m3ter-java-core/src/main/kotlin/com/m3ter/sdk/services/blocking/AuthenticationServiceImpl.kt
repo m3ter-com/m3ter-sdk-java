@@ -16,10 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
 
-class AuthenticationServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AuthenticationService {
+class AuthenticationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    AuthenticationService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Get authentication token */
     override fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AuthenticationGetBearerTokenResponse {
         val request =
             HttpRequest.builder()
@@ -39,14 +37,13 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { getBearerTokenHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { getBearerTokenHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 }

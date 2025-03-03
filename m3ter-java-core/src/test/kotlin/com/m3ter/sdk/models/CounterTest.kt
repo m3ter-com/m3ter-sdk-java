@@ -13,6 +13,7 @@ class CounterTest {
         val counter =
             Counter.builder()
                 .id("id")
+                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -21,10 +22,10 @@ class CounterTest {
                 .name("name")
                 .productId("productId")
                 .unit("unit")
-                .version(0L)
                 .build()
         assertThat(counter).isNotNull
-        assertThat(counter.id()).contains("id")
+        assertThat(counter.id()).isEqualTo("id")
+        assertThat(counter.version()).isEqualTo(0L)
         assertThat(counter.code()).contains("code")
         assertThat(counter.createdBy()).contains("createdBy")
         assertThat(counter.dtCreated()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -34,6 +35,5 @@ class CounterTest {
         assertThat(counter.name()).contains("name")
         assertThat(counter.productId()).contains("productId")
         assertThat(counter.unit()).contains("unit")
-        assertThat(counter.version()).contains(0L)
     }
 }

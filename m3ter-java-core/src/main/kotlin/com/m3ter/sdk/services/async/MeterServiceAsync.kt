@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.async
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
+import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPageAsync
 import com.m3ter.sdk.models.MeterListParams
 import com.m3ter.sdk.models.MeterRetrieveParams
@@ -46,14 +47,14 @@ interface MeterServiceAsync {
     @JvmOverloads
     fun create(
         params: MeterCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /** Retrieve the Meter with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: MeterRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /**
@@ -66,13 +67,20 @@ interface MeterServiceAsync {
     @JvmOverloads
     fun update(
         params: MeterUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Meter>
 
     /** Retrieve a list of Meter entities */
     @JvmOverloads
     fun list(
         params: MeterListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterListPageAsync>
+
+    /** Delete the Meter with the given UUID. */
+    @JvmOverloads
+    fun delete(
+        params: MeterDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Meter>
 }

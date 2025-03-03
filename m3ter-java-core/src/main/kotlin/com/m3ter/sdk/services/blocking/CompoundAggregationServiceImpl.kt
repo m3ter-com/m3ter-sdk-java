@@ -16,15 +16,14 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
+import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
 class CompoundAggregationServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CompoundAggregationService {
+internal constructor(private val clientOptions: ClientOptions) : CompoundAggregationService {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +38,7 @@ internal constructor(
      */
     override fun create(
         params: CompoundAggregationCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Aggregation {
         val request =
             HttpRequest.builder()
@@ -48,15 +47,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { createHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { createHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val retrieveHandler: Handler<CompoundAggregation> =
@@ -70,7 +68,7 @@ internal constructor(
      */
     override fun retrieve(
         params: CompoundAggregationRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompoundAggregation {
         val request =
             HttpRequest.builder()
@@ -79,19 +77,18 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { retrieveHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { retrieveHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val updateHandler: Handler<Aggregation> =
@@ -110,7 +107,7 @@ internal constructor(
      */
     override fun update(
         params: CompoundAggregationUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Aggregation {
         val request =
             HttpRequest.builder()
@@ -119,20 +116,19 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { updateHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { updateHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val listHandler: Handler<CompoundAggregationListPage.Response> =
@@ -149,7 +145,7 @@ internal constructor(
      */
     override fun list(
         params: CompoundAggregationListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompoundAggregationListPage {
         val request =
             HttpRequest.builder()
@@ -157,15 +153,50 @@ internal constructor(
                 .addPathSegments("organizations", params.getPathParam(0), "compoundaggregations")
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { listHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { listHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-                .let { CompoundAggregationListPage.of(this, params, it) }
-        }
+            }
+            .let { CompoundAggregationListPage.of(this, params, it) }
+    }
+
+    private val deleteHandler: Handler<CompoundAggregation> =
+        jsonHandler<CompoundAggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * Delete a CompoundAggregation with the given UUID.
+     *
+     * This endpoint enables deletion of a specific CompoundAggregation associated with a specific
+     * Organization. Useful when you need to remove an existing CompoundAggregation that is no
+     * longer required, such as when changing pricing or planning models.
+     */
+    override fun delete(
+        params: CompoundAggregationDeleteParams,
+        requestOptions: RequestOptions,
+    ): CompoundAggregation {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "compoundaggregations",
+                    params.getPathParam(1),
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepare(clientOptions, params)
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { deleteHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
+                }
+            }
     }
 }

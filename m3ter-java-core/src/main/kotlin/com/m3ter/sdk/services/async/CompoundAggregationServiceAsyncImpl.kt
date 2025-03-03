@@ -16,6 +16,7 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
+import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPageAsync
 import com.m3ter.sdk.models.CompoundAggregationListParams
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
@@ -23,9 +24,7 @@ import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
 
 class CompoundAggregationServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CompoundAggregationServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : CompoundAggregationServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +39,7 @@ internal constructor(
      */
     override fun create(
         params: CompoundAggregationCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Aggregation> {
         val request =
             HttpRequest.builder()
@@ -54,9 +53,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { createHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -73,7 +72,7 @@ internal constructor(
      */
     override fun retrieve(
         params: CompoundAggregationRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CompoundAggregation> {
         val request =
             HttpRequest.builder()
@@ -82,7 +81,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -91,9 +90,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { retrieveHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -115,7 +114,7 @@ internal constructor(
      */
     override fun update(
         params: CompoundAggregationUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<Aggregation> {
         val request =
             HttpRequest.builder()
@@ -124,7 +123,7 @@ internal constructor(
                     "organizations",
                     params.getPathParam(0),
                     "compoundaggregations",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -134,9 +133,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { updateHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }
@@ -156,7 +155,7 @@ internal constructor(
      */
     override fun list(
         params: CompoundAggregationListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<CompoundAggregationListPageAsync> {
         val request =
             HttpRequest.builder()
@@ -169,12 +168,51 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { listHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
                     .let { CompoundAggregationListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val deleteHandler: Handler<CompoundAggregation> =
+        jsonHandler<CompoundAggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * Delete a CompoundAggregation with the given UUID.
+     *
+     * This endpoint enables deletion of a specific CompoundAggregation associated with a specific
+     * Organization. Useful when you need to remove an existing CompoundAggregation that is no
+     * longer required, such as when changing pricing or planning models.
+     */
+    override fun delete(
+        params: CompoundAggregationDeleteParams,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<CompoundAggregation> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.DELETE)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "compoundaggregations",
+                    params.getPathParam(1),
+                )
+                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }

@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.models.AggregationCreateParams
+import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListParams
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
@@ -23,6 +24,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -36,12 +38,14 @@ class AggregationFunctionServiceTest {
                     .rounding(AggregationCreateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
-                    .code("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .code("example_code")
                     .customFields(
                         AggregationCreateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .customSql("customSql")
                     .defaultValue(0.0)
                     .addSegmentedField("string")
                     .addSegment(
@@ -64,6 +68,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -82,6 +87,7 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val aggregation =
@@ -96,12 +102,14 @@ class AggregationFunctionServiceTest {
                     .rounding(AggregationUpdateParams.Rounding.UP)
                     .targetField("x")
                     .unit("x")
-                    .code("x")
+                    .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .code("example_code")
                     .customFields(
                         AggregationUpdateParams.CustomFields.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .customSql("customSql")
                     .defaultValue(0.0)
                     .addSegmentedField("string")
                     .addSegment(
@@ -124,11 +132,31 @@ class AggregationFunctionServiceTest {
                 .apiKey("My API Key")
                 .apiSecret("My API Secret")
                 .token("My Token")
+                .orgId("My Org ID")
                 .build()
         val aggregationService = client.aggregations()
         val paginatedDataAggregationResponse =
             aggregationService.list(AggregationListParams.builder().orgId("orgId").build())
         println(paginatedDataAggregationResponse)
         paginatedDataAggregationResponse.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callDelete() {
+        val client =
+            M3terOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .apiSecret("My API Secret")
+                .token("My Token")
+                .orgId("My Org ID")
+                .build()
+        val aggregationService = client.aggregations()
+        val aggregation =
+            aggregationService.delete(
+                AggregationDeleteParams.builder().orgId("orgId").id("id").build()
+            )
+        println(aggregation)
+        aggregation.validate()
     }
 }

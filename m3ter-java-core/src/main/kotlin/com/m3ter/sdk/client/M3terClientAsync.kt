@@ -2,12 +2,31 @@
 
 package com.m3ter.sdk.client
 
+import com.m3ter.sdk.services.async.AccountPlanServiceAsync
+import com.m3ter.sdk.services.async.AccountServiceAsync
 import com.m3ter.sdk.services.async.AggregationServiceAsync
 import com.m3ter.sdk.services.async.AuthenticationServiceAsync
+import com.m3ter.sdk.services.async.BalanceServiceAsync
+import com.m3ter.sdk.services.async.BillConfigServiceAsync
+import com.m3ter.sdk.services.async.CommitmentServiceAsync
 import com.m3ter.sdk.services.async.CompoundAggregationServiceAsync
+import com.m3ter.sdk.services.async.ContractServiceAsync
+import com.m3ter.sdk.services.async.CounterAdjustmentServiceAsync
+import com.m3ter.sdk.services.async.CounterPricingServiceAsync
 import com.m3ter.sdk.services.async.CounterServiceAsync
+import com.m3ter.sdk.services.async.CreditReasonServiceAsync
+import com.m3ter.sdk.services.async.CurrencyServiceAsync
+import com.m3ter.sdk.services.async.DataExportServiceAsync
+import com.m3ter.sdk.services.async.DebitReasonServiceAsync
 import com.m3ter.sdk.services.async.MeterServiceAsync
+import com.m3ter.sdk.services.async.OrganizationConfigServiceAsync
+import com.m3ter.sdk.services.async.PlanGroupLinkServiceAsync
+import com.m3ter.sdk.services.async.PlanGroupServiceAsync
+import com.m3ter.sdk.services.async.PlanServiceAsync
+import com.m3ter.sdk.services.async.PlanTemplateServiceAsync
+import com.m3ter.sdk.services.async.PricingServiceAsync
 import com.m3ter.sdk.services.async.ProductServiceAsync
+import com.m3ter.sdk.services.async.TransactionTypeServiceAsync
 
 /**
  * A client for interacting with the M3ter REST API asynchronously. You can also switch to
@@ -35,15 +54,53 @@ interface M3terClientAsync {
 
     fun authentication(): AuthenticationServiceAsync
 
+    fun accounts(): AccountServiceAsync
+
+    fun accountPlans(): AccountPlanServiceAsync
+
     fun aggregations(): AggregationServiceAsync
+
+    fun balances(): BalanceServiceAsync
+
+    fun billConfig(): BillConfigServiceAsync
+
+    fun commitments(): CommitmentServiceAsync
 
     fun compoundAggregations(): CompoundAggregationServiceAsync
 
+    fun contracts(): ContractServiceAsync
+
     fun counters(): CounterServiceAsync
+
+    fun counterAdjustments(): CounterAdjustmentServiceAsync
+
+    fun counterPricings(): CounterPricingServiceAsync
+
+    fun creditReasons(): CreditReasonServiceAsync
+
+    fun currencies(): CurrencyServiceAsync
+
+    fun debitReasons(): DebitReasonServiceAsync
 
     fun meters(): MeterServiceAsync
 
+    fun organizationConfig(): OrganizationConfigServiceAsync
+
+    fun plans(): PlanServiceAsync
+
+    fun planGroups(): PlanGroupServiceAsync
+
+    fun planGroupLinks(): PlanGroupLinkServiceAsync
+
+    fun planTemplates(): PlanTemplateServiceAsync
+
+    fun pricings(): PricingServiceAsync
+
     fun products(): ProductServiceAsync
+
+    fun transactionTypes(): TransactionTypeServiceAsync
+
+    fun dataExports(): DataExportServiceAsync
 
     /**
      * Closes this client, relinquishing any underlying resources.

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AggregationFunctionRetrieveParamsTest {
 
     @Test
-    fun createAggregationRetrieveParams() {
+    fun create() {
         AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
     }
 

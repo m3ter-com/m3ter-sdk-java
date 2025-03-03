@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AggregationFunctionUpdateParamsTest {
 
     @Test
-    fun createAggregationUpdateParams() {
+    fun create() {
         AggregationUpdateParams.builder()
             .orgId("orgId")
             .id("id")
@@ -20,12 +21,14 @@ class AggregationFunctionUpdateParamsTest {
             .rounding(AggregationUpdateParams.Rounding.UP)
             .targetField("x")
             .unit("x")
-            .code("{1{}}_")
+            .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            .code("example_code")
             .customFields(
                 AggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .customSql("customSql")
             .defaultValue(0.0)
             .addSegmentedField("string")
             .addSegment(
@@ -50,12 +53,14 @@ class AggregationFunctionUpdateParamsTest {
                 .rounding(AggregationUpdateParams.Rounding.UP)
                 .targetField("x")
                 .unit("x")
-                .code("{1{}}_")
+                .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .code("example_code")
                 .customFields(
                     AggregationUpdateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .customSql("customSql")
                 .defaultValue(0.0)
                 .addSegmentedField("string")
                 .addSegment(
@@ -65,8 +70,10 @@ class AggregationFunctionUpdateParamsTest {
                 )
                 .version(0L)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
@@ -74,13 +81,15 @@ class AggregationFunctionUpdateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationUpdateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("{1{}}_")
+        assertThat(body.accountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        assertThat(body.code()).contains("example_code")
         assertThat(body.customFields())
             .contains(
                 AggregationUpdateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.customSql()).contains("customSql")
         assertThat(body.defaultValue()).contains(0.0)
         assertThat(body.segmentedFields()).contains(listOf("string"))
         assertThat(body.segments())
@@ -108,8 +117,10 @@ class AggregationFunctionUpdateParamsTest {
                 .targetField("x")
                 .unit("x")
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")

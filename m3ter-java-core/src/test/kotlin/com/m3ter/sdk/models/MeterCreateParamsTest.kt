@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MeterCreateParamsTest {
 
     @Test
-    fun createMeterCreateParams() {
+    fun create() {
         MeterCreateParams.builder()
             .orgId("orgId")
             .code("JS!?Q0]r] ]\$]")
@@ -33,7 +34,7 @@ class MeterCreateParamsTest {
             .name("x")
             .customFields(
                 MeterCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -68,15 +69,17 @@ class MeterCreateParamsTest {
                 .name("x")
                 .customFields(
                     MeterCreateParams.CustomFields.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .groupId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
             .isEqualTo(
@@ -105,7 +108,7 @@ class MeterCreateParamsTest {
         assertThat(body.customFields())
             .contains(
                 MeterCreateParams.CustomFields.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(body.groupId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -136,8 +139,10 @@ class MeterCreateParamsTest {
                 )
                 .name("x")
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
             .isEqualTo(

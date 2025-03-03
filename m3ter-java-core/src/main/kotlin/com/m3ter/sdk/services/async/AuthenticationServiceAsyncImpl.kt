@@ -18,9 +18,7 @@ import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
 import java.util.concurrent.CompletableFuture
 
 class AuthenticationServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AuthenticationServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : AuthenticationServiceAsync {
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Get authentication token */
     override fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CompletableFuture<AuthenticationGetBearerTokenResponse> {
         val request =
             HttpRequest.builder()
@@ -45,9 +43,9 @@ internal constructor(
             .thenApply { response ->
                 response
                     .use { getBearerTokenHandler.handle(it) }
-                    .apply {
+                    .also {
                         if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            validate()
+                            it.validate()
                         }
                     }
             }

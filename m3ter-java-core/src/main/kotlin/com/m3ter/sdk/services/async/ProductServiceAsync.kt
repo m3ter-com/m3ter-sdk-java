@@ -7,6 +7,7 @@ package com.m3ter.sdk.services.async
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
+import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPageAsync
 import com.m3ter.sdk.models.ProductListParams
 import com.m3ter.sdk.models.ProductRetrieveParams
@@ -24,7 +25,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun create(
         params: ProductCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -36,7 +37,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun retrieve(
         params: ProductRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -52,7 +53,7 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun update(
         params: ProductUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Product>
 
     /**
@@ -64,6 +65,18 @@ interface ProductServiceAsync {
     @JvmOverloads
     fun list(
         params: ProductListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductListPageAsync>
+
+    /**
+     * Delete a Product with the given UUID.
+     *
+     * This endpoint deletes a specific Product within a specified Organization, using the Product
+     * UUID.
+     */
+    @JvmOverloads
+    fun delete(
+        params: ProductDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Product>
 }

@@ -2,13 +2,14 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AuthenticationGetBearerTokenParamsTest {
 
     @Test
-    fun createAuthenticationGetBearerTokenParams() {
+    fun create() {
         AuthenticationGetBearerTokenParams.builder()
             .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
             .scope("scope")
@@ -22,8 +23,10 @@ class AuthenticationGetBearerTokenParamsTest {
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .scope("scope")
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
         assertThat(body.scope()).contains("scope")
@@ -35,8 +38,10 @@ class AuthenticationGetBearerTokenParamsTest {
             AuthenticationGetBearerTokenParams.builder()
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .build()
+
         val body = params._body()
-        assertThat(body).isNotNull
+
+        assertNotNull(body)
         assertThat(body.grantType())
             .isEqualTo(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
     }
