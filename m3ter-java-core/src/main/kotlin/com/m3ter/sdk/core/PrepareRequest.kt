@@ -39,7 +39,7 @@ internal fun HttpRequest.prepare(clientOptions: ClientOptions, params: Params): 
                 .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                 .putAdditionalHeader("Authorization", "Basic $encodedKeySecret")
                 .build(),
-            RequestOptions.none()
+            RequestOptions.none(),
         )
 
     return request
