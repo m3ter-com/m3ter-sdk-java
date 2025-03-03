@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CreditReasonServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,22 +26,23 @@ class CreditReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
+
         val creditReason =
             creditReasonService.create(
                 CreditReasonCreateParams.builder()
                     .orgId("orgId")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(creditReason)
+
         creditReason.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -51,16 +52,17 @@ class CreditReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
+
         val creditReason =
             creditReasonService.retrieve(
                 CreditReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(creditReason)
+
         creditReason.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -70,6 +72,7 @@ class CreditReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
+
         val creditReason =
             creditReasonService.update(
                 CreditReasonUpdateParams.builder()
@@ -77,16 +80,16 @@ class CreditReasonServiceTest {
                     .id("id")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(creditReason)
+
         creditReason.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -96,14 +99,14 @@ class CreditReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
-        val paginatedDataCreditReasonResponse =
-            creditReasonService.list(CreditReasonListParams.builder().orgId("orgId").build())
-        println(paginatedDataCreditReasonResponse)
-        paginatedDataCreditReasonResponse.data().forEach { it.validate() }
+
+        val page = creditReasonService.list(CreditReasonListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -113,11 +116,12 @@ class CreditReasonServiceTest {
                 .orgId("My Org ID")
                 .build()
         val creditReasonService = client.creditReasons()
+
         val creditReason =
             creditReasonService.delete(
                 CreditReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(creditReason)
+
         creditReason.validate()
     }
 }

@@ -8,7 +8,7 @@
 
 The M3ter Java SDK provides convenient access to the M3ter REST API from applications written in Java.
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com).
 
@@ -46,11 +46,8 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 import com.m3ter.sdk.models.ProductListPage;
 import com.m3ter.sdk.models.ProductListParams;
 
-M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
-    .fromEnv()
-    .orgId("My Org ID")
-    .build();
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
@@ -66,11 +63,8 @@ Configure the client using environment variables:
 import com.m3ter.sdk.client.M3terClient;
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
-M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
-    .fromEnv()
-    .orgId("My Org ID")
-    .build();
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+M3terClient client = M3terOkHttpClient.fromEnv();
 ```
 
 Or manually:
@@ -94,10 +88,9 @@ import com.m3ter.sdk.client.M3terClient;
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
     .fromEnv()
-    .orgId("My Org ID")
-    .orgId("My Org ID")
+    .apiKey("My API Key")
     .build();
 ```
 
@@ -108,6 +101,7 @@ See this table for the available options:
 | `apiKey`    | `M3TER_API_KEY`      | true     | -             |
 | `apiSecret` | `M3TER_API_SECRET`   | true     | -             |
 | `token`     | `M3TER_API_TOKEN`    | false    | -             |
+| `orgId`     | `M3TER_ORG_ID`       | true     | -             |
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
@@ -138,11 +132,8 @@ import com.m3ter.sdk.models.ProductListPageAsync;
 import com.m3ter.sdk.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
-    .fromEnv()
-    .orgId("My Org ID")
-    .build();
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
@@ -159,11 +150,8 @@ import com.m3ter.sdk.models.ProductListPageAsync;
 import com.m3ter.sdk.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-M3terClientAsync client = M3terOkHttpClientAsync.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET` and `M3TER_API_TOKEN` environment variables
-    .fromEnv()
-    .orgId("My Org ID")
-    .build();
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
@@ -288,7 +276,6 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
-    .orgId("My Org ID")
     .maxRetries(4)
     .build();
 ```
@@ -317,7 +304,6 @@ import java.time.Duration;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
-    .orgId("My Org ID")
     .timeout(Duration.ofSeconds(30))
     .build();
 ```
@@ -334,7 +320,6 @@ import java.net.Proxy;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
-    .orgId("My Org ID")
     .proxy(new Proxy(
       Proxy.Type.HTTP, new InetSocketAddress(
         "https://example.com", 8080
@@ -462,7 +447,6 @@ import com.m3ter.sdk.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
     .fromEnv()
-    .orgId("My Org ID")
     .responseValidation(true)
     .build();
 ```

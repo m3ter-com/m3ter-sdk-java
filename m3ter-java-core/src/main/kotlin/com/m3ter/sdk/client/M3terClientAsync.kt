@@ -8,6 +8,8 @@ import com.m3ter.sdk.services.async.AggregationServiceAsync
 import com.m3ter.sdk.services.async.AuthenticationServiceAsync
 import com.m3ter.sdk.services.async.BalanceServiceAsync
 import com.m3ter.sdk.services.async.BillConfigServiceAsync
+import com.m3ter.sdk.services.async.BillJobServiceAsync
+import com.m3ter.sdk.services.async.BillServiceAsync
 import com.m3ter.sdk.services.async.CommitmentServiceAsync
 import com.m3ter.sdk.services.async.CompoundAggregationServiceAsync
 import com.m3ter.sdk.services.async.ContractServiceAsync
@@ -16,17 +18,28 @@ import com.m3ter.sdk.services.async.CounterPricingServiceAsync
 import com.m3ter.sdk.services.async.CounterServiceAsync
 import com.m3ter.sdk.services.async.CreditReasonServiceAsync
 import com.m3ter.sdk.services.async.CurrencyServiceAsync
+import com.m3ter.sdk.services.async.CustomFieldServiceAsync
 import com.m3ter.sdk.services.async.DataExportServiceAsync
 import com.m3ter.sdk.services.async.DebitReasonServiceAsync
+import com.m3ter.sdk.services.async.EventServiceAsync
+import com.m3ter.sdk.services.async.ExternalMappingServiceAsync
+import com.m3ter.sdk.services.async.IntegrationConfigurationServiceAsync
 import com.m3ter.sdk.services.async.MeterServiceAsync
+import com.m3ter.sdk.services.async.NotificationConfigurationServiceAsync
 import com.m3ter.sdk.services.async.OrganizationConfigServiceAsync
+import com.m3ter.sdk.services.async.PermissionPolicyServiceAsync
 import com.m3ter.sdk.services.async.PlanGroupLinkServiceAsync
 import com.m3ter.sdk.services.async.PlanGroupServiceAsync
 import com.m3ter.sdk.services.async.PlanServiceAsync
 import com.m3ter.sdk.services.async.PlanTemplateServiceAsync
 import com.m3ter.sdk.services.async.PricingServiceAsync
 import com.m3ter.sdk.services.async.ProductServiceAsync
+import com.m3ter.sdk.services.async.ResourceGroupServiceAsync
+import com.m3ter.sdk.services.async.ScheduledEventConfigurationServiceAsync
 import com.m3ter.sdk.services.async.TransactionTypeServiceAsync
+import com.m3ter.sdk.services.async.UsageServiceAsync
+import com.m3ter.sdk.services.async.UserServiceAsync
+import com.m3ter.sdk.services.async.WebhookServiceAsync
 
 /**
  * A client for interacting with the M3ter REST API asynchronously. You can also switch to
@@ -62,9 +75,13 @@ interface M3terClientAsync {
 
     fun balances(): BalanceServiceAsync
 
+    fun bills(): BillServiceAsync
+
     fun billConfig(): BillConfigServiceAsync
 
     fun commitments(): CommitmentServiceAsync
+
+    fun billJobs(): BillJobServiceAsync
 
     fun compoundAggregations(): CompoundAggregationServiceAsync
 
@@ -80,11 +97,25 @@ interface M3terClientAsync {
 
     fun currencies(): CurrencyServiceAsync
 
+    fun customFields(): CustomFieldServiceAsync
+
+    fun dataExports(): DataExportServiceAsync
+
     fun debitReasons(): DebitReasonServiceAsync
+
+    fun events(): EventServiceAsync
+
+    fun externalMappings(): ExternalMappingServiceAsync
+
+    fun integrationConfigurations(): IntegrationConfigurationServiceAsync
 
     fun meters(): MeterServiceAsync
 
+    fun notificationConfigurations(): NotificationConfigurationServiceAsync
+
     fun organizationConfig(): OrganizationConfigServiceAsync
+
+    fun permissionPolicies(): PermissionPolicyServiceAsync
 
     fun plans(): PlanServiceAsync
 
@@ -98,9 +129,17 @@ interface M3terClientAsync {
 
     fun products(): ProductServiceAsync
 
+    fun resourceGroups(): ResourceGroupServiceAsync
+
+    fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync
+
     fun transactionTypes(): TransactionTypeServiceAsync
 
-    fun dataExports(): DataExportServiceAsync
+    fun usage(): UsageServiceAsync
+
+    fun users(): UserServiceAsync
+
+    fun webhooks(): WebhookServiceAsync
 
     /**
      * Closes this client, relinquishing any underlying resources.

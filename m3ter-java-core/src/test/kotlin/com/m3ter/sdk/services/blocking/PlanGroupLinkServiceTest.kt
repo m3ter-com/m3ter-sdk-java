@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PlanGroupLinkServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,6 +26,7 @@ class PlanGroupLinkServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
+
         val planGroupLink =
             planGroupLinkService.create(
                 PlanGroupLinkCreateParams.builder()
@@ -35,12 +36,12 @@ class PlanGroupLinkServiceTest {
                     .version(0L)
                     .build()
             )
-        println(planGroupLink)
+
         planGroupLink.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -50,16 +51,17 @@ class PlanGroupLinkServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
+
         val planGroupLink =
             planGroupLinkService.retrieve(
                 PlanGroupLinkRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(planGroupLink)
+
         planGroupLink.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -69,6 +71,7 @@ class PlanGroupLinkServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
+
         val planGroupLink =
             planGroupLinkService.update(
                 PlanGroupLinkUpdateParams.builder()
@@ -79,12 +82,12 @@ class PlanGroupLinkServiceTest {
                     .version(0L)
                     .build()
             )
-        println(planGroupLink)
+
         planGroupLink.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -94,14 +97,15 @@ class PlanGroupLinkServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
-        val paginatedDataPlanGroupLinkResponse =
+
+        val page =
             planGroupLinkService.list(PlanGroupLinkListParams.builder().orgId("orgId").build())
-        println(paginatedDataPlanGroupLinkResponse)
-        paginatedDataPlanGroupLinkResponse.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -111,11 +115,12 @@ class PlanGroupLinkServiceTest {
                 .orgId("My Org ID")
                 .build()
         val planGroupLinkService = client.planGroupLinks()
+
         val planGroupLink =
             planGroupLinkService.delete(
                 PlanGroupLinkDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(planGroupLink)
+
         planGroupLink.validate()
     }
 }

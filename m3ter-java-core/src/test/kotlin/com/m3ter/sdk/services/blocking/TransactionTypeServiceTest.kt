@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class TransactionTypeServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,22 +26,23 @@ class TransactionTypeServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
+
         val transactionType =
             transactionTypeService.create(
                 TransactionTypeCreateParams.builder()
                     .orgId("orgId")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(transactionType)
+
         transactionType.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -51,16 +52,17 @@ class TransactionTypeServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
+
         val transactionType =
             transactionTypeService.retrieve(
                 TransactionTypeRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(transactionType)
+
         transactionType.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -70,6 +72,7 @@ class TransactionTypeServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
+
         val transactionType =
             transactionTypeService.update(
                 TransactionTypeUpdateParams.builder()
@@ -77,16 +80,16 @@ class TransactionTypeServiceTest {
                     .id("id")
                     .name("x")
                     .archived(true)
-                    .code("{1{}}_")
+                    .code("code")
                     .version(0L)
                     .build()
             )
-        println(transactionType)
+
         transactionType.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -96,14 +99,15 @@ class TransactionTypeServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
-        val paginatedDataTransactionTypeResponse =
+
+        val page =
             transactionTypeService.list(TransactionTypeListParams.builder().orgId("orgId").build())
-        println(paginatedDataTransactionTypeResponse)
-        paginatedDataTransactionTypeResponse.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -113,11 +117,12 @@ class TransactionTypeServiceTest {
                 .orgId("My Org ID")
                 .build()
         val transactionTypeService = client.transactionTypes()
+
         val transactionType =
             transactionTypeService.delete(
                 TransactionTypeDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(transactionType)
+
         transactionType.validate()
     }
 }

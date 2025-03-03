@@ -16,6 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
 import com.m3ter.sdk.models.BalanceTransactionListPageAsync
 import com.m3ter.sdk.models.BalanceTransactionListParams
+import com.m3ter.sdk.models.BalanceTransactionSummaryParams
+import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
 import com.m3ter.sdk.models.Transaction
 import java.util.concurrent.CompletableFuture
 
@@ -111,6 +113,41 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                         }
                     }
                     .let { BalanceTransactionListPageAsync.of(this, params, it) }
+            }
+    }
+
+    private val summaryHandler: Handler<BalanceTransactionSummaryResponse> =
+        jsonHandler<BalanceTransactionSummaryResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /** Retrieves the Balance Transactions Summary for a given Balance. */
+    override fun summary(
+        params: BalanceTransactionSummaryParams,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<BalanceTransactionSummaryResponse> {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "balances",
+                    params.getPathParam(1),
+                    "transactions",
+                    "summary",
+                )
+                .build()
+                .prepareAsync(clientOptions, params)
+        return request
+            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+            .thenApply { response ->
+                response
+                    .use { summaryHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                            it.validate()
+                        }
+                    }
             }
     }
 }

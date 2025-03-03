@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CompoundAggregationFunctionServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -27,6 +27,7 @@ class CompoundAggregationFunctionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
+
         val aggregation =
             compoundAggregationService.create(
                 CompoundAggregationCreateParams.builder()
@@ -48,12 +49,12 @@ class CompoundAggregationFunctionServiceTest {
                     .version(0L)
                     .build()
             )
-        println(aggregation)
+
         aggregation.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -63,16 +64,17 @@ class CompoundAggregationFunctionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
+
         val compoundAggregation =
             compoundAggregationService.retrieve(
                 CompoundAggregationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(compoundAggregation)
+
         compoundAggregation.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -82,6 +84,7 @@ class CompoundAggregationFunctionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
+
         val aggregation =
             compoundAggregationService.update(
                 CompoundAggregationUpdateParams.builder()
@@ -104,12 +107,12 @@ class CompoundAggregationFunctionServiceTest {
                     .version(0L)
                     .build()
             )
-        println(aggregation)
+
         aggregation.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -119,16 +122,17 @@ class CompoundAggregationFunctionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
-        val paginatedDataCompoundAggregationResponse =
+
+        val page =
             compoundAggregationService.list(
                 CompoundAggregationListParams.builder().orgId("orgId").build()
             )
-        println(paginatedDataCompoundAggregationResponse)
-        paginatedDataCompoundAggregationResponse.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -138,11 +142,12 @@ class CompoundAggregationFunctionServiceTest {
                 .orgId("My Org ID")
                 .build()
         val compoundAggregationService = client.compoundAggregations()
+
         val compoundAggregation =
             compoundAggregationService.delete(
                 CompoundAggregationDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(compoundAggregation)
+
         compoundAggregation.validate()
     }
 }

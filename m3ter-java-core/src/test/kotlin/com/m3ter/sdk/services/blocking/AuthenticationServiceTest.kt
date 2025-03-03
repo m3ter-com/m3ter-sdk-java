@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class AuthenticationServiceTest {
 
     @Test
-    fun callGetBearerToken() {
+    fun getBearerToken() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -22,14 +22,15 @@ class AuthenticationServiceTest {
                 .orgId("My Org ID")
                 .build()
         val authenticationService = client.authentication()
-        val authenticationGetBearerTokenResponse =
+
+        val response =
             authenticationService.getBearerToken(
                 AuthenticationGetBearerTokenParams.builder()
                     .grantType(AuthenticationGetBearerTokenParams.GrantType.CLIENT_CREDENTIALS)
                     .scope("scope")
                     .build()
             )
-        println(authenticationGetBearerTokenResponse)
-        authenticationGetBearerTokenResponse.validate()
+
+        response.validate()
     }
 }

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class MeterServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -27,6 +27,7 @@ class MeterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
+
         val meter =
             meterService.create(
                 MeterCreateParams.builder()
@@ -60,12 +61,12 @@ class MeterServiceTest {
                     .version(0L)
                     .build()
             )
-        println(meter)
+
         meter.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -75,14 +76,15 @@ class MeterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
+
         val meter =
             meterService.retrieve(MeterRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(meter)
+
         meter.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -92,6 +94,7 @@ class MeterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
+
         val meter =
             meterService.update(
                 MeterUpdateParams.builder()
@@ -126,12 +129,12 @@ class MeterServiceTest {
                     .version(0L)
                     .build()
             )
-        println(meter)
+
         meter.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -141,14 +144,14 @@ class MeterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
-        val paginatedDataMeterResponse =
-            meterService.list(MeterListParams.builder().orgId("orgId").build())
-        println(paginatedDataMeterResponse)
-        paginatedDataMeterResponse.data().forEach { it.validate() }
+
+        val page = meterService.list(MeterListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -158,8 +161,9 @@ class MeterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val meterService = client.meters()
+
         val meter = meterService.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
-        println(meter)
+
         meter.validate()
     }
 }

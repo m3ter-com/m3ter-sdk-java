@@ -16,7 +16,7 @@ class PricingUpdateParamsTest {
             .orgId("orgId")
             .id("id")
             .addPricingBand(
-                PricingUpdateParams.PricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -36,7 +36,7 @@ class PricingUpdateParamsTest {
             .minimumSpendBillInAdvance(true)
             .minimumSpendDescription("minimumSpendDescription")
             .addOveragePricingBand(
-                PricingUpdateParams.OveragePricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -64,7 +64,7 @@ class PricingUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .addPricingBand(
-                    PricingUpdateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -84,7 +84,7 @@ class PricingUpdateParamsTest {
                 .minimumSpendBillInAdvance(true)
                 .minimumSpendDescription("minimumSpendDescription")
                 .addOveragePricingBand(
-                    PricingUpdateParams.OveragePricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -110,7 +110,7 @@ class PricingUpdateParamsTest {
         assertThat(body.pricingBands())
             .isEqualTo(
                 listOf(
-                    PricingUpdateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -133,7 +133,7 @@ class PricingUpdateParamsTest {
         assertThat(body.overagePricingBands())
             .contains(
                 listOf(
-                    PricingUpdateParams.OveragePricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -162,11 +162,7 @@ class PricingUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .addPricingBand(
-                    PricingUpdateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
@@ -176,13 +172,7 @@ class PricingUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.pricingBands())
             .isEqualTo(
-                listOf(
-                    PricingUpdateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
-                )
+                listOf(PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build())
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
@@ -194,11 +184,7 @@ class PricingUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .addPricingBand(
-                    PricingUpdateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()

@@ -19,7 +19,7 @@ class AccountSearchResponseTest {
                         .id("id")
                         .version(0L)
                         .address(
-                            Account.Address.builder()
+                            Address.builder()
                                 .addressLine1("addressLine1")
                                 .addressLine2("addressLine2")
                                 .addressLine3("addressLine3")
@@ -66,7 +66,7 @@ class AccountSearchResponseTest {
                     .id("id")
                     .version(0L)
                     .address(
-                        Account.Address.builder()
+                        Address.builder()
                             .addressLine1("addressLine1")
                             .addressLine2("addressLine2")
                             .addressLine3("addressLine3")

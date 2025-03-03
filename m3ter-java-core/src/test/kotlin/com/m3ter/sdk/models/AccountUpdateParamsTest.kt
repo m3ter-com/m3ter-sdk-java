@@ -16,10 +16,10 @@ class AccountUpdateParamsTest {
             .orgId("orgId")
             .id("id")
             .code("JS!?Q0]r] ]\$]")
-            .emailAddress("dev@stainlessapi.com")
+            .emailAddress("dev@stainless.com")
             .name("x")
             .address(
-                AccountUpdateParams.Address.builder()
+                Address.builder()
                     .addressLine1("addressLine1")
                     .addressLine2("addressLine2")
                     .addressLine3("addressLine3")
@@ -59,10 +59,10 @@ class AccountUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
-                .emailAddress("dev@stainlessapi.com")
+                .emailAddress("dev@stainless.com")
                 .name("x")
                 .address(
-                    AccountUpdateParams.Address.builder()
+                    Address.builder()
                         .addressLine1("addressLine1")
                         .addressLine2("addressLine2")
                         .addressLine3("addressLine3")
@@ -98,11 +98,11 @@ class AccountUpdateParamsTest {
 
         assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
-        assertThat(body.emailAddress()).isEqualTo("dev@stainlessapi.com")
+        assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.address())
             .contains(
-                AccountUpdateParams.Address.builder()
+                Address.builder()
                     .addressLine1("addressLine1")
                     .addressLine2("addressLine2")
                     .addressLine3("addressLine3")
@@ -145,7 +145,7 @@ class AccountUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
-                .emailAddress("dev@stainlessapi.com")
+                .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
 
@@ -153,7 +153,7 @@ class AccountUpdateParamsTest {
 
         assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
-        assertThat(body.emailAddress()).isEqualTo("dev@stainlessapi.com")
+        assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
     }
 
@@ -164,7 +164,7 @@ class AccountUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
-                .emailAddress("dev@stainlessapi.com")
+                .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
         assertThat(params).isNotNull

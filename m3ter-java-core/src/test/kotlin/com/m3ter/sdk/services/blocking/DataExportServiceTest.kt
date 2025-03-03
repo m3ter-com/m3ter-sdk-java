@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class DataExportServiceTest {
 
     @Test
-    fun callCreateAdhoc() {
+    fun createAdhoc() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -23,6 +23,7 @@ class DataExportServiceTest {
                 .orgId("My Org ID")
                 .build()
         val dataExportService = client.dataExports()
+
         val adhocExport =
             dataExportService.createAdhoc(
                 DataExportCreateAdhocParams.builder()
@@ -38,7 +39,7 @@ class DataExportServiceTest {
                     )
                     .build()
             )
-        println(adhocExport)
+
         adhocExport.validate()
     }
 }

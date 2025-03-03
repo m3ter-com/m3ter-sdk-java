@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class AccountPlanServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -29,6 +29,7 @@ class AccountPlanServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
+
         val accountPlan =
             accountPlanService.create(
                 AccountPlanCreateParams.builder()
@@ -50,12 +51,12 @@ class AccountPlanServiceTest {
                     .version(0L)
                     .build()
             )
-        println(accountPlan)
+
         accountPlan.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -65,16 +66,17 @@ class AccountPlanServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
+
         val accountPlan =
             accountPlanService.retrieve(
                 AccountPlanRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(accountPlan)
+
         accountPlan.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -84,6 +86,7 @@ class AccountPlanServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
+
         val accountPlan =
             accountPlanService.update(
                 AccountPlanUpdateParams.builder()
@@ -106,12 +109,12 @@ class AccountPlanServiceTest {
                     .version(0L)
                     .build()
             )
-        println(accountPlan)
+
         accountPlan.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -121,14 +124,14 @@ class AccountPlanServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
-        val paginatedDataAccountPlanResponse =
-            accountPlanService.list(AccountPlanListParams.builder().orgId("orgId").build())
-        println(paginatedDataAccountPlanResponse)
-        paginatedDataAccountPlanResponse.data().forEach { it.validate() }
+
+        val page = accountPlanService.list(AccountPlanListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -138,11 +141,12 @@ class AccountPlanServiceTest {
                 .orgId("My Org ID")
                 .build()
         val accountPlanService = client.accountPlans()
+
         val accountPlan =
             accountPlanService.delete(
                 AccountPlanDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(accountPlan)
+
         accountPlan.validate()
     }
 }

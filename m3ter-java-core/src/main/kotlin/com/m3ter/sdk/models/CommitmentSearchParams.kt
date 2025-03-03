@@ -36,13 +36,17 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** fromDocument for multi page retrievals */
+    /** `fromDocument` for multi page retrievals. */
     fun fromDocument(): Optional<Long> = Optional.ofNullable(fromDocument)
 
-    /** Search Operator to be used while querying search */
+    /** Search Operator to be used while querying search. */
     fun operator(): Optional<Operator> = Optional.ofNullable(operator)
 
-    /** Number of Commitments to retrieve per page */
+    /**
+     * Number of Commitments to retrieve per page.
+     *
+     * **NOTE:** If not defined, default is 10.
+     */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
 
     /**
@@ -73,7 +77,7 @@ private constructor(
      */
     fun sortBy(): Optional<String> = Optional.ofNullable(sortBy)
 
-    /** Sorting order */
+    /** Sorting order. */
     fun sortOrder(): Optional<SortOrder> = Optional.ofNullable(sortOrder)
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -137,30 +141,42 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         fun fromDocument(fromDocument: Long?) = apply { this.fromDocument = fromDocument }
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         fun fromDocument(fromDocument: Long) = fromDocument(fromDocument as Long?)
 
-        /** fromDocument for multi page retrievals */
+        /** `fromDocument` for multi page retrievals. */
         @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun fromDocument(fromDocument: Optional<Long>) =
             fromDocument(fromDocument.orElse(null) as Long?)
 
-        /** Search Operator to be used while querying search */
+        /** Search Operator to be used while querying search. */
         fun operator(operator: Operator?) = apply { this.operator = operator }
 
-        /** Search Operator to be used while querying search */
+        /** Search Operator to be used while querying search. */
         fun operator(operator: Optional<Operator>) = operator(operator.orElse(null))
 
-        /** Number of Commitments to retrieve per page */
+        /**
+         * Number of Commitments to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of Commitments to retrieve per page */
+        /**
+         * Number of Commitments to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of Commitments to retrieve per page */
+        /**
+         * Number of Commitments to retrieve per page.
+         *
+         * **NOTE:** If not defined, default is 10.
+         */
         @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
 
@@ -220,10 +236,10 @@ private constructor(
          */
         fun sortBy(sortBy: Optional<String>) = sortBy(sortBy.orElse(null))
 
-        /** Sorting order */
+        /** Sorting order. */
         fun sortOrder(sortOrder: SortOrder?) = apply { this.sortOrder = sortOrder }
 
-        /** Sorting order */
+        /** Sorting order. */
         fun sortOrder(sortOrder: Optional<SortOrder>) = sortOrder(sortOrder.orElse(null))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -338,7 +354,7 @@ private constructor(
             )
     }
 
-    /** Search Operator to be used while querying search */
+    /** Search Operator to be used while querying search. */
     class Operator @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -436,7 +452,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Sorting order */
+    /** Sorting order. */
     class SortOrder @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
