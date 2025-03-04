@@ -65,6 +65,11 @@ interface M3terClient {
      */
     fun async(): M3terClientAsync
 
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
+
     fun authentication(): AuthenticationService
 
     fun accounts(): AccountService
@@ -153,4 +158,84 @@ interface M3terClient {
      * method.
      */
     fun close()
+
+    /** A view of [M3terClient] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun authentication(): AuthenticationService.WithRawResponse
+
+        fun accounts(): AccountService.WithRawResponse
+
+        fun accountPlans(): AccountPlanService.WithRawResponse
+
+        fun aggregations(): AggregationService.WithRawResponse
+
+        fun balances(): BalanceService.WithRawResponse
+
+        fun bills(): BillService.WithRawResponse
+
+        fun billConfig(): BillConfigService.WithRawResponse
+
+        fun commitments(): CommitmentService.WithRawResponse
+
+        fun billJobs(): BillJobService.WithRawResponse
+
+        fun compoundAggregations(): CompoundAggregationService.WithRawResponse
+
+        fun contracts(): ContractService.WithRawResponse
+
+        fun counters(): CounterService.WithRawResponse
+
+        fun counterAdjustments(): CounterAdjustmentService.WithRawResponse
+
+        fun counterPricings(): CounterPricingService.WithRawResponse
+
+        fun creditReasons(): CreditReasonService.WithRawResponse
+
+        fun currencies(): CurrencyService.WithRawResponse
+
+        fun customFields(): CustomFieldService.WithRawResponse
+
+        fun dataExports(): DataExportService.WithRawResponse
+
+        fun debitReasons(): DebitReasonService.WithRawResponse
+
+        fun events(): EventService.WithRawResponse
+
+        fun externalMappings(): ExternalMappingService.WithRawResponse
+
+        fun integrationConfigurations(): IntegrationConfigurationService.WithRawResponse
+
+        fun meters(): MeterService.WithRawResponse
+
+        fun notificationConfigurations(): NotificationConfigurationService.WithRawResponse
+
+        fun organizationConfig(): OrganizationConfigService.WithRawResponse
+
+        fun permissionPolicies(): PermissionPolicyService.WithRawResponse
+
+        fun plans(): PlanService.WithRawResponse
+
+        fun planGroups(): PlanGroupService.WithRawResponse
+
+        fun planGroupLinks(): PlanGroupLinkService.WithRawResponse
+
+        fun planTemplates(): PlanTemplateService.WithRawResponse
+
+        fun pricings(): PricingService.WithRawResponse
+
+        fun products(): ProductService.WithRawResponse
+
+        fun resourceGroups(): ResourceGroupService.WithRawResponse
+
+        fun scheduledEventConfigurations(): ScheduledEventConfigurationService.WithRawResponse
+
+        fun transactionTypes(): TransactionTypeService.WithRawResponse
+
+        fun usage(): UsageService.WithRawResponse
+
+        fun users(): UserService.WithRawResponse
+
+        fun webhooks(): WebhookService.WithRawResponse
+    }
 }

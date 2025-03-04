@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async.usage.fileUploads
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.FileUploadJob
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.UsageFileUploadJobRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface JobServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Get the file upload job response using the UUID of the file upload job.
@@ -53,4 +60,44 @@ interface JobServiceAsync {
         params: UsageFileUploadJobGetOriginalDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UsageFileUploadJobGetOriginalDownloadUrlResponse>
+
+    /** A view of [JobServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
+         * [JobServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UsageFileUploadJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<FileUploadJob>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs`, but is otherwise the same as
+         * [JobServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs/{id}/original`, but is otherwise the
+         * same as [JobServiceAsync.getOriginalDownloadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getOriginalDownloadUrl(
+            params: UsageFileUploadJobGetOriginalDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>>
+    }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
@@ -16,6 +18,11 @@ import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface CompoundAggregationServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new CompoundAggregation.
@@ -84,4 +91,67 @@ interface CompoundAggregationServiceAsync {
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CompoundAggregation>
+
+    /**
+     * A view of [CompoundAggregationServiceAsync] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but
+         * is otherwise the same as [CompoundAggregationServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CompoundAggregationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations/{id}`,
+         * but is otherwise the same as [CompoundAggregationServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CompoundAggregationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CompoundAggregation>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
+         * but is otherwise the same as [CompoundAggregationServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CompoundAggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations`, but is
+         * otherwise the same as [CompoundAggregationServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/compoundaggregations/{id}`, but is otherwise the same as
+         * [CompoundAggregationServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CompoundAggregationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CompoundAggregation>>
+    }
 }

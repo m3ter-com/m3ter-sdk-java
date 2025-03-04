@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.CounterPricingUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface CounterPricingServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new CounterPricing.
@@ -63,4 +70,66 @@ interface CounterPricingServiceAsync {
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricing>
+
+    /**
+     * A view of [CounterPricingServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/counterpricings`, but is
+         * otherwise the same as [CounterPricingServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterPricingCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings/{id}`, but is
+         * otherwise the same as [CounterPricingServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterPricingRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/counterpricings/{id}`, but is
+         * otherwise the same as [CounterPricingServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterPricingUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings`, but is
+         * otherwise the same as [CounterPricingServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CounterPricingListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/counterpricings/{id}`, but
+         * is otherwise the same as [CounterPricingServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterPricingDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+    }
 }

@@ -94,6 +94,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
     // Pass the original clientOptions so that this client sets its own User-Agent.
     private val sync: M3terClient by lazy { M3terClientImpl(clientOptions) }
 
+    private val withRawResponse: M3terClientAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
+
     private val authentication: AuthenticationServiceAsync by lazy {
         AuthenticationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -242,6 +246,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun sync(): M3terClient = sync
 
+    override fun withRawResponse(): M3terClientAsync.WithRawResponse = withRawResponse
+
     override fun authentication(): AuthenticationServiceAsync = authentication
 
     override fun accounts(): AccountServiceAsync = accounts
@@ -322,4 +328,248 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
     override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun close() = clientOptions.httpClient.close()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        M3terClientAsync.WithRawResponse {
+
+        private val authentication: AuthenticationServiceAsync.WithRawResponse by lazy {
+            AuthenticationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val accounts: AccountServiceAsync.WithRawResponse by lazy {
+            AccountServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val accountPlans: AccountPlanServiceAsync.WithRawResponse by lazy {
+            AccountPlanServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val aggregations: AggregationServiceAsync.WithRawResponse by lazy {
+            AggregationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val balances: BalanceServiceAsync.WithRawResponse by lazy {
+            BalanceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val bills: BillServiceAsync.WithRawResponse by lazy {
+            BillServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val billConfig: BillConfigServiceAsync.WithRawResponse by lazy {
+            BillConfigServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val commitments: CommitmentServiceAsync.WithRawResponse by lazy {
+            CommitmentServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val billJobs: BillJobServiceAsync.WithRawResponse by lazy {
+            BillJobServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val compoundAggregations: CompoundAggregationServiceAsync.WithRawResponse by lazy {
+            CompoundAggregationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val contracts: ContractServiceAsync.WithRawResponse by lazy {
+            ContractServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val counters: CounterServiceAsync.WithRawResponse by lazy {
+            CounterServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val counterAdjustments: CounterAdjustmentServiceAsync.WithRawResponse by lazy {
+            CounterAdjustmentServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val counterPricings: CounterPricingServiceAsync.WithRawResponse by lazy {
+            CounterPricingServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val creditReasons: CreditReasonServiceAsync.WithRawResponse by lazy {
+            CreditReasonServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val currencies: CurrencyServiceAsync.WithRawResponse by lazy {
+            CurrencyServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val customFields: CustomFieldServiceAsync.WithRawResponse by lazy {
+            CustomFieldServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val dataExports: DataExportServiceAsync.WithRawResponse by lazy {
+            DataExportServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val debitReasons: DebitReasonServiceAsync.WithRawResponse by lazy {
+            DebitReasonServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val events: EventServiceAsync.WithRawResponse by lazy {
+            EventServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val externalMappings: ExternalMappingServiceAsync.WithRawResponse by lazy {
+            ExternalMappingServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val integrationConfigurations:
+            IntegrationConfigurationServiceAsync.WithRawResponse by lazy {
+            IntegrationConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val meters: MeterServiceAsync.WithRawResponse by lazy {
+            MeterServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val notificationConfigurations:
+            NotificationConfigurationServiceAsync.WithRawResponse by lazy {
+            NotificationConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val organizationConfig: OrganizationConfigServiceAsync.WithRawResponse by lazy {
+            OrganizationConfigServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val permissionPolicies: PermissionPolicyServiceAsync.WithRawResponse by lazy {
+            PermissionPolicyServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val plans: PlanServiceAsync.WithRawResponse by lazy {
+            PlanServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val planGroups: PlanGroupServiceAsync.WithRawResponse by lazy {
+            PlanGroupServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val planGroupLinks: PlanGroupLinkServiceAsync.WithRawResponse by lazy {
+            PlanGroupLinkServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val planTemplates: PlanTemplateServiceAsync.WithRawResponse by lazy {
+            PlanTemplateServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val pricings: PricingServiceAsync.WithRawResponse by lazy {
+            PricingServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val products: ProductServiceAsync.WithRawResponse by lazy {
+            ProductServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val resourceGroups: ResourceGroupServiceAsync.WithRawResponse by lazy {
+            ResourceGroupServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val scheduledEventConfigurations:
+            ScheduledEventConfigurationServiceAsync.WithRawResponse by lazy {
+            ScheduledEventConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val transactionTypes: TransactionTypeServiceAsync.WithRawResponse by lazy {
+            TransactionTypeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val usage: UsageServiceAsync.WithRawResponse by lazy {
+            UsageServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val users: UserServiceAsync.WithRawResponse by lazy {
+            UserServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val webhooks: WebhookServiceAsync.WithRawResponse by lazy {
+            WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun authentication(): AuthenticationServiceAsync.WithRawResponse = authentication
+
+        override fun accounts(): AccountServiceAsync.WithRawResponse = accounts
+
+        override fun accountPlans(): AccountPlanServiceAsync.WithRawResponse = accountPlans
+
+        override fun aggregations(): AggregationServiceAsync.WithRawResponse = aggregations
+
+        override fun balances(): BalanceServiceAsync.WithRawResponse = balances
+
+        override fun bills(): BillServiceAsync.WithRawResponse = bills
+
+        override fun billConfig(): BillConfigServiceAsync.WithRawResponse = billConfig
+
+        override fun commitments(): CommitmentServiceAsync.WithRawResponse = commitments
+
+        override fun billJobs(): BillJobServiceAsync.WithRawResponse = billJobs
+
+        override fun compoundAggregations(): CompoundAggregationServiceAsync.WithRawResponse =
+            compoundAggregations
+
+        override fun contracts(): ContractServiceAsync.WithRawResponse = contracts
+
+        override fun counters(): CounterServiceAsync.WithRawResponse = counters
+
+        override fun counterAdjustments(): CounterAdjustmentServiceAsync.WithRawResponse =
+            counterAdjustments
+
+        override fun counterPricings(): CounterPricingServiceAsync.WithRawResponse = counterPricings
+
+        override fun creditReasons(): CreditReasonServiceAsync.WithRawResponse = creditReasons
+
+        override fun currencies(): CurrencyServiceAsync.WithRawResponse = currencies
+
+        override fun customFields(): CustomFieldServiceAsync.WithRawResponse = customFields
+
+        override fun dataExports(): DataExportServiceAsync.WithRawResponse = dataExports
+
+        override fun debitReasons(): DebitReasonServiceAsync.WithRawResponse = debitReasons
+
+        override fun events(): EventServiceAsync.WithRawResponse = events
+
+        override fun externalMappings(): ExternalMappingServiceAsync.WithRawResponse =
+            externalMappings
+
+        override fun integrationConfigurations():
+            IntegrationConfigurationServiceAsync.WithRawResponse = integrationConfigurations
+
+        override fun meters(): MeterServiceAsync.WithRawResponse = meters
+
+        override fun notificationConfigurations():
+            NotificationConfigurationServiceAsync.WithRawResponse = notificationConfigurations
+
+        override fun organizationConfig(): OrganizationConfigServiceAsync.WithRawResponse =
+            organizationConfig
+
+        override fun permissionPolicies(): PermissionPolicyServiceAsync.WithRawResponse =
+            permissionPolicies
+
+        override fun plans(): PlanServiceAsync.WithRawResponse = plans
+
+        override fun planGroups(): PlanGroupServiceAsync.WithRawResponse = planGroups
+
+        override fun planGroupLinks(): PlanGroupLinkServiceAsync.WithRawResponse = planGroupLinks
+
+        override fun planTemplates(): PlanTemplateServiceAsync.WithRawResponse = planTemplates
+
+        override fun pricings(): PricingServiceAsync.WithRawResponse = pricings
+
+        override fun products(): ProductServiceAsync.WithRawResponse = products
+
+        override fun resourceGroups(): ResourceGroupServiceAsync.WithRawResponse = resourceGroups
+
+        override fun scheduledEventConfigurations():
+            ScheduledEventConfigurationServiceAsync.WithRawResponse = scheduledEventConfigurations
+
+        override fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse =
+            transactionTypes
+
+        override fun usage(): UsageServiceAsync.WithRawResponse = usage
+
+        override fun users(): UserServiceAsync.WithRawResponse = users
+
+        override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
+    }
 }

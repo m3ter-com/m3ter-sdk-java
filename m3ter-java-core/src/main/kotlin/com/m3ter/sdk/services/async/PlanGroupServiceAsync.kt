@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.PlanGroupUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface PlanGroupServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new PlanGroup. This endpoint creates a new PlanGroup within the specified
@@ -78,4 +85,65 @@ interface PlanGroupServiceAsync {
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroup>
+
+    /**
+     * A view of [PlanGroupServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/plangroups`, but is
+         * otherwise the same as [PlanGroupServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanGroupCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanGroupUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups`, but is otherwise
+         * the same as [PlanGroupServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanGroupListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+    }
 }
