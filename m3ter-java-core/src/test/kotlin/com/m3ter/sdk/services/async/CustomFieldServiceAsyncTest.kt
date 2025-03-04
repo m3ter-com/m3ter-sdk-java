@@ -53,7 +53,7 @@ class CustomFieldServiceAsyncTest {
                     .account(CustomFieldUpdateParams.Account.builder().build())
                     .accountPlan(
                         CustomFieldUpdateParams.AccountPlan.builder()
-                            .putAdditionalProperty("New CF Test", JsonValue.from("bar"))
+                            .putAdditionalProperty("New CF Test", JsonValue.from("Test Value"))
                             .build()
                     )
                     .aggregation(CustomFieldUpdateParams.Aggregation.builder().build())
@@ -63,15 +63,21 @@ class CustomFieldServiceAsyncTest {
                     .meter(CustomFieldUpdateParams.Meter.builder().build())
                     .organization(
                         CustomFieldUpdateParams.Organization.builder()
-                            .putAdditionalProperty("Org Example 2", JsonValue.from("bar"))
-                            .putAdditionalProperty("Org Example 1", JsonValue.from("bar"))
+                            .putAdditionalProperty(
+                                "Org Example 2",
+                                JsonValue.from("Sample text 2."),
+                            )
+                            .putAdditionalProperty(
+                                "Org Example 1",
+                                JsonValue.from("Sample text 1."),
+                            )
                             .build()
                     )
                     .plan(CustomFieldUpdateParams.Plan.builder().build())
                     .planTemplate(CustomFieldUpdateParams.PlanTemplate.builder().build())
                     .product(
                         CustomFieldUpdateParams.Product.builder()
-                            .putAdditionalProperty("Product CF Example", JsonValue.from("bar"))
+                            .putAdditionalProperty("Product CF Example", JsonValue.from(42))
                             .build()
                     )
                     .version(6L)

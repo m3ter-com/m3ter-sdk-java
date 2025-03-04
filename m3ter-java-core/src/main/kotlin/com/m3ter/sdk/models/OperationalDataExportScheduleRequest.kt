@@ -20,49 +20,55 @@ import java.util.Objects
 import java.util.Optional
 
 @NoAutoDetect
-class OperationalDataExportSchedule
+class OperationalDataExportScheduleRequest
 @JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("operationalDataTypes")
     @ExcludeMissing
     private val operationalDataTypes: JsonField<List<OperationalDataType>> = JsonMissing.of(),
+    @JsonProperty("sourceType")
+    @ExcludeMissing
+    private val sourceType: JsonField<SourceType> = JsonMissing.of(),
+    @JsonProperty("version")
+    @ExcludeMissing
+    private val version: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the schedule. */
-    fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     */
-    fun version(): Long = version.getRequired("version")
-
     /** A list of the entities whose operational data is included in the data export. */
-    fun operationalDataTypes(): Optional<List<OperationalDataType>> =
-        Optional.ofNullable(operationalDataTypes.getNullable("operationalDataTypes"))
+    fun operationalDataTypes(): List<OperationalDataType> =
+        operationalDataTypes.getRequired("operationalDataTypes")
 
-    /** The id of the schedule. */
-    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+    fun sourceType(): SourceType = sourceType.getRequired("sourceType")
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * The version number of the entity:
+     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     *   On initial Create, version is set at 1 and listed in the response.
+     * - **Update Entity:** On Update, version is required and must match the existing version
+     *   because a check is performed to ensure sequential versioning is preserved. Version is
+     *   incremented by 1 and listed in the response.
      */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
     /** A list of the entities whose operational data is included in the data export. */
     @JsonProperty("operationalDataTypes")
     @ExcludeMissing
     fun _operationalDataTypes(): JsonField<List<OperationalDataType>> = operationalDataTypes
+
+    @JsonProperty("sourceType")
+    @ExcludeMissing
+    fun _sourceType(): JsonField<SourceType> = sourceType
+
+    /**
+     * The version number of the entity:
+     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     *   On initial Create, version is set at 1 and listed in the response.
+     * - **Update Entity:** On Update, version is required and must match the existing version
+     *   because a check is performed to ensure sequential versioning is preserved. Version is
+     *   incremented by 1 and listed in the response.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -70,14 +76,14 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): OperationalDataExportSchedule = apply {
+    fun validate(): OperationalDataExportScheduleRequest = apply {
         if (validated) {
             return@apply
         }
 
-        id()
-        version()
         operationalDataTypes()
+        sourceType()
+        version()
         validated = true
     }
 
@@ -88,44 +94,25 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [OperationalDataExportSchedule]. */
+    /** A builder for [OperationalDataExportScheduleRequest]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var operationalDataTypes: JsonField<MutableList<OperationalDataType>>? = null
+        private var sourceType: JsonField<SourceType>? = null
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(operationalDataExportSchedule: OperationalDataExportSchedule) = apply {
-            id = operationalDataExportSchedule.id
-            version = operationalDataExportSchedule.version
+        internal fun from(
+            operationalDataExportScheduleRequest: OperationalDataExportScheduleRequest
+        ) = apply {
             operationalDataTypes =
-                operationalDataExportSchedule.operationalDataTypes.map { it.toMutableList() }
-            additionalProperties = operationalDataExportSchedule.additionalProperties.toMutableMap()
+                operationalDataExportScheduleRequest.operationalDataTypes.map { it.toMutableList() }
+            sourceType = operationalDataExportScheduleRequest.sourceType
+            version = operationalDataExportScheduleRequest.version
+            additionalProperties =
+                operationalDataExportScheduleRequest.additionalProperties.toMutableMap()
         }
-
-        /** The id of the schedule. */
-        fun id(id: String) = id(JsonField.of(id))
-
-        /** The id of the schedule. */
-        fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** A list of the entities whose operational data is included in the data export. */
         fun operationalDataTypes(operationalDataTypes: List<OperationalDataType>) =
@@ -151,6 +138,30 @@ private constructor(
                 }
         }
 
+        fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
+
+        fun sourceType(sourceType: JsonField<SourceType>) = apply { this.sourceType = sourceType }
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -170,11 +181,13 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
-        fun build(): OperationalDataExportSchedule =
-            OperationalDataExportSchedule(
-                checkRequired("id", id),
-                checkRequired("version", version),
-                (operationalDataTypes ?: JsonMissing.of()).map { it.toImmutable() },
+        fun build(): OperationalDataExportScheduleRequest =
+            OperationalDataExportScheduleRequest(
+                checkRequired("operationalDataTypes", operationalDataTypes).map {
+                    it.toImmutable()
+                },
+                checkRequired("sourceType", sourceType),
+                version,
                 additionalProperties.toImmutable(),
             )
     }
@@ -377,20 +390,119 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    class SourceType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val USAGE = of("USAGE")
+
+            @JvmField val OPERATIONAL = of("OPERATIONAL")
+
+            @JvmStatic fun of(value: String) = SourceType(JsonField.of(value))
+        }
+
+        /** An enum containing [SourceType]'s known values. */
+        enum class Known {
+            USAGE,
+            OPERATIONAL,
+        }
+
+        /**
+         * An enum containing [SourceType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [SourceType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            USAGE,
+            OPERATIONAL,
+            /**
+             * An enum member indicating that [SourceType] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                USAGE -> Value.USAGE
+                OPERATIONAL -> Value.OPERATIONAL
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                USAGE -> Known.USAGE
+                OPERATIONAL -> Known.OPERATIONAL
+                else -> throw M3terInvalidDataException("Unknown SourceType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is OperationalDataExportSchedule && id == other.id && version == other.version && operationalDataTypes == other.operationalDataTypes && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is OperationalDataExportScheduleRequest && operationalDataTypes == other.operationalDataTypes && sourceType == other.sourceType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, operationalDataTypes, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(operationalDataTypes, sourceType, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OperationalDataExportSchedule{id=$id, version=$version, operationalDataTypes=$operationalDataTypes, additionalProperties=$additionalProperties}"
+        "OperationalDataExportScheduleRequest{operationalDataTypes=$operationalDataTypes, sourceType=$sourceType, version=$version, additionalProperties=$additionalProperties}"
 }
