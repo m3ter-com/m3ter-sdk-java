@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -621,14 +622,8 @@ private constructor(
 
         fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
             currencyConversions =
-                (currencyConversions ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(currencyConversion)
+                (currencyConversions ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("currencyConversions", it).add(currencyConversion)
                 }
         }
 
@@ -751,14 +746,8 @@ private constructor(
         /** An array of the Bill line items. */
         fun addLineItem(lineItem: LineItem) = apply {
             lineItems =
-                (lineItems ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(lineItem)
+                (lineItems ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("lineItems", it).add(lineItem)
                 }
         }
 
@@ -1845,14 +1834,8 @@ private constructor(
             /** Shows the usage by pricing band for tiered pricing structures. */
             fun addUsagePerPricingBand(usagePerPricingBand: UsagePerPricingBand) = apply {
                 this.usagePerPricingBand =
-                    (this.usagePerPricingBand ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(usagePerPricingBand)
+                    (this.usagePerPricingBand ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("usagePerPricingBand", it).add(usagePerPricingBand)
                     }
             }
 

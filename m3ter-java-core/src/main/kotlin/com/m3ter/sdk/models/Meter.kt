@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -359,14 +360,8 @@ private constructor(
          */
         fun addDataField(dataField: DataField) = apply {
             dataFields =
-                (dataFields ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(dataField)
+                (dataFields ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("dataFields", it).add(dataField)
                 }
         }
 
@@ -394,14 +389,8 @@ private constructor(
          */
         fun addDerivedField(derivedField: DerivedField) = apply {
             derivedFields =
-                (derivedFields ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(derivedField)
+                (derivedFields ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("derivedFields", it).add(derivedField)
                 }
         }
 

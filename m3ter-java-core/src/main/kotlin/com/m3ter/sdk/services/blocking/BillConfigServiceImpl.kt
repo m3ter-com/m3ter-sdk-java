@@ -11,8 +11,8 @@ import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
-import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BillConfig

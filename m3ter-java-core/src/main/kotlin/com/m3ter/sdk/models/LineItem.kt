@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -755,14 +756,8 @@ private constructor(
          */
         fun addBandUsage(bandUsage: BandUsage) = apply {
             this.bandUsage =
-                (this.bandUsage ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(bandUsage)
+                (this.bandUsage ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("bandUsage", it).add(bandUsage)
                 }
         }
 
