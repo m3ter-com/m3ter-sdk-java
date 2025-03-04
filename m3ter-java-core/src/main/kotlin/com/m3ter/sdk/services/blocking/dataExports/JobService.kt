@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking.dataExports
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.DataExportJob
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlResponse
@@ -13,6 +15,11 @@ import com.m3ter.sdk.models.DataExportJobListParams
 import com.m3ter.sdk.models.DataExportJobRetrieveParams
 
 interface JobService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Retrieve an Export Job for the given UUID.
@@ -56,4 +63,42 @@ interface JobService {
         params: DataExportJobGetDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportJobGetDownloadUrlResponse
+
+    /** A view of [JobService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs/{id}`, but
+         * is otherwise the same as [JobService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJob>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is
+         * otherwise the same as [JobService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportJobListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJobListPage>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/dataexports/jobs/{jobId}/getdownloadurl`, but is otherwise the
+         * same as [JobService.getDownloadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getDownloadUrl(
+            params: DataExportJobGetDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse>
+    }
 }

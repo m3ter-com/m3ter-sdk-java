@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
@@ -23,6 +25,11 @@ import com.m3ter.sdk.services.async.bills.LineItemServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface BillServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun creditLineItems(): CreditLineItemServiceAsync
 
@@ -142,4 +149,102 @@ interface BillServiceAsync {
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Bill>
+
+    /** A view of [BillServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun creditLineItems(): CreditLineItemServiceAsync.WithRawResponse
+
+        fun debitLineItems(): DebitLineItemServiceAsync.WithRawResponse
+
+        fun lineItems(): LineItemServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{id}`, but is otherwise
+         * the same as [BillServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Bill>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills`, but is otherwise the
+         * same as [BillServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/bills/{id}`, but is
+         * otherwise the same as [BillServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BillDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Bill>>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/bills/approve`, but is
+         * otherwise the same as [BillServiceAsync.approve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun approve(
+            params: BillApproveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillApproveResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/latest/{accountId}`,
+         * but is otherwise the same as [BillServiceAsync.latestByAccount].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun latestByAccount(
+            params: BillLatestByAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Bill>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/lock`, but is
+         * otherwise the same as [BillServiceAsync.lock].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun lock(
+            params: BillLockParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Bill>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/search`, but is
+         * otherwise the same as [BillServiceAsync.search].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun search(
+            params: BillSearchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillSearchResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/status`, but is
+         * otherwise the same as [BillServiceAsync.updateStatus].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun updateStatus(
+            params: BillUpdateStatusParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Bill>>
+    }
 }

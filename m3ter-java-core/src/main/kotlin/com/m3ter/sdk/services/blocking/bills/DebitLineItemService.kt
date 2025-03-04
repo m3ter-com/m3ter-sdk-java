@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking.bills
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillDebitLineItemCreateParams
 import com.m3ter.sdk.models.BillDebitLineItemDeleteParams
 import com.m3ter.sdk.models.BillDebitLineItemListPage
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.BillDebitLineItemUpdateParams
 import com.m3ter.sdk.models.DebitLineItem
 
 interface DebitLineItemService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Debit line item for the given bill.
@@ -54,4 +61,70 @@ interface DebitLineItemService {
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItem
+
+    /**
+     * A view of [DebitLineItemService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
+         * [DebitLineItemService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BillDebitLineItemCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DebitLineItem>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
+         * [DebitLineItemService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillDebitLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DebitLineItem>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
+         * [DebitLineItemService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: BillDebitLineItemUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DebitLineItem>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
+         * [DebitLineItemService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillDebitLineItemListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillDebitLineItemListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
+         * [DebitLineItemService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BillDebitLineItemDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DebitLineItem>
+    }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking.dataExports
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.DataExportDestinationCreateParams
 import com.m3ter.sdk.models.DataExportDestinationCreateResponse
 import com.m3ter.sdk.models.DataExportDestinationDeleteParams
@@ -17,6 +19,11 @@ import com.m3ter.sdk.models.DataExportDestinationUpdateParams
 import com.m3ter.sdk.models.DataExportDestinationUpdateResponse
 
 interface DestinationService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Export Destination to use for your Data Export Schedules or Ad-Hoc Data Exports.
@@ -71,4 +78,68 @@ interface DestinationService {
         params: DataExportDestinationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportDestinationDeleteResponse
+
+    /**
+     * A view of [DestinationService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/destinations`,
+         * but is otherwise the same as [DestinationService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DataExportDestinationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
+         * [DestinationService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportDestinationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationRetrieveResponse>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
+         * [DestinationService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DataExportDestinationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationUpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/destinations`,
+         * but is otherwise the same as [DestinationService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportDestinationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
+         * [DestinationService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DataExportDestinationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationDeleteResponse>
+    }
 }

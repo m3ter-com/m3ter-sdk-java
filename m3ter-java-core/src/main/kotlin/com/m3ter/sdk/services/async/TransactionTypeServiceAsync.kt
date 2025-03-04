@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.TransactionTypeUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface TransactionTypeServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new TransactionType for the specified Organization. Details of the new
@@ -59,4 +66,69 @@ interface TransactionTypeServiceAsync {
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionType>
+
+    /**
+     * A view of [TransactionTypeServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/transactiontypes`,
+         * but is otherwise the same as [TransactionTypeServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: TransactionTypeCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionType>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionTypeRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionType>>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: TransactionTypeUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionType>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/transactiontypes`,
+         * but is otherwise the same as [TransactionTypeServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: TransactionTypeListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: TransactionTypeDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionType>>
+    }
 }

@@ -10,6 +10,8 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
@@ -25,178 +27,221 @@ import java.util.concurrent.CompletableFuture
 class CounterPricingServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : CounterPricingServiceAsync {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: CounterPricingServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<CounterPricing> =
-        jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): CounterPricingServiceAsync.WithRawResponse = withRawResponse
 
-    /**
-     * Create a new CounterPricing.
-     *
-     * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
-     * to be valid. If you omit both, then you will receive a validation error.
-     */
     override fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterPricing> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("organizations", params.getPathParam(0), "counterpricings")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<CounterPricing> =
+        // post /organizations/{orgId}/counterpricings
+        withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    private val retrieveHandler: Handler<CounterPricing> =
-        jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Retrieve a CounterPricing for the given UUID. */
     override fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterPricing> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "counterpricings",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<CounterPricing> =
+        // get /organizations/{orgId}/counterpricings/{id}
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    private val updateHandler: Handler<CounterPricing> =
-        jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * Update CounterPricing for the given UUID.
-     *
-     * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
-     * to be valid. If you omit both, then you will receive a validation error.
-     */
     override fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterPricing> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "counterpricings",
-                    params.getPathParam(1),
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<CounterPricing> =
+        // put /organizations/{orgId}/counterpricings/{id}
+        withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    private val listHandler: Handler<CounterPricingListPageAsync.Response> =
-        jsonHandler<CounterPricingListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
-     * CounterPricing ID.
-     */
     override fun list(
         params: CounterPricingListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterPricingListPageAsync> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "counterpricings")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-                    .let { CounterPricingListPageAsync.of(this, params, it) }
-            }
-    }
+    ): CompletableFuture<CounterPricingListPageAsync> =
+        // get /organizations/{orgId}/counterpricings
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    private val deleteHandler: Handler<CounterPricing> =
-        jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Delete a CounterPricing for the given UUID. */
     override fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterPricing> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "counterpricings",
-                    params.getPathParam(1),
-                )
-                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { deleteHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
+    ): CompletableFuture<CounterPricing> =
+        // delete /organizations/{orgId}/counterpricings/{id}
+        withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        CounterPricingServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<CounterPricing> =
+            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(
+            params: CounterPricingCreateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CounterPricing>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("organizations", params.getPathParam(0), "counterpricings")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { createHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
                     }
-            }
+                }
+        }
+
+        private val retrieveHandler: Handler<CounterPricing> =
+            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: CounterPricingRetrieveParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CounterPricing>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "counterpricings",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { retrieveHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val updateHandler: Handler<CounterPricing> =
+            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun update(
+            params: CounterPricingUpdateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CounterPricing>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "counterpricings",
+                        params.getPathParam(1),
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { updateHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val listHandler: Handler<CounterPricingListPageAsync.Response> =
+            jsonHandler<CounterPricingListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: CounterPricingListParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "counterpricings")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { listHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                            .let {
+                                CounterPricingListPageAsync.of(
+                                    CounterPricingServiceAsyncImpl(clientOptions),
+                                    params,
+                                    it,
+                                )
+                            }
+                    }
+                }
+        }
+
+        private val deleteHandler: Handler<CounterPricing> =
+            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun delete(
+            params: CounterPricingDeleteParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CounterPricing>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "counterpricings",
+                        params.getPathParam(1),
+                    )
+                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { deleteHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
     }
 }

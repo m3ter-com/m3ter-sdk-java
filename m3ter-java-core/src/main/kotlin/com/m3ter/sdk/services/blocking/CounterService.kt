@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 
 interface CounterService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Create a new Counter. */
     @JvmOverloads
@@ -51,4 +58,63 @@ interface CounterService {
         params: CounterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Counter
+
+    /** A view of [CounterService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise
+         * the same as [CounterService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Counter>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Counter>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Counter>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
+         * the same as [CounterService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CounterListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Counter>
+    }
 }

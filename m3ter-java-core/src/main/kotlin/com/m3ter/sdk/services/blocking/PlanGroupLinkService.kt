@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
 interface PlanGroupLinkService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Create a new PlanGroupLink. */
     @JvmOverloads
@@ -49,4 +56,65 @@ interface PlanGroupLinkService {
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLink
+
+    /**
+     * A view of [PlanGroupLinkService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/plangrouplinks`, but is
+         * otherwise the same as [PlanGroupLinkService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanGroupLinkCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLink>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks/{id}`, but is
+         * otherwise the same as [PlanGroupLinkService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupLinkRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLink>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
+         * otherwise the same as [PlanGroupLinkService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanGroupLinkUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLink>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks`, but is
+         * otherwise the same as [PlanGroupLinkService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanGroupLinkListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLinkListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/plangrouplinks/{id}`, but
+         * is otherwise the same as [PlanGroupLinkService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupLinkDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLink>
+    }
 }
