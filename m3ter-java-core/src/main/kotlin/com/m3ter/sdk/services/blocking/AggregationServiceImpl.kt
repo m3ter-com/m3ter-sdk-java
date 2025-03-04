@@ -13,11 +13,11 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPage
 import com.m3ter.sdk.models.AggregationListParams
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 
@@ -26,14 +26,14 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Create a new Aggregation. */
     override fun create(
         params: AggregationCreateParams,
         requestOptions: RequestOptions,
-    ): Aggregation {
+    ): AggregationResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -51,14 +51,14 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             }
     }
 
-    private val retrieveHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val retrieveHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve the Aggregation with the given UUID. */
     override fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions,
-    ): Aggregation {
+    ): AggregationResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -80,8 +80,8 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             }
     }
 
-    private val updateHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Update the Aggregation with the given UUID.
@@ -93,7 +93,7 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
     override fun update(
         params: AggregationUpdateParams,
         requestOptions: RequestOptions,
-    ): Aggregation {
+    ): AggregationResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
@@ -142,14 +142,14 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             .let { AggregationListPage.of(this, params, it) }
     }
 
-    private val deleteHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val deleteHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Delete the Aggregation with the given UUID. */
     override fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions,
-    ): Aggregation {
+    ): AggregationResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)

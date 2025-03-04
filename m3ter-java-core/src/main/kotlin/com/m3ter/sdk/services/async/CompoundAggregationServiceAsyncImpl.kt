@@ -13,7 +13,7 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Aggregation
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
@@ -28,8 +28,8 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Create a new CompoundAggregation.
@@ -40,7 +40,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     override fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -98,8 +98,8 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             }
     }
 
-    private val updateHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Update the CompoundAggregation with the given UUID.
@@ -115,7 +115,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     override fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.PUT)

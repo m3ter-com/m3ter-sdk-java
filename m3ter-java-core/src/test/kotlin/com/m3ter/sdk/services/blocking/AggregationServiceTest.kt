@@ -28,7 +28,7 @@ class AggregationServiceTest {
                 .build()
         val aggregationService = client.aggregations()
 
-        val aggregation =
+        val aggregationResponse =
             aggregationService.create(
                 AggregationCreateParams.builder()
                     .orgId("orgId")
@@ -58,7 +58,7 @@ class AggregationServiceTest {
                     .build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -73,12 +73,12 @@ class AggregationServiceTest {
                 .build()
         val aggregationService = client.aggregations()
 
-        val aggregation =
+        val aggregationResponse =
             aggregationService.retrieve(
                 AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -93,7 +93,7 @@ class AggregationServiceTest {
                 .build()
         val aggregationService = client.aggregations()
 
-        val aggregation =
+        val aggregationResponse =
             aggregationService.update(
                 AggregationUpdateParams.builder()
                     .orgId("orgId")
@@ -124,7 +124,7 @@ class AggregationServiceTest {
                     .build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -156,11 +156,11 @@ class AggregationServiceTest {
                 .build()
         val aggregationService = client.aggregations()
 
-        val aggregation =
+        val aggregationResponse =
             aggregationService.delete(
                 AggregationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 }
