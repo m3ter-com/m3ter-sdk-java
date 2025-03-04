@@ -28,7 +28,7 @@ class CompoundAggregationServiceAsyncTest {
                 .build()
         val compoundAggregationServiceAsync = client.compoundAggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             compoundAggregationServiceAsync.create(
                 CompoundAggregationCreateParams.builder()
                     .orgId("orgId")
@@ -50,8 +50,8 @@ class CompoundAggregationServiceAsyncTest {
                     .build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -87,7 +87,7 @@ class CompoundAggregationServiceAsyncTest {
                 .build()
         val compoundAggregationServiceAsync = client.compoundAggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             compoundAggregationServiceAsync.update(
                 CompoundAggregationUpdateParams.builder()
                     .orgId("orgId")
@@ -110,8 +110,8 @@ class CompoundAggregationServiceAsyncTest {
                     .build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 
     @Test

@@ -2,30 +2,20 @@
 
 package com.m3ter.sdk.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.sdk.core.ExcludeMissing
-import com.m3ter.sdk.core.JsonField
-import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
-import java.util.Optional
 
 /** Remove a permission policy from a user. */
 class PermissionPolicyRemoveFromUserParams
 private constructor(
     private val orgId: String,
     private val permissionPolicyId: String,
-    private val body: Body,
+    private val principalPermissionRequest: PrincipalPermissionRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -34,37 +24,16 @@ private constructor(
 
     fun permissionPolicyId(): String = permissionPolicyId
 
-    fun principalId(): String = body.principalId()
+    fun principalPermissionRequest(): PrincipalPermissionRequest = principalPermissionRequest
 
-    /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
-     */
-    fun version(): Optional<Long> = body.version()
-
-    fun _principalId(): JsonField<String> = body._principalId()
-
-    /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
-     */
-    fun _version(): JsonField<Long> = body._version()
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+    fun _additionalBodyProperties(): Map<String, JsonValue> =
+        principalPermissionRequest._additionalProperties()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
+    @JvmSynthetic internal fun _body(): PrincipalPermissionRequest = principalPermissionRequest
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -76,154 +45,6 @@ private constructor(
             1 -> permissionPolicyId
             else -> ""
         }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("principalId")
-        @ExcludeMissing
-        private val principalId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        fun principalId(): String = principalId.getRequired("principalId")
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        @JsonProperty("principalId")
-        @ExcludeMissing
-        fun _principalId(): JsonField<String> = principalId
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            principalId()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var principalId: JsonField<String>? = null
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                principalId = body.principalId
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            fun principalId(principalId: String) = principalId(JsonField.of(principalId))
-
-            fun principalId(principalId: JsonField<String>) = apply {
-                this.principalId = principalId
-            }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("principalId", principalId),
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && principalId == other.principalId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(principalId, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{principalId=$principalId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -239,7 +60,7 @@ private constructor(
 
         private var orgId: String? = null
         private var permissionPolicyId: String? = null
-        private var body: Body.Builder = Body.builder()
+        private var principalPermissionRequest: PrincipalPermissionRequest? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -249,7 +70,8 @@ private constructor(
         ) = apply {
             orgId = permissionPolicyRemoveFromUserParams.orgId
             permissionPolicyId = permissionPolicyRemoveFromUserParams.permissionPolicyId
-            body = permissionPolicyRemoveFromUserParams.body.toBuilder()
+            principalPermissionRequest =
+                permissionPolicyRemoveFromUserParams.principalPermissionRequest
             additionalHeaders = permissionPolicyRemoveFromUserParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 permissionPolicyRemoveFromUserParams.additionalQueryParams.toBuilder()
@@ -261,48 +83,10 @@ private constructor(
             this.permissionPolicyId = permissionPolicyId
         }
 
-        fun principalId(principalId: String) = apply { body.principalId(principalId) }
-
-        fun principalId(principalId: JsonField<String>) = apply { body.principalId(principalId) }
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         */
-        fun version(version: Long) = apply { body.version(version) }
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         */
-        fun version(version: JsonField<Long>) = apply { body.version(version) }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+        fun principalPermissionRequest(principalPermissionRequest: PrincipalPermissionRequest) =
             apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
+                this.principalPermissionRequest = principalPermissionRequest
             }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -406,7 +190,7 @@ private constructor(
             PermissionPolicyRemoveFromUserParams(
                 checkRequired("orgId", orgId),
                 checkRequired("permissionPolicyId", permissionPolicyId),
-                body.build(),
+                checkRequired("principalPermissionRequest", principalPermissionRequest),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -417,11 +201,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PermissionPolicyRemoveFromUserParams && orgId == other.orgId && permissionPolicyId == other.permissionPolicyId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PermissionPolicyRemoveFromUserParams && orgId == other.orgId && permissionPolicyId == other.permissionPolicyId && principalPermissionRequest == other.principalPermissionRequest && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, permissionPolicyId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, permissionPolicyId, principalPermissionRequest, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PermissionPolicyRemoveFromUserParams{orgId=$orgId, permissionPolicyId=$permissionPolicyId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PermissionPolicyRemoveFromUserParams{orgId=$orgId, permissionPolicyId=$permissionPolicyId, principalPermissionRequest=$principalPermissionRequest, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

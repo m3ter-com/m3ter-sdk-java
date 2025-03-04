@@ -5,7 +5,7 @@
 package com.m3ter.sdk.services.async
 
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Aggregation
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
@@ -27,7 +27,7 @@ interface CompoundAggregationServiceAsync {
     fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Aggregation>
+    ): CompletableFuture<AggregationResponse>
 
     /**
      * Retrieve a CompoundAggregation using the given UUID.
@@ -56,7 +56,7 @@ interface CompoundAggregationServiceAsync {
     fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Aggregation>
+    ): CompletableFuture<AggregationResponse>
 
     /**
      * Retrieve a list of all CompoundAggregations.

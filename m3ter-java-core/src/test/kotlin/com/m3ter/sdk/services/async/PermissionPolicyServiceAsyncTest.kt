@@ -18,6 +18,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 import com.m3ter.sdk.models.PermissionStatement
+import com.m3ter.sdk.models.PrincipalPermissionRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -169,8 +170,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyAddToServiceUserParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 
@@ -220,8 +222,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyAddToUserParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 
@@ -246,8 +249,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyAddToUserGroupParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 
@@ -272,8 +276,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyRemoveFromServiceUserParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 
@@ -322,8 +327,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyRemoveFromUserParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 
@@ -348,8 +354,9 @@ class PermissionPolicyServiceAsyncTest {
                 PermissionPolicyRemoveFromUserGroupParams.builder()
                     .orgId("orgId")
                     .permissionPolicyId("permissionPolicyId")
-                    .principalId("x")
-                    .version(0L)
+                    .principalPermissionRequest(
+                        PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                    )
                     .build()
             )
 

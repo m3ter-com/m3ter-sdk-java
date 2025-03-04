@@ -5,11 +5,11 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPage
 import com.m3ter.sdk.models.AggregationListParams
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 
@@ -20,14 +20,14 @@ interface AggregationService {
     fun create(
         params: AggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 
     /** Retrieve the Aggregation with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 
     /**
      * Update the Aggregation with the given UUID.
@@ -40,7 +40,7 @@ interface AggregationService {
     fun update(
         params: AggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
     @JvmOverloads
@@ -54,5 +54,5 @@ interface AggregationService {
     fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 }

@@ -28,7 +28,7 @@ class AggregationServiceAsyncTest {
                 .build()
         val aggregationServiceAsync = client.aggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             aggregationServiceAsync.create(
                 AggregationCreateParams.builder()
                     .orgId("orgId")
@@ -58,8 +58,8 @@ class AggregationServiceAsyncTest {
                     .build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -74,13 +74,13 @@ class AggregationServiceAsyncTest {
                 .build()
         val aggregationServiceAsync = client.aggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             aggregationServiceAsync.retrieve(
                 AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -95,7 +95,7 @@ class AggregationServiceAsyncTest {
                 .build()
         val aggregationServiceAsync = client.aggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             aggregationServiceAsync.update(
                 AggregationUpdateParams.builder()
                     .orgId("orgId")
@@ -126,8 +126,8 @@ class AggregationServiceAsyncTest {
                     .build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -161,12 +161,12 @@ class AggregationServiceAsyncTest {
                 .build()
         val aggregationServiceAsync = client.aggregations()
 
-        val aggregationFuture =
+        val aggregationResponseFuture =
             aggregationServiceAsync.delete(
                 AggregationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val aggregation = aggregationFuture.get()
-        aggregation.validate()
+        val aggregationResponse = aggregationResponseFuture.get()
+        aggregationResponse.validate()
     }
 }

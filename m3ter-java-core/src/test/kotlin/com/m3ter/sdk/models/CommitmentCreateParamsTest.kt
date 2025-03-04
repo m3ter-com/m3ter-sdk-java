@@ -33,7 +33,7 @@ class CommitmentCreateParamsTest {
             .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .drawdownsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .addFeeDate(
-                CommitmentCreateParams.FeeDate.builder()
+                CommitmentFee.builder()
                     .amount(1.0)
                     .date(LocalDate.parse("2019-12-27"))
                     .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -74,7 +74,7 @@ class CommitmentCreateParamsTest {
                 .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .drawdownsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .addFeeDate(
-                    CommitmentCreateParams.FeeDate.builder()
+                    CommitmentFee.builder()
                         .amount(1.0)
                         .date(LocalDate.parse("2019-12-27"))
                         .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -116,7 +116,7 @@ class CommitmentCreateParamsTest {
         assertThat(body.feeDates())
             .contains(
                 listOf(
-                    CommitmentCreateParams.FeeDate.builder()
+                    CommitmentFee.builder()
                         .amount(1.0)
                         .date(LocalDate.parse("2019-12-27"))
                         .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
