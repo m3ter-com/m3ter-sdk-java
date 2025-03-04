@@ -161,6 +161,35 @@ CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
 
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of Java classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
+
+```java
+import com.m3ter.sdk.core.http.Headers;
+import com.m3ter.sdk.core.http.HttpResponseFor;
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListParams params = ProductListParams.builder()
+    .orgId("ORG_ID")
+    .build();
+HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
+
+int statusCode = page.statusCode();
+Headers headers = page.headers();
+```
+
+You can still deserialize the response into an instance of a Java class if needed:
+
+```java
+import com.m3ter.sdk.models.ProductListPage;
+
+ProductListPage parsedPage = page.parse();
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
