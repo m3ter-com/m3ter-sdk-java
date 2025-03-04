@@ -20,7 +20,6 @@ import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
-import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
 
@@ -167,7 +166,7 @@ private constructor(
      * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_ without
      *   receiving an error, but _please be sure_ your Commitment billing use case requires this.
      */
-    fun feeDates(): Optional<List<FeeDate>> = body.feeDates()
+    fun feeDates(): Optional<List<CommitmentFee>> = body.feeDates()
 
     /** Optional Product ID this Commitment fees should be attributed to for accounting purposes */
     fun feesAccountingProductId(): Optional<String> = body.feesAccountingProductId()
@@ -353,7 +352,7 @@ private constructor(
      * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_ without
      *   receiving an error, but _please be sure_ your Commitment billing use case requires this.
      */
-    fun _feeDates(): JsonField<List<FeeDate>> = body._feeDates()
+    fun _feeDates(): JsonField<List<CommitmentFee>> = body._feeDates()
 
     /** Optional Product ID this Commitment fees should be attributed to for accounting purposes */
     fun _feesAccountingProductId(): JsonField<String> = body._feesAccountingProductId()
@@ -500,7 +499,7 @@ private constructor(
         private val drawdownsAccountingProductId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("feeDates")
         @ExcludeMissing
-        private val feeDates: JsonField<List<FeeDate>> = JsonMissing.of(),
+        private val feeDates: JsonField<List<CommitmentFee>> = JsonMissing.of(),
         @JsonProperty("feesAccountingProductId")
         @ExcludeMissing
         private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
@@ -668,7 +667,7 @@ private constructor(
          *   without receiving an error, but _please be sure_ your Commitment billing use case
          *   requires this.
          */
-        fun feeDates(): Optional<List<FeeDate>> =
+        fun feeDates(): Optional<List<CommitmentFee>> =
             Optional.ofNullable(feeDates.getNullable("feeDates"))
 
         /**
@@ -898,7 +897,7 @@ private constructor(
          */
         @JsonProperty("feeDates")
         @ExcludeMissing
-        fun _feeDates(): JsonField<List<FeeDate>> = feeDates
+        fun _feeDates(): JsonField<List<CommitmentFee>> = feeDates
 
         /**
          * Optional Product ID this Commitment fees should be attributed to for accounting purposes
@@ -1048,7 +1047,7 @@ private constructor(
             private var commitmentUsageDescription: JsonField<String> = JsonMissing.of()
             private var contractId: JsonField<String> = JsonMissing.of()
             private var drawdownsAccountingProductId: JsonField<String> = JsonMissing.of()
-            private var feeDates: JsonField<MutableList<FeeDate>>? = null
+            private var feeDates: JsonField<MutableList<CommitmentFee>>? = null
             private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
             private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
             private var overageDescription: JsonField<String> = JsonMissing.of()
@@ -1355,7 +1354,7 @@ private constructor(
              *   without receiving an error, but _please be sure_ your Commitment billing use case
              *   requires this.
              */
-            fun feeDates(feeDates: List<FeeDate>) = feeDates(JsonField.of(feeDates))
+            fun feeDates(feeDates: List<CommitmentFee>) = feeDates(JsonField.of(feeDates))
 
             /**
              * Used for billing any outstanding Commitment fees _on a schedule_.
@@ -1374,7 +1373,7 @@ private constructor(
              *   without receiving an error, but _please be sure_ your Commitment billing use case
              *   requires this.
              */
-            fun feeDates(feeDates: JsonField<List<FeeDate>>) = apply {
+            fun feeDates(feeDates: JsonField<List<CommitmentFee>>) = apply {
                 this.feeDates = feeDates.map { it.toMutableList() }
             }
 
@@ -1395,7 +1394,7 @@ private constructor(
              *   without receiving an error, but _please be sure_ your Commitment billing use case
              *   requires this.
              */
-            fun addFeeDate(feeDate: FeeDate) = apply {
+            fun addFeeDate(feeDate: CommitmentFee) = apply {
                 feeDates =
                     (feeDates ?: JsonField.of(mutableListOf())).apply {
                         asKnown()
@@ -1970,7 +1969,7 @@ private constructor(
          *   without receiving an error, but _please be sure_ your Commitment billing use case
          *   requires this.
          */
-        fun feeDates(feeDates: List<FeeDate>) = apply { body.feeDates(feeDates) }
+        fun feeDates(feeDates: List<CommitmentFee>) = apply { body.feeDates(feeDates) }
 
         /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
@@ -1989,7 +1988,7 @@ private constructor(
          *   without receiving an error, but _please be sure_ your Commitment billing use case
          *   requires this.
          */
-        fun feeDates(feeDates: JsonField<List<FeeDate>>) = apply { body.feeDates(feeDates) }
+        fun feeDates(feeDates: JsonField<List<CommitmentFee>>) = apply { body.feeDates(feeDates) }
 
         /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
@@ -2008,7 +2007,7 @@ private constructor(
          *   without receiving an error, but _please be sure_ your Commitment billing use case
          *   requires this.
          */
-        fun addFeeDate(feeDate: FeeDate) = apply { body.addFeeDate(feeDate) }
+        fun addFeeDate(feeDate: CommitmentFee) = apply { body.addFeeDate(feeDate) }
 
         /**
          * Optional Product ID this Commitment fees should be attributed to for accounting purposes
@@ -2430,160 +2429,6 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
-    }
-
-    @NoAutoDetect
-    class FeeDate
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("date")
-        @ExcludeMissing
-        private val date: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("servicePeriodEndDate")
-        @ExcludeMissing
-        private val servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("servicePeriodStartDate")
-        @ExcludeMissing
-        private val servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        fun amount(): Double = amount.getRequired("amount")
-
-        fun date(): LocalDate = date.getRequired("date")
-
-        fun servicePeriodEndDate(): OffsetDateTime =
-            servicePeriodEndDate.getRequired("servicePeriodEndDate")
-
-        fun servicePeriodStartDate(): OffsetDateTime =
-            servicePeriodStartDate.getRequired("servicePeriodStartDate")
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
-
-        @JsonProperty("date") @ExcludeMissing fun _date(): JsonField<LocalDate> = date
-
-        @JsonProperty("servicePeriodEndDate")
-        @ExcludeMissing
-        fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
-
-        @JsonProperty("servicePeriodStartDate")
-        @ExcludeMissing
-        fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): FeeDate = apply {
-            if (validated) {
-                return@apply
-            }
-
-            amount()
-            date()
-            servicePeriodEndDate()
-            servicePeriodStartDate()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [FeeDate]. */
-        class Builder internal constructor() {
-
-            private var amount: JsonField<Double>? = null
-            private var date: JsonField<LocalDate>? = null
-            private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
-            private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(feeDate: FeeDate) = apply {
-                amount = feeDate.amount
-                date = feeDate.date
-                servicePeriodEndDate = feeDate.servicePeriodEndDate
-                servicePeriodStartDate = feeDate.servicePeriodStartDate
-                additionalProperties = feeDate.additionalProperties.toMutableMap()
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun date(date: LocalDate) = date(JsonField.of(date))
-
-            fun date(date: JsonField<LocalDate>) = apply { this.date = date }
-
-            fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
-                servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
-
-            fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
-                this.servicePeriodEndDate = servicePeriodEndDate
-            }
-
-            fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
-                servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
-
-            fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
-                this.servicePeriodStartDate = servicePeriodStartDate
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): FeeDate =
-                FeeDate(
-                    checkRequired("amount", amount),
-                    checkRequired("date", date),
-                    checkRequired("servicePeriodEndDate", servicePeriodEndDate),
-                    checkRequired("servicePeriodStartDate", servicePeriodStartDate),
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is FeeDate && amount == other.amount && date == other.date && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, date, servicePeriodEndDate, servicePeriodStartDate, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "FeeDate{amount=$amount, date=$date, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, additionalProperties=$additionalProperties}"
     }
 
     /** Available line item types for Commitments */

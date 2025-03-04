@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,8 +12,9 @@ class PermissionPolicyRemoveFromUserGroupParamsTest {
         PermissionPolicyRemoveFromUserGroupParams.builder()
             .orgId("orgId")
             .permissionPolicyId("permissionPolicyId")
-            .principalId("x")
-            .version(0L)
+            .principalPermissionRequest(
+                PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+            )
             .build()
     }
 
@@ -24,15 +24,15 @@ class PermissionPolicyRemoveFromUserGroupParamsTest {
             PermissionPolicyRemoveFromUserGroupParams.builder()
                 .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
-                .principalId("x")
-                .version(0L)
+                .principalPermissionRequest(
+                    PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.principalId()).isEqualTo("x")
-        assertThat(body.version()).contains(0L)
+        assertThat(body)
+            .isEqualTo(PrincipalPermissionRequest.builder().principalId("x").version(0L).build())
     }
 
     @Test
@@ -41,13 +41,14 @@ class PermissionPolicyRemoveFromUserGroupParamsTest {
             PermissionPolicyRemoveFromUserGroupParams.builder()
                 .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
-                .principalId("x")
+                .principalPermissionRequest(
+                    PrincipalPermissionRequest.builder().principalId("x").build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.principalId()).isEqualTo("x")
+        assertThat(body).isEqualTo(PrincipalPermissionRequest.builder().principalId("x").build())
     }
 
     @Test
@@ -56,7 +57,9 @@ class PermissionPolicyRemoveFromUserGroupParamsTest {
             PermissionPolicyRemoveFromUserGroupParams.builder()
                 .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
-                .principalId("x")
+                .principalPermissionRequest(
+                    PrincipalPermissionRequest.builder().principalId("x").build()
+                )
                 .build()
         assertThat(params).isNotNull
         // path param "orgId"

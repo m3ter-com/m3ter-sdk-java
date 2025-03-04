@@ -13,11 +13,11 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Aggregation
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPageAsync
 import com.m3ter.sdk.models.AggregationListParams
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.AggregationRetrieveParams
 import com.m3ter.sdk.models.AggregationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -27,14 +27,14 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
 
     private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Create a new Aggregation. */
     override fun create(
         params: AggregationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -55,14 +55,14 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             }
     }
 
-    private val retrieveHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val retrieveHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Retrieve the Aggregation with the given UUID. */
     override fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
@@ -87,8 +87,8 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             }
     }
 
-    private val updateHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
      * Update the Aggregation with the given UUID.
@@ -100,7 +100,7 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
     override fun update(
         params: AggregationUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
@@ -155,14 +155,14 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             }
     }
 
-    private val deleteHandler: Handler<Aggregation> =
-        jsonHandler<Aggregation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val deleteHandler: Handler<AggregationResponse> =
+        jsonHandler<AggregationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /** Delete the Aggregation with the given UUID. */
     override fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Aggregation> {
+    ): CompletableFuture<AggregationResponse> {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)

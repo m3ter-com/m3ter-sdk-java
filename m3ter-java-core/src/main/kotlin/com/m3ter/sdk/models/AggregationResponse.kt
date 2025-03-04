@@ -21,7 +21,7 @@ import java.util.Objects
 import java.util.Optional
 
 @NoAutoDetect
-class Aggregation
+class AggregationResponse
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
@@ -33,7 +33,7 @@ private constructor(
     private val accountingProductId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("aggregation")
     @ExcludeMissing
-    private val aggregation: JsonField<InnerAggregation> = JsonMissing.of(),
+    private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
     @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
     @JsonProperty("createdBy")
     @ExcludeMissing
@@ -115,7 +115,7 @@ private constructor(
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
-    fun aggregation(): Optional<InnerAggregation> =
+    fun aggregation(): Optional<Aggregation> =
         Optional.ofNullable(aggregation.getNullable("aggregation"))
 
     /** Code of the Aggregation. A unique short code to identify the Aggregation. */
@@ -261,7 +261,7 @@ private constructor(
      */
     @JsonProperty("aggregation")
     @ExcludeMissing
-    fun _aggregation(): JsonField<InnerAggregation> = aggregation
+    fun _aggregation(): JsonField<Aggregation> = aggregation
 
     /** Code of the Aggregation. A unique short code to identify the Aggregation. */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
@@ -379,7 +379,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): Aggregation = apply {
+    fun validate(): AggregationResponse = apply {
         if (validated) {
             return@apply
         }
@@ -414,13 +414,13 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [Aggregation]. */
+    /** A builder for [AggregationResponse]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var version: JsonField<Long>? = null
         private var accountingProductId: JsonField<String> = JsonMissing.of()
-        private var aggregation: JsonField<InnerAggregation> = JsonMissing.of()
+        private var aggregation: JsonField<Aggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -440,28 +440,28 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(aggregation: Aggregation) = apply {
-            id = aggregation.id
-            version = aggregation.version
-            accountingProductId = aggregation.accountingProductId
-            this.aggregation = aggregation.aggregation
-            code = aggregation.code
-            createdBy = aggregation.createdBy
-            customFields = aggregation.customFields
-            customSql = aggregation.customSql
-            defaultValue = aggregation.defaultValue
-            dtCreated = aggregation.dtCreated
-            dtLastModified = aggregation.dtLastModified
-            lastModifiedBy = aggregation.lastModifiedBy
-            meterId = aggregation.meterId
-            name = aggregation.name
-            quantityPerUnit = aggregation.quantityPerUnit
-            rounding = aggregation.rounding
-            segmentedFields = aggregation.segmentedFields.map { it.toMutableList() }
-            segments = aggregation.segments.map { it.toMutableList() }
-            targetField = aggregation.targetField
-            unit = aggregation.unit
-            additionalProperties = aggregation.additionalProperties.toMutableMap()
+        internal fun from(aggregationResponse: AggregationResponse) = apply {
+            id = aggregationResponse.id
+            version = aggregationResponse.version
+            accountingProductId = aggregationResponse.accountingProductId
+            aggregation = aggregationResponse.aggregation
+            code = aggregationResponse.code
+            createdBy = aggregationResponse.createdBy
+            customFields = aggregationResponse.customFields
+            customSql = aggregationResponse.customSql
+            defaultValue = aggregationResponse.defaultValue
+            dtCreated = aggregationResponse.dtCreated
+            dtLastModified = aggregationResponse.dtLastModified
+            lastModifiedBy = aggregationResponse.lastModifiedBy
+            meterId = aggregationResponse.meterId
+            name = aggregationResponse.name
+            quantityPerUnit = aggregationResponse.quantityPerUnit
+            rounding = aggregationResponse.rounding
+            segmentedFields = aggregationResponse.segmentedFields.map { it.toMutableList() }
+            segments = aggregationResponse.segments.map { it.toMutableList() }
+            targetField = aggregationResponse.targetField
+            unit = aggregationResponse.unit
+            additionalProperties = aggregationResponse.additionalProperties.toMutableMap()
         }
 
         /** The UUID of the entity. */
@@ -516,7 +516,7 @@ private constructor(
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
-        fun aggregation(aggregation: InnerAggregation) = aggregation(JsonField.of(aggregation))
+        fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -541,7 +541,7 @@ private constructor(
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
-        fun aggregation(aggregation: JsonField<InnerAggregation>) = apply {
+        fun aggregation(aggregation: JsonField<Aggregation>) = apply {
             this.aggregation = aggregation
         }
 
@@ -820,8 +820,8 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
-        fun build(): Aggregation =
-            Aggregation(
+        fun build(): AggregationResponse =
+            AggregationResponse(
                 checkRequired("id", id),
                 checkRequired("version", version),
                 accountingProductId,
@@ -868,7 +868,7 @@ private constructor(
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
-    class InnerAggregation @JsonCreator private constructor(private val value: JsonField<String>) :
+    class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
 
         /**
@@ -899,10 +899,10 @@ private constructor(
 
             @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
 
-            @JvmStatic fun of(value: String) = InnerAggregation(JsonField.of(value))
+            @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
         }
 
-        /** An enum containing [InnerAggregation]'s known values. */
+        /** An enum containing [Aggregation]'s known values. */
         enum class Known {
             SUM,
             MIN,
@@ -915,9 +915,9 @@ private constructor(
         }
 
         /**
-         * An enum containing [InnerAggregation]'s known values, as well as an [_UNKNOWN] member.
+         * An enum containing [Aggregation]'s known values, as well as an [_UNKNOWN] member.
          *
-         * An instance of [InnerAggregation] can contain an unknown value in a couple of cases:
+         * An instance of [Aggregation] can contain an unknown value in a couple of cases:
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
@@ -933,8 +933,7 @@ private constructor(
             UNIQUE,
             CUSTOM_SQL,
             /**
-             * An enum member indicating that [InnerAggregation] was instantiated with an unknown
-             * value.
+             * An enum member indicating that [Aggregation] was instantiated with an unknown value.
              */
             _UNKNOWN,
         }
@@ -977,7 +976,7 @@ private constructor(
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
                 CUSTOM_SQL -> Known.CUSTOM_SQL
-                else -> throw M3terInvalidDataException("Unknown InnerAggregation: $value")
+                else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
             }
 
         /**
@@ -997,7 +996,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InnerAggregation && value == other.value /* spotless:on */
+            return /* spotless:off */ other is Aggregation && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1289,7 +1288,7 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Aggregation && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AggregationResponse && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -1299,5 +1298,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Aggregation{id=$id, version=$version, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
+        "AggregationResponse{id=$id, version=$version, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
 }
