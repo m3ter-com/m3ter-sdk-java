@@ -10,6 +10,8 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
@@ -24,173 +26,224 @@ import com.m3ter.sdk.models.DebitLineItem
 class DebitLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     DebitLineItemService {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: DebitLineItemService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<DebitLineItem> =
-        jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): DebitLineItemService.WithRawResponse = withRawResponse
 
-    /**
-     * Create a new Debit line item for the given bill.
-     *
-     * When creating Debit line items for Bills, use the Debit Reasons created for your
-     * Organization. See [DebitReason](https://www.m3ter.com/docs/api#tag/DebitReason).
-     */
     override fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "bills",
-                    params.getPathParam(1),
-                    "debitlineitems",
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DebitLineItem =
+        // post /organizations/{orgId}/bills/{billId}/debitlineitems
+        withRawResponse().create(params, requestOptions).parse()
 
-    private val retrieveHandler: Handler<DebitLineItem> =
-        jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Retrieve the Debit line item with the given UUID. */
     override fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "bills",
-                    params.getPathParam(1),
-                    "debitlineitems",
-                    params.getPathParam(2),
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DebitLineItem =
+        // get /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val updateHandler: Handler<DebitLineItem> =
-        jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Update the Debit line item with the given UUID. */
     override fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "bills",
-                    params.getPathParam(1),
-                    "debitlineitems",
-                    params.getPathParam(2),
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { updateHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DebitLineItem =
+        // put /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
+        withRawResponse().update(params, requestOptions).parse()
 
-    private val listHandler: Handler<BillDebitLineItemListPage.Response> =
-        jsonHandler<BillDebitLineItemListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List the Debit line items for the given bill. */
     override fun list(
         params: BillDebitLineItemListParams,
         requestOptions: RequestOptions,
-    ): BillDebitLineItemListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "bills",
-                    params.getPathParam(1),
-                    "debitlineitems",
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { BillDebitLineItemListPage.of(this, params, it) }
-    }
+    ): BillDebitLineItemListPage =
+        // get /organizations/{orgId}/bills/{billId}/debitlineitems
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val deleteHandler: Handler<DebitLineItem> =
-        jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Delete the Debit line item with the given UUID. */
     override fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "bills",
-                    params.getPathParam(1),
-                    "debitlineitems",
-                    params.getPathParam(2),
-                )
-                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { deleteHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): DebitLineItem =
+        // delete /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
+        withRawResponse().delete(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        DebitLineItemService.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<DebitLineItem> =
+            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(
+            params: BillDebitLineItemCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DebitLineItem> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "bills",
+                        params.getPathParam(1),
+                        "debitlineitems",
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val retrieveHandler: Handler<DebitLineItem> =
+            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: BillDebitLineItemRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DebitLineItem> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "bills",
+                        params.getPathParam(1),
+                        "debitlineitems",
+                        params.getPathParam(2),
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val updateHandler: Handler<DebitLineItem> =
+            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun update(
+            params: BillDebitLineItemUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DebitLineItem> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "bills",
+                        params.getPathParam(1),
+                        "debitlineitems",
+                        params.getPathParam(2),
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<BillDebitLineItemListPage.Response> =
+            jsonHandler<BillDebitLineItemListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: BillDebitLineItemListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillDebitLineItemListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "bills",
+                        params.getPathParam(1),
+                        "debitlineitems",
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        BillDebitLineItemListPage.of(
+                            DebitLineItemServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
+
+        private val deleteHandler: Handler<DebitLineItem> =
+            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun delete(
+            params: BillDebitLineItemDeleteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DebitLineItem> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "bills",
+                        params.getPathParam(1),
+                        "debitlineitems",
+                        params.getPathParam(2),
+                    )
+                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }

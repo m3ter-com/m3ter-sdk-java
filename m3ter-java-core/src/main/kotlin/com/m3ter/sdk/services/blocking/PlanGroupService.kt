@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
 interface PlanGroupService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new PlanGroup. This endpoint creates a new PlanGroup within the specified
@@ -77,4 +84,63 @@ interface PlanGroupService {
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroup
+
+    /** A view of [PlanGroupService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/plangroups`, but is
+         * otherwise the same as [PlanGroupService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanGroupCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroup>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroup>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanGroupUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroup>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups`, but is otherwise
+         * the same as [PlanGroupService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanGroupListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/plangroups/{id}`, but is
+         * otherwise the same as [PlanGroupService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroup>
+    }
 }

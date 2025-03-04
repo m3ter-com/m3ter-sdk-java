@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
@@ -17,6 +19,11 @@ import com.m3ter.sdk.models.CommitmentUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface CommitmentServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Commitment.
@@ -102,4 +109,77 @@ interface CommitmentServiceAsync {
         params: CommitmentSearchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CommitmentSearchResponse>
+
+    /**
+     * A view of [CommitmentServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/commitments`, but is
+         * otherwise the same as [CommitmentServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CommitmentCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Commitment>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/{id}`, but is
+         * otherwise the same as [CommitmentServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CommitmentRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Commitment>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/commitments/{id}`, but is
+         * otherwise the same as [CommitmentServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CommitmentUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Commitment>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/commitments`, but is
+         * otherwise the same as [CommitmentServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CommitmentListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/commitments/{id}`, but is
+         * otherwise the same as [CommitmentServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CommitmentDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Commitment>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/search`, but is
+         * otherwise the same as [CommitmentServiceAsync.search].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun search(
+            params: CommitmentSearchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>>
+    }
 }

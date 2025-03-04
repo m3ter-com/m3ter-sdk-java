@@ -4,7 +4,10 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponse
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.ResourceGroup
 import com.m3ter.sdk.models.User
@@ -20,6 +23,11 @@ import com.m3ter.sdk.models.UserUpdateParams
 import com.m3ter.sdk.services.blocking.users.InvitationService
 
 interface UserService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun invitations(): InvitationService
 
@@ -115,4 +123,87 @@ interface UserService {
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
+
+    /** A view of [UserService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun invitations(): InvitationService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UserRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<User>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: UserUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<User>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
+         * same as [UserService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UserListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UserListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
+         * is otherwise the same as [UserService.getPermissions].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicy>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
+         * is otherwise the same as [UserService.getUserGroups].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getUserGroups(
+            params: UserGetUserGroupsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroup>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
+         * the same as [UserService.me].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun me(
+            params: UserMeParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UserMeResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,
+         * but is otherwise the same as [UserService.resendPassword].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun resendPassword(
+            params: UserResendPasswordParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+    }
 }

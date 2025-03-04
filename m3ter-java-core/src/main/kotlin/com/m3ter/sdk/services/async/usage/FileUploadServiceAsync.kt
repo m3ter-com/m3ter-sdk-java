@@ -4,13 +4,20 @@
 
 package com.m3ter.sdk.services.async.usage
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.UsageFileUploadGenerateUploadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadGenerateUploadUrlResponse
 import com.m3ter.sdk.services.async.usage.fileUploads.JobServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface FileUploadServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun jobs(): JobServiceAsync
 
@@ -34,4 +41,25 @@ interface FileUploadServiceAsync {
         params: UsageFileUploadGenerateUploadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UsageFileUploadGenerateUploadUrlResponse>
+
+    /**
+     * A view of [FileUploadServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        fun jobs(): JobServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/fileuploads/measurements/generateUploadUrl`, but is otherwise the
+         * same as [FileUploadServiceAsync.generateUploadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun generateUploadUrl(
+            params: UsageFileUploadGenerateUploadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadGenerateUploadUrlResponse>>
+    }
 }

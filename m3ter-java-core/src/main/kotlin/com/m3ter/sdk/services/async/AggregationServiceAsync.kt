@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AggregationCreateParams
 import com.m3ter.sdk.models.AggregationDeleteParams
 import com.m3ter.sdk.models.AggregationListPageAsync
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.AggregationUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface AggregationServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Create a new Aggregation. */
     @JvmOverloads
@@ -56,4 +63,66 @@ interface AggregationServiceAsync {
         params: AggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AggregationResponse>
+
+    /**
+     * A view of [AggregationServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/aggregations`, but is
+         * otherwise the same as [AggregationServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: AggregationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/aggregations/{id}`, but is
+         * otherwise the same as [AggregationServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: AggregationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/aggregations/{id}`, but is
+         * otherwise the same as [AggregationServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: AggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/aggregations`, but is
+         * otherwise the same as [AggregationServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: AggregationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/aggregations/{id}`, but is
+         * otherwise the same as [AggregationServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: AggregationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+    }
 }

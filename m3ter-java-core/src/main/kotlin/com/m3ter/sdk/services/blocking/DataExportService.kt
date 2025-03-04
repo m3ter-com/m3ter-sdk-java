@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.blocking.dataExports.DestinationService
@@ -12,6 +14,11 @@ import com.m3ter.sdk.services.blocking.dataExports.JobService
 import com.m3ter.sdk.services.blocking.dataExports.ScheduleService
 
 interface DataExportService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun destinations(): DestinationService
 
@@ -74,4 +81,25 @@ interface DataExportService {
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AdhocExport
+
+    /** A view of [DataExportService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun destinations(): DestinationService.WithRawResponse
+
+        fun jobs(): JobService.WithRawResponse
+
+        fun schedules(): ScheduleService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/adhoc`, but is
+         * otherwise the same as [DataExportService.createAdhoc].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun createAdhoc(
+            params: DataExportCreateAdhocParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AdhocExport>
+    }
 }

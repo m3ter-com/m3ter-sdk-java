@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.ExternalMapping
 import com.m3ter.sdk.models.ExternalMappingCreateParams
 import com.m3ter.sdk.models.ExternalMappingDeleteParams
@@ -18,6 +20,11 @@ import com.m3ter.sdk.models.ExternalMappingRetrieveParams
 import com.m3ter.sdk.models.ExternalMappingUpdateParams
 
 interface ExternalMappingService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Creates a new External Mapping.
@@ -98,4 +105,90 @@ interface ExternalMappingService {
         params: ExternalMappingListByM3terEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalMappingListByM3terEntityPage
+
+    /**
+     * A view of [ExternalMappingService] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/externalmappings`, but is
+         * otherwise the same as [ExternalMappingService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ExternalMappingCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMapping>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings/{id}`, but
+         * is otherwise the same as [ExternalMappingService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ExternalMappingRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMapping>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/externalmappings/{id}`, but
+         * is otherwise the same as [ExternalMappingService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ExternalMappingUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMapping>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings`, but is
+         * otherwise the same as [ExternalMappingService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ExternalMappingListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/externalmappings/{id}`,
+         * but is otherwise the same as [ExternalMappingService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ExternalMappingDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMapping>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/externalmappings/externalid/{system}/{externalTable}/{externalId}`,
+         * but is otherwise the same as [ExternalMappingService.listByExternalEntity].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun listByExternalEntity(
+            params: ExternalMappingListByExternalEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingListByExternalEntityPage>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/externalmappings/external/{entity}/{m3terId}`, but is otherwise
+         * the same as [ExternalMappingService.listByM3terEntity].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun listByM3terEntity(
+            params: ExternalMappingListByM3terEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingListByM3terEntityPage>
+    }
 }

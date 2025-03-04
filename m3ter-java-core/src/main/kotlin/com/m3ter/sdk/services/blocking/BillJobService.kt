@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillJob
 import com.m3ter.sdk.models.BillJobCancelParams
 import com.m3ter.sdk.models.BillJobCreateParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.BillJobRecalculateParams
 import com.m3ter.sdk.models.BillJobRetrieveParams
 
 interface BillJobService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -96,4 +103,63 @@ interface BillJobService {
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJob
+
+    /** A view of [BillJobService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise
+         * the same as [BillJobService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BillJobCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJob>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
+         * otherwise the same as [BillJobService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJob>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
+         * the same as [BillJobService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillJobListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJobListPage>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but
+         * is otherwise the same as [BillJobService.cancel].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun cancel(
+            params: BillJobCancelParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJob>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but
+         * is otherwise the same as [BillJobService.recalculate].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun recalculate(
+            params: BillJobRecalculateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJob>
+    }
 }

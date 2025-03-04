@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
 interface TransactionTypeService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new TransactionType for the specified Organization. Details of the new
@@ -58,4 +65,69 @@ interface TransactionTypeService {
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionType
+
+    /**
+     * A view of [TransactionTypeService] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/transactiontypes`,
+         * but is otherwise the same as [TransactionTypeService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: TransactionTypeCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionType>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionTypeRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionType>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: TransactionTypeUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionType>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/transactiontypes`,
+         * but is otherwise the same as [TransactionTypeService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: TransactionTypeListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionTypeListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
+         * [TransactionTypeService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: TransactionTypeDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionType>
+    }
 }
