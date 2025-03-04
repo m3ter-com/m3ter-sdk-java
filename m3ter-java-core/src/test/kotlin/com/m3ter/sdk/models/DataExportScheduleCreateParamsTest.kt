@@ -12,11 +12,11 @@ class DataExportScheduleCreateParamsTest {
         DataExportScheduleCreateParams.builder()
             .orgId("orgId")
             .body(
-                DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                OperationalDataExportScheduleRequest.builder()
                     .addOperationalDataType(
-                        DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType.BILLS
+                        OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                     )
-                    .sourceType(DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE)
+                    .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                     .version(0L)
                     .build()
             )
@@ -29,14 +29,11 @@ class DataExportScheduleCreateParamsTest {
             DataExportScheduleCreateParams.builder()
                 .orgId("orgId")
                 .body(
-                    DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                    OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                .BILLS
+                            OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                        )
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                         .version(0L)
                         .build()
                 )
@@ -46,15 +43,12 @@ class DataExportScheduleCreateParamsTest {
 
         assertThat(body)
             .isEqualTo(
-                DataExportScheduleCreateParams.Body.ofUnionMember0(
-                    DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                DataExportScheduleCreateParams.Body.ofOperationalDataExportScheduleRequest(
+                    OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                .BILLS
+                            OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                        )
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                         .version(0L)
                         .build()
                 )
@@ -67,14 +61,11 @@ class DataExportScheduleCreateParamsTest {
             DataExportScheduleCreateParams.builder()
                 .orgId("orgId")
                 .body(
-                    DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                    OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                .BILLS
+                            OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                        )
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                         .build()
                 )
                 .build()
@@ -83,15 +74,12 @@ class DataExportScheduleCreateParamsTest {
 
         assertThat(body)
             .isEqualTo(
-                DataExportScheduleCreateParams.Body.ofUnionMember0(
-                    DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                DataExportScheduleCreateParams.Body.ofOperationalDataExportScheduleRequest(
+                    OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                .BILLS
+                            OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                        )
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                         .build()
                 )
             )
@@ -103,14 +91,11 @@ class DataExportScheduleCreateParamsTest {
             DataExportScheduleCreateParams.builder()
                 .orgId("orgId")
                 .body(
-                    DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                    OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                .BILLS
+                            OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(
-                            DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                        )
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                         .build()
                 )
                 .build()
