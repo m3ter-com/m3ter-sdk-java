@@ -28,7 +28,7 @@ class CompoundAggregationFunctionServiceTest {
                 .build()
         val compoundAggregationService = client.compoundAggregations()
 
-        val aggregation =
+        val aggregationResponse =
             compoundAggregationService.create(
                 CompoundAggregationCreateParams.builder()
                     .orgId("orgId")
@@ -50,7 +50,7 @@ class CompoundAggregationFunctionServiceTest {
                     .build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -85,7 +85,7 @@ class CompoundAggregationFunctionServiceTest {
                 .build()
         val compoundAggregationService = client.compoundAggregations()
 
-        val aggregation =
+        val aggregationResponse =
             compoundAggregationService.update(
                 CompoundAggregationUpdateParams.builder()
                     .orgId("orgId")
@@ -108,7 +108,7 @@ class CompoundAggregationFunctionServiceTest {
                     .build()
             )
 
-        aggregation.validate()
+        aggregationResponse.validate()
     }
 
     @Test

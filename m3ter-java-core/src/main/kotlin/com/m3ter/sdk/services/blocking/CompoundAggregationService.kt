@@ -5,7 +5,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Aggregation
+import com.m3ter.sdk.models.AggregationResponse
 import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
@@ -26,7 +26,7 @@ interface CompoundAggregationService {
     fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 
     /**
      * Retrieve a CompoundAggregation using the given UUID.
@@ -55,7 +55,7 @@ interface CompoundAggregationService {
     fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Aggregation
+    ): AggregationResponse
 
     /**
      * Retrieve a list of all CompoundAggregations.

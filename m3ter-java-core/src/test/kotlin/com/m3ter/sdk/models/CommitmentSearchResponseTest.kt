@@ -39,7 +39,7 @@ class CommitmentSearchResponseTest {
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .endDate(LocalDate.parse("2019-12-27"))
                         .addFeeDate(
-                            Commitment.FeeDate.builder()
+                            CommitmentFee.builder()
                                 .amount(1.0)
                                 .date(LocalDate.parse("2019-12-27"))
                                 .servicePeriodEndDate(
@@ -90,7 +90,7 @@ class CommitmentSearchResponseTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(LocalDate.parse("2019-12-27"))
                     .addFeeDate(
-                        Commitment.FeeDate.builder()
+                        CommitmentFee.builder()
                             .amount(1.0)
                             .date(LocalDate.parse("2019-12-27"))
                             .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

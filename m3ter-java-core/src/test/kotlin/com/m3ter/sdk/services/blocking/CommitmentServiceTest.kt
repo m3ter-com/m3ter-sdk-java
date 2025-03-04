@@ -6,6 +6,7 @@ import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
+import com.m3ter.sdk.models.CommitmentFee
 import com.m3ter.sdk.models.CommitmentListParams
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
@@ -53,7 +54,7 @@ class CommitmentServiceTest {
                     .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .drawdownsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .addFeeDate(
-                        CommitmentCreateParams.FeeDate.builder()
+                        CommitmentFee.builder()
                             .amount(1.0)
                             .date(LocalDate.parse("2019-12-27"))
                             .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -131,7 +132,7 @@ class CommitmentServiceTest {
                     .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .drawdownsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .addFeeDate(
-                        CommitmentUpdateParams.FeeDate.builder()
+                        CommitmentFee.builder()
                             .amount(1.0)
                             .date(LocalDate.parse("2019-12-27"))
                             .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
