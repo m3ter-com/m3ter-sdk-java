@@ -193,6 +193,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalMapping].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .externalId()
+         * .externalSystem()
+         * .externalTable()
+         * .m3terEntity()
+         * .m3terId()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

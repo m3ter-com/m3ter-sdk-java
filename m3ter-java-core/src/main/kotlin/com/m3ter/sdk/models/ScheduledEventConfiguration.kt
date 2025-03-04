@@ -172,6 +172,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ScheduledEventConfiguration].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .entity()
+         * .field()
+         * .name()
+         * .offset()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

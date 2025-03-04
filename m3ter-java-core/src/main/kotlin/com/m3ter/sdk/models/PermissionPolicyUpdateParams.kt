@@ -178,6 +178,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * .permissionPolicy()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -285,6 +294,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PermissionPolicyUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .name()
+         * .permissionPolicy()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -213,6 +213,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [DebitLineItem].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .description()
+         * .productId()
+         * .referencedBillId()
+         * .referencedLineItemId()
+         * .servicePeriodEndDate()
+         * .servicePeriodStartDate()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -260,6 +260,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DataExportScheduleCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .body()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

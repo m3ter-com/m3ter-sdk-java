@@ -18,6 +18,7 @@ class M3terOkHttpClientAsync private constructor() {
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [M3terOkHttpClientAsync]. */
         @JvmStatic fun builder() = Builder()
 
         @JvmStatic fun fromEnv(): M3terClientAsync = builder().fromEnv().build()

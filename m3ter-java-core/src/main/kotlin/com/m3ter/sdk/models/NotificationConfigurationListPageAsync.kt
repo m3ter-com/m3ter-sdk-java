@@ -152,6 +152,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [NotificationConfigurationListPageAsync].
+             */
             @JvmStatic fun builder() = Builder()
         }
 

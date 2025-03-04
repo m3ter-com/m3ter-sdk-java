@@ -52,6 +52,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [PermissionPolicyRemoveFromSupportUserParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .permissionPolicyId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

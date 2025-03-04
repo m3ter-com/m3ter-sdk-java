@@ -1203,6 +1203,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .currency()
+             * .dayEpoch()
+             * .daysBeforeBillDue()
+             * .monthEpoch()
+             * .timezone()
+             * .weekEpoch()
+             * .yearEpoch()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1919,6 +1933,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [OrganizationConfigUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .currency()
+         * .dayEpoch()
+         * .daysBeforeBillDue()
+         * .monthEpoch()
+         * .timezone()
+         * .weekEpoch()
+         * .yearEpoch()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -497,6 +497,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .calculation()
+             * .name()
+             * .quantityPerUnit()
+             * .rounding()
+             * .unit()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -791,6 +803,21 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CompoundAggregationUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .calculation()
+         * .name()
+         * .quantityPerUnit()
+         * .rounding()
+         * .unit()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1285,6 +1312,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
             @JvmStatic fun builder() = Builder()
         }
 

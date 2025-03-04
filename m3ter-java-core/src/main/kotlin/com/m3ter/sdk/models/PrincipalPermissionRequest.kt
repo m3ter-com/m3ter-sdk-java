@@ -74,6 +74,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PrincipalPermissionRequest].
+         *
+         * The following fields are required:
+         * ```java
+         * .principalId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
