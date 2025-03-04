@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-03-03)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Chores
+
+* **internal:** codegen related update ([#70](https://github.com/m3ter-com/m3ter-sdk-java/issues/70)) ([c5bd097](https://github.com/m3ter-com/m3ter-sdk-java/commit/c5bd097fe8eddded1a41575cded480bb3d221e41))
+
 ## 0.1.0-alpha.3 (2025-02-25)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)

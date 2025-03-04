@@ -4,6 +4,7 @@ package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
+import com.m3ter.sdk.models.CurrencyConversion
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 import org.junit.jupiter.api.Test
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class OrganizationConfigServiceTest {
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -23,16 +24,17 @@ class OrganizationConfigServiceTest {
                 .orgId("My Org ID")
                 .build()
         val organizationConfigService = client.organizationConfig()
+
         val organizationConfig =
             organizationConfigService.retrieve(
                 OrganizationConfigRetrieveParams.builder().orgId("orgId").build()
             )
-        println(organizationConfig)
+
         organizationConfig.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -42,6 +44,7 @@ class OrganizationConfigServiceTest {
                 .orgId("My Org ID")
                 .build()
         val organizationConfigService = client.organizationConfig()
+
         val organizationConfig =
             organizationConfigService.update(
                 OrganizationConfigUpdateParams.builder()
@@ -65,11 +68,7 @@ class OrganizationConfigServiceTest {
                         OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT
                     )
                     .addCurrencyConversion(
-                        OrganizationConfigUpdateParams.CurrencyConversion.builder()
-                            .from("EUR")
-                            .to("USD")
-                            .multiplier(1.12)
-                            .build()
+                        CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
                     )
                     .defaultStatementDefinitionId("defaultStatementDefinitionId")
                     .externalInvoiceDate("LAST_DAY_OF_ARREARS")
@@ -81,7 +80,7 @@ class OrganizationConfigServiceTest {
                     .version(0L)
                     .build()
             )
-        println(organizationConfig)
+
         organizationConfig.validate()
     }
 }

@@ -7,9 +7,18 @@ package com.m3ter.sdk.services.async
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
+import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsync
+import com.m3ter.sdk.services.async.dataExports.JobServiceAsync
+import com.m3ter.sdk.services.async.dataExports.ScheduleServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface DataExportServiceAsync {
+
+    fun destinations(): DestinationServiceAsync
+
+    fun jobs(): JobServiceAsync
+
+    fun schedules(): ScheduleServiceAsync
 
     /**
      * Trigger an ad-hoc Data Export. Each ad-hoc Export can be configured for exporting _only one

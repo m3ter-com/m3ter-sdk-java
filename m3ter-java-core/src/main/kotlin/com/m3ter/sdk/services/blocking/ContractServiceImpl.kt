@@ -16,6 +16,8 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
+import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
+import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPage
 import com.m3ter.sdk.models.ContractListParams
 import com.m3ter.sdk.models.ContractRetrieveParams
@@ -173,6 +175,50 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         val response = clientOptions.httpClient.execute(request, requestOptions)
         return response
             .use { deleteHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
+                }
+            }
+    }
+
+    private val endDateBillingEntitiesHandler: Handler<ContractEndDateBillingEntitiesResponse> =
+        jsonHandler<ContractEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /**
+     * Apply the specified end-date to billing entities associated with Accounts the Contract has
+     * been added to, and apply the end-date to the Contract itself.
+     *
+     * **NOTES:**
+     * - If you want to apply the end-date to the Contract _itself_ - the Contract `id` you use as
+     *   the required PATH PARAMETER - you must also specify `CONTRACT` as a `billingEntities`
+     *   option in the request body schema.
+     * - Only the Contract whose id you specify for the PATH PARAMETER will be end-dated. If there
+     *   are other Contracts associated with the Account, these will not be end-dated.
+     * - When you successfully end-date billing entities, the version number of each entity is
+     *   incremented.
+     */
+    override fun endDateBillingEntities(
+        params: ContractEndDateBillingEntitiesParams,
+        requestOptions: RequestOptions,
+    ): ContractEndDateBillingEntitiesResponse {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.PUT)
+                .addPathSegments(
+                    "organizations",
+                    params.getPathParam(0),
+                    "contracts",
+                    params.getPathParam(1),
+                    "enddatebillingentities",
+                )
+                .body(json(clientOptions.jsonMapper, params._body()))
+                .build()
+                .prepare(clientOptions, params)
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { endDateBillingEntitiesHandler.handle(it) }
             .also {
                 if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                     it.validate()

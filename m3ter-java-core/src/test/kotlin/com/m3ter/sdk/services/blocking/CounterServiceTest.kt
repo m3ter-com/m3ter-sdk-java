@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CounterServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -26,6 +26,7 @@ class CounterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
+
         val counter =
             counterService.create(
                 CounterCreateParams.builder()
@@ -37,12 +38,12 @@ class CounterServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counter)
+
         counter.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -52,14 +53,15 @@ class CounterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
+
         val counter =
             counterService.retrieve(CounterRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(counter)
+
         counter.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -69,6 +71,7 @@ class CounterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
+
         val counter =
             counterService.update(
                 CounterUpdateParams.builder()
@@ -81,12 +84,12 @@ class CounterServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counter)
+
         counter.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -96,14 +99,14 @@ class CounterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
-        val paginatedDataCounterResponse =
-            counterService.list(CounterListParams.builder().orgId("orgId").build())
-        println(paginatedDataCounterResponse)
-        paginatedDataCounterResponse.data().forEach { it.validate() }
+
+        val page = counterService.list(CounterListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -113,9 +116,10 @@ class CounterServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterService = client.counters()
+
         val counter =
             counterService.delete(CounterDeleteParams.builder().orgId("orgId").id("id").build())
-        println(counter)
+
         counter.validate()
     }
 }

@@ -15,7 +15,7 @@ class CounterPricingCreateParamsTest {
             .orgId("orgId")
             .counterId("x")
             .addPricingBand(
-                CounterPricingCreateParams.PricingBand.builder()
+                PricingBand.builder()
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
                     .unitPrice(0.0)
@@ -46,7 +46,7 @@ class CounterPricingCreateParamsTest {
                 .orgId("orgId")
                 .counterId("x")
                 .addPricingBand(
-                    CounterPricingCreateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -76,7 +76,7 @@ class CounterPricingCreateParamsTest {
         assertThat(body.pricingBands())
             .isEqualTo(
                 listOf(
-                    CounterPricingCreateParams.PricingBand.builder()
+                    PricingBand.builder()
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
                         .unitPrice(0.0)
@@ -107,11 +107,7 @@ class CounterPricingCreateParamsTest {
                 .orgId("orgId")
                 .counterId("x")
                 .addPricingBand(
-                    CounterPricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
@@ -122,13 +118,7 @@ class CounterPricingCreateParamsTest {
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.pricingBands())
             .isEqualTo(
-                listOf(
-                    CounterPricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
-                )
+                listOf(PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build())
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
@@ -140,11 +130,7 @@ class CounterPricingCreateParamsTest {
                 .orgId("orgId")
                 .counterId("x")
                 .addPricingBand(
-                    CounterPricingCreateParams.PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .build()
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()

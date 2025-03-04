@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "com.m3ter.sdk"
-    version = "0.1.0-alpha.3" // x-release-please-version
+    version = "0.1.0-alpha.4" // x-release-please-version
 }
 
 nexusPublishing {

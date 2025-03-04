@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class BalanceServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -27,6 +27,7 @@ class BalanceServiceTest {
                 .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
+
         val balance =
             balanceService.create(
                 BalanceCreateParams.builder()
@@ -50,12 +51,12 @@ class BalanceServiceTest {
                     .version(0L)
                     .build()
             )
-        println(balance)
+
         balance.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -65,14 +66,15 @@ class BalanceServiceTest {
                 .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
+
         val balance =
             balanceService.retrieve(BalanceRetrieveParams.builder().orgId("orgId").id("id").build())
-        println(balance)
+
         balance.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -82,6 +84,7 @@ class BalanceServiceTest {
                 .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
+
         val balance =
             balanceService.update(
                 BalanceUpdateParams.builder()
@@ -106,12 +109,12 @@ class BalanceServiceTest {
                     .version(0L)
                     .build()
             )
-        println(balance)
+
         balance.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -121,14 +124,14 @@ class BalanceServiceTest {
                 .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
-        val paginatedDataBalanceResponse =
-            balanceService.list(BalanceListParams.builder().orgId("orgId").build())
-        println(paginatedDataBalanceResponse)
-        paginatedDataBalanceResponse.data().forEach { it.validate() }
+
+        val page = balanceService.list(BalanceListParams.builder().orgId("orgId").build())
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -138,9 +141,10 @@ class BalanceServiceTest {
                 .orgId("My Org ID")
                 .build()
         val balanceService = client.balances()
+
         val balance =
             balanceService.delete(BalanceDeleteParams.builder().orgId("orgId").id("id").build())
-        println(balance)
+
         balance.validate()
     }
 }

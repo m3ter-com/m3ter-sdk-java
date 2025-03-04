@@ -9,6 +9,7 @@ import com.m3ter.sdk.models.CounterPricingDeleteParams
 import com.m3ter.sdk.models.CounterPricingListParams
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
+import com.m3ter.sdk.models.PricingBand
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CounterPricingServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -27,13 +28,14 @@ class CounterPricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
+
         val counterPricing =
             counterPricingService.create(
                 CounterPricingCreateParams.builder()
                     .orgId("orgId")
                     .counterId("x")
                     .addPricingBand(
-                        CounterPricingCreateParams.PricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -56,12 +58,12 @@ class CounterPricingServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counterPricing)
+
         counterPricing.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -71,16 +73,17 @@ class CounterPricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
+
         val counterPricing =
             counterPricingService.retrieve(
                 CounterPricingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
-        println(counterPricing)
+
         counterPricing.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -90,6 +93,7 @@ class CounterPricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
+
         val counterPricing =
             counterPricingService.update(
                 CounterPricingUpdateParams.builder()
@@ -97,7 +101,7 @@ class CounterPricingServiceTest {
                     .id("id")
                     .counterId("x")
                     .addPricingBand(
-                        CounterPricingUpdateParams.PricingBand.builder()
+                        PricingBand.builder()
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
                             .unitPrice(0.0)
@@ -120,12 +124,12 @@ class CounterPricingServiceTest {
                     .version(0L)
                     .build()
             )
-        println(counterPricing)
+
         counterPricing.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -135,14 +139,15 @@ class CounterPricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
-        val paginatedDataCounterPricingResponse =
+
+        val page =
             counterPricingService.list(CounterPricingListParams.builder().orgId("orgId").build())
-        println(paginatedDataCounterPricingResponse)
-        paginatedDataCounterPricingResponse.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -152,11 +157,12 @@ class CounterPricingServiceTest {
                 .orgId("My Org ID")
                 .build()
         val counterPricingService = client.counterPricings()
+
         val counterPricing =
             counterPricingService.delete(
                 CounterPricingDeleteParams.builder().orgId("orgId").id("id").build()
             )
-        println(counterPricing)
+
         counterPricing.validate()
     }
 }

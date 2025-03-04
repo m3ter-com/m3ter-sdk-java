@@ -8,7 +8,9 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
-import com.m3ter.sdk.models.AccountListChildrenParams
+import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
+import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
+import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPage
 import com.m3ter.sdk.models.AccountListParams
 import com.m3ter.sdk.models.AccountRetrieveParams
@@ -62,14 +64,33 @@ interface AccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
+    /**
+     * Apply the specified end-date to billing entities associated with an Account.
+     *
+     * **NOTE:**
+     * - When you successfully end-date billing entities, the version number of each entity is
+     *   incremented.
+     */
+    @JvmOverloads
+    fun endDateBillingEntities(
+        params: AccountEndDateBillingEntitiesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountEndDateBillingEntitiesResponse
+
     /** Retrieve a list of Accounts that are children of the specified Account. */
     @JvmOverloads
-    fun listChildren(
-        params: AccountListChildrenParams,
+    fun getChildren(
+        params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
-    /** Search for account entities */
+    /**
+     * Search for Account entities.
+     *
+     * This endpoint executes a search query for Accounts based on the user specified search
+     * criteria. The search query is customizable, allowing for complex nested conditions and
+     * sorting. The returned list of Accounts can be paginated for easier management.
+     */
     @JvmOverloads
     fun search(
         params: AccountSearchParams,
