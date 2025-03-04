@@ -9,6 +9,7 @@ import com.m3ter.sdk.models.DataExportScheduleDeleteParams
 import com.m3ter.sdk.models.DataExportScheduleListParams
 import com.m3ter.sdk.models.DataExportScheduleRetrieveParams
 import com.m3ter.sdk.models.DataExportScheduleUpdateParams
+import com.m3ter.sdk.models.OperationalDataExportScheduleRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -32,14 +33,11 @@ class ScheduleServiceAsyncTest {
                 DataExportScheduleCreateParams.builder()
                     .orgId("orgId")
                     .body(
-                        DataExportScheduleCreateParams.Body.UnionMember0.builder()
+                        OperationalDataExportScheduleRequest.builder()
                             .addOperationalDataType(
-                                DataExportScheduleCreateParams.Body.UnionMember0.OperationalDataType
-                                    .BILLS
+                                OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(
-                                DataExportScheduleCreateParams.Body.UnionMember0.SourceType.USAGE
-                            )
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                             .version(0L)
                             .build()
                     )
@@ -89,14 +87,11 @@ class ScheduleServiceAsyncTest {
                     .orgId("orgId")
                     .id("id")
                     .body(
-                        DataExportScheduleUpdateParams.Body.UnionMember0.builder()
+                        OperationalDataExportScheduleRequest.builder()
                             .addOperationalDataType(
-                                DataExportScheduleUpdateParams.Body.UnionMember0.OperationalDataType
-                                    .BILLS
+                                OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(
-                                DataExportScheduleUpdateParams.Body.UnionMember0.SourceType.USAGE
-                            )
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                             .version(0L)
                             .build()
                     )
