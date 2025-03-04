@@ -66,6 +66,7 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [EventGetFieldsResponse]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -158,6 +159,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Events]. */
             @JvmStatic fun builder() = Builder()
         }
 

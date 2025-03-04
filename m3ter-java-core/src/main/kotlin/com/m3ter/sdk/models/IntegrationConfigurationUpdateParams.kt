@@ -314,6 +314,21 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .configData()
+             * .credentials()
+             * .destination()
+             * .destinationId()
+             * .entityId()
+             * .entityType()
+             * .integrationCredentialsId()
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -506,6 +521,24 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IntegrationConfigurationUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .configData()
+         * .credentials()
+         * .destination()
+         * .destinationId()
+         * .entityId()
+         * .entityType()
+         * .integrationCredentialsId()
+         * .name()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -791,6 +824,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [ConfigData]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -941,6 +975,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Credentials].
+             *
+             * The following fields are required:
+             * ```java
+             * .type()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 

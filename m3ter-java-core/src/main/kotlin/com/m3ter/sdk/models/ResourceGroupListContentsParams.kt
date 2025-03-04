@@ -70,6 +70,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ResourceGroupListContentsParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .type()
+         * .resourceGroupId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

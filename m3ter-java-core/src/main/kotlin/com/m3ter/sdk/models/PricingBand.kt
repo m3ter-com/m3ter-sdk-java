@@ -93,6 +93,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PricingBand].
+         *
+         * The following fields are required:
+         * ```java
+         * .fixedPrice()
+         * .lowerLimit()
+         * .unitPrice()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

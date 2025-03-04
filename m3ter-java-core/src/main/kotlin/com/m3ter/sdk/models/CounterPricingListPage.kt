@@ -139,6 +139,9 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CounterPricingListPage].
+             */
             @JvmStatic fun builder() = Builder()
         }
 

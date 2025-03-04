@@ -50,6 +50,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BillLineItemRetrieveParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .billId()
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

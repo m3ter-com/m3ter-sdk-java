@@ -18,6 +18,7 @@ class M3terOkHttpClient private constructor() {
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [M3terOkHttpClient]. */
         @JvmStatic fun builder() = Builder()
 
         @JvmStatic fun fromEnv(): M3terClient = builder().fromEnv().build()

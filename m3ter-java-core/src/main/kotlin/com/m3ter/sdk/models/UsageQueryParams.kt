@@ -208,6 +208,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .endDate()
+             * .startDate()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -389,6 +398,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [UsageQueryParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .endDate()
+         * .startDate()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -676,6 +695,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Aggregation].
+             *
+             * The following fields are required:
+             * ```java
+             * .fieldCode()
+             * .fieldType()
+             * .function()
+             * .meterId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1063,6 +1093,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DimensionFilter].
+             *
+             * The following fields are required:
+             * ```java
+             * .fieldCode()
+             * .meterId()
+             * .values()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1382,6 +1422,10 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [DataExplorerAccountGroup].
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1618,6 +1662,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [DataExplorerDimensionGroup].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .fieldCode()
+                 * .meterId()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1865,6 +1919,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [DataExplorerTimeGroup].
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .frequency()
+                 * ```
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 
