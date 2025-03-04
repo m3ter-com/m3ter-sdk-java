@@ -68,6 +68,7 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [CommitmentSearchResponse]. */
         @JvmStatic fun builder() = Builder()
     }
 

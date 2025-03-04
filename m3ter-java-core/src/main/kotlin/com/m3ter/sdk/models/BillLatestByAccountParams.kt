@@ -47,6 +47,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BillLatestByAccountParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .accountId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

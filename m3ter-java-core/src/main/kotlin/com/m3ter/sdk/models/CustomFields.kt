@@ -227,6 +227,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CustomFields].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -459,6 +468,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Account]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -538,6 +548,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [AccountPlan]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -617,6 +628,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Aggregation]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -696,6 +708,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CompoundAggregation]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -776,6 +789,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Meter]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -855,6 +869,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Organization]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -934,6 +949,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Plan]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1013,6 +1029,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [PlanTemplate]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1092,6 +1109,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Product]. */
             @JvmStatic fun builder() = Builder()
         }
 

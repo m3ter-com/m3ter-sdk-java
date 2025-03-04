@@ -116,6 +116,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PermissionStatement].
+         *
+         * The following fields are required:
+         * ```java
+         * .action()
+         * .effect()
+         * .resource()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

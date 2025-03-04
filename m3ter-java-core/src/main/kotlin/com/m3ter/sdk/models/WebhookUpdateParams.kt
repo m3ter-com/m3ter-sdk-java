@@ -210,6 +210,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .credentials()
+             * .description()
+             * .name()
+             * .url()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -344,6 +355,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [WebhookUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .credentials()
+         * .description()
+         * .name()
+         * .url()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -102,6 +102,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .grantType()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -180,6 +188,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AuthenticationGetBearerTokenParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .grantType()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

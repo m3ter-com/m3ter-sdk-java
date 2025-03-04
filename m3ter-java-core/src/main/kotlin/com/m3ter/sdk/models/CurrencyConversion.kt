@@ -73,6 +73,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CurrencyConversion].
+         *
+         * The following fields are required:
+         * ```java
+         * .from()
+         * .to()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

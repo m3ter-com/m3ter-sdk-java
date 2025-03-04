@@ -252,6 +252,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [NotificationConfiguration].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .code()
+         * .description()
+         * .name()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

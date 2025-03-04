@@ -69,6 +69,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalMappingListByM3terEntityParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .entity()
+         * .m3terId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -191,6 +191,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -311,6 +319,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [TransactionTypeCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .name()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

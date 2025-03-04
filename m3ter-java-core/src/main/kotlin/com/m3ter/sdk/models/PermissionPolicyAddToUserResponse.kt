@@ -150,6 +150,10 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [PermissionPolicyAddToUserResponse].
+         */
         @JvmStatic fun builder() = Builder()
     }
 

@@ -74,6 +74,7 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [UserMeResponse]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -426,6 +427,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Organization].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .version()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1019,6 +1029,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [ServiceUser]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1356,6 +1367,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [User]. */
             @JvmStatic fun builder() = Builder()
         }
 

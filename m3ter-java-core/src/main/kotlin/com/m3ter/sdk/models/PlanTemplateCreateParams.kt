@@ -722,6 +722,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .billFrequency()
+             * .currency()
+             * .name()
+             * .productId()
+             * .standingCharge()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1139,6 +1151,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanTemplateCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .billFrequency()
+         * .currency()
+         * .name()
+         * .productId()
+         * .standingCharge()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1769,6 +1794,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
             @JvmStatic fun builder() = Builder()
         }
 

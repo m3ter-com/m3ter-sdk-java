@@ -238,6 +238,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageDataExportScheduleRequest].
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * .timePeriod()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

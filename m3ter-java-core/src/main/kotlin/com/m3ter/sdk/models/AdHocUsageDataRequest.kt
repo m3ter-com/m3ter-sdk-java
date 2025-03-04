@@ -239,6 +239,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AdHocUsageDataRequest].
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

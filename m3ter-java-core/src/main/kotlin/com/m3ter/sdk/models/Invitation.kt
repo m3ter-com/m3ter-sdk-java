@@ -223,6 +223,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Invitation].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .accepted()
+         * .dtEndAccess()
+         * .dtExpiry()
+         * .email()
+         * .firstName()
+         * .invitingPrincipalId()
+         * .lastName()
+         * .permissionPolicyIds()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
