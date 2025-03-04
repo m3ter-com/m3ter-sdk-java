@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
@@ -93,14 +94,8 @@ private constructor(
          */
         fun addEvent(event: String) = apply {
             events =
-                (events ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(event)
+                (events ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("events", it).add(event)
                 }
         }
 

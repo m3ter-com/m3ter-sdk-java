@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -181,14 +182,8 @@ private constructor(
          */
         fun addAction(action: Action) = apply {
             this.action =
-                (this.action ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(action)
+                (this.action ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("action", it).add(action)
                 }
         }
 
@@ -231,14 +226,8 @@ private constructor(
          */
         fun addResource(resource: String) = apply {
             this.resource =
-                (this.resource ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(resource)
+                (this.resource ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("resource", it).add(resource)
                 }
         }
 

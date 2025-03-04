@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -164,14 +165,8 @@ private constructor(
             /** Use to specify a collection of Bills by their IDs for batch approval */
             fun addBillId(billId: String) = apply {
                 billIds =
-                    (billIds ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(billId)
+                    (billIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("billIds", it).add(billId)
                     }
             }
 

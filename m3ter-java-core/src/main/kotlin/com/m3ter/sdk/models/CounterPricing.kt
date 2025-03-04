@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -540,14 +541,8 @@ private constructor(
 
         fun addPricingBand(pricingBand: PricingBand) = apply {
             pricingBands =
-                (pricingBands ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(pricingBand)
+                (pricingBands ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("pricingBands", it).add(pricingBand)
                 }
         }
 

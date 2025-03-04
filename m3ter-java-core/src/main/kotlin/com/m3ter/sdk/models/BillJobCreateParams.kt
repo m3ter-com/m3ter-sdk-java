@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -718,14 +719,8 @@ private constructor(
              */
             fun addAccountId(accountId: String) = apply {
                 accountIds =
-                    (accountIds ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(accountId)
+                    (accountIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("accountIds", it).add(accountId)
                     }
             }
 
@@ -824,14 +819,8 @@ private constructor(
              */
             fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
                 currencyConversions =
-                    (currencyConversions ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(currencyConversion)
+                    (currencyConversions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("currencyConversions", it).add(currencyConversion)
                     }
             }
 

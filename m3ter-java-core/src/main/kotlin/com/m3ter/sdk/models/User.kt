@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.time.OffsetDateTime
@@ -429,14 +430,8 @@ private constructor(
         /** An array listing the Organizations where this user has access. */
         fun addOrganization(organization: String) = apply {
             organizations =
-                (organizations ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(organization)
+                (organizations ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("organizations", it).add(organization)
                 }
         }
 
@@ -461,14 +456,8 @@ private constructor(
          */
         fun addPermissionPolicy(permissionPolicy: PermissionStatement) = apply {
             this.permissionPolicy =
-                (this.permissionPolicy ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(permissionPolicy)
+                (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("permissionPolicy", it).add(permissionPolicy)
                 }
         }
 
