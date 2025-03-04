@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -1396,14 +1397,8 @@ private constructor(
              */
             fun addFeeDate(feeDate: CommitmentFee) = apply {
                 feeDates =
-                    (feeDates ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(feeDate)
+                    (feeDates ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("feeDates", it).add(feeDate)
                     }
             }
 
@@ -1467,14 +1462,8 @@ private constructor(
              */
             fun addLineItemType(lineItemType: LineItemType) = apply {
                 lineItemTypes =
-                    (lineItemTypes ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(lineItemType)
+                    (lineItemTypes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("lineItemTypes", it).add(lineItemType)
                     }
             }
 
@@ -1535,14 +1524,8 @@ private constructor(
              */
             fun addProductId(productId: String) = apply {
                 productIds =
-                    (productIds ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(productId)
+                    (productIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("productIds", it).add(productId)
                     }
             }
 

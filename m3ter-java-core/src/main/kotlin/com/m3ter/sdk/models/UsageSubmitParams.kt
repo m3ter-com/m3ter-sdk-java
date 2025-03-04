@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -155,14 +156,8 @@ private constructor(
             /** Request containing the usage data measurements for submission. */
             fun addMeasurement(measurement: Measurement) = apply {
                 measurements =
-                    (measurements ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(measurement)
+                    (measurements ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("measurements", it).add(measurement)
                     }
             }
 
