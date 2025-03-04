@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface CounterServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Create a new Counter. */
     @JvmOverloads
@@ -52,4 +59,65 @@ interface CounterServiceAsync {
         params: CounterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Counter>
+
+    /**
+     * A view of [CounterServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise
+         * the same as [CounterServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Counter>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Counter>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Counter>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
+         * the same as [CounterServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CounterListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is
+         * otherwise the same as [CounterServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Counter>>
+    }
 }

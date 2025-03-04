@@ -10,6 +10,8 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.json
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
@@ -21,64 +23,88 @@ import java.util.concurrent.CompletableFuture
 class CustomFieldServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CustomFieldServiceAsync {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: CustomFieldServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveHandler: Handler<CustomFields> =
-        jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): CustomFieldServiceAsync.WithRawResponse = withRawResponse
 
-    /**
-     * Retrieve all Custom Fields added at Organizational level for the entities that support them.
-     */
     override fun retrieve(
         params: CustomFieldRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CustomFields> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "customfields")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<CustomFields> =
+        // get /organizations/{orgId}/customfields
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    private val updateHandler: Handler<CustomFields> =
-        jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Update Custom Fields added at Organization level to entities that support them. */
     override fun update(
         params: CustomFieldUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CustomFields> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments("organizations", params.getPathParam(0), "customfields")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation!!) {
-                            it.validate()
-                        }
+    ): CompletableFuture<CustomFields> =
+        // put /organizations/{orgId}/customfields
+        withRawResponse().update(params, requestOptions).thenApply { it.parse() }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        CustomFieldServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveHandler: Handler<CustomFields> =
+            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: CustomFieldRetrieveParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CustomFields>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "customfields")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { retrieveHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
                     }
-            }
+                }
+        }
+
+        private val updateHandler: Handler<CustomFields> =
+            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun update(
+            params: CustomFieldUpdateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CustomFields>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("organizations", params.getPathParam(0), "customfields")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { updateHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
     }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AdhocExport
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsync
@@ -13,6 +15,11 @@ import com.m3ter.sdk.services.async.dataExports.ScheduleServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface DataExportServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun destinations(): DestinationServiceAsync
 
@@ -75,4 +82,28 @@ interface DataExportServiceAsync {
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AdhocExport>
+
+    /**
+     * A view of [DataExportServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        fun destinations(): DestinationServiceAsync.WithRawResponse
+
+        fun jobs(): JobServiceAsync.WithRawResponse
+
+        fun schedules(): ScheduleServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/adhoc`, but is
+         * otherwise the same as [DataExportServiceAsync.createAdhoc].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun createAdhoc(
+            params: DataExportCreateAdhocParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AdhocExport>>
+    }
 }

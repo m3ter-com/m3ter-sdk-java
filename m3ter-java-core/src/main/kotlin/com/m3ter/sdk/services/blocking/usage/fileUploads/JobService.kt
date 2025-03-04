@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking.usage.fileUploads
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.FileUploadJob
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
@@ -13,6 +15,11 @@ import com.m3ter.sdk.models.UsageFileUploadJobListParams
 import com.m3ter.sdk.models.UsageFileUploadJobRetrieveParams
 
 interface JobService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Get the file upload job response using the UUID of the file upload job.
@@ -52,4 +59,44 @@ interface JobService {
         params: UsageFileUploadJobGetOriginalDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageFileUploadJobGetOriginalDownloadUrlResponse
+
+    /** A view of [JobService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
+         * [JobService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UsageFileUploadJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FileUploadJob>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs`, but is otherwise the same as
+         * [JobService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UsageFileUploadJobListPage>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/fileuploads/measurements/jobs/{id}/original`, but is otherwise the
+         * same as [JobService.getOriginalDownloadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getOriginalDownloadUrl(
+            params: UsageFileUploadJobGetOriginalDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>
+    }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async.bills
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillLineItemListPageAsync
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
@@ -12,6 +14,11 @@ import com.m3ter.sdk.models.LineItem
 import java.util.concurrent.CompletableFuture
 
 interface LineItemServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Retrieves a specific line item within a Bill.
@@ -37,4 +44,33 @@ interface LineItemServiceAsync {
         params: BillLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillLineItemListPageAsync>
+
+    /**
+     * A view of [LineItemServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/bills/{billId}/lineitems/{id}`, but is otherwise the same as
+         * [LineItemServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<LineItem>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{billId}/lineitems`,
+         * but is otherwise the same as [LineItemServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillLineItemListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>>
+    }
 }

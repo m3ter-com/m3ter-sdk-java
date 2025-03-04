@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.BalanceUpdateParams
 import com.m3ter.sdk.services.blocking.balances.TransactionService
 
 interface BalanceService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun transactions(): TransactionService
 
@@ -76,4 +83,65 @@ interface BalanceService {
         params: BalanceDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
+
+    /** A view of [BalanceService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun transactions(): TransactionService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise
+         * the same as [BalanceService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Balance>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BalanceRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Balance>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: BalanceUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Balance>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/balances`, but is otherwise
+         * the same as [BalanceService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BalanceListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BalanceDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Balance>
+    }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
@@ -31,6 +33,11 @@ import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface PermissionPolicyServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Permission Policy
@@ -175,4 +182,162 @@ interface PermissionPolicyServiceAsync {
         params: PermissionPolicyRemoveFromUserGroupParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyRemoveFromUserGroupResponse>
+
+    /**
+     * A view of [PermissionPolicyServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/permissionpolicies`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PermissionPolicyCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies/{id}`, but
+         * is otherwise the same as [PermissionPolicyServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PermissionPolicyRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/permissionpolicies/{id}`, but
+         * is otherwise the same as [PermissionPolicyServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PermissionPolicyUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PermissionPolicyListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/permissionpolicies/{id}`,
+         * but is otherwise the same as [PermissionPolicyServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PermissionPolicyDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtoserviceuser`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.addToServiceUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToServiceUser(
+            params: PermissionPolicyAddToServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToServiceUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtosupportusers`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.addToSupportUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToSupportUser(
+            params: PermissionPolicyAddToSupportUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtouser`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.addToUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToUser(
+            params: PermissionPolicyAddToUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtousergroup`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.addToUserGroup].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToUserGroup(
+            params: PermissionPolicyAddToUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserGroupResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromserviceuser`,
+         * but is otherwise the same as [PermissionPolicyServiceAsync.removeFromServiceUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromServiceUser(
+            params: PermissionPolicyRemoveFromServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromsupportusers`,
+         * but is otherwise the same as [PermissionPolicyServiceAsync.removeFromSupportUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromSupportUser(
+            params: PermissionPolicyRemoveFromSupportUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromuser`, but is
+         * otherwise the same as [PermissionPolicyServiceAsync.removeFromUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromUser(
+            params: PermissionPolicyRemoveFromUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromusergroup`, but
+         * is otherwise the same as [PermissionPolicyServiceAsync.removeFromUserGroup].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromUserGroup(
+            params: PermissionPolicyRemoveFromUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse>>
+    }
 }

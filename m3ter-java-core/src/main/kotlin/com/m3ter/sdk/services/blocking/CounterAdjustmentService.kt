@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 
 interface CounterAdjustmentService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new CounterAdjustment for an Account using a Counter.
@@ -68,4 +75,66 @@ interface CounterAdjustmentService {
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustment
+
+    /**
+     * A view of [CounterAdjustmentService] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is
+         * otherwise the same as [CounterAdjustmentService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterAdjustmentCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustment>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
+         * is otherwise the same as [CounterAdjustmentService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterAdjustmentRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustment>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
+         * is otherwise the same as [CounterAdjustmentService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterAdjustmentUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustment>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
+         * otherwise the same as [CounterAdjustmentService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CounterAdjustmentListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustmentListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,
+         * but is otherwise the same as [CounterAdjustmentService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterAdjustmentDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustment>
+    }
 }

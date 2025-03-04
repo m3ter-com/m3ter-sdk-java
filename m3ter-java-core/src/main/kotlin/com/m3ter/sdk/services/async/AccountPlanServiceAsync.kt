@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AccountPlan
 import com.m3ter.sdk.models.AccountPlanCreateParams
 import com.m3ter.sdk.models.AccountPlanDeleteParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.models.AccountPlanUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface AccountPlanServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new AccountPlan or AccountPlanGroup.
@@ -87,4 +94,66 @@ interface AccountPlanServiceAsync {
         params: AccountPlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlan>
+
+    /**
+     * A view of [AccountPlanServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/accountplans`, but is
+         * otherwise the same as [AccountPlanServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: AccountPlanCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlan>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans/{id}`, but is
+         * otherwise the same as [AccountPlanServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: AccountPlanRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlan>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/accountplans/{id}`, but is
+         * otherwise the same as [AccountPlanServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: AccountPlanUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlan>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans`, but is
+         * otherwise the same as [AccountPlanServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: AccountPlanListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/accountplans/{id}`, but is
+         * otherwise the same as [AccountPlanServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: AccountPlanDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlan>>
+    }
 }

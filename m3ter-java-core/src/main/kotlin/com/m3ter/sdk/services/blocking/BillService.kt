@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
@@ -22,6 +24,11 @@ import com.m3ter.sdk.services.blocking.bills.DebitLineItemService
 import com.m3ter.sdk.services.blocking.bills.LineItemService
 
 interface BillService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun creditLineItems(): CreditLineItemService
 
@@ -138,4 +145,102 @@ interface BillService {
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Bill
+
+    /** A view of [BillService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun creditLineItems(): CreditLineItemService.WithRawResponse
+
+        fun debitLineItems(): DebitLineItemService.WithRawResponse
+
+        fun lineItems(): LineItemService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{id}`, but is otherwise
+         * the same as [BillService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Bill>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills`, but is otherwise the
+         * same as [BillService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/bills/{id}`, but is
+         * otherwise the same as [BillService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BillDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Bill>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/bills/approve`, but is
+         * otherwise the same as [BillService.approve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun approve(
+            params: BillApproveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillApproveResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/latest/{accountId}`,
+         * but is otherwise the same as [BillService.latestByAccount].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun latestByAccount(
+            params: BillLatestByAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Bill>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/lock`, but is
+         * otherwise the same as [BillService.lock].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun lock(
+            params: BillLockParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Bill>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/bills/search`, but is
+         * otherwise the same as [BillService.search].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun search(
+            params: BillSearchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillSearchResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/status`, but is
+         * otherwise the same as [BillService.updateStatus].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun updateStatus(
+            params: BillUpdateStatusParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Bill>
+    }
 }

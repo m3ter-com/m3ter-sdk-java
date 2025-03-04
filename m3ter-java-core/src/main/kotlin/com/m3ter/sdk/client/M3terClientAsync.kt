@@ -65,6 +65,11 @@ interface M3terClientAsync {
      */
     fun sync(): M3terClient
 
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
+
     fun authentication(): AuthenticationServiceAsync
 
     fun accounts(): AccountServiceAsync
@@ -153,4 +158,84 @@ interface M3terClientAsync {
      * method.
      */
     fun close()
+
+    /** A view of [M3terClientAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun authentication(): AuthenticationServiceAsync.WithRawResponse
+
+        fun accounts(): AccountServiceAsync.WithRawResponse
+
+        fun accountPlans(): AccountPlanServiceAsync.WithRawResponse
+
+        fun aggregations(): AggregationServiceAsync.WithRawResponse
+
+        fun balances(): BalanceServiceAsync.WithRawResponse
+
+        fun bills(): BillServiceAsync.WithRawResponse
+
+        fun billConfig(): BillConfigServiceAsync.WithRawResponse
+
+        fun commitments(): CommitmentServiceAsync.WithRawResponse
+
+        fun billJobs(): BillJobServiceAsync.WithRawResponse
+
+        fun compoundAggregations(): CompoundAggregationServiceAsync.WithRawResponse
+
+        fun contracts(): ContractServiceAsync.WithRawResponse
+
+        fun counters(): CounterServiceAsync.WithRawResponse
+
+        fun counterAdjustments(): CounterAdjustmentServiceAsync.WithRawResponse
+
+        fun counterPricings(): CounterPricingServiceAsync.WithRawResponse
+
+        fun creditReasons(): CreditReasonServiceAsync.WithRawResponse
+
+        fun currencies(): CurrencyServiceAsync.WithRawResponse
+
+        fun customFields(): CustomFieldServiceAsync.WithRawResponse
+
+        fun dataExports(): DataExportServiceAsync.WithRawResponse
+
+        fun debitReasons(): DebitReasonServiceAsync.WithRawResponse
+
+        fun events(): EventServiceAsync.WithRawResponse
+
+        fun externalMappings(): ExternalMappingServiceAsync.WithRawResponse
+
+        fun integrationConfigurations(): IntegrationConfigurationServiceAsync.WithRawResponse
+
+        fun meters(): MeterServiceAsync.WithRawResponse
+
+        fun notificationConfigurations(): NotificationConfigurationServiceAsync.WithRawResponse
+
+        fun organizationConfig(): OrganizationConfigServiceAsync.WithRawResponse
+
+        fun permissionPolicies(): PermissionPolicyServiceAsync.WithRawResponse
+
+        fun plans(): PlanServiceAsync.WithRawResponse
+
+        fun planGroups(): PlanGroupServiceAsync.WithRawResponse
+
+        fun planGroupLinks(): PlanGroupLinkServiceAsync.WithRawResponse
+
+        fun planTemplates(): PlanTemplateServiceAsync.WithRawResponse
+
+        fun pricings(): PricingServiceAsync.WithRawResponse
+
+        fun products(): ProductServiceAsync.WithRawResponse
+
+        fun resourceGroups(): ResourceGroupServiceAsync.WithRawResponse
+
+        fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync.WithRawResponse
+
+        fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse
+
+        fun usage(): UsageServiceAsync.WithRawResponse
+
+        fun users(): UserServiceAsync.WithRawResponse
+
+        fun webhooks(): WebhookServiceAsync.WithRawResponse
+    }
 }

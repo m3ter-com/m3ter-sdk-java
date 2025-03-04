@@ -4,7 +4,10 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponse
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.ResourceGroup
 import com.m3ter.sdk.models.User
@@ -21,6 +24,11 @@ import com.m3ter.sdk.services.async.users.InvitationServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface UserServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun invitations(): InvitationServiceAsync
 
@@ -116,4 +124,87 @@ interface UserServiceAsync {
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
+
+    /** A view of [UserServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun invitations(): InvitationServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UserRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<User>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: UserUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<User>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
+         * same as [UserServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UserListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
+         * is otherwise the same as [UserServiceAsync.getPermissions].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
+         * is otherwise the same as [UserServiceAsync.getUserGroups].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getUserGroups(
+            params: UserGetUserGroupsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ResourceGroup>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
+         * the same as [UserServiceAsync.me].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun me(
+            params: UserMeParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserMeResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,
+         * but is otherwise the same as [UserServiceAsync.resendPassword].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun resendPassword(
+            params: UserResendPasswordParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse>
+    }
 }
