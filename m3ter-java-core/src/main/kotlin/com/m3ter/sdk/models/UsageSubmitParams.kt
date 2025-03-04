@@ -129,6 +129,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .measurements()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -209,6 +217,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [UsageSubmitParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .measurements()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -528,6 +545,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Measurement].
+             *
+             * The following fields are required:
+             * ```java
+             * .account()
+             * .meter()
+             * .ts()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -720,6 +747,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Cost]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -802,6 +830,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Income]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -884,6 +913,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Measure]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -966,6 +996,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Metadata]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1048,6 +1079,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Other]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1130,6 +1162,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [What]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1212,6 +1245,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Where]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -1294,6 +1328,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Who]. */
                 @JvmStatic fun builder() = Builder()
             }
 

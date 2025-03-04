@@ -191,6 +191,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [M3terSignedCredentialsResp].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .destination()
+         * .type()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

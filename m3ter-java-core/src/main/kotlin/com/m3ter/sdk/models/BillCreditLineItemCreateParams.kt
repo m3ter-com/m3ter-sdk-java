@@ -307,6 +307,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .description()
+             * .productId()
+             * .referencedBillId()
+             * .referencedLineItemId()
+             * .servicePeriodEndDate()
+             * .servicePeriodStartDate()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -501,6 +515,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [BillCreditLineItemCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .billId()
+         * .amount()
+         * .description()
+         * .productId()
+         * .referencedBillId()
+         * .referencedLineItemId()
+         * .servicePeriodEndDate()
+         * .servicePeriodStartDate()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

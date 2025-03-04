@@ -35,6 +35,17 @@ private constructor(
 
         const val PRODUCTION_URL = "https://api.m3ter.com"
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ClientOptions].
+         *
+         * The following fields are required:
+         * ```java
+         * .httpClient()
+         * .apiKey()
+         * .apiSecret()
+         * .orgId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
 
         @JvmStatic fun fromEnv(): ClientOptions = builder().fromEnv().build()

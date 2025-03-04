@@ -384,6 +384,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .code()
+             * .dataFields()
+             * .derivedFields()
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -629,6 +640,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [MeterCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .code()
+         * .dataFields()
+         * .derivedFields()
+         * .name()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1033,6 +1056,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DerivedField].
+             *
+             * The following fields are required:
+             * ```java
+             * .category()
+             * .code()
+             * .name()
+             * .calculation()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1200,6 +1234,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
             @JvmStatic fun builder() = Builder()
         }
 

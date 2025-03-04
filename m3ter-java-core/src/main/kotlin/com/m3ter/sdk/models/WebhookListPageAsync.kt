@@ -139,6 +139,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [WebhookListPageAsync]. */
             @JvmStatic fun builder() = Builder()
         }
 

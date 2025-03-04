@@ -445,6 +445,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Bill].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1446,6 +1455,23 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LineItem].
+             *
+             * The following fields are required:
+             * ```java
+             * .averageUnitPrice()
+             * .conversionRate()
+             * .convertedSubtotal()
+             * .currency()
+             * .description()
+             * .lineItemType()
+             * .quantity()
+             * .subtotal()
+             * .unit()
+             * .units()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -2127,6 +2153,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Group]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -2212,6 +2239,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Segment]. */
                 @JvmStatic fun builder() = Builder()
             }
 
@@ -2420,6 +2448,9 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [UsagePerPricingBand].
+                 */
                 @JvmStatic fun builder() = Builder()
             }
 

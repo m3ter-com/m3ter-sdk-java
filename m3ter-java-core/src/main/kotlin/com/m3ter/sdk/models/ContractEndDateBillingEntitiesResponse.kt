@@ -92,6 +92,10 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ContractEndDateBillingEntitiesResponse].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -259,6 +263,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [FailedEntities]. */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -436,6 +441,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [UpdatedEntities]. */
             @JvmStatic fun builder() = Builder()
         }
 
