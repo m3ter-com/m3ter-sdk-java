@@ -25,9 +25,11 @@ private constructor(
     @get:JvmName("maxRetries") val maxRetries: Int,
     @get:JvmName("apiKey") val apiKey: String,
     @get:JvmName("apiSecret") val apiSecret: String,
-    @get:JvmName("token") val token: String?,
+    private val token: String?,
     @get:JvmName("orgId") val orgId: String,
 ) {
+
+    fun token(): Optional<String> = Optional.ofNullable(token)
 
     fun toBuilder() = Builder().from(this)
 
