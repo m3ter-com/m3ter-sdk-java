@@ -23,17 +23,17 @@ import kotlin.jvm.optionals.getOrNull
 @JsonSerialize(using = DataExportScheduleUpdateResponse.Serializer::class)
 class DataExportScheduleUpdateResponse
 private constructor(
-    private val operationalDataExportSchedule: OperationalDataExportSchedule? = null,
-    private val usageDataExportSchedule: UsageDataExportSchedule? = null,
+    private val operationalDataExportSchedule: OperationalDataExportScheduleResponse? = null,
+    private val usageDataExportSchedule: UsageDataExportScheduleResponse? = null,
     private val _json: JsonValue? = null,
 ) {
 
     /** Response representing an operational data export configuration. */
-    fun operationalDataExportSchedule(): Optional<OperationalDataExportSchedule> =
+    fun operationalDataExportSchedule(): Optional<OperationalDataExportScheduleResponse> =
         Optional.ofNullable(operationalDataExportSchedule)
 
     /** Response representing an usage data export configuration. */
-    fun usageDataExportSchedule(): Optional<UsageDataExportSchedule> =
+    fun usageDataExportSchedule(): Optional<UsageDataExportScheduleResponse> =
         Optional.ofNullable(usageDataExportSchedule)
 
     fun isOperationalDataExportSchedule(): Boolean = operationalDataExportSchedule != null
@@ -41,11 +41,11 @@ private constructor(
     fun isUsageDataExportSchedule(): Boolean = usageDataExportSchedule != null
 
     /** Response representing an operational data export configuration. */
-    fun asOperationalDataExportSchedule(): OperationalDataExportSchedule =
+    fun asOperationalDataExportSchedule(): OperationalDataExportScheduleResponse =
         operationalDataExportSchedule.getOrThrow("operationalDataExportSchedule")
 
     /** Response representing an usage data export configuration. */
-    fun asUsageDataExportSchedule(): UsageDataExportSchedule =
+    fun asUsageDataExportSchedule(): UsageDataExportScheduleResponse =
         usageDataExportSchedule.getOrThrow("usageDataExportSchedule")
 
     fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
@@ -70,13 +70,13 @@ private constructor(
         accept(
             object : Visitor<Unit> {
                 override fun visitOperationalDataExportSchedule(
-                    operationalDataExportSchedule: OperationalDataExportSchedule
+                    operationalDataExportSchedule: OperationalDataExportScheduleResponse
                 ) {
                     operationalDataExportSchedule.validate()
                 }
 
                 override fun visitUsageDataExportSchedule(
-                    usageDataExportSchedule: UsageDataExportSchedule
+                    usageDataExportSchedule: UsageDataExportScheduleResponse
                 ) {
                     usageDataExportSchedule.validate()
                 }
@@ -110,7 +110,7 @@ private constructor(
         /** Response representing an operational data export configuration. */
         @JvmStatic
         fun ofOperationalDataExportSchedule(
-            operationalDataExportSchedule: OperationalDataExportSchedule
+            operationalDataExportSchedule: OperationalDataExportScheduleResponse
         ) =
             DataExportScheduleUpdateResponse(
                 operationalDataExportSchedule = operationalDataExportSchedule
@@ -118,7 +118,7 @@ private constructor(
 
         /** Response representing an usage data export configuration. */
         @JvmStatic
-        fun ofUsageDataExportSchedule(usageDataExportSchedule: UsageDataExportSchedule) =
+        fun ofUsageDataExportSchedule(usageDataExportSchedule: UsageDataExportScheduleResponse) =
             DataExportScheduleUpdateResponse(usageDataExportSchedule = usageDataExportSchedule)
     }
 
@@ -130,11 +130,13 @@ private constructor(
 
         /** Response representing an operational data export configuration. */
         fun visitOperationalDataExportSchedule(
-            operationalDataExportSchedule: OperationalDataExportSchedule
+            operationalDataExportSchedule: OperationalDataExportScheduleResponse
         ): T
 
         /** Response representing an usage data export configuration. */
-        fun visitUsageDataExportSchedule(usageDataExportSchedule: UsageDataExportSchedule): T
+        fun visitUsageDataExportSchedule(
+            usageDataExportSchedule: UsageDataExportScheduleResponse
+        ): T
 
         /**
          * Maps an unknown variant of [DataExportScheduleUpdateResponse] to a value of type [T].
@@ -162,14 +164,18 @@ private constructor(
 
             when (sourceType) {}
 
-            tryDeserialize(node, jacksonTypeRef<OperationalDataExportSchedule>()) { it.validate() }
+            tryDeserialize(node, jacksonTypeRef<OperationalDataExportScheduleResponse>()) {
+                    it.validate()
+                }
                 ?.let {
                     return DataExportScheduleUpdateResponse(
                         operationalDataExportSchedule = it,
                         _json = json,
                     )
                 }
-            tryDeserialize(node, jacksonTypeRef<UsageDataExportSchedule>()) { it.validate() }
+            tryDeserialize(node, jacksonTypeRef<UsageDataExportScheduleResponse>()) {
+                    it.validate()
+                }
                 ?.let {
                     return DataExportScheduleUpdateResponse(
                         usageDataExportSchedule = it,

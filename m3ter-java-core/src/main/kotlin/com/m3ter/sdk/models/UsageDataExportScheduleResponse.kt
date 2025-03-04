@@ -20,7 +20,7 @@ import java.util.Objects
 import java.util.Optional
 
 @NoAutoDetect
-class UsageDataExportSchedule
+class UsageDataExportScheduleResponse
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
@@ -213,7 +213,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): UsageDataExportSchedule = apply {
+    fun validate(): UsageDataExportScheduleResponse = apply {
         if (validated) {
             return@apply
         }
@@ -235,7 +235,7 @@ private constructor(
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [UsageDataExportSchedule]. */
+    /** A builder for [UsageDataExportScheduleResponse]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -248,16 +248,18 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(usageDataExportSchedule: UsageDataExportSchedule) = apply {
-            id = usageDataExportSchedule.id
-            version = usageDataExportSchedule.version
-            accountIds = usageDataExportSchedule.accountIds.map { it.toMutableList() }
-            aggregation = usageDataExportSchedule.aggregation
-            aggregationFrequency = usageDataExportSchedule.aggregationFrequency
-            meterIds = usageDataExportSchedule.meterIds.map { it.toMutableList() }
-            timePeriod = usageDataExportSchedule.timePeriod
-            additionalProperties = usageDataExportSchedule.additionalProperties.toMutableMap()
-        }
+        internal fun from(usageDataExportScheduleResponse: UsageDataExportScheduleResponse) =
+            apply {
+                id = usageDataExportScheduleResponse.id
+                version = usageDataExportScheduleResponse.version
+                accountIds = usageDataExportScheduleResponse.accountIds.map { it.toMutableList() }
+                aggregation = usageDataExportScheduleResponse.aggregation
+                aggregationFrequency = usageDataExportScheduleResponse.aggregationFrequency
+                meterIds = usageDataExportScheduleResponse.meterIds.map { it.toMutableList() }
+                timePeriod = usageDataExportScheduleResponse.timePeriod
+                additionalProperties =
+                    usageDataExportScheduleResponse.additionalProperties.toMutableMap()
+            }
 
         /** The id of the schedule */
         fun id(id: String) = id(JsonField.of(id))
@@ -465,8 +467,8 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
-        fun build(): UsageDataExportSchedule =
-            UsageDataExportSchedule(
+        fun build(): UsageDataExportScheduleResponse =
+            UsageDataExportScheduleResponse(
                 checkRequired("id", id),
                 checkRequired("version", version),
                 (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
@@ -915,7 +917,7 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageDataExportSchedule && id == other.id && version == other.version && accountIds == other.accountIds && aggregation == other.aggregation && aggregationFrequency == other.aggregationFrequency && meterIds == other.meterIds && timePeriod == other.timePeriod && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is UsageDataExportScheduleResponse && id == other.id && version == other.version && accountIds == other.accountIds && aggregation == other.aggregation && aggregationFrequency == other.aggregationFrequency && meterIds == other.meterIds && timePeriod == other.timePeriod && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
@@ -925,5 +927,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "UsageDataExportSchedule{id=$id, version=$version, accountIds=$accountIds, aggregation=$aggregation, aggregationFrequency=$aggregationFrequency, meterIds=$meterIds, timePeriod=$timePeriod, additionalProperties=$additionalProperties}"
+        "UsageDataExportScheduleResponse{id=$id, version=$version, accountIds=$accountIds, aggregation=$aggregation, aggregationFrequency=$aggregationFrequency, meterIds=$meterIds, timePeriod=$timePeriod, additionalProperties=$additionalProperties}"
 }
