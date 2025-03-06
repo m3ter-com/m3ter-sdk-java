@@ -31,7 +31,7 @@ class ContractServiceAsyncTest {
                 .build()
         val contractServiceAsync = client.contracts()
 
-        val contractFuture =
+        val contractResponseFuture =
             contractServiceAsync.create(
                 ContractCreateParams.builder()
                     .orgId("orgId")
@@ -51,8 +51,8 @@ class ContractServiceAsyncTest {
                     .build()
             )
 
-        val contract = contractFuture.get()
-        contract.validate()
+        val contractResponse = contractResponseFuture.get()
+        contractResponse.validate()
     }
 
     @Test
@@ -67,13 +67,13 @@ class ContractServiceAsyncTest {
                 .build()
         val contractServiceAsync = client.contracts()
 
-        val contractFuture =
+        val contractResponseFuture =
             contractServiceAsync.retrieve(
                 ContractRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val contract = contractFuture.get()
-        contract.validate()
+        val contractResponse = contractResponseFuture.get()
+        contractResponse.validate()
     }
 
     @Test
@@ -88,7 +88,7 @@ class ContractServiceAsyncTest {
                 .build()
         val contractServiceAsync = client.contracts()
 
-        val contractFuture =
+        val contractResponseFuture =
             contractServiceAsync.update(
                 ContractUpdateParams.builder()
                     .orgId("orgId")
@@ -109,8 +109,8 @@ class ContractServiceAsyncTest {
                     .build()
             )
 
-        val contract = contractFuture.get()
-        contract.validate()
+        val contractResponse = contractResponseFuture.get()
+        contractResponse.validate()
     }
 
     @Test
@@ -144,13 +144,13 @@ class ContractServiceAsyncTest {
                 .build()
         val contractServiceAsync = client.contracts()
 
-        val contractFuture =
+        val contractResponseFuture =
             contractServiceAsync.delete(
                 ContractDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val contract = contractFuture.get()
-        contract.validate()
+        val contractResponse = contractResponseFuture.get()
+        contractResponse.validate()
     }
 
     @Test

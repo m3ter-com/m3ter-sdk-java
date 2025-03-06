@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
 import com.m3ter.sdk.models.PricingListPageAsync
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -33,14 +33,14 @@ interface PricingServiceAsync {
     fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Pricing>
+    ): CompletableFuture<PricingResponse>
 
     /** Retrieve the Pricing with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Pricing>
+    ): CompletableFuture<PricingResponse>
 
     /**
      * Update Pricing for the given UUID.
@@ -52,7 +52,7 @@ interface PricingServiceAsync {
     fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Pricing>
+    ): CompletableFuture<PricingResponse>
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     @JvmOverloads
@@ -66,7 +66,7 @@ interface PricingServiceAsync {
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Pricing>
+    ): CompletableFuture<PricingResponse>
 
     /**
      * A view of [PricingServiceAsync] that provides access to raw HTTP responses for each method.
@@ -82,7 +82,7 @@ interface PricingServiceAsync {
         fun create(
             params: PricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Pricing>>
+        ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings/{id}`, but is
@@ -93,7 +93,7 @@ interface PricingServiceAsync {
         fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Pricing>>
+        ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/pricings/{id}`, but is
@@ -104,7 +104,7 @@ interface PricingServiceAsync {
         fun update(
             params: PricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Pricing>>
+        ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings`, but is otherwise
@@ -126,6 +126,6 @@ interface PricingServiceAsync {
         fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Pricing>>
+        ): CompletableFuture<HttpResponseFor<PricingResponse>>
     }
 }

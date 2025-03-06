@@ -30,7 +30,7 @@ class PricingServiceTest {
                 .build()
         val pricingService = client.pricings()
 
-        val pricing =
+        val pricingResponse =
             pricingService.create(
                 PricingCreateParams.builder()
                     .orgId("orgId")
@@ -76,7 +76,7 @@ class PricingServiceTest {
                     .build()
             )
 
-        pricing.validate()
+        pricingResponse.validate()
     }
 
     @Test
@@ -91,10 +91,10 @@ class PricingServiceTest {
                 .build()
         val pricingService = client.pricings()
 
-        val pricing =
+        val pricingResponse =
             pricingService.retrieve(PricingRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        pricing.validate()
+        pricingResponse.validate()
     }
 
     @Test
@@ -109,7 +109,7 @@ class PricingServiceTest {
                 .build()
         val pricingService = client.pricings()
 
-        val pricing =
+        val pricingResponse =
             pricingService.update(
                 PricingUpdateParams.builder()
                     .orgId("orgId")
@@ -156,7 +156,7 @@ class PricingServiceTest {
                     .build()
             )
 
-        pricing.validate()
+        pricingResponse.validate()
     }
 
     @Test
@@ -188,9 +188,9 @@ class PricingServiceTest {
                 .build()
         val pricingService = client.pricings()
 
-        val pricing =
+        val pricingResponse =
             pricingService.delete(PricingDeleteParams.builder().orgId("orgId").id("id").build())
 
-        pricing.validate()
+        pricingResponse.validate()
     }
 }

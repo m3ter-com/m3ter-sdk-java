@@ -27,7 +27,7 @@ class PlanGroupLinkServiceAsyncTest {
                 .build()
         val planGroupLinkServiceAsync = client.planGroupLinks()
 
-        val planGroupLinkFuture =
+        val planGroupLinkResponseFuture =
             planGroupLinkServiceAsync.create(
                 PlanGroupLinkCreateParams.builder()
                     .orgId("orgId")
@@ -37,8 +37,8 @@ class PlanGroupLinkServiceAsyncTest {
                     .build()
             )
 
-        val planGroupLink = planGroupLinkFuture.get()
-        planGroupLink.validate()
+        val planGroupLinkResponse = planGroupLinkResponseFuture.get()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -53,13 +53,13 @@ class PlanGroupLinkServiceAsyncTest {
                 .build()
         val planGroupLinkServiceAsync = client.planGroupLinks()
 
-        val planGroupLinkFuture =
+        val planGroupLinkResponseFuture =
             planGroupLinkServiceAsync.retrieve(
                 PlanGroupLinkRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planGroupLink = planGroupLinkFuture.get()
-        planGroupLink.validate()
+        val planGroupLinkResponse = planGroupLinkResponseFuture.get()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -74,7 +74,7 @@ class PlanGroupLinkServiceAsyncTest {
                 .build()
         val planGroupLinkServiceAsync = client.planGroupLinks()
 
-        val planGroupLinkFuture =
+        val planGroupLinkResponseFuture =
             planGroupLinkServiceAsync.update(
                 PlanGroupLinkUpdateParams.builder()
                     .orgId("orgId")
@@ -85,8 +85,8 @@ class PlanGroupLinkServiceAsyncTest {
                     .build()
             )
 
-        val planGroupLink = planGroupLinkFuture.get()
-        planGroupLink.validate()
+        val planGroupLinkResponse = planGroupLinkResponseFuture.get()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -120,12 +120,12 @@ class PlanGroupLinkServiceAsyncTest {
                 .build()
         val planGroupLinkServiceAsync = client.planGroupLinks()
 
-        val planGroupLinkFuture =
+        val planGroupLinkResponseFuture =
             planGroupLinkServiceAsync.delete(
                 PlanGroupLinkDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planGroupLink = planGroupLinkFuture.get()
-        planGroupLink.validate()
+        val planGroupLinkResponse = planGroupLinkResponseFuture.get()
+        planGroupLinkResponse.validate()
     }
 }

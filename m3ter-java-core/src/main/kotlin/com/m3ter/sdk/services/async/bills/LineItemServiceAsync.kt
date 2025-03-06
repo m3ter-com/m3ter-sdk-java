@@ -10,7 +10,7 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillLineItemListPageAsync
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
-import com.m3ter.sdk.models.LineItem
+import com.m3ter.sdk.models.LineItemResponse
 import java.util.concurrent.CompletableFuture
 
 interface LineItemServiceAsync {
@@ -30,7 +30,7 @@ interface LineItemServiceAsync {
     fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<LineItem>
+    ): CompletableFuture<LineItemResponse>
 
     /**
      * Lists all the line items for a specific Bill.
@@ -60,7 +60,7 @@ interface LineItemServiceAsync {
         fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<LineItem>>
+        ): CompletableFuture<HttpResponseFor<LineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{billId}/lineitems`,

@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
 import com.m3ter.sdk.models.PlanTemplateListPageAsync
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
     override fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanTemplate> =
+    ): CompletableFuture<PlanTemplateResponse> =
         // post /organizations/{orgId}/plantemplates
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanTemplate> =
+    ): CompletableFuture<PlanTemplateResponse> =
         // get /organizations/{orgId}/plantemplates/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanTemplate> =
+    ): CompletableFuture<PlanTemplateResponse> =
         // put /organizations/{orgId}/plantemplates/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
     override fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanTemplate> =
+    ): CompletableFuture<PlanTemplateResponse> =
         // delete /organizations/{orgId}/plantemplates/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanTemplateCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>> {
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +104,14 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val retrieveHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PlanTemplateRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>> {
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +139,14 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val updateHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanTemplateUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>> {
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +212,14 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val deleteHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PlanTemplateDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>> {
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

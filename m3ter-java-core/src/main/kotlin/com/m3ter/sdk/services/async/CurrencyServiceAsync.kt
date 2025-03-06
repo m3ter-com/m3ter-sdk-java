@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
 import com.m3ter.sdk.models.CurrencyListPageAsync
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -32,7 +32,7 @@ interface CurrencyServiceAsync {
     fun create(
         params: CurrencyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Currency>
+    ): CompletableFuture<CurrencyResponse>
 
     /**
      * Retrieve the specified Currency with the given UUID. Used to obtain the details of a
@@ -42,7 +42,7 @@ interface CurrencyServiceAsync {
     fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Currency>
+    ): CompletableFuture<CurrencyResponse>
 
     /**
      * Update a Currency with the given UUID.
@@ -53,7 +53,7 @@ interface CurrencyServiceAsync {
     fun update(
         params: CurrencyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Currency>
+    ): CompletableFuture<CurrencyResponse>
 
     /**
      * Retrieve a list of Currencies.
@@ -77,7 +77,7 @@ interface CurrencyServiceAsync {
     fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Currency>
+    ): CompletableFuture<CurrencyResponse>
 
     /**
      * A view of [CurrencyServiceAsync] that provides access to raw HTTP responses for each method.
@@ -93,7 +93,7 @@ interface CurrencyServiceAsync {
         fun create(
             params: CurrencyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Currency>>
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency/{id}`, but
@@ -104,7 +104,7 @@ interface CurrencyServiceAsync {
         fun retrieve(
             params: CurrencyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Currency>>
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/currency/{id}`, but
@@ -115,7 +115,7 @@ interface CurrencyServiceAsync {
         fun update(
             params: CurrencyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Currency>>
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency`, but is
@@ -137,6 +137,6 @@ interface CurrencyServiceAsync {
         fun delete(
             params: CurrencyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Currency>>
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
     }
 }

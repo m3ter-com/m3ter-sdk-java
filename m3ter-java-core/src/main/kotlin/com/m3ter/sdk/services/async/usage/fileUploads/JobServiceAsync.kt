@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.async.usage.fileUploads
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.FileUploadJob
+import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.sdk.models.UsageFileUploadJobListPageAsync
@@ -31,7 +31,7 @@ interface JobServiceAsync {
     fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<FileUploadJob>
+    ): CompletableFuture<FileUploadJobResponse>
 
     /**
      * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
@@ -74,7 +74,7 @@ interface JobServiceAsync {
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<FileUploadJob>>
+        ): CompletableFuture<HttpResponseFor<FileUploadJobResponse>>
 
         /**
          * Returns a raw HTTP response for `get

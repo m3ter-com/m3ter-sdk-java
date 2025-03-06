@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.BillConfig
+import com.m3ter.sdk.models.BillConfigResponse
 import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 
@@ -23,7 +23,7 @@ interface BillConfigService {
     fun retrieve(
         params: BillConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): BillConfig
+    ): BillConfigResponse
 
     /**
      * Update the Organization-wide BillConfig.
@@ -36,7 +36,7 @@ interface BillConfigService {
     fun update(
         params: BillConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): BillConfig
+    ): BillConfigResponse
 
     /** A view of [BillConfigService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -50,7 +50,7 @@ interface BillConfigService {
         fun retrieve(
             params: BillConfigRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BillConfig>
+        ): HttpResponseFor<BillConfigResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
@@ -61,6 +61,6 @@ interface BillConfigService {
         fun update(
             params: BillConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<BillConfig>
+        ): HttpResponseFor<BillConfigResponse>
     }
 }

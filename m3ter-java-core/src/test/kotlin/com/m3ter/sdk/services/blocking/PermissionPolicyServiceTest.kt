@@ -17,7 +17,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
-import com.m3ter.sdk.models.PermissionStatement
+import com.m3ter.sdk.models.PermissionStatementResponse
 import com.m3ter.sdk.models.PrincipalPermissionRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -37,15 +37,15 @@ class PermissionPolicyServiceTest {
                 .build()
         val permissionPolicyService = client.permissionPolicies()
 
-        val permissionPolicy =
+        val permissionPolicyResponse =
             permissionPolicyService.create(
                 PermissionPolicyCreateParams.builder()
                     .orgId("orgId")
                     .name("x")
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -53,7 +53,7 @@ class PermissionPolicyServiceTest {
                     .build()
             )
 
-        permissionPolicy.validate()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -68,12 +68,12 @@ class PermissionPolicyServiceTest {
                 .build()
         val permissionPolicyService = client.permissionPolicies()
 
-        val permissionPolicy =
+        val permissionPolicyResponse =
             permissionPolicyService.retrieve(
                 PermissionPolicyRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        permissionPolicy.validate()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -88,16 +88,16 @@ class PermissionPolicyServiceTest {
                 .build()
         val permissionPolicyService = client.permissionPolicies()
 
-        val permissionPolicy =
+        val permissionPolicyResponse =
             permissionPolicyService.update(
                 PermissionPolicyUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .name("x")
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -105,7 +105,7 @@ class PermissionPolicyServiceTest {
                     .build()
             )
 
-        permissionPolicy.validate()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -140,12 +140,12 @@ class PermissionPolicyServiceTest {
                 .build()
         val permissionPolicyService = client.permissionPolicies()
 
-        val permissionPolicy =
+        val permissionPolicyResponse =
             permissionPolicyService.delete(
                 PermissionPolicyDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        permissionPolicy.validate()
+        permissionPolicyResponse.validate()
     }
 
     @Test

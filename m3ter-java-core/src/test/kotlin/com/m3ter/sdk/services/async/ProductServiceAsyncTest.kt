@@ -28,7 +28,7 @@ class ProductServiceAsyncTest {
                 .build()
         val productServiceAsync = client.products()
 
-        val productFuture =
+        val productResponseFuture =
             productServiceAsync.create(
                 ProductCreateParams.builder()
                     .orgId("orgId")
@@ -43,8 +43,8 @@ class ProductServiceAsyncTest {
                     .build()
             )
 
-        val product = productFuture.get()
-        product.validate()
+        val productResponse = productResponseFuture.get()
+        productResponse.validate()
     }
 
     @Test
@@ -59,13 +59,13 @@ class ProductServiceAsyncTest {
                 .build()
         val productServiceAsync = client.products()
 
-        val productFuture =
+        val productResponseFuture =
             productServiceAsync.retrieve(
                 ProductRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val product = productFuture.get()
-        product.validate()
+        val productResponse = productResponseFuture.get()
+        productResponse.validate()
     }
 
     @Test
@@ -80,7 +80,7 @@ class ProductServiceAsyncTest {
                 .build()
         val productServiceAsync = client.products()
 
-        val productFuture =
+        val productResponseFuture =
             productServiceAsync.update(
                 ProductUpdateParams.builder()
                     .orgId("orgId")
@@ -96,8 +96,8 @@ class ProductServiceAsyncTest {
                     .build()
             )
 
-        val product = productFuture.get()
-        product.validate()
+        val productResponse = productResponseFuture.get()
+        productResponse.validate()
     }
 
     @Test
@@ -131,12 +131,12 @@ class ProductServiceAsyncTest {
                 .build()
         val productServiceAsync = client.products()
 
-        val productFuture =
+        val productResponseFuture =
             productServiceAsync.delete(
                 ProductDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val product = productFuture.get()
-        product.validate()
+        val productResponse = productResponseFuture.get()
+        productResponse.validate()
     }
 }

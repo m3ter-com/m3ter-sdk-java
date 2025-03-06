@@ -27,7 +27,7 @@ class PlanTemplateServiceAsyncTest {
                 .build()
         val planTemplateServiceAsync = client.planTemplates()
 
-        val planTemplateFuture =
+        val planTemplateResponseFuture =
             planTemplateServiceAsync.create(
                 PlanTemplateCreateParams.builder()
                     .orgId("orgId")
@@ -51,8 +51,8 @@ class PlanTemplateServiceAsyncTest {
                     .build()
             )
 
-        val planTemplate = planTemplateFuture.get()
-        planTemplate.validate()
+        val planTemplateResponse = planTemplateResponseFuture.get()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -67,13 +67,13 @@ class PlanTemplateServiceAsyncTest {
                 .build()
         val planTemplateServiceAsync = client.planTemplates()
 
-        val planTemplateFuture =
+        val planTemplateResponseFuture =
             planTemplateServiceAsync.retrieve(
                 PlanTemplateRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planTemplate = planTemplateFuture.get()
-        planTemplate.validate()
+        val planTemplateResponse = planTemplateResponseFuture.get()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -88,7 +88,7 @@ class PlanTemplateServiceAsyncTest {
                 .build()
         val planTemplateServiceAsync = client.planTemplates()
 
-        val planTemplateFuture =
+        val planTemplateResponseFuture =
             planTemplateServiceAsync.update(
                 PlanTemplateUpdateParams.builder()
                     .orgId("orgId")
@@ -113,8 +113,8 @@ class PlanTemplateServiceAsyncTest {
                     .build()
             )
 
-        val planTemplate = planTemplateFuture.get()
-        planTemplate.validate()
+        val planTemplateResponse = planTemplateResponseFuture.get()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -148,12 +148,12 @@ class PlanTemplateServiceAsyncTest {
                 .build()
         val planTemplateServiceAsync = client.planTemplates()
 
-        val planTemplateFuture =
+        val planTemplateResponseFuture =
             planTemplateServiceAsync.delete(
                 PlanTemplateDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planTemplate = planTemplateFuture.get()
-        planTemplate.validate()
+        val planTemplateResponse = planTemplateResponseFuture.get()
+        planTemplateResponse.validate()
     }
 }

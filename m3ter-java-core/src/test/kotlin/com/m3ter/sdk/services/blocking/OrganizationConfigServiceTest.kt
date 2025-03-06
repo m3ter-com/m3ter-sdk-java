@@ -25,12 +25,12 @@ class OrganizationConfigServiceTest {
                 .build()
         val organizationConfigService = client.organizationConfig()
 
-        val organizationConfig =
+        val organizationConfigResponse =
             organizationConfigService.retrieve(
                 OrganizationConfigRetrieveParams.builder().orgId("orgId").build()
             )
 
-        organizationConfig.validate()
+        organizationConfigResponse.validate()
     }
 
     @Test
@@ -45,7 +45,7 @@ class OrganizationConfigServiceTest {
                 .build()
         val organizationConfigService = client.organizationConfig()
 
-        val organizationConfig =
+        val organizationConfigResponse =
             organizationConfigService.update(
                 OrganizationConfigUpdateParams.builder()
                     .orgId("orgId")
@@ -81,6 +81,6 @@ class OrganizationConfigServiceTest {
                     .build()
             )
 
-        organizationConfig.validate()
+        organizationConfigResponse.validate()
     }
 }

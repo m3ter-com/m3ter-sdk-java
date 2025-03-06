@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
 import com.m3ter.sdk.models.PermissionPolicyAddToSupportUserParams
@@ -28,6 +27,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupResponse
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserResponse
+import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -71,14 +71,14 @@ interface PermissionPolicyServiceAsync {
     fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /** Retrieve the permission policy for the UUID */
     @JvmOverloads
     fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /**
      * Update a Permission Policy for the UUID
@@ -111,7 +111,7 @@ interface PermissionPolicyServiceAsync {
     fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /** Retrieve a list of PermissionPolicy entities */
     @JvmOverloads
@@ -125,7 +125,7 @@ interface PermissionPolicyServiceAsync {
     fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /** Add a permission policy to a service user. */
     @JvmOverloads
@@ -198,7 +198,7 @@ interface PermissionPolicyServiceAsync {
         fun create(
             params: PermissionPolicyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies/{id}`, but
@@ -209,7 +209,7 @@ interface PermissionPolicyServiceAsync {
         fun retrieve(
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/permissionpolicies/{id}`, but
@@ -220,7 +220,7 @@ interface PermissionPolicyServiceAsync {
         fun update(
             params: PermissionPolicyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies`, but is
@@ -242,7 +242,7 @@ interface PermissionPolicyServiceAsync {
         fun delete(
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
         /**
          * Returns a raw HTTP response for `post

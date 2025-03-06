@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.NotificationConfiguration
 import com.m3ter.sdk.models.NotificationConfigurationCreateParams
 import com.m3ter.sdk.models.NotificationConfigurationDeleteParams
 import com.m3ter.sdk.models.NotificationConfigurationListPage
 import com.m3ter.sdk.models.NotificationConfigurationListParams
+import com.m3ter.sdk.models.NotificationConfigurationResponse
 import com.m3ter.sdk.models.NotificationConfigurationRetrieveParams
 import com.m3ter.sdk.models.NotificationConfigurationUpdateParams
 
@@ -36,21 +36,21 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
     override fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions,
-    ): NotificationConfiguration =
+    ): NotificationConfigurationResponse =
         // post /organizations/{orgId}/notifications/configurations
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions,
-    ): NotificationConfiguration =
+    ): NotificationConfigurationResponse =
         // get /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions,
-    ): NotificationConfiguration =
+    ): NotificationConfigurationResponse =
         // put /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -64,7 +64,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
     override fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions,
-    ): NotificationConfiguration =
+    ): NotificationConfigurationResponse =
         // delete /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -73,14 +73,14 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val createHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: NotificationConfigurationCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<NotificationConfiguration> {
+        ): HttpResponseFor<NotificationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -106,14 +106,14 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             }
         }
 
-        private val retrieveHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<NotificationConfiguration> {
+        ): HttpResponseFor<NotificationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -139,14 +139,14 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             }
         }
 
-        private val updateHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun update(
             params: NotificationConfigurationUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<NotificationConfiguration> {
+        ): HttpResponseFor<NotificationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -212,14 +212,14 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             }
         }
 
-        private val deleteHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun delete(
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<NotificationConfiguration> {
+        ): HttpResponseFor<NotificationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

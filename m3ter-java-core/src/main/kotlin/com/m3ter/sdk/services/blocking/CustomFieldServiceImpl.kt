@@ -17,7 +17,7 @@ import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.CustomFieldRetrieveParams
 import com.m3ter.sdk.models.CustomFieldUpdateParams
-import com.m3ter.sdk.models.CustomFields
+import com.m3ter.sdk.models.CustomFieldsResponse
 
 class CustomFieldServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CustomFieldService {
@@ -31,14 +31,14 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
     override fun retrieve(
         params: CustomFieldRetrieveParams,
         requestOptions: RequestOptions,
-    ): CustomFields =
+    ): CustomFieldsResponse =
         // get /organizations/{orgId}/customfields
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: CustomFieldUpdateParams,
         requestOptions: RequestOptions,
-    ): CustomFields =
+    ): CustomFieldsResponse =
         // put /organizations/{orgId}/customfields
         withRawResponse().update(params, requestOptions).parse()
 
@@ -47,13 +47,14 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<CustomFields> =
-            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CustomFieldsResponse> =
+            jsonHandler<CustomFieldsResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CustomFieldRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomFields> {
+        ): HttpResponseFor<CustomFieldsResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -73,13 +74,14 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val updateHandler: Handler<CustomFields> =
-            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CustomFieldsResponse> =
+            jsonHandler<CustomFieldsResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CustomFieldUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CustomFields> {
+        ): HttpResponseFor<CustomFieldsResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

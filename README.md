@@ -224,12 +224,12 @@ To iterate through all results across all pages, you can use `autoPager`, which 
 ### Synchronous
 
 ```java
-import com.m3ter.sdk.models.Product;
 import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductResponse;
 
 // As an Iterable:
 ProductListPage page = client.products().list(params);
-for (Product product : page.autoPager()) {
+for (ProductResponse product : page.autoPager()) {
     System.out.println(product);
 };
 
@@ -252,12 +252,12 @@ asyncClient.products().list(params).autoPager()
 If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```java
-import com.m3ter.sdk.models.Product;
 import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductResponse;
 
 ProductListPage page = client.products().list(params);
 while (page != null) {
-    for (Product product : page.data()) {
+    for (ProductResponse product : page.data()) {
         System.out.println(product);
     }
 

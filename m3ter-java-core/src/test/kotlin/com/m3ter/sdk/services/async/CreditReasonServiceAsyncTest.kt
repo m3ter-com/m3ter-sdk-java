@@ -27,7 +27,7 @@ class CreditReasonServiceAsyncTest {
                 .build()
         val creditReasonServiceAsync = client.creditReasons()
 
-        val creditReasonFuture =
+        val creditReasonResponseFuture =
             creditReasonServiceAsync.create(
                 CreditReasonCreateParams.builder()
                     .orgId("orgId")
@@ -38,8 +38,8 @@ class CreditReasonServiceAsyncTest {
                     .build()
             )
 
-        val creditReason = creditReasonFuture.get()
-        creditReason.validate()
+        val creditReasonResponse = creditReasonResponseFuture.get()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -54,13 +54,13 @@ class CreditReasonServiceAsyncTest {
                 .build()
         val creditReasonServiceAsync = client.creditReasons()
 
-        val creditReasonFuture =
+        val creditReasonResponseFuture =
             creditReasonServiceAsync.retrieve(
                 CreditReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val creditReason = creditReasonFuture.get()
-        creditReason.validate()
+        val creditReasonResponse = creditReasonResponseFuture.get()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -75,7 +75,7 @@ class CreditReasonServiceAsyncTest {
                 .build()
         val creditReasonServiceAsync = client.creditReasons()
 
-        val creditReasonFuture =
+        val creditReasonResponseFuture =
             creditReasonServiceAsync.update(
                 CreditReasonUpdateParams.builder()
                     .orgId("orgId")
@@ -87,8 +87,8 @@ class CreditReasonServiceAsyncTest {
                     .build()
             )
 
-        val creditReason = creditReasonFuture.get()
-        creditReason.validate()
+        val creditReasonResponse = creditReasonResponseFuture.get()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -122,12 +122,12 @@ class CreditReasonServiceAsyncTest {
                 .build()
         val creditReasonServiceAsync = client.creditReasons()
 
-        val creditReasonFuture =
+        val creditReasonResponseFuture =
             creditReasonServiceAsync.delete(
                 CreditReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val creditReason = creditReasonFuture.get()
-        creditReason.validate()
+        val creditReasonResponse = creditReasonResponseFuture.get()
+        creditReasonResponse.validate()
     }
 }

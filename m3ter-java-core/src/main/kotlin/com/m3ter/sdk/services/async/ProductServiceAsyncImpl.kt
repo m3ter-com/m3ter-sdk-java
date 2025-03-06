@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPageAsync
 import com.m3ter.sdk.models.ProductListParams
+import com.m3ter.sdk.models.ProductResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: ProductCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Product> =
+    ): CompletableFuture<ProductResponse> =
         // post /organizations/{orgId}/products
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: ProductRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Product> =
+    ): CompletableFuture<ProductResponse> =
         // get /organizations/{orgId}/products/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: ProductUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Product> =
+    ): CompletableFuture<ProductResponse> =
         // put /organizations/{orgId}/products/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun delete(
         params: ProductDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Product> =
+    ): CompletableFuture<ProductResponse> =
         // delete /organizations/{orgId}/products/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,13 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: ProductCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Product>> {
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +103,13 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val retrieveHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ProductRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Product>> {
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +137,13 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: ProductUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Product>> {
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +209,13 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val deleteHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: ProductDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Product>> {
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

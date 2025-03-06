@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
 import com.m3ter.sdk.models.PlanGroupListPage
 import com.m3ter.sdk.models.PlanGroupListParams
+import com.m3ter.sdk.models.PlanGroupResponse
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
@@ -30,7 +30,7 @@ interface PlanGroupService {
     fun create(
         params: PlanGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroup
+    ): PlanGroupResponse
 
     /**
      * Retrieve a specific PlanGroup with the given UUID.
@@ -42,7 +42,7 @@ interface PlanGroupService {
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroup
+    ): PlanGroupResponse
 
     /**
      * Update the PlanGroup with the given UUID.
@@ -58,7 +58,7 @@ interface PlanGroupService {
     fun update(
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroup
+    ): PlanGroupResponse
 
     /**
      * Retrieve a list of PlanGroups.
@@ -83,7 +83,7 @@ interface PlanGroupService {
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroup
+    ): PlanGroupResponse
 
     /** A view of [PlanGroupService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -97,7 +97,7 @@ interface PlanGroupService {
         fun create(
             params: PlanGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroup>
+        ): HttpResponseFor<PlanGroupResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups/{id}`, but is
@@ -108,7 +108,7 @@ interface PlanGroupService {
         fun retrieve(
             params: PlanGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroup>
+        ): HttpResponseFor<PlanGroupResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
@@ -119,7 +119,7 @@ interface PlanGroupService {
         fun update(
             params: PlanGroupUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroup>
+        ): HttpResponseFor<PlanGroupResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups`, but is otherwise
@@ -141,6 +141,6 @@ interface PlanGroupService {
         fun delete(
             params: PlanGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroup>
+        ): HttpResponseFor<PlanGroupResponse>
     }
 }

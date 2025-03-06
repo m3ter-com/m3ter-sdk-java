@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
 import com.m3ter.sdk.models.TransactionTypeListPage
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
@@ -35,21 +35,21 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
     override fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions,
-    ): TransactionType =
+    ): TransactionTypeResponse =
         // post /organizations/{orgId}/picklists/transactiontypes
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions,
-    ): TransactionType =
+    ): TransactionTypeResponse =
         // get /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions,
-    ): TransactionType =
+    ): TransactionTypeResponse =
         // put /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
     override fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions,
-    ): TransactionType =
+    ): TransactionTypeResponse =
         // delete /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: TransactionTypeCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TransactionType> {
+        ): HttpResponseFor<TransactionTypeResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -104,13 +105,14 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val retrieveHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TransactionType> {
+        ): HttpResponseFor<TransactionTypeResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -136,13 +138,14 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val updateHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: TransactionTypeUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TransactionType> {
+        ): HttpResponseFor<TransactionTypeResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -208,13 +211,14 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val deleteHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TransactionType> {
+        ): HttpResponseFor<TransactionTypeResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
 import com.m3ter.sdk.models.BillDeleteParams
@@ -15,6 +14,7 @@ import com.m3ter.sdk.models.BillLatestByAccountParams
 import com.m3ter.sdk.models.BillListPage
 import com.m3ter.sdk.models.BillListParams
 import com.m3ter.sdk.models.BillLockParams
+import com.m3ter.sdk.models.BillResponse
 import com.m3ter.sdk.models.BillRetrieveParams
 import com.m3ter.sdk.models.BillSearchParams
 import com.m3ter.sdk.models.BillSearchResponse
@@ -46,7 +46,7 @@ interface BillService {
     fun retrieve(
         params: BillRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Bill
+    ): BillResponse
 
     /**
      * Retrieve a list of Bills.
@@ -74,7 +74,7 @@ interface BillService {
     fun delete(
         params: BillDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Bill
+    ): BillResponse
 
     /**
      * Approve multiple Bills for the specified Organization based on the given criteria.
@@ -107,7 +107,7 @@ interface BillService {
     fun latestByAccount(
         params: BillLatestByAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Bill
+    ): BillResponse
 
     /**
      * Lock the specific Bill identified by the given UUID. Once a Bill is locked, no further
@@ -119,7 +119,10 @@ interface BillService {
      * approve a Bill before you can lock it.
      */
     @JvmOverloads
-    fun lock(params: BillLockParams, requestOptions: RequestOptions = RequestOptions.none()): Bill
+    fun lock(
+        params: BillLockParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillResponse
 
     /**
      * Search for Bill entities.
@@ -144,7 +147,7 @@ interface BillService {
     fun updateStatus(
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Bill
+    ): BillResponse
 
     /** A view of [BillService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -164,7 +167,7 @@ interface BillService {
         fun retrieve(
             params: BillRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Bill>
+        ): HttpResponseFor<BillResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills`, but is otherwise the
@@ -186,7 +189,7 @@ interface BillService {
         fun delete(
             params: BillDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Bill>
+        ): HttpResponseFor<BillResponse>
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/bills/approve`, but is
@@ -208,7 +211,7 @@ interface BillService {
         fun latestByAccount(
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Bill>
+        ): HttpResponseFor<BillResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/lock`, but is
@@ -219,7 +222,7 @@ interface BillService {
         fun lock(
             params: BillLockParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Bill>
+        ): HttpResponseFor<BillResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/search`, but is
@@ -241,6 +244,6 @@ interface BillService {
         fun updateStatus(
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Bill>
+        ): HttpResponseFor<BillResponse>
     }
 }

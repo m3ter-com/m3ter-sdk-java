@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
 import com.m3ter.sdk.models.CounterAdjustmentListPage
 import com.m3ter.sdk.models.CounterAdjustmentListParams
+import com.m3ter.sdk.models.CounterAdjustmentResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 
@@ -37,21 +37,21 @@ interface CounterAdjustmentService {
     fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterAdjustment
+    ): CounterAdjustmentResponse
 
     /** Retrieve a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterAdjustment
+    ): CounterAdjustmentResponse
 
     /** Update a CounterAdjustment for an Account. */
     @JvmOverloads
     fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterAdjustment
+    ): CounterAdjustmentResponse
 
     /**
      * Retrieve a list of CounterAdjustments created for Accounts in your Organization. You can
@@ -74,7 +74,7 @@ interface CounterAdjustmentService {
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterAdjustment
+    ): CounterAdjustmentResponse
 
     /**
      * A view of [CounterAdjustmentService] that provides access to raw HTTP responses for each
@@ -91,7 +91,7 @@ interface CounterAdjustmentService {
         fun create(
             params: CounterAdjustmentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterAdjustment>
+        ): HttpResponseFor<CounterAdjustmentResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
@@ -102,7 +102,7 @@ interface CounterAdjustmentService {
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterAdjustment>
+        ): HttpResponseFor<CounterAdjustmentResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
@@ -113,7 +113,7 @@ interface CounterAdjustmentService {
         fun update(
             params: CounterAdjustmentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterAdjustment>
+        ): HttpResponseFor<CounterAdjustmentResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
@@ -135,6 +135,6 @@ interface CounterAdjustmentService {
         fun delete(
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterAdjustment>
+        ): HttpResponseFor<CounterAdjustmentResponse>
     }
 }

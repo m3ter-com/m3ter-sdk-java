@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
 import com.m3ter.sdk.models.TransactionTypeListPageAsync
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
     override fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<TransactionType> =
+    ): CompletableFuture<TransactionTypeResponse> =
         // post /organizations/{orgId}/picklists/transactiontypes
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<TransactionType> =
+    ): CompletableFuture<TransactionTypeResponse> =
         // get /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<TransactionType> =
+    ): CompletableFuture<TransactionTypeResponse> =
         // put /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
     override fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<TransactionType> =
+    ): CompletableFuture<TransactionTypeResponse> =
         // delete /organizations/{orgId}/picklists/transactiontypes/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: TransactionTypeCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TransactionType>> {
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +109,14 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                 }
         }
 
-        private val retrieveHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TransactionType>> {
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -143,13 +145,14 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                 }
         }
 
-        private val updateHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: TransactionTypeUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TransactionType>> {
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,13 +224,14 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                 }
         }
 
-        private val deleteHandler: Handler<TransactionType> =
-            jsonHandler<TransactionType>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<TransactionTypeResponse> =
+            jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<TransactionType>> {
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

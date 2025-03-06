@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.async.users
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Invitation
+import com.m3ter.sdk.models.InvitationResponse
 import com.m3ter.sdk.models.UserInvitationCreateParams
 import com.m3ter.sdk.models.UserInvitationListPageAsync
 import com.m3ter.sdk.models.UserInvitationListParams
@@ -30,14 +30,14 @@ interface InvitationServiceAsync {
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invitation>
+    ): CompletableFuture<InvitationResponse>
 
     /** Retrieve the specified invitation with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Invitation>
+    ): CompletableFuture<InvitationResponse>
 
     /** Retrieve a list of all invitations in the Organization. */
     @JvmOverloads
@@ -61,7 +61,7 @@ interface InvitationServiceAsync {
         fun create(
             params: UserInvitationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invitation>>
+        ): CompletableFuture<HttpResponseFor<InvitationResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations/{id}`, but is
@@ -72,7 +72,7 @@ interface InvitationServiceAsync {
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Invitation>>
+        ): CompletableFuture<HttpResponseFor<InvitationResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations`, but is

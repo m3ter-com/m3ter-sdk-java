@@ -15,12 +15,12 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.BillJob
 import com.m3ter.sdk.models.BillJobCancelParams
 import com.m3ter.sdk.models.BillJobCreateParams
 import com.m3ter.sdk.models.BillJobListPageAsync
 import com.m3ter.sdk.models.BillJobListParams
 import com.m3ter.sdk.models.BillJobRecalculateParams
+import com.m3ter.sdk.models.BillJobResponse
 import com.m3ter.sdk.models.BillJobRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -36,14 +36,14 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: BillJobCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillJob> =
+    ): CompletableFuture<BillJobResponse> =
         // post /organizations/{orgId}/billjobs
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillJob> =
+    ): CompletableFuture<BillJobResponse> =
         // get /organizations/{orgId}/billjobs/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -57,14 +57,14 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillJob> =
+    ): CompletableFuture<BillJobResponse> =
         // post /organizations/{orgId}/billjobs/{id}/cancel
         withRawResponse().cancel(params, requestOptions).thenApply { it.parse() }
 
     override fun recalculate(
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillJob> =
+    ): CompletableFuture<BillJobResponse> =
         // post /organizations/{orgId}/billjobs/recalculate
         withRawResponse().recalculate(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,13 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: BillJobCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillJob>> {
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +103,13 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val retrieveHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillJob>> {
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -174,13 +174,13 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val cancelHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val cancelHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun cancel(
             params: BillJobCancelParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillJob>> {
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -210,13 +210,13 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val recalculateHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val recalculateHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun recalculate(
             params: BillJobRecalculateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillJob>> {
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

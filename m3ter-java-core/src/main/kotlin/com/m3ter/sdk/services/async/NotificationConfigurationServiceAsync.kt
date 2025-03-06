@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.NotificationConfiguration
 import com.m3ter.sdk.models.NotificationConfigurationCreateParams
 import com.m3ter.sdk.models.NotificationConfigurationDeleteParams
 import com.m3ter.sdk.models.NotificationConfigurationListPageAsync
 import com.m3ter.sdk.models.NotificationConfigurationListParams
+import com.m3ter.sdk.models.NotificationConfigurationResponse
 import com.m3ter.sdk.models.NotificationConfigurationRetrieveParams
 import com.m3ter.sdk.models.NotificationConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -33,7 +33,7 @@ interface NotificationConfigurationServiceAsync {
     fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<NotificationConfiguration>
+    ): CompletableFuture<NotificationConfigurationResponse>
 
     /**
      * Retrieve the details of a specific Notification using its UUID. Includes the Event the
@@ -44,7 +44,7 @@ interface NotificationConfigurationServiceAsync {
     fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<NotificationConfiguration>
+    ): CompletableFuture<NotificationConfigurationResponse>
 
     /**
      * Update a Notification with the given UUID.
@@ -57,7 +57,7 @@ interface NotificationConfigurationServiceAsync {
     fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<NotificationConfiguration>
+    ): CompletableFuture<NotificationConfigurationResponse>
 
     /**
      * Retrieve a list of Event Notifications for the specified Organization.
@@ -82,7 +82,7 @@ interface NotificationConfigurationServiceAsync {
     fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<NotificationConfiguration>
+    ): CompletableFuture<NotificationConfigurationResponse>
 
     /**
      * A view of [NotificationConfigurationServiceAsync] that provides access to raw HTTP responses
@@ -100,7 +100,7 @@ interface NotificationConfigurationServiceAsync {
         fun create(
             params: NotificationConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -112,7 +112,7 @@ interface NotificationConfigurationServiceAsync {
         fun retrieve(
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -124,7 +124,7 @@ interface NotificationConfigurationServiceAsync {
         fun update(
             params: NotificationConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -148,6 +148,6 @@ interface NotificationConfigurationServiceAsync {
         fun delete(
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
     }
 }

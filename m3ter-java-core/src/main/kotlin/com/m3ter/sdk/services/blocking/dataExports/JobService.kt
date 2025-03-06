@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking.dataExports
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.DataExportJob
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.sdk.models.DataExportJobListPage
 import com.m3ter.sdk.models.DataExportJobListParams
+import com.m3ter.sdk.models.DataExportJobResponse
 import com.m3ter.sdk.models.DataExportJobRetrieveParams
 
 interface JobService {
@@ -32,7 +32,7 @@ interface JobService {
     fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DataExportJob
+    ): DataExportJobResponse
 
     /** Retrieve a list of Export Job entities. */
     @JvmOverloads
@@ -76,7 +76,7 @@ interface JobService {
         fun retrieve(
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DataExportJob>
+        ): HttpResponseFor<DataExportJobResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is

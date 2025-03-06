@@ -25,10 +25,10 @@ class CustomFieldServiceTest {
                 .build()
         val customFieldService = client.customFields()
 
-        val customFields =
+        val customFieldsResponse =
             customFieldService.retrieve(CustomFieldRetrieveParams.builder().orgId("orgId").build())
 
-        customFields.validate()
+        customFieldsResponse.validate()
     }
 
     @Test
@@ -43,7 +43,7 @@ class CustomFieldServiceTest {
                 .build()
         val customFieldService = client.customFields()
 
-        val customFields =
+        val customFieldsResponse =
             customFieldService.update(
                 CustomFieldUpdateParams.builder()
                     .orgId("orgId")
@@ -81,6 +81,6 @@ class CustomFieldServiceTest {
                     .build()
             )
 
-        customFields.validate()
+        customFieldsResponse.validate()
     }
 }

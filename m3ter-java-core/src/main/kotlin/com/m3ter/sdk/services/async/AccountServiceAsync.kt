@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
@@ -15,6 +14,7 @@ import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPageAsync
 import com.m3ter.sdk.models.AccountListParams
+import com.m3ter.sdk.models.AccountResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -33,14 +33,14 @@ interface AccountServiceAsync {
     fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Account>
+    ): CompletableFuture<AccountResponse>
 
     /** Retrieve the Account with the given Account UUID. */
     @JvmOverloads
     fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Account>
+    ): CompletableFuture<AccountResponse>
 
     /**
      * Update the Account with the given Account UUID.
@@ -53,7 +53,7 @@ interface AccountServiceAsync {
     fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Account>
+    ): CompletableFuture<AccountResponse>
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
     @JvmOverloads
@@ -70,7 +70,7 @@ interface AccountServiceAsync {
     fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Account>
+    ): CompletableFuture<AccountResponse>
 
     /**
      * Apply the specified end-date to billing entities associated with an Account.
@@ -90,7 +90,7 @@ interface AccountServiceAsync {
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Account>
+    ): CompletableFuture<AccountResponse>
 
     /**
      * Search for Account entities.
@@ -119,7 +119,7 @@ interface AccountServiceAsync {
         fun create(
             params: AccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Account>>
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}`, but is
@@ -130,7 +130,7 @@ interface AccountServiceAsync {
         fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Account>>
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/accounts/{id}`, but is
@@ -141,7 +141,7 @@ interface AccountServiceAsync {
         fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Account>>
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts`, but is otherwise
@@ -163,7 +163,7 @@ interface AccountServiceAsync {
         fun delete(
             params: AccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Account>>
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -186,7 +186,7 @@ interface AccountServiceAsync {
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Account>>
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is

@@ -26,7 +26,7 @@ class TransactionServiceTest {
                 .build()
         val transactionService = client.balances().transactions()
 
-        val transaction =
+        val transactionResponse =
             transactionService.create(
                 BalanceTransactionCreateParams.builder()
                     .orgId("orgId")
@@ -42,7 +42,7 @@ class TransactionServiceTest {
                     .build()
             )
 
-        transaction.validate()
+        transactionResponse.validate()
     }
 
     @Test

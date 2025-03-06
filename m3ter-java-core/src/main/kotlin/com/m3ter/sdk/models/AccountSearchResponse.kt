@@ -23,18 +23,18 @@ class AccountSearchResponse
 private constructor(
     @JsonProperty("data")
     @ExcludeMissing
-    private val data: JsonField<List<Account>> = JsonMissing.of(),
+    private val data: JsonField<List<AccountResponse>> = JsonMissing.of(),
     @JsonProperty("nextToken")
     @ExcludeMissing
     private val nextToken: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun data(): Optional<List<Account>> = Optional.ofNullable(data.getNullable("data"))
+    fun data(): Optional<List<AccountResponse>> = Optional.ofNullable(data.getNullable("data"))
 
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
-    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Account>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<AccountResponse>> = data
 
     @JsonProperty("nextToken") @ExcludeMissing fun _nextToken(): JsonField<String> = nextToken
 
@@ -65,7 +65,7 @@ private constructor(
     /** A builder for [AccountSearchResponse]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<Account>>? = null
+        private var data: JsonField<MutableList<AccountResponse>>? = null
         private var nextToken: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -76,13 +76,13 @@ private constructor(
             additionalProperties = accountSearchResponse.additionalProperties.toMutableMap()
         }
 
-        fun data(data: List<Account>) = data(JsonField.of(data))
+        fun data(data: List<AccountResponse>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<Account>>) = apply {
+        fun data(data: JsonField<List<AccountResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
-        fun addData(data: Account) = apply {
+        fun addData(data: AccountResponse) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)

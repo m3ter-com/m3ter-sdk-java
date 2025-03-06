@@ -5,7 +5,7 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.models.DataField
+import com.m3ter.sdk.models.DataFieldResponse
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListParams
@@ -29,14 +29,14 @@ class MeterServiceTest {
                 .build()
         val meterService = client.meters()
 
-        val meter =
+        val meterResponse =
             meterService.create(
                 MeterCreateParams.builder()
                     .orgId("orgId")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataField.builder()
-                            .category(DataField.Category.WHO)
+                        DataFieldResponse.builder()
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -44,7 +44,7 @@ class MeterServiceTest {
                     )
                     .addDerivedField(
                         MeterCreateParams.DerivedField.builder()
-                            .category(DataField.Category.WHO)
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -63,7 +63,7 @@ class MeterServiceTest {
                     .build()
             )
 
-        meter.validate()
+        meterResponse.validate()
     }
 
     @Test
@@ -78,10 +78,10 @@ class MeterServiceTest {
                 .build()
         val meterService = client.meters()
 
-        val meter =
+        val meterResponse =
             meterService.retrieve(MeterRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        meter.validate()
+        meterResponse.validate()
     }
 
     @Test
@@ -96,15 +96,15 @@ class MeterServiceTest {
                 .build()
         val meterService = client.meters()
 
-        val meter =
+        val meterResponse =
             meterService.update(
                 MeterUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataField.builder()
-                            .category(DataField.Category.WHO)
+                        DataFieldResponse.builder()
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -112,7 +112,7 @@ class MeterServiceTest {
                     )
                     .addDerivedField(
                         MeterUpdateParams.DerivedField.builder()
-                            .category(DataField.Category.WHO)
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -131,7 +131,7 @@ class MeterServiceTest {
                     .build()
             )
 
-        meter.validate()
+        meterResponse.validate()
     }
 
     @Test
@@ -163,8 +163,9 @@ class MeterServiceTest {
                 .build()
         val meterService = client.meters()
 
-        val meter = meterService.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
+        val meterResponse =
+            meterService.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
 
-        meter.validate()
+        meterResponse.validate()
     }
 }

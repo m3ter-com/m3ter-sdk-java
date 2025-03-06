@@ -25,12 +25,12 @@ class JobServiceTest {
                 .build()
         val jobService = client.usage().fileUploads().jobs()
 
-        val fileUploadJob =
+        val fileUploadJobResponse =
             jobService.retrieve(
                 UsageFileUploadJobRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        fileUploadJob.validate()
+        fileUploadJobResponse.validate()
     }
 
     @Test

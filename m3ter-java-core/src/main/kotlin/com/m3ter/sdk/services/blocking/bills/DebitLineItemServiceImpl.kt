@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.BillDebitLineItemListPage
 import com.m3ter.sdk.models.BillDebitLineItemListParams
 import com.m3ter.sdk.models.BillDebitLineItemRetrieveParams
 import com.m3ter.sdk.models.BillDebitLineItemUpdateParams
-import com.m3ter.sdk.models.DebitLineItem
+import com.m3ter.sdk.models.DebitLineItemResponse
 
 class DebitLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     DebitLineItemService {
@@ -35,21 +35,21 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
     override fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem =
+    ): DebitLineItemResponse =
         // post /organizations/{orgId}/bills/{billId}/debitlineitems
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem =
+    ): DebitLineItemResponse =
         // get /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem =
+    ): DebitLineItemResponse =
         // put /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
     override fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions,
-    ): DebitLineItem =
+    ): DebitLineItemResponse =
         // delete /organizations/{orgId}/bills/{billId}/debitlineitems/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<DebitLineItem> =
-            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<DebitLineItemResponse> =
+            jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DebitLineItem> {
+        ): HttpResponseFor<DebitLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -105,13 +106,14 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val retrieveHandler: Handler<DebitLineItem> =
-            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<DebitLineItemResponse> =
+            jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DebitLineItem> {
+        ): HttpResponseFor<DebitLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -138,13 +140,14 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val updateHandler: Handler<DebitLineItem> =
-            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<DebitLineItemResponse> =
+            jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DebitLineItem> {
+        ): HttpResponseFor<DebitLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -212,13 +215,14 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val deleteHandler: Handler<DebitLineItem> =
-            jsonHandler<DebitLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<DebitLineItemResponse> =
+            jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DebitLineItem> {
+        ): HttpResponseFor<DebitLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

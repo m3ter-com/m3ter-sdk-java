@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPage
 import com.m3ter.sdk.models.MeterListParams
+import com.m3ter.sdk.models.MeterResponse
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 
@@ -32,15 +32,18 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): MeterService.WithRawResponse = withRawResponse
 
-    override fun create(params: MeterCreateParams, requestOptions: RequestOptions): Meter =
+    override fun create(params: MeterCreateParams, requestOptions: RequestOptions): MeterResponse =
         // post /organizations/{orgId}/meters
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(params: MeterRetrieveParams, requestOptions: RequestOptions): Meter =
+    override fun retrieve(
+        params: MeterRetrieveParams,
+        requestOptions: RequestOptions,
+    ): MeterResponse =
         // get /organizations/{orgId}/meters/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: MeterUpdateParams, requestOptions: RequestOptions): Meter =
+    override fun update(params: MeterUpdateParams, requestOptions: RequestOptions): MeterResponse =
         // put /organizations/{orgId}/meters/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -48,7 +51,7 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
         // get /organizations/{orgId}/meters
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: MeterDeleteParams, requestOptions: RequestOptions): Meter =
+    override fun delete(params: MeterDeleteParams, requestOptions: RequestOptions): MeterResponse =
         // delete /organizations/{orgId}/meters/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -57,13 +60,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: MeterCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Meter> {
+        ): HttpResponseFor<MeterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -84,13 +87,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val retrieveHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: MeterRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Meter> {
+        ): HttpResponseFor<MeterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -115,13 +118,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val updateHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: MeterUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Meter> {
+        ): HttpResponseFor<MeterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -175,13 +178,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val deleteHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: MeterDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Meter> {
+        ): HttpResponseFor<MeterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

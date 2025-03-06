@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.ScheduledEventConfiguration
 import com.m3ter.sdk.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationDeleteParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationListPageAsync
 import com.m3ter.sdk.models.ScheduledEventConfigurationListParams
+import com.m3ter.sdk.models.ScheduledEventConfigurationResponse
 import com.m3ter.sdk.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -28,21 +28,21 @@ interface ScheduledEventConfigurationServiceAsync {
     fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfiguration>
+    ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfiguration>
+    ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Update a ScheduledEventConfiguration for the given UUID. */
     @JvmOverloads
     fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfiguration>
+    ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
     @JvmOverloads
@@ -56,7 +56,7 @@ interface ScheduledEventConfigurationServiceAsync {
     fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfiguration>
+    ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /**
      * A view of [ScheduledEventConfigurationServiceAsync] that provides access to raw HTTP
@@ -74,7 +74,7 @@ interface ScheduledEventConfigurationServiceAsync {
         fun create(
             params: ScheduledEventConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>>
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -86,7 +86,7 @@ interface ScheduledEventConfigurationServiceAsync {
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>>
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -98,7 +98,7 @@ interface ScheduledEventConfigurationServiceAsync {
         fun update(
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>>
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -122,6 +122,6 @@ interface ScheduledEventConfigurationServiceAsync {
         fun delete(
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>>
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
     }
 }

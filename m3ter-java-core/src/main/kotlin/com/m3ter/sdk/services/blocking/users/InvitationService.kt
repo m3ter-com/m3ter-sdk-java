@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.blocking.users
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Invitation
+import com.m3ter.sdk.models.InvitationResponse
 import com.m3ter.sdk.models.UserInvitationCreateParams
 import com.m3ter.sdk.models.UserInvitationListPage
 import com.m3ter.sdk.models.UserInvitationListParams
@@ -29,14 +29,14 @@ interface InvitationService {
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Invitation
+    ): InvitationResponse
 
     /** Retrieve the specified invitation with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Invitation
+    ): InvitationResponse
 
     /** Retrieve a list of all invitations in the Organization. */
     @JvmOverloads
@@ -57,7 +57,7 @@ interface InvitationService {
         fun create(
             params: UserInvitationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Invitation>
+        ): HttpResponseFor<InvitationResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations/{id}`, but is
@@ -68,7 +68,7 @@ interface InvitationService {
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Invitation>
+        ): HttpResponseFor<InvitationResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations`, but is

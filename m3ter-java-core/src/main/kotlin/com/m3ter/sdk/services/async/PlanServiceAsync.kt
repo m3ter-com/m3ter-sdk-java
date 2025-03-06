@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Plan
 import com.m3ter.sdk.models.PlanCreateParams
 import com.m3ter.sdk.models.PlanDeleteParams
 import com.m3ter.sdk.models.PlanListPageAsync
 import com.m3ter.sdk.models.PlanListParams
+import com.m3ter.sdk.models.PlanResponse
 import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -28,14 +28,14 @@ interface PlanServiceAsync {
     fun create(
         params: PlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Plan>
+    ): CompletableFuture<PlanResponse>
 
     /** Retrieve the Plan with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Plan>
+    ): CompletableFuture<PlanResponse>
 
     /**
      * Update the Plan with the given UUID.
@@ -48,7 +48,7 @@ interface PlanServiceAsync {
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Plan>
+    ): CompletableFuture<PlanResponse>
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     @JvmOverloads
@@ -62,7 +62,7 @@ interface PlanServiceAsync {
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Plan>
+    ): CompletableFuture<PlanResponse>
 
     /** A view of [PlanServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -76,7 +76,7 @@ interface PlanServiceAsync {
         fun create(
             params: PlanCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Plan>>
+        ): CompletableFuture<HttpResponseFor<PlanResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans/{id}`, but is otherwise
@@ -87,7 +87,7 @@ interface PlanServiceAsync {
         fun retrieve(
             params: PlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Plan>>
+        ): CompletableFuture<HttpResponseFor<PlanResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
@@ -98,7 +98,7 @@ interface PlanServiceAsync {
         fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Plan>>
+        ): CompletableFuture<HttpResponseFor<PlanResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
@@ -120,6 +120,6 @@ interface PlanServiceAsync {
         fun delete(
             params: PlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Plan>>
+        ): CompletableFuture<HttpResponseFor<PlanResponse>>
     }
 }

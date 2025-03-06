@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.ResourceGroup
 import com.m3ter.sdk.models.ResourceGroupAddResourceParams
 import com.m3ter.sdk.models.ResourceGroupCreateParams
 import com.m3ter.sdk.models.ResourceGroupDeleteParams
@@ -26,6 +25,7 @@ import com.m3ter.sdk.models.ResourceGroupListParams
 import com.m3ter.sdk.models.ResourceGroupListPermissionsPageAsync
 import com.m3ter.sdk.models.ResourceGroupListPermissionsParams
 import com.m3ter.sdk.models.ResourceGroupRemoveResourceParams
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.ResourceGroupRetrieveParams
 import com.m3ter.sdk.models.ResourceGroupUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -42,21 +42,21 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
     override fun create(
         params: ResourceGroupCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // post /organizations/{orgId}/resourcegroups/{type}
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: ResourceGroupRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // get /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: ResourceGroupUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // put /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -70,14 +70,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
     override fun delete(
         params: ResourceGroupDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // delete /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
     override fun addResource(
         params: ResourceGroupAddResourceParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // post /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/addresource
         withRawResponse().addResource(params, requestOptions).thenApply { it.parse() }
 
@@ -98,7 +98,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
     override fun removeResource(
         params: ResourceGroupRemoveResourceParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ResourceGroup> =
+    ): CompletableFuture<ResourceGroupResponse> =
         // post /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/removeresource
         withRawResponse().removeResource(params, requestOptions).thenApply { it.parse() }
 
@@ -107,13 +107,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -142,13 +143,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val retrieveHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -177,13 +179,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val updateHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -255,13 +258,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val deleteHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -291,13 +295,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val addResourceHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val addResourceHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun addResource(
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -418,13 +423,14 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val removeResourceHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val removeResourceHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun removeResource(
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>> {
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

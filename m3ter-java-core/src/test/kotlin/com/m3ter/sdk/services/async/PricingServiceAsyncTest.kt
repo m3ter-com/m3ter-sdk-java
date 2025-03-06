@@ -30,7 +30,7 @@ class PricingServiceAsyncTest {
                 .build()
         val pricingServiceAsync = client.pricings()
 
-        val pricingFuture =
+        val pricingResponseFuture =
             pricingServiceAsync.create(
                 PricingCreateParams.builder()
                     .orgId("orgId")
@@ -76,8 +76,8 @@ class PricingServiceAsyncTest {
                     .build()
             )
 
-        val pricing = pricingFuture.get()
-        pricing.validate()
+        val pricingResponse = pricingResponseFuture.get()
+        pricingResponse.validate()
     }
 
     @Test
@@ -92,13 +92,13 @@ class PricingServiceAsyncTest {
                 .build()
         val pricingServiceAsync = client.pricings()
 
-        val pricingFuture =
+        val pricingResponseFuture =
             pricingServiceAsync.retrieve(
                 PricingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val pricing = pricingFuture.get()
-        pricing.validate()
+        val pricingResponse = pricingResponseFuture.get()
+        pricingResponse.validate()
     }
 
     @Test
@@ -113,7 +113,7 @@ class PricingServiceAsyncTest {
                 .build()
         val pricingServiceAsync = client.pricings()
 
-        val pricingFuture =
+        val pricingResponseFuture =
             pricingServiceAsync.update(
                 PricingUpdateParams.builder()
                     .orgId("orgId")
@@ -160,8 +160,8 @@ class PricingServiceAsyncTest {
                     .build()
             )
 
-        val pricing = pricingFuture.get()
-        pricing.validate()
+        val pricingResponse = pricingResponseFuture.get()
+        pricingResponse.validate()
     }
 
     @Test
@@ -195,12 +195,12 @@ class PricingServiceAsyncTest {
                 .build()
         val pricingServiceAsync = client.pricings()
 
-        val pricingFuture =
+        val pricingResponseFuture =
             pricingServiceAsync.delete(
                 PricingDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val pricing = pricingFuture.get()
-        pricing.validate()
+        val pricingResponse = pricingResponseFuture.get()
+        pricingResponse.validate()
     }
 }

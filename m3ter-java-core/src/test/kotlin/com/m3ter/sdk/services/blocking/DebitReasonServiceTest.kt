@@ -27,7 +27,7 @@ class DebitReasonServiceTest {
                 .build()
         val debitReasonService = client.debitReasons()
 
-        val debitReason =
+        val debitReasonResponse =
             debitReasonService.create(
                 DebitReasonCreateParams.builder()
                     .orgId("orgId")
@@ -38,7 +38,7 @@ class DebitReasonServiceTest {
                     .build()
             )
 
-        debitReason.validate()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -53,12 +53,12 @@ class DebitReasonServiceTest {
                 .build()
         val debitReasonService = client.debitReasons()
 
-        val debitReason =
+        val debitReasonResponse =
             debitReasonService.retrieve(
                 DebitReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        debitReason.validate()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -73,7 +73,7 @@ class DebitReasonServiceTest {
                 .build()
         val debitReasonService = client.debitReasons()
 
-        val debitReason =
+        val debitReasonResponse =
             debitReasonService.update(
                 DebitReasonUpdateParams.builder()
                     .orgId("orgId")
@@ -85,7 +85,7 @@ class DebitReasonServiceTest {
                     .build()
             )
 
-        debitReason.validate()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -117,11 +117,11 @@ class DebitReasonServiceTest {
                 .build()
         val debitReasonService = client.debitReasons()
 
-        val debitReason =
+        val debitReasonResponse =
             debitReasonService.delete(
                 DebitReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        debitReason.validate()
+        debitReasonResponse.validate()
     }
 }

@@ -10,7 +10,7 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillLineItemListPage
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
-import com.m3ter.sdk.models.LineItem
+import com.m3ter.sdk.models.LineItemResponse
 
 interface LineItemService {
 
@@ -29,7 +29,7 @@ interface LineItemService {
     fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): LineItem
+    ): LineItemResponse
 
     /**
      * Lists all the line items for a specific Bill.
@@ -57,7 +57,7 @@ interface LineItemService {
         fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<LineItem>
+        ): HttpResponseFor<LineItemResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{billId}/lineitems`,

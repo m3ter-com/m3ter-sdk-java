@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
 import com.m3ter.sdk.models.PricingListPage
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 
@@ -32,15 +32,24 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): PricingService.WithRawResponse = withRawResponse
 
-    override fun create(params: PricingCreateParams, requestOptions: RequestOptions): Pricing =
+    override fun create(
+        params: PricingCreateParams,
+        requestOptions: RequestOptions,
+    ): PricingResponse =
         // post /organizations/{orgId}/pricings
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(params: PricingRetrieveParams, requestOptions: RequestOptions): Pricing =
+    override fun retrieve(
+        params: PricingRetrieveParams,
+        requestOptions: RequestOptions,
+    ): PricingResponse =
         // get /organizations/{orgId}/pricings/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: PricingUpdateParams, requestOptions: RequestOptions): Pricing =
+    override fun update(
+        params: PricingUpdateParams,
+        requestOptions: RequestOptions,
+    ): PricingResponse =
         // put /organizations/{orgId}/pricings/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -48,7 +57,10 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
         // get /organizations/{orgId}/pricings
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: PricingDeleteParams, requestOptions: RequestOptions): Pricing =
+    override fun delete(
+        params: PricingDeleteParams,
+        requestOptions: RequestOptions,
+    ): PricingResponse =
         // delete /organizations/{orgId}/pricings/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -57,13 +69,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: PricingCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Pricing> {
+        ): HttpResponseFor<PricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -84,13 +96,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val retrieveHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Pricing> {
+        ): HttpResponseFor<PricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -115,13 +127,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: PricingUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Pricing> {
+        ): HttpResponseFor<PricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -175,13 +187,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val deleteHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Pricing> {
+        ): HttpResponseFor<PricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

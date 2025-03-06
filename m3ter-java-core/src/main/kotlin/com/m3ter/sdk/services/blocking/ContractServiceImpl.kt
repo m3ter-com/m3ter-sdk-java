@@ -15,13 +15,13 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPage
 import com.m3ter.sdk.models.ContractListParams
+import com.m3ter.sdk.models.ContractResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 
@@ -34,18 +34,24 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): ContractService.WithRawResponse = withRawResponse
 
-    override fun create(params: ContractCreateParams, requestOptions: RequestOptions): Contract =
+    override fun create(
+        params: ContractCreateParams,
+        requestOptions: RequestOptions,
+    ): ContractResponse =
         // post /organizations/{orgId}/contracts
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions,
-    ): Contract =
+    ): ContractResponse =
         // get /organizations/{orgId}/contracts/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: ContractUpdateParams, requestOptions: RequestOptions): Contract =
+    override fun update(
+        params: ContractUpdateParams,
+        requestOptions: RequestOptions,
+    ): ContractResponse =
         // put /organizations/{orgId}/contracts/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -56,7 +62,10 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         // get /organizations/{orgId}/contracts
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: ContractDeleteParams, requestOptions: RequestOptions): Contract =
+    override fun delete(
+        params: ContractDeleteParams,
+        requestOptions: RequestOptions,
+    ): ContractResponse =
         // delete /organizations/{orgId}/contracts/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +81,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: ContractCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Contract> {
+        ): HttpResponseFor<ContractResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -99,13 +108,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val retrieveHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Contract> {
+        ): HttpResponseFor<ContractResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -130,13 +139,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val updateHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: ContractUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Contract> {
+        ): HttpResponseFor<ContractResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -190,13 +199,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val deleteHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Contract> {
+        ): HttpResponseFor<ContractResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

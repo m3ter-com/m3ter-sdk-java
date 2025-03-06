@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.TransactionType
 import com.m3ter.sdk.models.TransactionTypeCreateParams
 import com.m3ter.sdk.models.TransactionTypeDeleteParams
 import com.m3ter.sdk.models.TransactionTypeListPage
 import com.m3ter.sdk.models.TransactionTypeListParams
+import com.m3ter.sdk.models.TransactionTypeResponse
 import com.m3ter.sdk.models.TransactionTypeRetrieveParams
 import com.m3ter.sdk.models.TransactionTypeUpdateParams
 
@@ -30,14 +30,14 @@ interface TransactionTypeService {
     fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TransactionType
+    ): TransactionTypeResponse
 
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
     @JvmOverloads
     fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TransactionType
+    ): TransactionTypeResponse
 
     /**
      * Updates the TransactionType with the specified UUID for the specified Organization. Update
@@ -47,7 +47,7 @@ interface TransactionTypeService {
     fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TransactionType
+    ): TransactionTypeResponse
 
     /**
      * Retrieves a list of TransactionType entities for the specified Organization. The list can be
@@ -64,7 +64,7 @@ interface TransactionTypeService {
     fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TransactionType
+    ): TransactionTypeResponse
 
     /**
      * A view of [TransactionTypeService] that provides access to raw HTTP responses for each
@@ -81,7 +81,7 @@ interface TransactionTypeService {
         fun create(
             params: TransactionTypeCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TransactionType>
+        ): HttpResponseFor<TransactionTypeResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -93,7 +93,7 @@ interface TransactionTypeService {
         fun retrieve(
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TransactionType>
+        ): HttpResponseFor<TransactionTypeResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -105,7 +105,7 @@ interface TransactionTypeService {
         fun update(
             params: TransactionTypeUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TransactionType>
+        ): HttpResponseFor<TransactionTypeResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/transactiontypes`,
@@ -128,6 +128,6 @@ interface TransactionTypeService {
         fun delete(
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TransactionType>
+        ): HttpResponseFor<TransactionTypeResponse>
     }
 }

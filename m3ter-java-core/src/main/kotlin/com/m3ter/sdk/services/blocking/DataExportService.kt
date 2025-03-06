@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.AdhocExport
+import com.m3ter.sdk.models.AdHocResponse
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.blocking.dataExports.DestinationService
 import com.m3ter.sdk.services.blocking.dataExports.JobService
@@ -80,7 +80,7 @@ interface DataExportService {
     fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AdhocExport
+    ): AdHocResponse
 
     /** A view of [DataExportService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -100,6 +100,6 @@ interface DataExportService {
         fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AdhocExport>
+        ): HttpResponseFor<AdHocResponse>
     }
 }
