@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPage
 import com.m3ter.sdk.models.MeterListParams
+import com.m3ter.sdk.models.MeterResponse
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 
@@ -54,14 +54,14 @@ interface MeterService {
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /** Retrieve the Meter with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /**
      * Update the Meter with the given UUID.
@@ -74,7 +74,7 @@ interface MeterService {
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     @JvmOverloads
@@ -88,7 +88,7 @@ interface MeterService {
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /** A view of [MeterService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -102,7 +102,7 @@ interface MeterService {
         fun create(
             params: MeterCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Meter>
+        ): HttpResponseFor<MeterResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters/{id}`, but is
@@ -113,7 +113,7 @@ interface MeterService {
         fun retrieve(
             params: MeterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Meter>
+        ): HttpResponseFor<MeterResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/meters/{id}`, but is
@@ -124,7 +124,7 @@ interface MeterService {
         fun update(
             params: MeterUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Meter>
+        ): HttpResponseFor<MeterResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters`, but is otherwise the
@@ -146,6 +146,6 @@ interface MeterService {
         fun delete(
             params: MeterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Meter>
+        ): HttpResponseFor<MeterResponse>
     }
 }

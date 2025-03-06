@@ -14,7 +14,7 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.FileUploadJob
+import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.sdk.models.UsageFileUploadJobListPage
@@ -32,7 +32,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     override fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions,
-    ): FileUploadJob =
+    ): FileUploadJobResponse =
         // get /organizations/{orgId}/fileuploads/measurements/jobs/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -55,13 +55,14 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<FileUploadJob> =
-            jsonHandler<FileUploadJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<FileUploadJobResponse> =
+            jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<FileUploadJob> {
+        ): HttpResponseFor<FileUploadJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

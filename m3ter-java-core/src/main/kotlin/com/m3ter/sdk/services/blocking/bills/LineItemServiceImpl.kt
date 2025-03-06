@@ -17,7 +17,7 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BillLineItemListPage
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
-import com.m3ter.sdk.models.LineItem
+import com.m3ter.sdk.models.LineItemResponse
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemService {
@@ -31,7 +31,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
     override fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): LineItem =
+    ): LineItemResponse =
         // get /organizations/{orgId}/bills/{billId}/lineitems/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -47,13 +47,13 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<LineItem> =
-            jsonHandler<LineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<LineItemResponse> =
+            jsonHandler<LineItemResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<LineItem> {
+        ): HttpResponseFor<LineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

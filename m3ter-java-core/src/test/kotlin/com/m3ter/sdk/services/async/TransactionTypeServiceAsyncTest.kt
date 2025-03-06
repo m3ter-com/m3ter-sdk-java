@@ -27,7 +27,7 @@ class TransactionTypeServiceAsyncTest {
                 .build()
         val transactionTypeServiceAsync = client.transactionTypes()
 
-        val transactionTypeFuture =
+        val transactionTypeResponseFuture =
             transactionTypeServiceAsync.create(
                 TransactionTypeCreateParams.builder()
                     .orgId("orgId")
@@ -38,8 +38,8 @@ class TransactionTypeServiceAsyncTest {
                     .build()
             )
 
-        val transactionType = transactionTypeFuture.get()
-        transactionType.validate()
+        val transactionTypeResponse = transactionTypeResponseFuture.get()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -54,13 +54,13 @@ class TransactionTypeServiceAsyncTest {
                 .build()
         val transactionTypeServiceAsync = client.transactionTypes()
 
-        val transactionTypeFuture =
+        val transactionTypeResponseFuture =
             transactionTypeServiceAsync.retrieve(
                 TransactionTypeRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val transactionType = transactionTypeFuture.get()
-        transactionType.validate()
+        val transactionTypeResponse = transactionTypeResponseFuture.get()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -75,7 +75,7 @@ class TransactionTypeServiceAsyncTest {
                 .build()
         val transactionTypeServiceAsync = client.transactionTypes()
 
-        val transactionTypeFuture =
+        val transactionTypeResponseFuture =
             transactionTypeServiceAsync.update(
                 TransactionTypeUpdateParams.builder()
                     .orgId("orgId")
@@ -87,8 +87,8 @@ class TransactionTypeServiceAsyncTest {
                     .build()
             )
 
-        val transactionType = transactionTypeFuture.get()
-        transactionType.validate()
+        val transactionTypeResponse = transactionTypeResponseFuture.get()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -124,12 +124,12 @@ class TransactionTypeServiceAsyncTest {
                 .build()
         val transactionTypeServiceAsync = client.transactionTypes()
 
-        val transactionTypeFuture =
+        val transactionTypeResponseFuture =
             transactionTypeServiceAsync.delete(
                 TransactionTypeDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val transactionType = transactionTypeFuture.get()
-        transactionType.validate()
+        val transactionTypeResponse = transactionTypeResponseFuture.get()
+        transactionTypeResponse.validate()
     }
 }

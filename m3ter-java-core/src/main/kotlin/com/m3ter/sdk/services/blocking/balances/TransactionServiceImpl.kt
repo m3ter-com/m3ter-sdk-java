@@ -20,7 +20,7 @@ import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
-import com.m3ter.sdk.models.Transaction
+import com.m3ter.sdk.models.TransactionResponse
 
 class TransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     TransactionService {
@@ -34,7 +34,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
     override fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions,
-    ): Transaction =
+    ): TransactionResponse =
         // post /organizations/{orgId}/balances/{balanceId}/transactions
         withRawResponse().create(params, requestOptions).parse()
 
@@ -57,13 +57,14 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Transaction> =
-            jsonHandler<Transaction>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<TransactionResponse> =
+            jsonHandler<TransactionResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: BalanceTransactionCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Transaction> {
+        ): HttpResponseFor<TransactionResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

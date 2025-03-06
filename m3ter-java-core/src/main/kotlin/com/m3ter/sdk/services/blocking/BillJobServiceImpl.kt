@@ -15,12 +15,12 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.BillJob
 import com.m3ter.sdk.models.BillJobCancelParams
 import com.m3ter.sdk.models.BillJobCreateParams
 import com.m3ter.sdk.models.BillJobListPage
 import com.m3ter.sdk.models.BillJobListParams
 import com.m3ter.sdk.models.BillJobRecalculateParams
+import com.m3ter.sdk.models.BillJobResponse
 import com.m3ter.sdk.models.BillJobRetrieveParams
 
 class BillJobServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,11 +32,17 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): BillJobService.WithRawResponse = withRawResponse
 
-    override fun create(params: BillJobCreateParams, requestOptions: RequestOptions): BillJob =
+    override fun create(
+        params: BillJobCreateParams,
+        requestOptions: RequestOptions,
+    ): BillJobResponse =
         // post /organizations/{orgId}/billjobs
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(params: BillJobRetrieveParams, requestOptions: RequestOptions): BillJob =
+    override fun retrieve(
+        params: BillJobRetrieveParams,
+        requestOptions: RequestOptions,
+    ): BillJobResponse =
         // get /organizations/{orgId}/billjobs/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -44,14 +50,17 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
         // get /organizations/{orgId}/billjobs
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun cancel(params: BillJobCancelParams, requestOptions: RequestOptions): BillJob =
+    override fun cancel(
+        params: BillJobCancelParams,
+        requestOptions: RequestOptions,
+    ): BillJobResponse =
         // post /organizations/{orgId}/billjobs/{id}/cancel
         withRawResponse().cancel(params, requestOptions).parse()
 
     override fun recalculate(
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions,
-    ): BillJob =
+    ): BillJobResponse =
         // post /organizations/{orgId}/billjobs/recalculate
         withRawResponse().recalculate(params, requestOptions).parse()
 
@@ -60,13 +69,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: BillJobCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillJob> {
+        ): HttpResponseFor<BillJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -87,13 +96,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val retrieveHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillJob> {
+        ): HttpResponseFor<BillJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -146,13 +155,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val cancelHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val cancelHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun cancel(
             params: BillJobCancelParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillJob> {
+        ): HttpResponseFor<BillJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -179,13 +188,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val recalculateHandler: Handler<BillJob> =
-            jsonHandler<BillJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val recalculateHandler: Handler<BillJobResponse> =
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun recalculate(
             params: BillJobRecalculateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillJob> {
+        ): HttpResponseFor<BillJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

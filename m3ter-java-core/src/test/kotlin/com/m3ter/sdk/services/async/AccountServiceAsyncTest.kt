@@ -34,7 +34,7 @@ class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountFuture =
+        val accountResponseFuture =
             accountServiceAsync.create(
                 AccountCreateParams.builder()
                     .orgId("orgId")
@@ -77,8 +77,8 @@ class AccountServiceAsyncTest {
                     .build()
             )
 
-        val account = accountFuture.get()
-        account.validate()
+        val accountResponse = accountResponseFuture.get()
+        accountResponse.validate()
     }
 
     @Test
@@ -93,13 +93,13 @@ class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountFuture =
+        val accountResponseFuture =
             accountServiceAsync.retrieve(
                 AccountRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val account = accountFuture.get()
-        account.validate()
+        val accountResponse = accountResponseFuture.get()
+        accountResponse.validate()
     }
 
     @Test
@@ -114,7 +114,7 @@ class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountFuture =
+        val accountResponseFuture =
             accountServiceAsync.update(
                 AccountUpdateParams.builder()
                     .orgId("orgId")
@@ -158,8 +158,8 @@ class AccountServiceAsyncTest {
                     .build()
             )
 
-        val account = accountFuture.get()
-        account.validate()
+        val accountResponse = accountResponseFuture.get()
+        accountResponse.validate()
     }
 
     @Test
@@ -193,13 +193,13 @@ class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountFuture =
+        val accountResponseFuture =
             accountServiceAsync.delete(
                 AccountDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val account = accountFuture.get()
-        account.validate()
+        val accountResponse = accountResponseFuture.get()
+        accountResponse.validate()
     }
 
     @Test
@@ -241,7 +241,7 @@ class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountFuture =
+        val accountResponseFuture =
             accountServiceAsync.getChildren(
                 AccountGetChildrenParams.builder()
                     .orgId("orgId")
@@ -251,8 +251,8 @@ class AccountServiceAsyncTest {
                     .build()
             )
 
-        val account = accountFuture.get()
-        account.validate()
+        val accountResponse = accountResponseFuture.get()
+        accountResponse.validate()
     }
 
     @Test

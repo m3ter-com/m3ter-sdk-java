@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
 import com.m3ter.sdk.models.CreditReasonListPageAsync
 import com.m3ter.sdk.models.CreditReasonListParams
+import com.m3ter.sdk.models.CreditReasonResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -32,21 +32,21 @@ interface CreditReasonServiceAsync {
     fun create(
         params: CreditReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditReason>
+    ): CompletableFuture<CreditReasonResponse>
 
     /** Retrieve the Credit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CreditReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditReason>
+    ): CompletableFuture<CreditReasonResponse>
 
     /** Update the Credit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: CreditReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditReason>
+    ): CompletableFuture<CreditReasonResponse>
 
     /**
      * Retrieve a list of the Credit Reason entities created for your Organization. You can filter
@@ -64,7 +64,7 @@ interface CreditReasonServiceAsync {
     fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditReason>
+    ): CompletableFuture<CreditReasonResponse>
 
     /**
      * A view of [CreditReasonServiceAsync] that provides access to raw HTTP responses for each
@@ -81,7 +81,7 @@ interface CreditReasonServiceAsync {
         fun create(
             params: CreditReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditReason>>
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -93,7 +93,7 @@ interface CreditReasonServiceAsync {
         fun retrieve(
             params: CreditReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditReason>>
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -105,7 +105,7 @@ interface CreditReasonServiceAsync {
         fun update(
             params: CreditReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditReason>>
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/creditreasons`, but
@@ -128,6 +128,6 @@ interface CreditReasonServiceAsync {
         fun delete(
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditReason>>
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
     }
 }

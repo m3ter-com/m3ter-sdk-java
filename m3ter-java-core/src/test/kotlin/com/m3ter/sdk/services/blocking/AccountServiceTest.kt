@@ -34,7 +34,7 @@ class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val account =
+        val accountResponse =
             accountService.create(
                 AccountCreateParams.builder()
                     .orgId("orgId")
@@ -77,7 +77,7 @@ class AccountServiceTest {
                     .build()
             )
 
-        account.validate()
+        accountResponse.validate()
     }
 
     @Test
@@ -92,10 +92,10 @@ class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val account =
+        val accountResponse =
             accountService.retrieve(AccountRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        account.validate()
+        accountResponse.validate()
     }
 
     @Test
@@ -110,7 +110,7 @@ class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val account =
+        val accountResponse =
             accountService.update(
                 AccountUpdateParams.builder()
                     .orgId("orgId")
@@ -154,7 +154,7 @@ class AccountServiceTest {
                     .build()
             )
 
-        account.validate()
+        accountResponse.validate()
     }
 
     @Test
@@ -186,10 +186,10 @@ class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val account =
+        val accountResponse =
             accountService.delete(AccountDeleteParams.builder().orgId("orgId").id("id").build())
 
-        account.validate()
+        accountResponse.validate()
     }
 
     @Test
@@ -230,7 +230,7 @@ class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val account =
+        val accountResponse =
             accountService.getChildren(
                 AccountGetChildrenParams.builder()
                     .orgId("orgId")
@@ -240,7 +240,7 @@ class AccountServiceTest {
                     .build()
             )
 
-        account.validate()
+        accountResponse.validate()
     }
 
     @Test

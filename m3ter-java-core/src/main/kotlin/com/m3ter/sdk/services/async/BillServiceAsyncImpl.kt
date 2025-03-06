@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
 import com.m3ter.sdk.models.BillDeleteParams
@@ -23,6 +22,7 @@ import com.m3ter.sdk.models.BillLatestByAccountParams
 import com.m3ter.sdk.models.BillListPageAsync
 import com.m3ter.sdk.models.BillListParams
 import com.m3ter.sdk.models.BillLockParams
+import com.m3ter.sdk.models.BillResponse
 import com.m3ter.sdk.models.BillRetrieveParams
 import com.m3ter.sdk.models.BillSearchParams
 import com.m3ter.sdk.models.BillSearchResponse
@@ -63,7 +63,7 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun retrieve(
         params: BillRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Bill> =
+    ): CompletableFuture<BillResponse> =
         // get /organizations/{orgId}/bills/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -77,7 +77,7 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun delete(
         params: BillDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Bill> =
+    ): CompletableFuture<BillResponse> =
         // delete /organizations/{orgId}/bills/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -91,14 +91,14 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun latestByAccount(
         params: BillLatestByAccountParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Bill> =
+    ): CompletableFuture<BillResponse> =
         // get /organizations/{orgId}/bills/latest/{accountId}
         withRawResponse().latestByAccount(params, requestOptions).thenApply { it.parse() }
 
     override fun lock(
         params: BillLockParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Bill> =
+    ): CompletableFuture<BillResponse> =
         // put /organizations/{orgId}/bills/{id}/lock
         withRawResponse().lock(params, requestOptions).thenApply { it.parse() }
 
@@ -112,7 +112,7 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun updateStatus(
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Bill> =
+    ): CompletableFuture<BillResponse> =
         // put /organizations/{orgId}/bills/{id}/status
         withRawResponse().updateStatus(params, requestOptions).thenApply { it.parse() }
 
@@ -139,13 +139,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         override fun lineItems(): LineItemServiceAsync.WithRawResponse = lineItems
 
-        private val retrieveHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Bill>> {
+        ): CompletableFuture<HttpResponseFor<BillResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -210,13 +210,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val deleteHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: BillDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Bill>> {
+        ): CompletableFuture<HttpResponseFor<BillResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -276,13 +276,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val latestByAccountHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val latestByAccountHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun latestByAccount(
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Bill>> {
+        ): CompletableFuture<HttpResponseFor<BillResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -311,13 +311,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val lockHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val lockHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun lock(
             params: BillLockParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Bill>> {
+        ): CompletableFuture<HttpResponseFor<BillResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -376,13 +376,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val updateStatusHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateStatusHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun updateStatus(
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Bill>> {
+        ): CompletableFuture<HttpResponseFor<BillResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

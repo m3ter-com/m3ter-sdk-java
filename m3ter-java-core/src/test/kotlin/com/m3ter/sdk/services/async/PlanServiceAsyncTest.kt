@@ -28,7 +28,7 @@ class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val planFuture =
+        val planResponseFuture =
             planServiceAsync.create(
                 PlanCreateParams.builder()
                     .orgId("orgId")
@@ -55,8 +55,8 @@ class PlanServiceAsyncTest {
                     .build()
             )
 
-        val plan = planFuture.get()
-        plan.validate()
+        val planResponse = planResponseFuture.get()
+        planResponse.validate()
     }
 
     @Test
@@ -71,11 +71,11 @@ class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val planFuture =
+        val planResponseFuture =
             planServiceAsync.retrieve(PlanRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        val plan = planFuture.get()
-        plan.validate()
+        val planResponse = planResponseFuture.get()
+        planResponse.validate()
     }
 
     @Test
@@ -90,7 +90,7 @@ class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val planFuture =
+        val planResponseFuture =
             planServiceAsync.update(
                 PlanUpdateParams.builder()
                     .orgId("orgId")
@@ -118,8 +118,8 @@ class PlanServiceAsyncTest {
                     .build()
             )
 
-        val plan = planFuture.get()
-        plan.validate()
+        val planResponse = planResponseFuture.get()
+        planResponse.validate()
     }
 
     @Test
@@ -152,10 +152,10 @@ class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val planFuture =
+        val planResponseFuture =
             planServiceAsync.delete(PlanDeleteParams.builder().orgId("orgId").id("id").build())
 
-        val plan = planFuture.get()
-        plan.validate()
+        val planResponse = planResponseFuture.get()
+        planResponse.validate()
     }
 }

@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPage
 import com.m3ter.sdk.models.CounterListParams
+import com.m3ter.sdk.models.CounterResponse
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 
@@ -32,15 +32,24 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): CounterService.WithRawResponse = withRawResponse
 
-    override fun create(params: CounterCreateParams, requestOptions: RequestOptions): Counter =
+    override fun create(
+        params: CounterCreateParams,
+        requestOptions: RequestOptions,
+    ): CounterResponse =
         // post /organizations/{orgId}/counters
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(params: CounterRetrieveParams, requestOptions: RequestOptions): Counter =
+    override fun retrieve(
+        params: CounterRetrieveParams,
+        requestOptions: RequestOptions,
+    ): CounterResponse =
         // get /organizations/{orgId}/counters/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: CounterUpdateParams, requestOptions: RequestOptions): Counter =
+    override fun update(
+        params: CounterUpdateParams,
+        requestOptions: RequestOptions,
+    ): CounterResponse =
         // put /organizations/{orgId}/counters/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -48,7 +57,10 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
         // get /organizations/{orgId}/counters
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: CounterDeleteParams, requestOptions: RequestOptions): Counter =
+    override fun delete(
+        params: CounterDeleteParams,
+        requestOptions: RequestOptions,
+    ): CounterResponse =
         // delete /organizations/{orgId}/counters/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -57,13 +69,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Counter> =
-            jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CounterResponse> =
+            jsonHandler<CounterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CounterCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Counter> {
+        ): HttpResponseFor<CounterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -84,13 +96,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val retrieveHandler: Handler<Counter> =
-            jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CounterResponse> =
+            jsonHandler<CounterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CounterRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Counter> {
+        ): HttpResponseFor<CounterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -115,13 +127,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<Counter> =
-            jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CounterResponse> =
+            jsonHandler<CounterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CounterUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Counter> {
+        ): HttpResponseFor<CounterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -175,13 +187,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val deleteHandler: Handler<Counter> =
-            jsonHandler<Counter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CounterResponse> =
+            jsonHandler<CounterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: CounterDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Counter> {
+        ): HttpResponseFor<CounterResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

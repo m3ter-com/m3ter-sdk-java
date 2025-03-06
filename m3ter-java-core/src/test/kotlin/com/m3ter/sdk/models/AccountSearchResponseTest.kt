@@ -15,7 +15,7 @@ class AccountSearchResponseTest {
         val accountSearchResponse =
             AccountSearchResponse.builder()
                 .addData(
-                    Account.builder()
+                    AccountResponse.builder()
                         .id("id")
                         .version(0L)
                         .address(
@@ -30,19 +30,21 @@ class AccountSearchResponseTest {
                                 .region("region")
                                 .build()
                         )
-                        .autoGenerateStatementMode(Account.AutoGenerateStatementMode.NONE)
+                        .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .code("code")
                         .configData(
-                            Account.ConfigData.builder()
+                            AccountResponse.ConfigData.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("bar"))
                                 .build()
                         )
                         .createdBy("createdBy")
-                        .addCreditApplicationOrder(Account.CreditApplicationOrder.PREPAYMENT)
+                        .addCreditApplicationOrder(
+                            AccountResponse.CreditApplicationOrder.PREPAYMENT
+                        )
                         .currency("USD")
                         .customFields(
-                            Account.CustomFields.builder()
+                            AccountResponse.CustomFields.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -62,7 +64,7 @@ class AccountSearchResponseTest {
         assertThat(accountSearchResponse).isNotNull
         assertThat(accountSearchResponse.data().get())
             .containsExactly(
-                Account.builder()
+                AccountResponse.builder()
                     .id("id")
                     .version(0L)
                     .address(
@@ -77,19 +79,19 @@ class AccountSearchResponseTest {
                             .region("region")
                             .build()
                     )
-                    .autoGenerateStatementMode(Account.AutoGenerateStatementMode.NONE)
+                    .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .code("code")
                     .configData(
-                        Account.ConfigData.builder()
+                        AccountResponse.ConfigData.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
                             .build()
                     )
                     .createdBy("createdBy")
-                    .addCreditApplicationOrder(Account.CreditApplicationOrder.PREPAYMENT)
+                    .addCreditApplicationOrder(AccountResponse.CreditApplicationOrder.PREPAYMENT)
                     .currency("USD")
                     .customFields(
-                        Account.CustomFields.builder()
+                        AccountResponse.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )

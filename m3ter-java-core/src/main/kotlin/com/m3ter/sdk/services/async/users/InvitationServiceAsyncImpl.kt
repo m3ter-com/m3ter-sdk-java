@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Invitation
+import com.m3ter.sdk.models.InvitationResponse
 import com.m3ter.sdk.models.UserInvitationCreateParams
 import com.m3ter.sdk.models.UserInvitationListPageAsync
 import com.m3ter.sdk.models.UserInvitationListParams
@@ -34,14 +34,14 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
     override fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Invitation> =
+    ): CompletableFuture<InvitationResponse> =
         // post /organizations/{orgId}/invitations
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Invitation> =
+    ): CompletableFuture<InvitationResponse> =
         // get /organizations/{orgId}/invitations/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -57,13 +57,13 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Invitation> =
-            jsonHandler<Invitation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<InvitationResponse> =
+            jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: UserInvitationCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Invitation>> {
+        ): CompletableFuture<HttpResponseFor<InvitationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -87,13 +87,13 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val retrieveHandler: Handler<Invitation> =
-            jsonHandler<Invitation>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<InvitationResponse> =
+            jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Invitation>> {
+        ): CompletableFuture<HttpResponseFor<InvitationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

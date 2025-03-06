@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Counter
 import com.m3ter.sdk.models.CounterCreateParams
 import com.m3ter.sdk.models.CounterDeleteParams
 import com.m3ter.sdk.models.CounterListPageAsync
 import com.m3ter.sdk.models.CounterListParams
+import com.m3ter.sdk.models.CounterResponse
 import com.m3ter.sdk.models.CounterRetrieveParams
 import com.m3ter.sdk.models.CounterUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -28,21 +28,21 @@ interface CounterServiceAsync {
     fun create(
         params: CounterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Counter>
+    ): CompletableFuture<CounterResponse>
 
     /** Retrieve a Counter for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Counter>
+    ): CompletableFuture<CounterResponse>
 
     /** Update Counter for the given UUID. */
     @JvmOverloads
     fun update(
         params: CounterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Counter>
+    ): CompletableFuture<CounterResponse>
 
     /**
      * Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes.
@@ -58,7 +58,7 @@ interface CounterServiceAsync {
     fun delete(
         params: CounterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Counter>
+    ): CompletableFuture<CounterResponse>
 
     /**
      * A view of [CounterServiceAsync] that provides access to raw HTTP responses for each method.
@@ -74,7 +74,7 @@ interface CounterServiceAsync {
         fun create(
             params: CounterCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Counter>>
+        ): CompletableFuture<HttpResponseFor<CounterResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters/{id}`, but is
@@ -85,7 +85,7 @@ interface CounterServiceAsync {
         fun retrieve(
             params: CounterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Counter>>
+        ): CompletableFuture<HttpResponseFor<CounterResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counters/{id}`, but is
@@ -96,7 +96,7 @@ interface CounterServiceAsync {
         fun update(
             params: CounterUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Counter>>
+        ): CompletableFuture<HttpResponseFor<CounterResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
@@ -118,6 +118,6 @@ interface CounterServiceAsync {
         fun delete(
             params: CounterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Counter>>
+        ): CompletableFuture<HttpResponseFor<CounterResponse>>
     }
 }

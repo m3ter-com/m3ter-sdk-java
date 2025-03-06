@@ -17,7 +17,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
-import com.m3ter.sdk.models.PermissionStatement
+import com.m3ter.sdk.models.PermissionStatementResponse
 import com.m3ter.sdk.models.PrincipalPermissionRequest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -37,15 +37,15 @@ class PermissionPolicyServiceAsyncTest {
                 .build()
         val permissionPolicyServiceAsync = client.permissionPolicies()
 
-        val permissionPolicyFuture =
+        val permissionPolicyResponseFuture =
             permissionPolicyServiceAsync.create(
                 PermissionPolicyCreateParams.builder()
                     .orgId("orgId")
                     .name("x")
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -53,8 +53,8 @@ class PermissionPolicyServiceAsyncTest {
                     .build()
             )
 
-        val permissionPolicy = permissionPolicyFuture.get()
-        permissionPolicy.validate()
+        val permissionPolicyResponse = permissionPolicyResponseFuture.get()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -69,13 +69,13 @@ class PermissionPolicyServiceAsyncTest {
                 .build()
         val permissionPolicyServiceAsync = client.permissionPolicies()
 
-        val permissionPolicyFuture =
+        val permissionPolicyResponseFuture =
             permissionPolicyServiceAsync.retrieve(
                 PermissionPolicyRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val permissionPolicy = permissionPolicyFuture.get()
-        permissionPolicy.validate()
+        val permissionPolicyResponse = permissionPolicyResponseFuture.get()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -90,16 +90,16 @@ class PermissionPolicyServiceAsyncTest {
                 .build()
         val permissionPolicyServiceAsync = client.permissionPolicies()
 
-        val permissionPolicyFuture =
+        val permissionPolicyResponseFuture =
             permissionPolicyServiceAsync.update(
                 PermissionPolicyUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .name("x")
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -107,8 +107,8 @@ class PermissionPolicyServiceAsyncTest {
                     .build()
             )
 
-        val permissionPolicy = permissionPolicyFuture.get()
-        permissionPolicy.validate()
+        val permissionPolicyResponse = permissionPolicyResponseFuture.get()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -144,13 +144,13 @@ class PermissionPolicyServiceAsyncTest {
                 .build()
         val permissionPolicyServiceAsync = client.permissionPolicies()
 
-        val permissionPolicyFuture =
+        val permissionPolicyResponseFuture =
             permissionPolicyServiceAsync.delete(
                 PermissionPolicyDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val permissionPolicy = permissionPolicyFuture.get()
-        permissionPolicy.validate()
+        val permissionPolicyResponse = permissionPolicyResponseFuture.get()
+        permissionPolicyResponse.validate()
     }
 
     @Test

@@ -24,7 +24,7 @@ class LineItemServiceAsyncTest {
                 .build()
         val lineItemServiceAsync = client.bills().lineItems()
 
-        val lineItemFuture =
+        val lineItemResponseFuture =
             lineItemServiceAsync.retrieve(
                 BillLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -33,8 +33,8 @@ class LineItemServiceAsyncTest {
                     .build()
             )
 
-        val lineItem = lineItemFuture.get()
-        lineItem.validate()
+        val lineItemResponse = lineItemResponseFuture.get()
+        lineItemResponse.validate()
     }
 
     @Test

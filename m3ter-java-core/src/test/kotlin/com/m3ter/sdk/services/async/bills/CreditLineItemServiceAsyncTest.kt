@@ -28,7 +28,7 @@ class CreditLineItemServiceAsyncTest {
                 .build()
         val creditLineItemServiceAsync = client.bills().creditLineItems()
 
-        val creditLineItemFuture =
+        val creditLineItemResponseFuture =
             creditLineItemServiceAsync.create(
                 BillCreditLineItemCreateParams.builder()
                     .orgId("orgId")
@@ -47,8 +47,8 @@ class CreditLineItemServiceAsyncTest {
                     .build()
             )
 
-        val creditLineItem = creditLineItemFuture.get()
-        creditLineItem.validate()
+        val creditLineItemResponse = creditLineItemResponseFuture.get()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -63,7 +63,7 @@ class CreditLineItemServiceAsyncTest {
                 .build()
         val creditLineItemServiceAsync = client.bills().creditLineItems()
 
-        val creditLineItemFuture =
+        val creditLineItemResponseFuture =
             creditLineItemServiceAsync.retrieve(
                 BillCreditLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -72,8 +72,8 @@ class CreditLineItemServiceAsyncTest {
                     .build()
             )
 
-        val creditLineItem = creditLineItemFuture.get()
-        creditLineItem.validate()
+        val creditLineItemResponse = creditLineItemResponseFuture.get()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -88,7 +88,7 @@ class CreditLineItemServiceAsyncTest {
                 .build()
         val creditLineItemServiceAsync = client.bills().creditLineItems()
 
-        val creditLineItemFuture =
+        val creditLineItemResponseFuture =
             creditLineItemServiceAsync.update(
                 BillCreditLineItemUpdateParams.builder()
                     .orgId("orgId")
@@ -108,8 +108,8 @@ class CreditLineItemServiceAsyncTest {
                     .build()
             )
 
-        val creditLineItem = creditLineItemFuture.get()
-        creditLineItem.validate()
+        val creditLineItemResponse = creditLineItemResponseFuture.get()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -145,7 +145,7 @@ class CreditLineItemServiceAsyncTest {
                 .build()
         val creditLineItemServiceAsync = client.bills().creditLineItems()
 
-        val creditLineItemFuture =
+        val creditLineItemResponseFuture =
             creditLineItemServiceAsync.delete(
                 BillCreditLineItemDeleteParams.builder()
                     .orgId("orgId")
@@ -154,7 +154,7 @@ class CreditLineItemServiceAsyncTest {
                     .build()
             )
 
-        val creditLineItem = creditLineItemFuture.get()
-        creditLineItem.validate()
+        val creditLineItemResponse = creditLineItemResponseFuture.get()
+        creditLineItemResponse.validate()
     }
 }

@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.ScheduledEventConfiguration
 import com.m3ter.sdk.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationDeleteParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationListPageAsync
 import com.m3ter.sdk.models.ScheduledEventConfigurationListParams
+import com.m3ter.sdk.models.ScheduledEventConfigurationResponse
 import com.m3ter.sdk.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -38,21 +38,21 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ScheduledEventConfiguration> =
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
         // post /organizations/{orgId}/scheduledevents/configurations
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ScheduledEventConfiguration> =
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
         // get /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ScheduledEventConfiguration> =
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
         // put /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -66,7 +66,7 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ScheduledEventConfiguration> =
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
         // delete /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -75,14 +75,14 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val createHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: ScheduledEventConfigurationCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -111,14 +111,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val retrieveHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -147,14 +147,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val updateHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun update(
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -226,14 +226,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val deleteHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

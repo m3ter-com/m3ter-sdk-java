@@ -26,7 +26,7 @@ class InvitationServiceAsyncTest {
                 .build()
         val invitationServiceAsync = client.users().invitations()
 
-        val invitationFuture =
+        val invitationResponseFuture =
             invitationServiceAsync.create(
                 UserInvitationCreateParams.builder()
                     .orgId("orgId")
@@ -42,8 +42,8 @@ class InvitationServiceAsyncTest {
                     .build()
             )
 
-        val invitation = invitationFuture.get()
-        invitation.validate()
+        val invitationResponse = invitationResponseFuture.get()
+        invitationResponse.validate()
     }
 
     @Test
@@ -58,13 +58,13 @@ class InvitationServiceAsyncTest {
                 .build()
         val invitationServiceAsync = client.users().invitations()
 
-        val invitationFuture =
+        val invitationResponseFuture =
             invitationServiceAsync.retrieve(
                 UserInvitationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val invitation = invitationFuture.get()
-        invitation.validate()
+        val invitationResponse = invitationResponseFuture.get()
+        invitationResponse.validate()
     }
 
     @Test

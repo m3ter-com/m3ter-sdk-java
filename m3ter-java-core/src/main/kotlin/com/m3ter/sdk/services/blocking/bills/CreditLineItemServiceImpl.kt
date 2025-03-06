@@ -21,7 +21,7 @@ import com.m3ter.sdk.models.BillCreditLineItemListPage
 import com.m3ter.sdk.models.BillCreditLineItemListParams
 import com.m3ter.sdk.models.BillCreditLineItemRetrieveParams
 import com.m3ter.sdk.models.BillCreditLineItemUpdateParams
-import com.m3ter.sdk.models.CreditLineItem
+import com.m3ter.sdk.models.CreditLineItemResponse
 
 class CreditLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CreditLineItemService {
@@ -35,21 +35,21 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
     override fun create(
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions,
-    ): CreditLineItem =
+    ): CreditLineItemResponse =
         // post /organizations/{orgId}/bills/{billId}/creditlineitems
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): CreditLineItem =
+    ): CreditLineItemResponse =
         // get /organizations/{orgId}/bills/{billId}/creditlineitems/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions,
-    ): CreditLineItem =
+    ): CreditLineItemResponse =
         // put /organizations/{orgId}/bills/{billId}/creditlineitems/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
     override fun delete(
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions,
-    ): CreditLineItem =
+    ): CreditLineItemResponse =
         // delete /organizations/{orgId}/bills/{billId}/creditlineitems/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CreditLineItem> =
-            jsonHandler<CreditLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CreditLineItemResponse> =
+            jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: BillCreditLineItemCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLineItem> {
+        ): HttpResponseFor<CreditLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -105,13 +106,14 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val retrieveHandler: Handler<CreditLineItem> =
-            jsonHandler<CreditLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CreditLineItemResponse> =
+            jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillCreditLineItemRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLineItem> {
+        ): HttpResponseFor<CreditLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -138,13 +140,14 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val updateHandler: Handler<CreditLineItem> =
-            jsonHandler<CreditLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CreditLineItemResponse> =
+            jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: BillCreditLineItemUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLineItem> {
+        ): HttpResponseFor<CreditLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -212,13 +215,14 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val deleteHandler: Handler<CreditLineItem> =
-            jsonHandler<CreditLineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CreditLineItemResponse> =
+            jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: BillCreditLineItemDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditLineItem> {
+        ): HttpResponseFor<CreditLineItemResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

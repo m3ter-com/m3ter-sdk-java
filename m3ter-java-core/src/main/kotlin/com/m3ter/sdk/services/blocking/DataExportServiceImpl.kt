@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.AdhocExport
+import com.m3ter.sdk.models.AdHocResponse
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.blocking.dataExports.DestinationService
 import com.m3ter.sdk.services.blocking.dataExports.DestinationServiceImpl
@@ -48,7 +48,7 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
     override fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions,
-    ): AdhocExport =
+    ): AdHocResponse =
         // post /organizations/{orgId}/dataexports/adhoc
         withRawResponse().createAdhoc(params, requestOptions).parse()
 
@@ -75,13 +75,13 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
 
         override fun schedules(): ScheduleService.WithRawResponse = schedules
 
-        private val createAdhocHandler: Handler<AdhocExport> =
-            jsonHandler<AdhocExport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createAdhocHandler: Handler<AdHocResponse> =
+            jsonHandler<AdHocResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AdhocExport> {
+        ): HttpResponseFor<AdHocResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -29,7 +29,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<ScheduledEventConfiguration> = response().data()
+    fun data(): List<ScheduledEventConfigurationResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -93,18 +93,18 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<ScheduledEventConfiguration>> = JsonMissing.of(),
+        private val data: JsonField<List<ScheduledEventConfigurationResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<ScheduledEventConfiguration> = data.getNullable("data") ?: listOf()
+        fun data(): List<ScheduledEventConfigurationResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<ScheduledEventConfiguration>>> =
+        fun _data(): Optional<JsonField<List<ScheduledEventConfigurationResponse>>> =
             Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
@@ -152,7 +152,8 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<ScheduledEventConfiguration>> = JsonMissing.of()
+            private var data: JsonField<List<ScheduledEventConfigurationResponse>> =
+                JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -163,9 +164,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<ScheduledEventConfiguration>) = data(JsonField.of(data))
+            fun data(data: List<ScheduledEventConfigurationResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<ScheduledEventConfiguration>>) = apply {
+            fun data(data: JsonField<List<ScheduledEventConfigurationResponse>>) = apply {
                 this.data = data
             }
 
@@ -182,9 +183,9 @@ private constructor(
     }
 
     class AutoPager(private val firstPage: ScheduledEventConfigurationListPage) :
-        Iterable<ScheduledEventConfiguration> {
+        Iterable<ScheduledEventConfigurationResponse> {
 
-        override fun iterator(): Iterator<ScheduledEventConfiguration> = iterator {
+        override fun iterator(): Iterator<ScheduledEventConfigurationResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -196,7 +197,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<ScheduledEventConfiguration> {
+        fun stream(): Stream<ScheduledEventConfigurationResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

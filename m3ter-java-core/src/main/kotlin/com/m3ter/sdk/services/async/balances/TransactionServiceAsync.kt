@@ -12,7 +12,7 @@ import com.m3ter.sdk.models.BalanceTransactionListPageAsync
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
-import com.m3ter.sdk.models.Transaction
+import com.m3ter.sdk.models.TransactionResponse
 import java.util.concurrent.CompletableFuture
 
 interface TransactionServiceAsync {
@@ -43,7 +43,7 @@ interface TransactionServiceAsync {
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Transaction>
+    ): CompletableFuture<TransactionResponse>
 
     /**
      * Retrieve all Transactions for a specific Balance.
@@ -80,7 +80,7 @@ interface TransactionServiceAsync {
         fun create(
             params: BalanceTransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Transaction>>
+        ): CompletableFuture<HttpResponseFor<TransactionResponse>>
 
         /**
          * Returns a raw HTTP response for `get

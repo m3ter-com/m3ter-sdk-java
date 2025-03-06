@@ -9,7 +9,7 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.CustomFieldRetrieveParams
 import com.m3ter.sdk.models.CustomFieldUpdateParams
-import com.m3ter.sdk.models.CustomFields
+import com.m3ter.sdk.models.CustomFieldsResponse
 
 interface CustomFieldService {
 
@@ -25,14 +25,14 @@ interface CustomFieldService {
     fun retrieve(
         params: CustomFieldRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CustomFields
+    ): CustomFieldsResponse
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     @JvmOverloads
     fun update(
         params: CustomFieldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CustomFields
+    ): CustomFieldsResponse
 
     /**
      * A view of [CustomFieldService] that provides access to raw HTTP responses for each method.
@@ -48,7 +48,7 @@ interface CustomFieldService {
         fun retrieve(
             params: CustomFieldRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CustomFields>
+        ): HttpResponseFor<CustomFieldsResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/customfields`, but is
@@ -59,6 +59,6 @@ interface CustomFieldService {
         fun update(
             params: CustomFieldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CustomFields>
+        ): HttpResponseFor<CustomFieldsResponse>
     }
 }

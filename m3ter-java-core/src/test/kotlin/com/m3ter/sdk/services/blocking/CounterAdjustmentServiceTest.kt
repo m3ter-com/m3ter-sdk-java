@@ -27,7 +27,7 @@ class CounterAdjustmentServiceTest {
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
 
-        val counterAdjustment =
+        val counterAdjustmentResponse =
             counterAdjustmentService.create(
                 CounterAdjustmentCreateParams.builder()
                     .orgId("orgId")
@@ -40,7 +40,7 @@ class CounterAdjustmentServiceTest {
                     .build()
             )
 
-        counterAdjustment.validate()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -55,12 +55,12 @@ class CounterAdjustmentServiceTest {
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
 
-        val counterAdjustment =
+        val counterAdjustmentResponse =
             counterAdjustmentService.retrieve(
                 CounterAdjustmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        counterAdjustment.validate()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -75,7 +75,7 @@ class CounterAdjustmentServiceTest {
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
 
-        val counterAdjustment =
+        val counterAdjustmentResponse =
             counterAdjustmentService.update(
                 CounterAdjustmentUpdateParams.builder()
                     .orgId("orgId")
@@ -89,7 +89,7 @@ class CounterAdjustmentServiceTest {
                     .build()
             )
 
-        counterAdjustment.validate()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -124,11 +124,11 @@ class CounterAdjustmentServiceTest {
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
 
-        val counterAdjustment =
+        val counterAdjustmentResponse =
             counterAdjustmentService.delete(
                 CounterAdjustmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        counterAdjustment.validate()
+        counterAdjustmentResponse.validate()
     }
 }

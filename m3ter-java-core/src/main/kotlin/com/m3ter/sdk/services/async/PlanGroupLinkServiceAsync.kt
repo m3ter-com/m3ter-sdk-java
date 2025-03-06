@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
 import com.m3ter.sdk.models.PlanGroupLinkListPageAsync
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -28,21 +28,21 @@ interface PlanGroupLinkServiceAsync {
     fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroupLink>
+    ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Retrieve a PlanGroupLink for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroupLink>
+    ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Update PlanGroupLink for the given UUID. */
     @JvmOverloads
     fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroupLink>
+    ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Retrieve a list of PlanGroupLink entities */
     @JvmOverloads
@@ -56,7 +56,7 @@ interface PlanGroupLinkServiceAsync {
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroupLink>
+    ): CompletableFuture<PlanGroupLinkResponse>
 
     /**
      * A view of [PlanGroupLinkServiceAsync] that provides access to raw HTTP responses for each
@@ -73,7 +73,7 @@ interface PlanGroupLinkServiceAsync {
         fun create(
             params: PlanGroupLinkCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks/{id}`, but is
@@ -84,7 +84,7 @@ interface PlanGroupLinkServiceAsync {
         fun retrieve(
             params: PlanGroupLinkRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
@@ -95,7 +95,7 @@ interface PlanGroupLinkServiceAsync {
         fun update(
             params: PlanGroupLinkUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks`, but is
@@ -117,6 +117,6 @@ interface PlanGroupLinkServiceAsync {
         fun delete(
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
     }
 }

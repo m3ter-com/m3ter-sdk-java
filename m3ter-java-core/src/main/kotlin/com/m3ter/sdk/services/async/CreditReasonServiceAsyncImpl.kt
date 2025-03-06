@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
 import com.m3ter.sdk.models.CreditReasonListPageAsync
 import com.m3ter.sdk.models.CreditReasonListParams
+import com.m3ter.sdk.models.CreditReasonResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
     override fun create(
         params: CreditReasonCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CreditReason> =
+    ): CompletableFuture<CreditReasonResponse> =
         // post /organizations/{orgId}/picklists/creditreasons
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: CreditReasonRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CreditReason> =
+    ): CompletableFuture<CreditReasonResponse> =
         // get /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CreditReasonUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CreditReason> =
+    ): CompletableFuture<CreditReasonResponse> =
         // put /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
     override fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CreditReason> =
+    ): CompletableFuture<CreditReasonResponse> =
         // delete /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CreditReasonCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CreditReason>> {
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +109,14 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val retrieveHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CreditReasonRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CreditReason>> {
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -143,13 +145,14 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val updateHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CreditReasonUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CreditReason>> {
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,13 +224,14 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
                 }
         }
 
-        private val deleteHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CreditReason>> {
+        ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

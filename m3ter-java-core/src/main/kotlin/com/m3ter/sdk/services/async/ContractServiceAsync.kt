@@ -7,13 +7,13 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPageAsync
 import com.m3ter.sdk.models.ContractListParams
+import com.m3ter.sdk.models.ContractResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -35,14 +35,14 @@ interface ContractServiceAsync {
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     @JvmOverloads
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Update the Contract with the given UUID.
@@ -58,7 +58,7 @@ interface ContractServiceAsync {
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
@@ -81,7 +81,7 @@ interface ContractServiceAsync {
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Apply the specified end-date to billing entities associated with Accounts the Contract has
@@ -116,7 +116,7 @@ interface ContractServiceAsync {
         fun create(
             params: ContractCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Contract>>
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
@@ -127,7 +127,7 @@ interface ContractServiceAsync {
         fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Contract>>
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
@@ -138,7 +138,7 @@ interface ContractServiceAsync {
         fun update(
             params: ContractUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Contract>>
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
@@ -160,7 +160,7 @@ interface ContractServiceAsync {
         fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Contract>>
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /**
          * Returns a raw HTTP response for `put

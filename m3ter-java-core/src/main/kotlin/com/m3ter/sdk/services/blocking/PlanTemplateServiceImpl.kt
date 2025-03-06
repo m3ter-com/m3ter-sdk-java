@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
 import com.m3ter.sdk.models.PlanTemplateListPage
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 
@@ -35,21 +35,21 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions,
-    ): PlanTemplate =
+    ): PlanTemplateResponse =
         // post /organizations/{orgId}/plantemplates
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions,
-    ): PlanTemplate =
+    ): PlanTemplateResponse =
         // get /organizations/{orgId}/plantemplates/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions,
-    ): PlanTemplate =
+    ): PlanTemplateResponse =
         // put /organizations/{orgId}/plantemplates/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
     override fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions,
-    ): PlanTemplate =
+    ): PlanTemplateResponse =
         // delete /organizations/{orgId}/plantemplates/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanTemplateCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanTemplate> {
+        ): HttpResponseFor<PlanTemplateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -99,13 +100,14 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val retrieveHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PlanTemplateRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanTemplate> {
+        ): HttpResponseFor<PlanTemplateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -130,13 +132,14 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val updateHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanTemplateUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanTemplate> {
+        ): HttpResponseFor<PlanTemplateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -192,13 +195,14 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val deleteHandler: Handler<PlanTemplate> =
-            jsonHandler<PlanTemplate>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PlanTemplateResponse> =
+            jsonHandler<PlanTemplateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PlanTemplateDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanTemplate> {
+        ): HttpResponseFor<PlanTemplateResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

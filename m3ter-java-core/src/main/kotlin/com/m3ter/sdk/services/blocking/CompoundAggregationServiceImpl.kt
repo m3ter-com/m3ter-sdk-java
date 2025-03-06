@@ -16,11 +16,11 @@ import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AggregationResponse
-import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
@@ -43,7 +43,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     override fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompoundAggregation =
+    ): CompoundAggregationResponse =
         // get /organizations/{orgId}/compoundaggregations/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -64,7 +64,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     override fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions,
-    ): CompoundAggregation =
+    ): CompoundAggregationResponse =
         // delete /organizations/{orgId}/compoundaggregations/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -105,14 +105,14 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             }
         }
 
-        private val retrieveHandler: Handler<CompoundAggregation> =
-            jsonHandler<CompoundAggregation>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<CompoundAggregationResponse> =
+            jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CompoundAggregation> {
+        ): HttpResponseFor<CompoundAggregationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -208,14 +208,14 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             }
         }
 
-        private val deleteHandler: Handler<CompoundAggregation> =
-            jsonHandler<CompoundAggregation>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<CompoundAggregationResponse> =
+            jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CompoundAggregation> {
+        ): HttpResponseFor<CompoundAggregationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

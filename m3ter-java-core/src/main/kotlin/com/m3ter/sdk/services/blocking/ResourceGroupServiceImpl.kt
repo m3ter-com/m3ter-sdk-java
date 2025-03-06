@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.ResourceGroup
 import com.m3ter.sdk.models.ResourceGroupAddResourceParams
 import com.m3ter.sdk.models.ResourceGroupCreateParams
 import com.m3ter.sdk.models.ResourceGroupDeleteParams
@@ -26,6 +25,7 @@ import com.m3ter.sdk.models.ResourceGroupListParams
 import com.m3ter.sdk.models.ResourceGroupListPermissionsPage
 import com.m3ter.sdk.models.ResourceGroupListPermissionsParams
 import com.m3ter.sdk.models.ResourceGroupRemoveResourceParams
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.ResourceGroupRetrieveParams
 import com.m3ter.sdk.models.ResourceGroupUpdateParams
 
@@ -41,21 +41,21 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     override fun create(
         params: ResourceGroupCreateParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // post /organizations/{orgId}/resourcegroups/{type}
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: ResourceGroupRetrieveParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // get /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: ResourceGroupUpdateParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // put /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -69,14 +69,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     override fun delete(
         params: ResourceGroupDeleteParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // delete /organizations/{orgId}/resourcegroups/{type}/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
     override fun addResource(
         params: ResourceGroupAddResourceParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // post /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/addresource
         withRawResponse().addResource(params, requestOptions).parse()
 
@@ -97,7 +97,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     override fun removeResource(
         params: ResourceGroupRemoveResourceParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // post /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/removeresource
         withRawResponse().removeResource(params, requestOptions).parse()
 
@@ -106,13 +106,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -138,13 +139,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val retrieveHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -170,13 +172,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val updateHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -242,13 +245,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val deleteHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -275,13 +279,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val addResourceHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val addResourceHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun addResource(
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -392,13 +397,14 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val removeResourceHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val removeResourceHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun removeResource(
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -31,7 +31,7 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.create(
                 ResourceGroupCreateParams.builder()
                     .orgId("orgId")
@@ -41,8 +41,8 @@ class ResourceGroupServiceAsyncTest {
                     .build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -57,13 +57,13 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.retrieve(
                 ResourceGroupRetrieveParams.builder().orgId("orgId").type("type").id("id").build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -78,7 +78,7 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.update(
                 ResourceGroupUpdateParams.builder()
                     .orgId("orgId")
@@ -89,8 +89,8 @@ class ResourceGroupServiceAsyncTest {
                     .build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -126,13 +126,13 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.delete(
                 ResourceGroupDeleteParams.builder().orgId("orgId").type("type").id("id").build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -147,7 +147,7 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.addResource(
                 ResourceGroupAddResourceParams.builder()
                     .orgId("orgId")
@@ -159,8 +159,8 @@ class ResourceGroupServiceAsyncTest {
                     .build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -225,7 +225,7 @@ class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             resourceGroupServiceAsync.removeResource(
                 ResourceGroupRemoveResourceParams.builder()
                     .orgId("orgId")
@@ -237,7 +237,7 @@ class ResourceGroupServiceAsyncTest {
                     .build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 }

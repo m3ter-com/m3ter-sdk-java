@@ -13,7 +13,7 @@ import com.m3ter.sdk.models.BillCreditLineItemListPageAsync
 import com.m3ter.sdk.models.BillCreditLineItemListParams
 import com.m3ter.sdk.models.BillCreditLineItemRetrieveParams
 import com.m3ter.sdk.models.BillCreditLineItemUpdateParams
-import com.m3ter.sdk.models.CreditLineItem
+import com.m3ter.sdk.models.CreditLineItemResponse
 import java.util.concurrent.CompletableFuture
 
 interface CreditLineItemServiceAsync {
@@ -33,21 +33,21 @@ interface CreditLineItemServiceAsync {
     fun create(
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditLineItem>
+    ): CompletableFuture<CreditLineItemResponse>
 
     /** Retrieve the Credit line item with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditLineItem>
+    ): CompletableFuture<CreditLineItemResponse>
 
     /** Update the Credit line item with the given UUID. */
     @JvmOverloads
     fun update(
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditLineItem>
+    ): CompletableFuture<CreditLineItemResponse>
 
     /** List the Credit line items for the given Bill. */
     @JvmOverloads
@@ -61,7 +61,7 @@ interface CreditLineItemServiceAsync {
     fun delete(
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CreditLineItem>
+    ): CompletableFuture<CreditLineItemResponse>
 
     /**
      * A view of [CreditLineItemServiceAsync] that provides access to raw HTTP responses for each
@@ -79,7 +79,7 @@ interface CreditLineItemServiceAsync {
         fun create(
             params: BillCreditLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditLineItem>>
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -91,7 +91,7 @@ interface CreditLineItemServiceAsync {
         fun retrieve(
             params: BillCreditLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditLineItem>>
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -103,7 +103,7 @@ interface CreditLineItemServiceAsync {
         fun update(
             params: BillCreditLineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditLineItem>>
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -127,6 +127,6 @@ interface CreditLineItemServiceAsync {
         fun delete(
             params: BillCreditLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditLineItem>>
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>>
     }
 }

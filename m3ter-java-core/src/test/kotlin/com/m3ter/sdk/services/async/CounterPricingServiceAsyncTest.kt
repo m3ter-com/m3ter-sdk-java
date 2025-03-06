@@ -29,7 +29,7 @@ class CounterPricingServiceAsyncTest {
                 .build()
         val counterPricingServiceAsync = client.counterPricings()
 
-        val counterPricingFuture =
+        val counterPricingResponseFuture =
             counterPricingServiceAsync.create(
                 CounterPricingCreateParams.builder()
                     .orgId("orgId")
@@ -59,8 +59,8 @@ class CounterPricingServiceAsyncTest {
                     .build()
             )
 
-        val counterPricing = counterPricingFuture.get()
-        counterPricing.validate()
+        val counterPricingResponse = counterPricingResponseFuture.get()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -75,13 +75,13 @@ class CounterPricingServiceAsyncTest {
                 .build()
         val counterPricingServiceAsync = client.counterPricings()
 
-        val counterPricingFuture =
+        val counterPricingResponseFuture =
             counterPricingServiceAsync.retrieve(
                 CounterPricingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counterPricing = counterPricingFuture.get()
-        counterPricing.validate()
+        val counterPricingResponse = counterPricingResponseFuture.get()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -96,7 +96,7 @@ class CounterPricingServiceAsyncTest {
                 .build()
         val counterPricingServiceAsync = client.counterPricings()
 
-        val counterPricingFuture =
+        val counterPricingResponseFuture =
             counterPricingServiceAsync.update(
                 CounterPricingUpdateParams.builder()
                     .orgId("orgId")
@@ -127,8 +127,8 @@ class CounterPricingServiceAsyncTest {
                     .build()
             )
 
-        val counterPricing = counterPricingFuture.get()
-        counterPricing.validate()
+        val counterPricingResponse = counterPricingResponseFuture.get()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -164,12 +164,12 @@ class CounterPricingServiceAsyncTest {
                 .build()
         val counterPricingServiceAsync = client.counterPricings()
 
-        val counterPricingFuture =
+        val counterPricingResponseFuture =
             counterPricingServiceAsync.delete(
                 CounterPricingDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counterPricing = counterPricingFuture.get()
-        counterPricing.validate()
+        val counterPricingResponse = counterPricingResponseFuture.get()
+        counterPricingResponse.validate()
     }
 }

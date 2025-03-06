@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
 import com.m3ter.sdk.models.PlanGroupLinkListPage
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
@@ -35,21 +35,21 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
     override fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions,
-    ): PlanGroupLink =
+    ): PlanGroupLinkResponse =
         // post /organizations/{orgId}/plangrouplinks
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions,
-    ): PlanGroupLink =
+    ): PlanGroupLinkResponse =
         // get /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions,
-    ): PlanGroupLink =
+    ): PlanGroupLinkResponse =
         // put /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
     override fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions,
-    ): PlanGroupLink =
+    ): PlanGroupLinkResponse =
         // delete /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanGroupLinkCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroupLink> {
+        ): HttpResponseFor<PlanGroupLinkResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -99,13 +100,14 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val retrieveHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PlanGroupLinkRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroupLink> {
+        ): HttpResponseFor<PlanGroupLinkResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -130,13 +132,14 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val updateHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanGroupLinkUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroupLink> {
+        ): HttpResponseFor<PlanGroupLinkResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -196,13 +199,14 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val deleteHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroupLink> {
+        ): HttpResponseFor<PlanGroupLinkResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -27,7 +27,7 @@ class CounterAdjustmentServiceAsyncTest {
                 .build()
         val counterAdjustmentServiceAsync = client.counterAdjustments()
 
-        val counterAdjustmentFuture =
+        val counterAdjustmentResponseFuture =
             counterAdjustmentServiceAsync.create(
                 CounterAdjustmentCreateParams.builder()
                     .orgId("orgId")
@@ -40,8 +40,8 @@ class CounterAdjustmentServiceAsyncTest {
                     .build()
             )
 
-        val counterAdjustment = counterAdjustmentFuture.get()
-        counterAdjustment.validate()
+        val counterAdjustmentResponse = counterAdjustmentResponseFuture.get()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -56,13 +56,13 @@ class CounterAdjustmentServiceAsyncTest {
                 .build()
         val counterAdjustmentServiceAsync = client.counterAdjustments()
 
-        val counterAdjustmentFuture =
+        val counterAdjustmentResponseFuture =
             counterAdjustmentServiceAsync.retrieve(
                 CounterAdjustmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counterAdjustment = counterAdjustmentFuture.get()
-        counterAdjustment.validate()
+        val counterAdjustmentResponse = counterAdjustmentResponseFuture.get()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -77,7 +77,7 @@ class CounterAdjustmentServiceAsyncTest {
                 .build()
         val counterAdjustmentServiceAsync = client.counterAdjustments()
 
-        val counterAdjustmentFuture =
+        val counterAdjustmentResponseFuture =
             counterAdjustmentServiceAsync.update(
                 CounterAdjustmentUpdateParams.builder()
                     .orgId("orgId")
@@ -91,8 +91,8 @@ class CounterAdjustmentServiceAsyncTest {
                     .build()
             )
 
-        val counterAdjustment = counterAdjustmentFuture.get()
-        counterAdjustment.validate()
+        val counterAdjustmentResponse = counterAdjustmentResponseFuture.get()
+        counterAdjustmentResponse.validate()
     }
 
     @Test
@@ -128,12 +128,12 @@ class CounterAdjustmentServiceAsyncTest {
                 .build()
         val counterAdjustmentServiceAsync = client.counterAdjustments()
 
-        val counterAdjustmentFuture =
+        val counterAdjustmentResponseFuture =
             counterAdjustmentServiceAsync.delete(
                 CounterAdjustmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counterAdjustment = counterAdjustmentFuture.get()
-        counterAdjustment.validate()
+        val counterAdjustmentResponse = counterAdjustmentResponseFuture.get()
+        counterAdjustmentResponse.validate()
     }
 }

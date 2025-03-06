@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.NotificationConfiguration
 import com.m3ter.sdk.models.NotificationConfigurationCreateParams
 import com.m3ter.sdk.models.NotificationConfigurationDeleteParams
 import com.m3ter.sdk.models.NotificationConfigurationListPageAsync
 import com.m3ter.sdk.models.NotificationConfigurationListParams
+import com.m3ter.sdk.models.NotificationConfigurationResponse
 import com.m3ter.sdk.models.NotificationConfigurationRetrieveParams
 import com.m3ter.sdk.models.NotificationConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -38,21 +38,21 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<NotificationConfiguration> =
+    ): CompletableFuture<NotificationConfigurationResponse> =
         // post /organizations/{orgId}/notifications/configurations
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<NotificationConfiguration> =
+    ): CompletableFuture<NotificationConfigurationResponse> =
         // get /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<NotificationConfiguration> =
+    ): CompletableFuture<NotificationConfigurationResponse> =
         // put /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -66,7 +66,7 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<NotificationConfiguration> =
+    ): CompletableFuture<NotificationConfigurationResponse> =
         // delete /organizations/{orgId}/notifications/configurations/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -75,14 +75,14 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val createHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: NotificationConfigurationCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -111,14 +111,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val retrieveHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -147,14 +147,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val updateHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun update(
             params: NotificationConfigurationUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -226,14 +226,14 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val deleteHandler: Handler<NotificationConfiguration> =
-            jsonHandler<NotificationConfiguration>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<NotificationConfigurationResponse> =
+            jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun delete(
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<NotificationConfiguration>> {
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
+import com.m3ter.sdk.models.ProductResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 
@@ -32,7 +32,7 @@ interface ProductService {
     fun create(
         params: ProductCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Product
+    ): ProductResponse
 
     /**
      * Retrieve a Product with the given UUID.
@@ -44,7 +44,7 @@ interface ProductService {
     fun retrieve(
         params: ProductRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Product
+    ): ProductResponse
 
     /**
      * Update a Product with the given UUID.
@@ -60,7 +60,7 @@ interface ProductService {
     fun update(
         params: ProductUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Product
+    ): ProductResponse
 
     /**
      * Retrieve a list of Products.
@@ -84,7 +84,7 @@ interface ProductService {
     fun delete(
         params: ProductDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Product
+    ): ProductResponse
 
     /** A view of [ProductService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -98,7 +98,7 @@ interface ProductService {
         fun create(
             params: ProductCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Product>
+        ): HttpResponseFor<ProductResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/products/{id}`, but is
@@ -109,7 +109,7 @@ interface ProductService {
         fun retrieve(
             params: ProductRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Product>
+        ): HttpResponseFor<ProductResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/products/{id}`, but is
@@ -120,7 +120,7 @@ interface ProductService {
         fun update(
             params: ProductUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Product>
+        ): HttpResponseFor<ProductResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/products`, but is otherwise
@@ -142,6 +142,6 @@ interface ProductService {
         fun delete(
             params: ProductDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Product>
+        ): HttpResponseFor<ProductResponse>
     }
 }

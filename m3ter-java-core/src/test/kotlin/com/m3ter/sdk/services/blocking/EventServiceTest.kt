@@ -26,10 +26,10 @@ class EventServiceTest {
                 .build()
         val eventService = client.events()
 
-        val event =
+        val eventResponse =
             eventService.retrieve(EventRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        event.validate()
+        eventResponse.validate()
     }
 
     @Test

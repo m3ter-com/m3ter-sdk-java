@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.DebitReason
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
 import com.m3ter.sdk.models.DebitReasonListPageAsync
 import com.m3ter.sdk.models.DebitReasonListParams
+import com.m3ter.sdk.models.DebitReasonResponse
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
     override fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DebitReason> =
+    ): CompletableFuture<DebitReasonResponse> =
         // post /organizations/{orgId}/picklists/debitreasons
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DebitReason> =
+    ): CompletableFuture<DebitReasonResponse> =
         // get /organizations/{orgId}/picklists/debitreasons/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DebitReason> =
+    ): CompletableFuture<DebitReasonResponse> =
         // put /organizations/{orgId}/picklists/debitreasons/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
     override fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DebitReason> =
+    ): CompletableFuture<DebitReasonResponse> =
         // delete /organizations/{orgId}/picklists/debitreasons/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<DebitReason> =
-            jsonHandler<DebitReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<DebitReasonResponse> =
+            jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: DebitReasonCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<DebitReason>> {
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +109,14 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val retrieveHandler: Handler<DebitReason> =
-            jsonHandler<DebitReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<DebitReasonResponse> =
+            jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<DebitReason>> {
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -143,13 +145,14 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val updateHandler: Handler<DebitReason> =
-            jsonHandler<DebitReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<DebitReasonResponse> =
+            jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<DebitReason>> {
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,13 +224,14 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val deleteHandler: Handler<DebitReason> =
-            jsonHandler<DebitReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<DebitReasonResponse> =
+            jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<DebitReason>> {
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

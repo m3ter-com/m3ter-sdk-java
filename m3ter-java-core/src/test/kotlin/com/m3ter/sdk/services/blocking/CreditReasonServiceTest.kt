@@ -27,7 +27,7 @@ class CreditReasonServiceTest {
                 .build()
         val creditReasonService = client.creditReasons()
 
-        val creditReason =
+        val creditReasonResponse =
             creditReasonService.create(
                 CreditReasonCreateParams.builder()
                     .orgId("orgId")
@@ -38,7 +38,7 @@ class CreditReasonServiceTest {
                     .build()
             )
 
-        creditReason.validate()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -53,12 +53,12 @@ class CreditReasonServiceTest {
                 .build()
         val creditReasonService = client.creditReasons()
 
-        val creditReason =
+        val creditReasonResponse =
             creditReasonService.retrieve(
                 CreditReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        creditReason.validate()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -73,7 +73,7 @@ class CreditReasonServiceTest {
                 .build()
         val creditReasonService = client.creditReasons()
 
-        val creditReason =
+        val creditReasonResponse =
             creditReasonService.update(
                 CreditReasonUpdateParams.builder()
                     .orgId("orgId")
@@ -85,7 +85,7 @@ class CreditReasonServiceTest {
                     .build()
             )
 
-        creditReason.validate()
+        creditReasonResponse.validate()
     }
 
     @Test
@@ -117,11 +117,11 @@ class CreditReasonServiceTest {
                 .build()
         val creditReasonService = client.creditReasons()
 
-        val creditReason =
+        val creditReasonResponse =
             creditReasonService.delete(
                 CreditReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        creditReason.validate()
+        creditReasonResponse.validate()
     }
 }

@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.ResourceGroup
 import com.m3ter.sdk.models.ResourceGroupAddResourceParams
 import com.m3ter.sdk.models.ResourceGroupCreateParams
 import com.m3ter.sdk.models.ResourceGroupDeleteParams
@@ -18,6 +17,7 @@ import com.m3ter.sdk.models.ResourceGroupListParams
 import com.m3ter.sdk.models.ResourceGroupListPermissionsPage
 import com.m3ter.sdk.models.ResourceGroupListPermissionsParams
 import com.m3ter.sdk.models.ResourceGroupRemoveResourceParams
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.ResourceGroupRetrieveParams
 import com.m3ter.sdk.models.ResourceGroupUpdateParams
 
@@ -33,21 +33,21 @@ interface ResourceGroupService {
     fun create(
         params: ResourceGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /** Retrieve the ResourceGroup for the UUID */
     @JvmOverloads
     fun retrieve(
         params: ResourceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /** Update the ResourceGroup for the UUID */
     @JvmOverloads
     fun update(
         params: ResourceGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /** Retrieve a list of ResourceGroup entities */
     @JvmOverloads
@@ -61,14 +61,14 @@ interface ResourceGroupService {
     fun delete(
         params: ResourceGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /** Add an item to a ResourceGroup. */
     @JvmOverloads
     fun addResource(
         params: ResourceGroupAddResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /** Retrieve a list of items for a ResourceGroup */
     @JvmOverloads
@@ -89,7 +89,7 @@ interface ResourceGroupService {
     fun removeResource(
         params: ResourceGroupRemoveResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ResourceGroup
+    ): ResourceGroupResponse
 
     /**
      * A view of [ResourceGroupService] that provides access to raw HTTP responses for each method.
@@ -105,7 +105,7 @@ interface ResourceGroupService {
         fun create(
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/resourcegroups/{type}/{id}`,
@@ -116,7 +116,7 @@ interface ResourceGroupService {
         fun retrieve(
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/resourcegroups/{type}/{id}`,
@@ -127,7 +127,7 @@ interface ResourceGroupService {
         fun update(
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/resourcegroups/{type}`, but
@@ -150,7 +150,7 @@ interface ResourceGroupService {
         fun delete(
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
 
         /**
          * Returns a raw HTTP response for `post
@@ -162,7 +162,7 @@ interface ResourceGroupService {
         fun addResource(
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
 
         /**
          * Returns a raw HTTP response for `post
@@ -198,6 +198,6 @@ interface ResourceGroupService {
         fun removeResource(
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ResourceGroup>
+        ): HttpResponseFor<ResourceGroupResponse>
     }
 }

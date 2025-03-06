@@ -8,11 +8,11 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AggregationResponse
-import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPageAsync
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -46,7 +46,7 @@ interface CompoundAggregationServiceAsync {
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CompoundAggregation>
+    ): CompletableFuture<CompoundAggregationResponse>
 
     /**
      * Update the CompoundAggregation with the given UUID.
@@ -90,7 +90,7 @@ interface CompoundAggregationServiceAsync {
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CompoundAggregation>
+    ): CompletableFuture<CompoundAggregationResponse>
 
     /**
      * A view of [CompoundAggregationServiceAsync] that provides access to raw HTTP responses for
@@ -118,7 +118,7 @@ interface CompoundAggregationServiceAsync {
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CompoundAggregation>>
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
@@ -152,6 +152,6 @@ interface CompoundAggregationServiceAsync {
         fun delete(
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CompoundAggregation>>
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>>
     }
 }

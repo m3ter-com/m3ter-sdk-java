@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
 import com.m3ter.sdk.models.CounterPricingListPageAsync
 import com.m3ter.sdk.models.CounterPricingListParams
+import com.m3ter.sdk.models.CounterPricingResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -33,14 +33,14 @@ interface CounterPricingServiceAsync {
     fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterPricing>
+    ): CompletableFuture<CounterPricingResponse>
 
     /** Retrieve a CounterPricing for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterPricing>
+    ): CompletableFuture<CounterPricingResponse>
 
     /**
      * Update CounterPricing for the given UUID.
@@ -52,7 +52,7 @@ interface CounterPricingServiceAsync {
     fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterPricing>
+    ): CompletableFuture<CounterPricingResponse>
 
     /**
      * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
@@ -69,7 +69,7 @@ interface CounterPricingServiceAsync {
     fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterPricing>
+    ): CompletableFuture<CounterPricingResponse>
 
     /**
      * A view of [CounterPricingServiceAsync] that provides access to raw HTTP responses for each
@@ -86,7 +86,7 @@ interface CounterPricingServiceAsync {
         fun create(
             params: CounterPricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+        ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings/{id}`, but is
@@ -97,7 +97,7 @@ interface CounterPricingServiceAsync {
         fun retrieve(
             params: CounterPricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+        ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counterpricings/{id}`, but is
@@ -108,7 +108,7 @@ interface CounterPricingServiceAsync {
         fun update(
             params: CounterPricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+        ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings`, but is
@@ -130,6 +130,6 @@ interface CounterPricingServiceAsync {
         fun delete(
             params: CounterPricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterPricing>>
+        ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
     }
 }
