@@ -5,16 +5,16 @@ package com.m3ter.sdk.services.blocking
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.models.CompoundAggregationCreateParams
-import com.m3ter.sdk.models.CompoundAggregationDeleteParams
-import com.m3ter.sdk.models.CompoundAggregationListParams
-import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
-import com.m3ter.sdk.models.CompoundAggregationUpdateParams
+import com.m3ter.sdk.models.AggregationCreateParams
+import com.m3ter.sdk.models.AggregationDeleteParams
+import com.m3ter.sdk.models.AggregationListParams
+import com.m3ter.sdk.models.AggregationRetrieveParams
+import com.m3ter.sdk.models.AggregationUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class CompoundAggregationServiceTest {
+class AggregationFunctionServiceTest {
 
     @Test
     fun create() {
@@ -26,26 +26,34 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .orgId("My Org ID")
                 .build()
-        val compoundAggregationService = client.compoundAggregations()
+        val aggregationService = client.aggregations()
 
         val aggregationResponse =
-            compoundAggregationService.create(
-                CompoundAggregationCreateParams.builder()
+            aggregationService.create(
+                AggregationCreateParams.builder()
                     .orgId("orgId")
-                    .calculation("x")
+                    .aggregation(AggregationCreateParams.Aggregation.SUM)
+                    .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .name("x")
                     .quantityPerUnit(1.0)
-                    .rounding(CompoundAggregationCreateParams.Rounding.UP)
+                    .rounding(AggregationCreateParams.Rounding.UP)
+                    .targetField("x")
                     .unit("x")
                     .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
-                        CompoundAggregationCreateParams.CustomFields.builder()
+                        AggregationCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
-                    .evaluateNullAggregations(true)
-                    .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .customSql("customSql")
+                    .defaultValue(0.0)
+                    .addSegmentedField("string")
+                    .addSegment(
+                        AggregationCreateParams.Segment.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .version(0L)
                     .build()
             )
@@ -63,14 +71,14 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .orgId("My Org ID")
                 .build()
-        val compoundAggregationService = client.compoundAggregations()
+        val aggregationService = client.aggregations()
 
-        val compoundAggregationResponse =
-            compoundAggregationService.retrieve(
-                CompoundAggregationRetrieveParams.builder().orgId("orgId").id("id").build()
+        val aggregationResponse =
+            aggregationService.retrieve(
+                AggregationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        compoundAggregationResponse.validate()
+        aggregationResponse.validate()
     }
 
     @Test
@@ -83,27 +91,35 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .orgId("My Org ID")
                 .build()
-        val compoundAggregationService = client.compoundAggregations()
+        val aggregationService = client.aggregations()
 
         val aggregationResponse =
-            compoundAggregationService.update(
-                CompoundAggregationUpdateParams.builder()
+            aggregationService.update(
+                AggregationUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .calculation("x")
+                    .aggregation(AggregationUpdateParams.Aggregation.SUM)
+                    .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .name("x")
                     .quantityPerUnit(1.0)
-                    .rounding(CompoundAggregationUpdateParams.Rounding.UP)
+                    .rounding(AggregationUpdateParams.Rounding.UP)
+                    .targetField("x")
                     .unit("x")
                     .accountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .code("example_code")
                     .customFields(
-                        CompoundAggregationUpdateParams.CustomFields.builder()
+                        AggregationUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
-                    .evaluateNullAggregations(true)
-                    .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .customSql("customSql")
+                    .defaultValue(0.0)
+                    .addSegmentedField("string")
+                    .addSegment(
+                        AggregationUpdateParams.Segment.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .version(0L)
                     .build()
             )
@@ -121,12 +137,9 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .orgId("My Org ID")
                 .build()
-        val compoundAggregationService = client.compoundAggregations()
+        val aggregationService = client.aggregations()
 
-        val page =
-            compoundAggregationService.list(
-                CompoundAggregationListParams.builder().orgId("orgId").build()
-            )
+        val page = aggregationService.list(AggregationListParams.builder().orgId("orgId").build())
 
         page.response().validate()
     }
@@ -141,13 +154,13 @@ class CompoundAggregationServiceTest {
                 .token("My Token")
                 .orgId("My Org ID")
                 .build()
-        val compoundAggregationService = client.compoundAggregations()
+        val aggregationService = client.aggregations()
 
-        val compoundAggregationResponse =
-            compoundAggregationService.delete(
-                CompoundAggregationDeleteParams.builder().orgId("orgId").id("id").build()
+        val aggregationResponse =
+            aggregationService.delete(
+                AggregationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        compoundAggregationResponse.validate()
+        aggregationResponse.validate()
     }
 }
