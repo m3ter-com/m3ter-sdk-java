@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve all Transactions for a specific Balance.
@@ -118,7 +119,7 @@ private constructor(
          * `nextToken` for multi page retrievals. A token for retrieving the next page of
          * transactions. You'll get this from the response to your request.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of transactions to return per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -127,15 +128,14 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** The maximum number of transactions to return per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun transactionTypeId(transactionTypeId: String?) = apply {
             this.transactionTypeId = transactionTypeId
         }
 
         fun transactionTypeId(transactionTypeId: Optional<String>) =
-            transactionTypeId(transactionTypeId.orElse(null))
+            transactionTypeId(transactionTypeId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

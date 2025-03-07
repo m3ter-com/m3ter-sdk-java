@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Search for Account entities.
@@ -156,15 +157,13 @@ private constructor(
         fun fromDocument(fromDocument: Long) = fromDocument(fromDocument as Long?)
 
         /** `fromDocument` for multi page retrievals. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun fromDocument(fromDocument: Optional<Long>) =
-            fromDocument(fromDocument.orElse(null) as Long?)
+        fun fromDocument(fromDocument: Optional<Long>) = fromDocument(fromDocument.getOrNull())
 
         /** Search Operator to be used while querying search. */
         fun operator(operator: Operator?) = apply { this.operator = operator }
 
         /** Search Operator to be used while querying search. */
-        fun operator(operator: Optional<Operator>) = operator(operator.orElse(null))
+        fun operator(operator: Optional<Operator>) = operator(operator.getOrNull())
 
         /**
          * Number of Accounts to retrieve per page.
@@ -185,8 +184,7 @@ private constructor(
          *
          * **NOTE:** If not defined, default is 10.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
          * Query for data using special syntax:
@@ -230,7 +228,7 @@ private constructor(
          * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend
          * treating this as a "starts with" comparator for your search query.
          */
-        fun searchQuery(searchQuery: Optional<String>) = searchQuery(searchQuery.orElse(null))
+        fun searchQuery(searchQuery: Optional<String>) = searchQuery(searchQuery.getOrNull())
 
         /**
          * Name of the parameter on which sorting is performed. Use any field available on the
@@ -242,13 +240,13 @@ private constructor(
          * Name of the parameter on which sorting is performed. Use any field available on the
          * Account entity to sort by, such as `name`, `code`, and so on.
          */
-        fun sortBy(sortBy: Optional<String>) = sortBy(sortBy.orElse(null))
+        fun sortBy(sortBy: Optional<String>) = sortBy(sortBy.getOrNull())
 
         /** Sorting order. */
         fun sortOrder(sortOrder: SortOrder?) = apply { this.sortOrder = sortOrder }
 
         /** Sorting order. */
-        fun sortOrder(sortOrder: Optional<SortOrder>) = sortOrder(sortOrder.orElse(null))
+        fun sortOrder(sortOrder: Optional<SortOrder>) = sortOrder(sortOrder.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

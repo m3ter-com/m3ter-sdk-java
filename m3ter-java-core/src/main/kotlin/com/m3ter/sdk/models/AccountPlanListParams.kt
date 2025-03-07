@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
@@ -178,11 +179,11 @@ private constructor(
          * The unique identifier (UUID) for the Account whose AccountPlans and AccountPlanGroups you
          * want to retrieve.
          */
-        fun account(account: Optional<String>) = account(account.orElse(null))
+        fun account(account: Optional<String>) = account(account.getOrNull())
 
         fun contract(contract: String?) = apply { this.contract = contract }
 
-        fun contract(contract: Optional<String>) = contract(contract.orElse(null))
+        fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
         /**
          * The specific date for which you want to retrieve active AccountPlans and
@@ -194,7 +195,7 @@ private constructor(
          * The specific date for which you want to retrieve active AccountPlans and
          * AccountPlanGroups.
          */
-        fun date(date: Optional<String>) = date(date.orElse(null))
+        fun date(date: Optional<String>) = date(date.getOrNull())
 
         /**
          * A list of unique identifiers (UUIDs) for specific AccountPlans and AccountPlanGroups you
@@ -206,7 +207,7 @@ private constructor(
          * A list of unique identifiers (UUIDs) for specific AccountPlans and AccountPlanGroups you
          * want to retrieve.
          */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
          * A list of unique identifiers (UUIDs) for specific AccountPlans and AccountPlanGroups you
@@ -239,9 +240,7 @@ private constructor(
          *   the list.
          * - **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun includeall(includeall: Optional<Boolean>) =
-            includeall(includeall.orElse(null) as Boolean?)
+        fun includeall(includeall: Optional<Boolean>) = includeall(includeall.getOrNull())
 
         /**
          * The `nextToken` for retrieving the next page of AccountPlans and AccountPlanGroups. It is
@@ -253,7 +252,7 @@ private constructor(
          * The `nextToken` for retrieving the next page of AccountPlans and AccountPlanGroups. It is
          * used to fetch the next page of AccountPlans and AccountPlanGroups in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -262,8 +261,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
          * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
@@ -275,7 +273,7 @@ private constructor(
          * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
          * AccountPlanGroups you want to retrieve.
          */
-        fun plan(plan: Optional<String>) = plan(plan.orElse(null))
+        fun plan(plan: Optional<String>) = plan(plan.getOrNull())
 
         /**
          * The unique identifier (UUID) for the Product whose associated AccountPlans you want to
@@ -293,7 +291,7 @@ private constructor(
          * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but
          * must always use it in combination with the `account` query parameter.
          */
-        fun product(product: Optional<String>) = product(product.orElse(null))
+        fun product(product: Optional<String>) = product(product.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

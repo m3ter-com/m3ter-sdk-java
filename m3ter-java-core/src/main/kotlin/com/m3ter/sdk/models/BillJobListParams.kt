@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of BillJobs.
@@ -137,7 +138,7 @@ private constructor(
          * - TRUE - only active BillJobs.
          * - FALSE - all BillJobs including completed and cancelled BillJobs.
          */
-        fun active(active: Optional<String>) = active(active.orElse(null))
+        fun active(active: Optional<String>) = active(active.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of BillJobs
@@ -149,7 +150,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of BillJobs
          * in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of BillJobs to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -158,8 +159,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of BillJobs to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
          * Filter BillJobs by specific status. Allows for targeted retrieval of BillJobs based on
@@ -185,7 +185,7 @@ private constructor(
          * - COMPLETE
          * - CANCELLED
          */
-        fun status(status: Optional<String>) = status(status.orElse(null))
+        fun status(status: Optional<String>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

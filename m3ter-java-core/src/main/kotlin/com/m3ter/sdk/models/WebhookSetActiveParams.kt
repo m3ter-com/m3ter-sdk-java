@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Set the `active` status on a webhook integration destination.
@@ -111,8 +112,7 @@ private constructor(
         fun active(active: Boolean) = active(active as Boolean?)
 
         /** active status of the webhook */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun active(active: Optional<Boolean>) = active(active.orElse(null) as Boolean?)
+        fun active(active: Optional<Boolean>) = active(active.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
