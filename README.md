@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.6)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.7)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.6")
+implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.7")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.6")
 <dependency>
     <groupId>com.m3ter.sdk</groupId>
     <artifactId>m3ter-java</artifactId>
-    <version>0.1.0-alpha.6</version>
+    <version>0.1.0-alpha.7</version>
 </dependency>
 ```
 
@@ -161,6 +161,35 @@ CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
 
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of Java classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
+
+```java
+import com.m3ter.sdk.core.http.Headers;
+import com.m3ter.sdk.core.http.HttpResponseFor;
+import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductListParams;
+
+ProductListParams params = ProductListParams.builder()
+    .orgId("ORG_ID")
+    .build();
+HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
+
+int statusCode = page.statusCode();
+Headers headers = page.headers();
+```
+
+You can still deserialize the response into an instance of a Java class if needed:
+
+```java
+import com.m3ter.sdk.models.ProductListPage;
+
+ProductListPage parsedPage = page.parse();
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
@@ -195,12 +224,12 @@ To iterate through all results across all pages, you can use `autoPager`, which 
 ### Synchronous
 
 ```java
-import com.m3ter.sdk.models.Product;
 import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductResponse;
 
 // As an Iterable:
 ProductListPage page = client.products().list(params);
-for (Product product : page.autoPager()) {
+for (ProductResponse product : page.autoPager()) {
     System.out.println(product);
 };
 
@@ -223,12 +252,12 @@ asyncClient.products().list(params).autoPager()
 If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```java
-import com.m3ter.sdk.models.Product;
 import com.m3ter.sdk.models.ProductListPage;
+import com.m3ter.sdk.models.ProductResponse;
 
 ProductListPage page = client.products().list(params);
 while (page != null) {
-    for (Product product : page.data()) {
+    for (ProductResponse product : page.data()) {
         System.out.println(product);
     }
 

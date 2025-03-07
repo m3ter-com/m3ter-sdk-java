@@ -43,7 +43,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<Event> = response().data()
+    fun data(): List<EventResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -100,18 +100,18 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<Event>> = JsonMissing.of(),
+        @JsonProperty("data") private val data: JsonField<List<EventResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<Event> = data.getNullable("data") ?: listOf()
+        fun data(): List<EventResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<Event>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<EventResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -149,12 +149,13 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [EventListPageAsync]. */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<Event>> = JsonMissing.of()
+            private var data: JsonField<List<EventResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -165,9 +166,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<Event>) = data(JsonField.of(data))
+            fun data(data: List<EventResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<Event>>) = apply { this.data = data }
+            fun data(data: JsonField<List<EventResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -183,9 +184,9 @@ private constructor(
 
     class AutoPager(private val firstPage: EventListPageAsync) {
 
-        fun forEach(action: Predicate<Event>, executor: Executor): CompletableFuture<Void> {
+        fun forEach(action: Predicate<EventResponse>, executor: Executor): CompletableFuture<Void> {
             fun CompletableFuture<Optional<EventListPageAsync>>.forEach(
-                action: (Event) -> Boolean,
+                action: (EventResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -201,8 +202,8 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<Event>> {
-            val values = mutableListOf<Event>()
+        fun toList(executor: Executor): CompletableFuture<List<EventResponse>> {
+            val values = mutableListOf<EventResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

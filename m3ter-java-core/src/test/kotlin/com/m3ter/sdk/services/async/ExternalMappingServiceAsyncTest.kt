@@ -29,7 +29,7 @@ class ExternalMappingServiceAsyncTest {
                 .build()
         val externalMappingServiceAsync = client.externalMappings()
 
-        val externalMappingFuture =
+        val externalMappingResponseFuture =
             externalMappingServiceAsync.create(
                 ExternalMappingCreateParams.builder()
                     .orgId("orgId")
@@ -43,8 +43,8 @@ class ExternalMappingServiceAsyncTest {
                     .build()
             )
 
-        val externalMapping = externalMappingFuture.get()
-        externalMapping.validate()
+        val externalMappingResponse = externalMappingResponseFuture.get()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -59,13 +59,13 @@ class ExternalMappingServiceAsyncTest {
                 .build()
         val externalMappingServiceAsync = client.externalMappings()
 
-        val externalMappingFuture =
+        val externalMappingResponseFuture =
             externalMappingServiceAsync.retrieve(
                 ExternalMappingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val externalMapping = externalMappingFuture.get()
-        externalMapping.validate()
+        val externalMappingResponse = externalMappingResponseFuture.get()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -80,7 +80,7 @@ class ExternalMappingServiceAsyncTest {
                 .build()
         val externalMappingServiceAsync = client.externalMappings()
 
-        val externalMappingFuture =
+        val externalMappingResponseFuture =
             externalMappingServiceAsync.update(
                 ExternalMappingUpdateParams.builder()
                     .orgId("orgId")
@@ -95,8 +95,8 @@ class ExternalMappingServiceAsyncTest {
                     .build()
             )
 
-        val externalMapping = externalMappingFuture.get()
-        externalMapping.validate()
+        val externalMappingResponse = externalMappingResponseFuture.get()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -132,13 +132,13 @@ class ExternalMappingServiceAsyncTest {
                 .build()
         val externalMappingServiceAsync = client.externalMappings()
 
-        val externalMappingFuture =
+        val externalMappingResponseFuture =
             externalMappingServiceAsync.delete(
                 ExternalMappingDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val externalMapping = externalMappingFuture.get()
-        externalMapping.validate()
+        val externalMappingResponse = externalMappingResponseFuture.get()
+        externalMappingResponse.validate()
     }
 
     @Test

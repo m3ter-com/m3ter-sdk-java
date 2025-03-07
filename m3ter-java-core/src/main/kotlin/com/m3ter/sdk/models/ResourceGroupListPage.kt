@@ -29,7 +29,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<ResourceGroup> = response().data()
+    fun data(): List<ResourceGroupResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -87,18 +87,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<ResourceGroup>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<ResourceGroupResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<ResourceGroup> = data.getNullable("data") ?: listOf()
+        fun data(): List<ResourceGroupResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<ResourceGroup>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<ResourceGroupResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -136,12 +137,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ResourceGroupListPage].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<ResourceGroup>> = JsonMissing.of()
+            private var data: JsonField<List<ResourceGroupResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -152,9 +156,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<ResourceGroup>) = data(JsonField.of(data))
+            fun data(data: List<ResourceGroupResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<ResourceGroup>>) = apply { this.data = data }
+            fun data(data: JsonField<List<ResourceGroupResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -168,9 +172,10 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: ResourceGroupListPage) : Iterable<ResourceGroup> {
+    class AutoPager(private val firstPage: ResourceGroupListPage) :
+        Iterable<ResourceGroupResponse> {
 
-        override fun iterator(): Iterator<ResourceGroup> = iterator {
+        override fun iterator(): Iterator<ResourceGroupResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -182,7 +187,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<ResourceGroup> {
+        fun stream(): Stream<ResourceGroupResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

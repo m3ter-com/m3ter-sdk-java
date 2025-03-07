@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -62,7 +63,7 @@ private constructor(
 
     fun name(): String = body.name()
 
-    fun permissionPolicy(): List<PermissionStatement> = body.permissionPolicy()
+    fun permissionPolicy(): List<PermissionStatementResponse> = body.permissionPolicy()
 
     /**
      * The version number of the entity:
@@ -76,7 +77,7 @@ private constructor(
 
     fun _name(): JsonField<String> = body._name()
 
-    fun _permissionPolicy(): JsonField<List<PermissionStatement>> = body._permissionPolicy()
+    fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = body._permissionPolicy()
 
     /**
      * The version number of the entity:
@@ -117,7 +118,8 @@ private constructor(
         private val name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
-        private val permissionPolicy: JsonField<List<PermissionStatement>> = JsonMissing.of(),
+        private val permissionPolicy: JsonField<List<PermissionStatementResponse>> =
+            JsonMissing.of(),
         @JsonProperty("version")
         @ExcludeMissing
         private val version: JsonField<Long> = JsonMissing.of(),
@@ -127,7 +129,7 @@ private constructor(
 
         fun name(): String = name.getRequired("name")
 
-        fun permissionPolicy(): List<PermissionStatement> =
+        fun permissionPolicy(): List<PermissionStatementResponse> =
             permissionPolicy.getRequired("permissionPolicy")
 
         /**
@@ -144,7 +146,7 @@ private constructor(
 
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
-        fun _permissionPolicy(): JsonField<List<PermissionStatement>> = permissionPolicy
+        fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
         /**
          * The version number of the entity:
@@ -177,6 +179,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .name()
+             * .permissionPolicy()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -184,7 +195,8 @@ private constructor(
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
-            private var permissionPolicy: JsonField<MutableList<PermissionStatement>>? = null
+            private var permissionPolicy: JsonField<MutableList<PermissionStatementResponse>>? =
+                null
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -200,23 +212,18 @@ private constructor(
 
             fun name(name: JsonField<String>) = apply { this.name = name }
 
-            fun permissionPolicy(permissionPolicy: List<PermissionStatement>) =
+            fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
                 permissionPolicy(JsonField.of(permissionPolicy))
 
-            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatement>>) = apply {
-                this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
-            }
+            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
+                apply {
+                    this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
+                }
 
-            fun addPermissionPolicy(permissionPolicy: PermissionStatement) = apply {
+            fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
                 this.permissionPolicy =
-                    (this.permissionPolicy ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(permissionPolicy)
+                    (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("permissionPolicy", it).add(permissionPolicy)
                     }
             }
 
@@ -290,6 +297,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PermissionPolicyUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .name()
+         * .permissionPolicy()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -320,15 +338,16 @@ private constructor(
 
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
-        fun permissionPolicy(permissionPolicy: List<PermissionStatement>) = apply {
+        fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) = apply {
             body.permissionPolicy(permissionPolicy)
         }
 
-        fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatement>>) = apply {
-            body.permissionPolicy(permissionPolicy)
-        }
+        fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
+            apply {
+                body.permissionPolicy(permissionPolicy)
+            }
 
-        fun addPermissionPolicy(permissionPolicy: PermissionStatement) = apply {
+        fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             body.addPermissionPolicy(permissionPolicy)
         }
 

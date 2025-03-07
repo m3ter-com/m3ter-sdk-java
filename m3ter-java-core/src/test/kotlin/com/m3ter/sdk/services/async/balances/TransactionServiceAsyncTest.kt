@@ -26,7 +26,7 @@ class TransactionServiceAsyncTest {
                 .build()
         val transactionServiceAsync = client.balances().transactions()
 
-        val transactionFuture =
+        val transactionResponseFuture =
             transactionServiceAsync.create(
                 BalanceTransactionCreateParams.builder()
                     .orgId("orgId")
@@ -42,8 +42,8 @@ class TransactionServiceAsyncTest {
                     .build()
             )
 
-        val transaction = transactionFuture.get()
-        transaction.validate()
+        val transactionResponse = transactionResponseFuture.get()
+        transactionResponse.validate()
     }
 
     @Test

@@ -4,11 +4,18 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams
 import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
 
 interface AuthenticationService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Get authentication token */
     @JvmOverloads
@@ -16,4 +23,21 @@ interface AuthenticationService {
         params: AuthenticationGetBearerTokenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthenticationGetBearerTokenResponse
+
+    /**
+     * A view of [AuthenticationService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /oauth/token`, but is otherwise the same as
+         * [AuthenticationService.getBearerToken].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getBearerToken(
+            params: AuthenticationGetBearerTokenParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthenticationGetBearerTokenResponse>
+    }
 }

@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.DownloadUrlResponse
 import com.m3ter.sdk.models.SubmitMeasurementsResponse
 import com.m3ter.sdk.models.UsageGetFailedIngestDownloadUrlParams
@@ -14,6 +16,11 @@ import com.m3ter.sdk.models.UsageSubmitParams
 import com.m3ter.sdk.services.blocking.usage.FileUploadService
 
 interface UsageService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun fileUploads(): FileUploadService
 
@@ -91,4 +98,44 @@ interface UsageService {
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubmitMeasurementsResponse
+
+    /** A view of [UsageService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun fileUploads(): FileUploadService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/measurements/failedIngest/getDownloadUrl`, but is otherwise the
+         * same as [UsageService.getFailedIngestDownloadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getFailedIngestDownloadUrl(
+            params: UsageGetFailedIngestDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DownloadUrlResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/usage/query`, but is
+         * otherwise the same as [UsageService.query].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun query(
+            params: UsageQueryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UsageQueryResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/measurements`, but is
+         * otherwise the same as [UsageService.submit].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun submit(
+            params: UsageSubmitParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubmitMeasurementsResponse>
+    }
 }

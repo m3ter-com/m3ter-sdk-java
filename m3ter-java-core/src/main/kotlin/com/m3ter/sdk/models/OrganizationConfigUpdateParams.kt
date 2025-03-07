@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -1202,6 +1203,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .currency()
+             * .dayEpoch()
+             * .daysBeforeBillDue()
+             * .monthEpoch()
+             * .timezone()
+             * .weekEpoch()
+             * .yearEpoch()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -1627,14 +1642,8 @@ private constructor(
              */
             fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
                 this.creditApplicationOrder =
-                    (this.creditApplicationOrder ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(creditApplicationOrder)
+                    (this.creditApplicationOrder ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("creditApplicationOrder", it).add(creditApplicationOrder)
                     }
             }
 
@@ -1684,14 +1693,8 @@ private constructor(
              */
             fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
                 currencyConversions =
-                    (currencyConversions ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(currencyConversion)
+                    (currencyConversions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("currencyConversions", it).add(currencyConversion)
                     }
             }
 
@@ -1930,6 +1933,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [OrganizationConfigUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .currency()
+         * .dayEpoch()
+         * .daysBeforeBillDue()
+         * .monthEpoch()
+         * .timezone()
+         * .weekEpoch()
+         * .yearEpoch()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

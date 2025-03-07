@@ -10,7 +10,9 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
-import com.m3ter.sdk.core.json
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.json
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Balance
@@ -26,158 +28,195 @@ import com.m3ter.sdk.services.blocking.balances.TransactionServiceImpl
 class BalanceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceService {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: BalanceService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val transactions: TransactionService by lazy { TransactionServiceImpl(clientOptions) }
 
+    override fun withRawResponse(): BalanceService.WithRawResponse = withRawResponse
+
     override fun transactions(): TransactionService = transactions
 
-    private val createHandler: Handler<Balance> =
-        jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun create(params: BalanceCreateParams, requestOptions: RequestOptions): Balance =
+        // post /organizations/{orgId}/balances
+        withRawResponse().create(params, requestOptions).parse()
 
-    /**
-     * Create a new Balance for the given end customer Account.
-     *
-     * This endpoint allows you to create a new Balance for a specific end customer Account. The
-     * Balance details should be provided in the request body.
-     */
-    override fun create(params: BalanceCreateParams, requestOptions: RequestOptions): Balance {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("organizations", params.getPathParam(0), "balances")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+    override fun retrieve(params: BalanceRetrieveParams, requestOptions: RequestOptions): Balance =
+        // get /organizations/{orgId}/balances/{id}
+        withRawResponse().retrieve(params, requestOptions).parse()
+
+    override fun update(params: BalanceUpdateParams, requestOptions: RequestOptions): Balance =
+        // put /organizations/{orgId}/balances/{id}
+        withRawResponse().update(params, requestOptions).parse()
+
+    override fun list(params: BalanceListParams, requestOptions: RequestOptions): BalanceListPage =
+        // get /organizations/{orgId}/balances
+        withRawResponse().list(params, requestOptions).parse()
+
+    override fun delete(params: BalanceDeleteParams, requestOptions: RequestOptions): Balance =
+        // delete /organizations/{orgId}/balances/{id}
+        withRawResponse().delete(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        BalanceService.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val transactions: TransactionService.WithRawResponse by lazy {
+            TransactionServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun transactions(): TransactionService.WithRawResponse = transactions
+
+        private val createHandler: Handler<Balance> =
+            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(
+            params: BalanceCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Balance> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("organizations", params.getPathParam(0), "balances")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-    }
+        }
 
-    private val retrieveHandler: Handler<Balance> =
-        jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Balance> =
+            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /**
-     * Retrieve a specific Balance.
-     *
-     * This endpoint returns the details of the specified Balance.
-     */
-    override fun retrieve(params: BalanceRetrieveParams, requestOptions: RequestOptions): Balance {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "balances",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+        override fun retrieve(
+            params: BalanceRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Balance> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "balances",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-    }
+        }
 
-    private val updateHandler: Handler<Balance> =
-        jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Balance> =
+            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /**
-     * Update a specific Balance.
-     *
-     * This endpoint allows you to update the details of a specific Balance. The updated Balance
-     * details should be provided in the request body.
-     */
-    override fun update(params: BalanceUpdateParams, requestOptions: RequestOptions): Balance {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "balances",
-                    params.getPathParam(1),
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { updateHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+        override fun update(
+            params: BalanceUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Balance> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "balances",
+                        params.getPathParam(1),
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-    }
+        }
 
-    private val listHandler: Handler<BalanceListPage.Response> =
-        jsonHandler<BalanceListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+        private val listHandler: Handler<BalanceListPage.Response> =
+            jsonHandler<BalanceListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
-    /**
-     * Retrieve a list of all Balances for your Organization.
-     *
-     * This endpoint returns a list of all Balances associated with your organization. You can
-     * filter the Balances by the end customer's Account UUID and end dates, and paginate through
-     * them using the `pageSize` and `nextToken` parameters.
-     */
-    override fun list(params: BalanceListParams, requestOptions: RequestOptions): BalanceListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "balances")
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+        override fun list(
+            params: BalanceListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BalanceListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "balances")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { BalanceListPage.of(BalanceServiceImpl(clientOptions), params, it) }
             }
-            .let { BalanceListPage.of(this, params, it) }
-    }
+        }
 
-    private val deleteHandler: Handler<Balance> =
-        jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Balance> =
+            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /**
-     * Delete a specific Balance.
-     *
-     * This endpoint allows you to delete a specific Balance with the given UUID.
-     */
-    override fun delete(params: BalanceDeleteParams, requestOptions: RequestOptions): Balance {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "balances",
-                    params.getPathParam(1),
-                )
-                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { deleteHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+        override fun delete(
+            params: BalanceDeleteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Balance> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "balances",
+                        params.getPathParam(1),
+                    )
+                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { deleteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
     }
 }

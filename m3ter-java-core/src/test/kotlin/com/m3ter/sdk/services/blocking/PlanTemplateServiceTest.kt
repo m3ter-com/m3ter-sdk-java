@@ -27,7 +27,7 @@ class PlanTemplateServiceTest {
                 .build()
         val planTemplateService = client.planTemplates()
 
-        val planTemplate =
+        val planTemplateResponse =
             planTemplateService.create(
                 PlanTemplateCreateParams.builder()
                     .orgId("orgId")
@@ -51,7 +51,7 @@ class PlanTemplateServiceTest {
                     .build()
             )
 
-        planTemplate.validate()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -66,12 +66,12 @@ class PlanTemplateServiceTest {
                 .build()
         val planTemplateService = client.planTemplates()
 
-        val planTemplate =
+        val planTemplateResponse =
             planTemplateService.retrieve(
                 PlanTemplateRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        planTemplate.validate()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -86,7 +86,7 @@ class PlanTemplateServiceTest {
                 .build()
         val planTemplateService = client.planTemplates()
 
-        val planTemplate =
+        val planTemplateResponse =
             planTemplateService.update(
                 PlanTemplateUpdateParams.builder()
                     .orgId("orgId")
@@ -111,7 +111,7 @@ class PlanTemplateServiceTest {
                     .build()
             )
 
-        planTemplate.validate()
+        planTemplateResponse.validate()
     }
 
     @Test
@@ -143,11 +143,11 @@ class PlanTemplateServiceTest {
                 .build()
         val planTemplateService = client.planTemplates()
 
-        val planTemplate =
+        val planTemplateResponse =
             planTemplateService.delete(
                 PlanTemplateDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        planTemplate.validate()
+        planTemplateResponse.validate()
     }
 }

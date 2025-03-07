@@ -82,6 +82,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AuthenticationGetBearerTokenResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .accessToken()
+         * .expiresIn()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

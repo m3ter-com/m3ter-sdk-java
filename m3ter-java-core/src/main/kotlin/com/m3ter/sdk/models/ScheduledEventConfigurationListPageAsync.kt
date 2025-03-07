@@ -30,7 +30,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<ScheduledEventConfiguration> = response().data()
+    fun data(): List<ScheduledEventConfigurationResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -96,18 +96,18 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<ScheduledEventConfiguration>> = JsonMissing.of(),
+        private val data: JsonField<List<ScheduledEventConfigurationResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<ScheduledEventConfiguration> = data.getNullable("data") ?: listOf()
+        fun data(): List<ScheduledEventConfigurationResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<ScheduledEventConfiguration>>> =
+        fun _data(): Optional<JsonField<List<ScheduledEventConfigurationResponse>>> =
             Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
@@ -146,12 +146,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ScheduledEventConfigurationListPageAsync].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<ScheduledEventConfiguration>> = JsonMissing.of()
+            private var data: JsonField<List<ScheduledEventConfigurationResponse>> =
+                JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -162,9 +167,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<ScheduledEventConfiguration>) = data(JsonField.of(data))
+            fun data(data: List<ScheduledEventConfigurationResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<ScheduledEventConfiguration>>) = apply {
+            fun data(data: JsonField<List<ScheduledEventConfigurationResponse>>) = apply {
                 this.data = data
             }
 
@@ -183,11 +188,11 @@ private constructor(
     class AutoPager(private val firstPage: ScheduledEventConfigurationListPageAsync) {
 
         fun forEach(
-            action: Predicate<ScheduledEventConfiguration>,
+            action: Predicate<ScheduledEventConfigurationResponse>,
             executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<ScheduledEventConfigurationListPageAsync>>.forEach(
-                action: (ScheduledEventConfiguration) -> Boolean,
+                action: (ScheduledEventConfigurationResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -203,8 +208,10 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<ScheduledEventConfiguration>> {
-            val values = mutableListOf<ScheduledEventConfiguration>()
+        fun toList(
+            executor: Executor
+        ): CompletableFuture<List<ScheduledEventConfigurationResponse>> {
+            val values = mutableListOf<ScheduledEventConfigurationResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

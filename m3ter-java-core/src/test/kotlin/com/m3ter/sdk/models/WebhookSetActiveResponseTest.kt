@@ -12,10 +12,10 @@ class WebhookSetActiveResponseTest {
         val webhookSetActiveResponse =
             WebhookSetActiveResponse.builder()
                 .credentials(
-                    M3terSignedCredentialsReq.builder()
+                    M3terSignedCredentialsRequest.builder()
                         .apiKey("x")
                         .secret("x")
-                        .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                        .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
                         .empty(true)
                         .version(0L)
                         .build()
@@ -30,10 +30,10 @@ class WebhookSetActiveResponseTest {
         assertThat(webhookSetActiveResponse).isNotNull
         assertThat(webhookSetActiveResponse.credentials())
             .isEqualTo(
-                M3terSignedCredentialsReq.builder()
+                M3terSignedCredentialsRequest.builder()
                     .apiKey("x")
                     .secret("x")
-                    .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                    .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
                     .empty(true)
                     .version(0L)
                     .build()

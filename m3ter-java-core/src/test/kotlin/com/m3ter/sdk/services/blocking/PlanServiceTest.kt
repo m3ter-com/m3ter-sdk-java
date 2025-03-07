@@ -28,7 +28,7 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val plan =
+        val planResponse =
             planService.create(
                 PlanCreateParams.builder()
                     .orgId("orgId")
@@ -55,7 +55,7 @@ class PlanServiceTest {
                     .build()
             )
 
-        plan.validate()
+        planResponse.validate()
     }
 
     @Test
@@ -70,10 +70,10 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val plan =
+        val planResponse =
             planService.retrieve(PlanRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        plan.validate()
+        planResponse.validate()
     }
 
     @Test
@@ -88,7 +88,7 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val plan =
+        val planResponse =
             planService.update(
                 PlanUpdateParams.builder()
                     .orgId("orgId")
@@ -116,7 +116,7 @@ class PlanServiceTest {
                     .build()
             )
 
-        plan.validate()
+        planResponse.validate()
     }
 
     @Test
@@ -148,8 +148,9 @@ class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val plan = planService.delete(PlanDeleteParams.builder().orgId("orgId").id("id").build())
+        val planResponse =
+            planService.delete(PlanDeleteParams.builder().orgId("orgId").id("id").build())
 
-        plan.validate()
+        planResponse.validate()
     }
 }

@@ -27,7 +27,7 @@ class ScheduledEventConfigurationServiceAsyncTest {
                 .build()
         val scheduledEventConfigurationServiceAsync = client.scheduledEventConfigurations()
 
-        val scheduledEventConfigurationFuture =
+        val scheduledEventConfigurationResponseFuture =
             scheduledEventConfigurationServiceAsync.create(
                 ScheduledEventConfigurationCreateParams.builder()
                     .orgId("orgId")
@@ -39,8 +39,8 @@ class ScheduledEventConfigurationServiceAsyncTest {
                     .build()
             )
 
-        val scheduledEventConfiguration = scheduledEventConfigurationFuture.get()
-        scheduledEventConfiguration.validate()
+        val scheduledEventConfigurationResponse = scheduledEventConfigurationResponseFuture.get()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -55,13 +55,13 @@ class ScheduledEventConfigurationServiceAsyncTest {
                 .build()
         val scheduledEventConfigurationServiceAsync = client.scheduledEventConfigurations()
 
-        val scheduledEventConfigurationFuture =
+        val scheduledEventConfigurationResponseFuture =
             scheduledEventConfigurationServiceAsync.retrieve(
                 ScheduledEventConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val scheduledEventConfiguration = scheduledEventConfigurationFuture.get()
-        scheduledEventConfiguration.validate()
+        val scheduledEventConfigurationResponse = scheduledEventConfigurationResponseFuture.get()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -76,7 +76,7 @@ class ScheduledEventConfigurationServiceAsyncTest {
                 .build()
         val scheduledEventConfigurationServiceAsync = client.scheduledEventConfigurations()
 
-        val scheduledEventConfigurationFuture =
+        val scheduledEventConfigurationResponseFuture =
             scheduledEventConfigurationServiceAsync.update(
                 ScheduledEventConfigurationUpdateParams.builder()
                     .orgId("orgId")
@@ -89,8 +89,8 @@ class ScheduledEventConfigurationServiceAsyncTest {
                     .build()
             )
 
-        val scheduledEventConfiguration = scheduledEventConfigurationFuture.get()
-        scheduledEventConfiguration.validate()
+        val scheduledEventConfigurationResponse = scheduledEventConfigurationResponseFuture.get()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -126,12 +126,12 @@ class ScheduledEventConfigurationServiceAsyncTest {
                 .build()
         val scheduledEventConfigurationServiceAsync = client.scheduledEventConfigurations()
 
-        val scheduledEventConfigurationFuture =
+        val scheduledEventConfigurationResponseFuture =
             scheduledEventConfigurationServiceAsync.delete(
                 ScheduledEventConfigurationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val scheduledEventConfiguration = scheduledEventConfigurationFuture.get()
-        scheduledEventConfiguration.validate()
+        val scheduledEventConfigurationResponse = scheduledEventConfigurationResponseFuture.get()
+        scheduledEventConfigurationResponse.validate()
     }
 }

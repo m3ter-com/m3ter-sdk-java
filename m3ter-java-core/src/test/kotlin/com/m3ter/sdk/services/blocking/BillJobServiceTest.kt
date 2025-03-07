@@ -29,7 +29,7 @@ class BillJobServiceTest {
                 .build()
         val billJobService = client.billJobs()
 
-        val billJob =
+        val billJobResponse =
             billJobService.create(
                 BillJobCreateParams.builder()
                     .orgId("orgId")
@@ -53,7 +53,7 @@ class BillJobServiceTest {
                     .build()
             )
 
-        billJob.validate()
+        billJobResponse.validate()
     }
 
     @Test
@@ -68,10 +68,10 @@ class BillJobServiceTest {
                 .build()
         val billJobService = client.billJobs()
 
-        val billJob =
+        val billJobResponse =
             billJobService.retrieve(BillJobRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        billJob.validate()
+        billJobResponse.validate()
     }
 
     @Test
@@ -103,10 +103,10 @@ class BillJobServiceTest {
                 .build()
         val billJobService = client.billJobs()
 
-        val billJob =
+        val billJobResponse =
             billJobService.cancel(BillJobCancelParams.builder().orgId("orgId").id("id").build())
 
-        billJob.validate()
+        billJobResponse.validate()
     }
 
     @Test
@@ -121,7 +121,7 @@ class BillJobServiceTest {
                 .build()
         val billJobService = client.billJobs()
 
-        val billJob =
+        val billJobResponse =
             billJobService.recalculate(
                 BillJobRecalculateParams.builder()
                     .orgId("orgId")
@@ -130,6 +130,6 @@ class BillJobServiceTest {
                     .build()
             )
 
-        billJob.validate()
+        billJobResponse.validate()
     }
 }

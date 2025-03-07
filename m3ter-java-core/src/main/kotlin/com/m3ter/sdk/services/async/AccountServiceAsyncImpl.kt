@@ -10,10 +10,11 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
-import com.m3ter.sdk.core.json
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.json
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
@@ -21,6 +22,7 @@ import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPageAsync
 import com.m3ter.sdk.models.AccountListParams
+import com.m3ter.sdk.models.AccountResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -30,276 +32,344 @@ import java.util.concurrent.CompletableFuture
 class AccountServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     AccountServiceAsync {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: AccountServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<Account> =
-        jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): AccountServiceAsync.WithRawResponse = withRawResponse
 
-    /** Create a new Account within the Organization. */
     override fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("organizations", params.getPathParam(0), "accounts")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountResponse> =
+        // post /organizations/{orgId}/accounts
+        withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    private val retrieveHandler: Handler<Account> =
-        jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Retrieve the Account with the given Account UUID. */
     override fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "accounts",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountResponse> =
+        // get /organizations/{orgId}/accounts/{id}
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    private val updateHandler: Handler<Account> =
-        jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * Update the Account with the given Account UUID.
-     *
-     * **Note:** If you have created Custom Fields for an Account, when you use this endpoint to
-     * update the Account, use the `customFields` parameter to preserve those Custom Fields. If you
-     * omit them from the update request, they will be lost.
-     */
     override fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "accounts",
-                    params.getPathParam(1),
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountResponse> =
+        // put /organizations/{orgId}/accounts/{id}
+        withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    private val listHandler: Handler<AccountListPageAsync.Response> =
-        jsonHandler<AccountListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
     override fun list(
         params: AccountListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AccountListPageAsync> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "accounts")
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-                    .let { AccountListPageAsync.of(this, params, it) }
-            }
-    }
+    ): CompletableFuture<AccountListPageAsync> =
+        // get /organizations/{orgId}/accounts
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    private val deleteHandler: Handler<Account> =
-        jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * Delete the Account with the given UUID. This may fail if there are any AccountPlans that
-     * reference the Account being deleted.
-     */
     override fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "accounts",
-                    params.getPathParam(1),
-                )
-                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { deleteHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountResponse> =
+        // delete /organizations/{orgId}/accounts/{id}
+        withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
-    private val endDateBillingEntitiesHandler: Handler<AccountEndDateBillingEntitiesResponse> =
-        jsonHandler<AccountEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Apply the specified end-date to billing entities associated with an Account.
-     *
-     * **NOTE:**
-     * - When you successfully end-date billing entities, the version number of each entity is
-     *   incremented.
-     */
     override fun endDateBillingEntities(
         params: AccountEndDateBillingEntitiesParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AccountEndDateBillingEntitiesResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "accounts",
-                    params.getPathParam(1),
-                    "enddatebillingentities",
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { endDateBillingEntitiesHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountEndDateBillingEntitiesResponse> =
+        // put /organizations/{orgId}/accounts/{id}/enddatebillingentities
+        withRawResponse().endDateBillingEntities(params, requestOptions).thenApply { it.parse() }
 
-    private val getChildrenHandler: Handler<Account> =
-        jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Retrieve a list of Accounts that are children of the specified Account. */
     override fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "accounts",
-                    params.getPathParam(1),
-                    "children",
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { getChildrenHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<AccountResponse> =
+        // get /organizations/{orgId}/accounts/{id}/children
+        withRawResponse().getChildren(params, requestOptions).thenApply { it.parse() }
 
-    private val searchHandler: Handler<AccountSearchResponse> =
-        jsonHandler<AccountSearchResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * Search for Account entities.
-     *
-     * This endpoint executes a search query for Accounts based on the user specified search
-     * criteria. The search query is customizable, allowing for complex nested conditions and
-     * sorting. The returned list of Accounts can be paginated for easier management.
-     */
     override fun search(
         params: AccountSearchParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AccountSearchResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "accounts", "search")
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { searchHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
+    ): CompletableFuture<AccountSearchResponse> =
+        // get /organizations/{orgId}/accounts/search
+        withRawResponse().search(params, requestOptions).thenApply { it.parse() }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        AccountServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(
+            params: AccountCreateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("organizations", params.getPathParam(0), "accounts")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { createHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
                     }
-            }
+                }
+        }
+
+        private val retrieveHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: AccountRetrieveParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "accounts",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { retrieveHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val updateHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun update(
+            params: AccountUpdateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "accounts",
+                        params.getPathParam(1),
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { updateHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val listHandler: Handler<AccountListPageAsync.Response> =
+            jsonHandler<AccountListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: AccountListParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountListPageAsync>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "accounts")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { listHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                            .let {
+                                AccountListPageAsync.of(
+                                    AccountServiceAsyncImpl(clientOptions),
+                                    params,
+                                    it,
+                                )
+                            }
+                    }
+                }
+        }
+
+        private val deleteHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun delete(
+            params: AccountDeleteParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "accounts",
+                        params.getPathParam(1),
+                    )
+                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { deleteHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val endDateBillingEntitiesHandler: Handler<AccountEndDateBillingEntitiesResponse> =
+            jsonHandler<AccountEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun endDateBillingEntities(
+            params: AccountEndDateBillingEntitiesParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountEndDateBillingEntitiesResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "accounts",
+                        params.getPathParam(1),
+                        "enddatebillingentities",
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { endDateBillingEntitiesHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val getChildrenHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun getChildren(
+            params: AccountGetChildrenParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "accounts",
+                        params.getPathParam(1),
+                        "children",
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { getChildrenHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val searchHandler: Handler<AccountSearchResponse> =
+            jsonHandler<AccountSearchResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun search(
+            params: AccountSearchParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountSearchResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "accounts", "search")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { searchHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
     }
 }

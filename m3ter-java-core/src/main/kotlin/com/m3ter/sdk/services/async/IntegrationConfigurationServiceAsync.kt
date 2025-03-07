@@ -4,8 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.IntegrationConfiguration
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.IntegrationConfigurationCreateParams
 import com.m3ter.sdk.models.IntegrationConfigurationCreateResponse
 import com.m3ter.sdk.models.IntegrationConfigurationDeleteParams
@@ -15,12 +16,18 @@ import com.m3ter.sdk.models.IntegrationConfigurationEnableResponse
 import com.m3ter.sdk.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.sdk.models.IntegrationConfigurationListPageAsync
 import com.m3ter.sdk.models.IntegrationConfigurationListParams
+import com.m3ter.sdk.models.IntegrationConfigurationResponse
 import com.m3ter.sdk.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateResponse
 import java.util.concurrent.CompletableFuture
 
 interface IntegrationConfigurationServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Set the integration configuration for the entity. */
     @JvmOverloads
@@ -39,7 +46,7 @@ interface IntegrationConfigurationServiceAsync {
     fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<IntegrationConfiguration>
+    ): CompletableFuture<IntegrationConfigurationResponse>
 
     /**
      * Update the integration configuration for the given UUID.
@@ -91,5 +98,91 @@ interface IntegrationConfigurationServiceAsync {
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<IntegrationConfiguration>
+    ): CompletableFuture<IntegrationConfigurationResponse>
+
+    /**
+     * A view of [IntegrationConfigurationServiceAsync] that provides access to raw HTTP responses
+     * for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/integrationconfigs`, but is
+         * otherwise the same as [IntegrationConfigurationServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: IntegrationConfigurationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationCreateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs/{id}`, but
+         * is otherwise the same as [IntegrationConfigurationServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: IntegrationConfigurationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/integrationconfigs/{id}`, but
+         * is otherwise the same as [IntegrationConfigurationServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: IntegrationConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationUpdateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs`, but is
+         * otherwise the same as [IntegrationConfigurationServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: IntegrationConfigurationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/integrationconfigs/{id}`,
+         * but is otherwise the same as [IntegrationConfigurationServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: IntegrationConfigurationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationDeleteResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/integrationconfigs/{id}/enable`, but is otherwise the same as
+         * [IntegrationConfigurationServiceAsync.enable].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun enable(
+            params: IntegrationConfigurationEnableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationEnableResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationconfigs/entity/{entityType}`, but is otherwise the same
+         * as [IntegrationConfigurationServiceAsync.getByEntity].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getByEntity(
+            params: IntegrationConfigurationGetByEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
+    }
 }

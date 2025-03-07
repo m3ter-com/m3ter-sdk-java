@@ -30,7 +30,7 @@ class AccountPlanServiceTest {
                 .build()
         val accountPlanService = client.accountPlans()
 
-        val accountPlan =
+        val accountPlanResponse =
             accountPlanService.create(
                 AccountPlanCreateParams.builder()
                     .orgId("orgId")
@@ -52,7 +52,7 @@ class AccountPlanServiceTest {
                     .build()
             )
 
-        accountPlan.validate()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -67,12 +67,12 @@ class AccountPlanServiceTest {
                 .build()
         val accountPlanService = client.accountPlans()
 
-        val accountPlan =
+        val accountPlanResponse =
             accountPlanService.retrieve(
                 AccountPlanRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        accountPlan.validate()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -87,7 +87,7 @@ class AccountPlanServiceTest {
                 .build()
         val accountPlanService = client.accountPlans()
 
-        val accountPlan =
+        val accountPlanResponse =
             accountPlanService.update(
                 AccountPlanUpdateParams.builder()
                     .orgId("orgId")
@@ -110,7 +110,7 @@ class AccountPlanServiceTest {
                     .build()
             )
 
-        accountPlan.validate()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -142,11 +142,11 @@ class AccountPlanServiceTest {
                 .build()
         val accountPlanService = client.accountPlans()
 
-        val accountPlan =
+        val accountPlanResponse =
             accountPlanService.delete(
                 AccountPlanDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        accountPlan.validate()
+        accountPlanResponse.validate()
     }
 }

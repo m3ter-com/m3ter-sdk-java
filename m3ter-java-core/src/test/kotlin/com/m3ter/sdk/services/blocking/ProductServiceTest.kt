@@ -28,7 +28,7 @@ class ProductServiceTest {
                 .build()
         val productService = client.products()
 
-        val product =
+        val productResponse =
             productService.create(
                 ProductCreateParams.builder()
                     .orgId("orgId")
@@ -43,7 +43,7 @@ class ProductServiceTest {
                     .build()
             )
 
-        product.validate()
+        productResponse.validate()
     }
 
     @Test
@@ -58,10 +58,10 @@ class ProductServiceTest {
                 .build()
         val productService = client.products()
 
-        val product =
+        val productResponse =
             productService.retrieve(ProductRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        product.validate()
+        productResponse.validate()
     }
 
     @Test
@@ -76,7 +76,7 @@ class ProductServiceTest {
                 .build()
         val productService = client.products()
 
-        val product =
+        val productResponse =
             productService.update(
                 ProductUpdateParams.builder()
                     .orgId("orgId")
@@ -92,7 +92,7 @@ class ProductServiceTest {
                     .build()
             )
 
-        product.validate()
+        productResponse.validate()
     }
 
     @Test
@@ -124,9 +124,9 @@ class ProductServiceTest {
                 .build()
         val productService = client.products()
 
-        val product =
+        val productResponse =
             productService.delete(ProductDeleteParams.builder().orgId("orgId").id("id").build())
 
-        product.validate()
+        productResponse.validate()
     }
 }

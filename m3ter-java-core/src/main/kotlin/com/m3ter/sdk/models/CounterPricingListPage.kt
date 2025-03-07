@@ -32,7 +32,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<CounterPricing> = response().data()
+    fun data(): List<CounterPricingResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -90,18 +90,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<CounterPricing>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<CounterPricingResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<CounterPricing> = data.getNullable("data") ?: listOf()
+        fun data(): List<CounterPricingResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<CounterPricing>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<CounterPricingResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -139,12 +140,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CounterPricingListPage].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<CounterPricing>> = JsonMissing.of()
+            private var data: JsonField<List<CounterPricingResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -155,9 +159,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<CounterPricing>) = data(JsonField.of(data))
+            fun data(data: List<CounterPricingResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<CounterPricing>>) = apply { this.data = data }
+            fun data(data: JsonField<List<CounterPricingResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -171,9 +175,10 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: CounterPricingListPage) : Iterable<CounterPricing> {
+    class AutoPager(private val firstPage: CounterPricingListPage) :
+        Iterable<CounterPricingResponse> {
 
-        override fun iterator(): Iterator<CounterPricing> = iterator {
+        override fun iterator(): Iterator<CounterPricingResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -185,7 +190,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<CounterPricing> {
+        fun stream(): Stream<CounterPricingResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

@@ -28,7 +28,7 @@ class DebitLineItemServiceAsyncTest {
                 .build()
         val debitLineItemServiceAsync = client.bills().debitLineItems()
 
-        val debitLineItemFuture =
+        val debitLineItemResponseFuture =
             debitLineItemServiceAsync.create(
                 BillDebitLineItemCreateParams.builder()
                     .orgId("orgId")
@@ -47,8 +47,8 @@ class DebitLineItemServiceAsyncTest {
                     .build()
             )
 
-        val debitLineItem = debitLineItemFuture.get()
-        debitLineItem.validate()
+        val debitLineItemResponse = debitLineItemResponseFuture.get()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -63,7 +63,7 @@ class DebitLineItemServiceAsyncTest {
                 .build()
         val debitLineItemServiceAsync = client.bills().debitLineItems()
 
-        val debitLineItemFuture =
+        val debitLineItemResponseFuture =
             debitLineItemServiceAsync.retrieve(
                 BillDebitLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -72,8 +72,8 @@ class DebitLineItemServiceAsyncTest {
                     .build()
             )
 
-        val debitLineItem = debitLineItemFuture.get()
-        debitLineItem.validate()
+        val debitLineItemResponse = debitLineItemResponseFuture.get()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -88,7 +88,7 @@ class DebitLineItemServiceAsyncTest {
                 .build()
         val debitLineItemServiceAsync = client.bills().debitLineItems()
 
-        val debitLineItemFuture =
+        val debitLineItemResponseFuture =
             debitLineItemServiceAsync.update(
                 BillDebitLineItemUpdateParams.builder()
                     .orgId("orgId")
@@ -108,8 +108,8 @@ class DebitLineItemServiceAsyncTest {
                     .build()
             )
 
-        val debitLineItem = debitLineItemFuture.get()
-        debitLineItem.validate()
+        val debitLineItemResponse = debitLineItemResponseFuture.get()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -145,7 +145,7 @@ class DebitLineItemServiceAsyncTest {
                 .build()
         val debitLineItemServiceAsync = client.bills().debitLineItems()
 
-        val debitLineItemFuture =
+        val debitLineItemResponseFuture =
             debitLineItemServiceAsync.delete(
                 BillDebitLineItemDeleteParams.builder()
                     .orgId("orgId")
@@ -154,7 +154,7 @@ class DebitLineItemServiceAsyncTest {
                     .build()
             )
 
-        val debitLineItem = debitLineItemFuture.get()
-        debitLineItem.validate()
+        val debitLineItemResponse = debitLineItemResponseFuture.get()
+        debitLineItemResponse.validate()
     }
 }

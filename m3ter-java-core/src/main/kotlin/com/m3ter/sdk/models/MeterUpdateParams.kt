@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -53,7 +54,7 @@ private constructor(
      * numeric quantitative values or non-numeric data values. At least one required per Meter;
      * maximum 15 per Meter.
      */
-    fun dataFields(): List<DataField> = body.dataFields()
+    fun dataFields(): List<DataFieldResponse> = body.dataFields()
 
     /**
      * Used to submit usage data values for ingest into the platform that are the result of a
@@ -113,7 +114,7 @@ private constructor(
      * numeric quantitative values or non-numeric data values. At least one required per Meter;
      * maximum 15 per Meter.
      */
-    fun _dataFields(): JsonField<List<DataField>> = body._dataFields()
+    fun _dataFields(): JsonField<List<DataFieldResponse>> = body._dataFields()
 
     /**
      * Used to submit usage data values for ingest into the platform that are the result of a
@@ -189,7 +190,7 @@ private constructor(
         private val code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dataFields")
         @ExcludeMissing
-        private val dataFields: JsonField<List<DataField>> = JsonMissing.of(),
+        private val dataFields: JsonField<List<DataFieldResponse>> = JsonMissing.of(),
         @JsonProperty("derivedFields")
         @ExcludeMissing
         private val derivedFields: JsonField<List<DerivedField>> = JsonMissing.of(),
@@ -225,7 +226,7 @@ private constructor(
          * numeric quantitative values or non-numeric data values. At least one required per Meter;
          * maximum 15 per Meter.
          */
-        fun dataFields(): List<DataField> = dataFields.getRequired("dataFields")
+        fun dataFields(): List<DataFieldResponse> = dataFields.getRequired("dataFields")
 
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
@@ -289,7 +290,7 @@ private constructor(
          */
         @JsonProperty("dataFields")
         @ExcludeMissing
-        fun _dataFields(): JsonField<List<DataField>> = dataFields
+        fun _dataFields(): JsonField<List<DataFieldResponse>> = dataFields
 
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
@@ -367,6 +368,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .code()
+             * .dataFields()
+             * .derivedFields()
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -374,7 +386,7 @@ private constructor(
         class Builder internal constructor() {
 
             private var code: JsonField<String>? = null
-            private var dataFields: JsonField<MutableList<DataField>>? = null
+            private var dataFields: JsonField<MutableList<DataFieldResponse>>? = null
             private var derivedFields: JsonField<MutableList<DerivedField>>? = null
             private var name: JsonField<String>? = null
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -419,14 +431,15 @@ private constructor(
              * either numeric quantitative values or non-numeric data values. At least one required
              * per Meter; maximum 15 per Meter.
              */
-            fun dataFields(dataFields: List<DataField>) = dataFields(JsonField.of(dataFields))
+            fun dataFields(dataFields: List<DataFieldResponse>) =
+                dataFields(JsonField.of(dataFields))
 
             /**
              * Used to submit categorized raw usage data values for ingest into the platform -
              * either numeric quantitative values or non-numeric data values. At least one required
              * per Meter; maximum 15 per Meter.
              */
-            fun dataFields(dataFields: JsonField<List<DataField>>) = apply {
+            fun dataFields(dataFields: JsonField<List<DataFieldResponse>>) = apply {
                 this.dataFields = dataFields.map { it.toMutableList() }
             }
 
@@ -435,16 +448,10 @@ private constructor(
              * either numeric quantitative values or non-numeric data values. At least one required
              * per Meter; maximum 15 per Meter.
              */
-            fun addDataField(dataField: DataField) = apply {
+            fun addDataField(dataField: DataFieldResponse) = apply {
                 dataFields =
-                    (dataFields ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(dataField)
+                    (dataFields ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dataFields", it).add(dataField)
                     }
             }
 
@@ -484,14 +491,8 @@ private constructor(
              */
             fun addDerivedField(derivedField: DerivedField) = apply {
                 derivedFields =
-                    (derivedFields ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(derivedField)
+                    (derivedFields ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("derivedFields", it).add(derivedField)
                     }
             }
 
@@ -624,6 +625,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [MeterUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .code()
+         * .dataFields()
+         * .derivedFields()
+         * .name()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -671,14 +685,14 @@ private constructor(
          * numeric quantitative values or non-numeric data values. At least one required per Meter;
          * maximum 15 per Meter.
          */
-        fun dataFields(dataFields: List<DataField>) = apply { body.dataFields(dataFields) }
+        fun dataFields(dataFields: List<DataFieldResponse>) = apply { body.dataFields(dataFields) }
 
         /**
          * Used to submit categorized raw usage data values for ingest into the platform - either
          * numeric quantitative values or non-numeric data values. At least one required per Meter;
          * maximum 15 per Meter.
          */
-        fun dataFields(dataFields: JsonField<List<DataField>>) = apply {
+        fun dataFields(dataFields: JsonField<List<DataFieldResponse>>) = apply {
             body.dataFields(dataFields)
         }
 
@@ -687,7 +701,7 @@ private constructor(
          * numeric quantitative values or non-numeric data values. At least one required per Meter;
          * maximum 15 per Meter.
          */
-        fun addDataField(dataField: DataField) = apply { body.addDataField(dataField) }
+        fun addDataField(dataField: DataFieldResponse) = apply { body.addDataField(dataField) }
 
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
@@ -932,7 +946,7 @@ private constructor(
     private constructor(
         @JsonProperty("category")
         @ExcludeMissing
-        private val category: JsonField<DataField.Category> = JsonMissing.of(),
+        private val category: JsonField<DataFieldResponse.Category> = JsonMissing.of(),
         @JsonProperty("code")
         @ExcludeMissing
         private val code: JsonField<String> = JsonMissing.of(),
@@ -950,7 +964,7 @@ private constructor(
     ) {
 
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
-        fun category(): DataField.Category = category.getRequired("category")
+        fun category(): DataFieldResponse.Category = category.getRequired("category")
 
         /**
          * Short code to identify the field
@@ -979,7 +993,7 @@ private constructor(
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         @JsonProperty("category")
         @ExcludeMissing
-        fun _category(): JsonField<DataField.Category> = category
+        fun _category(): JsonField<DataFieldResponse.Category> = category
 
         /**
          * Short code to identify the field
@@ -1011,8 +1025,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        fun toDataField(): DataField =
-            DataField.builder().category(category).code(code).name(name).unit(unit).build()
+        fun toDataFieldResponse(): DataFieldResponse =
+            DataFieldResponse.builder().category(category).code(code).name(name).unit(unit).build()
 
         private var validated: Boolean = false
 
@@ -1033,13 +1047,24 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DerivedField].
+             *
+             * The following fields are required:
+             * ```java
+             * .category()
+             * .code()
+             * .name()
+             * .calculation()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [DerivedField]. */
         class Builder internal constructor() {
 
-            private var category: JsonField<DataField.Category>? = null
+            private var category: JsonField<DataFieldResponse.Category>? = null
             private var code: JsonField<String>? = null
             private var name: JsonField<String>? = null
             private var unit: JsonField<String> = JsonMissing.of()
@@ -1057,10 +1082,10 @@ private constructor(
             }
 
             /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
-            fun category(category: DataField.Category) = category(JsonField.of(category))
+            fun category(category: DataFieldResponse.Category) = category(JsonField.of(category))
 
             /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
-            fun category(category: JsonField<DataField.Category>) = apply {
+            fun category(category: JsonField<DataFieldResponse.Category>) = apply {
                 this.category = category
             }
 
@@ -1200,6 +1225,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
             @JvmStatic fun builder() = Builder()
         }
 

@@ -257,6 +257,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .externalId()
+             * .externalSystem()
+             * .externalTable()
+             * .m3terEntity()
+             * .m3terId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -416,6 +428,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalMappingCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .externalId()
+         * .externalSystem()
+         * .externalTable()
+         * .m3terEntity()
+         * .m3terId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

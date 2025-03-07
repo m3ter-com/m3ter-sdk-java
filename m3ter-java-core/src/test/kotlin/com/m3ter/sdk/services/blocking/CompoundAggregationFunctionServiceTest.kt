@@ -65,12 +65,12 @@ class CompoundAggregationFunctionServiceTest {
                 .build()
         val compoundAggregationService = client.compoundAggregations()
 
-        val compoundAggregation =
+        val compoundAggregationResponse =
             compoundAggregationService.retrieve(
                 CompoundAggregationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        compoundAggregation.validate()
+        compoundAggregationResponse.validate()
     }
 
     @Test
@@ -143,11 +143,11 @@ class CompoundAggregationFunctionServiceTest {
                 .build()
         val compoundAggregationService = client.compoundAggregations()
 
-        val compoundAggregation =
+        val compoundAggregationResponse =
             compoundAggregationService.delete(
                 CompoundAggregationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        compoundAggregation.validate()
+        compoundAggregationResponse.validate()
     }
 }

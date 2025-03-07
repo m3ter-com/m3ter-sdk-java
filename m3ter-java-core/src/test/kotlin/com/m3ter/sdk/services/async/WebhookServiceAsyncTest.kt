@@ -4,7 +4,7 @@ package com.m3ter.sdk.services.async
 
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClientAsync
-import com.m3ter.sdk.models.M3terSignedCredentialsReq
+import com.m3ter.sdk.models.M3terSignedCredentialsRequest
 import com.m3ter.sdk.models.WebhookCreateParams
 import com.m3ter.sdk.models.WebhookDeleteParams
 import com.m3ter.sdk.models.WebhookListParams
@@ -34,10 +34,10 @@ class WebhookServiceAsyncTest {
                 WebhookCreateParams.builder()
                     .orgId("orgId")
                     .credentials(
-                        M3terSignedCredentialsReq.builder()
+                        M3terSignedCredentialsRequest.builder()
                             .apiKey("x")
                             .secret("x")
-                            .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                            .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
                             .build()
@@ -94,10 +94,10 @@ class WebhookServiceAsyncTest {
                     .orgId("orgId")
                     .id("id")
                     .credentials(
-                        M3terSignedCredentialsReq.builder()
+                        M3terSignedCredentialsRequest.builder()
                             .apiKey("x")
                             .secret("x")
-                            .type(M3terSignedCredentialsReq.Type.M3_TER_SIGNED_REQUEST)
+                            .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
                             .build()

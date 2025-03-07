@@ -10,126 +10,144 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.DataExportJob
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.sdk.models.DataExportJobListPage
 import com.m3ter.sdk.models.DataExportJobListParams
+import com.m3ter.sdk.models.DataExportJobResponse
 import com.m3ter.sdk.models.DataExportJobRetrieveParams
 
 class JobServiceImpl internal constructor(private val clientOptions: ClientOptions) : JobService {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: JobService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveHandler: Handler<DataExportJob> =
-        jsonHandler<DataExportJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): JobService.WithRawResponse = withRawResponse
 
-    /**
-     * Retrieve an Export Job for the given UUID.
-     *
-     * The response returns:
-     * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
-     * - The status of the Export Job.
-     */
     override fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions,
-    ): DataExportJob {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "jobs",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
-            }
-    }
+    ): DataExportJobResponse =
+        // get /organizations/{orgId}/dataexports/jobs/{id}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<DataExportJobListPage.Response> =
-        jsonHandler<DataExportJobListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Retrieve a list of Export Job entities. */
     override fun list(
         params: DataExportJobListParams,
         requestOptions: RequestOptions,
-    ): DataExportJobListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("organizations", params.getPathParam(0), "dataexports", "jobs")
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
-            }
-            .let { DataExportJobListPage.of(this, params, it) }
-    }
+    ): DataExportJobListPage =
+        // get /organizations/{orgId}/dataexports/jobs
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val getDownloadUrlHandler: Handler<DataExportJobGetDownloadUrlResponse> =
-        jsonHandler<DataExportJobGetDownloadUrlResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Returns a presigned download URL for data export file download based on the `jobId` provided.
-     *
-     * If you omit `destinationIds` when setting up your
-     * [Ad-Hoc data exports](https://www.m3ter.com/docs/api#tag/ExportAdHoc) or
-     * [Scheduled data exports](https://www.m3ter.com/docs/api#tag/ExportSchedule), then the data is
-     * not copied to a destination but is available for you to download using the returned download
-     * URL.
-     *
-     * **Constraints:**
-     * - Only valid for Export jobs ran in the past 24 hours.
-     * - The download URL is time-bound and is only valid for 15 minutes.
-     *
-     * **NOTE!** This ExportDestination endpoint is available in Beta release version. Beta release
-     * features are functional but may be incomplete, and there is no commitment at this stage to
-     * particular functionality or timelines.
-     */
     override fun getDownloadUrl(
         params: DataExportJobGetDownloadUrlParams,
         requestOptions: RequestOptions,
-    ): DataExportJobGetDownloadUrlResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "jobs",
-                    params.getPathParam(1),
-                    "getdownloadurl",
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { getDownloadUrlHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                    it.validate()
-                }
+    ): DataExportJobGetDownloadUrlResponse =
+        // get /organizations/{orgId}/dataexports/jobs/{jobId}/getdownloadurl
+        withRawResponse().getDownloadUrl(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        JobService.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveHandler: Handler<DataExportJobResponse> =
+            jsonHandler<DataExportJobResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: DataExportJobRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportJobResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "jobs",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val listHandler: Handler<DataExportJobListPage.Response> =
+            jsonHandler<DataExportJobListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: DataExportJobListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportJobListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("organizations", params.getPathParam(0), "dataexports", "jobs")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { DataExportJobListPage.of(JobServiceImpl(clientOptions), params, it) }
+            }
+        }
+
+        private val getDownloadUrlHandler: Handler<DataExportJobGetDownloadUrlResponse> =
+            jsonHandler<DataExportJobGetDownloadUrlResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun getDownloadUrl(
+            params: DataExportJobGetDownloadUrlParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "jobs",
+                        params.getPathParam(1),
+                        "getdownloadurl",
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { getDownloadUrlHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }

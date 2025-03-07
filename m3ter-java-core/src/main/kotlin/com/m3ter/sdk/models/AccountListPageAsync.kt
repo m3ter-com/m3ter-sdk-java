@@ -30,7 +30,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<Account> = response().data()
+    fun data(): List<AccountResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -90,18 +90,18 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<Account>> = JsonMissing.of(),
+        @JsonProperty("data") private val data: JsonField<List<AccountResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<Account> = data.getNullable("data") ?: listOf()
+        fun data(): List<AccountResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<Account>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<AccountResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -139,12 +139,13 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [AccountListPageAsync]. */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<Account>> = JsonMissing.of()
+            private var data: JsonField<List<AccountResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -155,9 +156,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<Account>) = data(JsonField.of(data))
+            fun data(data: List<AccountResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<Account>>) = apply { this.data = data }
+            fun data(data: JsonField<List<AccountResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -173,9 +174,12 @@ private constructor(
 
     class AutoPager(private val firstPage: AccountListPageAsync) {
 
-        fun forEach(action: Predicate<Account>, executor: Executor): CompletableFuture<Void> {
+        fun forEach(
+            action: Predicate<AccountResponse>,
+            executor: Executor,
+        ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<AccountListPageAsync>>.forEach(
-                action: (Account) -> Boolean,
+                action: (AccountResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -191,8 +195,8 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<Account>> {
-            val values = mutableListOf<Account>()
+        fun toList(executor: Executor): CompletableFuture<List<AccountResponse>> {
+            val values = mutableListOf<AccountResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

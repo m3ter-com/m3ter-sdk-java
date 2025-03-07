@@ -27,7 +27,7 @@ class DebitReasonServiceAsyncTest {
                 .build()
         val debitReasonServiceAsync = client.debitReasons()
 
-        val debitReasonFuture =
+        val debitReasonResponseFuture =
             debitReasonServiceAsync.create(
                 DebitReasonCreateParams.builder()
                     .orgId("orgId")
@@ -38,8 +38,8 @@ class DebitReasonServiceAsyncTest {
                     .build()
             )
 
-        val debitReason = debitReasonFuture.get()
-        debitReason.validate()
+        val debitReasonResponse = debitReasonResponseFuture.get()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -54,13 +54,13 @@ class DebitReasonServiceAsyncTest {
                 .build()
         val debitReasonServiceAsync = client.debitReasons()
 
-        val debitReasonFuture =
+        val debitReasonResponseFuture =
             debitReasonServiceAsync.retrieve(
                 DebitReasonRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val debitReason = debitReasonFuture.get()
-        debitReason.validate()
+        val debitReasonResponse = debitReasonResponseFuture.get()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -75,7 +75,7 @@ class DebitReasonServiceAsyncTest {
                 .build()
         val debitReasonServiceAsync = client.debitReasons()
 
-        val debitReasonFuture =
+        val debitReasonResponseFuture =
             debitReasonServiceAsync.update(
                 DebitReasonUpdateParams.builder()
                     .orgId("orgId")
@@ -87,8 +87,8 @@ class DebitReasonServiceAsyncTest {
                     .build()
             )
 
-        val debitReason = debitReasonFuture.get()
-        debitReason.validate()
+        val debitReasonResponse = debitReasonResponseFuture.get()
+        debitReasonResponse.validate()
     }
 
     @Test
@@ -122,12 +122,12 @@ class DebitReasonServiceAsyncTest {
                 .build()
         val debitReasonServiceAsync = client.debitReasons()
 
-        val debitReasonFuture =
+        val debitReasonResponseFuture =
             debitReasonServiceAsync.delete(
                 DebitReasonDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val debitReason = debitReasonFuture.get()
-        debitReason.validate()
+        val debitReasonResponse = debitReasonResponseFuture.get()
+        debitReasonResponse.validate()
     }
 }

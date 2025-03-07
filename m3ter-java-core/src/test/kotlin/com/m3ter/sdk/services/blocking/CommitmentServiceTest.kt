@@ -31,7 +31,7 @@ class CommitmentServiceTest {
                 .build()
         val commitmentService = client.commitments()
 
-        val commitment =
+        val commitmentResponse =
             commitmentService.create(
                 CommitmentCreateParams.builder()
                     .orgId("orgId")
@@ -73,7 +73,7 @@ class CommitmentServiceTest {
                     .build()
             )
 
-        commitment.validate()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -88,12 +88,12 @@ class CommitmentServiceTest {
                 .build()
         val commitmentService = client.commitments()
 
-        val commitment =
+        val commitmentResponse =
             commitmentService.retrieve(
                 CommitmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        commitment.validate()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -108,7 +108,7 @@ class CommitmentServiceTest {
                 .build()
         val commitmentService = client.commitments()
 
-        val commitment =
+        val commitmentResponse =
             commitmentService.update(
                 CommitmentUpdateParams.builder()
                     .orgId("orgId")
@@ -151,7 +151,7 @@ class CommitmentServiceTest {
                     .build()
             )
 
-        commitment.validate()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -183,12 +183,12 @@ class CommitmentServiceTest {
                 .build()
         val commitmentService = client.commitments()
 
-        val commitment =
+        val commitmentResponse =
             commitmentService.delete(
                 CommitmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        commitment.validate()
+        commitmentResponse.validate()
     }
 
     @Test

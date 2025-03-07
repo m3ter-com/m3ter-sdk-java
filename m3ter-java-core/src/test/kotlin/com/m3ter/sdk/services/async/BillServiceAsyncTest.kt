@@ -30,11 +30,11 @@ class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val billFuture =
+        val billResponseFuture =
             billServiceAsync.retrieve(BillRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        val bill = billFuture.get()
-        bill.validate()
+        val billResponse = billResponseFuture.get()
+        billResponse.validate()
     }
 
     @Test
@@ -67,11 +67,11 @@ class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val billFuture =
+        val billResponseFuture =
             billServiceAsync.delete(BillDeleteParams.builder().orgId("orgId").id("id").build())
 
-        val bill = billFuture.get()
-        bill.validate()
+        val billResponse = billResponseFuture.get()
+        billResponse.validate()
     }
 
     @Test
@@ -113,13 +113,13 @@ class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val billFuture =
+        val billResponseFuture =
             billServiceAsync.latestByAccount(
                 BillLatestByAccountParams.builder().orgId("orgId").accountId("accountId").build()
             )
 
-        val bill = billFuture.get()
-        bill.validate()
+        val billResponse = billResponseFuture.get()
+        billResponse.validate()
     }
 
     @Test
@@ -134,11 +134,11 @@ class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val billFuture =
+        val billResponseFuture =
             billServiceAsync.lock(BillLockParams.builder().orgId("orgId").id("id").build())
 
-        val bill = billFuture.get()
-        bill.validate()
+        val billResponse = billResponseFuture.get()
+        billResponse.validate()
     }
 
     @Test
@@ -182,7 +182,7 @@ class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val billFuture =
+        val billResponseFuture =
             billServiceAsync.updateStatus(
                 BillUpdateStatusParams.builder()
                     .orgId("orgId")
@@ -191,7 +191,7 @@ class BillServiceAsyncTest {
                     .build()
             )
 
-        val bill = billFuture.get()
-        bill.validate()
+        val billResponse = billResponseFuture.get()
+        billResponse.validate()
     }
 }

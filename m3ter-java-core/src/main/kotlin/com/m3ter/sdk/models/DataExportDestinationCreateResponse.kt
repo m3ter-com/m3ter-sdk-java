@@ -195,8 +195,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun toDataExportDestination(): DataExportDestination =
-        DataExportDestination.builder()
+    fun toDataExportDestinationResponse(): DataExportDestinationResponse =
+        DataExportDestinationResponse.builder()
             .id(id)
             .version(version)
             .code(code)
@@ -233,6 +233,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DataExportDestinationCreateResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

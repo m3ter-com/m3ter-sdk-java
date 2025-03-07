@@ -61,6 +61,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IntegrationConfigurationListParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

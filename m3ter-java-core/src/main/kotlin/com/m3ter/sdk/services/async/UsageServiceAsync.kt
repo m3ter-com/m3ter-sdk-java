@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.DownloadUrlResponse
 import com.m3ter.sdk.models.SubmitMeasurementsResponse
 import com.m3ter.sdk.models.UsageGetFailedIngestDownloadUrlParams
@@ -15,6 +17,11 @@ import com.m3ter.sdk.services.async.usage.FileUploadServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface UsageServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun fileUploads(): FileUploadServiceAsync
 
@@ -92,4 +99,44 @@ interface UsageServiceAsync {
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<SubmitMeasurementsResponse>
+
+    /** A view of [UsageServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun fileUploads(): FileUploadServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/measurements/failedIngest/getDownloadUrl`, but is otherwise the
+         * same as [UsageServiceAsync.getFailedIngestDownloadUrl].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getFailedIngestDownloadUrl(
+            params: UsageGetFailedIngestDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/usage/query`, but is
+         * otherwise the same as [UsageServiceAsync.query].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun query(
+            params: UsageQueryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UsageQueryResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/measurements`, but is
+         * otherwise the same as [UsageServiceAsync.submit].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun submit(
+            params: UsageSubmitParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>>
+    }
 }

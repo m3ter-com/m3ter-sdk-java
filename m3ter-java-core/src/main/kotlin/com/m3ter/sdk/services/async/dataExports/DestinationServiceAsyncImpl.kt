@@ -10,7 +10,9 @@ import com.m3ter.sdk.core.handlers.withErrorHandler
 import com.m3ter.sdk.core.http.HttpMethod
 import com.m3ter.sdk.core.http.HttpRequest
 import com.m3ter.sdk.core.http.HttpResponse.Handler
-import com.m3ter.sdk.core.json
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.core.http.json
+import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.DataExportDestinationCreateParams
@@ -28,196 +30,238 @@ import java.util.concurrent.CompletableFuture
 class DestinationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DestinationServiceAsync {
 
-    private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: DestinationServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<DataExportDestinationCreateResponse> =
-        jsonHandler<DataExportDestinationCreateResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    override fun withRawResponse(): DestinationServiceAsync.WithRawResponse = withRawResponse
 
-    /**
-     * Create a new Export Destination to use for your Data Export Schedules or Ad-Hoc Data Exports.
-     *
-     * **NOTE:** Currently, you can only create Export Destinations using an S3 bucket on your AWS
-     * Account.
-     */
     override fun create(
         params: DataExportDestinationCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DataExportDestinationCreateResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "destinations",
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { createHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<DataExportDestinationCreateResponse> =
+        // post /organizations/{orgId}/dataexports/destinations
+        withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
-    private val retrieveHandler: Handler<DataExportDestinationRetrieveResponse> =
-        jsonHandler<DataExportDestinationRetrieveResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Retrieve an Export Destination for the given UUID. */
     override fun retrieve(
         params: DataExportDestinationRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DataExportDestinationRetrieveResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "destinations",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { retrieveHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<DataExportDestinationRetrieveResponse> =
+        // get /organizations/{orgId}/dataexports/destinations/{id}
+        withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
-    private val updateHandler: Handler<DataExportDestinationUpdateResponse> =
-        jsonHandler<DataExportDestinationUpdateResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Update an Export Destination for the given UUID.
-     *
-     * **NOTE:** Currently, only Export Destinations using an S3 bucket on your AWS Account are
-     * supported.
-     */
     override fun update(
         params: DataExportDestinationUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DataExportDestinationUpdateResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "destinations",
-                    params.getPathParam(1),
-                )
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { updateHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-            }
-    }
+    ): CompletableFuture<DataExportDestinationUpdateResponse> =
+        // put /organizations/{orgId}/dataexports/destinations/{id}
+        withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
-    private val listHandler: Handler<DataExportDestinationListPageAsync.Response> =
-        jsonHandler<DataExportDestinationListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Retrieve a list of Export Destination entities. You can filter the list of Destinations
-     * returned by UUID.
-     */
     override fun list(
         params: DataExportDestinationListParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DataExportDestinationListPageAsync> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "destinations",
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { listHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
-                    }
-                    .let { DataExportDestinationListPageAsync.of(this, params, it) }
-            }
-    }
+    ): CompletableFuture<DataExportDestinationListPageAsync> =
+        // get /organizations/{orgId}/dataexports/destinations
+        withRawResponse().list(params, requestOptions).thenApply { it.parse() }
 
-    private val deleteHandler: Handler<DataExportDestinationDeleteResponse> =
-        jsonHandler<DataExportDestinationDeleteResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Delete an Export Destination for the given UUID.
-     *
-     * **NOTE:** If you attempt to delete an Export Destination that is currently linked to a Data
-     * Export Schedule, an error message is returned and you won't be able to delete the
-     * Destination.
-     */
     override fun delete(
         params: DataExportDestinationDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<DataExportDestinationDeleteResponse> {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "organizations",
-                    params.getPathParam(0),
-                    "dataexports",
-                    "destinations",
-                    params.getPathParam(1),
-                )
-                .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepareAsync(clientOptions, params)
-        return request
-            .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
-            .thenApply { response ->
-                response
-                    .use { deleteHandler.handle(it) }
-                    .also {
-                        if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                            it.validate()
-                        }
+    ): CompletableFuture<DataExportDestinationDeleteResponse> =
+        // delete /organizations/{orgId}/dataexports/destinations/{id}
+        withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        DestinationServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<DataExportDestinationCreateResponse> =
+            jsonHandler<DataExportDestinationCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun create(
+            params: DataExportDestinationCreateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationCreateResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "destinations",
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { createHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
                     }
-            }
+                }
+        }
+
+        private val retrieveHandler: Handler<DataExportDestinationRetrieveResponse> =
+            jsonHandler<DataExportDestinationRetrieveResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun retrieve(
+            params: DataExportDestinationRetrieveParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationRetrieveResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "destinations",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { retrieveHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val updateHandler: Handler<DataExportDestinationUpdateResponse> =
+            jsonHandler<DataExportDestinationUpdateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun update(
+            params: DataExportDestinationUpdateParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationUpdateResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "destinations",
+                        params.getPathParam(1),
+                    )
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { updateHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
+
+        private val listHandler: Handler<DataExportDestinationListPageAsync.Response> =
+            jsonHandler<DataExportDestinationListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: DataExportDestinationListParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "destinations",
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { listHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                            .let {
+                                DataExportDestinationListPageAsync.of(
+                                    DestinationServiceAsyncImpl(clientOptions),
+                                    params,
+                                    it,
+                                )
+                            }
+                    }
+                }
+        }
+
+        private val deleteHandler: Handler<DataExportDestinationDeleteResponse> =
+            jsonHandler<DataExportDestinationDeleteResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun delete(
+            params: DataExportDestinationDeleteParams,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationDeleteResponse>> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments(
+                        "organizations",
+                        params.getPathParam(0),
+                        "dataexports",
+                        "destinations",
+                        params.getPathParam(1),
+                    )
+                    .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            return request
+                .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
+                .thenApply { response ->
+                    response.parseable {
+                        response
+                            .use { deleteHandler.handle(it) }
+                            .also {
+                                if (requestOptions.responseValidation!!) {
+                                    it.validate()
+                                }
+                            }
+                    }
+                }
+        }
     }
 }

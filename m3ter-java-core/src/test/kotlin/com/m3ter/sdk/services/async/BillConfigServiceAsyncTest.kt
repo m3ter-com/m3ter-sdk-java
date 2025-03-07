@@ -25,13 +25,13 @@ class BillConfigServiceAsyncTest {
                 .build()
         val billConfigServiceAsync = client.billConfig()
 
-        val billConfigFuture =
+        val billConfigResponseFuture =
             billConfigServiceAsync.retrieve(
                 BillConfigRetrieveParams.builder().orgId("orgId").build()
             )
 
-        val billConfig = billConfigFuture.get()
-        billConfig.validate()
+        val billConfigResponse = billConfigResponseFuture.get()
+        billConfigResponse.validate()
     }
 
     @Test
@@ -46,7 +46,7 @@ class BillConfigServiceAsyncTest {
                 .build()
         val billConfigServiceAsync = client.billConfig()
 
-        val billConfigFuture =
+        val billConfigResponseFuture =
             billConfigServiceAsync.update(
                 BillConfigUpdateParams.builder()
                     .orgId("orgId")
@@ -55,7 +55,7 @@ class BillConfigServiceAsyncTest {
                     .build()
             )
 
-        val billConfig = billConfigFuture.get()
-        billConfig.validate()
+        val billConfigResponse = billConfigResponseFuture.get()
+        billConfigResponse.validate()
     }
 }

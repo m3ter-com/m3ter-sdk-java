@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -237,6 +238,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageDataExportScheduleRequest].
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * .timePeriod()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -371,14 +383,8 @@ private constructor(
         /** List of account IDs for which the usage data will be exported. */
         fun addAccountId(accountId: String) = apply {
             accountIds =
-                (accountIds ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(accountId)
+                (accountIds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("accountIds", it).add(accountId)
                 }
         }
 
@@ -423,14 +429,8 @@ private constructor(
         /** List of meter IDs for which the usage data will be exported. */
         fun addMeterId(meterId: String) = apply {
             meterIds =
-                (meterIds ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(meterId)
+                (meterIds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("meterIds", it).add(meterId)
                 }
         }
 

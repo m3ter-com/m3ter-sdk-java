@@ -4,17 +4,24 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AggregationResponse
-import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
 interface CompoundAggregationService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new CompoundAggregation.
@@ -38,7 +45,7 @@ interface CompoundAggregationService {
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompoundAggregation
+    ): CompoundAggregationResponse
 
     /**
      * Update the CompoundAggregation with the given UUID.
@@ -82,5 +89,68 @@ interface CompoundAggregationService {
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompoundAggregation
+    ): CompoundAggregationResponse
+
+    /**
+     * A view of [CompoundAggregationService] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but
+         * is otherwise the same as [CompoundAggregationService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CompoundAggregationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations/{id}`,
+         * but is otherwise the same as [CompoundAggregationService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CompoundAggregationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CompoundAggregationResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
+         * but is otherwise the same as [CompoundAggregationService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CompoundAggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations`, but is
+         * otherwise the same as [CompoundAggregationService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CompoundAggregationListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/compoundaggregations/{id}`, but is otherwise the same as
+         * [CompoundAggregationService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CompoundAggregationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CompoundAggregationResponse>
+    }
 }

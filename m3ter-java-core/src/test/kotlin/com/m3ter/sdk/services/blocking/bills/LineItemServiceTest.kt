@@ -24,7 +24,7 @@ class LineItemServiceTest {
                 .build()
         val lineItemService = client.bills().lineItems()
 
-        val lineItem =
+        val lineItemResponse =
             lineItemService.retrieve(
                 BillLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -33,7 +33,7 @@ class LineItemServiceTest {
                     .build()
             )
 
-        lineItem.validate()
+        lineItemResponse.validate()
     }
 
     @Test

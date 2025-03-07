@@ -256,6 +256,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IntegrationConfigurationCreateResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .destination()
+         * .entityType()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -515,6 +527,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [ConfigData]. */
             @JvmStatic fun builder() = Builder()
         }
 

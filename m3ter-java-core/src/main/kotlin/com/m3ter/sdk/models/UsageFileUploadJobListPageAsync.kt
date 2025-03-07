@@ -36,7 +36,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<FileUploadJob> = response().data()
+    fun data(): List<FileUploadJobResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -96,18 +96,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<FileUploadJob>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<FileUploadJobResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<FileUploadJob> = data.getNullable("data") ?: listOf()
+        fun data(): List<FileUploadJobResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<FileUploadJob>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<FileUploadJobResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -145,12 +146,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [UsageFileUploadJobListPageAsync].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<FileUploadJob>> = JsonMissing.of()
+            private var data: JsonField<List<FileUploadJobResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -161,9 +166,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<FileUploadJob>) = data(JsonField.of(data))
+            fun data(data: List<FileUploadJobResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<FileUploadJob>>) = apply { this.data = data }
+            fun data(data: JsonField<List<FileUploadJobResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -179,9 +184,12 @@ private constructor(
 
     class AutoPager(private val firstPage: UsageFileUploadJobListPageAsync) {
 
-        fun forEach(action: Predicate<FileUploadJob>, executor: Executor): CompletableFuture<Void> {
+        fun forEach(
+            action: Predicate<FileUploadJobResponse>,
+            executor: Executor,
+        ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<UsageFileUploadJobListPageAsync>>.forEach(
-                action: (FileUploadJob) -> Boolean,
+                action: (FileUploadJobResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -197,8 +205,8 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<FileUploadJob>> {
-            val values = mutableListOf<FileUploadJob>()
+        fun toList(executor: Executor): CompletableFuture<List<FileUploadJobResponse>> {
+            val values = mutableListOf<FileUploadJobResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

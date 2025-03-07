@@ -25,12 +25,12 @@ class JobServiceTest {
                 .build()
         val jobService = client.dataExports().jobs()
 
-        val dataExportJob =
+        val dataExportJobResponse =
             jobService.retrieve(
                 DataExportJobRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        dataExportJob.validate()
+        dataExportJobResponse.validate()
     }
 
     @Test

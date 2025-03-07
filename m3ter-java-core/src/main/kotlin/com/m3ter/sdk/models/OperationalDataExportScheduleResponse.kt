@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -85,6 +86,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [OperationalDataExportScheduleResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -145,14 +156,8 @@ private constructor(
         /** A list of the entities whose operational data is included in the data export. */
         fun addOperationalDataType(operationalDataType: OperationalDataType) = apply {
             operationalDataTypes =
-                (operationalDataTypes ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(operationalDataType)
+                (operationalDataTypes ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("operationalDataTypes", it).add(operationalDataType)
                 }
         }
 

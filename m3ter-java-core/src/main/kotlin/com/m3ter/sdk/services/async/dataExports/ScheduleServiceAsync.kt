@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async.dataExports
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.DataExportScheduleCreateParams
 import com.m3ter.sdk.models.DataExportScheduleCreateResponse
 import com.m3ter.sdk.models.DataExportScheduleDeleteParams
@@ -18,6 +20,11 @@ import com.m3ter.sdk.models.DataExportScheduleUpdateResponse
 import java.util.concurrent.CompletableFuture
 
 interface ScheduleServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Data Export Schedule. Each Schedule can be configured for exporting _only one_
@@ -113,4 +120,66 @@ interface ScheduleServiceAsync {
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DataExportScheduleDeleteResponse>
+
+    /**
+     * A view of [ScheduleServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/schedules`, but
+         * is otherwise the same as [ScheduleServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DataExportScheduleCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleCreateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules/{id}`,
+         * but is otherwise the same as [ScheduleServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportScheduleRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/dataexports/schedules/{id}`,
+         * but is otherwise the same as [ScheduleServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DataExportScheduleUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleUpdateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules`, but
+         * is otherwise the same as [ScheduleServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportScheduleListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/dataexports/schedules/{id}`, but is otherwise the same as
+         * [ScheduleServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DataExportScheduleDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>>
+    }
 }

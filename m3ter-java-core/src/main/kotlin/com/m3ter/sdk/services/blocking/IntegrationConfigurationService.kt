@@ -4,8 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.IntegrationConfiguration
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.IntegrationConfigurationCreateParams
 import com.m3ter.sdk.models.IntegrationConfigurationCreateResponse
 import com.m3ter.sdk.models.IntegrationConfigurationDeleteParams
@@ -15,11 +16,17 @@ import com.m3ter.sdk.models.IntegrationConfigurationEnableResponse
 import com.m3ter.sdk.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.sdk.models.IntegrationConfigurationListPage
 import com.m3ter.sdk.models.IntegrationConfigurationListParams
+import com.m3ter.sdk.models.IntegrationConfigurationResponse
 import com.m3ter.sdk.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateResponse
 
 interface IntegrationConfigurationService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Set the integration configuration for the entity. */
     @JvmOverloads
@@ -38,7 +45,7 @@ interface IntegrationConfigurationService {
     fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): IntegrationConfiguration
+    ): IntegrationConfigurationResponse
 
     /**
      * Update the integration configuration for the given UUID.
@@ -90,5 +97,91 @@ interface IntegrationConfigurationService {
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): IntegrationConfiguration
+    ): IntegrationConfigurationResponse
+
+    /**
+     * A view of [IntegrationConfigurationService] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/integrationconfigs`, but is
+         * otherwise the same as [IntegrationConfigurationService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: IntegrationConfigurationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs/{id}`, but
+         * is otherwise the same as [IntegrationConfigurationService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: IntegrationConfigurationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/integrationconfigs/{id}`, but
+         * is otherwise the same as [IntegrationConfigurationService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: IntegrationConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationUpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs`, but is
+         * otherwise the same as [IntegrationConfigurationService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: IntegrationConfigurationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/integrationconfigs/{id}`,
+         * but is otherwise the same as [IntegrationConfigurationService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: IntegrationConfigurationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationDeleteResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/integrationconfigs/{id}/enable`, but is otherwise the same as
+         * [IntegrationConfigurationService.enable].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun enable(
+            params: IntegrationConfigurationEnableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationEnableResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationconfigs/entity/{entityType}`, but is otherwise the same
+         * as [IntegrationConfigurationService.getByEntity].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getByEntity(
+            params: IntegrationConfigurationGetByEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationResponse>
+    }
 }

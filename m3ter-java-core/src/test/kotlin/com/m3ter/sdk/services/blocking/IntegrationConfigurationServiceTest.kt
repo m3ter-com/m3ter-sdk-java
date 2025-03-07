@@ -75,12 +75,12 @@ class IntegrationConfigurationServiceTest {
                 .build()
         val integrationConfigurationService = client.integrationConfigurations()
 
-        val integrationConfiguration =
+        val integrationConfigurationResponse =
             integrationConfigurationService.retrieve(
                 IntegrationConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        integrationConfiguration.validate()
+        integrationConfigurationResponse.validate()
     }
 
     @Test
@@ -201,7 +201,7 @@ class IntegrationConfigurationServiceTest {
                 .build()
         val integrationConfigurationService = client.integrationConfigurations()
 
-        val integrationConfiguration =
+        val integrationConfigurationResponse =
             integrationConfigurationService.getByEntity(
                 IntegrationConfigurationGetByEntityParams.builder()
                     .orgId("orgId")
@@ -210,6 +210,6 @@ class IntegrationConfigurationServiceTest {
                     .build()
             )
 
-        integrationConfiguration.validate()
+        integrationConfigurationResponse.validate()
     }
 }
