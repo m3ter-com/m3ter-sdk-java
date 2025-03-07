@@ -29,7 +29,7 @@ class CounterPricingServiceTest {
                 .build()
         val counterPricingService = client.counterPricings()
 
-        val counterPricing =
+        val counterPricingResponse =
             counterPricingService.create(
                 CounterPricingCreateParams.builder()
                     .orgId("orgId")
@@ -59,7 +59,7 @@ class CounterPricingServiceTest {
                     .build()
             )
 
-        counterPricing.validate()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -74,12 +74,12 @@ class CounterPricingServiceTest {
                 .build()
         val counterPricingService = client.counterPricings()
 
-        val counterPricing =
+        val counterPricingResponse =
             counterPricingService.retrieve(
                 CounterPricingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        counterPricing.validate()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -94,7 +94,7 @@ class CounterPricingServiceTest {
                 .build()
         val counterPricingService = client.counterPricings()
 
-        val counterPricing =
+        val counterPricingResponse =
             counterPricingService.update(
                 CounterPricingUpdateParams.builder()
                     .orgId("orgId")
@@ -125,7 +125,7 @@ class CounterPricingServiceTest {
                     .build()
             )
 
-        counterPricing.validate()
+        counterPricingResponse.validate()
     }
 
     @Test
@@ -158,11 +158,11 @@ class CounterPricingServiceTest {
                 .build()
         val counterPricingService = client.counterPricings()
 
-        val counterPricing =
+        val counterPricingResponse =
             counterPricingService.delete(
                 CounterPricingDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        counterPricing.validate()
+        counterPricingResponse.validate()
     }
 }

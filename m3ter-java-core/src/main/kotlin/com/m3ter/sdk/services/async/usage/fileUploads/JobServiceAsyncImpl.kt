@@ -14,7 +14,7 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.FileUploadJob
+import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.sdk.models.UsageFileUploadJobListPageAsync
@@ -34,7 +34,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
     override fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<FileUploadJob> =
+    ): CompletableFuture<FileUploadJobResponse> =
         // get /organizations/{orgId}/fileuploads/measurements/jobs/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -57,13 +57,14 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<FileUploadJob> =
-            jsonHandler<FileUploadJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<FileUploadJobResponse> =
+            jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<FileUploadJob>> {
+        ): CompletableFuture<HttpResponseFor<FileUploadJobResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

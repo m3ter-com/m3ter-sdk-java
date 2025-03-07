@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.BillConfig
+import com.m3ter.sdk.models.BillConfigResponse
 import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -24,7 +24,7 @@ interface BillConfigServiceAsync {
     fun retrieve(
         params: BillConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillConfig>
+    ): CompletableFuture<BillConfigResponse>
 
     /**
      * Update the Organization-wide BillConfig.
@@ -37,7 +37,7 @@ interface BillConfigServiceAsync {
     fun update(
         params: BillConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillConfig>
+    ): CompletableFuture<BillConfigResponse>
 
     /**
      * A view of [BillConfigServiceAsync] that provides access to raw HTTP responses for each
@@ -54,7 +54,7 @@ interface BillConfigServiceAsync {
         fun retrieve(
             params: BillConfigRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillConfig>>
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
@@ -65,6 +65,6 @@ interface BillConfigServiceAsync {
         fun update(
             params: BillConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillConfig>>
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
     }
 }

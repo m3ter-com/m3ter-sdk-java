@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
 import com.m3ter.sdk.models.PlanGroupLinkListPageAsync
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
     override fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanGroupLink> =
+    ): CompletableFuture<PlanGroupLinkResponse> =
         // post /organizations/{orgId}/plangrouplinks
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanGroupLink> =
+    ): CompletableFuture<PlanGroupLinkResponse> =
         // get /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanGroupLink> =
+    ): CompletableFuture<PlanGroupLinkResponse> =
         // put /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
     override fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PlanGroupLink> =
+    ): CompletableFuture<PlanGroupLinkResponse> =
         // delete /organizations/{orgId}/plangrouplinks/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanGroupLinkCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>> {
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +104,14 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val retrieveHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PlanGroupLinkRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>> {
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +139,14 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val updateHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanGroupLinkUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>> {
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +212,14 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val deleteHandler: Handler<PlanGroupLink> =
-            jsonHandler<PlanGroupLink>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PlanGroupLinkResponse> =
+            jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PlanGroupLink>> {
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

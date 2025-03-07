@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
 import com.m3ter.sdk.models.PlanGroupListPageAsync
 import com.m3ter.sdk.models.PlanGroupListParams
+import com.m3ter.sdk.models.PlanGroupResponse
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -31,7 +31,7 @@ interface PlanGroupServiceAsync {
     fun create(
         params: PlanGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroup>
+    ): CompletableFuture<PlanGroupResponse>
 
     /**
      * Retrieve a specific PlanGroup with the given UUID.
@@ -43,7 +43,7 @@ interface PlanGroupServiceAsync {
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroup>
+    ): CompletableFuture<PlanGroupResponse>
 
     /**
      * Update the PlanGroup with the given UUID.
@@ -59,7 +59,7 @@ interface PlanGroupServiceAsync {
     fun update(
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroup>
+    ): CompletableFuture<PlanGroupResponse>
 
     /**
      * Retrieve a list of PlanGroups.
@@ -84,7 +84,7 @@ interface PlanGroupServiceAsync {
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanGroup>
+    ): CompletableFuture<PlanGroupResponse>
 
     /**
      * A view of [PlanGroupServiceAsync] that provides access to raw HTTP responses for each method.
@@ -100,7 +100,7 @@ interface PlanGroupServiceAsync {
         fun create(
             params: PlanGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups/{id}`, but is
@@ -111,7 +111,7 @@ interface PlanGroupServiceAsync {
         fun retrieve(
             params: PlanGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
@@ -122,7 +122,7 @@ interface PlanGroupServiceAsync {
         fun update(
             params: PlanGroupUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups`, but is otherwise
@@ -144,6 +144,6 @@ interface PlanGroupServiceAsync {
         fun delete(
             params: PlanGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroup>>
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
     }
 }

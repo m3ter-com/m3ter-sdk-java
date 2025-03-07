@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
 import com.m3ter.sdk.models.CommitmentListPageAsync
 import com.m3ter.sdk.models.CommitmentListParams
+import com.m3ter.sdk.models.CommitmentResponse
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
 import com.m3ter.sdk.models.CommitmentSearchResponse
@@ -38,21 +38,21 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
     override fun create(
         params: CommitmentCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Commitment> =
+    ): CompletableFuture<CommitmentResponse> =
         // post /organizations/{orgId}/commitments
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Commitment> =
+    ): CompletableFuture<CommitmentResponse> =
         // get /organizations/{orgId}/commitments/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Commitment> =
+    ): CompletableFuture<CommitmentResponse> =
         // put /organizations/{orgId}/commitments/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -66,7 +66,7 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
     override fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Commitment> =
+    ): CompletableFuture<CommitmentResponse> =
         // delete /organizations/{orgId}/commitments/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -82,13 +82,13 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CommitmentCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Commitment>> {
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -112,13 +112,13 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val retrieveHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Commitment>> {
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -146,13 +146,13 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val updateHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Commitment>> {
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -218,13 +218,13 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val deleteHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Commitment>> {
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

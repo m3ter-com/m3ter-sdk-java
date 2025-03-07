@@ -27,7 +27,7 @@ class PlanGroupLinkServiceTest {
                 .build()
         val planGroupLinkService = client.planGroupLinks()
 
-        val planGroupLink =
+        val planGroupLinkResponse =
             planGroupLinkService.create(
                 PlanGroupLinkCreateParams.builder()
                     .orgId("orgId")
@@ -37,7 +37,7 @@ class PlanGroupLinkServiceTest {
                     .build()
             )
 
-        planGroupLink.validate()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -52,12 +52,12 @@ class PlanGroupLinkServiceTest {
                 .build()
         val planGroupLinkService = client.planGroupLinks()
 
-        val planGroupLink =
+        val planGroupLinkResponse =
             planGroupLinkService.retrieve(
                 PlanGroupLinkRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        planGroupLink.validate()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -72,7 +72,7 @@ class PlanGroupLinkServiceTest {
                 .build()
         val planGroupLinkService = client.planGroupLinks()
 
-        val planGroupLink =
+        val planGroupLinkResponse =
             planGroupLinkService.update(
                 PlanGroupLinkUpdateParams.builder()
                     .orgId("orgId")
@@ -83,7 +83,7 @@ class PlanGroupLinkServiceTest {
                     .build()
             )
 
-        planGroupLink.validate()
+        planGroupLinkResponse.validate()
     }
 
     @Test
@@ -116,11 +116,11 @@ class PlanGroupLinkServiceTest {
                 .build()
         val planGroupLinkService = client.planGroupLinks()
 
-        val planGroupLink =
+        val planGroupLinkResponse =
             planGroupLinkService.delete(
                 PlanGroupLinkDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        planGroupLink.validate()
+        planGroupLinkResponse.validate()
     }
 }

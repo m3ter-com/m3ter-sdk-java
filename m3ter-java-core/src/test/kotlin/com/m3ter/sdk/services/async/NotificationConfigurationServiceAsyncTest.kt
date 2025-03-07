@@ -27,7 +27,7 @@ class NotificationConfigurationServiceAsyncTest {
                 .build()
         val notificationConfigurationServiceAsync = client.notificationConfigurations()
 
-        val notificationConfigurationFuture =
+        val notificationConfigurationResponseFuture =
             notificationConfigurationServiceAsync.create(
                 NotificationConfigurationCreateParams.builder()
                     .orgId("orgId")
@@ -42,8 +42,8 @@ class NotificationConfigurationServiceAsyncTest {
                     .build()
             )
 
-        val notificationConfiguration = notificationConfigurationFuture.get()
-        notificationConfiguration.validate()
+        val notificationConfigurationResponse = notificationConfigurationResponseFuture.get()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -58,13 +58,13 @@ class NotificationConfigurationServiceAsyncTest {
                 .build()
         val notificationConfigurationServiceAsync = client.notificationConfigurations()
 
-        val notificationConfigurationFuture =
+        val notificationConfigurationResponseFuture =
             notificationConfigurationServiceAsync.retrieve(
                 NotificationConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val notificationConfiguration = notificationConfigurationFuture.get()
-        notificationConfiguration.validate()
+        val notificationConfigurationResponse = notificationConfigurationResponseFuture.get()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -79,7 +79,7 @@ class NotificationConfigurationServiceAsyncTest {
                 .build()
         val notificationConfigurationServiceAsync = client.notificationConfigurations()
 
-        val notificationConfigurationFuture =
+        val notificationConfigurationResponseFuture =
             notificationConfigurationServiceAsync.update(
                 NotificationConfigurationUpdateParams.builder()
                     .orgId("orgId")
@@ -95,8 +95,8 @@ class NotificationConfigurationServiceAsyncTest {
                     .build()
             )
 
-        val notificationConfiguration = notificationConfigurationFuture.get()
-        notificationConfiguration.validate()
+        val notificationConfigurationResponse = notificationConfigurationResponseFuture.get()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -132,12 +132,12 @@ class NotificationConfigurationServiceAsyncTest {
                 .build()
         val notificationConfigurationServiceAsync = client.notificationConfigurations()
 
-        val notificationConfigurationFuture =
+        val notificationConfigurationResponseFuture =
             notificationConfigurationServiceAsync.delete(
                 NotificationConfigurationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val notificationConfiguration = notificationConfigurationFuture.get()
-        notificationConfiguration.validate()
+        val notificationConfigurationResponse = notificationConfigurationResponseFuture.get()
+        notificationConfigurationResponse.validate()
     }
 }

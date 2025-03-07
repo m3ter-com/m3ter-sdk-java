@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Pricing
 import com.m3ter.sdk.models.PricingCreateParams
 import com.m3ter.sdk.models.PricingDeleteParams
 import com.m3ter.sdk.models.PricingListPageAsync
 import com.m3ter.sdk.models.PricingListParams
+import com.m3ter.sdk.models.PricingResponse
 import com.m3ter.sdk.models.PricingRetrieveParams
 import com.m3ter.sdk.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Pricing> =
+    ): CompletableFuture<PricingResponse> =
         // post /organizations/{orgId}/pricings
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Pricing> =
+    ): CompletableFuture<PricingResponse> =
         // get /organizations/{orgId}/pricings/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Pricing> =
+    ): CompletableFuture<PricingResponse> =
         // put /organizations/{orgId}/pricings/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Pricing> =
+    ): CompletableFuture<PricingResponse> =
         // delete /organizations/{orgId}/pricings/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,13 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: PricingCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Pricing>> {
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +103,13 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val retrieveHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Pricing>> {
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +137,13 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: PricingUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Pricing>> {
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +209,13 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val deleteHandler: Handler<Pricing> =
-            jsonHandler<Pricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PricingResponse> =
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Pricing>> {
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

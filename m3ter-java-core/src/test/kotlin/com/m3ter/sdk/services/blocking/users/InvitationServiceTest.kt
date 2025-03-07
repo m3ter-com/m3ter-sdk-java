@@ -26,7 +26,7 @@ class InvitationServiceTest {
                 .build()
         val invitationService = client.users().invitations()
 
-        val invitation =
+        val invitationResponse =
             invitationService.create(
                 UserInvitationCreateParams.builder()
                     .orgId("orgId")
@@ -42,7 +42,7 @@ class InvitationServiceTest {
                     .build()
             )
 
-        invitation.validate()
+        invitationResponse.validate()
     }
 
     @Test
@@ -57,12 +57,12 @@ class InvitationServiceTest {
                 .build()
         val invitationService = client.users().invitations()
 
-        val invitation =
+        val invitationResponse =
             invitationService.retrieve(
                 UserInvitationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        invitation.validate()
+        invitationResponse.validate()
     }
 
     @Test

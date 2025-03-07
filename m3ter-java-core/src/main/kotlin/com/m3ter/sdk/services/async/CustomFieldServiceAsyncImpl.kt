@@ -17,7 +17,7 @@ import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.CustomFieldRetrieveParams
 import com.m3ter.sdk.models.CustomFieldUpdateParams
-import com.m3ter.sdk.models.CustomFields
+import com.m3ter.sdk.models.CustomFieldsResponse
 import java.util.concurrent.CompletableFuture
 
 class CustomFieldServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,14 +32,14 @@ class CustomFieldServiceAsyncImpl internal constructor(private val clientOptions
     override fun retrieve(
         params: CustomFieldRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CustomFields> =
+    ): CompletableFuture<CustomFieldsResponse> =
         // get /organizations/{orgId}/customfields
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CustomFieldUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CustomFields> =
+    ): CompletableFuture<CustomFieldsResponse> =
         // put /organizations/{orgId}/customfields
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -48,13 +48,14 @@ class CustomFieldServiceAsyncImpl internal constructor(private val clientOptions
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<CustomFields> =
-            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CustomFieldsResponse> =
+            jsonHandler<CustomFieldsResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CustomFieldRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CustomFields>> {
+        ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -77,13 +78,14 @@ class CustomFieldServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val updateHandler: Handler<CustomFields> =
-            jsonHandler<CustomFields>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CustomFieldsResponse> =
+            jsonHandler<CustomFieldsResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CustomFieldUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CustomFields>> {
+        ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

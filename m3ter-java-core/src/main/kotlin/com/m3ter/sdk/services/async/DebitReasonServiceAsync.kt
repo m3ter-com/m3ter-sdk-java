@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.DebitReason
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
 import com.m3ter.sdk.models.DebitReasonListPageAsync
 import com.m3ter.sdk.models.DebitReasonListParams
+import com.m3ter.sdk.models.DebitReasonResponse
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -32,21 +32,21 @@ interface DebitReasonServiceAsync {
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitReason>
+    ): CompletableFuture<DebitReasonResponse>
 
     /** Retrieve the Debit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitReason>
+    ): CompletableFuture<DebitReasonResponse>
 
     /** Update the Debit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitReason>
+    ): CompletableFuture<DebitReasonResponse>
 
     /**
      * Retrieve a list of the Debit Reason entities created for your Organization. You can filter
@@ -64,7 +64,7 @@ interface DebitReasonServiceAsync {
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitReason>
+    ): CompletableFuture<DebitReasonResponse>
 
     /**
      * A view of [DebitReasonServiceAsync] that provides access to raw HTTP responses for each
@@ -81,7 +81,7 @@ interface DebitReasonServiceAsync {
         fun create(
             params: DebitReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitReason>>
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons/{id}`,
@@ -92,7 +92,7 @@ interface DebitReasonServiceAsync {
         fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitReason>>
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/debitreasons/{id}`,
@@ -103,7 +103,7 @@ interface DebitReasonServiceAsync {
         fun update(
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitReason>>
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons`, but
@@ -126,6 +126,6 @@ interface DebitReasonServiceAsync {
         fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitReason>>
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
     }
 }

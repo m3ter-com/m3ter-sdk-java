@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
 import com.m3ter.sdk.models.CommitmentListPage
 import com.m3ter.sdk.models.CommitmentListParams
+import com.m3ter.sdk.models.CommitmentResponse
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
 import com.m3ter.sdk.models.CommitmentSearchResponse
@@ -43,7 +43,7 @@ interface CommitmentService {
     fun create(
         params: CommitmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Commitment
+    ): CommitmentResponse
 
     /**
      * Retrieve a specific Commitment.
@@ -56,7 +56,7 @@ interface CommitmentService {
     fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Commitment
+    ): CommitmentResponse
 
     /**
      * Modify a specific Commitment.
@@ -69,7 +69,7 @@ interface CommitmentService {
     fun update(
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Commitment
+    ): CommitmentResponse
 
     /**
      * Retrieve a list of Commitments.
@@ -94,7 +94,7 @@ interface CommitmentService {
     fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Commitment
+    ): CommitmentResponse
 
     /**
      * Search for commitment entities.
@@ -121,7 +121,7 @@ interface CommitmentService {
         fun create(
             params: CommitmentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Commitment>
+        ): HttpResponseFor<CommitmentResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/{id}`, but is
@@ -132,7 +132,7 @@ interface CommitmentService {
         fun retrieve(
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Commitment>
+        ): HttpResponseFor<CommitmentResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/commitments/{id}`, but is
@@ -143,7 +143,7 @@ interface CommitmentService {
         fun update(
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Commitment>
+        ): HttpResponseFor<CommitmentResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments`, but is
@@ -165,7 +165,7 @@ interface CommitmentService {
         fun delete(
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Commitment>
+        ): HttpResponseFor<CommitmentResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/search`, but is

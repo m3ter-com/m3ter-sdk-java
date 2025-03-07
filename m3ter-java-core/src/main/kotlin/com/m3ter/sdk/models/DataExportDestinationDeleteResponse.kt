@@ -195,8 +195,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun toDataExportDestination(): DataExportDestination =
-        DataExportDestination.builder()
+    fun toDataExportDestinationResponse(): DataExportDestinationResponse =
+        DataExportDestinationResponse.builder()
             .id(id)
             .version(version)
             .code(code)

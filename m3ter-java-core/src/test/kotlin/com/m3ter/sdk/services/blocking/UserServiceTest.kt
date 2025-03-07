@@ -4,7 +4,7 @@ package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClient
-import com.m3ter.sdk.models.PermissionStatement
+import com.m3ter.sdk.models.PermissionStatementResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
 import com.m3ter.sdk.models.UserGetUserGroupsParams
 import com.m3ter.sdk.models.UserListParams
@@ -31,10 +31,10 @@ class UserServiceTest {
                 .build()
         val userService = client.users()
 
-        val user =
+        val userResponse =
             userService.retrieve(UserRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        user.validate()
+        userResponse.validate()
     }
 
     @Test
@@ -49,16 +49,16 @@ class UserServiceTest {
                 .build()
         val userService = client.users()
 
-        val user =
+        val userResponse =
             userService.update(
                 UserUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -66,7 +66,7 @@ class UserServiceTest {
                     .build()
             )
 
-        user.validate()
+        userResponse.validate()
     }
 
     @Test
@@ -98,7 +98,7 @@ class UserServiceTest {
                 .build()
         val userService = client.users()
 
-        val permissionPolicy =
+        val permissionPolicyResponse =
             userService.getPermissions(
                 UserGetPermissionsParams.builder()
                     .orgId("orgId")
@@ -108,7 +108,7 @@ class UserServiceTest {
                     .build()
             )
 
-        permissionPolicy.validate()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -123,7 +123,7 @@ class UserServiceTest {
                 .build()
         val userService = client.users()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             userService.getUserGroups(
                 UserGetUserGroupsParams.builder()
                     .orgId("orgId")
@@ -133,7 +133,7 @@ class UserServiceTest {
                     .build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test

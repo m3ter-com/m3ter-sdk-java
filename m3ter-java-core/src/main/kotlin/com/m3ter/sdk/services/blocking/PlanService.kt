@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Plan
 import com.m3ter.sdk.models.PlanCreateParams
 import com.m3ter.sdk.models.PlanDeleteParams
 import com.m3ter.sdk.models.PlanListPage
 import com.m3ter.sdk.models.PlanListParams
+import com.m3ter.sdk.models.PlanResponse
 import com.m3ter.sdk.models.PlanRetrieveParams
 import com.m3ter.sdk.models.PlanUpdateParams
 
@@ -27,14 +27,14 @@ interface PlanService {
     fun create(
         params: PlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Plan
+    ): PlanResponse
 
     /** Retrieve the Plan with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Plan
+    ): PlanResponse
 
     /**
      * Update the Plan with the given UUID.
@@ -47,7 +47,7 @@ interface PlanService {
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Plan
+    ): PlanResponse
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     @JvmOverloads
@@ -61,7 +61,7 @@ interface PlanService {
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Plan
+    ): PlanResponse
 
     /** A view of [PlanService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -75,7 +75,7 @@ interface PlanService {
         fun create(
             params: PlanCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Plan>
+        ): HttpResponseFor<PlanResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans/{id}`, but is otherwise
@@ -86,7 +86,7 @@ interface PlanService {
         fun retrieve(
             params: PlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Plan>
+        ): HttpResponseFor<PlanResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
@@ -97,7 +97,7 @@ interface PlanService {
         fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Plan>
+        ): HttpResponseFor<PlanResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
@@ -119,6 +119,6 @@ interface PlanService {
         fun delete(
             params: PlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Plan>
+        ): HttpResponseFor<PlanResponse>
     }
 }

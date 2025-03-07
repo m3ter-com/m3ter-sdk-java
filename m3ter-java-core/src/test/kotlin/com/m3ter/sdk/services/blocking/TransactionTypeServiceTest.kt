@@ -27,7 +27,7 @@ class TransactionTypeServiceTest {
                 .build()
         val transactionTypeService = client.transactionTypes()
 
-        val transactionType =
+        val transactionTypeResponse =
             transactionTypeService.create(
                 TransactionTypeCreateParams.builder()
                     .orgId("orgId")
@@ -38,7 +38,7 @@ class TransactionTypeServiceTest {
                     .build()
             )
 
-        transactionType.validate()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -53,12 +53,12 @@ class TransactionTypeServiceTest {
                 .build()
         val transactionTypeService = client.transactionTypes()
 
-        val transactionType =
+        val transactionTypeResponse =
             transactionTypeService.retrieve(
                 TransactionTypeRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        transactionType.validate()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -73,7 +73,7 @@ class TransactionTypeServiceTest {
                 .build()
         val transactionTypeService = client.transactionTypes()
 
-        val transactionType =
+        val transactionTypeResponse =
             transactionTypeService.update(
                 TransactionTypeUpdateParams.builder()
                     .orgId("orgId")
@@ -85,7 +85,7 @@ class TransactionTypeServiceTest {
                     .build()
             )
 
-        transactionType.validate()
+        transactionTypeResponse.validate()
     }
 
     @Test
@@ -118,11 +118,11 @@ class TransactionTypeServiceTest {
                 .build()
         val transactionTypeService = client.transactionTypes()
 
-        val transactionType =
+        val transactionTypeResponse =
             transactionTypeService.delete(
                 TransactionTypeDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        transactionType.validate()
+        transactionTypeResponse.validate()
     }
 }

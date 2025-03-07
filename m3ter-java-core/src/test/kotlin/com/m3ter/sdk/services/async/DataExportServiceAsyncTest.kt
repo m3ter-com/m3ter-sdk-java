@@ -24,7 +24,7 @@ class DataExportServiceAsyncTest {
                 .build()
         val dataExportServiceAsync = client.dataExports()
 
-        val adhocExportFuture =
+        val adHocResponseFuture =
             dataExportServiceAsync.createAdhoc(
                 DataExportCreateAdhocParams.builder()
                     .orgId("orgId")
@@ -40,7 +40,7 @@ class DataExportServiceAsyncTest {
                     .build()
             )
 
-        val adhocExport = adhocExportFuture.get()
-        adhocExport.validate()
+        val adHocResponse = adHocResponseFuture.get()
+        adHocResponse.validate()
     }
 }

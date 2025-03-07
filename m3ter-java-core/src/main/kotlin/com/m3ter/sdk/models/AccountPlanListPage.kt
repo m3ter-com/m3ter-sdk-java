@@ -37,7 +37,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<AccountPlan> = response().data()
+    fun data(): List<AccountPlanResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -95,18 +95,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<AccountPlan>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<AccountPlanResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<AccountPlan> = data.getNullable("data") ?: listOf()
+        fun data(): List<AccountPlanResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<AccountPlan>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<AccountPlanResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -150,7 +151,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<AccountPlan>> = JsonMissing.of()
+            private var data: JsonField<List<AccountPlanResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -161,9 +162,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<AccountPlan>) = data(JsonField.of(data))
+            fun data(data: List<AccountPlanResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<AccountPlan>>) = apply { this.data = data }
+            fun data(data: JsonField<List<AccountPlanResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -177,9 +178,9 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: AccountPlanListPage) : Iterable<AccountPlan> {
+    class AutoPager(private val firstPage: AccountPlanListPage) : Iterable<AccountPlanResponse> {
 
-        override fun iterator(): Iterator<AccountPlan> = iterator {
+        override fun iterator(): Iterator<AccountPlanResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -191,7 +192,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<AccountPlan> {
+        fun stream(): Stream<AccountPlanResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

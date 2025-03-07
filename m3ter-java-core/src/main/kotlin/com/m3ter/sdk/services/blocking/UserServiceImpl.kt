@@ -17,9 +17,8 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PermissionPolicy
-import com.m3ter.sdk.models.ResourceGroup
-import com.m3ter.sdk.models.User
+import com.m3ter.sdk.models.PermissionPolicyResponse
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
 import com.m3ter.sdk.models.UserGetUserGroupsParams
 import com.m3ter.sdk.models.UserListPage
@@ -27,6 +26,7 @@ import com.m3ter.sdk.models.UserListParams
 import com.m3ter.sdk.models.UserMeParams
 import com.m3ter.sdk.models.UserMeResponse
 import com.m3ter.sdk.models.UserResendPasswordParams
+import com.m3ter.sdk.models.UserResponse
 import com.m3ter.sdk.models.UserRetrieveParams
 import com.m3ter.sdk.models.UserUpdateParams
 import com.m3ter.sdk.services.blocking.users.InvitationService
@@ -44,11 +44,14 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun invitations(): InvitationService = invitations
 
-    override fun retrieve(params: UserRetrieveParams, requestOptions: RequestOptions): User =
+    override fun retrieve(
+        params: UserRetrieveParams,
+        requestOptions: RequestOptions,
+    ): UserResponse =
         // get /organizations/{orgId}/users/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: UserUpdateParams, requestOptions: RequestOptions): User =
+    override fun update(params: UserUpdateParams, requestOptions: RequestOptions): UserResponse =
         // put /organizations/{orgId}/users/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -59,14 +62,14 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions,
-    ): PermissionPolicy =
+    ): PermissionPolicyResponse =
         // get /organizations/{orgId}/users/{id}/permissions
         withRawResponse().getPermissions(params, requestOptions).parse()
 
     override fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions,
-    ): ResourceGroup =
+    ): ResourceGroupResponse =
         // get /organizations/{orgId}/users/{id}/usergroups
         withRawResponse().getUserGroups(params, requestOptions).parse()
 
@@ -90,13 +93,13 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         override fun invitations(): InvitationService.WithRawResponse = invitations
 
-        private val retrieveHandler: Handler<User> =
-            jsonHandler<User>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<UserResponse> =
+            jsonHandler<UserResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UserRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<User> {
+        ): HttpResponseFor<UserResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -121,13 +124,13 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val updateHandler: Handler<User> =
-            jsonHandler<User>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<UserResponse> =
+            jsonHandler<UserResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: UserUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<User> {
+        ): HttpResponseFor<UserResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -181,13 +184,14 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val getPermissionsHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val getPermissionsHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun getPermissions(
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PermissionPolicy> {
+        ): HttpResponseFor<PermissionPolicyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -213,13 +217,14 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val getUserGroupsHandler: Handler<ResourceGroup> =
-            jsonHandler<ResourceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val getUserGroupsHandler: Handler<ResourceGroupResponse> =
+            jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun getUserGroups(
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ResourceGroup> {
+        ): HttpResponseFor<ResourceGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

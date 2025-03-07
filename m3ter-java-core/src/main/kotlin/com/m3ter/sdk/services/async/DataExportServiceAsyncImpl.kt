@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.AdhocExport
+import com.m3ter.sdk.models.AdHocResponse
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsync
 import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsyncImpl
@@ -51,7 +51,7 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
     override fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AdhocExport> =
+    ): CompletableFuture<AdHocResponse> =
         // post /organizations/{orgId}/dataexports/adhoc
         withRawResponse().createAdhoc(params, requestOptions).thenApply { it.parse() }
 
@@ -78,13 +78,13 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
 
         override fun schedules(): ScheduleServiceAsync.WithRawResponse = schedules
 
-        private val createAdhocHandler: Handler<AdhocExport> =
-            jsonHandler<AdhocExport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createAdhocHandler: Handler<AdHocResponse> =
+            jsonHandler<AdHocResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AdhocExport>> {
+        ): CompletableFuture<HttpResponseFor<AdHocResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

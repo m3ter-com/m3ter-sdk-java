@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
 import com.m3ter.sdk.models.PermissionPolicyAddToSupportUserParams
@@ -28,6 +27,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupResponse
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserResponse
+import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 
@@ -70,14 +70,14 @@ interface PermissionPolicyService {
     fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Retrieve the permission policy for the UUID */
     @JvmOverloads
     fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /**
      * Update a Permission Policy for the UUID
@@ -110,7 +110,7 @@ interface PermissionPolicyService {
     fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Retrieve a list of PermissionPolicy entities */
     @JvmOverloads
@@ -124,7 +124,7 @@ interface PermissionPolicyService {
     fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Add a permission policy to a service user. */
     @JvmOverloads
@@ -197,7 +197,7 @@ interface PermissionPolicyService {
         fun create(
             params: PermissionPolicyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PermissionPolicy>
+        ): HttpResponseFor<PermissionPolicyResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies/{id}`, but
@@ -208,7 +208,7 @@ interface PermissionPolicyService {
         fun retrieve(
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PermissionPolicy>
+        ): HttpResponseFor<PermissionPolicyResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/permissionpolicies/{id}`, but
@@ -219,7 +219,7 @@ interface PermissionPolicyService {
         fun update(
             params: PermissionPolicyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PermissionPolicy>
+        ): HttpResponseFor<PermissionPolicyResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies`, but is
@@ -241,7 +241,7 @@ interface PermissionPolicyService {
         fun delete(
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PermissionPolicy>
+        ): HttpResponseFor<PermissionPolicyResponse>
 
         /**
          * Returns a raw HTTP response for `post

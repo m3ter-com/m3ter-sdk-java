@@ -27,7 +27,7 @@ class ScheduledEventConfigurationServiceTest {
                 .build()
         val scheduledEventConfigurationService = client.scheduledEventConfigurations()
 
-        val scheduledEventConfiguration =
+        val scheduledEventConfigurationResponse =
             scheduledEventConfigurationService.create(
                 ScheduledEventConfigurationCreateParams.builder()
                     .orgId("orgId")
@@ -39,7 +39,7 @@ class ScheduledEventConfigurationServiceTest {
                     .build()
             )
 
-        scheduledEventConfiguration.validate()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -54,12 +54,12 @@ class ScheduledEventConfigurationServiceTest {
                 .build()
         val scheduledEventConfigurationService = client.scheduledEventConfigurations()
 
-        val scheduledEventConfiguration =
+        val scheduledEventConfigurationResponse =
             scheduledEventConfigurationService.retrieve(
                 ScheduledEventConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        scheduledEventConfiguration.validate()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -74,7 +74,7 @@ class ScheduledEventConfigurationServiceTest {
                 .build()
         val scheduledEventConfigurationService = client.scheduledEventConfigurations()
 
-        val scheduledEventConfiguration =
+        val scheduledEventConfigurationResponse =
             scheduledEventConfigurationService.update(
                 ScheduledEventConfigurationUpdateParams.builder()
                     .orgId("orgId")
@@ -87,7 +87,7 @@ class ScheduledEventConfigurationServiceTest {
                     .build()
             )
 
-        scheduledEventConfiguration.validate()
+        scheduledEventConfigurationResponse.validate()
     }
 
     @Test
@@ -122,11 +122,11 @@ class ScheduledEventConfigurationServiceTest {
                 .build()
         val scheduledEventConfigurationService = client.scheduledEventConfigurations()
 
-        val scheduledEventConfiguration =
+        val scheduledEventConfigurationResponse =
             scheduledEventConfigurationService.delete(
                 ScheduledEventConfigurationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        scheduledEventConfiguration.validate()
+        scheduledEventConfigurationResponse.validate()
     }
 }

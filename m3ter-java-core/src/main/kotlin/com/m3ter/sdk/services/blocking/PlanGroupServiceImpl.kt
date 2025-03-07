@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PlanGroup
 import com.m3ter.sdk.models.PlanGroupCreateParams
 import com.m3ter.sdk.models.PlanGroupDeleteParams
 import com.m3ter.sdk.models.PlanGroupListPage
 import com.m3ter.sdk.models.PlanGroupListParams
+import com.m3ter.sdk.models.PlanGroupResponse
 import com.m3ter.sdk.models.PlanGroupRetrieveParams
 import com.m3ter.sdk.models.PlanGroupUpdateParams
 
@@ -32,18 +32,24 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): PlanGroupService.WithRawResponse = withRawResponse
 
-    override fun create(params: PlanGroupCreateParams, requestOptions: RequestOptions): PlanGroup =
+    override fun create(
+        params: PlanGroupCreateParams,
+        requestOptions: RequestOptions,
+    ): PlanGroupResponse =
         // post /organizations/{orgId}/plangroups
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions,
-    ): PlanGroup =
+    ): PlanGroupResponse =
         // get /organizations/{orgId}/plangroups/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: PlanGroupUpdateParams, requestOptions: RequestOptions): PlanGroup =
+    override fun update(
+        params: PlanGroupUpdateParams,
+        requestOptions: RequestOptions,
+    ): PlanGroupResponse =
         // put /organizations/{orgId}/plangroups/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -54,7 +60,10 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
         // get /organizations/{orgId}/plangroups
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: PlanGroupDeleteParams, requestOptions: RequestOptions): PlanGroup =
+    override fun delete(
+        params: PlanGroupDeleteParams,
+        requestOptions: RequestOptions,
+    ): PlanGroupResponse =
         // delete /organizations/{orgId}/plangroups/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -63,13 +72,13 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PlanGroup> =
-            jsonHandler<PlanGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PlanGroupResponse> =
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: PlanGroupCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroup> {
+        ): HttpResponseFor<PlanGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -90,13 +99,13 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val retrieveHandler: Handler<PlanGroup> =
-            jsonHandler<PlanGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PlanGroupResponse> =
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PlanGroupRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroup> {
+        ): HttpResponseFor<PlanGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -121,13 +130,13 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<PlanGroup> =
-            jsonHandler<PlanGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PlanGroupResponse> =
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: PlanGroupUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroup> {
+        ): HttpResponseFor<PlanGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -181,13 +190,13 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val deleteHandler: Handler<PlanGroup> =
-            jsonHandler<PlanGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PlanGroupResponse> =
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: PlanGroupDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PlanGroup> {
+        ): HttpResponseFor<PlanGroupResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

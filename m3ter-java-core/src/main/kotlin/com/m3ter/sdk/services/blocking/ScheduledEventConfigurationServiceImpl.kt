@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.ScheduledEventConfiguration
 import com.m3ter.sdk.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationDeleteParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationListPage
 import com.m3ter.sdk.models.ScheduledEventConfigurationListParams
+import com.m3ter.sdk.models.ScheduledEventConfigurationResponse
 import com.m3ter.sdk.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationUpdateParams
 
@@ -37,21 +37,21 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions,
-    ): ScheduledEventConfiguration =
+    ): ScheduledEventConfigurationResponse =
         // post /organizations/{orgId}/scheduledevents/configurations
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions,
-    ): ScheduledEventConfiguration =
+    ): ScheduledEventConfigurationResponse =
         // get /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions,
-    ): ScheduledEventConfiguration =
+    ): ScheduledEventConfigurationResponse =
         // put /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -65,7 +65,7 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions,
-    ): ScheduledEventConfiguration =
+    ): ScheduledEventConfigurationResponse =
         // delete /organizations/{orgId}/scheduledevents/configurations/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -74,14 +74,14 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val createHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun create(
             params: ScheduledEventConfigurationCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ScheduledEventConfiguration> {
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -107,14 +107,14 @@ internal constructor(private val clientOptions: ClientOptions) :
             }
         }
 
-        private val retrieveHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ScheduledEventConfiguration> {
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -140,14 +140,14 @@ internal constructor(private val clientOptions: ClientOptions) :
             }
         }
 
-        private val updateHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun update(
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ScheduledEventConfiguration> {
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -213,14 +213,14 @@ internal constructor(private val clientOptions: ClientOptions) :
             }
         }
 
-        private val deleteHandler: Handler<ScheduledEventConfiguration> =
-            jsonHandler<ScheduledEventConfiguration>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<ScheduledEventConfigurationResponse> =
+            jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ScheduledEventConfiguration> {
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -9,7 +9,7 @@ import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.CustomFieldRetrieveParams
 import com.m3ter.sdk.models.CustomFieldUpdateParams
-import com.m3ter.sdk.models.CustomFields
+import com.m3ter.sdk.models.CustomFieldsResponse
 import java.util.concurrent.CompletableFuture
 
 interface CustomFieldServiceAsync {
@@ -26,14 +26,14 @@ interface CustomFieldServiceAsync {
     fun retrieve(
         params: CustomFieldRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CustomFields>
+    ): CompletableFuture<CustomFieldsResponse>
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     @JvmOverloads
     fun update(
         params: CustomFieldUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CustomFields>
+    ): CompletableFuture<CustomFieldsResponse>
 
     /**
      * A view of [CustomFieldServiceAsync] that provides access to raw HTTP responses for each
@@ -50,7 +50,7 @@ interface CustomFieldServiceAsync {
         fun retrieve(
             params: CustomFieldRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CustomFields>>
+        ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/customfields`, but is
@@ -61,6 +61,6 @@ interface CustomFieldServiceAsync {
         fun update(
             params: CustomFieldUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CustomFields>>
+        ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
     }
 }

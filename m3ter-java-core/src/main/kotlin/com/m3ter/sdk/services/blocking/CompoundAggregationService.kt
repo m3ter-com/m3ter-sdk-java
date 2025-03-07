@@ -8,11 +8,11 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.AggregationResponse
-import com.m3ter.sdk.models.CompoundAggregation
 import com.m3ter.sdk.models.CompoundAggregationCreateParams
 import com.m3ter.sdk.models.CompoundAggregationDeleteParams
 import com.m3ter.sdk.models.CompoundAggregationListPage
 import com.m3ter.sdk.models.CompoundAggregationListParams
+import com.m3ter.sdk.models.CompoundAggregationResponse
 import com.m3ter.sdk.models.CompoundAggregationRetrieveParams
 import com.m3ter.sdk.models.CompoundAggregationUpdateParams
 
@@ -45,7 +45,7 @@ interface CompoundAggregationService {
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompoundAggregation
+    ): CompoundAggregationResponse
 
     /**
      * Update the CompoundAggregation with the given UUID.
@@ -89,7 +89,7 @@ interface CompoundAggregationService {
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompoundAggregation
+    ): CompoundAggregationResponse
 
     /**
      * A view of [CompoundAggregationService] that provides access to raw HTTP responses for each
@@ -117,7 +117,7 @@ interface CompoundAggregationService {
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CompoundAggregation>
+        ): HttpResponseFor<CompoundAggregationResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
@@ -151,6 +151,6 @@ interface CompoundAggregationService {
         fun delete(
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CompoundAggregation>
+        ): HttpResponseFor<CompoundAggregationResponse>
     }
 }

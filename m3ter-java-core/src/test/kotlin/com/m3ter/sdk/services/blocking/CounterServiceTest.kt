@@ -27,7 +27,7 @@ class CounterServiceTest {
                 .build()
         val counterService = client.counters()
 
-        val counter =
+        val counterResponse =
             counterService.create(
                 CounterCreateParams.builder()
                     .orgId("orgId")
@@ -39,7 +39,7 @@ class CounterServiceTest {
                     .build()
             )
 
-        counter.validate()
+        counterResponse.validate()
     }
 
     @Test
@@ -54,10 +54,10 @@ class CounterServiceTest {
                 .build()
         val counterService = client.counters()
 
-        val counter =
+        val counterResponse =
             counterService.retrieve(CounterRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        counter.validate()
+        counterResponse.validate()
     }
 
     @Test
@@ -72,7 +72,7 @@ class CounterServiceTest {
                 .build()
         val counterService = client.counters()
 
-        val counter =
+        val counterResponse =
             counterService.update(
                 CounterUpdateParams.builder()
                     .orgId("orgId")
@@ -85,7 +85,7 @@ class CounterServiceTest {
                     .build()
             )
 
-        counter.validate()
+        counterResponse.validate()
     }
 
     @Test
@@ -117,9 +117,9 @@ class CounterServiceTest {
                 .build()
         val counterService = client.counters()
 
-        val counter =
+        val counterResponse =
             counterService.delete(CounterDeleteParams.builder().orgId("orgId").id("id").build())
 
-        counter.validate()
+        counterResponse.validate()
     }
 }

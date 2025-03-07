@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PlanGroupLink
 import com.m3ter.sdk.models.PlanGroupLinkCreateParams
 import com.m3ter.sdk.models.PlanGroupLinkDeleteParams
 import com.m3ter.sdk.models.PlanGroupLinkListPage
 import com.m3ter.sdk.models.PlanGroupLinkListParams
+import com.m3ter.sdk.models.PlanGroupLinkResponse
 import com.m3ter.sdk.models.PlanGroupLinkRetrieveParams
 import com.m3ter.sdk.models.PlanGroupLinkUpdateParams
 
@@ -27,21 +27,21 @@ interface PlanGroupLinkService {
     fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroupLink
+    ): PlanGroupLinkResponse
 
     /** Retrieve a PlanGroupLink for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroupLink
+    ): PlanGroupLinkResponse
 
     /** Update PlanGroupLink for the given UUID. */
     @JvmOverloads
     fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroupLink
+    ): PlanGroupLinkResponse
 
     /** Retrieve a list of PlanGroupLink entities */
     @JvmOverloads
@@ -55,7 +55,7 @@ interface PlanGroupLinkService {
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanGroupLink
+    ): PlanGroupLinkResponse
 
     /**
      * A view of [PlanGroupLinkService] that provides access to raw HTTP responses for each method.
@@ -71,7 +71,7 @@ interface PlanGroupLinkService {
         fun create(
             params: PlanGroupLinkCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroupLink>
+        ): HttpResponseFor<PlanGroupLinkResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks/{id}`, but is
@@ -82,7 +82,7 @@ interface PlanGroupLinkService {
         fun retrieve(
             params: PlanGroupLinkRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroupLink>
+        ): HttpResponseFor<PlanGroupLinkResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
@@ -93,7 +93,7 @@ interface PlanGroupLinkService {
         fun update(
             params: PlanGroupLinkUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroupLink>
+        ): HttpResponseFor<PlanGroupLinkResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks`, but is
@@ -115,6 +115,6 @@ interface PlanGroupLinkService {
         fun delete(
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<PlanGroupLink>
+        ): HttpResponseFor<PlanGroupLinkResponse>
     }
 }

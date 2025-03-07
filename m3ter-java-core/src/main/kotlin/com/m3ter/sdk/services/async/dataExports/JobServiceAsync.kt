@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async.dataExports
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.DataExportJob
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.sdk.models.DataExportJobListPageAsync
 import com.m3ter.sdk.models.DataExportJobListParams
+import com.m3ter.sdk.models.DataExportJobResponse
 import com.m3ter.sdk.models.DataExportJobRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -33,7 +33,7 @@ interface JobServiceAsync {
     fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DataExportJob>
+    ): CompletableFuture<DataExportJobResponse>
 
     /** Retrieve a list of Export Job entities. */
     @JvmOverloads
@@ -77,7 +77,7 @@ interface JobServiceAsync {
         fun retrieve(
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DataExportJob>>
+        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is

@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
 import com.m3ter.sdk.models.PermissionPolicyAddToSupportUserParams
@@ -36,6 +35,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupResponse
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserResponse
+import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -52,21 +52,21 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
     override fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PermissionPolicy> =
+    ): CompletableFuture<PermissionPolicyResponse> =
         // post /organizations/{orgId}/permissionpolicies
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PermissionPolicy> =
+    ): CompletableFuture<PermissionPolicyResponse> =
         // get /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PermissionPolicy> =
+    ): CompletableFuture<PermissionPolicyResponse> =
         // put /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -80,7 +80,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
     override fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<PermissionPolicy> =
+    ): CompletableFuture<PermissionPolicyResponse> =
         // delete /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -146,13 +146,14 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PermissionPolicyCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>> {
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -176,13 +177,14 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
                 }
         }
 
-        private val retrieveHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>> {
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -210,13 +212,14 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
                 }
         }
 
-        private val updateHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PermissionPolicyUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>> {
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -282,13 +285,14 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
                 }
         }
 
-        private val deleteHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>> {
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

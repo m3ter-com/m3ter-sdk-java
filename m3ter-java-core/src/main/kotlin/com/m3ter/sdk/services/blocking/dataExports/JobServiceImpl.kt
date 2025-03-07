@@ -14,11 +14,11 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.DataExportJob
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.sdk.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.sdk.models.DataExportJobListPage
 import com.m3ter.sdk.models.DataExportJobListParams
+import com.m3ter.sdk.models.DataExportJobResponse
 import com.m3ter.sdk.models.DataExportJobRetrieveParams
 
 class JobServiceImpl internal constructor(private val clientOptions: ClientOptions) : JobService {
@@ -32,7 +32,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     override fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions,
-    ): DataExportJob =
+    ): DataExportJobResponse =
         // get /organizations/{orgId}/dataexports/jobs/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -55,13 +55,14 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<DataExportJob> =
-            jsonHandler<DataExportJob>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<DataExportJobResponse> =
+            jsonHandler<DataExportJobResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DataExportJob> {
+        ): HttpResponseFor<DataExportJobResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

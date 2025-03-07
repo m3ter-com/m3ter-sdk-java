@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.IntegrationConfiguration
 import com.m3ter.sdk.models.IntegrationConfigurationCreateParams
 import com.m3ter.sdk.models.IntegrationConfigurationCreateResponse
 import com.m3ter.sdk.models.IntegrationConfigurationDeleteParams
@@ -17,6 +16,7 @@ import com.m3ter.sdk.models.IntegrationConfigurationEnableResponse
 import com.m3ter.sdk.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.sdk.models.IntegrationConfigurationListPage
 import com.m3ter.sdk.models.IntegrationConfigurationListParams
+import com.m3ter.sdk.models.IntegrationConfigurationResponse
 import com.m3ter.sdk.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateResponse
@@ -45,7 +45,7 @@ interface IntegrationConfigurationService {
     fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): IntegrationConfiguration
+    ): IntegrationConfigurationResponse
 
     /**
      * Update the integration configuration for the given UUID.
@@ -97,7 +97,7 @@ interface IntegrationConfigurationService {
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): IntegrationConfiguration
+    ): IntegrationConfigurationResponse
 
     /**
      * A view of [IntegrationConfigurationService] that provides access to raw HTTP responses for
@@ -125,7 +125,7 @@ interface IntegrationConfigurationService {
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<IntegrationConfiguration>
+        ): HttpResponseFor<IntegrationConfigurationResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/integrationconfigs/{id}`, but
@@ -182,6 +182,6 @@ interface IntegrationConfigurationService {
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<IntegrationConfiguration>
+        ): HttpResponseFor<IntegrationConfigurationResponse>
     }
 }

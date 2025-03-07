@@ -28,7 +28,7 @@ class CreditLineItemServiceTest {
                 .build()
         val creditLineItemService = client.bills().creditLineItems()
 
-        val creditLineItem =
+        val creditLineItemResponse =
             creditLineItemService.create(
                 BillCreditLineItemCreateParams.builder()
                     .orgId("orgId")
@@ -47,7 +47,7 @@ class CreditLineItemServiceTest {
                     .build()
             )
 
-        creditLineItem.validate()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -62,7 +62,7 @@ class CreditLineItemServiceTest {
                 .build()
         val creditLineItemService = client.bills().creditLineItems()
 
-        val creditLineItem =
+        val creditLineItemResponse =
             creditLineItemService.retrieve(
                 BillCreditLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -71,7 +71,7 @@ class CreditLineItemServiceTest {
                     .build()
             )
 
-        creditLineItem.validate()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -86,7 +86,7 @@ class CreditLineItemServiceTest {
                 .build()
         val creditLineItemService = client.bills().creditLineItems()
 
-        val creditLineItem =
+        val creditLineItemResponse =
             creditLineItemService.update(
                 BillCreditLineItemUpdateParams.builder()
                     .orgId("orgId")
@@ -106,7 +106,7 @@ class CreditLineItemServiceTest {
                     .build()
             )
 
-        creditLineItem.validate()
+        creditLineItemResponse.validate()
     }
 
     @Test
@@ -141,7 +141,7 @@ class CreditLineItemServiceTest {
                 .build()
         val creditLineItemService = client.bills().creditLineItems()
 
-        val creditLineItem =
+        val creditLineItemResponse =
             creditLineItemService.delete(
                 BillCreditLineItemDeleteParams.builder()
                     .orgId("orgId")
@@ -150,6 +150,6 @@ class CreditLineItemServiceTest {
                     .build()
             )
 
-        creditLineItem.validate()
+        creditLineItemResponse.validate()
     }
 }

@@ -56,7 +56,7 @@ private constructor(
      * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
      * for more information.
      */
-    fun permissionPolicy(): Optional<List<PermissionStatement>> = body.permissionPolicy()
+    fun permissionPolicy(): Optional<List<PermissionStatementResponse>> = body.permissionPolicy()
 
     /**
      * The version number of the entity:
@@ -82,7 +82,7 @@ private constructor(
      * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
      * for more information.
      */
-    fun _permissionPolicy(): JsonField<List<PermissionStatement>> = body._permissionPolicy()
+    fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = body._permissionPolicy()
 
     /**
      * The version number of the entity:
@@ -123,7 +123,8 @@ private constructor(
         private val dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
-        private val permissionPolicy: JsonField<List<PermissionStatement>> = JsonMissing.of(),
+        private val permissionPolicy: JsonField<List<PermissionStatementResponse>> =
+            JsonMissing.of(),
         @JsonProperty("version")
         @ExcludeMissing
         private val version: JsonField<Long> = JsonMissing.of(),
@@ -146,7 +147,7 @@ private constructor(
          * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
          * for more information.
          */
-        fun permissionPolicy(): Optional<List<PermissionStatement>> =
+        fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
             Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
 
         /**
@@ -177,7 +178,7 @@ private constructor(
          */
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
-        fun _permissionPolicy(): JsonField<List<PermissionStatement>> = permissionPolicy
+        fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
         /**
          * The version number of the entity:
@@ -218,7 +219,8 @@ private constructor(
         class Builder internal constructor() {
 
             private var dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var permissionPolicy: JsonField<MutableList<PermissionStatement>>? = null
+            private var permissionPolicy: JsonField<MutableList<PermissionStatementResponse>>? =
+                null
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -252,7 +254,7 @@ private constructor(
              * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
              * for more information.
              */
-            fun permissionPolicy(permissionPolicy: List<PermissionStatement>) =
+            fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
                 permissionPolicy(JsonField.of(permissionPolicy))
 
             /**
@@ -263,9 +265,10 @@ private constructor(
              * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
              * for more information.
              */
-            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatement>>) = apply {
-                this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
-            }
+            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
+                apply {
+                    this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
+                }
 
             /**
              * An array of permission statements for the user. Each permission statement defines a
@@ -275,7 +278,7 @@ private constructor(
              * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
              * for more information.
              */
-            fun addPermissionPolicy(permissionPolicy: PermissionStatement) = apply {
+            fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
                 this.permissionPolicy =
                     (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
                         checkKnown("permissionPolicy", it).add(permissionPolicy)
@@ -409,7 +412,7 @@ private constructor(
          * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
          * for more information.
          */
-        fun permissionPolicy(permissionPolicy: List<PermissionStatement>) = apply {
+        fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) = apply {
             body.permissionPolicy(permissionPolicy)
         }
 
@@ -421,9 +424,10 @@ private constructor(
          * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
          * for more information.
          */
-        fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatement>>) = apply {
-            body.permissionPolicy(permissionPolicy)
-        }
+        fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
+            apply {
+                body.permissionPolicy(permissionPolicy)
+            }
 
         /**
          * An array of permission statements for the user. Each permission statement defines a
@@ -433,7 +437,7 @@ private constructor(
          * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
          * for more information.
          */
-        fun addPermissionPolicy(permissionPolicy: PermissionStatement) = apply {
+        fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             body.addPermissionPolicy(permissionPolicy)
         }
 

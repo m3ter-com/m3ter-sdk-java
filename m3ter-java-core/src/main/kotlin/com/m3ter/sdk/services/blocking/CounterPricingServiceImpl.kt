@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
 import com.m3ter.sdk.models.CounterPricingListPage
 import com.m3ter.sdk.models.CounterPricingListParams
+import com.m3ter.sdk.models.CounterPricingResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 
@@ -35,21 +35,21 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
     override fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions,
-    ): CounterPricing =
+    ): CounterPricingResponse =
         // post /organizations/{orgId}/counterpricings
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions,
-    ): CounterPricing =
+    ): CounterPricingResponse =
         // get /organizations/{orgId}/counterpricings/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions,
-    ): CounterPricing =
+    ): CounterPricingResponse =
         // put /organizations/{orgId}/counterpricings/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
     override fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions,
-    ): CounterPricing =
+    ): CounterPricingResponse =
         // delete /organizations/{orgId}/counterpricings/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CounterPricing> =
-            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CounterPricingResponse> =
+            jsonHandler<CounterPricingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CounterPricingCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CounterPricing> {
+        ): HttpResponseFor<CounterPricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -99,13 +100,14 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val retrieveHandler: Handler<CounterPricing> =
-            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CounterPricingResponse> =
+            jsonHandler<CounterPricingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CounterPricingRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CounterPricing> {
+        ): HttpResponseFor<CounterPricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -130,13 +132,14 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val updateHandler: Handler<CounterPricing> =
-            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CounterPricingResponse> =
+            jsonHandler<CounterPricingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CounterPricingUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CounterPricing> {
+        ): HttpResponseFor<CounterPricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -196,13 +199,14 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
             }
         }
 
-        private val deleteHandler: Handler<CounterPricing> =
-            jsonHandler<CounterPricing>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CounterPricingResponse> =
+            jsonHandler<CounterPricingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CounterPricingDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CounterPricing> {
+        ): HttpResponseFor<CounterPricingResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

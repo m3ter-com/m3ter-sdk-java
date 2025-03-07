@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
 import com.m3ter.sdk.models.BillDeleteParams
@@ -23,6 +22,7 @@ import com.m3ter.sdk.models.BillLatestByAccountParams
 import com.m3ter.sdk.models.BillListPage
 import com.m3ter.sdk.models.BillListParams
 import com.m3ter.sdk.models.BillLockParams
+import com.m3ter.sdk.models.BillResponse
 import com.m3ter.sdk.models.BillRetrieveParams
 import com.m3ter.sdk.models.BillSearchParams
 import com.m3ter.sdk.models.BillSearchResponse
@@ -58,7 +58,10 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun lineItems(): LineItemService = lineItems
 
-    override fun retrieve(params: BillRetrieveParams, requestOptions: RequestOptions): Bill =
+    override fun retrieve(
+        params: BillRetrieveParams,
+        requestOptions: RequestOptions,
+    ): BillResponse =
         // get /organizations/{orgId}/bills/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -66,7 +69,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         // get /organizations/{orgId}/bills
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: BillDeleteParams, requestOptions: RequestOptions): Bill =
+    override fun delete(params: BillDeleteParams, requestOptions: RequestOptions): BillResponse =
         // delete /organizations/{orgId}/bills/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -80,11 +83,11 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun latestByAccount(
         params: BillLatestByAccountParams,
         requestOptions: RequestOptions,
-    ): Bill =
+    ): BillResponse =
         // get /organizations/{orgId}/bills/latest/{accountId}
         withRawResponse().latestByAccount(params, requestOptions).parse()
 
-    override fun lock(params: BillLockParams, requestOptions: RequestOptions): Bill =
+    override fun lock(params: BillLockParams, requestOptions: RequestOptions): BillResponse =
         // put /organizations/{orgId}/bills/{id}/lock
         withRawResponse().lock(params, requestOptions).parse()
 
@@ -98,7 +101,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun updateStatus(
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions,
-    ): Bill =
+    ): BillResponse =
         // put /organizations/{orgId}/bills/{id}/status
         withRawResponse().updateStatus(params, requestOptions).parse()
 
@@ -125,13 +128,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         override fun lineItems(): LineItemService.WithRawResponse = lineItems
 
-        private val retrieveHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Bill> {
+        ): HttpResponseFor<BillResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -184,13 +187,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val deleteHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: BillDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Bill> {
+        ): HttpResponseFor<BillResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -244,13 +247,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val latestByAccountHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val latestByAccountHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun latestByAccount(
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Bill> {
+        ): HttpResponseFor<BillResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -276,13 +279,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val lockHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val lockHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun lock(
             params: BillLockParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Bill> {
+        ): HttpResponseFor<BillResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -335,13 +338,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val updateStatusHandler: Handler<Bill> =
-            jsonHandler<Bill>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateStatusHandler: Handler<BillResponse> =
+            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun updateStatus(
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Bill> {
+        ): HttpResponseFor<BillResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

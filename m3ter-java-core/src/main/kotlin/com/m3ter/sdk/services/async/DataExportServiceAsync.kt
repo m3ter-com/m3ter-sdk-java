@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.AdhocExport
+import com.m3ter.sdk.models.AdHocResponse
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.async.dataExports.DestinationServiceAsync
 import com.m3ter.sdk.services.async.dataExports.JobServiceAsync
@@ -81,7 +81,7 @@ interface DataExportServiceAsync {
     fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AdhocExport>
+    ): CompletableFuture<AdHocResponse>
 
     /**
      * A view of [DataExportServiceAsync] that provides access to raw HTTP responses for each
@@ -104,6 +104,6 @@ interface DataExportServiceAsync {
         fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AdhocExport>>
+        ): CompletableFuture<HttpResponseFor<AdHocResponse>>
     }
 }

@@ -14,13 +14,13 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Event
 import com.m3ter.sdk.models.EventGetFieldsParams
 import com.m3ter.sdk.models.EventGetFieldsResponse
 import com.m3ter.sdk.models.EventGetTypesParams
 import com.m3ter.sdk.models.EventGetTypesResponse
 import com.m3ter.sdk.models.EventListPageAsync
 import com.m3ter.sdk.models.EventListParams
+import com.m3ter.sdk.models.EventResponse
 import com.m3ter.sdk.models.EventRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -36,7 +36,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Event> =
+    ): CompletableFuture<EventResponse> =
         // get /organizations/{orgId}/events/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -66,13 +66,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<Event> =
-            jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<EventResponse> =
+            jsonHandler<EventResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Event>> {
+        ): CompletableFuture<HttpResponseFor<EventResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

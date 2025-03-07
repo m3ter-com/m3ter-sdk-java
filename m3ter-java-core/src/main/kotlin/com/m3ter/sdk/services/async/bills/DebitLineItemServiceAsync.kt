@@ -13,7 +13,7 @@ import com.m3ter.sdk.models.BillDebitLineItemListPageAsync
 import com.m3ter.sdk.models.BillDebitLineItemListParams
 import com.m3ter.sdk.models.BillDebitLineItemRetrieveParams
 import com.m3ter.sdk.models.BillDebitLineItemUpdateParams
-import com.m3ter.sdk.models.DebitLineItem
+import com.m3ter.sdk.models.DebitLineItemResponse
 import java.util.concurrent.CompletableFuture
 
 interface DebitLineItemServiceAsync {
@@ -33,21 +33,21 @@ interface DebitLineItemServiceAsync {
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitLineItem>
+    ): CompletableFuture<DebitLineItemResponse>
 
     /** Retrieve the Debit line item with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitLineItem>
+    ): CompletableFuture<DebitLineItemResponse>
 
     /** Update the Debit line item with the given UUID. */
     @JvmOverloads
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitLineItem>
+    ): CompletableFuture<DebitLineItemResponse>
 
     /** List the Debit line items for the given bill. */
     @JvmOverloads
@@ -61,7 +61,7 @@ interface DebitLineItemServiceAsync {
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DebitLineItem>
+    ): CompletableFuture<DebitLineItemResponse>
 
     /**
      * A view of [DebitLineItemServiceAsync] that provides access to raw HTTP responses for each
@@ -79,7 +79,7 @@ interface DebitLineItemServiceAsync {
         fun create(
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitLineItem>>
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -91,7 +91,7 @@ interface DebitLineItemServiceAsync {
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitLineItem>>
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `put
@@ -103,7 +103,7 @@ interface DebitLineItemServiceAsync {
         fun update(
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitLineItem>>
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>>
 
         /**
          * Returns a raw HTTP response for `get
@@ -127,6 +127,6 @@ interface DebitLineItemServiceAsync {
         fun delete(
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitLineItem>>
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>>
     }
 }

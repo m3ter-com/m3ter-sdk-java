@@ -14,13 +14,13 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Event
 import com.m3ter.sdk.models.EventGetFieldsParams
 import com.m3ter.sdk.models.EventGetFieldsResponse
 import com.m3ter.sdk.models.EventGetTypesParams
 import com.m3ter.sdk.models.EventGetTypesResponse
 import com.m3ter.sdk.models.EventListPage
 import com.m3ter.sdk.models.EventListParams
+import com.m3ter.sdk.models.EventResponse
 import com.m3ter.sdk.models.EventRetrieveParams
 
 class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,7 +32,10 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
 
-    override fun retrieve(params: EventRetrieveParams, requestOptions: RequestOptions): Event =
+    override fun retrieve(
+        params: EventRetrieveParams,
+        requestOptions: RequestOptions,
+    ): EventResponse =
         // get /organizations/{orgId}/events/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -59,13 +62,13 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<Event> =
-            jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<EventResponse> =
+            jsonHandler<EventResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Event> {
+        ): HttpResponseFor<EventResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

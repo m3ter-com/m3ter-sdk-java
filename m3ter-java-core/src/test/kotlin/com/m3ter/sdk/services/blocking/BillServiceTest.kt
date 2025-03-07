@@ -30,10 +30,10 @@ class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val bill =
+        val billResponse =
             billService.retrieve(BillRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        bill.validate()
+        billResponse.validate()
     }
 
     @Test
@@ -65,9 +65,10 @@ class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val bill = billService.delete(BillDeleteParams.builder().orgId("orgId").id("id").build())
+        val billResponse =
+            billService.delete(BillDeleteParams.builder().orgId("orgId").id("id").build())
 
-        bill.validate()
+        billResponse.validate()
     }
 
     @Test
@@ -108,12 +109,12 @@ class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val bill =
+        val billResponse =
             billService.latestByAccount(
                 BillLatestByAccountParams.builder().orgId("orgId").accountId("accountId").build()
             )
 
-        bill.validate()
+        billResponse.validate()
     }
 
     @Test
@@ -128,9 +129,10 @@ class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val bill = billService.lock(BillLockParams.builder().orgId("orgId").id("id").build())
+        val billResponse =
+            billService.lock(BillLockParams.builder().orgId("orgId").id("id").build())
 
-        bill.validate()
+        billResponse.validate()
     }
 
     @Test
@@ -173,7 +175,7 @@ class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val bill =
+        val billResponse =
             billService.updateStatus(
                 BillUpdateStatusParams.builder()
                     .orgId("orgId")
@@ -182,6 +184,6 @@ class BillServiceTest {
                     .build()
             )
 
-        bill.validate()
+        billResponse.validate()
     }
 }

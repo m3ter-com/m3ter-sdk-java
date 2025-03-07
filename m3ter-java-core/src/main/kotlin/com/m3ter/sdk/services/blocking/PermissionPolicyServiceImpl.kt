@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.PermissionPolicy
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
 import com.m3ter.sdk.models.PermissionPolicyAddToSupportUserParams
@@ -36,6 +35,7 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupResponse
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserResponse
+import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 
@@ -51,21 +51,21 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
     override fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions,
-    ): PermissionPolicy =
+    ): PermissionPolicyResponse =
         // post /organizations/{orgId}/permissionpolicies
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions,
-    ): PermissionPolicy =
+    ): PermissionPolicyResponse =
         // get /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions,
-    ): PermissionPolicy =
+    ): PermissionPolicyResponse =
         // put /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -79,7 +79,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
     override fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions,
-    ): PermissionPolicy =
+    ): PermissionPolicyResponse =
         // delete /organizations/{orgId}/permissionpolicies/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -145,13 +145,14 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PermissionPolicyCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PermissionPolicy> {
+        ): HttpResponseFor<PermissionPolicyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -172,13 +173,14 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             }
         }
 
-        private val retrieveHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PermissionPolicy> {
+        ): HttpResponseFor<PermissionPolicyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -203,13 +205,14 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             }
         }
 
-        private val updateHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PermissionPolicyUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PermissionPolicy> {
+        ): HttpResponseFor<PermissionPolicyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -269,13 +272,14 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             }
         }
 
-        private val deleteHandler: Handler<PermissionPolicy> =
-            jsonHandler<PermissionPolicy>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<PermissionPolicyResponse> =
+            jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<PermissionPolicy> {
+        ): HttpResponseFor<PermissionPolicyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

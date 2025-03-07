@@ -31,7 +31,7 @@ class ContractServiceTest {
                 .build()
         val contractService = client.contracts()
 
-        val contract =
+        val contractResponse =
             contractService.create(
                 ContractCreateParams.builder()
                     .orgId("orgId")
@@ -51,7 +51,7 @@ class ContractServiceTest {
                     .build()
             )
 
-        contract.validate()
+        contractResponse.validate()
     }
 
     @Test
@@ -66,12 +66,12 @@ class ContractServiceTest {
                 .build()
         val contractService = client.contracts()
 
-        val contract =
+        val contractResponse =
             contractService.retrieve(
                 ContractRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        contract.validate()
+        contractResponse.validate()
     }
 
     @Test
@@ -86,7 +86,7 @@ class ContractServiceTest {
                 .build()
         val contractService = client.contracts()
 
-        val contract =
+        val contractResponse =
             contractService.update(
                 ContractUpdateParams.builder()
                     .orgId("orgId")
@@ -107,7 +107,7 @@ class ContractServiceTest {
                     .build()
             )
 
-        contract.validate()
+        contractResponse.validate()
     }
 
     @Test
@@ -139,10 +139,10 @@ class ContractServiceTest {
                 .build()
         val contractService = client.contracts()
 
-        val contract =
+        val contractResponse =
             contractService.delete(ContractDeleteParams.builder().orgId("orgId").id("id").build())
 
-        contract.validate()
+        contractResponse.validate()
     }
 
     @Test

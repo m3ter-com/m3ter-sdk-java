@@ -13,7 +13,7 @@ import com.m3ter.sdk.models.BillDebitLineItemListPage
 import com.m3ter.sdk.models.BillDebitLineItemListParams
 import com.m3ter.sdk.models.BillDebitLineItemRetrieveParams
 import com.m3ter.sdk.models.BillDebitLineItemUpdateParams
-import com.m3ter.sdk.models.DebitLineItem
+import com.m3ter.sdk.models.DebitLineItemResponse
 
 interface DebitLineItemService {
 
@@ -32,21 +32,21 @@ interface DebitLineItemService {
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitLineItem
+    ): DebitLineItemResponse
 
     /** Retrieve the Debit line item with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitLineItem
+    ): DebitLineItemResponse
 
     /** Update the Debit line item with the given UUID. */
     @JvmOverloads
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitLineItem
+    ): DebitLineItemResponse
 
     /** List the Debit line items for the given bill. */
     @JvmOverloads
@@ -60,7 +60,7 @@ interface DebitLineItemService {
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitLineItem
+    ): DebitLineItemResponse
 
     /**
      * A view of [DebitLineItemService] that provides access to raw HTTP responses for each method.
@@ -77,7 +77,7 @@ interface DebitLineItemService {
         fun create(
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitLineItem>
+        ): HttpResponseFor<DebitLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -89,7 +89,7 @@ interface DebitLineItemService {
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitLineItem>
+        ): HttpResponseFor<DebitLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -101,7 +101,7 @@ interface DebitLineItemService {
         fun update(
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitLineItem>
+        ): HttpResponseFor<DebitLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -125,6 +125,6 @@ interface DebitLineItemService {
         fun delete(
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitLineItem>
+        ): HttpResponseFor<DebitLineItemResponse>
     }
 }

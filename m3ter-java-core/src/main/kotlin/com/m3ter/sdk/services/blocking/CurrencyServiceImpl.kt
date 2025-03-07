@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
 import com.m3ter.sdk.models.CurrencyListPage
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 
@@ -32,18 +32,24 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): CurrencyService.WithRawResponse = withRawResponse
 
-    override fun create(params: CurrencyCreateParams, requestOptions: RequestOptions): Currency =
+    override fun create(
+        params: CurrencyCreateParams,
+        requestOptions: RequestOptions,
+    ): CurrencyResponse =
         // post /organizations/{orgId}/picklists/currency
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions,
-    ): Currency =
+    ): CurrencyResponse =
         // get /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: CurrencyUpdateParams, requestOptions: RequestOptions): Currency =
+    override fun update(
+        params: CurrencyUpdateParams,
+        requestOptions: RequestOptions,
+    ): CurrencyResponse =
         // put /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -54,7 +60,10 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
         // get /organizations/{orgId}/picklists/currency
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: CurrencyDeleteParams, requestOptions: RequestOptions): Currency =
+    override fun delete(
+        params: CurrencyDeleteParams,
+        requestOptions: RequestOptions,
+    ): CurrencyResponse =
         // delete /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -63,13 +72,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CurrencyCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Currency> {
+        ): HttpResponseFor<CurrencyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -95,13 +104,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val retrieveHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CurrencyRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Currency> {
+        ): HttpResponseFor<CurrencyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -127,13 +136,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val updateHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CurrencyUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Currency> {
+        ): HttpResponseFor<CurrencyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -193,13 +202,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val deleteHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: CurrencyDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Currency> {
+        ): HttpResponseFor<CurrencyResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

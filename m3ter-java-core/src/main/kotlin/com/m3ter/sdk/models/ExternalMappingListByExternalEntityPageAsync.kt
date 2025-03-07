@@ -35,7 +35,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<ExternalMapping> = response().data()
+    fun data(): List<ExternalMappingResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -95,18 +95,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<ExternalMapping>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<ExternalMappingResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<ExternalMapping> = data.getNullable("data") ?: listOf()
+        fun data(): List<ExternalMappingResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<ExternalMapping>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<ExternalMappingResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -153,7 +154,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<ExternalMapping>> = JsonMissing.of()
+            private var data: JsonField<List<ExternalMappingResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -164,9 +165,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<ExternalMapping>) = data(JsonField.of(data))
+            fun data(data: List<ExternalMappingResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<ExternalMapping>>) = apply { this.data = data }
+            fun data(data: JsonField<List<ExternalMappingResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -183,11 +184,11 @@ private constructor(
     class AutoPager(private val firstPage: ExternalMappingListByExternalEntityPageAsync) {
 
         fun forEach(
-            action: Predicate<ExternalMapping>,
+            action: Predicate<ExternalMappingResponse>,
             executor: Executor,
         ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<ExternalMappingListByExternalEntityPageAsync>>.forEach(
-                action: (ExternalMapping) -> Boolean,
+                action: (ExternalMappingResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -203,8 +204,8 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<ExternalMapping>> {
-            val values = mutableListOf<ExternalMapping>()
+        fun toList(executor: Executor): CompletableFuture<List<ExternalMappingResponse>> {
+            val values = mutableListOf<ExternalMappingResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

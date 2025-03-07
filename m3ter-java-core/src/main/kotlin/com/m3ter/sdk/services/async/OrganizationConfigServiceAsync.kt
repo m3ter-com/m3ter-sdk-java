@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.OrganizationConfig
+import com.m3ter.sdk.models.OrganizationConfigResponse
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -24,14 +24,14 @@ interface OrganizationConfigServiceAsync {
     fun retrieve(
         params: OrganizationConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<OrganizationConfig>
+    ): CompletableFuture<OrganizationConfigResponse>
 
     /** Update the Organization-wide configuration details. */
     @JvmOverloads
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<OrganizationConfig>
+    ): CompletableFuture<OrganizationConfigResponse>
 
     /**
      * A view of [OrganizationConfigServiceAsync] that provides access to raw HTTP responses for
@@ -48,7 +48,7 @@ interface OrganizationConfigServiceAsync {
         fun retrieve(
             params: OrganizationConfigRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<OrganizationConfig>>
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is
@@ -59,6 +59,6 @@ interface OrganizationConfigServiceAsync {
         fun update(
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<OrganizationConfig>>
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
     }
 }

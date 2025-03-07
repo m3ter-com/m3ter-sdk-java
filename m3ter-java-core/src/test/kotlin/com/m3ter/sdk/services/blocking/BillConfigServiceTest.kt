@@ -25,10 +25,10 @@ class BillConfigServiceTest {
                 .build()
         val billConfigService = client.billConfig()
 
-        val billConfig =
+        val billConfigResponse =
             billConfigService.retrieve(BillConfigRetrieveParams.builder().orgId("orgId").build())
 
-        billConfig.validate()
+        billConfigResponse.validate()
     }
 
     @Test
@@ -43,7 +43,7 @@ class BillConfigServiceTest {
                 .build()
         val billConfigService = client.billConfig()
 
-        val billConfig =
+        val billConfigResponse =
             billConfigService.update(
                 BillConfigUpdateParams.builder()
                     .orgId("orgId")
@@ -52,6 +52,6 @@ class BillConfigServiceTest {
                     .build()
             )
 
-        billConfig.validate()
+        billConfigResponse.validate()
     }
 }

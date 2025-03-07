@@ -31,7 +31,7 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.create(
                 ResourceGroupCreateParams.builder()
                     .orgId("orgId")
@@ -41,7 +41,7 @@ class ResourceGroupServiceTest {
                     .build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -56,12 +56,12 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.retrieve(
                 ResourceGroupRetrieveParams.builder().orgId("orgId").type("type").id("id").build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -76,7 +76,7 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.update(
                 ResourceGroupUpdateParams.builder()
                     .orgId("orgId")
@@ -87,7 +87,7 @@ class ResourceGroupServiceTest {
                     .build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -122,12 +122,12 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.delete(
                 ResourceGroupDeleteParams.builder().orgId("orgId").type("type").id("id").build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -142,7 +142,7 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.addResource(
                 ResourceGroupAddResourceParams.builder()
                     .orgId("orgId")
@@ -154,7 +154,7 @@ class ResourceGroupServiceTest {
                     .build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 
     @Test
@@ -217,7 +217,7 @@ class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val resourceGroup =
+        val resourceGroupResponse =
             resourceGroupService.removeResource(
                 ResourceGroupRemoveResourceParams.builder()
                     .orgId("orgId")
@@ -229,6 +229,6 @@ class ResourceGroupServiceTest {
                     .build()
             )
 
-        resourceGroup.validate()
+        resourceGroupResponse.validate()
     }
 }

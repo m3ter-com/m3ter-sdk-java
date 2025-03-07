@@ -12,7 +12,7 @@ import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
-import com.m3ter.sdk.models.Transaction
+import com.m3ter.sdk.models.TransactionResponse
 
 interface TransactionService {
 
@@ -42,7 +42,7 @@ interface TransactionService {
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction
+    ): TransactionResponse
 
     /**
      * Retrieve all Transactions for a specific Balance.
@@ -78,7 +78,7 @@ interface TransactionService {
         fun create(
             params: BalanceTransactionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Transaction>
+        ): HttpResponseFor<TransactionResponse>
 
         /**
          * Returns a raw HTTP response for `get

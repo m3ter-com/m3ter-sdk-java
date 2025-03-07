@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
 import com.m3ter.sdk.models.CurrencyListPage
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 
@@ -31,7 +31,7 @@ interface CurrencyService {
     fun create(
         params: CurrencyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Currency
+    ): CurrencyResponse
 
     /**
      * Retrieve the specified Currency with the given UUID. Used to obtain the details of a
@@ -41,7 +41,7 @@ interface CurrencyService {
     fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Currency
+    ): CurrencyResponse
 
     /**
      * Update a Currency with the given UUID.
@@ -52,7 +52,7 @@ interface CurrencyService {
     fun update(
         params: CurrencyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Currency
+    ): CurrencyResponse
 
     /**
      * Retrieve a list of Currencies.
@@ -76,7 +76,7 @@ interface CurrencyService {
     fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Currency
+    ): CurrencyResponse
 
     /** A view of [CurrencyService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -90,7 +90,7 @@ interface CurrencyService {
         fun create(
             params: CurrencyCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Currency>
+        ): HttpResponseFor<CurrencyResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency/{id}`, but
@@ -101,7 +101,7 @@ interface CurrencyService {
         fun retrieve(
             params: CurrencyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Currency>
+        ): HttpResponseFor<CurrencyResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/currency/{id}`, but
@@ -112,7 +112,7 @@ interface CurrencyService {
         fun update(
             params: CurrencyUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Currency>
+        ): HttpResponseFor<CurrencyResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency`, but is
@@ -134,6 +134,6 @@ interface CurrencyService {
         fun delete(
             params: CurrencyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Currency>
+        ): HttpResponseFor<CurrencyResponse>
     }
 }

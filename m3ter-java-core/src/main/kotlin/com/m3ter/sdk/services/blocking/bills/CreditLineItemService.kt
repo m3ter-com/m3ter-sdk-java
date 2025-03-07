@@ -13,7 +13,7 @@ import com.m3ter.sdk.models.BillCreditLineItemListPage
 import com.m3ter.sdk.models.BillCreditLineItemListParams
 import com.m3ter.sdk.models.BillCreditLineItemRetrieveParams
 import com.m3ter.sdk.models.BillCreditLineItemUpdateParams
-import com.m3ter.sdk.models.CreditLineItem
+import com.m3ter.sdk.models.CreditLineItemResponse
 
 interface CreditLineItemService {
 
@@ -32,21 +32,21 @@ interface CreditLineItemService {
     fun create(
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditLineItem
+    ): CreditLineItemResponse
 
     /** Retrieve the Credit line item with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditLineItem
+    ): CreditLineItemResponse
 
     /** Update the Credit line item with the given UUID. */
     @JvmOverloads
     fun update(
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditLineItem
+    ): CreditLineItemResponse
 
     /** List the Credit line items for the given Bill. */
     @JvmOverloads
@@ -60,7 +60,7 @@ interface CreditLineItemService {
     fun delete(
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditLineItem
+    ): CreditLineItemResponse
 
     /**
      * A view of [CreditLineItemService] that provides access to raw HTTP responses for each method.
@@ -77,7 +77,7 @@ interface CreditLineItemService {
         fun create(
             params: BillCreditLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditLineItem>
+        ): HttpResponseFor<CreditLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -89,7 +89,7 @@ interface CreditLineItemService {
         fun retrieve(
             params: BillCreditLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditLineItem>
+        ): HttpResponseFor<CreditLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -101,7 +101,7 @@ interface CreditLineItemService {
         fun update(
             params: BillCreditLineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditLineItem>
+        ): HttpResponseFor<CreditLineItemResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -125,6 +125,6 @@ interface CreditLineItemService {
         fun delete(
             params: BillCreditLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditLineItem>
+        ): HttpResponseFor<CreditLineItemResponse>
     }
 }
