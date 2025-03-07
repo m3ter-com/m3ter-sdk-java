@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.ExternalMapping
 import com.m3ter.sdk.models.ExternalMappingCreateParams
 import com.m3ter.sdk.models.ExternalMappingDeleteParams
 import com.m3ter.sdk.models.ExternalMappingListByExternalEntityPageAsync
@@ -24,6 +23,7 @@ import com.m3ter.sdk.models.ExternalMappingListByM3terEntityPageAsync
 import com.m3ter.sdk.models.ExternalMappingListByM3terEntityParams
 import com.m3ter.sdk.models.ExternalMappingListPageAsync
 import com.m3ter.sdk.models.ExternalMappingListParams
+import com.m3ter.sdk.models.ExternalMappingResponse
 import com.m3ter.sdk.models.ExternalMappingRetrieveParams
 import com.m3ter.sdk.models.ExternalMappingUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -40,21 +40,21 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
     override fun create(
         params: ExternalMappingCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ExternalMapping> =
+    ): CompletableFuture<ExternalMappingResponse> =
         // post /organizations/{orgId}/externalmappings
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: ExternalMappingRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ExternalMapping> =
+    ): CompletableFuture<ExternalMappingResponse> =
         // get /organizations/{orgId}/externalmappings/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: ExternalMappingUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ExternalMapping> =
+    ): CompletableFuture<ExternalMappingResponse> =
         // put /organizations/{orgId}/externalmappings/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -68,7 +68,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
     override fun delete(
         params: ExternalMappingDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<ExternalMapping> =
+    ): CompletableFuture<ExternalMappingResponse> =
         // delete /organizations/{orgId}/externalmappings/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -92,13 +92,14 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<ExternalMapping> =
-            jsonHandler<ExternalMapping>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ExternalMappingResponse> =
+            jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ExternalMappingCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ExternalMapping>> {
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -122,13 +123,14 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                 }
         }
 
-        private val retrieveHandler: Handler<ExternalMapping> =
-            jsonHandler<ExternalMapping>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ExternalMappingResponse> =
+            jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ExternalMappingRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ExternalMapping>> {
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -156,13 +158,14 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                 }
         }
 
-        private val updateHandler: Handler<ExternalMapping> =
-            jsonHandler<ExternalMapping>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ExternalMappingResponse> =
+            jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ExternalMappingUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ExternalMapping>> {
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -228,13 +231,14 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                 }
         }
 
-        private val deleteHandler: Handler<ExternalMapping> =
-            jsonHandler<ExternalMapping>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ExternalMappingResponse> =
+            jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ExternalMappingDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<ExternalMapping>> {
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -16,8 +16,8 @@ class MeterUpdateParamsTest {
             .id("id")
             .code("JS!?Q0]r] ]\$]")
             .addDataField(
-                DataField.builder()
-                    .category(DataField.Category.WHO)
+                DataFieldResponse.builder()
+                    .category(DataFieldResponse.Category.WHO)
                     .code("{1{}}_")
                     .name("x")
                     .unit("x")
@@ -25,7 +25,7 @@ class MeterUpdateParamsTest {
             )
             .addDerivedField(
                 MeterUpdateParams.DerivedField.builder()
-                    .category(DataField.Category.WHO)
+                    .category(DataFieldResponse.Category.WHO)
                     .code("{1{}}_")
                     .name("x")
                     .unit("x")
@@ -52,8 +52,8 @@ class MeterUpdateParamsTest {
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
                 .addDataField(
-                    DataField.builder()
-                        .category(DataField.Category.WHO)
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .unit("x")
@@ -61,7 +61,7 @@ class MeterUpdateParamsTest {
                 )
                 .addDerivedField(
                     MeterUpdateParams.DerivedField.builder()
-                        .category(DataField.Category.WHO)
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .unit("x")
@@ -86,8 +86,8 @@ class MeterUpdateParamsTest {
         assertThat(body.dataFields())
             .isEqualTo(
                 listOf(
-                    DataField.builder()
-                        .category(DataField.Category.WHO)
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .unit("x")
@@ -98,7 +98,7 @@ class MeterUpdateParamsTest {
             .isEqualTo(
                 listOf(
                     MeterUpdateParams.DerivedField.builder()
-                        .category(DataField.Category.WHO)
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .unit("x")
@@ -126,15 +126,15 @@ class MeterUpdateParamsTest {
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
                 .addDataField(
-                    DataField.builder()
-                        .category(DataField.Category.WHO)
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .build()
                 )
                 .addDerivedField(
                     MeterUpdateParams.DerivedField.builder()
-                        .category(DataField.Category.WHO)
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .calculation("x")
@@ -150,8 +150,8 @@ class MeterUpdateParamsTest {
         assertThat(body.dataFields())
             .isEqualTo(
                 listOf(
-                    DataField.builder()
-                        .category(DataField.Category.WHO)
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .build()
@@ -161,7 +161,7 @@ class MeterUpdateParamsTest {
             .isEqualTo(
                 listOf(
                     MeterUpdateParams.DerivedField.builder()
-                        .category(DataField.Category.WHO)
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .calculation("x")
@@ -179,15 +179,15 @@ class MeterUpdateParamsTest {
                 .id("id")
                 .code("JS!?Q0]r] ]\$]")
                 .addDataField(
-                    DataField.builder()
-                        .category(DataField.Category.WHO)
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .build()
                 )
                 .addDerivedField(
                     MeterUpdateParams.DerivedField.builder()
-                        .category(DataField.Category.WHO)
+                        .category(DataFieldResponse.Category.WHO)
                         .code("{1{}}_")
                         .name("x")
                         .calculation("x")

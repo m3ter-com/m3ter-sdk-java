@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
 import com.m3ter.sdk.models.CounterAdjustmentListPageAsync
 import com.m3ter.sdk.models.CounterAdjustmentListParams
+import com.m3ter.sdk.models.CounterAdjustmentResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
     override fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterAdjustment> =
+    ): CompletableFuture<CounterAdjustmentResponse> =
         // post /organizations/{orgId}/counteradjustments
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterAdjustment> =
+    ): CompletableFuture<CounterAdjustmentResponse> =
         // get /organizations/{orgId}/counteradjustments/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterAdjustment> =
+    ): CompletableFuture<CounterAdjustmentResponse> =
         // put /organizations/{orgId}/counteradjustments/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
     override fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<CounterAdjustment> =
+    ): CompletableFuture<CounterAdjustmentResponse> =
         // delete /organizations/{orgId}/counteradjustments/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,14 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CounterAdjustment> =
-            jsonHandler<CounterAdjustment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CounterAdjustmentResponse> =
+            jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CounterAdjustmentCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>> {
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +104,14 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
                 }
         }
 
-        private val retrieveHandler: Handler<CounterAdjustment> =
-            jsonHandler<CounterAdjustment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CounterAdjustmentResponse> =
+            jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CounterAdjustmentRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>> {
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +139,14 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
                 }
         }
 
-        private val updateHandler: Handler<CounterAdjustment> =
-            jsonHandler<CounterAdjustment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CounterAdjustmentResponse> =
+            jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CounterAdjustmentUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>> {
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +212,14 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
                 }
         }
 
-        private val deleteHandler: Handler<CounterAdjustment> =
-            jsonHandler<CounterAdjustment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CounterAdjustmentResponse> =
+            jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>> {
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

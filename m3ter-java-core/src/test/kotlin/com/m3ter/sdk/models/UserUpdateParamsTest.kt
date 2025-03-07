@@ -16,9 +16,9 @@ class UserUpdateParamsTest {
             .id("id")
             .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .addPermissionPolicy(
-                PermissionStatement.builder()
-                    .addAction(PermissionStatement.Action.ALL)
-                    .effect(PermissionStatement.Effect.ALLOW)
+                PermissionStatementResponse.builder()
+                    .addAction(PermissionStatementResponse.Action.ALL)
+                    .effect(PermissionStatementResponse.Effect.ALLOW)
                     .addResource("string")
                     .build()
             )
@@ -34,9 +34,9 @@ class UserUpdateParamsTest {
                 .id("id")
                 .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addPermissionPolicy(
-                    PermissionStatement.builder()
-                        .addAction(PermissionStatement.Action.ALL)
-                        .effect(PermissionStatement.Effect.ALLOW)
+                    PermissionStatementResponse.builder()
+                        .addAction(PermissionStatementResponse.Action.ALL)
+                        .effect(PermissionStatementResponse.Effect.ALLOW)
                         .addResource("string")
                         .build()
                 )
@@ -50,9 +50,9 @@ class UserUpdateParamsTest {
         assertThat(body.permissionPolicy())
             .contains(
                 listOf(
-                    PermissionStatement.builder()
-                        .addAction(PermissionStatement.Action.ALL)
-                        .effect(PermissionStatement.Effect.ALLOW)
+                    PermissionStatementResponse.builder()
+                        .addAction(PermissionStatementResponse.Action.ALL)
+                        .effect(PermissionStatementResponse.Effect.ALLOW)
                         .addResource("string")
                         .build()
                 )

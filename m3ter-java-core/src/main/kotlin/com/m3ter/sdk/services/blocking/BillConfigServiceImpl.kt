@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.BillConfig
+import com.m3ter.sdk.models.BillConfigResponse
 import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 
@@ -31,14 +31,14 @@ class BillConfigServiceImpl internal constructor(private val clientOptions: Clie
     override fun retrieve(
         params: BillConfigRetrieveParams,
         requestOptions: RequestOptions,
-    ): BillConfig =
+    ): BillConfigResponse =
         // get /organizations/{orgId}/billconfig
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: BillConfigUpdateParams,
         requestOptions: RequestOptions,
-    ): BillConfig =
+    ): BillConfigResponse =
         // put /organizations/{orgId}/billconfig
         withRawResponse().update(params, requestOptions).parse()
 
@@ -47,13 +47,13 @@ class BillConfigServiceImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<BillConfig> =
-            jsonHandler<BillConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillConfigResponse> =
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillConfigRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillConfig> {
+        ): HttpResponseFor<BillConfigResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -73,13 +73,13 @@ class BillConfigServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val updateHandler: Handler<BillConfig> =
-            jsonHandler<BillConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<BillConfigResponse> =
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: BillConfigUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<BillConfig> {
+        ): HttpResponseFor<BillConfigResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

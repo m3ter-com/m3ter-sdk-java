@@ -27,7 +27,7 @@ class CurrencyServiceTest {
                 .build()
         val currencyService = client.currencies()
 
-        val currency =
+        val currencyResponse =
             currencyService.create(
                 CurrencyCreateParams.builder()
                     .orgId("orgId")
@@ -40,7 +40,7 @@ class CurrencyServiceTest {
                     .build()
             )
 
-        currency.validate()
+        currencyResponse.validate()
     }
 
     @Test
@@ -55,12 +55,12 @@ class CurrencyServiceTest {
                 .build()
         val currencyService = client.currencies()
 
-        val currency =
+        val currencyResponse =
             currencyService.retrieve(
                 CurrencyRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        currency.validate()
+        currencyResponse.validate()
     }
 
     @Test
@@ -75,7 +75,7 @@ class CurrencyServiceTest {
                 .build()
         val currencyService = client.currencies()
 
-        val currency =
+        val currencyResponse =
             currencyService.update(
                 CurrencyUpdateParams.builder()
                     .orgId("orgId")
@@ -89,7 +89,7 @@ class CurrencyServiceTest {
                     .build()
             )
 
-        currency.validate()
+        currencyResponse.validate()
     }
 
     @Test
@@ -121,9 +121,9 @@ class CurrencyServiceTest {
                 .build()
         val currencyService = client.currencies()
 
-        val currency =
+        val currencyResponse =
             currencyService.delete(CurrencyDeleteParams.builder().orgId("orgId").id("id").build())
 
-        currency.validate()
+        currencyResponse.validate()
     }
 }

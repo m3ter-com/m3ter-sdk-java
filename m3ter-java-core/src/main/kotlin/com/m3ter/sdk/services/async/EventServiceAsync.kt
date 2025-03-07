@@ -7,13 +7,13 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Event
 import com.m3ter.sdk.models.EventGetFieldsParams
 import com.m3ter.sdk.models.EventGetFieldsResponse
 import com.m3ter.sdk.models.EventGetTypesParams
 import com.m3ter.sdk.models.EventGetTypesResponse
 import com.m3ter.sdk.models.EventListPageAsync
 import com.m3ter.sdk.models.EventListParams
+import com.m3ter.sdk.models.EventResponse
 import com.m3ter.sdk.models.EventRetrieveParams
 import java.util.concurrent.CompletableFuture
 
@@ -35,7 +35,7 @@ interface EventServiceAsync {
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Event>
+    ): CompletableFuture<EventResponse>
 
     /**
      * List all Events.
@@ -109,7 +109,7 @@ interface EventServiceAsync {
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Event>>
+        ): CompletableFuture<HttpResponseFor<EventResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the

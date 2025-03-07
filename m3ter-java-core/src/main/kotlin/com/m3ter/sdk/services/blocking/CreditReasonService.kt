@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
 import com.m3ter.sdk.models.CreditReasonListPage
 import com.m3ter.sdk.models.CreditReasonListParams
+import com.m3ter.sdk.models.CreditReasonResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 
@@ -31,21 +31,21 @@ interface CreditReasonService {
     fun create(
         params: CreditReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditReason
+    ): CreditReasonResponse
 
     /** Retrieve the Credit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CreditReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditReason
+    ): CreditReasonResponse
 
     /** Update the Credit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: CreditReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditReason
+    ): CreditReasonResponse
 
     /**
      * Retrieve a list of the Credit Reason entities created for your Organization. You can filter
@@ -63,7 +63,7 @@ interface CreditReasonService {
     fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CreditReason
+    ): CreditReasonResponse
 
     /**
      * A view of [CreditReasonService] that provides access to raw HTTP responses for each method.
@@ -79,7 +79,7 @@ interface CreditReasonService {
         fun create(
             params: CreditReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditReason>
+        ): HttpResponseFor<CreditReasonResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -91,7 +91,7 @@ interface CreditReasonService {
         fun retrieve(
             params: CreditReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditReason>
+        ): HttpResponseFor<CreditReasonResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -103,7 +103,7 @@ interface CreditReasonService {
         fun update(
             params: CreditReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditReason>
+        ): HttpResponseFor<CreditReasonResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/creditreasons`, but
@@ -126,6 +126,6 @@ interface CreditReasonService {
         fun delete(
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CreditReason>
+        ): HttpResponseFor<CreditReasonResponse>
     }
 }

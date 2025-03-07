@@ -7,13 +7,13 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Event
 import com.m3ter.sdk.models.EventGetFieldsParams
 import com.m3ter.sdk.models.EventGetFieldsResponse
 import com.m3ter.sdk.models.EventGetTypesParams
 import com.m3ter.sdk.models.EventGetTypesResponse
 import com.m3ter.sdk.models.EventListPage
 import com.m3ter.sdk.models.EventListParams
+import com.m3ter.sdk.models.EventResponse
 import com.m3ter.sdk.models.EventRetrieveParams
 
 interface EventService {
@@ -34,7 +34,7 @@ interface EventService {
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Event
+    ): EventResponse
 
     /**
      * List all Events.
@@ -108,7 +108,7 @@ interface EventService {
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Event>
+        ): HttpResponseFor<EventResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the

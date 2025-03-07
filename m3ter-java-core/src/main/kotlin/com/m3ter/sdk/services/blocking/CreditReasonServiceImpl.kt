@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.CreditReason
 import com.m3ter.sdk.models.CreditReasonCreateParams
 import com.m3ter.sdk.models.CreditReasonDeleteParams
 import com.m3ter.sdk.models.CreditReasonListPage
 import com.m3ter.sdk.models.CreditReasonListParams
+import com.m3ter.sdk.models.CreditReasonResponse
 import com.m3ter.sdk.models.CreditReasonRetrieveParams
 import com.m3ter.sdk.models.CreditReasonUpdateParams
 
@@ -35,21 +35,21 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: CreditReasonCreateParams,
         requestOptions: RequestOptions,
-    ): CreditReason =
+    ): CreditReasonResponse =
         // post /organizations/{orgId}/picklists/creditreasons
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: CreditReasonRetrieveParams,
         requestOptions: RequestOptions,
-    ): CreditReason =
+    ): CreditReasonResponse =
         // get /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: CreditReasonUpdateParams,
         requestOptions: RequestOptions,
-    ): CreditReason =
+    ): CreditReasonResponse =
         // put /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -63,7 +63,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
     override fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions,
-    ): CreditReason =
+    ): CreditReasonResponse =
         // delete /organizations/{orgId}/picklists/creditreasons/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -72,13 +72,14 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CreditReasonCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditReason> {
+        ): HttpResponseFor<CreditReasonResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -104,13 +105,14 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val retrieveHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CreditReasonRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditReason> {
+        ): HttpResponseFor<CreditReasonResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -136,13 +138,14 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val updateHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CreditReasonUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditReason> {
+        ): HttpResponseFor<CreditReasonResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -204,13 +207,14 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val deleteHandler: Handler<CreditReason> =
-            jsonHandler<CreditReason>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CreditReasonResponse> =
+            jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CreditReason> {
+        ): HttpResponseFor<CreditReasonResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

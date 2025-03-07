@@ -17,7 +17,7 @@ import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BillLineItemListPageAsync
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
-import com.m3ter.sdk.models.LineItem
+import com.m3ter.sdk.models.LineItemResponse
 import java.util.concurrent.CompletableFuture
 
 class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,7 +32,7 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<LineItem> =
+    ): CompletableFuture<LineItemResponse> =
         // get /organizations/{orgId}/bills/{billId}/lineitems/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
@@ -48,13 +48,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<LineItem> =
-            jsonHandler<LineItem>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<LineItemResponse> =
+            jsonHandler<LineItemResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<LineItem>> {
+        ): CompletableFuture<HttpResponseFor<LineItemResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

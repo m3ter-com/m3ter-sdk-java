@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Currency
 import com.m3ter.sdk.models.CurrencyCreateParams
 import com.m3ter.sdk.models.CurrencyDeleteParams
 import com.m3ter.sdk.models.CurrencyListPageAsync
 import com.m3ter.sdk.models.CurrencyListParams
+import com.m3ter.sdk.models.CurrencyResponse
 import com.m3ter.sdk.models.CurrencyRetrieveParams
 import com.m3ter.sdk.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun create(
         params: CurrencyCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Currency> =
+    ): CompletableFuture<CurrencyResponse> =
         // post /organizations/{orgId}/picklists/currency
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Currency> =
+    ): CompletableFuture<CurrencyResponse> =
         // get /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: CurrencyUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Currency> =
+    ): CompletableFuture<CurrencyResponse> =
         // put /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Currency> =
+    ): CompletableFuture<CurrencyResponse> =
         // delete /organizations/{orgId}/picklists/currency/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,13 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CurrencyCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Currency>> {
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +108,13 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val retrieveHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CurrencyRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Currency>> {
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -143,13 +143,13 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val updateHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CurrencyUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Currency>> {
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,13 +221,13 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val deleteHandler: Handler<Currency> =
-            jsonHandler<Currency>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CurrencyResponse> =
+            jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: CurrencyDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Currency>> {
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

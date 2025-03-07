@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.IntegrationConfiguration
 import com.m3ter.sdk.models.IntegrationConfigurationCreateParams
 import com.m3ter.sdk.models.IntegrationConfigurationCreateResponse
 import com.m3ter.sdk.models.IntegrationConfigurationDeleteParams
@@ -25,6 +24,7 @@ import com.m3ter.sdk.models.IntegrationConfigurationEnableResponse
 import com.m3ter.sdk.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.sdk.models.IntegrationConfigurationListPage
 import com.m3ter.sdk.models.IntegrationConfigurationListParams
+import com.m3ter.sdk.models.IntegrationConfigurationResponse
 import com.m3ter.sdk.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateResponse
@@ -49,7 +49,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
     override fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions,
-    ): IntegrationConfiguration =
+    ): IntegrationConfigurationResponse =
         // get /organizations/{orgId}/integrationconfigs/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -84,7 +84,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
     override fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions,
-    ): IntegrationConfiguration =
+    ): IntegrationConfigurationResponse =
         // get /organizations/{orgId}/integrationconfigs/entity/{entityType}
         withRawResponse().getByEntity(params, requestOptions).parse()
 
@@ -121,14 +121,14 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
             }
         }
 
-        private val retrieveHandler: Handler<IntegrationConfiguration> =
-            jsonHandler<IntegrationConfiguration>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<IntegrationConfigurationResponse> =
+            jsonHandler<IntegrationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<IntegrationConfiguration> {
+        ): HttpResponseFor<IntegrationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -287,14 +287,14 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
             }
         }
 
-        private val getByEntityHandler: Handler<IntegrationConfiguration> =
-            jsonHandler<IntegrationConfiguration>(clientOptions.jsonMapper)
+        private val getByEntityHandler: Handler<IntegrationConfigurationResponse> =
+            jsonHandler<IntegrationConfigurationResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<IntegrationConfiguration> {
+        ): HttpResponseFor<IntegrationConfigurationResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

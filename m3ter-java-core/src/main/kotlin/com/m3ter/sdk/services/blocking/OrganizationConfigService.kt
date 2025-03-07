@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.OrganizationConfig
+import com.m3ter.sdk.models.OrganizationConfigResponse
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 
@@ -23,14 +23,14 @@ interface OrganizationConfigService {
     fun retrieve(
         params: OrganizationConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): OrganizationConfig
+    ): OrganizationConfigResponse
 
     /** Update the Organization-wide configuration details. */
     @JvmOverloads
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): OrganizationConfig
+    ): OrganizationConfigResponse
 
     /**
      * A view of [OrganizationConfigService] that provides access to raw HTTP responses for each
@@ -47,7 +47,7 @@ interface OrganizationConfigService {
         fun retrieve(
             params: OrganizationConfigRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<OrganizationConfig>
+        ): HttpResponseFor<OrganizationConfigResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is
@@ -58,6 +58,6 @@ interface OrganizationConfigService {
         fun update(
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<OrganizationConfig>
+        ): HttpResponseFor<OrganizationConfigResponse>
     }
 }

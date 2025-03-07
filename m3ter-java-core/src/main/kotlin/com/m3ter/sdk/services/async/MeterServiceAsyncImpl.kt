@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Meter
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPageAsync
 import com.m3ter.sdk.models.MeterListParams
+import com.m3ter.sdk.models.MeterResponse
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -36,21 +36,21 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Meter> =
+    ): CompletableFuture<MeterResponse> =
         // post /organizations/{orgId}/meters
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Meter> =
+    ): CompletableFuture<MeterResponse> =
         // get /organizations/{orgId}/meters/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Meter> =
+    ): CompletableFuture<MeterResponse> =
         // put /organizations/{orgId}/meters/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -64,7 +64,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Meter> =
+    ): CompletableFuture<MeterResponse> =
         // delete /organizations/{orgId}/meters/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -73,13 +73,13 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: MeterCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Meter>> {
+        ): CompletableFuture<HttpResponseFor<MeterResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -103,13 +103,13 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 }
         }
 
-        private val retrieveHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: MeterRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Meter>> {
+        ): CompletableFuture<HttpResponseFor<MeterResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -137,13 +137,13 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 }
         }
 
-        private val updateHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: MeterUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Meter>> {
+        ): CompletableFuture<HttpResponseFor<MeterResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,13 +209,13 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 }
         }
 
-        private val deleteHandler: Handler<Meter> =
-            jsonHandler<Meter>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<MeterResponse> =
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: MeterDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Meter>> {
+        ): CompletableFuture<HttpResponseFor<MeterResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

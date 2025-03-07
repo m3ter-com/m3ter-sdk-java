@@ -28,7 +28,7 @@ class DebitLineItemServiceTest {
                 .build()
         val debitLineItemService = client.bills().debitLineItems()
 
-        val debitLineItem =
+        val debitLineItemResponse =
             debitLineItemService.create(
                 BillDebitLineItemCreateParams.builder()
                     .orgId("orgId")
@@ -47,7 +47,7 @@ class DebitLineItemServiceTest {
                     .build()
             )
 
-        debitLineItem.validate()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -62,7 +62,7 @@ class DebitLineItemServiceTest {
                 .build()
         val debitLineItemService = client.bills().debitLineItems()
 
-        val debitLineItem =
+        val debitLineItemResponse =
             debitLineItemService.retrieve(
                 BillDebitLineItemRetrieveParams.builder()
                     .orgId("orgId")
@@ -71,7 +71,7 @@ class DebitLineItemServiceTest {
                     .build()
             )
 
-        debitLineItem.validate()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -86,7 +86,7 @@ class DebitLineItemServiceTest {
                 .build()
         val debitLineItemService = client.bills().debitLineItems()
 
-        val debitLineItem =
+        val debitLineItemResponse =
             debitLineItemService.update(
                 BillDebitLineItemUpdateParams.builder()
                     .orgId("orgId")
@@ -106,7 +106,7 @@ class DebitLineItemServiceTest {
                     .build()
             )
 
-        debitLineItem.validate()
+        debitLineItemResponse.validate()
     }
 
     @Test
@@ -141,7 +141,7 @@ class DebitLineItemServiceTest {
                 .build()
         val debitLineItemService = client.bills().debitLineItems()
 
-        val debitLineItem =
+        val debitLineItemResponse =
             debitLineItemService.delete(
                 BillDebitLineItemDeleteParams.builder()
                     .orgId("orgId")
@@ -150,6 +150,6 @@ class DebitLineItemServiceTest {
                     .build()
             )
 
-        debitLineItem.validate()
+        debitLineItemResponse.validate()
     }
 }

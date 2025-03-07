@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.IntegrationConfiguration
 import com.m3ter.sdk.models.IntegrationConfigurationCreateParams
 import com.m3ter.sdk.models.IntegrationConfigurationCreateResponse
 import com.m3ter.sdk.models.IntegrationConfigurationDeleteParams
@@ -17,6 +16,7 @@ import com.m3ter.sdk.models.IntegrationConfigurationEnableResponse
 import com.m3ter.sdk.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.sdk.models.IntegrationConfigurationListPageAsync
 import com.m3ter.sdk.models.IntegrationConfigurationListParams
+import com.m3ter.sdk.models.IntegrationConfigurationResponse
 import com.m3ter.sdk.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateParams
 import com.m3ter.sdk.models.IntegrationConfigurationUpdateResponse
@@ -46,7 +46,7 @@ interface IntegrationConfigurationServiceAsync {
     fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<IntegrationConfiguration>
+    ): CompletableFuture<IntegrationConfigurationResponse>
 
     /**
      * Update the integration configuration for the given UUID.
@@ -98,7 +98,7 @@ interface IntegrationConfigurationServiceAsync {
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<IntegrationConfiguration>
+    ): CompletableFuture<IntegrationConfigurationResponse>
 
     /**
      * A view of [IntegrationConfigurationServiceAsync] that provides access to raw HTTP responses
@@ -126,7 +126,7 @@ interface IntegrationConfigurationServiceAsync {
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<IntegrationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/integrationconfigs/{id}`, but
@@ -183,6 +183,6 @@ interface IntegrationConfigurationServiceAsync {
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<IntegrationConfiguration>>
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
     }
 }

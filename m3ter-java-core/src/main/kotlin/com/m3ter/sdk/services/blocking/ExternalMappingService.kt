@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.ExternalMapping
 import com.m3ter.sdk.models.ExternalMappingCreateParams
 import com.m3ter.sdk.models.ExternalMappingDeleteParams
 import com.m3ter.sdk.models.ExternalMappingListByExternalEntityPage
@@ -16,6 +15,7 @@ import com.m3ter.sdk.models.ExternalMappingListByM3terEntityPage
 import com.m3ter.sdk.models.ExternalMappingListByM3terEntityParams
 import com.m3ter.sdk.models.ExternalMappingListPage
 import com.m3ter.sdk.models.ExternalMappingListParams
+import com.m3ter.sdk.models.ExternalMappingResponse
 import com.m3ter.sdk.models.ExternalMappingRetrieveParams
 import com.m3ter.sdk.models.ExternalMappingUpdateParams
 
@@ -36,7 +36,7 @@ interface ExternalMappingService {
     fun create(
         params: ExternalMappingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalMapping
+    ): ExternalMappingResponse
 
     /**
      * Retrieve an External Mapping with the given UUID.
@@ -48,7 +48,7 @@ interface ExternalMappingService {
     fun retrieve(
         params: ExternalMappingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalMapping
+    ): ExternalMappingResponse
 
     /**
      * Updates an External Mapping with the given UUID.
@@ -60,7 +60,7 @@ interface ExternalMappingService {
     fun update(
         params: ExternalMappingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalMapping
+    ): ExternalMappingResponse
 
     /**
      * Retrieve a list of all External Mapping entities.
@@ -80,7 +80,7 @@ interface ExternalMappingService {
     fun delete(
         params: ExternalMappingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalMapping
+    ): ExternalMappingResponse
 
     /**
      * Retrieve a list of External Mapping entities for a specified external system entity.
@@ -121,7 +121,7 @@ interface ExternalMappingService {
         fun create(
             params: ExternalMappingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalMapping>
+        ): HttpResponseFor<ExternalMappingResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings/{id}`, but
@@ -132,7 +132,7 @@ interface ExternalMappingService {
         fun retrieve(
             params: ExternalMappingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalMapping>
+        ): HttpResponseFor<ExternalMappingResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/externalmappings/{id}`, but
@@ -143,7 +143,7 @@ interface ExternalMappingService {
         fun update(
             params: ExternalMappingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalMapping>
+        ): HttpResponseFor<ExternalMappingResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings`, but is
@@ -165,7 +165,7 @@ interface ExternalMappingService {
         fun delete(
             params: ExternalMappingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalMapping>
+        ): HttpResponseFor<ExternalMappingResponse>
 
         /**
          * Returns a raw HTTP response for `get

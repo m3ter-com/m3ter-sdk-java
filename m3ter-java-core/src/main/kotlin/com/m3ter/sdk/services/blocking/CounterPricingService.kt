@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CounterPricing
 import com.m3ter.sdk.models.CounterPricingCreateParams
 import com.m3ter.sdk.models.CounterPricingDeleteParams
 import com.m3ter.sdk.models.CounterPricingListPage
 import com.m3ter.sdk.models.CounterPricingListParams
+import com.m3ter.sdk.models.CounterPricingResponse
 import com.m3ter.sdk.models.CounterPricingRetrieveParams
 import com.m3ter.sdk.models.CounterPricingUpdateParams
 
@@ -32,14 +32,14 @@ interface CounterPricingService {
     fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterPricing
+    ): CounterPricingResponse
 
     /** Retrieve a CounterPricing for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterPricing
+    ): CounterPricingResponse
 
     /**
      * Update CounterPricing for the given UUID.
@@ -51,7 +51,7 @@ interface CounterPricingService {
     fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterPricing
+    ): CounterPricingResponse
 
     /**
      * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
@@ -68,7 +68,7 @@ interface CounterPricingService {
     fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CounterPricing
+    ): CounterPricingResponse
 
     /**
      * A view of [CounterPricingService] that provides access to raw HTTP responses for each method.
@@ -84,7 +84,7 @@ interface CounterPricingService {
         fun create(
             params: CounterPricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterPricing>
+        ): HttpResponseFor<CounterPricingResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings/{id}`, but is
@@ -95,7 +95,7 @@ interface CounterPricingService {
         fun retrieve(
             params: CounterPricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterPricing>
+        ): HttpResponseFor<CounterPricingResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counterpricings/{id}`, but is
@@ -106,7 +106,7 @@ interface CounterPricingService {
         fun update(
             params: CounterPricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterPricing>
+        ): HttpResponseFor<CounterPricingResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings`, but is
@@ -128,6 +128,6 @@ interface CounterPricingService {
         fun delete(
             params: CounterPricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CounterPricing>
+        ): HttpResponseFor<CounterPricingResponse>
     }
 }

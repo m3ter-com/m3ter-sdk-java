@@ -29,7 +29,7 @@ class ExternalMappingServiceTest {
                 .build()
         val externalMappingService = client.externalMappings()
 
-        val externalMapping =
+        val externalMappingResponse =
             externalMappingService.create(
                 ExternalMappingCreateParams.builder()
                     .orgId("orgId")
@@ -43,7 +43,7 @@ class ExternalMappingServiceTest {
                     .build()
             )
 
-        externalMapping.validate()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -58,12 +58,12 @@ class ExternalMappingServiceTest {
                 .build()
         val externalMappingService = client.externalMappings()
 
-        val externalMapping =
+        val externalMappingResponse =
             externalMappingService.retrieve(
                 ExternalMappingRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        externalMapping.validate()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -78,7 +78,7 @@ class ExternalMappingServiceTest {
                 .build()
         val externalMappingService = client.externalMappings()
 
-        val externalMapping =
+        val externalMappingResponse =
             externalMappingService.update(
                 ExternalMappingUpdateParams.builder()
                     .orgId("orgId")
@@ -93,7 +93,7 @@ class ExternalMappingServiceTest {
                     .build()
             )
 
-        externalMapping.validate()
+        externalMappingResponse.validate()
     }
 
     @Test
@@ -126,12 +126,12 @@ class ExternalMappingServiceTest {
                 .build()
         val externalMappingService = client.externalMappings()
 
-        val externalMapping =
+        val externalMappingResponse =
             externalMappingService.delete(
                 ExternalMappingDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        externalMapping.validate()
+        externalMappingResponse.validate()
     }
 
     @Test

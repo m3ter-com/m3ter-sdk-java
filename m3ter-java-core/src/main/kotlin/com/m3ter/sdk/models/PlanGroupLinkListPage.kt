@@ -29,7 +29,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<PlanGroupLink> = response().data()
+    fun data(): List<PlanGroupLinkResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -87,18 +87,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<PlanGroupLink>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<PlanGroupLinkResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<PlanGroupLink> = data.getNullable("data") ?: listOf()
+        fun data(): List<PlanGroupLinkResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<PlanGroupLink>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<PlanGroupLinkResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -144,7 +145,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<PlanGroupLink>> = JsonMissing.of()
+            private var data: JsonField<List<PlanGroupLinkResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -155,9 +156,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<PlanGroupLink>) = data(JsonField.of(data))
+            fun data(data: List<PlanGroupLinkResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<PlanGroupLink>>) = apply { this.data = data }
+            fun data(data: JsonField<List<PlanGroupLinkResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -171,9 +172,10 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: PlanGroupLinkListPage) : Iterable<PlanGroupLink> {
+    class AutoPager(private val firstPage: PlanGroupLinkListPage) :
+        Iterable<PlanGroupLinkResponse> {
 
-        override fun iterator(): Iterator<PlanGroupLink> = iterator {
+        override fun iterator(): Iterator<PlanGroupLinkResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -185,7 +187,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<PlanGroupLink> {
+        fun stream(): Stream<PlanGroupLinkResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

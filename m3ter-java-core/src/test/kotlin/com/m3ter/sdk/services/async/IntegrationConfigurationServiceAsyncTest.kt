@@ -76,13 +76,13 @@ class IntegrationConfigurationServiceAsyncTest {
                 .build()
         val integrationConfigurationServiceAsync = client.integrationConfigurations()
 
-        val integrationConfigurationFuture =
+        val integrationConfigurationResponseFuture =
             integrationConfigurationServiceAsync.retrieve(
                 IntegrationConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val integrationConfiguration = integrationConfigurationFuture.get()
-        integrationConfiguration.validate()
+        val integrationConfigurationResponse = integrationConfigurationResponseFuture.get()
+        integrationConfigurationResponse.validate()
     }
 
     @Test
@@ -207,7 +207,7 @@ class IntegrationConfigurationServiceAsyncTest {
                 .build()
         val integrationConfigurationServiceAsync = client.integrationConfigurations()
 
-        val integrationConfigurationFuture =
+        val integrationConfigurationResponseFuture =
             integrationConfigurationServiceAsync.getByEntity(
                 IntegrationConfigurationGetByEntityParams.builder()
                     .orgId("orgId")
@@ -216,7 +216,7 @@ class IntegrationConfigurationServiceAsyncTest {
                     .build()
             )
 
-        val integrationConfiguration = integrationConfigurationFuture.get()
-        integrationConfiguration.validate()
+        val integrationConfigurationResponse = integrationConfigurationResponseFuture.get()
+        integrationConfigurationResponse.validate()
     }
 }

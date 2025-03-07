@@ -36,7 +36,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<BillJob> = response().data()
+    fun data(): List<BillJobResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -96,18 +96,18 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<BillJob>> = JsonMissing.of(),
+        @JsonProperty("data") private val data: JsonField<List<BillJobResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<BillJob> = data.getNullable("data") ?: listOf()
+        fun data(): List<BillJobResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<BillJob>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<BillJobResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -151,7 +151,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<BillJob>> = JsonMissing.of()
+            private var data: JsonField<List<BillJobResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -162,9 +162,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<BillJob>) = data(JsonField.of(data))
+            fun data(data: List<BillJobResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<BillJob>>) = apply { this.data = data }
+            fun data(data: JsonField<List<BillJobResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -180,9 +180,12 @@ private constructor(
 
     class AutoPager(private val firstPage: BillJobListPageAsync) {
 
-        fun forEach(action: Predicate<BillJob>, executor: Executor): CompletableFuture<Void> {
+        fun forEach(
+            action: Predicate<BillJobResponse>,
+            executor: Executor,
+        ): CompletableFuture<Void> {
             fun CompletableFuture<Optional<BillJobListPageAsync>>.forEach(
-                action: (BillJob) -> Boolean,
+                action: (BillJobResponse) -> Boolean,
                 executor: Executor,
             ): CompletableFuture<Void> =
                 thenComposeAsync(
@@ -198,8 +201,8 @@ private constructor(
                 .forEach(action::test, executor)
         }
 
-        fun toList(executor: Executor): CompletableFuture<List<BillJob>> {
-            val values = mutableListOf<BillJob>()
+        fun toList(executor: Executor): CompletableFuture<List<BillJobResponse>> {
+            val values = mutableListOf<BillJobResponse>()
             return forEach(values::add, executor).thenApply { values }
         }
     }

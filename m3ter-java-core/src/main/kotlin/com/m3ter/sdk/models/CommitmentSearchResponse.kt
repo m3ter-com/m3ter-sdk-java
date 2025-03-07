@@ -23,7 +23,7 @@ class CommitmentSearchResponse
 private constructor(
     @JsonProperty("data")
     @ExcludeMissing
-    private val data: JsonField<List<Commitment>> = JsonMissing.of(),
+    private val data: JsonField<List<CommitmentResponse>> = JsonMissing.of(),
     @JsonProperty("nextToken")
     @ExcludeMissing
     private val nextToken: JsonField<String> = JsonMissing.of(),
@@ -31,7 +31,7 @@ private constructor(
 ) {
 
     /** The list of Commitments information. */
-    fun data(): Optional<List<Commitment>> = Optional.ofNullable(data.getNullable("data"))
+    fun data(): Optional<List<CommitmentResponse>> = Optional.ofNullable(data.getNullable("data"))
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Commitments
@@ -40,7 +40,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
     /** The list of Commitments information. */
-    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Commitment>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<CommitmentResponse>> = data
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Commitments
@@ -75,7 +75,7 @@ private constructor(
     /** A builder for [CommitmentSearchResponse]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<Commitment>>? = null
+        private var data: JsonField<MutableList<CommitmentResponse>>? = null
         private var nextToken: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -87,15 +87,15 @@ private constructor(
         }
 
         /** The list of Commitments information. */
-        fun data(data: List<Commitment>) = data(JsonField.of(data))
+        fun data(data: List<CommitmentResponse>) = data(JsonField.of(data))
 
         /** The list of Commitments information. */
-        fun data(data: JsonField<List<Commitment>>) = apply {
+        fun data(data: JsonField<List<CommitmentResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
         /** The list of Commitments information. */
-        fun addData(data: Commitment) = apply {
+        fun addData(data: CommitmentResponse) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)

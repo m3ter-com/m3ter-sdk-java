@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.DebitReason
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
 import com.m3ter.sdk.models.DebitReasonListPage
 import com.m3ter.sdk.models.DebitReasonListParams
+import com.m3ter.sdk.models.DebitReasonResponse
 import com.m3ter.sdk.models.DebitReasonRetrieveParams
 import com.m3ter.sdk.models.DebitReasonUpdateParams
 
@@ -31,21 +31,21 @@ interface DebitReasonService {
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitReason
+    ): DebitReasonResponse
 
     /** Retrieve the Debit Reason with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitReason
+    ): DebitReasonResponse
 
     /** Update the Debit Reason with the given UUID. */
     @JvmOverloads
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitReason
+    ): DebitReasonResponse
 
     /**
      * Retrieve a list of the Debit Reason entities created for your Organization. You can filter
@@ -63,7 +63,7 @@ interface DebitReasonService {
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): DebitReason
+    ): DebitReasonResponse
 
     /**
      * A view of [DebitReasonService] that provides access to raw HTTP responses for each method.
@@ -79,7 +79,7 @@ interface DebitReasonService {
         fun create(
             params: DebitReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitReason>
+        ): HttpResponseFor<DebitReasonResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons/{id}`,
@@ -90,7 +90,7 @@ interface DebitReasonService {
         fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitReason>
+        ): HttpResponseFor<DebitReasonResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/debitreasons/{id}`,
@@ -101,7 +101,7 @@ interface DebitReasonService {
         fun update(
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitReason>
+        ): HttpResponseFor<DebitReasonResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons`, but
@@ -124,6 +124,6 @@ interface DebitReasonService {
         fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DebitReason>
+        ): HttpResponseFor<DebitReasonResponse>
     }
 }

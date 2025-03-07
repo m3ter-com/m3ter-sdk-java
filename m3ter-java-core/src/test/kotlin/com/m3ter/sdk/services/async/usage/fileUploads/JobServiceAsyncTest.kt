@@ -25,13 +25,13 @@ class JobServiceAsyncTest {
                 .build()
         val jobServiceAsync = client.usage().fileUploads().jobs()
 
-        val fileUploadJobFuture =
+        val fileUploadJobResponseFuture =
             jobServiceAsync.retrieve(
                 UsageFileUploadJobRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val fileUploadJob = fileUploadJobFuture.get()
-        fileUploadJob.validate()
+        val fileUploadJobResponse = fileUploadJobResponseFuture.get()
+        fileUploadJobResponse.validate()
     }
 
     @Test

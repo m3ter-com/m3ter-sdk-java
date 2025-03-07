@@ -4,7 +4,7 @@ package com.m3ter.sdk.services.async
 
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClientAsync
-import com.m3ter.sdk.models.PermissionStatement
+import com.m3ter.sdk.models.PermissionStatementResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
 import com.m3ter.sdk.models.UserGetUserGroupsParams
 import com.m3ter.sdk.models.UserListParams
@@ -31,11 +31,11 @@ class UserServiceAsyncTest {
                 .build()
         val userServiceAsync = client.users()
 
-        val userFuture =
+        val userResponseFuture =
             userServiceAsync.retrieve(UserRetrieveParams.builder().orgId("orgId").id("id").build())
 
-        val user = userFuture.get()
-        user.validate()
+        val userResponse = userResponseFuture.get()
+        userResponse.validate()
     }
 
     @Test
@@ -50,16 +50,16 @@ class UserServiceAsyncTest {
                 .build()
         val userServiceAsync = client.users()
 
-        val userFuture =
+        val userResponseFuture =
             userServiceAsync.update(
                 UserUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addPermissionPolicy(
-                        PermissionStatement.builder()
-                            .addAction(PermissionStatement.Action.ALL)
-                            .effect(PermissionStatement.Effect.ALLOW)
+                        PermissionStatementResponse.builder()
+                            .addAction(PermissionStatementResponse.Action.ALL)
+                            .effect(PermissionStatementResponse.Effect.ALLOW)
                             .addResource("string")
                             .build()
                     )
@@ -67,8 +67,8 @@ class UserServiceAsyncTest {
                     .build()
             )
 
-        val user = userFuture.get()
-        user.validate()
+        val userResponse = userResponseFuture.get()
+        userResponse.validate()
     }
 
     @Test
@@ -101,7 +101,7 @@ class UserServiceAsyncTest {
                 .build()
         val userServiceAsync = client.users()
 
-        val permissionPolicyFuture =
+        val permissionPolicyResponseFuture =
             userServiceAsync.getPermissions(
                 UserGetPermissionsParams.builder()
                     .orgId("orgId")
@@ -111,8 +111,8 @@ class UserServiceAsyncTest {
                     .build()
             )
 
-        val permissionPolicy = permissionPolicyFuture.get()
-        permissionPolicy.validate()
+        val permissionPolicyResponse = permissionPolicyResponseFuture.get()
+        permissionPolicyResponse.validate()
     }
 
     @Test
@@ -127,7 +127,7 @@ class UserServiceAsyncTest {
                 .build()
         val userServiceAsync = client.users()
 
-        val resourceGroupFuture =
+        val resourceGroupResponseFuture =
             userServiceAsync.getUserGroups(
                 UserGetUserGroupsParams.builder()
                     .orgId("orgId")
@@ -137,8 +137,8 @@ class UserServiceAsyncTest {
                     .build()
             )
 
-        val resourceGroup = resourceGroupFuture.get()
-        resourceGroup.validate()
+        val resourceGroupResponse = resourceGroupResponseFuture.get()
+        resourceGroupResponse.validate()
     }
 
     @Test

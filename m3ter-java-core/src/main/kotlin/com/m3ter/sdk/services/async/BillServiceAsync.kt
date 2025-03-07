@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Bill
 import com.m3ter.sdk.models.BillApproveParams
 import com.m3ter.sdk.models.BillApproveResponse
 import com.m3ter.sdk.models.BillDeleteParams
@@ -15,6 +14,7 @@ import com.m3ter.sdk.models.BillLatestByAccountParams
 import com.m3ter.sdk.models.BillListPageAsync
 import com.m3ter.sdk.models.BillListParams
 import com.m3ter.sdk.models.BillLockParams
+import com.m3ter.sdk.models.BillResponse
 import com.m3ter.sdk.models.BillRetrieveParams
 import com.m3ter.sdk.models.BillSearchParams
 import com.m3ter.sdk.models.BillSearchResponse
@@ -47,7 +47,7 @@ interface BillServiceAsync {
     fun retrieve(
         params: BillRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Bill>
+    ): CompletableFuture<BillResponse>
 
     /**
      * Retrieve a list of Bills.
@@ -75,7 +75,7 @@ interface BillServiceAsync {
     fun delete(
         params: BillDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Bill>
+    ): CompletableFuture<BillResponse>
 
     /**
      * Approve multiple Bills for the specified Organization based on the given criteria.
@@ -108,7 +108,7 @@ interface BillServiceAsync {
     fun latestByAccount(
         params: BillLatestByAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Bill>
+    ): CompletableFuture<BillResponse>
 
     /**
      * Lock the specific Bill identified by the given UUID. Once a Bill is locked, no further
@@ -123,7 +123,7 @@ interface BillServiceAsync {
     fun lock(
         params: BillLockParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Bill>
+    ): CompletableFuture<BillResponse>
 
     /**
      * Search for Bill entities.
@@ -148,7 +148,7 @@ interface BillServiceAsync {
     fun updateStatus(
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Bill>
+    ): CompletableFuture<BillResponse>
 
     /** A view of [BillServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -168,7 +168,7 @@ interface BillServiceAsync {
         fun retrieve(
             params: BillRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Bill>>
+        ): CompletableFuture<HttpResponseFor<BillResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills`, but is otherwise the
@@ -190,7 +190,7 @@ interface BillServiceAsync {
         fun delete(
             params: BillDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Bill>>
+        ): CompletableFuture<HttpResponseFor<BillResponse>>
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/bills/approve`, but is
@@ -212,7 +212,7 @@ interface BillServiceAsync {
         fun latestByAccount(
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Bill>>
+        ): CompletableFuture<HttpResponseFor<BillResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/lock`, but is
@@ -223,7 +223,7 @@ interface BillServiceAsync {
         fun lock(
             params: BillLockParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Bill>>
+        ): CompletableFuture<HttpResponseFor<BillResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/search`, but is
@@ -245,6 +245,6 @@ interface BillServiceAsync {
         fun updateStatus(
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<Bill>>
+        ): CompletableFuture<HttpResponseFor<BillResponse>>
     }
 }

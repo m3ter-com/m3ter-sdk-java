@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Product
 import com.m3ter.sdk.models.ProductCreateParams
 import com.m3ter.sdk.models.ProductDeleteParams
 import com.m3ter.sdk.models.ProductListPage
 import com.m3ter.sdk.models.ProductListParams
+import com.m3ter.sdk.models.ProductResponse
 import com.m3ter.sdk.models.ProductRetrieveParams
 import com.m3ter.sdk.models.ProductUpdateParams
 
@@ -32,15 +32,24 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): ProductService.WithRawResponse = withRawResponse
 
-    override fun create(params: ProductCreateParams, requestOptions: RequestOptions): Product =
+    override fun create(
+        params: ProductCreateParams,
+        requestOptions: RequestOptions,
+    ): ProductResponse =
         // post /organizations/{orgId}/products
         withRawResponse().create(params, requestOptions).parse()
 
-    override fun retrieve(params: ProductRetrieveParams, requestOptions: RequestOptions): Product =
+    override fun retrieve(
+        params: ProductRetrieveParams,
+        requestOptions: RequestOptions,
+    ): ProductResponse =
         // get /organizations/{orgId}/products/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(params: ProductUpdateParams, requestOptions: RequestOptions): Product =
+    override fun update(
+        params: ProductUpdateParams,
+        requestOptions: RequestOptions,
+    ): ProductResponse =
         // put /organizations/{orgId}/products/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -48,7 +57,10 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
         // get /organizations/{orgId}/products
         withRawResponse().list(params, requestOptions).parse()
 
-    override fun delete(params: ProductDeleteParams, requestOptions: RequestOptions): Product =
+    override fun delete(
+        params: ProductDeleteParams,
+        requestOptions: RequestOptions,
+    ): ProductResponse =
         // delete /organizations/{orgId}/products/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -57,13 +69,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: ProductCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Product> {
+        ): HttpResponseFor<ProductResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -84,13 +96,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val retrieveHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ProductRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Product> {
+        ): HttpResponseFor<ProductResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -115,13 +127,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: ProductUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Product> {
+        ): HttpResponseFor<ProductResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -175,13 +187,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val deleteHandler: Handler<Product> =
-            jsonHandler<Product>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ProductResponse> =
+            jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: ProductDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Product> {
+        ): HttpResponseFor<ProductResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

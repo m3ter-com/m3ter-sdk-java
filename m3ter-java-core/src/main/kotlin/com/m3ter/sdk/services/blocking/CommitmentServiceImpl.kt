@@ -15,11 +15,11 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Commitment
 import com.m3ter.sdk.models.CommitmentCreateParams
 import com.m3ter.sdk.models.CommitmentDeleteParams
 import com.m3ter.sdk.models.CommitmentListPage
 import com.m3ter.sdk.models.CommitmentListParams
+import com.m3ter.sdk.models.CommitmentResponse
 import com.m3ter.sdk.models.CommitmentRetrieveParams
 import com.m3ter.sdk.models.CommitmentSearchParams
 import com.m3ter.sdk.models.CommitmentSearchResponse
@@ -37,21 +37,21 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
     override fun create(
         params: CommitmentCreateParams,
         requestOptions: RequestOptions,
-    ): Commitment =
+    ): CommitmentResponse =
         // post /organizations/{orgId}/commitments
         withRawResponse().create(params, requestOptions).parse()
 
     override fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions,
-    ): Commitment =
+    ): CommitmentResponse =
         // get /organizations/{orgId}/commitments/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override fun update(
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions,
-    ): Commitment =
+    ): CommitmentResponse =
         // put /organizations/{orgId}/commitments/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -65,7 +65,7 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
     override fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions,
-    ): Commitment =
+    ): CommitmentResponse =
         // delete /organizations/{orgId}/commitments/{id}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -81,13 +81,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: CommitmentCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Commitment> {
+        ): HttpResponseFor<CommitmentResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -108,13 +108,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val retrieveHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Commitment> {
+        ): HttpResponseFor<CommitmentResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -139,13 +139,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val updateHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Commitment> {
+        ): HttpResponseFor<CommitmentResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -199,13 +199,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val deleteHandler: Handler<Commitment> =
-            jsonHandler<Commitment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<CommitmentResponse> =
+            jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Commitment> {
+        ): HttpResponseFor<CommitmentResponse> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

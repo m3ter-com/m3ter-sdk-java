@@ -7,7 +7,7 @@ package com.m3ter.sdk.services.blocking.usage.fileUploads
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.FileUploadJob
+import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.sdk.models.UsageFileUploadJobListPage
@@ -30,7 +30,7 @@ interface JobService {
     fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): FileUploadJob
+    ): FileUploadJobResponse
 
     /**
      * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
@@ -73,7 +73,7 @@ interface JobService {
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<FileUploadJob>
+        ): HttpResponseFor<FileUploadJobResponse>
 
         /**
          * Returns a raw HTTP response for `get

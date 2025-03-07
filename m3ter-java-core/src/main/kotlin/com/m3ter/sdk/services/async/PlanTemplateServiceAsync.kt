@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PlanTemplate
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
 import com.m3ter.sdk.models.PlanTemplateListPageAsync
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -34,7 +34,7 @@ interface PlanTemplateServiceAsync {
     fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanTemplate>
+    ): CompletableFuture<PlanTemplateResponse>
 
     /**
      * Retrieve a specific PlanTemplate.
@@ -46,7 +46,7 @@ interface PlanTemplateServiceAsync {
     fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanTemplate>
+    ): CompletableFuture<PlanTemplateResponse>
 
     /**
      * Update a specific PlanTemplate.
@@ -63,7 +63,7 @@ interface PlanTemplateServiceAsync {
     fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanTemplate>
+    ): CompletableFuture<PlanTemplateResponse>
 
     /**
      * Retrieve a list of PlanTemplates.
@@ -88,7 +88,7 @@ interface PlanTemplateServiceAsync {
     fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PlanTemplate>
+    ): CompletableFuture<PlanTemplateResponse>
 
     /**
      * A view of [PlanTemplateServiceAsync] that provides access to raw HTTP responses for each
@@ -105,7 +105,7 @@ interface PlanTemplateServiceAsync {
         fun create(
             params: PlanTemplateCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>>
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates/{id}`, but is
@@ -116,7 +116,7 @@ interface PlanTemplateServiceAsync {
         fun retrieve(
             params: PlanTemplateRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>>
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plantemplates/{id}`, but is
@@ -127,7 +127,7 @@ interface PlanTemplateServiceAsync {
         fun update(
             params: PlanTemplateUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>>
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates`, but is
@@ -149,6 +149,6 @@ interface PlanTemplateServiceAsync {
         fun delete(
             params: PlanTemplateDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanTemplate>>
+        ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
     }
 }

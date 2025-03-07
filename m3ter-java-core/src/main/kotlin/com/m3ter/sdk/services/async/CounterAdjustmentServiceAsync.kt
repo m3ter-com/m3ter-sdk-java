@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.CounterAdjustment
 import com.m3ter.sdk.models.CounterAdjustmentCreateParams
 import com.m3ter.sdk.models.CounterAdjustmentDeleteParams
 import com.m3ter.sdk.models.CounterAdjustmentListPageAsync
 import com.m3ter.sdk.models.CounterAdjustmentListParams
+import com.m3ter.sdk.models.CounterAdjustmentResponse
 import com.m3ter.sdk.models.CounterAdjustmentRetrieveParams
 import com.m3ter.sdk.models.CounterAdjustmentUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -38,21 +38,21 @@ interface CounterAdjustmentServiceAsync {
     fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterAdjustment>
+    ): CompletableFuture<CounterAdjustmentResponse>
 
     /** Retrieve a CounterAdjustment for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterAdjustment>
+    ): CompletableFuture<CounterAdjustmentResponse>
 
     /** Update a CounterAdjustment for an Account. */
     @JvmOverloads
     fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterAdjustment>
+    ): CompletableFuture<CounterAdjustmentResponse>
 
     /**
      * Retrieve a list of CounterAdjustments created for Accounts in your Organization. You can
@@ -75,7 +75,7 @@ interface CounterAdjustmentServiceAsync {
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<CounterAdjustment>
+    ): CompletableFuture<CounterAdjustmentResponse>
 
     /**
      * A view of [CounterAdjustmentServiceAsync] that provides access to raw HTTP responses for each
@@ -92,7 +92,7 @@ interface CounterAdjustmentServiceAsync {
         fun create(
             params: CounterAdjustmentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>>
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
@@ -103,7 +103,7 @@ interface CounterAdjustmentServiceAsync {
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>>
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
@@ -114,7 +114,7 @@ interface CounterAdjustmentServiceAsync {
         fun update(
             params: CounterAdjustmentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>>
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
@@ -136,6 +136,6 @@ interface CounterAdjustmentServiceAsync {
         fun delete(
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterAdjustment>>
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
     }
 }

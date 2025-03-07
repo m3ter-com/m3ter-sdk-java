@@ -7,11 +7,11 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.ScheduledEventConfiguration
 import com.m3ter.sdk.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationDeleteParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationListPage
 import com.m3ter.sdk.models.ScheduledEventConfigurationListParams
+import com.m3ter.sdk.models.ScheduledEventConfigurationResponse
 import com.m3ter.sdk.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.sdk.models.ScheduledEventConfigurationUpdateParams
 
@@ -27,21 +27,21 @@ interface ScheduledEventConfigurationService {
     fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ScheduledEventConfiguration
+    ): ScheduledEventConfigurationResponse
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ScheduledEventConfiguration
+    ): ScheduledEventConfigurationResponse
 
     /** Update a ScheduledEventConfiguration for the given UUID. */
     @JvmOverloads
     fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ScheduledEventConfiguration
+    ): ScheduledEventConfigurationResponse
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
     @JvmOverloads
@@ -55,7 +55,7 @@ interface ScheduledEventConfigurationService {
     fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ScheduledEventConfiguration
+    ): ScheduledEventConfigurationResponse
 
     /**
      * A view of [ScheduledEventConfigurationService] that provides access to raw HTTP responses for
@@ -73,7 +73,7 @@ interface ScheduledEventConfigurationService {
         fun create(
             params: ScheduledEventConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfiguration>
+        ): HttpResponseFor<ScheduledEventConfigurationResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -85,7 +85,7 @@ interface ScheduledEventConfigurationService {
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfiguration>
+        ): HttpResponseFor<ScheduledEventConfigurationResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -97,7 +97,7 @@ interface ScheduledEventConfigurationService {
         fun update(
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfiguration>
+        ): HttpResponseFor<ScheduledEventConfigurationResponse>
 
         /**
          * Returns a raw HTTP response for `get
@@ -121,6 +121,6 @@ interface ScheduledEventConfigurationService {
         fun delete(
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfiguration>
+        ): HttpResponseFor<ScheduledEventConfigurationResponse>
     }
 }

@@ -7,7 +7,6 @@ package com.m3ter.sdk.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
@@ -15,6 +14,7 @@ import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPage
 import com.m3ter.sdk.models.AccountListParams
+import com.m3ter.sdk.models.AccountResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -32,14 +32,14 @@ interface AccountService {
     fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account
+    ): AccountResponse
 
     /** Retrieve the Account with the given Account UUID. */
     @JvmOverloads
     fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account
+    ): AccountResponse
 
     /**
      * Update the Account with the given Account UUID.
@@ -52,7 +52,7 @@ interface AccountService {
     fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account
+    ): AccountResponse
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
     @JvmOverloads
@@ -69,7 +69,7 @@ interface AccountService {
     fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account
+    ): AccountResponse
 
     /**
      * Apply the specified end-date to billing entities associated with an Account.
@@ -89,7 +89,7 @@ interface AccountService {
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account
+    ): AccountResponse
 
     /**
      * Search for Account entities.
@@ -116,7 +116,7 @@ interface AccountService {
         fun create(
             params: AccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Account>
+        ): HttpResponseFor<AccountResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}`, but is
@@ -127,7 +127,7 @@ interface AccountService {
         fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Account>
+        ): HttpResponseFor<AccountResponse>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/accounts/{id}`, but is
@@ -138,7 +138,7 @@ interface AccountService {
         fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Account>
+        ): HttpResponseFor<AccountResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts`, but is otherwise
@@ -160,7 +160,7 @@ interface AccountService {
         fun delete(
             params: AccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Account>
+        ): HttpResponseFor<AccountResponse>
 
         /**
          * Returns a raw HTTP response for `put
@@ -183,7 +183,7 @@ interface AccountService {
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<Account>
+        ): HttpResponseFor<AccountResponse>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is

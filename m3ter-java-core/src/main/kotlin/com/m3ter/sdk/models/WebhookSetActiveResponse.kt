@@ -23,7 +23,7 @@ class WebhookSetActiveResponse
 private constructor(
     @JsonProperty("credentials")
     @ExcludeMissing
-    private val credentials: JsonField<M3terSignedCredentialsReq> = JsonMissing.of(),
+    private val credentials: JsonField<M3terSignedCredentialsRequest> = JsonMissing.of(),
     @JsonProperty("description")
     @ExcludeMissing
     private val description: JsonField<String> = JsonMissing.of(),
@@ -40,7 +40,7 @@ private constructor(
 ) {
 
     /** This schema defines the credentials required for m3ter request signing. */
-    fun credentials(): M3terSignedCredentialsReq = credentials.getRequired("credentials")
+    fun credentials(): M3terSignedCredentialsRequest = credentials.getRequired("credentials")
 
     fun description(): String = description.getRequired("description")
 
@@ -66,7 +66,7 @@ private constructor(
     /** This schema defines the credentials required for m3ter request signing. */
     @JsonProperty("credentials")
     @ExcludeMissing
-    fun _credentials(): JsonField<M3terSignedCredentialsReq> = credentials
+    fun _credentials(): JsonField<M3terSignedCredentialsRequest> = credentials
 
     @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
@@ -131,7 +131,7 @@ private constructor(
     /** A builder for [WebhookSetActiveResponse]. */
     class Builder internal constructor() {
 
-        private var credentials: JsonField<M3terSignedCredentialsReq>? = null
+        private var credentials: JsonField<M3terSignedCredentialsRequest>? = null
         private var description: JsonField<String>? = null
         private var name: JsonField<String>? = null
         private var url: JsonField<String>? = null
@@ -153,11 +153,11 @@ private constructor(
         }
 
         /** This schema defines the credentials required for m3ter request signing. */
-        fun credentials(credentials: M3terSignedCredentialsReq) =
+        fun credentials(credentials: M3terSignedCredentialsRequest) =
             credentials(JsonField.of(credentials))
 
         /** This schema defines the credentials required for m3ter request signing. */
-        fun credentials(credentials: JsonField<M3terSignedCredentialsReq>) = apply {
+        fun credentials(credentials: JsonField<M3terSignedCredentialsRequest>) = apply {
             this.credentials = credentials
         }
 

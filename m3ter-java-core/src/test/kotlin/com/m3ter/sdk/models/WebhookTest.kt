@@ -18,7 +18,7 @@ class WebhookTest {
                 .code("code")
                 .createdBy("createdBy")
                 .credentials(
-                    M3terSignedCredentialsResp.builder()
+                    M3terSignedCredentialsResponse.builder()
                         .id("id")
                         .destination("x")
                         .type("x")
@@ -48,7 +48,7 @@ class WebhookTest {
         assertThat(webhook.createdBy()).contains("createdBy")
         assertThat(webhook.credentials())
             .contains(
-                M3terSignedCredentialsResp.builder()
+                M3terSignedCredentialsResponse.builder()
                     .id("id")
                     .destination("x")
                     .type("x")

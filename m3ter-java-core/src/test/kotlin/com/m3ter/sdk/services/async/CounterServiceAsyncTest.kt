@@ -27,7 +27,7 @@ class CounterServiceAsyncTest {
                 .build()
         val counterServiceAsync = client.counters()
 
-        val counterFuture =
+        val counterResponseFuture =
             counterServiceAsync.create(
                 CounterCreateParams.builder()
                     .orgId("orgId")
@@ -39,8 +39,8 @@ class CounterServiceAsyncTest {
                     .build()
             )
 
-        val counter = counterFuture.get()
-        counter.validate()
+        val counterResponse = counterResponseFuture.get()
+        counterResponse.validate()
     }
 
     @Test
@@ -55,13 +55,13 @@ class CounterServiceAsyncTest {
                 .build()
         val counterServiceAsync = client.counters()
 
-        val counterFuture =
+        val counterResponseFuture =
             counterServiceAsync.retrieve(
                 CounterRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counter = counterFuture.get()
-        counter.validate()
+        val counterResponse = counterResponseFuture.get()
+        counterResponse.validate()
     }
 
     @Test
@@ -76,7 +76,7 @@ class CounterServiceAsyncTest {
                 .build()
         val counterServiceAsync = client.counters()
 
-        val counterFuture =
+        val counterResponseFuture =
             counterServiceAsync.update(
                 CounterUpdateParams.builder()
                     .orgId("orgId")
@@ -89,8 +89,8 @@ class CounterServiceAsyncTest {
                     .build()
             )
 
-        val counter = counterFuture.get()
-        counter.validate()
+        val counterResponse = counterResponseFuture.get()
+        counterResponse.validate()
     }
 
     @Test
@@ -124,12 +124,12 @@ class CounterServiceAsyncTest {
                 .build()
         val counterServiceAsync = client.counters()
 
-        val counterFuture =
+        val counterResponseFuture =
             counterServiceAsync.delete(
                 CounterDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val counter = counterFuture.get()
-        counter.validate()
+        val counterResponse = counterResponseFuture.get()
+        counterResponse.validate()
     }
 }

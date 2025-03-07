@@ -35,7 +35,7 @@ private constructor(
     private val createdBy: JsonField<String> = JsonMissing.of(),
     @JsonProperty("credentials")
     @ExcludeMissing
-    private val credentials: JsonField<M3terSignedCredentialsResp> = JsonMissing.of(),
+    private val credentials: JsonField<M3terSignedCredentialsResponse> = JsonMissing.of(),
     @JsonProperty("description")
     @ExcludeMissing
     private val description: JsonField<String> = JsonMissing.of(),
@@ -72,7 +72,7 @@ private constructor(
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
     /** Response representing a set of credentials used for signing m3ter requests. */
-    fun credentials(): Optional<M3terSignedCredentialsResp> =
+    fun credentials(): Optional<M3terSignedCredentialsResponse> =
         Optional.ofNullable(credentials.getNullable("credentials"))
 
     fun description(): Optional<String> =
@@ -116,7 +116,7 @@ private constructor(
     /** Response representing a set of credentials used for signing m3ter requests. */
     @JsonProperty("credentials")
     @ExcludeMissing
-    fun _credentials(): JsonField<M3terSignedCredentialsResp> = credentials
+    fun _credentials(): JsonField<M3terSignedCredentialsResponse> = credentials
 
     @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
@@ -190,7 +190,7 @@ private constructor(
         private var active: JsonField<Boolean> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
-        private var credentials: JsonField<M3terSignedCredentialsResp> = JsonMissing.of()
+        private var credentials: JsonField<M3terSignedCredentialsResponse> = JsonMissing.of()
         private var description: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -253,11 +253,11 @@ private constructor(
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** Response representing a set of credentials used for signing m3ter requests. */
-        fun credentials(credentials: M3terSignedCredentialsResp) =
+        fun credentials(credentials: M3terSignedCredentialsResponse) =
             credentials(JsonField.of(credentials))
 
         /** Response representing a set of credentials used for signing m3ter requests. */
-        fun credentials(credentials: JsonField<M3terSignedCredentialsResp>) = apply {
+        fun credentials(credentials: JsonField<M3terSignedCredentialsResponse>) = apply {
             this.credentials = credentials
         }
 

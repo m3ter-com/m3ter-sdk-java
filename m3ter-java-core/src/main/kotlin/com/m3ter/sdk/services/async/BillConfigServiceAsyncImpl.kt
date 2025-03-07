@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.BillConfig
+import com.m3ter.sdk.models.BillConfigResponse
 import com.m3ter.sdk.models.BillConfigRetrieveParams
 import com.m3ter.sdk.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -32,14 +32,14 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
     override fun retrieve(
         params: BillConfigRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillConfig> =
+    ): CompletableFuture<BillConfigResponse> =
         // get /organizations/{orgId}/billconfig
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: BillConfigUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<BillConfig> =
+    ): CompletableFuture<BillConfigResponse> =
         // put /organizations/{orgId}/billconfig
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -48,13 +48,13 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<BillConfig> =
-            jsonHandler<BillConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<BillConfigResponse> =
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: BillConfigRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillConfig>> {
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -77,13 +77,13 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val updateHandler: Handler<BillConfig> =
-            jsonHandler<BillConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<BillConfigResponse> =
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: BillConfigUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<BillConfig>> {
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

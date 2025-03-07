@@ -15,13 +15,13 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Contract
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPageAsync
 import com.m3ter.sdk.models.ContractListParams
+import com.m3ter.sdk.models.ContractResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -38,21 +38,21 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Contract> =
+    ): CompletableFuture<ContractResponse> =
         // post /organizations/{orgId}/contracts
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Contract> =
+    ): CompletableFuture<ContractResponse> =
         // get /organizations/{orgId}/contracts/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Contract> =
+    ): CompletableFuture<ContractResponse> =
         // put /organizations/{orgId}/contracts/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -66,7 +66,7 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
     override fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Contract> =
+    ): CompletableFuture<ContractResponse> =
         // delete /organizations/{orgId}/contracts/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -82,13 +82,13 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: ContractCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Contract>> {
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -112,13 +112,13 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val retrieveHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Contract>> {
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -146,13 +146,13 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val updateHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: ContractUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Contract>> {
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -218,13 +218,13 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val deleteHandler: Handler<Contract> =
-            jsonHandler<Contract>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<ContractResponse> =
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Contract>> {
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

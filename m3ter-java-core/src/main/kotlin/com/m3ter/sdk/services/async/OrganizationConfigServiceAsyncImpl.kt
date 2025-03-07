@@ -15,7 +15,7 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.OrganizationConfig
+import com.m3ter.sdk.models.OrganizationConfigResponse
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
 import java.util.concurrent.CompletableFuture
@@ -32,14 +32,14 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
     override fun retrieve(
         params: OrganizationConfigRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<OrganizationConfig> =
+    ): CompletableFuture<OrganizationConfigResponse> =
         // get /organizations/{orgId}/organizationconfig
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<OrganizationConfig> =
+    ): CompletableFuture<OrganizationConfigResponse> =
         // put /organizations/{orgId}/organizationconfig
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -48,13 +48,14 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val retrieveHandler: Handler<OrganizationConfig> =
-            jsonHandler<OrganizationConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<OrganizationConfigResponse> =
+            jsonHandler<OrganizationConfigResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: OrganizationConfigRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<OrganizationConfig>> {
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -77,13 +78,14 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
                 }
         }
 
-        private val updateHandler: Handler<OrganizationConfig> =
-            jsonHandler<OrganizationConfig>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<OrganizationConfigResponse> =
+            jsonHandler<OrganizationConfigResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
 
         override fun update(
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<OrganizationConfig>> {
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

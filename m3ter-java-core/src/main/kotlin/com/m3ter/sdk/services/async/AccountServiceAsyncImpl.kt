@@ -15,7 +15,6 @@ import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
 import com.m3ter.sdk.errors.M3terError
-import com.m3ter.sdk.models.Account
 import com.m3ter.sdk.models.AccountCreateParams
 import com.m3ter.sdk.models.AccountDeleteParams
 import com.m3ter.sdk.models.AccountEndDateBillingEntitiesParams
@@ -23,6 +22,7 @@ import com.m3ter.sdk.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.AccountGetChildrenParams
 import com.m3ter.sdk.models.AccountListPageAsync
 import com.m3ter.sdk.models.AccountListParams
+import com.m3ter.sdk.models.AccountResponse
 import com.m3ter.sdk.models.AccountRetrieveParams
 import com.m3ter.sdk.models.AccountSearchParams
 import com.m3ter.sdk.models.AccountSearchResponse
@@ -41,21 +41,21 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> =
+    ): CompletableFuture<AccountResponse> =
         // post /organizations/{orgId}/accounts
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
     override fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> =
+    ): CompletableFuture<AccountResponse> =
         // get /organizations/{orgId}/accounts/{id}
         withRawResponse().retrieve(params, requestOptions).thenApply { it.parse() }
 
     override fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> =
+    ): CompletableFuture<AccountResponse> =
         // put /organizations/{orgId}/accounts/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -69,7 +69,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> =
+    ): CompletableFuture<AccountResponse> =
         // delete /organizations/{orgId}/accounts/{id}
         withRawResponse().delete(params, requestOptions).thenApply { it.parse() }
 
@@ -83,7 +83,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<Account> =
+    ): CompletableFuture<AccountResponse> =
         // get /organizations/{orgId}/accounts/{id}/children
         withRawResponse().getChildren(params, requestOptions).thenApply { it.parse() }
 
@@ -99,13 +99,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
 
-        private val createHandler: Handler<Account> =
-            jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun create(
             params: AccountCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Account>> {
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -129,13 +129,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val retrieveHandler: Handler<Account> =
-            jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Account>> {
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -163,13 +163,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<Account> =
-            jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Account>> {
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -235,13 +235,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val deleteHandler: Handler<Account> =
-            jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun delete(
             params: AccountDeleteParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Account>> {
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -307,13 +307,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val getChildrenHandler: Handler<Account> =
-            jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val getChildrenHandler: Handler<AccountResponse> =
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<Account>> {
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

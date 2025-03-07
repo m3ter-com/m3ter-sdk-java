@@ -8,9 +8,8 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.http.HttpResponse
 import com.m3ter.sdk.core.http.HttpResponseFor
-import com.m3ter.sdk.models.PermissionPolicy
-import com.m3ter.sdk.models.ResourceGroup
-import com.m3ter.sdk.models.User
+import com.m3ter.sdk.models.PermissionPolicyResponse
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
 import com.m3ter.sdk.models.UserGetUserGroupsParams
 import com.m3ter.sdk.models.UserListPageAsync
@@ -18,6 +17,7 @@ import com.m3ter.sdk.models.UserListParams
 import com.m3ter.sdk.models.UserMeParams
 import com.m3ter.sdk.models.UserMeResponse
 import com.m3ter.sdk.models.UserResendPasswordParams
+import com.m3ter.sdk.models.UserResponse
 import com.m3ter.sdk.models.UserRetrieveParams
 import com.m3ter.sdk.models.UserUpdateParams
 import com.m3ter.sdk.services.async.users.InvitationServiceAsync
@@ -42,7 +42,7 @@ interface UserServiceAsync {
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<User>
+    ): CompletableFuture<UserResponse>
 
     /**
      * Update the OrgUser with the given UUID.
@@ -55,7 +55,7 @@ interface UserServiceAsync {
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<User>
+    ): CompletableFuture<UserResponse>
 
     /**
      * Retrieve a list of OrgUsers.
@@ -80,7 +80,7 @@ interface UserServiceAsync {
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /**
      * Retrieve a list of User Groups for an OrgUser.
@@ -109,7 +109,7 @@ interface UserServiceAsync {
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ResourceGroup>
+    ): CompletableFuture<ResourceGroupResponse>
 
     /** Retrieve information about the current user */
     @JvmOverloads
@@ -139,7 +139,7 @@ interface UserServiceAsync {
         fun retrieve(
             params: UserRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<User>>
+        ): CompletableFuture<HttpResponseFor<UserResponse>>
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
@@ -150,7 +150,7 @@ interface UserServiceAsync {
         fun update(
             params: UserUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<User>>
+        ): CompletableFuture<HttpResponseFor<UserResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
@@ -172,7 +172,7 @@ interface UserServiceAsync {
         fun getPermissions(
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicy>>
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
@@ -183,7 +183,7 @@ interface UserServiceAsync {
         fun getUserGroups(
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ResourceGroup>>
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
