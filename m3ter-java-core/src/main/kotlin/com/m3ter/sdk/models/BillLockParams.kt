@@ -60,6 +60,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BillLockParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

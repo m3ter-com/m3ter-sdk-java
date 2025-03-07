@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
@@ -198,6 +199,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DataExportScheduleListResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -285,14 +296,8 @@ private constructor(
         /** The Export Destination ids. */
         fun addDestinationId(destinationId: String) = apply {
             destinationIds =
-                (destinationIds ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(destinationId)
+                (destinationIds ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("destinationIds", it).add(destinationId)
                 }
         }
 

@@ -4,19 +4,26 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Contract
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPageAsync
 import com.m3ter.sdk.models.ContractListParams
+import com.m3ter.sdk.models.ContractResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
 
 interface ContractServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Contract.
@@ -28,14 +35,14 @@ interface ContractServiceAsync {
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     @JvmOverloads
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Update the Contract with the given UUID.
@@ -51,7 +58,7 @@ interface ContractServiceAsync {
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
@@ -74,7 +81,7 @@ interface ContractServiceAsync {
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Contract>
+    ): CompletableFuture<ContractResponse>
 
     /**
      * Apply the specified end-date to billing entities associated with Accounts the Contract has
@@ -94,4 +101,77 @@ interface ContractServiceAsync {
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractEndDateBillingEntitiesResponse>
+
+    /**
+     * A view of [ContractServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/contracts`, but is otherwise
+         * the same as [ContractServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ContractCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ContractRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ContractUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
+         * the same as [ContractServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ContractListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ContractDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
+         * as [ContractServiceAsync.endDateBillingEntities].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun endDateBillingEntities(
+            params: ContractEndDateBillingEntitiesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>>
+    }
 }

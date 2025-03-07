@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Webhook
 import com.m3ter.sdk.models.WebhookCreateParams
 import com.m3ter.sdk.models.WebhookCreateResponse
@@ -18,6 +20,11 @@ import com.m3ter.sdk.models.WebhookUpdateParams
 import com.m3ter.sdk.models.WebhookUpdateResponse
 
 interface WebhookService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * This endpoint creates a new webhook destination. A webhook destination is a URL where webhook
@@ -68,4 +75,80 @@ interface WebhookService {
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookSetActiveResponse
+
+    /** A view of [WebhookService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
+         * [WebhookService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: WebhookCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: WebhookRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Webhook>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: WebhookUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookUpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
+         * [WebhookService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: WebhookListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: WebhookDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Webhook>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}/active`, but is otherwise
+         * the same as [WebhookService.setActive].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun setActive(
+            params: WebhookSetActiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookSetActiveResponse>
+    }
 }

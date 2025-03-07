@@ -4,17 +4,24 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.BillJob
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BillJobCancelParams
 import com.m3ter.sdk.models.BillJobCreateParams
 import com.m3ter.sdk.models.BillJobListPageAsync
 import com.m3ter.sdk.models.BillJobListParams
 import com.m3ter.sdk.models.BillJobRecalculateParams
+import com.m3ter.sdk.models.BillJobResponse
 import com.m3ter.sdk.models.BillJobRetrieveParams
 import java.util.concurrent.CompletableFuture
 
 interface BillJobServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -45,14 +52,14 @@ interface BillJobServiceAsync {
     fun create(
         params: BillJobCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillJob>
+    ): CompletableFuture<BillJobResponse>
 
     /** Retrieve a Bill Job for the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillJob>
+    ): CompletableFuture<BillJobResponse>
 
     /**
      * Retrieve a list of BillJobs.
@@ -77,7 +84,7 @@ interface BillJobServiceAsync {
     fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillJob>
+    ): CompletableFuture<BillJobResponse>
 
     /**
      * Create a new BillJob specifically to recalculate existing bills for a given Organization.
@@ -96,5 +103,66 @@ interface BillJobServiceAsync {
     fun recalculate(
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<BillJob>
+    ): CompletableFuture<BillJobResponse>
+
+    /**
+     * A view of [BillJobServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise
+         * the same as [BillJobServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BillJobCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
+         * otherwise the same as [BillJobServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
+         * the same as [BillJobServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillJobListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but
+         * is otherwise the same as [BillJobServiceAsync.cancel].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun cancel(
+            params: BillJobCancelParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but
+         * is otherwise the same as [BillJobServiceAsync.recalculate].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun recalculate(
+            params: BillJobRecalculateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+    }
 }

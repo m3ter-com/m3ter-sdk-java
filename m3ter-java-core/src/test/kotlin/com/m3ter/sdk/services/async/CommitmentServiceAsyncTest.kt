@@ -31,7 +31,7 @@ class CommitmentServiceAsyncTest {
                 .build()
         val commitmentServiceAsync = client.commitments()
 
-        val commitmentFuture =
+        val commitmentResponseFuture =
             commitmentServiceAsync.create(
                 CommitmentCreateParams.builder()
                     .orgId("orgId")
@@ -73,8 +73,8 @@ class CommitmentServiceAsyncTest {
                     .build()
             )
 
-        val commitment = commitmentFuture.get()
-        commitment.validate()
+        val commitmentResponse = commitmentResponseFuture.get()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -89,13 +89,13 @@ class CommitmentServiceAsyncTest {
                 .build()
         val commitmentServiceAsync = client.commitments()
 
-        val commitmentFuture =
+        val commitmentResponseFuture =
             commitmentServiceAsync.retrieve(
                 CommitmentRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val commitment = commitmentFuture.get()
-        commitment.validate()
+        val commitmentResponse = commitmentResponseFuture.get()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -110,7 +110,7 @@ class CommitmentServiceAsyncTest {
                 .build()
         val commitmentServiceAsync = client.commitments()
 
-        val commitmentFuture =
+        val commitmentResponseFuture =
             commitmentServiceAsync.update(
                 CommitmentUpdateParams.builder()
                     .orgId("orgId")
@@ -153,8 +153,8 @@ class CommitmentServiceAsyncTest {
                     .build()
             )
 
-        val commitment = commitmentFuture.get()
-        commitment.validate()
+        val commitmentResponse = commitmentResponseFuture.get()
+        commitmentResponse.validate()
     }
 
     @Test
@@ -188,13 +188,13 @@ class CommitmentServiceAsyncTest {
                 .build()
         val commitmentServiceAsync = client.commitments()
 
-        val commitmentFuture =
+        val commitmentResponseFuture =
             commitmentServiceAsync.delete(
                 CommitmentDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val commitment = commitmentFuture.get()
-        commitment.validate()
+        val commitmentResponse = commitmentResponseFuture.get()
+        commitmentResponse.validate()
     }
 
     @Test

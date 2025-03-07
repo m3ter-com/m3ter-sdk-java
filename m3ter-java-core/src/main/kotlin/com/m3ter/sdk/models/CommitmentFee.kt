@@ -79,6 +79,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CommitmentFee].
+         *
+         * The following fields are required:
+         * ```java
+         * .amount()
+         * .date()
+         * .servicePeriodEndDate()
+         * .servicePeriodStartDate()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

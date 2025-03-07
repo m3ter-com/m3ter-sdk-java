@@ -4,18 +4,25 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Contract
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.sdk.models.ContractListPage
 import com.m3ter.sdk.models.ContractListParams
+import com.m3ter.sdk.models.ContractResponse
 import com.m3ter.sdk.models.ContractRetrieveParams
 import com.m3ter.sdk.models.ContractUpdateParams
 
 interface ContractService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Contract.
@@ -27,14 +34,14 @@ interface ContractService {
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Contract
+    ): ContractResponse
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     @JvmOverloads
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Contract
+    ): ContractResponse
 
     /**
      * Update the Contract with the given UUID.
@@ -50,7 +57,7 @@ interface ContractService {
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Contract
+    ): ContractResponse
 
     /**
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
@@ -73,7 +80,7 @@ interface ContractService {
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Contract
+    ): ContractResponse
 
     /**
      * Apply the specified end-date to billing entities associated with Accounts the Contract has
@@ -93,4 +100,75 @@ interface ContractService {
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractEndDateBillingEntitiesResponse
+
+    /** A view of [ContractService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/contracts`, but is otherwise
+         * the same as [ContractService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ContractCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ContractRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ContractUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
+         * the same as [ContractService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ContractListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is
+         * otherwise the same as [ContractService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ContractDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
+         * as [ContractService.endDateBillingEntities].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun endDateBillingEntities(
+            params: ContractEndDateBillingEntitiesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractEndDateBillingEntitiesResponse>
+    }
 }

@@ -24,11 +24,11 @@ internal fun HttpRequest.prepare(clientOptions: ClientOptions, params: Params): 
 
     val isAuthRequest: Boolean =
         request.pathSegments.contains("oauth") && request.pathSegments.contains("token")
-    val token: String? = clientOptions.token
+    val token: Optional<String> = clientOptions.token()
 
     // If the request is an OAuth token request or if the token is not null
     // return early, no need to generate token.
-    if (isAuthRequest || token != null) {
+    if (isAuthRequest || token.isPresent) {
         return request
     }
 
@@ -65,11 +65,11 @@ internal fun HttpRequest.prepareAsync(
 
     val isAuthRequest: Boolean =
         request.pathSegments.contains("oauth") && request.pathSegments.contains("token")
-    val token: String? = clientOptions.token
+    val token: Optional<String> = clientOptions.token()
 
     // If the request is an OAuth token request or if the token is not null
     // return early, no need to generate token.
-    if (isAuthRequest || token != null) {
+    if (isAuthRequest || token.isPresent) {
         return CompletableFuture.completedFuture(request)
     }
 

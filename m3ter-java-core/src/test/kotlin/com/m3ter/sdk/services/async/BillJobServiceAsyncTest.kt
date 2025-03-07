@@ -29,7 +29,7 @@ class BillJobServiceAsyncTest {
                 .build()
         val billJobServiceAsync = client.billJobs()
 
-        val billJobFuture =
+        val billJobResponseFuture =
             billJobServiceAsync.create(
                 BillJobCreateParams.builder()
                     .orgId("orgId")
@@ -53,8 +53,8 @@ class BillJobServiceAsyncTest {
                     .build()
             )
 
-        val billJob = billJobFuture.get()
-        billJob.validate()
+        val billJobResponse = billJobResponseFuture.get()
+        billJobResponse.validate()
     }
 
     @Test
@@ -69,13 +69,13 @@ class BillJobServiceAsyncTest {
                 .build()
         val billJobServiceAsync = client.billJobs()
 
-        val billJobFuture =
+        val billJobResponseFuture =
             billJobServiceAsync.retrieve(
                 BillJobRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val billJob = billJobFuture.get()
-        billJob.validate()
+        val billJobResponse = billJobResponseFuture.get()
+        billJobResponse.validate()
     }
 
     @Test
@@ -109,13 +109,13 @@ class BillJobServiceAsyncTest {
                 .build()
         val billJobServiceAsync = client.billJobs()
 
-        val billJobFuture =
+        val billJobResponseFuture =
             billJobServiceAsync.cancel(
                 BillJobCancelParams.builder().orgId("orgId").id("id").build()
             )
 
-        val billJob = billJobFuture.get()
-        billJob.validate()
+        val billJobResponse = billJobResponseFuture.get()
+        billJobResponse.validate()
     }
 
     @Test
@@ -130,7 +130,7 @@ class BillJobServiceAsyncTest {
                 .build()
         val billJobServiceAsync = client.billJobs()
 
-        val billJobFuture =
+        val billJobResponseFuture =
             billJobServiceAsync.recalculate(
                 BillJobRecalculateParams.builder()
                     .orgId("orgId")
@@ -139,7 +139,7 @@ class BillJobServiceAsyncTest {
                     .build()
             )
 
-        val billJob = billJobFuture.get()
-        billJob.validate()
+        val billJobResponse = billJobResponseFuture.get()
+        billJobResponse.validate()
     }
 }

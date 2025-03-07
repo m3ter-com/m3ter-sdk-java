@@ -4,16 +4,23 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.NotificationConfiguration
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.NotificationConfigurationCreateParams
 import com.m3ter.sdk.models.NotificationConfigurationDeleteParams
 import com.m3ter.sdk.models.NotificationConfigurationListPage
 import com.m3ter.sdk.models.NotificationConfigurationListParams
+import com.m3ter.sdk.models.NotificationConfigurationResponse
 import com.m3ter.sdk.models.NotificationConfigurationRetrieveParams
 import com.m3ter.sdk.models.NotificationConfigurationUpdateParams
 
 interface NotificationConfigurationService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Notification for an Event.
@@ -25,7 +32,7 @@ interface NotificationConfigurationService {
     fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NotificationConfiguration
+    ): NotificationConfigurationResponse
 
     /**
      * Retrieve the details of a specific Notification using its UUID. Includes the Event the
@@ -36,7 +43,7 @@ interface NotificationConfigurationService {
     fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NotificationConfiguration
+    ): NotificationConfigurationResponse
 
     /**
      * Update a Notification with the given UUID.
@@ -49,7 +56,7 @@ interface NotificationConfigurationService {
     fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NotificationConfiguration
+    ): NotificationConfigurationResponse
 
     /**
      * Retrieve a list of Event Notifications for the specified Organization.
@@ -74,5 +81,72 @@ interface NotificationConfigurationService {
     fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NotificationConfiguration
+    ): NotificationConfigurationResponse
+
+    /**
+     * A view of [NotificationConfigurationService] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
+         * [NotificationConfigurationService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: NotificationConfigurationCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
+         * [NotificationConfigurationService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: NotificationConfigurationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
+         * [NotificationConfigurationService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: NotificationConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
+         * [NotificationConfigurationService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: NotificationConfigurationListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
+         * [NotificationConfigurationService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: NotificationConfigurationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse>
+    }
 }

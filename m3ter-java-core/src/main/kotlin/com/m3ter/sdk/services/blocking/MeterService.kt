@@ -4,16 +4,23 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.Meter
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListPage
 import com.m3ter.sdk.models.MeterListParams
+import com.m3ter.sdk.models.MeterResponse
 import com.m3ter.sdk.models.MeterRetrieveParams
 import com.m3ter.sdk.models.MeterUpdateParams
 
 interface MeterService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Meter.
@@ -47,14 +54,14 @@ interface MeterService {
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /** Retrieve the Meter with the given UUID. */
     @JvmOverloads
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /**
      * Update the Meter with the given UUID.
@@ -67,7 +74,7 @@ interface MeterService {
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     @JvmOverloads
@@ -81,5 +88,64 @@ interface MeterService {
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Meter
+    ): MeterResponse
+
+    /** A view of [MeterService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/meters`, but is otherwise
+         * the same as [MeterService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: MeterCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/meters/{id}`, but is
+         * otherwise the same as [MeterService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: MeterRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/meters/{id}`, but is
+         * otherwise the same as [MeterService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: MeterUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/meters`, but is otherwise the
+         * same as [MeterService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: MeterListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/meters/{id}`, but is
+         * otherwise the same as [MeterService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: MeterDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse>
+    }
 }

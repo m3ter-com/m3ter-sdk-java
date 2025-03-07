@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-03-07)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** refactor multipart formdata impl ([#82](https://github.com/m3ter-com/m3ter-sdk-java/issues/82))
+
+### Features
+
+* **api:** make response model names explicit ([#88](https://github.com/m3ter-com/m3ter-sdk-java/issues/88)) ([0e26079](https://github.com/m3ter-com/m3ter-sdk-java/commit/0e26079ad197b9ca0ee90a246cce0c022b247571))
+* **client:** accept `InputStream` and `Path` for file params ([#87](https://github.com/m3ter-com/m3ter-sdk-java/issues/87)) ([3b9c9b2](https://github.com/m3ter-com/m3ter-sdk-java/commit/3b9c9b22cd6170f8c887e5cb35a8b20032ff9d4f))
+* **client:** allow configuring timeouts granularly ([#79](https://github.com/m3ter-com/m3ter-sdk-java/issues/79)) ([735f8f7](https://github.com/m3ter-com/m3ter-sdk-java/commit/735f8f7c5deb57542a7f1bea286491ad6a2f162e))
+* **client:** detect binary incompatible jackson versions ([#90](https://github.com/m3ter-com/m3ter-sdk-java/issues/90)) ([d3f17db](https://github.com/m3ter-com/m3ter-sdk-java/commit/d3f17db29cc7069913913fe7e473cc92f8c22894))
+* **client:** support raw response access ([#81](https://github.com/m3ter-com/m3ter-sdk-java/issues/81)) ([bbd1527](https://github.com/m3ter-com/m3ter-sdk-java/commit/bbd15272c0301635ebcf0c5177cd62a552598ec6))
+
+
+### Chores
+
+* **client:** expose `Optional`, not nullable, from `ClientOptions` ([#85](https://github.com/m3ter-com/m3ter-sdk-java/issues/85)) ([6cef27f](https://github.com/m3ter-com/m3ter-sdk-java/commit/6cef27ffd3299e5045a9c5d77ce23670ee3b032c))
+* **client:** refactor multipart formdata impl ([#82](https://github.com/m3ter-com/m3ter-sdk-java/issues/82)) ([0589a2c](https://github.com/m3ter-com/m3ter-sdk-java/commit/0589a2ce7baca8718966ec62e7b94d20afba5dfe))
+
+
+### Documentation
+
+* add raw response readme documentation ([#83](https://github.com/m3ter-com/m3ter-sdk-java/issues/83)) ([e444138](https://github.com/m3ter-com/m3ter-sdk-java/commit/e444138d63cca66edc53ce36dabb04632fb2f2f2))
+* note required fields in `builder` javadoc ([#84](https://github.com/m3ter-com/m3ter-sdk-java/issues/84)) ([a81eecb](https://github.com/m3ter-com/m3ter-sdk-java/commit/a81eecb7ac2be840e951cc7986b5382895e08a10))
+
 ## 0.1.0-alpha.6 (2025-03-04)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)

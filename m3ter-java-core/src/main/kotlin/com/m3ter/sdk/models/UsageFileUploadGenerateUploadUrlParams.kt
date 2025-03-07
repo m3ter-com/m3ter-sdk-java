@@ -182,6 +182,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .contentType()
+             * .fileName()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -293,6 +302,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageFileUploadGenerateUploadUrlParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .contentType()
+         * .fileName()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

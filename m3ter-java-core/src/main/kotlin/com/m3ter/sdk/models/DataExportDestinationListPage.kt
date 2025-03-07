@@ -32,7 +32,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<DataExportDestination> = response().data()
+    fun data(): List<DataExportDestinationResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -91,18 +91,19 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<DataExportDestination>> = JsonMissing.of(),
+        private val data: JsonField<List<DataExportDestinationResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<DataExportDestination> = data.getNullable("data") ?: listOf()
+        fun data(): List<DataExportDestinationResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<DataExportDestination>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<DataExportDestinationResponse>>> =
+            Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -140,12 +141,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [DataExportDestinationListPage].
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<DataExportDestination>> = JsonMissing.of()
+            private var data: JsonField<List<DataExportDestinationResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -156,9 +161,11 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<DataExportDestination>) = data(JsonField.of(data))
+            fun data(data: List<DataExportDestinationResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<DataExportDestination>>) = apply { this.data = data }
+            fun data(data: JsonField<List<DataExportDestinationResponse>>) = apply {
+                this.data = data
+            }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -173,9 +180,9 @@ private constructor(
     }
 
     class AutoPager(private val firstPage: DataExportDestinationListPage) :
-        Iterable<DataExportDestination> {
+        Iterable<DataExportDestinationResponse> {
 
-        override fun iterator(): Iterator<DataExportDestination> = iterator {
+        override fun iterator(): Iterator<DataExportDestinationResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -187,7 +194,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<DataExportDestination> {
+        fun stream(): Stream<DataExportDestinationResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

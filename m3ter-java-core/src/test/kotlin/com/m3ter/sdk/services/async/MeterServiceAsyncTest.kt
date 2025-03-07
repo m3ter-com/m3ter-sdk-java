@@ -5,7 +5,7 @@ package com.m3ter.sdk.services.async
 import com.m3ter.sdk.TestServerExtension
 import com.m3ter.sdk.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.models.DataField
+import com.m3ter.sdk.models.DataFieldResponse
 import com.m3ter.sdk.models.MeterCreateParams
 import com.m3ter.sdk.models.MeterDeleteParams
 import com.m3ter.sdk.models.MeterListParams
@@ -29,14 +29,14 @@ class MeterServiceAsyncTest {
                 .build()
         val meterServiceAsync = client.meters()
 
-        val meterFuture =
+        val meterResponseFuture =
             meterServiceAsync.create(
                 MeterCreateParams.builder()
                     .orgId("orgId")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataField.builder()
-                            .category(DataField.Category.WHO)
+                        DataFieldResponse.builder()
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -44,7 +44,7 @@ class MeterServiceAsyncTest {
                     )
                     .addDerivedField(
                         MeterCreateParams.DerivedField.builder()
-                            .category(DataField.Category.WHO)
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -63,8 +63,8 @@ class MeterServiceAsyncTest {
                     .build()
             )
 
-        val meter = meterFuture.get()
-        meter.validate()
+        val meterResponse = meterResponseFuture.get()
+        meterResponse.validate()
     }
 
     @Test
@@ -79,13 +79,13 @@ class MeterServiceAsyncTest {
                 .build()
         val meterServiceAsync = client.meters()
 
-        val meterFuture =
+        val meterResponseFuture =
             meterServiceAsync.retrieve(
                 MeterRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val meter = meterFuture.get()
-        meter.validate()
+        val meterResponse = meterResponseFuture.get()
+        meterResponse.validate()
     }
 
     @Test
@@ -100,15 +100,15 @@ class MeterServiceAsyncTest {
                 .build()
         val meterServiceAsync = client.meters()
 
-        val meterFuture =
+        val meterResponseFuture =
             meterServiceAsync.update(
                 MeterUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataField.builder()
-                            .category(DataField.Category.WHO)
+                        DataFieldResponse.builder()
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -116,7 +116,7 @@ class MeterServiceAsyncTest {
                     )
                     .addDerivedField(
                         MeterUpdateParams.DerivedField.builder()
-                            .category(DataField.Category.WHO)
+                            .category(DataFieldResponse.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -135,8 +135,8 @@ class MeterServiceAsyncTest {
                     .build()
             )
 
-        val meter = meterFuture.get()
-        meter.validate()
+        val meterResponse = meterResponseFuture.get()
+        meterResponse.validate()
     }
 
     @Test
@@ -169,10 +169,10 @@ class MeterServiceAsyncTest {
                 .build()
         val meterServiceAsync = client.meters()
 
-        val meterFuture =
+        val meterResponseFuture =
             meterServiceAsync.delete(MeterDeleteParams.builder().orgId("orgId").id("id").build())
 
-        val meter = meterFuture.get()
-        meter.validate()
+        val meterResponse = meterResponseFuture.get()
+        meterResponse.validate()
     }
 }

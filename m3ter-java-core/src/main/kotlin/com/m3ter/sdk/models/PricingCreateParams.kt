@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -700,6 +701,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .pricingBands()
+             * .startDate()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -760,14 +770,8 @@ private constructor(
 
             fun addPricingBand(pricingBand: PricingBand) = apply {
                 pricingBands =
-                    (pricingBands ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(pricingBand)
+                    (pricingBands ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("pricingBands", it).add(pricingBand)
                     }
             }
 
@@ -942,14 +946,8 @@ private constructor(
              */
             fun addOveragePricingBand(overagePricingBand: PricingBand) = apply {
                 overagePricingBands =
-                    (overagePricingBands ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(overagePricingBand)
+                    (overagePricingBands ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("overagePricingBands", it).add(overagePricingBand)
                     }
             }
 
@@ -1134,6 +1132,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PricingCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .pricingBands()
+         * .startDate()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -1616,6 +1624,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Segment]. */
             @JvmStatic fun builder() = Builder()
         }
 

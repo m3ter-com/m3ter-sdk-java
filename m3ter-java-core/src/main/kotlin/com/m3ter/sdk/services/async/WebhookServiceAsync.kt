@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Webhook
 import com.m3ter.sdk.models.WebhookCreateParams
 import com.m3ter.sdk.models.WebhookCreateResponse
@@ -19,6 +21,11 @@ import com.m3ter.sdk.models.WebhookUpdateResponse
 import java.util.concurrent.CompletableFuture
 
 interface WebhookServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * This endpoint creates a new webhook destination. A webhook destination is a URL where webhook
@@ -69,4 +76,82 @@ interface WebhookServiceAsync {
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<WebhookSetActiveResponse>
+
+    /**
+     * A view of [WebhookServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
+         * [WebhookServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: WebhookCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: WebhookRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Webhook>>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: WebhookUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<WebhookUpdateResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
+         * [WebhookServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: WebhookListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
+         * as [WebhookServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: WebhookDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Webhook>>
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /organizations/{orgId}/integrationdestinations/webhooks/{id}/active`, but is otherwise
+         * the same as [WebhookServiceAsync.setActive].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun setActive(
+            params: WebhookSetActiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>>
+    }
 }

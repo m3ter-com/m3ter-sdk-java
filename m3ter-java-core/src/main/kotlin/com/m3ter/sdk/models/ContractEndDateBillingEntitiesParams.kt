@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -182,6 +183,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .billingEntities()
+             * .endDate()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -225,14 +235,8 @@ private constructor(
              */
             fun addBillingEntity(billingEntity: BillingEntity) = apply {
                 billingEntities =
-                    (billingEntities ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(billingEntity)
+                    (billingEntities ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("billingEntities", it).add(billingEntity)
                     }
             }
 
@@ -315,6 +319,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ContractEndDateBillingEntitiesParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .billingEntities()
+         * .endDate()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

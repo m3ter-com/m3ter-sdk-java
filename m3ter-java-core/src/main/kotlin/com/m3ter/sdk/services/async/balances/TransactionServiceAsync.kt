@@ -4,16 +4,23 @@
 
 package com.m3ter.sdk.services.async.balances
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
 import com.m3ter.sdk.models.BalanceTransactionListPageAsync
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
-import com.m3ter.sdk.models.Transaction
+import com.m3ter.sdk.models.TransactionResponse
 import java.util.concurrent.CompletableFuture
 
 interface TransactionServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Add a Transaction to a Balance. This endpoint allows you to create a new Transaction amount
@@ -36,7 +43,7 @@ interface TransactionServiceAsync {
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<Transaction>
+    ): CompletableFuture<TransactionResponse>
 
     /**
      * Retrieve all Transactions for a specific Balance.
@@ -56,4 +63,47 @@ interface TransactionServiceAsync {
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceTransactionSummaryResponse>
+
+    /**
+     * A view of [TransactionServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
+         * [TransactionServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceTransactionCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
+         * [TransactionServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceTransactionListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/balances/{balanceId}/transactions/summary`, but is otherwise the
+         * same as [TransactionServiceAsync.summary].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun summary(
+            params: BalanceTransactionSummaryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>>
+    }
 }

@@ -68,6 +68,10 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageFileUploadJobGetOriginalDownloadUrlResponse].
+         */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -164,6 +168,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Headers]. */
             @JvmStatic fun builder() = Builder()
         }
 

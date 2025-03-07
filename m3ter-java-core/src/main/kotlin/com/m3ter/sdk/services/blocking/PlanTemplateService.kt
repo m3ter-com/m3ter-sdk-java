@@ -4,16 +4,23 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.PlanTemplate
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PlanTemplateCreateParams
 import com.m3ter.sdk.models.PlanTemplateDeleteParams
 import com.m3ter.sdk.models.PlanTemplateListPage
 import com.m3ter.sdk.models.PlanTemplateListParams
+import com.m3ter.sdk.models.PlanTemplateResponse
 import com.m3ter.sdk.models.PlanTemplateRetrieveParams
 import com.m3ter.sdk.models.PlanTemplateUpdateParams
 
 interface PlanTemplateService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new PlanTemplate.
@@ -26,7 +33,7 @@ interface PlanTemplateService {
     fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanTemplate
+    ): PlanTemplateResponse
 
     /**
      * Retrieve a specific PlanTemplate.
@@ -38,7 +45,7 @@ interface PlanTemplateService {
     fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanTemplate
+    ): PlanTemplateResponse
 
     /**
      * Update a specific PlanTemplate.
@@ -55,7 +62,7 @@ interface PlanTemplateService {
     fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanTemplate
+    ): PlanTemplateResponse
 
     /**
      * Retrieve a list of PlanTemplates.
@@ -80,5 +87,66 @@ interface PlanTemplateService {
     fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PlanTemplate
+    ): PlanTemplateResponse
+
+    /**
+     * A view of [PlanTemplateService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/plantemplates`, but is
+         * otherwise the same as [PlanTemplateService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanTemplateCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates/{id}`, but is
+         * otherwise the same as [PlanTemplateService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanTemplateRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/plantemplates/{id}`, but is
+         * otherwise the same as [PlanTemplateService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanTemplateUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates`, but is
+         * otherwise the same as [PlanTemplateService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanTemplateListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/plantemplates/{id}`, but
+         * is otherwise the same as [PlanTemplateService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanTemplateDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse>
+    }
 }

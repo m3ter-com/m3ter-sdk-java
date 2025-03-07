@@ -27,7 +27,7 @@ class NotificationConfigurationServiceTest {
                 .build()
         val notificationConfigurationService = client.notificationConfigurations()
 
-        val notificationConfiguration =
+        val notificationConfigurationResponse =
             notificationConfigurationService.create(
                 NotificationConfigurationCreateParams.builder()
                     .orgId("orgId")
@@ -42,7 +42,7 @@ class NotificationConfigurationServiceTest {
                     .build()
             )
 
-        notificationConfiguration.validate()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -57,12 +57,12 @@ class NotificationConfigurationServiceTest {
                 .build()
         val notificationConfigurationService = client.notificationConfigurations()
 
-        val notificationConfiguration =
+        val notificationConfigurationResponse =
             notificationConfigurationService.retrieve(
                 NotificationConfigurationRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        notificationConfiguration.validate()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -77,7 +77,7 @@ class NotificationConfigurationServiceTest {
                 .build()
         val notificationConfigurationService = client.notificationConfigurations()
 
-        val notificationConfiguration =
+        val notificationConfigurationResponse =
             notificationConfigurationService.update(
                 NotificationConfigurationUpdateParams.builder()
                     .orgId("orgId")
@@ -93,7 +93,7 @@ class NotificationConfigurationServiceTest {
                     .build()
             )
 
-        notificationConfiguration.validate()
+        notificationConfigurationResponse.validate()
     }
 
     @Test
@@ -128,11 +128,11 @@ class NotificationConfigurationServiceTest {
                 .build()
         val notificationConfigurationService = client.notificationConfigurations()
 
-        val notificationConfiguration =
+        val notificationConfigurationResponse =
             notificationConfigurationService.delete(
                 NotificationConfigurationDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        notificationConfiguration.validate()
+        notificationConfigurationResponse.validate()
     }
 }

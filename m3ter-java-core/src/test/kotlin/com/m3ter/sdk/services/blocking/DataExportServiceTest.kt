@@ -24,7 +24,7 @@ class DataExportServiceTest {
                 .build()
         val dataExportService = client.dataExports()
 
-        val adhocExport =
+        val adHocResponse =
             dataExportService.createAdhoc(
                 DataExportCreateAdhocParams.builder()
                     .orgId("orgId")
@@ -40,6 +40,6 @@ class DataExportServiceTest {
                     .build()
             )
 
-        adhocExport.validate()
+        adHocResponse.validate()
     }
 }

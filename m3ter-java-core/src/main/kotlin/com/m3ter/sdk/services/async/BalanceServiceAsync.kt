@@ -4,7 +4,9 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
@@ -16,6 +18,11 @@ import com.m3ter.sdk.services.async.balances.TransactionServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface BalanceServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun transactions(): TransactionServiceAsync
 
@@ -77,4 +84,67 @@ interface BalanceServiceAsync {
         params: BalanceDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
+
+    /**
+     * A view of [BalanceServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        fun transactions(): TransactionServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise
+         * the same as [BalanceServiceAsync.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Balance>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BalanceRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Balance>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: BalanceUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Balance>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/balances`, but is otherwise
+         * the same as [BalanceServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is
+         * otherwise the same as [BalanceServiceAsync.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BalanceDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<Balance>>
+    }
 }

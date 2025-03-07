@@ -25,13 +25,13 @@ class OrganizationConfigServiceAsyncTest {
                 .build()
         val organizationConfigServiceAsync = client.organizationConfig()
 
-        val organizationConfigFuture =
+        val organizationConfigResponseFuture =
             organizationConfigServiceAsync.retrieve(
                 OrganizationConfigRetrieveParams.builder().orgId("orgId").build()
             )
 
-        val organizationConfig = organizationConfigFuture.get()
-        organizationConfig.validate()
+        val organizationConfigResponse = organizationConfigResponseFuture.get()
+        organizationConfigResponse.validate()
     }
 
     @Test
@@ -46,7 +46,7 @@ class OrganizationConfigServiceAsyncTest {
                 .build()
         val organizationConfigServiceAsync = client.organizationConfig()
 
-        val organizationConfigFuture =
+        val organizationConfigResponseFuture =
             organizationConfigServiceAsync.update(
                 OrganizationConfigUpdateParams.builder()
                     .orgId("orgId")
@@ -82,7 +82,7 @@ class OrganizationConfigServiceAsyncTest {
                     .build()
             )
 
-        val organizationConfig = organizationConfigFuture.get()
-        organizationConfig.validate()
+        val organizationConfigResponse = organizationConfigResponseFuture.get()
+        organizationConfigResponse.validate()
     }
 }

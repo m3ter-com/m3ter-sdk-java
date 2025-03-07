@@ -25,13 +25,13 @@ class JobServiceAsyncTest {
                 .build()
         val jobServiceAsync = client.dataExports().jobs()
 
-        val dataExportJobFuture =
+        val dataExportJobResponseFuture =
             jobServiceAsync.retrieve(
                 DataExportJobRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val dataExportJob = dataExportJobFuture.get()
-        dataExportJob.validate()
+        val dataExportJobResponse = dataExportJobResponseFuture.get()
+        dataExportJobResponse.validate()
     }
 
     @Test

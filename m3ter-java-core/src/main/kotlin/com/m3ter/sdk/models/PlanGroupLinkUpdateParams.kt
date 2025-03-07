@@ -150,6 +150,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .planGroupId()
+             * .planId()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -249,6 +258,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanGroupLinkUpdateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .planGroupId()
+         * .planId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

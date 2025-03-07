@@ -28,7 +28,7 @@ class PlanGroupServiceAsyncTest {
                 .build()
         val planGroupServiceAsync = client.planGroups()
 
-        val planGroupFuture =
+        val planGroupResponseFuture =
             planGroupServiceAsync.create(
                 PlanGroupCreateParams.builder()
                     .orgId("orgId")
@@ -53,8 +53,8 @@ class PlanGroupServiceAsyncTest {
                     .build()
             )
 
-        val planGroup = planGroupFuture.get()
-        planGroup.validate()
+        val planGroupResponse = planGroupResponseFuture.get()
+        planGroupResponse.validate()
     }
 
     @Test
@@ -69,13 +69,13 @@ class PlanGroupServiceAsyncTest {
                 .build()
         val planGroupServiceAsync = client.planGroups()
 
-        val planGroupFuture =
+        val planGroupResponseFuture =
             planGroupServiceAsync.retrieve(
                 PlanGroupRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planGroup = planGroupFuture.get()
-        planGroup.validate()
+        val planGroupResponse = planGroupResponseFuture.get()
+        planGroupResponse.validate()
     }
 
     @Test
@@ -90,7 +90,7 @@ class PlanGroupServiceAsyncTest {
                 .build()
         val planGroupServiceAsync = client.planGroups()
 
-        val planGroupFuture =
+        val planGroupResponseFuture =
             planGroupServiceAsync.update(
                 PlanGroupUpdateParams.builder()
                     .orgId("orgId")
@@ -116,8 +116,8 @@ class PlanGroupServiceAsyncTest {
                     .build()
             )
 
-        val planGroup = planGroupFuture.get()
-        planGroup.validate()
+        val planGroupResponse = planGroupResponseFuture.get()
+        planGroupResponse.validate()
     }
 
     @Test
@@ -151,12 +151,12 @@ class PlanGroupServiceAsyncTest {
                 .build()
         val planGroupServiceAsync = client.planGroups()
 
-        val planGroupFuture =
+        val planGroupResponseFuture =
             planGroupServiceAsync.delete(
                 PlanGroupDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val planGroup = planGroupFuture.get()
-        planGroup.validate()
+        val planGroupResponse = planGroupResponseFuture.get()
+        planGroupResponse.validate()
     }
 }

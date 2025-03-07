@@ -4,10 +4,12 @@
 
 package com.m3ter.sdk.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.PermissionPolicy
-import com.m3ter.sdk.models.ResourceGroup
-import com.m3ter.sdk.models.User
+import com.m3ter.sdk.core.http.HttpResponse
+import com.m3ter.sdk.core.http.HttpResponseFor
+import com.m3ter.sdk.models.PermissionPolicyResponse
+import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
 import com.m3ter.sdk.models.UserGetUserGroupsParams
 import com.m3ter.sdk.models.UserListPageAsync
@@ -15,12 +17,18 @@ import com.m3ter.sdk.models.UserListParams
 import com.m3ter.sdk.models.UserMeParams
 import com.m3ter.sdk.models.UserMeResponse
 import com.m3ter.sdk.models.UserResendPasswordParams
+import com.m3ter.sdk.models.UserResponse
 import com.m3ter.sdk.models.UserRetrieveParams
 import com.m3ter.sdk.models.UserUpdateParams
 import com.m3ter.sdk.services.async.users.InvitationServiceAsync
 import java.util.concurrent.CompletableFuture
 
 interface UserServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun invitations(): InvitationServiceAsync
 
@@ -34,7 +42,7 @@ interface UserServiceAsync {
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<User>
+    ): CompletableFuture<UserResponse>
 
     /**
      * Update the OrgUser with the given UUID.
@@ -47,7 +55,7 @@ interface UserServiceAsync {
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<User>
+    ): CompletableFuture<UserResponse>
 
     /**
      * Retrieve a list of OrgUsers.
@@ -72,7 +80,7 @@ interface UserServiceAsync {
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<PermissionPolicy>
+    ): CompletableFuture<PermissionPolicyResponse>
 
     /**
      * Retrieve a list of User Groups for an OrgUser.
@@ -101,7 +109,7 @@ interface UserServiceAsync {
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ResourceGroup>
+    ): CompletableFuture<ResourceGroupResponse>
 
     /** Retrieve information about the current user */
     @JvmOverloads
@@ -116,4 +124,87 @@ interface UserServiceAsync {
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
+
+    /** A view of [UserServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun invitations(): InvitationServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserServiceAsync.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UserRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
+         * the same as [UserServiceAsync.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: UserUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
+         * same as [UserServiceAsync.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UserListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
+         * is otherwise the same as [UserServiceAsync.getPermissions].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
+         * is otherwise the same as [UserServiceAsync.getUserGroups].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun getUserGroups(
+            params: UserGetUserGroupsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
+         * the same as [UserServiceAsync.me].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun me(
+            params: UserMeParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserMeResponse>>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,
+         * but is otherwise the same as [UserServiceAsync.resendPassword].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun resendPassword(
+            params: UserResendPasswordParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse>
+    }
 }

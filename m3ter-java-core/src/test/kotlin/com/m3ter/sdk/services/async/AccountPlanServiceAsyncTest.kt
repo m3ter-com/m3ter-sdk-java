@@ -30,7 +30,7 @@ class AccountPlanServiceAsyncTest {
                 .build()
         val accountPlanServiceAsync = client.accountPlans()
 
-        val accountPlanFuture =
+        val accountPlanResponseFuture =
             accountPlanServiceAsync.create(
                 AccountPlanCreateParams.builder()
                     .orgId("orgId")
@@ -52,8 +52,8 @@ class AccountPlanServiceAsyncTest {
                     .build()
             )
 
-        val accountPlan = accountPlanFuture.get()
-        accountPlan.validate()
+        val accountPlanResponse = accountPlanResponseFuture.get()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -68,13 +68,13 @@ class AccountPlanServiceAsyncTest {
                 .build()
         val accountPlanServiceAsync = client.accountPlans()
 
-        val accountPlanFuture =
+        val accountPlanResponseFuture =
             accountPlanServiceAsync.retrieve(
                 AccountPlanRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val accountPlan = accountPlanFuture.get()
-        accountPlan.validate()
+        val accountPlanResponse = accountPlanResponseFuture.get()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -89,7 +89,7 @@ class AccountPlanServiceAsyncTest {
                 .build()
         val accountPlanServiceAsync = client.accountPlans()
 
-        val accountPlanFuture =
+        val accountPlanResponseFuture =
             accountPlanServiceAsync.update(
                 AccountPlanUpdateParams.builder()
                     .orgId("orgId")
@@ -112,8 +112,8 @@ class AccountPlanServiceAsyncTest {
                     .build()
             )
 
-        val accountPlan = accountPlanFuture.get()
-        accountPlan.validate()
+        val accountPlanResponse = accountPlanResponseFuture.get()
+        accountPlanResponse.validate()
     }
 
     @Test
@@ -147,12 +147,12 @@ class AccountPlanServiceAsyncTest {
                 .build()
         val accountPlanServiceAsync = client.accountPlans()
 
-        val accountPlanFuture =
+        val accountPlanResponseFuture =
             accountPlanServiceAsync.delete(
                 AccountPlanDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val accountPlan = accountPlanFuture.get()
-        accountPlan.validate()
+        val accountPlanResponse = accountPlanResponseFuture.get()
+        accountPlanResponse.validate()
     }
 }

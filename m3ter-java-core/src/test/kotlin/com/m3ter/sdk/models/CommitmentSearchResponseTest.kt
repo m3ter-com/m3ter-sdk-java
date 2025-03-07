@@ -14,7 +14,7 @@ class CommitmentSearchResponseTest {
         val commitmentSearchResponse =
             CommitmentSearchResponse.builder()
                 .addData(
-                    Commitment.builder()
+                    CommitmentResponse.builder()
                         .id("id")
                         .version(0L)
                         .accountId("accountId")
@@ -27,7 +27,7 @@ class CommitmentSearchResponseTest {
                         .billingInterval(0L)
                         .billingOffset(0L)
                         .billingPlanId("billingPlanId")
-                        .childBillingMode(Commitment.ChildBillingMode.PARENT_SUMMARY)
+                        .childBillingMode(CommitmentResponse.ChildBillingMode.PARENT_SUMMARY)
                         .commitmentFeeBillInAdvance(true)
                         .commitmentFeeDescription("commitmentFeeDescription")
                         .commitmentUsageDescription("commitmentUsageDescription")
@@ -52,7 +52,7 @@ class CommitmentSearchResponseTest {
                         )
                         .feesAccountingProductId("feesAccountingProductId")
                         .lastModifiedBy("lastModifiedBy")
-                        .addLineItemType(Commitment.LineItemType.STANDING_CHARGE)
+                        .addLineItemType(CommitmentResponse.LineItemType.STANDING_CHARGE)
                         .overageDescription("overageDescription")
                         .overageSurchargePercent(0.0)
                         .addProductId("string")
@@ -65,7 +65,7 @@ class CommitmentSearchResponseTest {
         assertThat(commitmentSearchResponse).isNotNull
         assertThat(commitmentSearchResponse.data().get())
             .containsExactly(
-                Commitment.builder()
+                CommitmentResponse.builder()
                     .id("id")
                     .version(0L)
                     .accountId("accountId")
@@ -78,7 +78,7 @@ class CommitmentSearchResponseTest {
                     .billingInterval(0L)
                     .billingOffset(0L)
                     .billingPlanId("billingPlanId")
-                    .childBillingMode(Commitment.ChildBillingMode.PARENT_SUMMARY)
+                    .childBillingMode(CommitmentResponse.ChildBillingMode.PARENT_SUMMARY)
                     .commitmentFeeBillInAdvance(true)
                     .commitmentFeeDescription("commitmentFeeDescription")
                     .commitmentUsageDescription("commitmentUsageDescription")
@@ -101,7 +101,7 @@ class CommitmentSearchResponseTest {
                     )
                     .feesAccountingProductId("feesAccountingProductId")
                     .lastModifiedBy("lastModifiedBy")
-                    .addLineItemType(Commitment.LineItemType.STANDING_CHARGE)
+                    .addLineItemType(CommitmentResponse.LineItemType.STANDING_CHARGE)
                     .overageDescription("overageDescription")
                     .overageSurchargePercent(0.0)
                     .addProductId("string")

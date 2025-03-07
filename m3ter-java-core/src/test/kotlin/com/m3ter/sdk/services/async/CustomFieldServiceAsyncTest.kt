@@ -25,13 +25,13 @@ class CustomFieldServiceAsyncTest {
                 .build()
         val customFieldServiceAsync = client.customFields()
 
-        val customFieldsFuture =
+        val customFieldsResponseFuture =
             customFieldServiceAsync.retrieve(
                 CustomFieldRetrieveParams.builder().orgId("orgId").build()
             )
 
-        val customFields = customFieldsFuture.get()
-        customFields.validate()
+        val customFieldsResponse = customFieldsResponseFuture.get()
+        customFieldsResponse.validate()
     }
 
     @Test
@@ -46,7 +46,7 @@ class CustomFieldServiceAsyncTest {
                 .build()
         val customFieldServiceAsync = client.customFields()
 
-        val customFieldsFuture =
+        val customFieldsResponseFuture =
             customFieldServiceAsync.update(
                 CustomFieldUpdateParams.builder()
                     .orgId("orgId")
@@ -84,7 +84,7 @@ class CustomFieldServiceAsyncTest {
                     .build()
             )
 
-        val customFields = customFieldsFuture.get()
-        customFields.validate()
+        val customFieldsResponse = customFieldsResponseFuture.get()
+        customFieldsResponse.validate()
     }
 }

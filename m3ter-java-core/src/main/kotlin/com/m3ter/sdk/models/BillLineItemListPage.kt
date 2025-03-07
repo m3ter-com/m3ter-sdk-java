@@ -35,7 +35,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<LineItem> = response().data()
+    fun data(): List<LineItemResponse> = response().data()
 
     fun nextToken(): Optional<String> = response().nextToken()
 
@@ -93,18 +93,19 @@ private constructor(
     class Response
     @JsonCreator
     constructor(
-        @JsonProperty("data") private val data: JsonField<List<LineItem>> = JsonMissing.of(),
+        @JsonProperty("data")
+        private val data: JsonField<List<LineItemResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<LineItem> = data.getNullable("data") ?: listOf()
+        fun data(): List<LineItemResponse> = data.getNullable("data") ?: listOf()
 
         fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
         @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<LineItem>>> = Optional.ofNullable(data)
+        fun _data(): Optional<JsonField<List<LineItemResponse>>> = Optional.ofNullable(data)
 
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
@@ -142,12 +143,13 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [BillLineItemListPage]. */
             @JvmStatic fun builder() = Builder()
         }
 
         class Builder {
 
-            private var data: JsonField<List<LineItem>> = JsonMissing.of()
+            private var data: JsonField<List<LineItemResponse>> = JsonMissing.of()
             private var nextToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -158,9 +160,9 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<LineItem>) = data(JsonField.of(data))
+            fun data(data: List<LineItemResponse>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<LineItem>>) = apply { this.data = data }
+            fun data(data: JsonField<List<LineItemResponse>>) = apply { this.data = data }
 
             fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
@@ -174,9 +176,9 @@ private constructor(
         }
     }
 
-    class AutoPager(private val firstPage: BillLineItemListPage) : Iterable<LineItem> {
+    class AutoPager(private val firstPage: BillLineItemListPage) : Iterable<LineItemResponse> {
 
-        override fun iterator(): Iterator<LineItem> = iterator {
+        override fun iterator(): Iterator<LineItemResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
@@ -188,7 +190,7 @@ private constructor(
             }
         }
 
-        fun stream(): Stream<LineItem> {
+        fun stream(): Stream<LineItemResponse> {
             return StreamSupport.stream(spliterator(), false)
         }
     }

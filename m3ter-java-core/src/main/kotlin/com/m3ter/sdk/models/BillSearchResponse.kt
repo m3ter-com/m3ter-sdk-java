@@ -11,6 +11,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
@@ -22,7 +23,7 @@ class BillSearchResponse
 private constructor(
     @JsonProperty("data")
     @ExcludeMissing
-    private val data: JsonField<List<Bill>> = JsonMissing.of(),
+    private val data: JsonField<List<BillResponse>> = JsonMissing.of(),
     @JsonProperty("nextToken")
     @ExcludeMissing
     private val nextToken: JsonField<String> = JsonMissing.of(),
@@ -30,7 +31,7 @@ private constructor(
 ) {
 
     /** An array containing the list of requested Bills. */
-    fun data(): Optional<List<Bill>> = Optional.ofNullable(data.getNullable("data"))
+    fun data(): Optional<List<BillResponse>> = Optional.ofNullable(data.getNullable("data"))
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in a
@@ -39,7 +40,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
     /** An array containing the list of requested Bills. */
-    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Bill>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<BillResponse>> = data
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in a
@@ -67,13 +68,14 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [BillSearchResponse]. */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [BillSearchResponse]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<Bill>>? = null
+        private var data: JsonField<MutableList<BillResponse>>? = null
         private var nextToken: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -85,24 +87,18 @@ private constructor(
         }
 
         /** An array containing the list of requested Bills. */
-        fun data(data: List<Bill>) = data(JsonField.of(data))
+        fun data(data: List<BillResponse>) = data(JsonField.of(data))
 
         /** An array containing the list of requested Bills. */
-        fun data(data: JsonField<List<Bill>>) = apply {
+        fun data(data: JsonField<List<BillResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
         /** An array containing the list of requested Bills. */
-        fun addData(data: Bill) = apply {
+        fun addData(data: BillResponse) = apply {
             this.data =
-                (this.data ?: JsonField.of(mutableListOf())).apply {
-                    asKnown()
-                        .orElseThrow {
-                            IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            )
-                        }
-                        .add(data)
+                (this.data ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("data", it).add(data)
                 }
         }
 

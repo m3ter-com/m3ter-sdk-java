@@ -12,6 +12,7 @@ import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
@@ -255,6 +256,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .email()
+             * .firstName()
+             * .lastName()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
@@ -360,14 +371,8 @@ private constructor(
              */
             fun addPermissionPolicyId(permissionPolicyId: String) = apply {
                 permissionPolicyIds =
-                    (permissionPolicyIds ?: JsonField.of(mutableListOf())).apply {
-                        asKnown()
-                            .orElseThrow {
-                                IllegalStateException(
-                                    "Field was set to non-list type: ${javaClass.simpleName}"
-                                )
-                            }
-                            .add(permissionPolicyId)
+                    (permissionPolicyIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("permissionPolicyIds", it).add(permissionPolicyId)
                     }
             }
 
@@ -431,6 +436,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [UserInvitationCreateParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .email()
+         * .firstName()
+         * .lastName()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 

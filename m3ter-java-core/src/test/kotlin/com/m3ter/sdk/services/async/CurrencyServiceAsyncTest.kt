@@ -27,7 +27,7 @@ class CurrencyServiceAsyncTest {
                 .build()
         val currencyServiceAsync = client.currencies()
 
-        val currencyFuture =
+        val currencyResponseFuture =
             currencyServiceAsync.create(
                 CurrencyCreateParams.builder()
                     .orgId("orgId")
@@ -40,8 +40,8 @@ class CurrencyServiceAsyncTest {
                     .build()
             )
 
-        val currency = currencyFuture.get()
-        currency.validate()
+        val currencyResponse = currencyResponseFuture.get()
+        currencyResponse.validate()
     }
 
     @Test
@@ -56,13 +56,13 @@ class CurrencyServiceAsyncTest {
                 .build()
         val currencyServiceAsync = client.currencies()
 
-        val currencyFuture =
+        val currencyResponseFuture =
             currencyServiceAsync.retrieve(
                 CurrencyRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val currency = currencyFuture.get()
-        currency.validate()
+        val currencyResponse = currencyResponseFuture.get()
+        currencyResponse.validate()
     }
 
     @Test
@@ -77,7 +77,7 @@ class CurrencyServiceAsyncTest {
                 .build()
         val currencyServiceAsync = client.currencies()
 
-        val currencyFuture =
+        val currencyResponseFuture =
             currencyServiceAsync.update(
                 CurrencyUpdateParams.builder()
                     .orgId("orgId")
@@ -91,8 +91,8 @@ class CurrencyServiceAsyncTest {
                     .build()
             )
 
-        val currency = currencyFuture.get()
-        currency.validate()
+        val currencyResponse = currencyResponseFuture.get()
+        currencyResponse.validate()
     }
 
     @Test
@@ -126,12 +126,12 @@ class CurrencyServiceAsyncTest {
                 .build()
         val currencyServiceAsync = client.currencies()
 
-        val currencyFuture =
+        val currencyResponseFuture =
             currencyServiceAsync.delete(
                 CurrencyDeleteParams.builder().orgId("orgId").id("id").build()
             )
 
-        val currency = currencyFuture.get()
-        currency.validate()
+        val currencyResponse = currencyResponseFuture.get()
+        currencyResponse.validate()
     }
 }

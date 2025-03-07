@@ -26,13 +26,13 @@ class EventServiceAsyncTest {
                 .build()
         val eventServiceAsync = client.events()
 
-        val eventFuture =
+        val eventResponseFuture =
             eventServiceAsync.retrieve(
                 EventRetrieveParams.builder().orgId("orgId").id("id").build()
             )
 
-        val event = eventFuture.get()
-        event.validate()
+        val eventResponse = eventResponseFuture.get()
+        eventResponse.validate()
     }
 
     @Test

@@ -4,15 +4,22 @@
 
 package com.m3ter.sdk.services.blocking.balances
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.BalanceTransactionCreateParams
 import com.m3ter.sdk.models.BalanceTransactionListPage
 import com.m3ter.sdk.models.BalanceTransactionListParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryParams
 import com.m3ter.sdk.models.BalanceTransactionSummaryResponse
-import com.m3ter.sdk.models.Transaction
+import com.m3ter.sdk.models.TransactionResponse
 
 interface TransactionService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Add a Transaction to a Balance. This endpoint allows you to create a new Transaction amount
@@ -35,7 +42,7 @@ interface TransactionService {
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Transaction
+    ): TransactionResponse
 
     /**
      * Retrieve all Transactions for a specific Balance.
@@ -55,4 +62,46 @@ interface TransactionService {
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionSummaryResponse
+
+    /**
+     * A view of [TransactionService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
+         * [TransactionService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceTransactionCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TransactionResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
+         * [TransactionService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceTransactionListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BalanceTransactionListPage>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /organizations/{orgId}/balances/{balanceId}/transactions/summary`, but is otherwise the
+         * same as [TransactionService.summary].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun summary(
+            params: BalanceTransactionSummaryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BalanceTransactionSummaryResponse>
+    }
 }

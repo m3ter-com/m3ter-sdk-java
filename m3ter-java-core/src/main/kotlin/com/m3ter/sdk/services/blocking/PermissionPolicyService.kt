@@ -4,8 +4,9 @@
 
 package com.m3ter.sdk.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.sdk.core.RequestOptions
-import com.m3ter.sdk.models.PermissionPolicy
+import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserParams
 import com.m3ter.sdk.models.PermissionPolicyAddToServiceUserResponse
 import com.m3ter.sdk.models.PermissionPolicyAddToSupportUserParams
@@ -26,10 +27,16 @@ import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserGroupResponse
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserParams
 import com.m3ter.sdk.models.PermissionPolicyRemoveFromUserResponse
+import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.PermissionPolicyRetrieveParams
 import com.m3ter.sdk.models.PermissionPolicyUpdateParams
 
 interface PermissionPolicyService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create a new Permission Policy
@@ -63,14 +70,14 @@ interface PermissionPolicyService {
     fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Retrieve the permission policy for the UUID */
     @JvmOverloads
     fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /**
      * Update a Permission Policy for the UUID
@@ -103,7 +110,7 @@ interface PermissionPolicyService {
     fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Retrieve a list of PermissionPolicy entities */
     @JvmOverloads
@@ -117,7 +124,7 @@ interface PermissionPolicyService {
     fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): PermissionPolicy
+    ): PermissionPolicyResponse
 
     /** Add a permission policy to a service user. */
     @JvmOverloads
@@ -174,4 +181,162 @@ interface PermissionPolicyService {
         params: PermissionPolicyRemoveFromUserGroupParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyRemoveFromUserGroupResponse
+
+    /**
+     * A view of [PermissionPolicyService] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /organizations/{orgId}/permissionpolicies`, but is
+         * otherwise the same as [PermissionPolicyService.create].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PermissionPolicyCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies/{id}`, but
+         * is otherwise the same as [PermissionPolicyService.retrieve].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PermissionPolicyRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyResponse>
+
+        /**
+         * Returns a raw HTTP response for `put /organizations/{orgId}/permissionpolicies/{id}`, but
+         * is otherwise the same as [PermissionPolicyService.update].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PermissionPolicyUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /organizations/{orgId}/permissionpolicies`, but is
+         * otherwise the same as [PermissionPolicyService.list].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PermissionPolicyListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyListPage>
+
+        /**
+         * Returns a raw HTTP response for `delete /organizations/{orgId}/permissionpolicies/{id}`,
+         * but is otherwise the same as [PermissionPolicyService.delete].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PermissionPolicyDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtoserviceuser`, but is
+         * otherwise the same as [PermissionPolicyService.addToServiceUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToServiceUser(
+            params: PermissionPolicyAddToServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyAddToServiceUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtosupportusers`, but is
+         * otherwise the same as [PermissionPolicyService.addToSupportUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToSupportUser(
+            params: PermissionPolicyAddToSupportUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtouser`, but is
+         * otherwise the same as [PermissionPolicyService.addToUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToUser(
+            params: PermissionPolicyAddToUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyAddToUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtousergroup`, but is
+         * otherwise the same as [PermissionPolicyService.addToUserGroup].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun addToUserGroup(
+            params: PermissionPolicyAddToUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyAddToUserGroupResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromserviceuser`,
+         * but is otherwise the same as [PermissionPolicyService.removeFromServiceUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromServiceUser(
+            params: PermissionPolicyRemoveFromServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromsupportusers`,
+         * but is otherwise the same as [PermissionPolicyService.removeFromSupportUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromSupportUser(
+            params: PermissionPolicyRemoveFromSupportUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromuser`, but is
+         * otherwise the same as [PermissionPolicyService.removeFromUser].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromUser(
+            params: PermissionPolicyRemoveFromUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyRemoveFromUserResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromusergroup`, but
+         * is otherwise the same as [PermissionPolicyService.removeFromUserGroup].
+         */
+        @JvmOverloads
+        @MustBeClosed
+        fun removeFromUserGroup(
+            params: PermissionPolicyRemoveFromUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse>
+    }
 }
