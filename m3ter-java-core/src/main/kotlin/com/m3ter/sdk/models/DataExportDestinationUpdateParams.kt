@@ -21,6 +21,7 @@ import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Update an Export Destination for the given UUID.
@@ -494,7 +495,7 @@ private constructor(
              *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
              */
             fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
-                partitionOrder(partitionOrder.orElse(null))
+                partitionOrder(partitionOrder.getOrNull())
 
             /**
              * Specify how you want the file path to be structured in your bucket destination - by
@@ -734,7 +735,7 @@ private constructor(
          *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
          */
         fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
-            partitionOrder(partitionOrder.orElse(null))
+            partitionOrder(partitionOrder.getOrNull())
 
         /**
          * Specify how you want the file path to be structured in your bucket destination - by Time

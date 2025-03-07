@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieve a list of ResourceGroup entities */
 class ResourceGroupListParams
@@ -98,7 +99,7 @@ private constructor(
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
         /** nextToken for multi page retrievals */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of ResourceGroups to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -107,8 +108,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Number of ResourceGroups to retrieve per page */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * List Event Fields.
@@ -113,7 +114,7 @@ private constructor(
          * The name of the specific Event Type to use as a list filter, for example
          * `configuration.commitment.created`.
          */
-        fun eventName(eventName: Optional<String>) = eventName(eventName.orElse(null))
+        fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

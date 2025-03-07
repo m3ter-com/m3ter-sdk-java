@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of Products.
@@ -105,7 +106,7 @@ private constructor(
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
         /** List of specific Product UUIDs to retrieve. */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /** List of specific Product UUIDs to retrieve. */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
@@ -120,7 +121,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Products
          * in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Products to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -129,8 +130,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of Products to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

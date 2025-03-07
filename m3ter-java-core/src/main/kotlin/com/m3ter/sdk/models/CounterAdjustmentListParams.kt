@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of CounterAdjustments created for Accounts in your Organization. You can filter
@@ -145,45 +146,45 @@ private constructor(
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
         /** List CounterAdjustment items for the Account UUID. */
-        fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** List CounterAdjustment items for the Counter UUID. */
         fun counterId(counterId: String?) = apply { this.counterId = counterId }
 
         /** List CounterAdjustment items for the Counter UUID. */
-        fun counterId(counterId: Optional<String>) = counterId(counterId.orElse(null))
+        fun counterId(counterId: Optional<String>) = counterId(counterId.getOrNull())
 
         /** List CounterAdjustment items for the given date. */
         fun date(date: String?) = apply { this.date = date }
 
         /** List CounterAdjustment items for the given date. */
-        fun date(date: Optional<String>) = date(date.orElse(null))
+        fun date(date: Optional<String>) = date(date.getOrNull())
 
         fun dateEnd(dateEnd: String?) = apply { this.dateEnd = dateEnd }
 
-        fun dateEnd(dateEnd: Optional<String>) = dateEnd(dateEnd.orElse(null))
+        fun dateEnd(dateEnd: Optional<String>) = dateEnd(dateEnd.getOrNull())
 
         fun dateStart(dateStart: String?) = apply { this.dateStart = dateStart }
 
-        fun dateStart(dateStart: Optional<String>) = dateStart(dateStart.orElse(null))
+        fun dateStart(dateStart: Optional<String>) = dateStart(dateStart.getOrNull())
 
         /** Only include CounterAdjustments with end dates earlier than this date. */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
 
         /** Only include CounterAdjustments with end dates earlier than this date. */
-        fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.orElse(null))
+        fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /** Only include CounterAdjustments with end dates equal to or later than this date. */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
 
         /** Only include CounterAdjustments with end dates equal to or later than this date. */
-        fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.orElse(null))
+        fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
 
         /** nextToken for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
         /** nextToken for multi page retrievals. */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of CounterAdjustments to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -192,8 +193,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Number of CounterAdjustments to retrieve per page */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

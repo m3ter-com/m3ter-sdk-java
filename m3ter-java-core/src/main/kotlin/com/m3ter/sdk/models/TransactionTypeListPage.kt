@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieves a list of TransactionType entities for the specified Organization. The list can be
@@ -185,7 +186,7 @@ private constructor(
                 while (index < page.data().size) {
                     yield(page.data()[index++])
                 }
-                page = page.getNextPage().orElse(null) ?: break
+                page = page.getNextPage().getOrNull() ?: break
                 index = 0
             }
         }
