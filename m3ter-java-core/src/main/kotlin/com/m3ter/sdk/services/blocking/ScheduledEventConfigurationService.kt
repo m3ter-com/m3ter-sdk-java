@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,35 +21,54 @@ interface ScheduledEventConfigurationService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new ScheduledEventConfiguration. */
-    @JvmOverloads
+    fun create(
+        params: ScheduledEventConfigurationCreateParams
+    ): ScheduledEventConfigurationResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationResponse
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun retrieve(
+        params: ScheduledEventConfigurationRetrieveParams
+    ): ScheduledEventConfigurationResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationResponse
 
     /** Update a ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun update(
+        params: ScheduledEventConfigurationUpdateParams
+    ): ScheduledEventConfigurationResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationResponse
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
-    @JvmOverloads
+    fun list(params: ScheduledEventConfigurationListParams): ScheduledEventConfigurationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ScheduledEventConfigurationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationListPage
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun delete(
+        params: ScheduledEventConfigurationDeleteParams
+    ): ScheduledEventConfigurationResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +85,13 @@ interface ScheduledEventConfigurationService {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ScheduledEventConfigurationCreateParams
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ScheduledEventConfigurationCreateParams,
@@ -80,7 +103,13 @@ interface ScheduledEventConfigurationService {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ScheduledEventConfigurationRetrieveParams
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
@@ -92,7 +121,13 @@ interface ScheduledEventConfigurationService {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ScheduledEventConfigurationUpdateParams
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams,
@@ -104,7 +139,13 @@ interface ScheduledEventConfigurationService {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ScheduledEventConfigurationListParams
+        ): HttpResponseFor<ScheduledEventConfigurationListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ScheduledEventConfigurationListParams,
@@ -116,7 +157,13 @@ interface ScheduledEventConfigurationService {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ScheduledEventConfigurationDeleteParams
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ScheduledEventConfigurationDeleteParams,

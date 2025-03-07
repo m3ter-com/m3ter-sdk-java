@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -32,7 +30,10 @@ interface ExternalMappingService {
      * This endpoint enables you to create a new External Mapping for the specified Organization.
      * You need to supply a request body with the details of the new External Mapping.
      */
-    @JvmOverloads
+    fun create(params: ExternalMappingCreateParams): ExternalMappingResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ExternalMappingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,7 +45,10 @@ interface ExternalMappingService {
      * This endpoint enables you to retrieve the External Mapping with the specified UUID for a
      * specific Organization.
      */
-    @JvmOverloads
+    fun retrieve(params: ExternalMappingRetrieveParams): ExternalMappingResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ExternalMappingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -56,7 +60,10 @@ interface ExternalMappingService {
      * This endpoint enables you to update an existing External Mapping entity, identified by its
      * UUID. You must supply a request body with the new details for the External Mapping.
      */
-    @JvmOverloads
+    fun update(params: ExternalMappingUpdateParams): ExternalMappingResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ExternalMappingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -69,14 +76,20 @@ interface ExternalMappingService {
      * The list can be paginated for better management, and supports filtering using the external
      * system.
      */
-    @JvmOverloads
+    fun list(params: ExternalMappingListParams): ExternalMappingListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ExternalMappingListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalMappingListPage
 
     /** Delete an External Mapping with the given UUID. */
-    @JvmOverloads
+    fun delete(params: ExternalMappingDeleteParams): ExternalMappingResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ExternalMappingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -88,7 +101,11 @@ interface ExternalMappingService {
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * external system entity. The list can be paginated for easier management.
      */
-    @JvmOverloads
+    fun listByExternalEntity(
+        params: ExternalMappingListByExternalEntityParams
+    ): ExternalMappingListByExternalEntityPage = listByExternalEntity(params, RequestOptions.none())
+
+    /** @see [listByExternalEntity] */
     fun listByExternalEntity(
         params: ExternalMappingListByExternalEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -100,7 +117,11 @@ interface ExternalMappingService {
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * m3ter entity. The list can be paginated for easier management.
      */
-    @JvmOverloads
+    fun listByM3terEntity(
+        params: ExternalMappingListByM3terEntityParams
+    ): ExternalMappingListByM3terEntityPage = listByM3terEntity(params, RequestOptions.none())
+
+    /** @see [listByM3terEntity] */
     fun listByM3terEntity(
         params: ExternalMappingListByM3terEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -116,7 +137,11 @@ interface ExternalMappingService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/externalmappings`, but is
          * otherwise the same as [ExternalMappingService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ExternalMappingCreateParams): HttpResponseFor<ExternalMappingResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ExternalMappingCreateParams,
@@ -127,7 +152,12 @@ interface ExternalMappingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings/{id}`, but
          * is otherwise the same as [ExternalMappingService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ExternalMappingRetrieveParams
+        ): HttpResponseFor<ExternalMappingResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ExternalMappingRetrieveParams,
@@ -138,7 +168,11 @@ interface ExternalMappingService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/externalmappings/{id}`, but
          * is otherwise the same as [ExternalMappingService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: ExternalMappingUpdateParams): HttpResponseFor<ExternalMappingResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ExternalMappingUpdateParams,
@@ -149,7 +183,11 @@ interface ExternalMappingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/externalmappings`, but is
          * otherwise the same as [ExternalMappingService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: ExternalMappingListParams): HttpResponseFor<ExternalMappingListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ExternalMappingListParams,
@@ -160,7 +198,11 @@ interface ExternalMappingService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/externalmappings/{id}`,
          * but is otherwise the same as [ExternalMappingService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ExternalMappingDeleteParams): HttpResponseFor<ExternalMappingResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ExternalMappingDeleteParams,
@@ -172,7 +214,13 @@ interface ExternalMappingService {
          * /organizations/{orgId}/externalmappings/externalid/{system}/{externalTable}/{externalId}`,
          * but is otherwise the same as [ExternalMappingService.listByExternalEntity].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun listByExternalEntity(
+            params: ExternalMappingListByExternalEntityParams
+        ): HttpResponseFor<ExternalMappingListByExternalEntityPage> =
+            listByExternalEntity(params, RequestOptions.none())
+
+        /** @see [listByExternalEntity] */
         @MustBeClosed
         fun listByExternalEntity(
             params: ExternalMappingListByExternalEntityParams,
@@ -184,7 +232,13 @@ interface ExternalMappingService {
          * /organizations/{orgId}/externalmappings/external/{entity}/{m3terId}`, but is otherwise
          * the same as [ExternalMappingService.listByM3terEntity].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun listByM3terEntity(
+            params: ExternalMappingListByM3terEntityParams
+        ): HttpResponseFor<ExternalMappingListByM3terEntityPage> =
+            listByM3terEntity(params, RequestOptions.none())
+
+        /** @see [listByM3terEntity] */
         @MustBeClosed
         fun listByM3terEntity(
             params: ExternalMappingListByM3terEntityParams,

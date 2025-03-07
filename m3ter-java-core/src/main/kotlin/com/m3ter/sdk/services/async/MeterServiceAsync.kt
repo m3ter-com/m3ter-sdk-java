@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -51,14 +49,20 @@ interface MeterServiceAsync {
      * - [Reviewing Meter
      *   Options](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/reviewing-meter-options).
      */
-    @JvmOverloads
+    fun create(params: MeterCreateParams): CompletableFuture<MeterResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse>
 
     /** Retrieve the Meter with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: MeterRetrieveParams): CompletableFuture<MeterResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,21 +75,30 @@ interface MeterServiceAsync {
      * the Meter use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: MeterUpdateParams): CompletableFuture<MeterResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse>
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
-    @JvmOverloads
+    fun list(params: MeterListParams): CompletableFuture<MeterListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: MeterListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterListPageAsync>
 
     /** Delete the Meter with the given UUID. */
-    @JvmOverloads
+    fun delete(params: MeterDeleteParams): CompletableFuture<MeterResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -98,7 +111,11 @@ interface MeterServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/meters`, but is otherwise
          * the same as [MeterServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: MeterCreateParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: MeterCreateParams,
@@ -109,7 +126,13 @@ interface MeterServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: MeterRetrieveParams
+        ): CompletableFuture<HttpResponseFor<MeterResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: MeterRetrieveParams,
@@ -120,7 +143,11 @@ interface MeterServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: MeterUpdateParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: MeterUpdateParams,
@@ -131,7 +158,11 @@ interface MeterServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters`, but is otherwise the
          * same as [MeterServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: MeterListParams): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: MeterListParams,
@@ -142,7 +173,11 @@ interface MeterServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: MeterDeleteParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: MeterDeleteParams,

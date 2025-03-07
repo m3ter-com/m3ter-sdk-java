@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -34,21 +32,33 @@ interface CounterAdjustmentServiceAsync {
      *   cannot create more than one CounterAdjustment for any given day using the same Counter and
      *   you'll receive an error if you try to do this.
      */
-    @JvmOverloads
+    fun create(
+        params: CounterAdjustmentCreateParams
+    ): CompletableFuture<CounterAdjustmentResponse> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustmentResponse>
 
     /** Retrieve a CounterAdjustment for the given UUID. */
-    @JvmOverloads
+    fun retrieve(
+        params: CounterAdjustmentRetrieveParams
+    ): CompletableFuture<CounterAdjustmentResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustmentResponse>
 
     /** Update a CounterAdjustment for an Account. */
-    @JvmOverloads
+    fun update(
+        params: CounterAdjustmentUpdateParams
+    ): CompletableFuture<CounterAdjustmentResponse> = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,14 +74,22 @@ interface CounterAdjustmentServiceAsync {
      * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
      *   use the `accountId` query parameter.
      */
-    @JvmOverloads
+    fun list(
+        params: CounterAdjustmentListParams
+    ): CompletableFuture<CounterAdjustmentListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CounterAdjustmentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustmentListPageAsync>
 
     /** Delete a CounterAdjustment for the given UUID. */
-    @JvmOverloads
+    fun delete(
+        params: CounterAdjustmentDeleteParams
+    ): CompletableFuture<CounterAdjustmentResponse> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -87,7 +105,13 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterAdjustmentCreateParams
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterAdjustmentCreateParams,
@@ -98,7 +122,13 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterAdjustmentRetrieveParams
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
@@ -109,7 +139,13 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterAdjustmentUpdateParams
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams,
@@ -120,7 +156,13 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CounterAdjustmentListParams
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams,
@@ -131,7 +173,13 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,
          * but is otherwise the same as [CounterAdjustmentServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterAdjustmentDeleteParams
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams,

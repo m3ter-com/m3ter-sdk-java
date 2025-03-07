@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,14 +27,20 @@ interface PricingServiceAsync {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun create(params: PricingCreateParams): CompletableFuture<PricingResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingResponse>
 
     /** Retrieve the Pricing with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PricingRetrieveParams): CompletableFuture<PricingResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,21 +52,30 @@ interface PricingServiceAsync {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun update(params: PricingUpdateParams): CompletableFuture<PricingResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingResponse>
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
-    @JvmOverloads
+    fun list(params: PricingListParams): CompletableFuture<PricingListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PricingListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingListPageAsync>
 
     /** Delete the Pricing with the given UUID. */
-    @JvmOverloads
+    fun delete(params: PricingDeleteParams): CompletableFuture<PricingResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +90,13 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PricingCreateParams
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PricingCreateParams,
@@ -88,7 +107,13 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PricingRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PricingRetrieveParams,
@@ -99,7 +124,13 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PricingUpdateParams
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PricingUpdateParams,
@@ -110,7 +141,13 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PricingListParams
+        ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PricingListParams,
@@ -121,7 +158,13 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PricingDeleteParams
+        ): CompletableFuture<HttpResponseFor<PricingResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PricingDeleteParams,

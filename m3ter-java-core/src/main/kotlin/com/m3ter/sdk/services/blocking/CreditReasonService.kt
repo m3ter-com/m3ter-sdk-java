@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,21 +25,30 @@ interface CreditReasonService {
      * becomes available as a credit type for adding Credit line items to Bills. See
      * [Credits](https://www.m3ter.com/docs/api#tag/Credits).
      */
-    @JvmOverloads
+    fun create(params: CreditReasonCreateParams): CreditReasonResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CreditReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonResponse
 
     /** Retrieve the Credit Reason with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: CreditReasonRetrieveParams): CreditReasonResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CreditReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonResponse
 
     /** Update the Credit Reason with the given UUID. */
-    @JvmOverloads
+    fun update(params: CreditReasonUpdateParams): CreditReasonResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CreditReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,14 +59,20 @@ interface CreditReasonService {
      * the list returned for the call by Credit Reason ID, Credit Reason short code, or by Archive
      * status.
      */
-    @JvmOverloads
+    fun list(params: CreditReasonListParams): CreditReasonListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CreditReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonListPage
 
     /** Delete the Credit Reason with the given UUID. */
-    @JvmOverloads
+    fun delete(params: CreditReasonDeleteParams): CreditReasonResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +87,11 @@ interface CreditReasonService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/creditreasons`,
          * but is otherwise the same as [CreditReasonService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CreditReasonCreateParams): HttpResponseFor<CreditReasonResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CreditReasonCreateParams,
@@ -86,7 +103,11 @@ interface CreditReasonService {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: CreditReasonRetrieveParams): HttpResponseFor<CreditReasonResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CreditReasonRetrieveParams,
@@ -98,7 +119,11 @@ interface CreditReasonService {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CreditReasonUpdateParams): HttpResponseFor<CreditReasonResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CreditReasonUpdateParams,
@@ -109,7 +134,11 @@ interface CreditReasonService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/creditreasons`, but
          * is otherwise the same as [CreditReasonService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: CreditReasonListParams): HttpResponseFor<CreditReasonListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CreditReasonListParams,
@@ -121,7 +150,11 @@ interface CreditReasonService {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CreditReasonDeleteParams): HttpResponseFor<CreditReasonResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CreditReasonDeleteParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -50,14 +48,19 @@ interface MeterService {
      * - [Reviewing Meter
      *   Options](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/reviewing-meter-options).
      */
-    @JvmOverloads
+    fun create(params: MeterCreateParams): MeterResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
 
     /** Retrieve the Meter with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: MeterRetrieveParams): MeterResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,21 +73,27 @@ interface MeterService {
      * the Meter use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: MeterUpdateParams): MeterResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
-    @JvmOverloads
+    fun list(params: MeterListParams): MeterListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: MeterListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterListPage
 
     /** Delete the Meter with the given UUID. */
-    @JvmOverloads
+    fun delete(params: MeterDeleteParams): MeterResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -97,7 +106,11 @@ interface MeterService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/meters`, but is otherwise
          * the same as [MeterService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: MeterCreateParams): HttpResponseFor<MeterResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: MeterCreateParams,
@@ -108,7 +121,11 @@ interface MeterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: MeterRetrieveParams): HttpResponseFor<MeterResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: MeterRetrieveParams,
@@ -119,7 +136,11 @@ interface MeterService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: MeterUpdateParams): HttpResponseFor<MeterResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: MeterUpdateParams,
@@ -130,7 +151,11 @@ interface MeterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters`, but is otherwise the
          * same as [MeterService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: MeterListParams): HttpResponseFor<MeterListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: MeterListParams,
@@ -141,7 +166,11 @@ interface MeterService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: MeterDeleteParams): HttpResponseFor<MeterResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: MeterDeleteParams,

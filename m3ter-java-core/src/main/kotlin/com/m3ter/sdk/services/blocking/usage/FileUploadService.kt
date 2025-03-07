@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.usage
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -35,7 +33,11 @@ interface FileUploadService {
      *
      * Part of the file upload service for submitting measurements data files.
      */
-    @JvmOverloads
+    fun generateUploadUrl(
+        params: UsageFileUploadGenerateUploadUrlParams
+    ): UsageFileUploadGenerateUploadUrlResponse = generateUploadUrl(params, RequestOptions.none())
+
+    /** @see [generateUploadUrl] */
     fun generateUploadUrl(
         params: UsageFileUploadGenerateUploadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -51,7 +53,13 @@ interface FileUploadService {
          * /organizations/{orgId}/fileuploads/measurements/generateUploadUrl`, but is otherwise the
          * same as [FileUploadService.generateUploadUrl].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun generateUploadUrl(
+            params: UsageFileUploadGenerateUploadUrlParams
+        ): HttpResponseFor<UsageFileUploadGenerateUploadUrlResponse> =
+            generateUploadUrl(params, RequestOptions.none())
+
+        /** @see [generateUploadUrl] */
         @MustBeClosed
         fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,

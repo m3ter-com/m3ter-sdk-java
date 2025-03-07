@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -37,7 +35,9 @@ interface UserService {
      * Retrieves detailed information for a specific user within an Organization, using their unique
      * identifier (UUID).
      */
-    @JvmOverloads
+    fun retrieve(params: UserRetrieveParams): UserResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,7 +50,9 @@ interface UserService {
      * (UUID). Use this endpoint when you need to modify user information such as their permission
      * policy.
      */
-    @JvmOverloads
+    fun update(params: UserUpdateParams): UserResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -63,7 +65,9 @@ interface UserService {
      * overview of all users and their basic details. The list can be paginated for easier
      * management.
      */
-    @JvmOverloads
+    fun list(params: UserListParams): UserListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: UserListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -75,7 +79,10 @@ interface UserService {
      * Retrieves a list of all permissions associated with a specific user in an Organization using
      * their UUID. The list can be paginated for easier management.
      */
-    @JvmOverloads
+    fun getPermissions(params: UserGetPermissionsParams): PermissionPolicyResponse =
+        getPermissions(params, RequestOptions.none())
+
+    /** @see [getPermissions] */
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,21 +111,29 @@ interface UserService {
      *     - If `inherited = FALSE`, then only those User Resource Groups to which the user belongs
      *       are returned.
      */
-    @JvmOverloads
+    fun getUserGroups(params: UserGetUserGroupsParams): ResourceGroupResponse =
+        getUserGroups(params, RequestOptions.none())
+
+    /** @see [getUserGroups] */
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Retrieve information about the current user */
-    @JvmOverloads
+    fun me(params: UserMeParams): UserMeResponse = me(params, RequestOptions.none())
+
+    /** @see [me] */
     fun me(
         params: UserMeParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserMeResponse
 
     /** Resend temporary password for user */
-    @JvmOverloads
+    fun resendPassword(params: UserResendPasswordParams) =
+        resendPassword(params, RequestOptions.none())
+
+    /** @see [resendPassword] */
     fun resendPassword(
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -133,7 +148,11 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: UserRetrieveParams): HttpResponseFor<UserResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: UserRetrieveParams,
@@ -144,7 +163,11 @@ interface UserService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: UserUpdateParams): HttpResponseFor<UserResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: UserUpdateParams,
@@ -155,7 +178,11 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
          * same as [UserService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: UserListParams): HttpResponseFor<UserListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: UserListParams,
@@ -166,7 +193,12 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
          * is otherwise the same as [UserService.getPermissions].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams
+        ): HttpResponseFor<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
+
+        /** @see [getPermissions] */
         @MustBeClosed
         fun getPermissions(
             params: UserGetPermissionsParams,
@@ -177,7 +209,11 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
          * is otherwise the same as [UserService.getUserGroups].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getUserGroups(params: UserGetUserGroupsParams): HttpResponseFor<ResourceGroupResponse> =
+            getUserGroups(params, RequestOptions.none())
+
+        /** @see [getUserGroups] */
         @MustBeClosed
         fun getUserGroups(
             params: UserGetUserGroupsParams,
@@ -188,7 +224,11 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
          * the same as [UserService.me].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun me(params: UserMeParams): HttpResponseFor<UserMeResponse> =
+            me(params, RequestOptions.none())
+
+        /** @see [me] */
         @MustBeClosed
         fun me(
             params: UserMeParams,
@@ -199,7 +239,11 @@ interface UserService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,
          * but is otherwise the same as [UserService.resendPassword].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun resendPassword(params: UserResendPasswordParams): HttpResponse =
+            resendPassword(params, RequestOptions.none())
+
+        /** @see [resendPassword] */
         @MustBeClosed
         fun resendPassword(
             params: UserResendPasswordParams,

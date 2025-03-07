@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -76,7 +74,10 @@ interface DataExportService {
      * export. See the [ExportJob](https://www.m3ter.com/docs/api#tag/ExportJob) section of this API
      * Reference.
      */
-    @JvmOverloads
+    fun createAdhoc(params: DataExportCreateAdhocParams): AdHocResponse =
+        createAdhoc(params, RequestOptions.none())
+
+    /** @see [createAdhoc] */
     fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -95,7 +96,11 @@ interface DataExportService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/adhoc`, but is
          * otherwise the same as [DataExportService.createAdhoc].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun createAdhoc(params: DataExportCreateAdhocParams): HttpResponseFor<AdHocResponse> =
+            createAdhoc(params, RequestOptions.none())
+
+        /** @see [createAdhoc] */
         @MustBeClosed
         fun createAdhoc(
             params: DataExportCreateAdhocParams,

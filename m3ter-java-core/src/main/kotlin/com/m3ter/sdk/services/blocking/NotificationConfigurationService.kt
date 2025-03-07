@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,7 +26,10 @@ interface NotificationConfigurationService {
      * This endpoint enables you to create a new Event Notification for the specified Organization.
      * You need to supply a request body with the details of the new Notification.
      */
-    @JvmOverloads
+    fun create(params: NotificationConfigurationCreateParams): NotificationConfigurationResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,7 +40,11 @@ interface NotificationConfigurationService {
      * Notification is based on, and any calculation referencing the Event's field and which defines
      * further conditions that must be met to trigger the Notification when the Event occurs.
      */
-    @JvmOverloads
+    fun retrieve(
+        params: NotificationConfigurationRetrieveParams
+    ): NotificationConfigurationResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,7 +57,10 @@ interface NotificationConfigurationService {
      * the Event that triggers the Notification and/or update the conditions for sending the
      * Notification.
      */
-    @JvmOverloads
+    fun update(params: NotificationConfigurationUpdateParams): NotificationConfigurationResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -65,7 +73,10 @@ interface NotificationConfigurationService {
      * its UUID. The list can be paginated for easier management. The list also supports filtering
      * by parameters such as Notification UUID.
      */
-    @JvmOverloads
+    fun list(params: NotificationConfigurationListParams): NotificationConfigurationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: NotificationConfigurationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +88,10 @@ interface NotificationConfigurationService {
      * This endpoint permanently removes a specified Notification and its configuration. This action
      * cannot be undone.
      */
-    @JvmOverloads
+    fun delete(params: NotificationConfigurationDeleteParams): NotificationConfigurationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -94,7 +108,13 @@ interface NotificationConfigurationService {
          * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
          * [NotificationConfigurationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: NotificationConfigurationCreateParams
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: NotificationConfigurationCreateParams,
@@ -106,7 +126,13 @@ interface NotificationConfigurationService {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: NotificationConfigurationRetrieveParams
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: NotificationConfigurationRetrieveParams,
@@ -118,7 +144,13 @@ interface NotificationConfigurationService {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: NotificationConfigurationUpdateParams
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams,
@@ -130,7 +162,12 @@ interface NotificationConfigurationService {
          * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
          * [NotificationConfigurationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: NotificationConfigurationListParams
+        ): HttpResponseFor<NotificationConfigurationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: NotificationConfigurationListParams,
@@ -142,7 +179,13 @@ interface NotificationConfigurationService {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: NotificationConfigurationDeleteParams
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams,

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -18,7 +16,11 @@ interface AuthenticationService {
     fun withRawResponse(): WithRawResponse
 
     /** Get authentication token */
-    @JvmOverloads
+    fun getBearerToken(
+        params: AuthenticationGetBearerTokenParams
+    ): AuthenticationGetBearerTokenResponse = getBearerToken(params, RequestOptions.none())
+
+    /** @see [getBearerToken] */
     fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -33,7 +35,13 @@ interface AuthenticationService {
          * Returns a raw HTTP response for `post /oauth/token`, but is otherwise the same as
          * [AuthenticationService.getBearerToken].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getBearerToken(
+            params: AuthenticationGetBearerTokenParams
+        ): HttpResponseFor<AuthenticationGetBearerTokenResponse> =
+            getBearerToken(params, RequestOptions.none())
+
+        /** @see [getBearerToken] */
         @MustBeClosed
         fun getBearerToken(
             params: AuthenticationGetBearerTokenParams,

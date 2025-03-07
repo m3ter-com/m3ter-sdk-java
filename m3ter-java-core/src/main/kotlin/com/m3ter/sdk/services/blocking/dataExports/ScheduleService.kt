@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -50,7 +48,10 @@ interface ScheduleService {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
-    @JvmOverloads
+    fun create(params: DataExportScheduleCreateParams): DataExportScheduleCreateResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DataExportScheduleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +61,10 @@ interface ScheduleService {
      * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    @JvmOverloads
+    fun retrieve(params: DataExportScheduleRetrieveParams): DataExportScheduleRetrieveResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DataExportScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -91,7 +95,10 @@ interface ScheduleService {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
-    @JvmOverloads
+    fun update(params: DataExportScheduleUpdateParams): DataExportScheduleUpdateResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,7 +111,10 @@ interface ScheduleService {
      * The response will contain an array for both the operational and usage Data Export Schedules
      * in your Organization.
      */
-    @JvmOverloads
+    fun list(params: DataExportScheduleListParams): DataExportScheduleListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DataExportScheduleListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -114,7 +124,10 @@ interface ScheduleService {
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    @JvmOverloads
+    fun delete(params: DataExportScheduleDeleteParams): DataExportScheduleDeleteResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -127,7 +140,12 @@ interface ScheduleService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/schedules`, but
          * is otherwise the same as [ScheduleService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DataExportScheduleCreateParams
+        ): HttpResponseFor<DataExportScheduleCreateResponse> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DataExportScheduleCreateParams,
@@ -138,7 +156,13 @@ interface ScheduleService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportScheduleRetrieveParams
+        ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams,
@@ -149,7 +173,12 @@ interface ScheduleService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DataExportScheduleUpdateParams
+        ): HttpResponseFor<DataExportScheduleUpdateResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams,
@@ -160,7 +189,12 @@ interface ScheduleService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules`, but
          * is otherwise the same as [ScheduleService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportScheduleListParams
+        ): HttpResponseFor<DataExportScheduleListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams,
@@ -172,7 +206,12 @@ interface ScheduleService {
          * /organizations/{orgId}/dataexports/schedules/{id}`, but is otherwise the same as
          * [ScheduleService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DataExportScheduleDeleteParams
+        ): HttpResponseFor<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams,

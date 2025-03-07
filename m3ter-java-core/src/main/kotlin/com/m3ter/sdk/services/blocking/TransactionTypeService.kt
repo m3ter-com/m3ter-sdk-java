@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,14 +24,20 @@ interface TransactionTypeService {
      * Create a new TransactionType for the specified Organization. Details of the new
      * TransactionType should be included in the request body.
      */
-    @JvmOverloads
+    fun create(params: TransactionTypeCreateParams): TransactionTypeResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse
 
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
-    @JvmOverloads
+    fun retrieve(params: TransactionTypeRetrieveParams): TransactionTypeResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +47,10 @@ interface TransactionTypeService {
      * Updates the TransactionType with the specified UUID for the specified Organization. Update
      * details for the TransactionType should be included in the request body.
      */
-    @JvmOverloads
+    fun update(params: TransactionTypeUpdateParams): TransactionTypeResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,14 +60,20 @@ interface TransactionTypeService {
      * Retrieves a list of TransactionType entities for the specified Organization. The list can be
      * paginated for easier management, and supports filtering by various parameters.
      */
-    @JvmOverloads
+    fun list(params: TransactionTypeListParams): TransactionTypeListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeListPage
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
-    @JvmOverloads
+    fun delete(params: TransactionTypeDeleteParams): TransactionTypeResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,7 +89,11 @@ interface TransactionTypeService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/transactiontypes`,
          * but is otherwise the same as [TransactionTypeService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: TransactionTypeCreateParams): HttpResponseFor<TransactionTypeResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: TransactionTypeCreateParams,
@@ -88,7 +105,12 @@ interface TransactionTypeService {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionTypeRetrieveParams
+        ): HttpResponseFor<TransactionTypeResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: TransactionTypeRetrieveParams,
@@ -100,7 +122,11 @@ interface TransactionTypeService {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: TransactionTypeUpdateParams): HttpResponseFor<TransactionTypeResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: TransactionTypeUpdateParams,
@@ -111,7 +137,11 @@ interface TransactionTypeService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/transactiontypes`,
          * but is otherwise the same as [TransactionTypeService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: TransactionTypeListParams): HttpResponseFor<TransactionTypeListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: TransactionTypeListParams,
@@ -123,7 +153,11 @@ interface TransactionTypeService {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: TransactionTypeDeleteParams): HttpResponseFor<TransactionTypeResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: TransactionTypeDeleteParams,

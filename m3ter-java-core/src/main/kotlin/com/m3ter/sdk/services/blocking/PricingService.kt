@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,14 +26,19 @@ interface PricingService {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun create(params: PricingCreateParams): PricingResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
 
     /** Retrieve the Pricing with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PricingRetrieveParams): PricingResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,21 +50,27 @@ interface PricingService {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun update(params: PricingUpdateParams): PricingResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
-    @JvmOverloads
+    fun list(params: PricingListParams): PricingListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PricingListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingListPage
 
     /** Delete the Pricing with the given UUID. */
-    @JvmOverloads
+    fun delete(params: PricingDeleteParams): PricingResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +83,11 @@ interface PricingService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PricingCreateParams): HttpResponseFor<PricingResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PricingCreateParams,
@@ -85,7 +98,11 @@ interface PricingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PricingRetrieveParams): HttpResponseFor<PricingResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PricingRetrieveParams,
@@ -96,7 +113,11 @@ interface PricingService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PricingUpdateParams): HttpResponseFor<PricingResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PricingUpdateParams,
@@ -107,7 +128,11 @@ interface PricingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: PricingListParams): HttpResponseFor<PricingListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PricingListParams,
@@ -118,7 +143,11 @@ interface PricingService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: PricingDeleteParams): HttpResponseFor<PricingResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PricingDeleteParams,

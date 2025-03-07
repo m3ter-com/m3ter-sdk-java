@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -31,14 +29,20 @@ interface ContractServiceAsync {
      * Creates a new Contract for the specified Account. The Contract includes information such as
      * the associated Account along with start and end dates.
      */
-    @JvmOverloads
+    fun create(params: ContractCreateParams): CompletableFuture<ContractResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractResponse>
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
-    @JvmOverloads
+    fun retrieve(params: ContractRetrieveParams): CompletableFuture<ContractResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,7 +58,10 @@ interface ContractServiceAsync {
      * update the Contract use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: ContractUpdateParams): CompletableFuture<ContractResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +71,10 @@ interface ContractServiceAsync {
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
      * query parameters to filter the Contracts returned based on Contract IDs or short codes.
      */
-    @JvmOverloads
+    fun list(params: ContractListParams): CompletableFuture<ContractListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ContractListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +87,10 @@ interface ContractServiceAsync {
      * **Note:** This call will fail if there are any AccountPlans or Commitments that have been
      * added to the Contract.
      */
-    @JvmOverloads
+    fun delete(params: ContractDeleteParams): CompletableFuture<ContractResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -96,7 +109,12 @@ interface ContractServiceAsync {
      * - When you successfully end-date billing entities, the version number of each entity is
      *   incremented.
      */
-    @JvmOverloads
+    fun endDateBillingEntities(
+        params: ContractEndDateBillingEntitiesParams
+    ): CompletableFuture<ContractEndDateBillingEntitiesResponse> =
+        endDateBillingEntities(params, RequestOptions.none())
+
+    /** @see [endDateBillingEntities] */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +129,13 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ContractCreateParams
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ContractCreateParams,
@@ -122,7 +146,13 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ContractRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ContractRetrieveParams,
@@ -133,7 +163,13 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ContractUpdateParams
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ContractUpdateParams,
@@ -144,7 +180,13 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ContractListParams
+        ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ContractListParams,
@@ -155,7 +197,13 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ContractDeleteParams
+        ): CompletableFuture<HttpResponseFor<ContractResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ContractDeleteParams,
@@ -167,7 +215,13 @@ interface ContractServiceAsync {
          * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
          * as [ContractServiceAsync.endDateBillingEntities].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun endDateBillingEntities(
+            params: ContractEndDateBillingEntitiesParams
+        ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> =
+            endDateBillingEntities(params, RequestOptions.none())
+
+        /** @see [endDateBillingEntities] */
         @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,
