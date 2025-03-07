@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieve a list of Export Job entities. */
 class DataExportJobListParams
@@ -130,7 +131,7 @@ private constructor(
 
         /** Include only Job entities created before this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z' */
         fun dateCreatedEnd(dateCreatedEnd: Optional<String>) =
-            dateCreatedEnd(dateCreatedEnd.orElse(null))
+            dateCreatedEnd(dateCreatedEnd.getOrNull())
 
         /**
          * Include only Job entities created on or after this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
@@ -143,13 +144,13 @@ private constructor(
          * Include only Job entities created on or after this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
          */
         fun dateCreatedStart(dateCreatedStart: Optional<String>) =
-            dateCreatedStart(dateCreatedStart.orElse(null))
+            dateCreatedStart(dateCreatedStart.getOrNull())
 
         /** List Job entities for the given UUIDs */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
         /** List Job entities for the given UUIDs */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /** List Job entities for the given UUIDs */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
@@ -158,7 +159,7 @@ private constructor(
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
         /** nextToken for multi page retrievals */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of Jobs to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -167,20 +168,19 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Number of Jobs to retrieve per page */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** List Job entities for the schedule UUID */
         fun scheduleId(scheduleId: String?) = apply { this.scheduleId = scheduleId }
 
         /** List Job entities for the schedule UUID */
-        fun scheduleId(scheduleId: Optional<String>) = scheduleId(scheduleId.orElse(null))
+        fun scheduleId(scheduleId: Optional<String>) = scheduleId(scheduleId.getOrNull())
 
         /** List Job entities for the status */
         fun status(status: Status?) = apply { this.status = status }
 
         /** List Job entities for the status */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

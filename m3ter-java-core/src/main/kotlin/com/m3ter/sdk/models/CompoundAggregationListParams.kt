@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of all CompoundAggregations.
@@ -138,7 +139,7 @@ private constructor(
          * An optional parameter to retrieve specific CompoundAggregations based on their short
          * codes.
          */
-        fun codes(codes: Optional<List<String>>) = codes(codes.orElse(null))
+        fun codes(codes: Optional<List<String>>) = codes(codes.getOrNull())
 
         /**
          * An optional parameter to retrieve specific CompoundAggregations based on their short
@@ -156,7 +157,7 @@ private constructor(
          * An optional parameter to retrieve specific CompoundAggregations based on their unique
          * identifiers (UUIDs).
          */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
          * An optional parameter to retrieve specific CompoundAggregations based on their unique
@@ -174,7 +175,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
          * CompoundAggregations in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of CompoundAggregations to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -183,8 +184,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of CompoundAggregations to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
          * An optional parameter to filter the CompoundAggregations based on specific Product unique
@@ -198,7 +198,7 @@ private constructor(
          * An optional parameter to filter the CompoundAggregations based on specific Product unique
          * identifiers (UUIDs).
          */
-        fun productId(productId: Optional<List<String>>) = productId(productId.orElse(null))
+        fun productId(productId: Optional<List<String>>) = productId(productId.getOrNull())
 
         /**
          * An optional parameter to filter the CompoundAggregations based on specific Product unique

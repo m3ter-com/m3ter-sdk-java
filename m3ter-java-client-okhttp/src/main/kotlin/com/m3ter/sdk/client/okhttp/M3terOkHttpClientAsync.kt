@@ -13,6 +13,7 @@ import java.net.Proxy
 import java.time.Clock
 import java.time.Duration
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class M3terOkHttpClientAsync private constructor() {
 
@@ -149,7 +150,7 @@ class M3terOkHttpClientAsync private constructor() {
 
         fun token(token: String?) = apply { clientOptions.token(token) }
 
-        fun token(token: Optional<String>) = token(token.orElse(null))
+        fun token(token: Optional<String>) = token(token.getOrNull())
 
         fun orgId(orgId: String) = apply { clientOptions.orgId(orgId) }
 

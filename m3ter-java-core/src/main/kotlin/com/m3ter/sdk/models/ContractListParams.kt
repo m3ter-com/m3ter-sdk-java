@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various query
@@ -117,13 +118,13 @@ private constructor(
 
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** An optional parameter to retrieve specific Contracts based on their short codes. */
         fun codes(codes: List<String>?) = apply { this.codes = codes?.toMutableList() }
 
         /** An optional parameter to retrieve specific Contracts based on their short codes. */
-        fun codes(codes: Optional<List<String>>) = codes(codes.orElse(null))
+        fun codes(codes: Optional<List<String>>) = codes(codes.getOrNull())
 
         /** An optional parameter to retrieve specific Contracts based on their short codes. */
         fun addCode(code: String) = apply { codes = (codes ?: mutableListOf()).apply { add(code) } }
@@ -138,7 +139,7 @@ private constructor(
          * An optional parameter to filter the list based on specific Contract unique identifiers
          * (UUIDs).
          */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
          * An optional parameter to filter the list based on specific Contract unique identifiers
@@ -156,7 +157,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Contracts
          * in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Contracts to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -165,8 +166,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of Contracts to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

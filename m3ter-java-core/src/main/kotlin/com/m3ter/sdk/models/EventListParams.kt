@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * List all Events.
@@ -189,11 +190,11 @@ private constructor(
          * The Account ID associated with the Event to filter the results. Returns the Events that
          * have been generated for the Account.
          */
-        fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
-        fun eventName(eventName: Optional<String>) = eventName(eventName.orElse(null))
+        fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         /**
          * The category of Events to filter the results by. Options:
@@ -211,7 +212,7 @@ private constructor(
          * - IngestValidationFailure
          * - DataExportJobFailure
          */
-        fun eventType(eventType: Optional<String>) = eventType(eventType.orElse(null))
+        fun eventType(eventType: Optional<String>) = eventType(eventType.getOrNull())
 
         /**
          * List of Event UUIDs to filter the results.
@@ -225,7 +226,7 @@ private constructor(
          *
          * **NOTE:** cannot be used with other filters.
          */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
          * List of Event UUIDs to filter the results.
@@ -255,9 +256,8 @@ private constructor(
          * - **TRUE** - include actioned Events.
          * - **FALSE** - exclude actioned Events.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun includeActioned(includeActioned: Optional<Boolean>) =
-            includeActioned(includeActioned.orElse(null) as Boolean?)
+            includeActioned(includeActioned.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Events in
@@ -269,7 +269,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Events in
          * a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /**
          * Short code of the Notification to filter the results. Returns the Events that have
@@ -284,7 +284,7 @@ private constructor(
          * triggered the Notification.
          */
         fun notificationCode(notificationCode: Optional<String>) =
-            notificationCode(notificationCode.orElse(null))
+            notificationCode(notificationCode.getOrNull())
 
         /**
          * Notification UUID to filter the results. Returns the Events that have triggered the
@@ -297,7 +297,7 @@ private constructor(
          * Notification.
          */
         fun notificationId(notificationId: Optional<String>) =
-            notificationId(notificationId.orElse(null))
+            notificationId(notificationId.getOrNull())
 
         /** The maximum number of Events to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -306,12 +306,11 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** The maximum number of Events to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun resourceId(resourceId: String?) = apply { this.resourceId = resourceId }
 
-        fun resourceId(resourceId: Optional<String>) = resourceId(resourceId.orElse(null))
+        fun resourceId(resourceId: Optional<String>) = resourceId(resourceId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
