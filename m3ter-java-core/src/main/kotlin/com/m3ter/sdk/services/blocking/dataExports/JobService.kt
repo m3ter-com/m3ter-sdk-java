@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,14 +26,20 @@ interface JobService {
      * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
      * - The status of the Export Job.
      */
-    @JvmOverloads
+    fun retrieve(params: DataExportJobRetrieveParams): DataExportJobResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportJobResponse
 
     /** Retrieve a list of Export Job entities. */
-    @JvmOverloads
+    fun list(params: DataExportJobListParams): DataExportJobListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DataExportJobListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +62,11 @@ interface JobService {
      * features are functional but may be incomplete, and there is no commitment at this stage to
      * particular functionality or timelines.
      */
-    @JvmOverloads
+    fun getDownloadUrl(
+        params: DataExportJobGetDownloadUrlParams
+    ): DataExportJobGetDownloadUrlResponse = getDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getDownloadUrl] */
     fun getDownloadUrl(
         params: DataExportJobGetDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,7 +79,11 @@ interface JobService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs/{id}`, but
          * is otherwise the same as [JobService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: DataExportJobRetrieveParams): HttpResponseFor<DataExportJobResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DataExportJobRetrieveParams,
@@ -82,7 +94,11 @@ interface JobService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is
          * otherwise the same as [JobService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: DataExportJobListParams): HttpResponseFor<DataExportJobListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DataExportJobListParams,
@@ -94,7 +110,13 @@ interface JobService {
          * /organizations/{orgId}/dataexports/jobs/{jobId}/getdownloadurl`, but is otherwise the
          * same as [JobService.getDownloadUrl].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getDownloadUrl(
+            params: DataExportJobGetDownloadUrlParams
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
+            getDownloadUrl(params, RequestOptions.none())
+
+        /** @see [getDownloadUrl] */
         @MustBeClosed
         fun getDownloadUrl(
             params: DataExportJobGetDownloadUrlParams,

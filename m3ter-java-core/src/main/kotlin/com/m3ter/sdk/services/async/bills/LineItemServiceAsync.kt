@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async.bills
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,7 +24,10 @@ interface LineItemServiceAsync {
      * This endpoint retrieves the line item given by its unique identifier (UUID) from a specific
      * Bill.
      */
-    @JvmOverloads
+    fun retrieve(params: BillLineItemRetrieveParams): CompletableFuture<LineItemResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,7 +40,10 @@ interface LineItemServiceAsync {
      * Organization. The list can also be paginated for easier management. The line items returned
      * in the list include individual charges, discounts, or adjustments within a Bill.
      */
-    @JvmOverloads
+    fun list(params: BillLineItemListParams): CompletableFuture<BillLineItemListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BillLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +59,13 @@ interface LineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/lineitems/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillLineItemRetrieveParams
+        ): CompletableFuture<HttpResponseFor<LineItemResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillLineItemRetrieveParams,
@@ -66,7 +76,13 @@ interface LineItemServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{billId}/lineitems`,
          * but is otherwise the same as [LineItemServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillLineItemListParams
+        ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BillLineItemListParams,

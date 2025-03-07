@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,35 +21,50 @@ interface PlanGroupLinkService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new PlanGroupLink. */
-    @JvmOverloads
+    fun create(params: PlanGroupLinkCreateParams): PlanGroupLinkResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkResponse
 
     /** Retrieve a PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PlanGroupLinkRetrieveParams): PlanGroupLinkResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkResponse
 
     /** Update PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun update(params: PlanGroupLinkUpdateParams): PlanGroupLinkResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkResponse
 
     /** Retrieve a list of PlanGroupLink entities */
-    @JvmOverloads
+    fun list(params: PlanGroupLinkListParams): PlanGroupLinkListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkListPage
 
     /** Delete a PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun delete(params: PlanGroupLinkDeleteParams): PlanGroupLinkResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -66,7 +79,11 @@ interface PlanGroupLinkService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plangrouplinks`, but is
          * otherwise the same as [PlanGroupLinkService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PlanGroupLinkCreateParams): HttpResponseFor<PlanGroupLinkResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanGroupLinkCreateParams,
@@ -77,7 +94,11 @@ interface PlanGroupLinkService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks/{id}`, but is
          * otherwise the same as [PlanGroupLinkService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PlanGroupLinkRetrieveParams): HttpResponseFor<PlanGroupLinkResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanGroupLinkRetrieveParams,
@@ -88,7 +109,11 @@ interface PlanGroupLinkService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
          * otherwise the same as [PlanGroupLinkService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PlanGroupLinkUpdateParams): HttpResponseFor<PlanGroupLinkResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanGroupLinkUpdateParams,
@@ -99,7 +124,11 @@ interface PlanGroupLinkService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks`, but is
          * otherwise the same as [PlanGroupLinkService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: PlanGroupLinkListParams): HttpResponseFor<PlanGroupLinkListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanGroupLinkListParams,
@@ -110,7 +139,11 @@ interface PlanGroupLinkService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangrouplinks/{id}`, but
          * is otherwise the same as [PlanGroupLinkService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: PlanGroupLinkDeleteParams): HttpResponseFor<PlanGroupLinkResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanGroupLinkDeleteParams,

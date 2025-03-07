@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.usage.fileUploads
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -26,7 +24,10 @@ interface JobService {
      *
      * Part of the file upload service for measurements ingest.
      */
-    @JvmOverloads
+    fun retrieve(params: UsageFileUploadJobRetrieveParams): FileUploadJobResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,7 +40,10 @@ interface JobService {
      * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
      *   Upload jobs are returned.
      */
-    @JvmOverloads
+    fun list(params: UsageFileUploadJobListParams): UsageFileUploadJobListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: UsageFileUploadJobListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,7 +58,12 @@ interface JobService {
      *
      * Part of the file upload service for submitting measurements data files.
      */
-    @JvmOverloads
+    fun getOriginalDownloadUrl(
+        params: UsageFileUploadJobGetOriginalDownloadUrlParams
+    ): UsageFileUploadJobGetOriginalDownloadUrlResponse =
+        getOriginalDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getOriginalDownloadUrl] */
     fun getOriginalDownloadUrl(
         params: UsageFileUploadJobGetOriginalDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +77,12 @@ interface JobService {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
          * [JobService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UsageFileUploadJobRetrieveParams
+        ): HttpResponseFor<FileUploadJobResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
@@ -80,7 +94,12 @@ interface JobService {
          * /organizations/{orgId}/fileuploads/measurements/jobs`, but is otherwise the same as
          * [JobService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams
+        ): HttpResponseFor<UsageFileUploadJobListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams,
@@ -92,7 +111,13 @@ interface JobService {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}/original`, but is otherwise the
          * same as [JobService.getOriginalDownloadUrl].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getOriginalDownloadUrl(
+            params: UsageFileUploadJobGetOriginalDownloadUrlParams
+        ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
+            getOriginalDownloadUrl(params, RequestOptions.none())
+
+        /** @see [getOriginalDownloadUrl] */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,

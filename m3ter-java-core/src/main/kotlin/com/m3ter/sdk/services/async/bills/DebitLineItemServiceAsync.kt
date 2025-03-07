@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async.bills
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,35 +27,52 @@ interface DebitLineItemServiceAsync {
      * When creating Debit line items for Bills, use the Debit Reasons created for your
      * Organization. See [DebitReason](https://www.m3ter.com/docs/api#tag/DebitReason).
      */
-    @JvmOverloads
+    fun create(params: BillDebitLineItemCreateParams): CompletableFuture<DebitLineItemResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitLineItemResponse>
 
     /** Retrieve the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun retrieve(
+        params: BillDebitLineItemRetrieveParams
+    ): CompletableFuture<DebitLineItemResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitLineItemResponse>
 
     /** Update the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun update(params: BillDebitLineItemUpdateParams): CompletableFuture<DebitLineItemResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitLineItemResponse>
 
     /** List the Debit line items for the given bill. */
-    @JvmOverloads
+    fun list(
+        params: BillDebitLineItemListParams
+    ): CompletableFuture<BillDebitLineItemListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BillDebitLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillDebitLineItemListPageAsync>
 
     /** Delete the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun delete(params: BillDebitLineItemDeleteParams): CompletableFuture<DebitLineItemResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +89,13 @@ interface DebitLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
          * [DebitLineItemServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BillDebitLineItemCreateParams
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BillDebitLineItemCreateParams,
@@ -86,7 +107,13 @@ interface DebitLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillDebitLineItemRetrieveParams
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
@@ -98,7 +125,13 @@ interface DebitLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: BillDebitLineItemUpdateParams
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: BillDebitLineItemUpdateParams,
@@ -110,7 +143,13 @@ interface DebitLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
          * [DebitLineItemServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillDebitLineItemListParams
+        ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BillDebitLineItemListParams,
@@ -122,7 +161,13 @@ interface DebitLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BillDebitLineItemDeleteParams
+        ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BillDebitLineItemDeleteParams,

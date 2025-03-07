@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -31,7 +29,10 @@ interface EventServiceAsync {
      * corresponds to a unique instance of a state change within the system, classified under a
      * specific Event Type.
      */
-    @JvmOverloads
+    fun retrieve(params: EventRetrieveParams): CompletableFuture<EventResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -51,7 +52,10 @@ interface EventServiceAsync {
      *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
      *   endpoint in this section. The response lists the valid Query parameters.
      */
-    @JvmOverloads
+    fun list(params: EventListParams): CompletableFuture<EventListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: EventListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +84,10 @@ interface EventServiceAsync {
      *   these Events, their `customFields` values will not be populated until such time as the
      *   custom fields functionality is implemented for them
      */
-    @JvmOverloads
+    fun getFields(params: EventGetFieldsParams): CompletableFuture<EventGetFieldsResponse> =
+        getFields(params, RequestOptions.none())
+
+    /** @see [getFields] */
     fun getFields(
         params: EventGetFieldsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -91,7 +98,10 @@ interface EventServiceAsync {
      *
      * This endpoint retrieves a list of Event Types that can have Notification rules configured.
      */
-    @JvmOverloads
+    fun getTypes(params: EventGetTypesParams): CompletableFuture<EventGetTypesResponse> =
+        getTypes(params, RequestOptions.none())
+
+    /** @see [getTypes] */
     fun getTypes(
         params: EventGetTypesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,7 +114,13 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/{id}`, but is
          * otherwise the same as [EventServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: EventRetrieveParams
+        ): CompletableFuture<HttpResponseFor<EventResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
@@ -115,7 +131,11 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the
          * same as [EventServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: EventListParams): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: EventListParams,
@@ -126,7 +146,13 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/fields`, but is
          * otherwise the same as [EventServiceAsync.getFields].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getFields(
+            params: EventGetFieldsParams
+        ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
+            getFields(params, RequestOptions.none())
+
+        /** @see [getFields] */
         @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams,
@@ -137,7 +163,13 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/types`, but is
          * otherwise the same as [EventServiceAsync.getTypes].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getTypes(
+            params: EventGetTypesParams
+        ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
+            getTypes(params, RequestOptions.none())
+
+        /** @see [getTypes] */
         @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams,

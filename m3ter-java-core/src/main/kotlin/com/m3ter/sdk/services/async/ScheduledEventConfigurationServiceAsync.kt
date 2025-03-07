@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,35 +22,60 @@ interface ScheduledEventConfigurationServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new ScheduledEventConfiguration. */
-    @JvmOverloads
+    fun create(
+        params: ScheduledEventConfigurationCreateParams
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ScheduledEventConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun retrieve(
+        params: ScheduledEventConfigurationRetrieveParams
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ScheduledEventConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Update a ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun update(
+        params: ScheduledEventConfigurationUpdateParams
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ScheduledEventConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
-    @JvmOverloads
+    fun list(
+        params: ScheduledEventConfigurationListParams
+    ): CompletableFuture<ScheduledEventConfigurationListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ScheduledEventConfigurationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationListPageAsync>
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
-    @JvmOverloads
+    fun delete(
+        params: ScheduledEventConfigurationDeleteParams
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -69,7 +92,13 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ScheduledEventConfigurationCreateParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ScheduledEventConfigurationCreateParams,
@@ -81,7 +110,13 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ScheduledEventConfigurationRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
@@ -93,7 +128,13 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ScheduledEventConfigurationUpdateParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams,
@@ -105,7 +146,13 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ScheduledEventConfigurationListParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ScheduledEventConfigurationListParams,
@@ -117,7 +164,13 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ScheduledEventConfigurationDeleteParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ScheduledEventConfigurationDeleteParams,

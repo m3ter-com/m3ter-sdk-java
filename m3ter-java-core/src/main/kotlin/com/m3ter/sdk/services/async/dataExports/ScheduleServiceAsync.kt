@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -51,7 +49,11 @@ interface ScheduleServiceAsync {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
-    @JvmOverloads
+    fun create(
+        params: DataExportScheduleCreateParams
+    ): CompletableFuture<DataExportScheduleCreateResponse> = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DataExportScheduleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -61,7 +63,12 @@ interface ScheduleServiceAsync {
      * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    @JvmOverloads
+    fun retrieve(
+        params: DataExportScheduleRetrieveParams
+    ): CompletableFuture<DataExportScheduleRetrieveResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DataExportScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -92,7 +99,11 @@ interface ScheduleServiceAsync {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
-    @JvmOverloads
+    fun update(
+        params: DataExportScheduleUpdateParams
+    ): CompletableFuture<DataExportScheduleUpdateResponse> = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -105,7 +116,11 @@ interface ScheduleServiceAsync {
      * The response will contain an array for both the operational and usage Data Export Schedules
      * in your Organization.
      */
-    @JvmOverloads
+    fun list(
+        params: DataExportScheduleListParams
+    ): CompletableFuture<DataExportScheduleListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DataExportScheduleListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,7 +130,11 @@ interface ScheduleServiceAsync {
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    @JvmOverloads
+    fun delete(
+        params: DataExportScheduleDeleteParams
+    ): CompletableFuture<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -130,7 +149,13 @@ interface ScheduleServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/schedules`, but
          * is otherwise the same as [ScheduleServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DataExportScheduleCreateParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleCreateResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DataExportScheduleCreateParams,
@@ -141,7 +166,13 @@ interface ScheduleServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportScheduleRetrieveParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams,
@@ -152,7 +183,13 @@ interface ScheduleServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DataExportScheduleUpdateParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleUpdateResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams,
@@ -163,7 +200,13 @@ interface ScheduleServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/schedules`, but
          * is otherwise the same as [ScheduleServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportScheduleListParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams,
@@ -175,7 +218,13 @@ interface ScheduleServiceAsync {
          * /organizations/{orgId}/dataexports/schedules/{id}`, but is otherwise the same as
          * [ScheduleServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DataExportScheduleDeleteParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams,

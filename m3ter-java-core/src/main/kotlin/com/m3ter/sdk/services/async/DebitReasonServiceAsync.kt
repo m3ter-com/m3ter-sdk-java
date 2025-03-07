@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,21 +26,30 @@ interface DebitReasonServiceAsync {
      * becomes available as a debit type for adding Debit line items to Bills. See
      * [Debits](https://www.m3ter.com/docs/api#tag/Debits).
      */
-    @JvmOverloads
+    fun create(params: DebitReasonCreateParams): CompletableFuture<DebitReasonResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonResponse>
 
     /** Retrieve the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: DebitReasonRetrieveParams): CompletableFuture<DebitReasonResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonResponse>
 
     /** Update the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun update(params: DebitReasonUpdateParams): CompletableFuture<DebitReasonResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,14 +60,20 @@ interface DebitReasonServiceAsync {
      * the list returned for the call by Debit Reason ID, Debit Reason short code, or by Archive
      * status.
      */
-    @JvmOverloads
+    fun list(params: DebitReasonListParams): CompletableFuture<DebitReasonListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DebitReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonListPageAsync>
 
     /** Delete the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun delete(params: DebitReasonDeleteParams): CompletableFuture<DebitReasonResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,7 +89,13 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DebitReasonCreateParams
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DebitReasonCreateParams,
@@ -87,7 +106,13 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DebitReasonRetrieveParams
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DebitReasonRetrieveParams,
@@ -98,7 +123,13 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DebitReasonUpdateParams
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DebitReasonUpdateParams,
@@ -109,7 +140,13 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DebitReasonListParams
+        ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DebitReasonListParams,
@@ -121,7 +158,13 @@ interface DebitReasonServiceAsync {
          * /organizations/{orgId}/picklists/debitreasons/{id}`, but is otherwise the same as
          * [DebitReasonServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DebitReasonDeleteParams
+        ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: DebitReasonDeleteParams,
