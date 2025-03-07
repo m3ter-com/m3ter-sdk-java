@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,21 +21,28 @@ interface CounterService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new Counter. */
-    @JvmOverloads
+    fun create(params: CounterCreateParams): CounterResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse
 
     /** Retrieve a Counter for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: CounterRetrieveParams): CounterResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse
 
     /** Update Counter for the given UUID. */
-    @JvmOverloads
+    fun update(params: CounterUpdateParams): CounterResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,14 +51,18 @@ interface CounterService {
     /**
      * Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes.
      */
-    @JvmOverloads
+    fun list(params: CounterListParams): CounterListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CounterListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterListPage
 
     /** Delete a Counter for the given UUID. */
-    @JvmOverloads
+    fun delete(params: CounterDeleteParams): CounterResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -66,7 +75,11 @@ interface CounterService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise
          * the same as [CounterService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CounterCreateParams): HttpResponseFor<CounterResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterCreateParams,
@@ -77,7 +90,11 @@ interface CounterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: CounterRetrieveParams): HttpResponseFor<CounterResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterRetrieveParams,
@@ -88,7 +105,11 @@ interface CounterService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CounterUpdateParams): HttpResponseFor<CounterResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterUpdateParams,
@@ -99,7 +120,11 @@ interface CounterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
          * the same as [CounterService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: CounterListParams): HttpResponseFor<CounterListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterListParams,
@@ -110,7 +135,11 @@ interface CounterService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CounterDeleteParams): HttpResponseFor<CounterResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterDeleteParams,

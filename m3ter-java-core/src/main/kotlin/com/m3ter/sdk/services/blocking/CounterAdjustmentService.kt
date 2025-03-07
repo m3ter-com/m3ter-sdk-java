@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -33,21 +31,30 @@ interface CounterAdjustmentService {
      *   cannot create more than one CounterAdjustment for any given day using the same Counter and
      *   you'll receive an error if you try to do this.
      */
-    @JvmOverloads
+    fun create(params: CounterAdjustmentCreateParams): CounterAdjustmentResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
 
     /** Retrieve a CounterAdjustment for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: CounterAdjustmentRetrieveParams): CounterAdjustmentResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
 
     /** Update a CounterAdjustment for an Account. */
-    @JvmOverloads
+    fun update(params: CounterAdjustmentUpdateParams): CounterAdjustmentResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -63,14 +70,20 @@ interface CounterAdjustmentService {
      * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
      *   use the `accountId` query parameter.
      */
-    @JvmOverloads
+    fun list(params: CounterAdjustmentListParams): CounterAdjustmentListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CounterAdjustmentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentListPage
 
     /** Delete a CounterAdjustment for the given UUID. */
-    @JvmOverloads
+    fun delete(params: CounterAdjustmentDeleteParams): CounterAdjustmentResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -86,7 +99,12 @@ interface CounterAdjustmentService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CounterAdjustmentCreateParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterAdjustmentCreateParams,
@@ -97,7 +115,12 @@ interface CounterAdjustmentService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterAdjustmentRetrieveParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
@@ -108,7 +131,12 @@ interface CounterAdjustmentService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CounterAdjustmentUpdateParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams,
@@ -119,7 +147,11 @@ interface CounterAdjustmentService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: CounterAdjustmentListParams): HttpResponseFor<CounterAdjustmentListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams,
@@ -130,7 +162,12 @@ interface CounterAdjustmentService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,
          * but is otherwise the same as [CounterAdjustmentService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CounterAdjustmentDeleteParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams,

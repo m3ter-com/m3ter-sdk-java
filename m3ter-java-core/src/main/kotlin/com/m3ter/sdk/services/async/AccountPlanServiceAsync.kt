@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -34,14 +32,20 @@ interface AccountPlanServiceAsync {
      * an Account at the same time. If you want to create both for an Account, you must submit two
      * separate calls.
      */
-    @JvmOverloads
+    fun create(params: AccountPlanCreateParams): CompletableFuture<AccountPlanResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AccountPlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlanResponse>
 
     /** Retrieve the AccountPlan or AccountPlanGroup details corresponding to the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: AccountPlanRetrieveParams): CompletableFuture<AccountPlanResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AccountPlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -61,7 +65,10 @@ interface AccountPlanServiceAsync {
      *   the AccountPlan use the `customFields` parameter to preserve those Custom Fields. If you
      *   omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: AccountPlanUpdateParams): CompletableFuture<AccountPlanResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: AccountPlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +84,10 @@ interface AccountPlanServiceAsync {
      * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
      * always use it in combination with the `account` query parameter.
      */
-    @JvmOverloads
+    fun list(params: AccountPlanListParams): CompletableFuture<AccountPlanListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: AccountPlanListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -89,7 +99,10 @@ interface AccountPlanServiceAsync {
      * This endpoint deletes an AccountPlan or AccountPlanGroup that has been attached to a specific
      * Account in your Organization.
      */
-    @JvmOverloads
+    fun delete(params: AccountPlanDeleteParams): CompletableFuture<AccountPlanResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: AccountPlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -105,7 +118,13 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/accountplans`, but is
          * otherwise the same as [AccountPlanServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: AccountPlanCreateParams
+        ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AccountPlanCreateParams,
@@ -116,7 +135,13 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: AccountPlanRetrieveParams
+        ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AccountPlanRetrieveParams,
@@ -127,7 +152,13 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: AccountPlanUpdateParams
+        ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountPlanUpdateParams,
@@ -138,7 +169,13 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans`, but is
          * otherwise the same as [AccountPlanServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: AccountPlanListParams
+        ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AccountPlanListParams,
@@ -149,7 +186,13 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: AccountPlanDeleteParams
+        ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: AccountPlanDeleteParams,

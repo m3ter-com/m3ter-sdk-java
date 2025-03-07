@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,14 +17,20 @@ interface OrganizationConfigService {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide configuration details. */
-    @JvmOverloads
+    fun retrieve(params: OrganizationConfigRetrieveParams): OrganizationConfigResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: OrganizationConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfigResponse
 
     /** Update the Organization-wide configuration details. */
-    @JvmOverloads
+    fun update(params: OrganizationConfigUpdateParams): OrganizationConfigResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,7 +46,12 @@ interface OrganizationConfigService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/organizationconfig`, but is
          * otherwise the same as [OrganizationConfigService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: OrganizationConfigRetrieveParams
+        ): HttpResponseFor<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams,
@@ -53,7 +62,12 @@ interface OrganizationConfigService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is
          * otherwise the same as [OrganizationConfigService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: OrganizationConfigUpdateParams
+        ): HttpResponseFor<OrganizationConfigResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: OrganizationConfigUpdateParams,

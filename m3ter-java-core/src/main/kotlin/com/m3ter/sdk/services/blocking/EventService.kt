@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -30,7 +28,10 @@ interface EventService {
      * corresponds to a unique instance of a state change within the system, classified under a
      * specific Event Type.
      */
-    @JvmOverloads
+    fun retrieve(params: EventRetrieveParams): EventResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,7 +51,9 @@ interface EventService {
      *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
      *   endpoint in this section. The response lists the valid Query parameters.
      */
-    @JvmOverloads
+    fun list(params: EventListParams): EventListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: EventListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +82,10 @@ interface EventService {
      *   these Events, their `customFields` values will not be populated until such time as the
      *   custom fields functionality is implemented for them
      */
-    @JvmOverloads
+    fun getFields(params: EventGetFieldsParams): EventGetFieldsResponse =
+        getFields(params, RequestOptions.none())
+
+    /** @see [getFields] */
     fun getFields(
         params: EventGetFieldsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -90,7 +96,10 @@ interface EventService {
      *
      * This endpoint retrieves a list of Event Types that can have Notification rules configured.
      */
-    @JvmOverloads
+    fun getTypes(params: EventGetTypesParams): EventGetTypesResponse =
+        getTypes(params, RequestOptions.none())
+
+    /** @see [getTypes] */
     fun getTypes(
         params: EventGetTypesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -103,7 +112,11 @@ interface EventService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/{id}`, but is
          * otherwise the same as [EventService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: EventRetrieveParams): HttpResponseFor<EventResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
@@ -114,7 +127,11 @@ interface EventService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the
          * same as [EventService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: EventListParams): HttpResponseFor<EventListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: EventListParams,
@@ -125,7 +142,11 @@ interface EventService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/fields`, but is
          * otherwise the same as [EventService.getFields].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getFields(params: EventGetFieldsParams): HttpResponseFor<EventGetFieldsResponse> =
+            getFields(params, RequestOptions.none())
+
+        /** @see [getFields] */
         @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams,
@@ -136,7 +157,11 @@ interface EventService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/types`, but is
          * otherwise the same as [EventService.getTypes].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getTypes(params: EventGetTypesParams): HttpResponseFor<EventGetTypesResponse> =
+            getTypes(params, RequestOptions.none())
+
+        /** @see [getTypes] */
         @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams,

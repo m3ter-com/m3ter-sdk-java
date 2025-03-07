@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -31,14 +29,21 @@ interface DestinationService {
      * **NOTE:** Currently, you can only create Export Destinations using an S3 bucket on your AWS
      * Account.
      */
-    @JvmOverloads
+    fun create(params: DataExportDestinationCreateParams): DataExportDestinationCreateResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DataExportDestinationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportDestinationCreateResponse
 
     /** Retrieve an Export Destination for the given UUID. */
-    @JvmOverloads
+    fun retrieve(
+        params: DataExportDestinationRetrieveParams
+    ): DataExportDestinationRetrieveResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DataExportDestinationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,7 +55,10 @@ interface DestinationService {
      * **NOTE:** Currently, only Export Destinations using an S3 bucket on your AWS Account are
      * supported.
      */
-    @JvmOverloads
+    fun update(params: DataExportDestinationUpdateParams): DataExportDestinationUpdateResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: DataExportDestinationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +68,10 @@ interface DestinationService {
      * Retrieve a list of Export Destination entities. You can filter the list of Destinations
      * returned by UUID.
      */
-    @JvmOverloads
+    fun list(params: DataExportDestinationListParams): DataExportDestinationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DataExportDestinationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -73,7 +84,10 @@ interface DestinationService {
      * Export Schedule, an error message is returned and you won't be able to delete the
      * Destination.
      */
-    @JvmOverloads
+    fun delete(params: DataExportDestinationDeleteParams): DataExportDestinationDeleteResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: DataExportDestinationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -88,7 +102,13 @@ interface DestinationService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/destinations`,
          * but is otherwise the same as [DestinationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: DataExportDestinationCreateParams
+        ): HttpResponseFor<DataExportDestinationCreateResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DataExportDestinationCreateParams,
@@ -100,7 +120,13 @@ interface DestinationService {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportDestinationRetrieveParams
+        ): HttpResponseFor<DataExportDestinationRetrieveResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DataExportDestinationRetrieveParams,
@@ -112,7 +138,13 @@ interface DestinationService {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: DataExportDestinationUpdateParams
+        ): HttpResponseFor<DataExportDestinationUpdateResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportDestinationUpdateParams,
@@ -123,7 +155,12 @@ interface DestinationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/destinations`,
          * but is otherwise the same as [DestinationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: DataExportDestinationListParams
+        ): HttpResponseFor<DataExportDestinationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DataExportDestinationListParams,
@@ -135,7 +172,13 @@ interface DestinationService {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: DataExportDestinationDeleteParams
+        ): HttpResponseFor<DataExportDestinationDeleteResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: DataExportDestinationDeleteParams,

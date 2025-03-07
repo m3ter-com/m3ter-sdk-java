@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -40,7 +38,10 @@ interface CommitmentServiceAsync {
      * - Define a _schedule of billing dates_. Omit a `billingPlanId` and use the `feeDates` request
      *   parameter to define a precise schedule of bill dates and amounts.
      */
-    @JvmOverloads
+    fun create(params: CommitmentCreateParams): CompletableFuture<CommitmentResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CommitmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,7 +54,10 @@ interface CommitmentServiceAsync {
      * information about the Commitment, such as the agreed amount, overage surcharge percentage,
      * and other related details.
      */
-    @JvmOverloads
+    fun retrieve(params: CommitmentRetrieveParams): CompletableFuture<CommitmentResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -66,7 +70,10 @@ interface CommitmentServiceAsync {
      * Commitment parameters such as the fixed amount, overage surcharge percentage, or associated
      * contract details.
      */
-    @JvmOverloads
+    fun update(params: CommitmentUpdateParams): CompletableFuture<CommitmentResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +86,10 @@ interface CommitmentServiceAsync {
      * pagination and includes various query parameters to filter the Commitments based on Account,
      * Product, date, and end dates.
      */
-    @JvmOverloads
+    fun list(params: CommitmentListParams): CompletableFuture<CommitmentListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CommitmentListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -91,7 +101,10 @@ interface CommitmentServiceAsync {
      * Deletes the Commitment with the given UUID. Use this endpoint when a Commitment is no longer
      * valid or needs to be removed from the system.
      */
-    @JvmOverloads
+    fun delete(params: CommitmentDeleteParams): CompletableFuture<CommitmentResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,7 +117,10 @@ interface CommitmentServiceAsync {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Commitments can be paginated for easier management.
      */
-    @JvmOverloads
+    fun search(params: CommitmentSearchParams): CompletableFuture<CommitmentSearchResponse> =
+        search(params, RequestOptions.none())
+
+    /** @see [search] */
     fun search(
         params: CommitmentSearchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -120,7 +136,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/commitments`, but is
          * otherwise the same as [CommitmentServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CommitmentCreateParams
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CommitmentCreateParams,
@@ -131,7 +153,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CommitmentRetrieveParams
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CommitmentRetrieveParams,
@@ -142,7 +170,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CommitmentUpdateParams
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CommitmentUpdateParams,
@@ -153,7 +187,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments`, but is
          * otherwise the same as [CommitmentServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CommitmentListParams
+        ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CommitmentListParams,
@@ -164,7 +204,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CommitmentDeleteParams
+        ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CommitmentDeleteParams,
@@ -175,7 +221,13 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/search`, but is
          * otherwise the same as [CommitmentServiceAsync.search].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun search(
+            params: CommitmentSearchParams
+        ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
+            search(params, RequestOptions.none())
+
+        /** @see [search] */
         @MustBeClosed
         fun search(
             params: CommitmentSearchParams,

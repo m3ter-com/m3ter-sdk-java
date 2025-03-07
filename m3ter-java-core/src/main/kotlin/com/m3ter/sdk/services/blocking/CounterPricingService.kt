@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,14 +26,20 @@ interface CounterPricingService {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun create(params: CounterPricingCreateParams): CounterPricingResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse
 
     /** Retrieve a CounterPricing for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: CounterPricingRetrieveParams): CounterPricingResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,7 +51,10 @@ interface CounterPricingService {
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
-    @JvmOverloads
+    fun update(params: CounterPricingUpdateParams): CounterPricingResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -57,14 +64,20 @@ interface CounterPricingService {
      * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
      * CounterPricing ID.
      */
-    @JvmOverloads
+    fun list(params: CounterPricingListParams): CounterPricingListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CounterPricingListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingListPage
 
     /** Delete a CounterPricing for the given UUID. */
-    @JvmOverloads
+    fun delete(params: CounterPricingDeleteParams): CounterPricingResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +92,11 @@ interface CounterPricingService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counterpricings`, but is
          * otherwise the same as [CounterPricingService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CounterPricingCreateParams): HttpResponseFor<CounterPricingResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CounterPricingCreateParams,
@@ -90,7 +107,12 @@ interface CounterPricingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings/{id}`, but is
          * otherwise the same as [CounterPricingService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CounterPricingRetrieveParams
+        ): HttpResponseFor<CounterPricingResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CounterPricingRetrieveParams,
@@ -101,7 +123,11 @@ interface CounterPricingService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counterpricings/{id}`, but is
          * otherwise the same as [CounterPricingService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CounterPricingUpdateParams): HttpResponseFor<CounterPricingResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterPricingUpdateParams,
@@ -112,7 +138,11 @@ interface CounterPricingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counterpricings`, but is
          * otherwise the same as [CounterPricingService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: CounterPricingListParams): HttpResponseFor<CounterPricingListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CounterPricingListParams,
@@ -123,7 +153,11 @@ interface CounterPricingService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counterpricings/{id}`, but
          * is otherwise the same as [CounterPricingService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CounterPricingDeleteParams): HttpResponseFor<CounterPricingResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CounterPricingDeleteParams,

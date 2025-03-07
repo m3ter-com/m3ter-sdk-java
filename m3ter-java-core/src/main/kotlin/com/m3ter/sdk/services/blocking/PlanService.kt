@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,14 +21,18 @@ interface PlanService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new Plan. */
-    @JvmOverloads
+    fun create(params: PlanCreateParams): PlanResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
 
     /** Retrieve the Plan with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PlanRetrieveParams): PlanResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,21 +45,27 @@ interface PlanService {
      * the Plan use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: PlanUpdateParams): PlanResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
-    @JvmOverloads
+    fun list(params: PlanListParams): PlanListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
 
     /** Delete the Plan with the given UUID. */
-    @JvmOverloads
+    fun delete(params: PlanDeleteParams): PlanResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +78,11 @@ interface PlanService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PlanCreateParams): HttpResponseFor<PlanResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanCreateParams,
@@ -81,7 +93,11 @@ interface PlanService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PlanRetrieveParams): HttpResponseFor<PlanResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanRetrieveParams,
@@ -92,7 +108,11 @@ interface PlanService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PlanUpdateParams): HttpResponseFor<PlanResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanUpdateParams,
@@ -103,7 +123,11 @@ interface PlanService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: PlanListParams): HttpResponseFor<PlanListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanListParams,
@@ -114,7 +138,11 @@ interface PlanService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plans/{id}`, but is
          * otherwise the same as [PlanService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: PlanDeleteParams): HttpResponseFor<PlanResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanDeleteParams,

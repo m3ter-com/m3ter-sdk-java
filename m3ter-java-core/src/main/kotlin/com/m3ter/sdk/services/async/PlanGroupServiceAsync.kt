@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,7 +25,10 @@ interface PlanGroupServiceAsync {
      * Create a new PlanGroup. This endpoint creates a new PlanGroup within the specified
      * organization.
      */
-    @JvmOverloads
+    fun create(params: PlanGroupCreateParams): CompletableFuture<PlanGroupResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -39,7 +40,10 @@ interface PlanGroupServiceAsync {
      * This endpoint retrieves detailed information about a specific PlanGroup identified by the
      * given UUID within a specific organization.
      */
-    @JvmOverloads
+    fun retrieve(params: PlanGroupRetrieveParams): CompletableFuture<PlanGroupResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +59,10 @@ interface PlanGroupServiceAsync {
      * update the PlanGroup use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: PlanGroupUpdateParams): CompletableFuture<PlanGroupResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -67,7 +74,10 @@ interface PlanGroupServiceAsync {
      * Retrieves a list of PlanGroups within the specified organization. You can optionally filter
      * by Account IDs or PlanGroup IDs, and also paginate the results for easier management.
      */
-    @JvmOverloads
+    fun list(params: PlanGroupListParams): CompletableFuture<PlanGroupListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +90,10 @@ interface PlanGroupServiceAsync {
      * organization. This operation is irreversible and removes the PlanGroup along with any
      * associated settings.
      */
-    @JvmOverloads
+    fun delete(params: PlanGroupDeleteParams): CompletableFuture<PlanGroupResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -95,7 +108,13 @@ interface PlanGroupServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plangroups`, but is
          * otherwise the same as [PlanGroupServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanGroupCreateParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanGroupCreateParams,
@@ -106,7 +125,13 @@ interface PlanGroupServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups/{id}`, but is
          * otherwise the same as [PlanGroupServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanGroupRetrieveParams,
@@ -117,7 +142,13 @@ interface PlanGroupServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
          * otherwise the same as [PlanGroupServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanGroupUpdateParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanGroupUpdateParams,
@@ -128,7 +159,13 @@ interface PlanGroupServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangroups`, but is otherwise
          * the same as [PlanGroupServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanGroupListParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanGroupListParams,
@@ -139,7 +176,13 @@ interface PlanGroupServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangroups/{id}`, but is
          * otherwise the same as [PlanGroupServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupDeleteParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanGroupDeleteParams,

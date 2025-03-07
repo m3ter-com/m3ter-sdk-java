@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.bills
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,35 +26,50 @@ interface CreditLineItemService {
      * When creating Credit line items for Bills, use the Credit Reasons created for your
      * Organization. See [CreditReason](https://www.m3ter.com/docs/api#tag/CreditReason).
      */
-    @JvmOverloads
+    fun create(params: BillCreditLineItemCreateParams): CreditLineItemResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse
 
     /** Retrieve the Credit line item with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: BillCreditLineItemRetrieveParams): CreditLineItemResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse
 
     /** Update the Credit line item with the given UUID. */
-    @JvmOverloads
+    fun update(params: BillCreditLineItemUpdateParams): CreditLineItemResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse
 
     /** List the Credit line items for the given Bill. */
-    @JvmOverloads
+    fun list(params: BillCreditLineItemListParams): BillCreditLineItemListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BillCreditLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillCreditLineItemListPage
 
     /** Delete the Credit line item with the given UUID. */
-    @JvmOverloads
+    fun delete(params: BillCreditLineItemDeleteParams): CreditLineItemResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +85,12 @@ interface CreditLineItemService {
          * /organizations/{orgId}/bills/{billId}/creditlineitems`, but is otherwise the same as
          * [CreditLineItemService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BillCreditLineItemCreateParams
+        ): HttpResponseFor<CreditLineItemResponse> = create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BillCreditLineItemCreateParams,
@@ -84,7 +102,12 @@ interface CreditLineItemService {
          * /organizations/{orgId}/bills/{billId}/creditlineitems/{id}`, but is otherwise the same as
          * [CreditLineItemService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillCreditLineItemRetrieveParams
+        ): HttpResponseFor<CreditLineItemResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillCreditLineItemRetrieveParams,
@@ -96,7 +119,12 @@ interface CreditLineItemService {
          * /organizations/{orgId}/bills/{billId}/creditlineitems/{id}`, but is otherwise the same as
          * [CreditLineItemService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: BillCreditLineItemUpdateParams
+        ): HttpResponseFor<CreditLineItemResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: BillCreditLineItemUpdateParams,
@@ -108,7 +136,12 @@ interface CreditLineItemService {
          * /organizations/{orgId}/bills/{billId}/creditlineitems`, but is otherwise the same as
          * [CreditLineItemService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BillCreditLineItemListParams
+        ): HttpResponseFor<BillCreditLineItemListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BillCreditLineItemListParams,
@@ -120,7 +153,12 @@ interface CreditLineItemService {
          * /organizations/{orgId}/bills/{billId}/creditlineitems/{id}`, but is otherwise the same as
          * [CreditLineItemService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: BillCreditLineItemDeleteParams
+        ): HttpResponseFor<CreditLineItemResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BillCreditLineItemDeleteParams,

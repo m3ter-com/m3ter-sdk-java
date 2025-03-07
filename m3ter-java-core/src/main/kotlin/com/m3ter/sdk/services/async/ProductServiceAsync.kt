@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,7 +27,10 @@ interface ProductServiceAsync {
      * This endpoint creates a new Product within the specified Organization. The details of the
      * Product are provided in the request body.
      */
-    @JvmOverloads
+    fun create(params: ProductCreateParams): CompletableFuture<ProductResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ProductCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,7 +42,10 @@ interface ProductServiceAsync {
      * This endpoint retrieves the details of a specific Product within a specified Organization,
      * using the Product UUID.
      */
-    @JvmOverloads
+    fun retrieve(params: ProductRetrieveParams): CompletableFuture<ProductResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ProductRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -57,7 +61,10 @@ interface ProductServiceAsync {
      * update the Product use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: ProductUpdateParams): CompletableFuture<ProductResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ProductUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -69,7 +76,10 @@ interface ProductServiceAsync {
      * This endpoint retrieves a list of all the Products within a specified Organization. The list
      * can be paginated, and supports filtering by specific Product IDs.
      */
-    @JvmOverloads
+    fun list(params: ProductListParams): CompletableFuture<ProductListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ProductListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -81,7 +91,10 @@ interface ProductServiceAsync {
      * This endpoint deletes a specific Product within a specified Organization, using the Product
      * UUID.
      */
-    @JvmOverloads
+    fun delete(params: ProductDeleteParams): CompletableFuture<ProductResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ProductDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -96,7 +109,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: ProductCreateParams
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ProductCreateParams,
@@ -107,7 +126,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: ProductRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ProductRetrieveParams,
@@ -118,7 +143,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: ProductUpdateParams
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ProductUpdateParams,
@@ -129,7 +160,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: ProductListParams
+        ): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ProductListParams,
@@ -140,7 +177,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: ProductDeleteParams
+        ): CompletableFuture<HttpResponseFor<ProductResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ProductDeleteParams,

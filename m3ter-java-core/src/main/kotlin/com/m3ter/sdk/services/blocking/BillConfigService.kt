@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -19,7 +17,10 @@ interface BillConfigService {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide BillConfig. */
-    @JvmOverloads
+    fun retrieve(params: BillConfigRetrieveParams): BillConfigResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillConfigRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -32,7 +33,10 @@ interface BillConfigService {
      * service period end date on or before the set date will be locked and cannot be updated or
      * recalculated.
      */
-    @JvmOverloads
+    fun update(params: BillConfigUpdateParams): BillConfigResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: BillConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -45,7 +49,11 @@ interface BillConfigService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: BillConfigRetrieveParams): HttpResponseFor<BillConfigResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillConfigRetrieveParams,
@@ -56,7 +64,11 @@ interface BillConfigService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: BillConfigUpdateParams): HttpResponseFor<BillConfigResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: BillConfigUpdateParams,

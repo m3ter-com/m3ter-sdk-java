@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,14 +25,21 @@ interface TransactionTypeServiceAsync {
      * Create a new TransactionType for the specified Organization. Details of the new
      * TransactionType should be included in the request body.
      */
-    @JvmOverloads
+    fun create(params: TransactionTypeCreateParams): CompletableFuture<TransactionTypeResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeResponse>
 
     /** Retrieves the TransactionType with the given UUID from the specified Organization. */
-    @JvmOverloads
+    fun retrieve(
+        params: TransactionTypeRetrieveParams
+    ): CompletableFuture<TransactionTypeResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,7 +49,10 @@ interface TransactionTypeServiceAsync {
      * Updates the TransactionType with the specified UUID for the specified Organization. Update
      * details for the TransactionType should be included in the request body.
      */
-    @JvmOverloads
+    fun update(params: TransactionTypeUpdateParams): CompletableFuture<TransactionTypeResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,14 +62,20 @@ interface TransactionTypeServiceAsync {
      * Retrieves a list of TransactionType entities for the specified Organization. The list can be
      * paginated for easier management, and supports filtering by various parameters.
      */
-    @JvmOverloads
+    fun list(params: TransactionTypeListParams): CompletableFuture<TransactionTypeListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: TransactionTypeListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeListPageAsync>
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
-    @JvmOverloads
+    fun delete(params: TransactionTypeDeleteParams): CompletableFuture<TransactionTypeResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +91,13 @@ interface TransactionTypeServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/transactiontypes`,
          * but is otherwise the same as [TransactionTypeServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: TransactionTypeCreateParams
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: TransactionTypeCreateParams,
@@ -89,7 +109,13 @@ interface TransactionTypeServiceAsync {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: TransactionTypeRetrieveParams
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: TransactionTypeRetrieveParams,
@@ -101,7 +127,13 @@ interface TransactionTypeServiceAsync {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: TransactionTypeUpdateParams
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: TransactionTypeUpdateParams,
@@ -112,7 +144,13 @@ interface TransactionTypeServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/transactiontypes`,
          * but is otherwise the same as [TransactionTypeServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: TransactionTypeListParams
+        ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: TransactionTypeListParams,
@@ -124,7 +162,13 @@ interface TransactionTypeServiceAsync {
          * /organizations/{orgId}/picklists/transactiontypes/{id}`, but is otherwise the same as
          * [TransactionTypeServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: TransactionTypeDeleteParams
+        ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: TransactionTypeDeleteParams,
