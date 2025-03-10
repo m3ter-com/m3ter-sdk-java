@@ -1,6 +1,7 @@
 plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
     id("org.jetbrains.dokka") version "2.0.0"
+    id("maven-publish")
 }
 
 repositories {
@@ -32,5 +33,11 @@ nexusPublishing {
             username.set(System.getenv("SONATYPE_USERNAME"))
             password.set(System.getenv("SONATYPE_PASSWORD"))
         }
+    }
+}
+
+publishing {
+    repositories {
+        mavenLocal()
     }
 }
