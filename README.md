@@ -2,7 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.7)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.8)
+[![javadoc](https://javadoc.io/badge2/com.m3ter.sdk/m3ter-java/0.1.0-alpha.8/javadoc.svg)](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.8)
 
 <!-- x-release-please-end -->
 
@@ -10,7 +11,7 @@ The M3ter Java SDK provides convenient access to the M3ter REST API from applica
 
 It is generated with [Stainless](https://www.stainless.com/).
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.7).
 
 ## Installation
 
@@ -19,7 +20,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.7")
+implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.8")
 ```
 
 ### Maven
@@ -28,7 +29,7 @@ implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.7")
 <dependency>
     <groupId>com.m3ter.sdk</groupId>
     <artifactId>m3ter-java</artifactId>
-    <version>0.1.0-alpha.7</version>
+    <version>0.1.0-alpha.8</version>
 </dependency>
 ```
 
@@ -376,9 +377,25 @@ ProductListParams params = ProductListParams.builder()
     .build();
 ```
 
-These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
+These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
 
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/core/JsonValue.kt) object to its setter:
+To set undocumented parameters on _nested_ headers, query params, or body classes, call the `putAdditionalProperty` method on the nested class:
+
+```java
+import com.m3ter.sdk.core.JsonValue;
+import com.m3ter.sdk.models.AccountCreateParams;
+import com.m3ter.sdk.models.Address;
+
+AccountCreateParams params = AccountCreateParams.builder()
+    .address(Address.builder()
+        .putAdditionalProperty("secretProperty", JsonValue.from("42"))
+        .build())
+    .build();
+```
+
+These properties can be accessed on the nested built object later using the `_additionalProperties()` method.
+
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/core/Values.kt) object to its setter:
 
 ```java
 import com.m3ter.sdk.models.ProductListParams;
@@ -386,6 +403,45 @@ import com.m3ter.sdk.models.ProductListParams;
 ProductListParams params = ProductListParams.builder()
     .orgId("ORG_ID")
     .build();
+```
+
+The most straightforward way to create a [`JsonValue`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/core/Values.kt) is using its `from(...)` method:
+
+```java
+import com.m3ter.sdk.core.JsonValue;
+import java.util.List;
+import java.util.Map;
+
+// Create primitive JSON values
+JsonValue nullValue = JsonValue.from(null);
+JsonValue booleanValue = JsonValue.from(true);
+JsonValue numberValue = JsonValue.from(42);
+JsonValue stringValue = JsonValue.from("Hello World!");
+
+// Create a JSON array value equivalent to `["Hello", "World"]`
+JsonValue arrayValue = JsonValue.from(List.of(
+  "Hello", "World"
+));
+
+// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`
+JsonValue objectValue = JsonValue.from(Map.of(
+  "a", 1,
+  "b", 2
+));
+
+// Create an arbitrarily nested JSON equivalent to:
+// {
+//   "a": [1, 2],
+//   "b": [3, 4]
+// }
+JsonValue complexValue = JsonValue.from(Map.of(
+  "a", List.of(
+    1, 2
+  ),
+  "b", List.of(
+    3, 4
+  )
+));
 ```
 
 ### Response properties

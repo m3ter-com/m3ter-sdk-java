@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,7 +25,10 @@ interface CurrencyService {
      *
      * Used to create a Currency that your Organization will start to use.
      */
-    @JvmOverloads
+    fun create(params: CurrencyCreateParams): CurrencyResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CurrencyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -37,7 +38,10 @@ interface CurrencyService {
      * Retrieve the specified Currency with the given UUID. Used to obtain the details of a
      * specified existing Currency in your Organization.
      */
-    @JvmOverloads
+    fun retrieve(params: CurrencyRetrieveParams): CurrencyResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,7 +52,10 @@ interface CurrencyService {
      *
      * Used to update the attributes of the specified Currency for the specified Organization.
      */
-    @JvmOverloads
+    fun update(params: CurrencyUpdateParams): CurrencyResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CurrencyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -61,7 +68,9 @@ interface CurrencyService {
      * pagination and includes various query parameters to filter the Currencies based on Currency
      * ID, and short codes.
      */
-    @JvmOverloads
+    fun list(params: CurrencyListParams): CurrencyListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CurrencyListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +81,10 @@ interface CurrencyService {
      *
      * Used to remove an existing Currency from your Organization that is no longer required.
      */
-    @JvmOverloads
+    fun delete(params: CurrencyDeleteParams): CurrencyResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -85,7 +97,11 @@ interface CurrencyService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/currency`, but is
          * otherwise the same as [CurrencyService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CurrencyCreateParams): HttpResponseFor<CurrencyResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CurrencyCreateParams,
@@ -96,7 +112,11 @@ interface CurrencyService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency/{id}`, but
          * is otherwise the same as [CurrencyService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: CurrencyRetrieveParams): HttpResponseFor<CurrencyResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CurrencyRetrieveParams,
@@ -107,7 +127,11 @@ interface CurrencyService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/currency/{id}`, but
          * is otherwise the same as [CurrencyService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CurrencyUpdateParams): HttpResponseFor<CurrencyResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CurrencyUpdateParams,
@@ -118,7 +142,11 @@ interface CurrencyService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency`, but is
          * otherwise the same as [CurrencyService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: CurrencyListParams): HttpResponseFor<CurrencyListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CurrencyListParams,
@@ -129,7 +157,11 @@ interface CurrencyService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/picklists/currency/{id}`,
          * but is otherwise the same as [CurrencyService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: CurrencyDeleteParams): HttpResponseFor<CurrencyResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CurrencyDeleteParams,

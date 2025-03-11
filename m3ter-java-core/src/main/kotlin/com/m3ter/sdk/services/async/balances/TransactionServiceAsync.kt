@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async.balances
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -39,7 +37,10 @@ interface TransactionServiceAsync {
      * of 200 USD to a Balance on a customer Account where the customer actually paid you 50 units
      * in virtual currency X.
      */
-    @JvmOverloads
+    fun create(params: BalanceTransactionCreateParams): CompletableFuture<TransactionResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -51,14 +52,22 @@ interface TransactionServiceAsync {
      * This endpoint returns a list of all Transactions associated with a specific Balance. You can
      * paginate through the Transactions by using the `pageSize` and `nextToken` parameters.
      */
-    @JvmOverloads
+    fun list(
+        params: BalanceTransactionListParams
+    ): CompletableFuture<BalanceTransactionListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceTransactionListPageAsync>
 
     /** Retrieves the Balance Transactions Summary for a given Balance. */
-    @JvmOverloads
+    fun summary(
+        params: BalanceTransactionSummaryParams
+    ): CompletableFuture<BalanceTransactionSummaryResponse> = summary(params, RequestOptions.none())
+
+    /** @see [summary] */
     fun summary(
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -75,7 +84,13 @@ interface TransactionServiceAsync {
          * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: BalanceTransactionCreateParams
+        ): CompletableFuture<HttpResponseFor<TransactionResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BalanceTransactionCreateParams,
@@ -87,7 +102,13 @@ interface TransactionServiceAsync {
          * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceTransactionListParams
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BalanceTransactionListParams,
@@ -99,7 +120,13 @@ interface TransactionServiceAsync {
          * /organizations/{orgId}/balances/{balanceId}/transactions/summary`, but is otherwise the
          * same as [TransactionServiceAsync.summary].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun summary(
+            params: BalanceTransactionSummaryParams
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>> =
+            summary(params, RequestOptions.none())
+
+        /** @see [summary] */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams,

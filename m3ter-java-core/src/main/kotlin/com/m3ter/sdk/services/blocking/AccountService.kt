@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,14 +26,19 @@ interface AccountService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new Account within the Organization. */
-    @JvmOverloads
+    fun create(params: AccountCreateParams): AccountResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse
 
     /** Retrieve the Account with the given Account UUID. */
-    @JvmOverloads
+    fun retrieve(params: AccountRetrieveParams): AccountResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,14 +51,18 @@ interface AccountService {
      * update the Account, use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: AccountUpdateParams): AccountResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
-    @JvmOverloads
+    fun list(params: AccountListParams): AccountListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: AccountListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -65,7 +72,9 @@ interface AccountService {
      * Delete the Account with the given UUID. This may fail if there are any AccountPlans that
      * reference the Account being deleted.
      */
-    @JvmOverloads
+    fun delete(params: AccountDeleteParams): AccountResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -78,14 +87,21 @@ interface AccountService {
      * - When you successfully end-date billing entities, the version number of each entity is
      *   incremented.
      */
-    @JvmOverloads
+    fun endDateBillingEntities(
+        params: AccountEndDateBillingEntitiesParams
+    ): AccountEndDateBillingEntitiesResponse = endDateBillingEntities(params, RequestOptions.none())
+
+    /** @see [endDateBillingEntities] */
     fun endDateBillingEntities(
         params: AccountEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountEndDateBillingEntitiesResponse
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    @JvmOverloads
+    fun getChildren(params: AccountGetChildrenParams): AccountResponse =
+        getChildren(params, RequestOptions.none())
+
+    /** @see [getChildren] */
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -98,7 +114,10 @@ interface AccountService {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Accounts can be paginated for easier management.
      */
-    @JvmOverloads
+    fun search(params: AccountSearchParams): AccountSearchResponse =
+        search(params, RequestOptions.none())
+
+    /** @see [search] */
     fun search(
         params: AccountSearchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +130,11 @@ interface AccountService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/accounts`, but is otherwise
          * the same as [AccountService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: AccountCreateParams): HttpResponseFor<AccountResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AccountCreateParams,
@@ -122,7 +145,11 @@ interface AccountService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: AccountRetrieveParams): HttpResponseFor<AccountResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AccountRetrieveParams,
@@ -133,7 +160,11 @@ interface AccountService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: AccountUpdateParams): HttpResponseFor<AccountResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountUpdateParams,
@@ -144,7 +175,11 @@ interface AccountService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts`, but is otherwise
          * the same as [AccountService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: AccountListParams): HttpResponseFor<AccountListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AccountListParams,
@@ -155,7 +190,11 @@ interface AccountService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: AccountDeleteParams): HttpResponseFor<AccountResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: AccountDeleteParams,
@@ -167,7 +206,13 @@ interface AccountService {
          * /organizations/{orgId}/accounts/{id}/enddatebillingentities`, but is otherwise the same
          * as [AccountService.endDateBillingEntities].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun endDateBillingEntities(
+            params: AccountEndDateBillingEntitiesParams
+        ): HttpResponseFor<AccountEndDateBillingEntitiesResponse> =
+            endDateBillingEntities(params, RequestOptions.none())
+
+        /** @see [endDateBillingEntities] */
         @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams,
@@ -178,7 +223,11 @@ interface AccountService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}/children`, but
          * is otherwise the same as [AccountService.getChildren].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getChildren(params: AccountGetChildrenParams): HttpResponseFor<AccountResponse> =
+            getChildren(params, RequestOptions.none())
+
+        /** @see [getChildren] */
         @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams,
@@ -189,7 +238,11 @@ interface AccountService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is
          * otherwise the same as [AccountService.search].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun search(params: AccountSearchParams): HttpResponseFor<AccountSearchResponse> =
+            search(params, RequestOptions.none())
+
+        /** @see [search] */
         @MustBeClosed
         fun search(
             params: AccountSearchParams,

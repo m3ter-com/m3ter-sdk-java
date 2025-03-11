@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of Commitments.
@@ -170,11 +171,11 @@ private constructor(
          * The unique identifier (UUID) for the Account. This parameter helps filter the Commitments
          * related to a specific end-customer Account.
          */
-        fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         fun contractId(contractId: String?) = apply { this.contractId = contractId }
 
-        fun contractId(contractId: Optional<String>) = contractId(contractId.orElse(null))
+        fun contractId(contractId: Optional<String>) = contractId(contractId.getOrNull())
 
         /**
          * A date _(in ISO-8601 format)_ to filter Commitments which are active on this specific
@@ -186,7 +187,7 @@ private constructor(
          * A date _(in ISO-8601 format)_ to filter Commitments which are active on this specific
          * date.
          */
-        fun date(date: Optional<String>) = date(date.orElse(null))
+        fun date(date: Optional<String>) = date(date.getOrNull())
 
         /**
          * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
@@ -198,7 +199,7 @@ private constructor(
          * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
          * before this date will be included.
          */
-        fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.orElse(null))
+        fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /**
          * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
@@ -210,7 +211,7 @@ private constructor(
          * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
          * on or after this date will be included.
          */
-        fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.orElse(null))
+        fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
 
         /**
          * A list of unique identifiers (UUIDs) for the Commitments to retrieve. Use this to fetch
@@ -222,7 +223,7 @@ private constructor(
          * A list of unique identifiers (UUIDs) for the Commitments to retrieve. Use this to fetch
          * specific Commitments in a single request.
          */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
          * A list of unique identifiers (UUIDs) for the Commitments to retrieve. Use this to fetch
@@ -240,7 +241,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
          * Commitments in a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Commitments to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -249,8 +250,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of Commitments to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
          * The unique identifier (UUID) for the Product. This parameter helps filter the Commitments
@@ -262,7 +262,7 @@ private constructor(
          * The unique identifier (UUID) for the Product. This parameter helps filter the Commitments
          * related to a specific Product.
          */
-        fun productId(productId: Optional<String>) = productId(productId.orElse(null))
+        fun productId(productId: Optional<String>) = productId(productId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

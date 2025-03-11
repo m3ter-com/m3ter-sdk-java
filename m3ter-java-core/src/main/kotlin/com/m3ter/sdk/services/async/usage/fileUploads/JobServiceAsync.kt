@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async.usage.fileUploads
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,7 +25,11 @@ interface JobServiceAsync {
      *
      * Part of the file upload service for measurements ingest.
      */
-    @JvmOverloads
+    fun retrieve(
+        params: UsageFileUploadJobRetrieveParams
+    ): CompletableFuture<FileUploadJobResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -40,7 +42,11 @@ interface JobServiceAsync {
      * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
      *   Upload jobs are returned.
      */
-    @JvmOverloads
+    fun list(
+        params: UsageFileUploadJobListParams
+    ): CompletableFuture<UsageFileUploadJobListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: UsageFileUploadJobListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +61,12 @@ interface JobServiceAsync {
      *
      * Part of the file upload service for submitting measurements data files.
      */
-    @JvmOverloads
+    fun getOriginalDownloadUrl(
+        params: UsageFileUploadJobGetOriginalDownloadUrlParams
+    ): CompletableFuture<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
+        getOriginalDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getOriginalDownloadUrl] */
     fun getOriginalDownloadUrl(
         params: UsageFileUploadJobGetOriginalDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -69,7 +80,13 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
          * [JobServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: UsageFileUploadJobRetrieveParams
+        ): CompletableFuture<HttpResponseFor<FileUploadJobResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
@@ -81,7 +98,13 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs`, but is otherwise the same as
          * [JobServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams,
@@ -93,7 +116,13 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}/original`, but is otherwise the
          * same as [JobServiceAsync.getOriginalDownloadUrl].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getOriginalDownloadUrl(
+            params: UsageFileUploadJobGetOriginalDownloadUrlParams
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>> =
+            getOriginalDownloadUrl(params, RequestOptions.none())
+
+        /** @see [getOriginalDownloadUrl] */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,

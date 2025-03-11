@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Returns a presigned download URL for failed ingest file download based on the file path provided.
@@ -106,7 +107,7 @@ private constructor(
         fun file(file: String?) = apply { this.file = file }
 
         /** The file path */
-        fun file(file: Optional<String>) = file(file.orElse(null))
+        fun file(file: Optional<String>) = file(file.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -32,7 +30,10 @@ interface BalanceServiceAsync {
      * This endpoint allows you to create a new Balance for a specific end customer Account. The
      * Balance details should be provided in the request body.
      */
-    @JvmOverloads
+    fun create(params: BalanceCreateParams): CompletableFuture<Balance> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BalanceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +44,10 @@ interface BalanceServiceAsync {
      *
      * This endpoint returns the details of the specified Balance.
      */
-    @JvmOverloads
+    fun retrieve(params: BalanceRetrieveParams): CompletableFuture<Balance> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BalanceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +59,10 @@ interface BalanceServiceAsync {
      * This endpoint allows you to update the details of a specific Balance. The updated Balance
      * details should be provided in the request body.
      */
-    @JvmOverloads
+    fun update(params: BalanceUpdateParams): CompletableFuture<Balance> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: BalanceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +75,10 @@ interface BalanceServiceAsync {
      * filter the Balances by the end customer's Account UUID and end dates, and paginate through
      * them using the `pageSize` and `nextToken` parameters.
      */
-    @JvmOverloads
+    fun list(params: BalanceListParams): CompletableFuture<BalanceListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +89,10 @@ interface BalanceServiceAsync {
      *
      * This endpoint allows you to delete a specific Balance with the given UUID.
      */
-    @JvmOverloads
+    fun delete(params: BalanceDeleteParams): CompletableFuture<Balance> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BalanceDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -96,7 +109,11 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise
          * the same as [BalanceServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: BalanceCreateParams): CompletableFuture<HttpResponseFor<Balance>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BalanceCreateParams,
@@ -107,7 +124,11 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: BalanceRetrieveParams): CompletableFuture<HttpResponseFor<Balance>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BalanceRetrieveParams,
@@ -118,7 +139,11 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: BalanceUpdateParams): CompletableFuture<HttpResponseFor<Balance>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: BalanceUpdateParams,
@@ -129,7 +154,13 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/balances`, but is otherwise
          * the same as [BalanceServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: BalanceListParams
+        ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BalanceListParams,
@@ -140,7 +171,11 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: BalanceDeleteParams): CompletableFuture<HttpResponseFor<Balance>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BalanceDeleteParams,

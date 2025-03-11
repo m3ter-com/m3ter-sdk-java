@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.bills
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,35 +26,50 @@ interface DebitLineItemService {
      * When creating Debit line items for Bills, use the Debit Reasons created for your
      * Organization. See [DebitReason](https://www.m3ter.com/docs/api#tag/DebitReason).
      */
-    @JvmOverloads
+    fun create(params: BillDebitLineItemCreateParams): DebitLineItemResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse
 
     /** Retrieve the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: BillDebitLineItemRetrieveParams): DebitLineItemResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse
 
     /** Update the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun update(params: BillDebitLineItemUpdateParams): DebitLineItemResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse
 
     /** List the Debit line items for the given bill. */
-    @JvmOverloads
+    fun list(params: BillDebitLineItemListParams): BillDebitLineItemListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BillDebitLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillDebitLineItemListPage
 
     /** Delete the Debit line item with the given UUID. */
-    @JvmOverloads
+    fun delete(params: BillDebitLineItemDeleteParams): DebitLineItemResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +85,11 @@ interface DebitLineItemService {
          * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
          * [DebitLineItemService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: BillDebitLineItemCreateParams): HttpResponseFor<DebitLineItemResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BillDebitLineItemCreateParams,
@@ -84,7 +101,12 @@ interface DebitLineItemService {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: BillDebitLineItemRetrieveParams
+        ): HttpResponseFor<DebitLineItemResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
@@ -96,7 +118,11 @@ interface DebitLineItemService {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: BillDebitLineItemUpdateParams): HttpResponseFor<DebitLineItemResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: BillDebitLineItemUpdateParams,
@@ -108,7 +134,11 @@ interface DebitLineItemService {
          * /organizations/{orgId}/bills/{billId}/debitlineitems`, but is otherwise the same as
          * [DebitLineItemService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: BillDebitLineItemListParams): HttpResponseFor<BillDebitLineItemListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BillDebitLineItemListParams,
@@ -120,7 +150,11 @@ interface DebitLineItemService {
          * /organizations/{orgId}/bills/{billId}/debitlineitems/{id}`, but is otherwise the same as
          * [DebitLineItemService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: BillDebitLineItemDeleteParams): HttpResponseFor<DebitLineItemResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BillDebitLineItemDeleteParams,

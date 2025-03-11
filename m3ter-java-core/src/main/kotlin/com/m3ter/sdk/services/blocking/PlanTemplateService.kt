@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,7 +27,10 @@ interface PlanTemplateService {
      * unique UUID. The request body should contain the necessary information for the new
      * PlanTemplate.
      */
-    @JvmOverloads
+    fun create(params: PlanTemplateCreateParams): PlanTemplateResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,7 +42,10 @@ interface PlanTemplateService {
      * This endpoint allows you to retrieve a specific PlanTemplate within a specific Organization,
      * both identified by their unique identifiers (UUIDs).
      */
-    @JvmOverloads
+    fun retrieve(params: PlanTemplateRetrieveParams): PlanTemplateResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +62,10 @@ interface PlanTemplateService {
      * to update the Plan Template use the `customFields` parameter to preserve those Custom Fields.
      * If you omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: PlanTemplateUpdateParams): PlanTemplateResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,7 +78,10 @@ interface PlanTemplateService {
      * specific Organization, identified by its UUID. You can filter the list by PlanTemplate IDs or
      * Product IDs for more focused retrieval.
      */
-    @JvmOverloads
+    fun list(params: PlanTemplateListParams): PlanTemplateListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanTemplateListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -83,7 +93,10 @@ interface PlanTemplateService {
      * This endpoint enables you to delete a specific PlanTemplate within a specific Organization,
      * both identified by their unique identifiers (UUIDs).
      */
-    @JvmOverloads
+    fun delete(params: PlanTemplateDeleteParams): PlanTemplateResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -98,7 +111,11 @@ interface PlanTemplateService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plantemplates`, but is
          * otherwise the same as [PlanTemplateService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PlanTemplateCreateParams): HttpResponseFor<PlanTemplateResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanTemplateCreateParams,
@@ -109,7 +126,11 @@ interface PlanTemplateService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates/{id}`, but is
          * otherwise the same as [PlanTemplateService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PlanTemplateRetrieveParams): HttpResponseFor<PlanTemplateResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanTemplateRetrieveParams,
@@ -120,7 +141,11 @@ interface PlanTemplateService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plantemplates/{id}`, but is
          * otherwise the same as [PlanTemplateService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PlanTemplateUpdateParams): HttpResponseFor<PlanTemplateResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanTemplateUpdateParams,
@@ -131,7 +156,11 @@ interface PlanTemplateService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plantemplates`, but is
          * otherwise the same as [PlanTemplateService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: PlanTemplateListParams): HttpResponseFor<PlanTemplateListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanTemplateListParams,
@@ -142,7 +171,11 @@ interface PlanTemplateService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plantemplates/{id}`, but
          * is otherwise the same as [PlanTemplateService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: PlanTemplateDeleteParams): HttpResponseFor<PlanTemplateResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanTemplateDeleteParams,

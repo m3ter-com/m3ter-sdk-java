@@ -20,6 +20,7 @@ import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Approve multiple Bills for the specified Organization based on the given criteria.
@@ -273,7 +274,7 @@ private constructor(
          * List of Account IDs to filter Bills. This allows you to approve Bills for specific
          * Accounts within the Organization.
          */
-        fun accountIds(accountIds: Optional<String>) = accountIds(accountIds.orElse(null))
+        fun accountIds(accountIds: Optional<String>) = accountIds(accountIds.getOrNull())
 
         /**
          * End date for filtering Bills by external invoice date. Includes Bills with dates earlier
@@ -288,7 +289,7 @@ private constructor(
          * than this date.
          */
         fun externalInvoiceDateEnd(externalInvoiceDateEnd: Optional<String>) =
-            externalInvoiceDateEnd(externalInvoiceDateEnd.orElse(null))
+            externalInvoiceDateEnd(externalInvoiceDateEnd.getOrNull())
 
         /**
          * Start date for filtering Bills by external invoice date. Includes Bills with dates equal
@@ -303,7 +304,7 @@ private constructor(
          * to or later than this date.
          */
         fun externalInvoiceDateStart(externalInvoiceDateStart: Optional<String>) =
-            externalInvoiceDateStart(externalInvoiceDateStart.orElse(null))
+            externalInvoiceDateStart(externalInvoiceDateStart.getOrNull())
 
         /** Use to specify a collection of Bills by their IDs for batch approval */
         fun billIds(billIds: List<String>) = apply { body.billIds(billIds) }

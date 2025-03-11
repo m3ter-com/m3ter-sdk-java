@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,35 +22,50 @@ interface PlanGroupLinkServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new PlanGroupLink. */
-    @JvmOverloads
+    fun create(params: PlanGroupLinkCreateParams): CompletableFuture<PlanGroupLinkResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Retrieve a PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PlanGroupLinkRetrieveParams): CompletableFuture<PlanGroupLinkResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Update PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun update(params: PlanGroupLinkUpdateParams): CompletableFuture<PlanGroupLinkResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkResponse>
 
     /** Retrieve a list of PlanGroupLink entities */
-    @JvmOverloads
+    fun list(params: PlanGroupLinkListParams): CompletableFuture<PlanGroupLinkListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanGroupLinkListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkListPageAsync>
 
     /** Delete a PlanGroupLink for the given UUID. */
-    @JvmOverloads
+    fun delete(params: PlanGroupLinkDeleteParams): CompletableFuture<PlanGroupLinkResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +81,13 @@ interface PlanGroupLinkServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plangrouplinks`, but is
          * otherwise the same as [PlanGroupLinkServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: PlanGroupLinkCreateParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanGroupLinkCreateParams,
@@ -79,7 +98,13 @@ interface PlanGroupLinkServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks/{id}`, but is
          * otherwise the same as [PlanGroupLinkServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupLinkRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanGroupLinkRetrieveParams,
@@ -90,7 +115,13 @@ interface PlanGroupLinkServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
          * otherwise the same as [PlanGroupLinkServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: PlanGroupLinkUpdateParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanGroupLinkUpdateParams,
@@ -101,7 +132,13 @@ interface PlanGroupLinkServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plangrouplinks`, but is
          * otherwise the same as [PlanGroupLinkServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: PlanGroupLinkListParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanGroupLinkListParams,
@@ -112,7 +149,13 @@ interface PlanGroupLinkServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangrouplinks/{id}`, but
          * is otherwise the same as [PlanGroupLinkServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupLinkDeleteParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanGroupLinkDeleteParams,

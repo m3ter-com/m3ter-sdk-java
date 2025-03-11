@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,7 +26,9 @@ interface ProductService {
      * This endpoint creates a new Product within the specified Organization. The details of the
      * Product are provided in the request body.
      */
-    @JvmOverloads
+    fun create(params: ProductCreateParams): ProductResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ProductCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -40,7 +40,10 @@ interface ProductService {
      * This endpoint retrieves the details of a specific Product within a specified Organization,
      * using the Product UUID.
      */
-    @JvmOverloads
+    fun retrieve(params: ProductRetrieveParams): ProductResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ProductRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -56,7 +59,9 @@ interface ProductService {
      * update the Product use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: ProductUpdateParams): ProductResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ProductUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,7 +73,9 @@ interface ProductService {
      * This endpoint retrieves a list of all the Products within a specified Organization. The list
      * can be paginated, and supports filtering by specific Product IDs.
      */
-    @JvmOverloads
+    fun list(params: ProductListParams): ProductListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ProductListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +87,9 @@ interface ProductService {
      * This endpoint deletes a specific Product within a specified Organization, using the Product
      * UUID.
      */
-    @JvmOverloads
+    fun delete(params: ProductDeleteParams): ProductResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ProductDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -93,7 +102,11 @@ interface ProductService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ProductCreateParams): HttpResponseFor<ProductResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ProductCreateParams,
@@ -104,7 +117,11 @@ interface ProductService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: ProductRetrieveParams): HttpResponseFor<ProductResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ProductRetrieveParams,
@@ -115,7 +132,11 @@ interface ProductService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: ProductUpdateParams): HttpResponseFor<ProductResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ProductUpdateParams,
@@ -126,7 +147,11 @@ interface ProductService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: ProductListParams): HttpResponseFor<ProductListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ProductListParams,
@@ -137,7 +162,11 @@ interface ProductService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ProductDeleteParams): HttpResponseFor<ProductResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ProductDeleteParams,

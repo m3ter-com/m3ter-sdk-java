@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -47,14 +45,19 @@ interface BillJobService {
      *   to create another one, you'll get an HTTP 429 response (Too many requests). When one of the
      *   existing BillJobs has completed, you'll be able to submit another job
      */
-    @JvmOverloads
+    fun create(params: BillJobCreateParams): BillJobResponse = create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: BillJobCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
 
     /** Retrieve a Bill Job for the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: BillJobRetrieveParams): BillJobResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -67,7 +70,9 @@ interface BillJobService {
      * paginated for easier management, and allows you to query and filter based on various
      * parameters, such as BillJob `status` and whether or not BillJob remains `active`.
      */
-    @JvmOverloads
+    fun list(params: BillJobListParams): BillJobListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: BillJobListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -79,7 +84,9 @@ interface BillJobService {
      * This endpoint allows you to halt the processing of a specific BillJob, which might be
      * necessary if there are changes in billing requirements or other operational considerations.
      */
-    @JvmOverloads
+    fun cancel(params: BillJobCancelParams): BillJobResponse = cancel(params, RequestOptions.none())
+
+    /** @see [cancel] */
     fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -98,7 +105,10 @@ interface BillJobService {
      *   response might not contain all of the parameters listed. If set to null,the parameter is
      *   hidden to help simplify the output as well as to reduce its size and improve performance.
      */
-    @JvmOverloads
+    fun recalculate(params: BillJobRecalculateParams): BillJobResponse =
+        recalculate(params, RequestOptions.none())
+
+    /** @see [recalculate] */
     fun recalculate(
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +121,11 @@ interface BillJobService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise
          * the same as [BillJobService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: BillJobCreateParams): HttpResponseFor<BillJobResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BillJobCreateParams,
@@ -122,7 +136,11 @@ interface BillJobService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
          * otherwise the same as [BillJobService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: BillJobRetrieveParams): HttpResponseFor<BillJobResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillJobRetrieveParams,
@@ -133,7 +151,11 @@ interface BillJobService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
          * the same as [BillJobService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: BillJobListParams): HttpResponseFor<BillJobListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: BillJobListParams,
@@ -144,7 +166,11 @@ interface BillJobService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but
          * is otherwise the same as [BillJobService.cancel].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun cancel(params: BillJobCancelParams): HttpResponseFor<BillJobResponse> =
+            cancel(params, RequestOptions.none())
+
+        /** @see [cancel] */
         @MustBeClosed
         fun cancel(
             params: BillJobCancelParams,
@@ -155,7 +181,11 @@ interface BillJobService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but
          * is otherwise the same as [BillJobService.recalculate].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun recalculate(params: BillJobRecalculateParams): HttpResponseFor<BillJobResponse> =
+            recalculate(params, RequestOptions.none())
+
+        /** @see [recalculate] */
         @MustBeClosed
         fun recalculate(
             params: BillJobRecalculateParams,

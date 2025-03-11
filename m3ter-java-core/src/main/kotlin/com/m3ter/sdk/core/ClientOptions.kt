@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.http.RetryingHttpClient
 import java.time.Clock
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class ClientOptions
 private constructor(
@@ -109,7 +110,7 @@ private constructor(
 
         fun token(token: String?) = apply { this.token = token }
 
-        fun token(token: Optional<String>) = token(token.orElse(null))
+        fun token(token: Optional<String>) = token(token.getOrNull())
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 

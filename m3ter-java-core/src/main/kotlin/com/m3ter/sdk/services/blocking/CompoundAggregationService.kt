@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,7 +27,10 @@ interface CompoundAggregationService {
      * This endpoint allows you to create a new CompoundAggregation for a specific Organization. The
      * request body must include all the necessary details such as the Calculation formula.
      */
-    @JvmOverloads
+    fun create(params: CompoundAggregationCreateParams): AggregationResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,7 +42,10 @@ interface CompoundAggregationService {
      * This endpoint returns a specific CompoundAggregation associated with an Organization. It
      * provides detailed information about the CompoundAggregation.
      */
-    @JvmOverloads
+    fun retrieve(params: CompoundAggregationRetrieveParams): CompoundAggregationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +62,10 @@ interface CompoundAggregationService {
      * endpoint to update the Compound Aggregation use the `customFields` parameter to preserve
      * those Custom Fields. If you omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: CompoundAggregationUpdateParams): AggregationResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +79,10 @@ interface CompoundAggregationService {
      * Aggregations of usage data. It supports pagination, and includes various query parameters to
      * filter the CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
      */
-    @JvmOverloads
+    fun list(params: CompoundAggregationListParams): CompoundAggregationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -85,7 +95,10 @@ interface CompoundAggregationService {
      * Organization. Useful when you need to remove an existing CompoundAggregation that is no
      * longer required, such as when changing pricing or planning models.
      */
-    @JvmOverloads
+    fun delete(params: CompoundAggregationDeleteParams): CompoundAggregationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,7 +114,11 @@ interface CompoundAggregationService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but
          * is otherwise the same as [CompoundAggregationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: CompoundAggregationCreateParams): HttpResponseFor<AggregationResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CompoundAggregationCreateParams,
@@ -112,7 +129,12 @@ interface CompoundAggregationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CompoundAggregationRetrieveParams
+        ): HttpResponseFor<CompoundAggregationResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
@@ -123,7 +145,11 @@ interface CompoundAggregationService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: CompoundAggregationUpdateParams): HttpResponseFor<AggregationResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CompoundAggregationUpdateParams,
@@ -134,7 +160,12 @@ interface CompoundAggregationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations`, but is
          * otherwise the same as [CompoundAggregationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams
+        ): HttpResponseFor<CompoundAggregationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CompoundAggregationListParams,
@@ -146,7 +177,12 @@ interface CompoundAggregationService {
          * /organizations/{orgId}/compoundaggregations/{id}`, but is otherwise the same as
          * [CompoundAggregationService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CompoundAggregationDeleteParams
+        ): HttpResponseFor<CompoundAggregationResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams,

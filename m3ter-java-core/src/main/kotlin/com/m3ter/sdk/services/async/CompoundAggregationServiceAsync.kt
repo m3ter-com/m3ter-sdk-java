@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -30,7 +28,10 @@ interface CompoundAggregationServiceAsync {
      * This endpoint allows you to create a new CompoundAggregation for a specific Organization. The
      * request body must include all the necessary details such as the Calculation formula.
      */
-    @JvmOverloads
+    fun create(params: CompoundAggregationCreateParams): CompletableFuture<AggregationResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -42,7 +43,11 @@ interface CompoundAggregationServiceAsync {
      * This endpoint returns a specific CompoundAggregation associated with an Organization. It
      * provides detailed information about the CompoundAggregation.
      */
-    @JvmOverloads
+    fun retrieve(
+        params: CompoundAggregationRetrieveParams
+    ): CompletableFuture<CompoundAggregationResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,7 +64,10 @@ interface CompoundAggregationServiceAsync {
      * endpoint to update the Compound Aggregation use the `customFields` parameter to preserve
      * those Custom Fields. If you omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: CompoundAggregationUpdateParams): CompletableFuture<AggregationResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -73,7 +81,11 @@ interface CompoundAggregationServiceAsync {
      * Aggregations of usage data. It supports pagination, and includes various query parameters to
      * filter the CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
      */
-    @JvmOverloads
+    fun list(
+        params: CompoundAggregationListParams
+    ): CompletableFuture<CompoundAggregationListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CompoundAggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -86,7 +98,11 @@ interface CompoundAggregationServiceAsync {
      * Organization. Useful when you need to remove an existing CompoundAggregation that is no
      * longer required, such as when changing pricing or planning models.
      */
-    @JvmOverloads
+    fun delete(
+        params: CompoundAggregationDeleteParams
+    ): CompletableFuture<CompoundAggregationResponse> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -102,7 +118,13 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but
          * is otherwise the same as [CompoundAggregationServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CompoundAggregationCreateParams
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CompoundAggregationCreateParams,
@@ -113,7 +135,13 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CompoundAggregationRetrieveParams
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
@@ -124,7 +152,13 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CompoundAggregationUpdateParams
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CompoundAggregationUpdateParams,
@@ -135,7 +169,13 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations`, but is
          * otherwise the same as [CompoundAggregationServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CompoundAggregationListParams,
@@ -147,7 +187,13 @@ interface CompoundAggregationServiceAsync {
          * /organizations/{orgId}/compoundaggregations/{id}`, but is otherwise the same as
          * [CompoundAggregationServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CompoundAggregationDeleteParams
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams,

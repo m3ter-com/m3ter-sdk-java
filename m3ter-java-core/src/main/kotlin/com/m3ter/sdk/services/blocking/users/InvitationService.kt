@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking.users
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -25,21 +23,30 @@ interface InvitationService {
      *
      * This sends an email to someone inviting them to join your m3ter Organization.
      */
-    @JvmOverloads
+    fun create(params: UserInvitationCreateParams): InvitationResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse
 
     /** Retrieve the specified invitation with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: UserInvitationRetrieveParams): InvitationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse
 
     /** Retrieve a list of all invitations in the Organization. */
-    @JvmOverloads
+    fun list(params: UserInvitationListParams): UserInvitationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: UserInvitationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,7 +59,11 @@ interface InvitationService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/invitations`, but is
          * otherwise the same as [InvitationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: UserInvitationCreateParams): HttpResponseFor<InvitationResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: UserInvitationCreateParams,
@@ -63,7 +74,11 @@ interface InvitationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations/{id}`, but is
          * otherwise the same as [InvitationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: UserInvitationRetrieveParams): HttpResponseFor<InvitationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: UserInvitationRetrieveParams,
@@ -74,7 +89,11 @@ interface InvitationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations`, but is
          * otherwise the same as [InvitationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: UserInvitationListParams): HttpResponseFor<UserInvitationListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: UserInvitationListParams,

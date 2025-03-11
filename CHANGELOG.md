@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.1.0-alpha.8 (2025-03-10)
+
+Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
+
+### Features
+
+* generate and publish docs ([#92](https://github.com/m3ter-com/m3ter-sdk-java/issues/92)) ([15ad5f7](https://github.com/m3ter-com/m3ter-sdk-java/commit/15ad5f7036c0f6ddcaab625107229d53d1172126))
+
+
+### Chores
+
+* **internal:** add `.kotlin` to `.gitignore` ([#94](https://github.com/m3ter-com/m3ter-sdk-java/issues/94)) ([ca780d1](https://github.com/m3ter-com/m3ter-sdk-java/commit/ca780d1cdcc5647f773f6c1123acda595ee053ae))
+* **internal:** don't use `JvmOverloads` in interfaces ([da42697](https://github.com/m3ter-com/m3ter-sdk-java/commit/da42697859bc30ab6a085904f33fe3d3a604ba09))
+* **internal:** reenable warnings as errors ([#96](https://github.com/m3ter-com/m3ter-sdk-java/issues/96)) ([da42697](https://github.com/m3ter-com/m3ter-sdk-java/commit/da42697859bc30ab6a085904f33fe3d3a604ba09))
+* **internal:** use `getOrNull` instead of `orElse(null)` ([#95](https://github.com/m3ter-com/m3ter-sdk-java/issues/95)) ([33328bd](https://github.com/m3ter-com/m3ter-sdk-java/commit/33328bdd0ba95d3d1a5fad3037d4df2f7bc681b4))
+
+
+### Documentation
+
+* document `JsonValue` construction in readme ([#98](https://github.com/m3ter-com/m3ter-sdk-java/issues/98)) ([abf2b8f](https://github.com/m3ter-com/m3ter-sdk-java/commit/abf2b8fe7005fb2e9a8d1cff76ed93194272fcd8))
+* revise readme docs about nested params ([#97](https://github.com/m3ter-com/m3ter-sdk-java/issues/97)) ([666df9d](https://github.com/m3ter-com/m3ter-sdk-java/commit/666df9d96042da789daef7e11837459341fbb1a3))
+
 ## 0.1.0-alpha.7 (2025-03-07)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)

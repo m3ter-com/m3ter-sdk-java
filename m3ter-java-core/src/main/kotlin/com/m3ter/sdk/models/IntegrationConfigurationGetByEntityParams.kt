@@ -9,6 +9,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieve the integration configuration for the entity */
 class IntegrationConfigurationGetByEntityParams
@@ -96,7 +97,7 @@ private constructor(
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
         /** UUID of the entity to retrieve IntegrationConfigs for */
-        fun entityId(entityId: Optional<String>) = entityId(entityId.orElse(null))
+        fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -24,14 +22,20 @@ interface PlanServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new Plan. */
-    @JvmOverloads
+    fun create(params: PlanCreateParams): CompletableFuture<PlanResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: PlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanResponse>
 
     /** Retrieve the Plan with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: PlanRetrieveParams): CompletableFuture<PlanResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,21 +48,30 @@ interface PlanServiceAsync {
      * the Plan use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: PlanUpdateParams): CompletableFuture<PlanResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanResponse>
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
-    @JvmOverloads
+    fun list(params: PlanListParams): CompletableFuture<PlanListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: PlanListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanListPageAsync>
 
     /** Delete the Plan with the given UUID. */
-    @JvmOverloads
+    fun delete(params: PlanDeleteParams): CompletableFuture<PlanResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,7 +84,11 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: PlanCreateParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: PlanCreateParams,
@@ -82,7 +99,11 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: PlanRetrieveParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: PlanRetrieveParams,
@@ -93,7 +114,11 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: PlanUpdateParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanUpdateParams,
@@ -104,7 +129,11 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: PlanListParams): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: PlanListParams,
@@ -115,7 +144,11 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plans/{id}`, but is
          * otherwise the same as [PlanServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: PlanDeleteParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: PlanDeleteParams,

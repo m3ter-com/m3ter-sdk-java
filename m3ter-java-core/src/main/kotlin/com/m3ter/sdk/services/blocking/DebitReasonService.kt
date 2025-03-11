@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -27,21 +25,30 @@ interface DebitReasonService {
      * becomes available as a debit type for adding Debit line items to Bills. See
      * [Debits](https://www.m3ter.com/docs/api#tag/Debits).
      */
-    @JvmOverloads
+    fun create(params: DebitReasonCreateParams): DebitReasonResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse
 
     /** Retrieve the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: DebitReasonRetrieveParams): DebitReasonResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse
 
     /** Update the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun update(params: DebitReasonUpdateParams): DebitReasonResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -52,14 +59,20 @@ interface DebitReasonService {
      * the list returned for the call by Debit Reason ID, Debit Reason short code, or by Archive
      * status.
      */
-    @JvmOverloads
+    fun list(params: DebitReasonListParams): DebitReasonListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: DebitReasonListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonListPage
 
     /** Delete the Debit Reason with the given UUID. */
-    @JvmOverloads
+    fun delete(params: DebitReasonDeleteParams): DebitReasonResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +87,11 @@ interface DebitReasonService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: DebitReasonCreateParams): HttpResponseFor<DebitReasonResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: DebitReasonCreateParams,
@@ -85,7 +102,11 @@ interface DebitReasonService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: DebitReasonRetrieveParams): HttpResponseFor<DebitReasonResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: DebitReasonRetrieveParams,
@@ -96,7 +117,11 @@ interface DebitReasonService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: DebitReasonUpdateParams): HttpResponseFor<DebitReasonResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DebitReasonUpdateParams,
@@ -107,7 +132,11 @@ interface DebitReasonService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: DebitReasonListParams): HttpResponseFor<DebitReasonListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: DebitReasonListParams,
@@ -119,7 +148,11 @@ interface DebitReasonService {
          * /organizations/{orgId}/picklists/debitreasons/{id}`, but is otherwise the same as
          * [DebitReasonService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: DebitReasonDeleteParams): HttpResponseFor<DebitReasonResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: DebitReasonDeleteParams,

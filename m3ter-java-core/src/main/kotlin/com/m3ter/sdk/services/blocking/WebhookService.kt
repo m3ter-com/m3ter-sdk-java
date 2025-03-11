@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -30,35 +28,47 @@ interface WebhookService {
      * This endpoint creates a new webhook destination. A webhook destination is a URL where webhook
      * payloads will be sent.
      */
-    @JvmOverloads
+    fun create(params: WebhookCreateParams): WebhookCreateResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: WebhookCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookCreateResponse
 
     /** Retrieve the webhook Destination for the UUID. */
-    @JvmOverloads
+    fun retrieve(params: WebhookRetrieveParams): Webhook = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: WebhookRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Webhook
 
     /** Update a destination to be used for a webhook. */
-    @JvmOverloads
+    fun update(params: WebhookUpdateParams): WebhookUpdateResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: WebhookUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookUpdateResponse
 
     /** Retrieve a list of all Destinations created in the Organization. */
-    @JvmOverloads
+    fun list(params: WebhookListParams): WebhookListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: WebhookListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookListPage
 
     /** This endpoint deletes a specific webhook destination identified by its UUID. */
-    @JvmOverloads
+    fun delete(params: WebhookDeleteParams): Webhook = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: WebhookDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +80,10 @@ interface WebhookService {
      * Use this endpoint to activate or deactivate a webhook integration destination. It toggles the
      * `active` status of the specific wehbook destination with the given ID.
      */
-    @JvmOverloads
+    fun setActive(params: WebhookSetActiveParams): WebhookSetActiveResponse =
+        setActive(params, RequestOptions.none())
+
+    /** @see [setActive] */
     fun setActive(
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +97,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
          * [WebhookService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: WebhookCreateParams): HttpResponseFor<WebhookCreateResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: WebhookCreateParams,
@@ -96,7 +113,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: WebhookRetrieveParams): HttpResponseFor<Webhook> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: WebhookRetrieveParams,
@@ -108,7 +129,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: WebhookUpdateParams): HttpResponseFor<WebhookUpdateResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: WebhookUpdateParams,
@@ -120,7 +145,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
          * [WebhookService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: WebhookListParams): HttpResponseFor<WebhookListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: WebhookListParams,
@@ -132,7 +161,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: WebhookDeleteParams): HttpResponseFor<Webhook> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: WebhookDeleteParams,
@@ -144,7 +177,11 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}/active`, but is otherwise
          * the same as [WebhookService.setActive].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun setActive(params: WebhookSetActiveParams): HttpResponseFor<WebhookSetActiveResponse> =
+            setActive(params, RequestOptions.none())
+
+        /** @see [setActive] */
         @MustBeClosed
         fun setActive(
             params: WebhookSetActiveParams,

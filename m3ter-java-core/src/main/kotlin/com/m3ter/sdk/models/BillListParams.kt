@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of Bills.
@@ -194,33 +195,33 @@ private constructor(
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
         /** Optional filter. An Account ID - returns the Bills for the single specified Account. */
-        fun accountId(accountId: Optional<String>) = accountId(accountId.orElse(null))
+        fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
         fun billDate(billDate: String?) = apply { this.billDate = billDate }
 
         /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
-        fun billDate(billDate: Optional<String>) = billDate(billDate.orElse(null))
+        fun billDate(billDate: Optional<String>) = billDate(billDate.getOrNull())
 
         /** Only include Bills with bill dates earlier than this date. */
         fun billDateEnd(billDateEnd: String?) = apply { this.billDateEnd = billDateEnd }
 
         /** Only include Bills with bill dates earlier than this date. */
-        fun billDateEnd(billDateEnd: Optional<String>) = billDateEnd(billDateEnd.orElse(null))
+        fun billDateEnd(billDateEnd: Optional<String>) = billDateEnd(billDateEnd.getOrNull())
 
         /** Only include Bills with bill dates equal to or later than this date. */
         fun billDateStart(billDateStart: String?) = apply { this.billDateStart = billDateStart }
 
         /** Only include Bills with bill dates equal to or later than this date. */
         fun billDateStart(billDateStart: Optional<String>) =
-            billDateStart(billDateStart.orElse(null))
+            billDateStart(billDateStart.getOrNull())
 
         fun billingFrequency(billingFrequency: String?) = apply {
             this.billingFrequency = billingFrequency
         }
 
         fun billingFrequency(billingFrequency: Optional<String>) =
-            billingFrequency(billingFrequency.orElse(null))
+            billingFrequency(billingFrequency.getOrNull())
 
         /** Exclude Line Items */
         fun excludeLineItems(excludeLineItems: Boolean?) = apply {
@@ -232,9 +233,8 @@ private constructor(
             excludeLineItems(excludeLineItems as Boolean?)
 
         /** Exclude Line Items */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun excludeLineItems(excludeLineItems: Optional<Boolean>) =
-            excludeLineItems(excludeLineItems.orElse(null) as Boolean?)
+            excludeLineItems(excludeLineItems.getOrNull())
 
         /** Only include Bills with external invoice dates earlier than this date. */
         fun externalInvoiceDateEnd(externalInvoiceDateEnd: String?) = apply {
@@ -243,7 +243,7 @@ private constructor(
 
         /** Only include Bills with external invoice dates earlier than this date. */
         fun externalInvoiceDateEnd(externalInvoiceDateEnd: Optional<String>) =
-            externalInvoiceDateEnd(externalInvoiceDateEnd.orElse(null))
+            externalInvoiceDateEnd(externalInvoiceDateEnd.getOrNull())
 
         /** Only include Bills with external invoice dates equal to or later than this date. */
         fun externalInvoiceDateStart(externalInvoiceDateStart: String?) = apply {
@@ -252,13 +252,13 @@ private constructor(
 
         /** Only include Bills with external invoice dates equal to or later than this date. */
         fun externalInvoiceDateStart(externalInvoiceDateStart: Optional<String>) =
-            externalInvoiceDateStart(externalInvoiceDateStart.orElse(null))
+            externalInvoiceDateStart(externalInvoiceDateStart.getOrNull())
 
         /** Optional filter. The list of Bill IDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
         /** Optional filter. The list of Bill IDs to retrieve. */
-        fun ids(ids: Optional<List<String>>) = ids(ids.orElse(null))
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /** Optional filter. The list of Bill IDs to retrieve. */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
@@ -273,9 +273,8 @@ private constructor(
             includeBillTotal(includeBillTotal as Boolean?)
 
         /** Include Bill Total */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
         fun includeBillTotal(includeBillTotal: Optional<Boolean>) =
-            includeBillTotal(includeBillTotal.orElse(null) as Boolean?)
+            includeBillTotal(includeBillTotal.getOrNull())
 
         /**
          * Boolean flag specifying whether to include Bills with "locked" status.
@@ -296,8 +295,7 @@ private constructor(
          * - **TRUE** - the list inlcudes "locked" Bills.
          * - **FALSE** - excludes "locked" Bills from the list.
          */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun locked(locked: Optional<Boolean>) = locked(locked.orElse(null) as Boolean?)
+        fun locked(locked: Optional<Boolean>) = locked(locked.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in
@@ -309,7 +307,7 @@ private constructor(
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in
          * a paginated list.
          */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.orElse(null))
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Bills to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
@@ -318,14 +316,13 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Specifies the maximum number of Bills to retrieve per page. */
-        @Suppress("USELESS_CAST") // See https://youtrack.jetbrains.com/issue/KT-74228
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.orElse(null) as Long?)
+        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** Only include Bills having the given status */
         fun status(status: Status?) = apply { this.status = status }
 
         /** Only include Bills having the given status */
-        fun status(status: Optional<Status>) = status(status.orElse(null))
+        fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

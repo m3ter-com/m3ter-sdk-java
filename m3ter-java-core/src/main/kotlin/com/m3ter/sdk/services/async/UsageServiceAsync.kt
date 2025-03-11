@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -47,14 +45,22 @@ interface UsageServiceAsync {
      *   then you can perform this **GET** call using the full URL returned for any ingest failure
      *   Event to obtain a failed ingest file download URL for the Event.
      */
-    @JvmOverloads
+    fun getFailedIngestDownloadUrl(
+        params: UsageGetFailedIngestDownloadUrlParams
+    ): CompletableFuture<DownloadUrlResponse> =
+        getFailedIngestDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getFailedIngestDownloadUrl] */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DownloadUrlResponse>
 
     /** Query and filter usage data */
-    @JvmOverloads
+    fun query(params: UsageQueryParams): CompletableFuture<UsageQueryResponse> =
+        query(params, RequestOptions.none())
+
+    /** @see [query] */
     fun query(
         params: UsageQueryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -94,7 +100,10 @@ interface UsageServiceAsync {
      * [Introduction section](https://www.m3ter.com/docs/api#section/Introduction) above for more
      * details.
      */
-    @JvmOverloads
+    fun submit(params: UsageSubmitParams): CompletableFuture<SubmitMeasurementsResponse> =
+        submit(params, RequestOptions.none())
+
+    /** @see [submit] */
     fun submit(
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -110,7 +119,13 @@ interface UsageServiceAsync {
          * /organizations/{orgId}/measurements/failedIngest/getDownloadUrl`, but is otherwise the
          * same as [UsageServiceAsync.getFailedIngestDownloadUrl].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun getFailedIngestDownloadUrl(
+            params: UsageGetFailedIngestDownloadUrlParams
+        ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
+            getFailedIngestDownloadUrl(params, RequestOptions.none())
+
+        /** @see [getFailedIngestDownloadUrl] */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams,
@@ -121,7 +136,13 @@ interface UsageServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/usage/query`, but is
          * otherwise the same as [UsageServiceAsync.query].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun query(
+            params: UsageQueryParams
+        ): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
+            query(params, RequestOptions.none())
+
+        /** @see [query] */
         @MustBeClosed
         fun query(
             params: UsageQueryParams,
@@ -132,7 +153,13 @@ interface UsageServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/measurements`, but is
          * otherwise the same as [UsageServiceAsync.submit].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun submit(
+            params: UsageSubmitParams
+        ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> =
+            submit(params, RequestOptions.none())
+
+        /** @see [submit] */
         @MustBeClosed
         fun submit(
             params: UsageSubmitParams,

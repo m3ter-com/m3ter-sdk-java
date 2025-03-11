@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -30,14 +28,20 @@ interface ContractService {
      * Creates a new Contract for the specified Account. The Contract includes information such as
      * the associated Account along with start and end dates.
      */
-    @JvmOverloads
+    fun create(params: ContractCreateParams): ContractResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
-    @JvmOverloads
+    fun retrieve(params: ContractRetrieveParams): ContractResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,7 +57,10 @@ interface ContractService {
      * update the Contract use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: ContractUpdateParams): ContractResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -63,7 +70,9 @@ interface ContractService {
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
      * query parameters to filter the Contracts returned based on Contract IDs or short codes.
      */
-    @JvmOverloads
+    fun list(params: ContractListParams): ContractListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ContractListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,7 +85,10 @@ interface ContractService {
      * **Note:** This call will fail if there are any AccountPlans or Commitments that have been
      * added to the Contract.
      */
-    @JvmOverloads
+    fun delete(params: ContractDeleteParams): ContractResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -95,7 +107,12 @@ interface ContractService {
      * - When you successfully end-date billing entities, the version number of each entity is
      *   incremented.
      */
-    @JvmOverloads
+    fun endDateBillingEntities(
+        params: ContractEndDateBillingEntitiesParams
+    ): ContractEndDateBillingEntitiesResponse =
+        endDateBillingEntities(params, RequestOptions.none())
+
+    /** @see [endDateBillingEntities] */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -108,7 +125,11 @@ interface ContractService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ContractCreateParams): HttpResponseFor<ContractResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ContractCreateParams,
@@ -119,7 +140,11 @@ interface ContractService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: ContractRetrieveParams): HttpResponseFor<ContractResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ContractRetrieveParams,
@@ -130,7 +155,11 @@ interface ContractService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: ContractUpdateParams): HttpResponseFor<ContractResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ContractUpdateParams,
@@ -141,7 +170,11 @@ interface ContractService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: ContractListParams): HttpResponseFor<ContractListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ContractListParams,
@@ -152,7 +185,11 @@ interface ContractService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ContractDeleteParams): HttpResponseFor<ContractResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ContractDeleteParams,
@@ -164,7 +201,13 @@ interface ContractService {
          * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
          * as [ContractService.endDateBillingEntities].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun endDateBillingEntities(
+            params: ContractEndDateBillingEntitiesParams
+        ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
+            endDateBillingEntities(params, RequestOptions.none())
+
+        /** @see [endDateBillingEntities] */
         @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,

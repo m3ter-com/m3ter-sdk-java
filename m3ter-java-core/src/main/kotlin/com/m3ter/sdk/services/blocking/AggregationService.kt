@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -23,14 +21,20 @@ interface AggregationService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a new Aggregation. */
-    @JvmOverloads
+    fun create(params: AggregationCreateParams): AggregationResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: AggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationResponse
 
     /** Retrieve the Aggregation with the given UUID. */
-    @JvmOverloads
+    fun retrieve(params: AggregationRetrieveParams): AggregationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,21 +47,30 @@ interface AggregationService {
      * update the Aggregation use the `customFields` parameter to preserve those Custom Fields. If
      * you omit them from the update request, they will be lost.
      */
-    @JvmOverloads
+    fun update(params: AggregationUpdateParams): AggregationResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: AggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationResponse
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
-    @JvmOverloads
+    fun list(params: AggregationListParams): AggregationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: AggregationListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationListPage
 
     /** Delete the Aggregation with the given UUID. */
-    @JvmOverloads
+    fun delete(params: AggregationDeleteParams): AggregationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -72,7 +85,11 @@ interface AggregationService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/aggregations`, but is
          * otherwise the same as [AggregationService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: AggregationCreateParams): HttpResponseFor<AggregationResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: AggregationCreateParams,
@@ -83,7 +100,11 @@ interface AggregationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/aggregations/{id}`, but is
          * otherwise the same as [AggregationService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: AggregationRetrieveParams): HttpResponseFor<AggregationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: AggregationRetrieveParams,
@@ -94,7 +115,11 @@ interface AggregationService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/aggregations/{id}`, but is
          * otherwise the same as [AggregationService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: AggregationUpdateParams): HttpResponseFor<AggregationResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AggregationUpdateParams,
@@ -105,7 +130,11 @@ interface AggregationService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/aggregations`, but is
          * otherwise the same as [AggregationService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: AggregationListParams): HttpResponseFor<AggregationListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: AggregationListParams,
@@ -116,7 +145,11 @@ interface AggregationService {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/aggregations/{id}`, but is
          * otherwise the same as [AggregationService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: AggregationDeleteParams): HttpResponseFor<AggregationResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: AggregationDeleteParams,

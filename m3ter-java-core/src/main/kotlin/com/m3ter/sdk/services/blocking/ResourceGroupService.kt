@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -29,63 +27,91 @@ interface ResourceGroupService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ResourceGroup for the UUID */
-    @JvmOverloads
+    fun create(params: ResourceGroupCreateParams): ResourceGroupResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: ResourceGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Retrieve the ResourceGroup for the UUID */
-    @JvmOverloads
+    fun retrieve(params: ResourceGroupRetrieveParams): ResourceGroupResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: ResourceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Update the ResourceGroup for the UUID */
-    @JvmOverloads
+    fun update(params: ResourceGroupUpdateParams): ResourceGroupResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: ResourceGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Retrieve a list of ResourceGroup entities */
-    @JvmOverloads
+    fun list(params: ResourceGroupListParams): ResourceGroupListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: ResourceGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupListPage
 
     /** Delete a ResourceGroup for the UUID */
-    @JvmOverloads
+    fun delete(params: ResourceGroupDeleteParams): ResourceGroupResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: ResourceGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Add an item to a ResourceGroup. */
-    @JvmOverloads
+    fun addResource(params: ResourceGroupAddResourceParams): ResourceGroupResponse =
+        addResource(params, RequestOptions.none())
+
+    /** @see [addResource] */
     fun addResource(
         params: ResourceGroupAddResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
 
     /** Retrieve a list of items for a ResourceGroup */
-    @JvmOverloads
+    fun listContents(params: ResourceGroupListContentsParams): ResourceGroupListContentsPage =
+        listContents(params, RequestOptions.none())
+
+    /** @see [listContents] */
     fun listContents(
         params: ResourceGroupListContentsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupListContentsPage
 
     /** Retrieve a list of permission policies for a ResourceGroup */
-    @JvmOverloads
+    fun listPermissions(
+        params: ResourceGroupListPermissionsParams
+    ): ResourceGroupListPermissionsPage = listPermissions(params, RequestOptions.none())
+
+    /** @see [listPermissions] */
     fun listPermissions(
         params: ResourceGroupListPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupListPermissionsPage
 
     /** Remove an item from a ResourceGroup. */
-    @JvmOverloads
+    fun removeResource(params: ResourceGroupRemoveResourceParams): ResourceGroupResponse =
+        removeResource(params, RequestOptions.none())
+
+    /** @see [removeResource] */
     fun removeResource(
         params: ResourceGroupRemoveResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -100,7 +126,11 @@ interface ResourceGroupService {
          * Returns a raw HTTP response for `post /organizations/{orgId}/resourcegroups/{type}`, but
          * is otherwise the same as [ResourceGroupService.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(params: ResourceGroupCreateParams): HttpResponseFor<ResourceGroupResponse> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ResourceGroupCreateParams,
@@ -111,7 +141,11 @@ interface ResourceGroupService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/resourcegroups/{type}/{id}`,
          * but is otherwise the same as [ResourceGroupService.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(params: ResourceGroupRetrieveParams): HttpResponseFor<ResourceGroupResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: ResourceGroupRetrieveParams,
@@ -122,7 +156,11 @@ interface ResourceGroupService {
          * Returns a raw HTTP response for `put /organizations/{orgId}/resourcegroups/{type}/{id}`,
          * but is otherwise the same as [ResourceGroupService.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(params: ResourceGroupUpdateParams): HttpResponseFor<ResourceGroupResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ResourceGroupUpdateParams,
@@ -133,7 +171,11 @@ interface ResourceGroupService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/resourcegroups/{type}`, but
          * is otherwise the same as [ResourceGroupService.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(params: ResourceGroupListParams): HttpResponseFor<ResourceGroupListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: ResourceGroupListParams,
@@ -145,7 +187,11 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{id}`, but is otherwise the same as
          * [ResourceGroupService.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(params: ResourceGroupDeleteParams): HttpResponseFor<ResourceGroupResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: ResourceGroupDeleteParams,
@@ -157,7 +203,12 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/addresource`, but is
          * otherwise the same as [ResourceGroupService.addResource].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun addResource(
+            params: ResourceGroupAddResourceParams
+        ): HttpResponseFor<ResourceGroupResponse> = addResource(params, RequestOptions.none())
+
+        /** @see [addResource] */
         @MustBeClosed
         fun addResource(
             params: ResourceGroupAddResourceParams,
@@ -169,7 +220,13 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/contents`, but is
          * otherwise the same as [ResourceGroupService.listContents].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun listContents(
+            params: ResourceGroupListContentsParams
+        ): HttpResponseFor<ResourceGroupListContentsPage> =
+            listContents(params, RequestOptions.none())
+
+        /** @see [listContents] */
         @MustBeClosed
         fun listContents(
             params: ResourceGroupListContentsParams,
@@ -181,7 +238,13 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/permissions`, but is
          * otherwise the same as [ResourceGroupService.listPermissions].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun listPermissions(
+            params: ResourceGroupListPermissionsParams
+        ): HttpResponseFor<ResourceGroupListPermissionsPage> =
+            listPermissions(params, RequestOptions.none())
+
+        /** @see [listPermissions] */
         @MustBeClosed
         fun listPermissions(
             params: ResourceGroupListPermissionsParams,
@@ -193,7 +256,12 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/removeresource`, but is
          * otherwise the same as [ResourceGroupService.removeResource].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun removeResource(
+            params: ResourceGroupRemoveResourceParams
+        ): HttpResponseFor<ResourceGroupResponse> = removeResource(params, RequestOptions.none())
+
+        /** @see [removeResource] */
         @MustBeClosed
         fun removeResource(
             params: ResourceGroupRemoveResourceParams,

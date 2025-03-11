@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.m3ter.sdk.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
@@ -28,7 +26,10 @@ interface CurrencyServiceAsync {
      *
      * Used to create a Currency that your Organization will start to use.
      */
-    @JvmOverloads
+    fun create(params: CurrencyCreateParams): CompletableFuture<CurrencyResponse> =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
     fun create(
         params: CurrencyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -38,7 +39,10 @@ interface CurrencyServiceAsync {
      * Retrieve the specified Currency with the given UUID. Used to obtain the details of a
      * specified existing Currency in your Organization.
      */
-    @JvmOverloads
+    fun retrieve(params: CurrencyRetrieveParams): CompletableFuture<CurrencyResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
     fun retrieve(
         params: CurrencyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -49,7 +53,10 @@ interface CurrencyServiceAsync {
      *
      * Used to update the attributes of the specified Currency for the specified Organization.
      */
-    @JvmOverloads
+    fun update(params: CurrencyUpdateParams): CompletableFuture<CurrencyResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
     fun update(
         params: CurrencyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -62,7 +69,10 @@ interface CurrencyServiceAsync {
      * pagination and includes various query parameters to filter the Currencies based on Currency
      * ID, and short codes.
      */
-    @JvmOverloads
+    fun list(params: CurrencyListParams): CompletableFuture<CurrencyListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
     fun list(
         params: CurrencyListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -73,7 +83,10 @@ interface CurrencyServiceAsync {
      *
      * Used to remove an existing Currency from your Organization that is no longer required.
      */
-    @JvmOverloads
+    fun delete(params: CurrencyDeleteParams): CompletableFuture<CurrencyResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
     fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -88,7 +101,13 @@ interface CurrencyServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/currency`, but is
          * otherwise the same as [CurrencyServiceAsync.create].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun create(
+            params: CurrencyCreateParams
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            create(params, RequestOptions.none())
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CurrencyCreateParams,
@@ -99,7 +118,13 @@ interface CurrencyServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency/{id}`, but
          * is otherwise the same as [CurrencyServiceAsync.retrieve].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun retrieve(
+            params: CurrencyRetrieveParams
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: CurrencyRetrieveParams,
@@ -110,7 +135,13 @@ interface CurrencyServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/currency/{id}`, but
          * is otherwise the same as [CurrencyServiceAsync.update].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun update(
+            params: CurrencyUpdateParams
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CurrencyUpdateParams,
@@ -121,7 +152,13 @@ interface CurrencyServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/currency`, but is
          * otherwise the same as [CurrencyServiceAsync.list].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun list(
+            params: CurrencyListParams
+        ): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
         @MustBeClosed
         fun list(
             params: CurrencyListParams,
@@ -132,7 +169,13 @@ interface CurrencyServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/picklists/currency/{id}`,
          * but is otherwise the same as [CurrencyServiceAsync.delete].
          */
-        @JvmOverloads
+        @MustBeClosed
+        fun delete(
+            params: CurrencyDeleteParams
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: CurrencyDeleteParams,
