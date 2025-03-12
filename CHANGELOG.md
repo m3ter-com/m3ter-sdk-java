@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-03-11)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Chores
+
+* **internal:** version bump ([#100](https://github.com/m3ter-com/m3ter-sdk-java/issues/100)) ([98eb4f3](https://github.com/m3ter-com/m3ter-sdk-java/commit/98eb4f3ccbc898baba302cefd91d7aa6cbbdb101))
+
 ## 0.1.0-alpha.8 (2025-03-10)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
