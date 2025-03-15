@@ -96,7 +96,7 @@ private constructor(
         /** UUID of the entity to retrieve IntegrationConfigs for */
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
 
-        /** UUID of the entity to retrieve IntegrationConfigs for */
+        /** Alias for calling [Builder.entityId] with `entityId.orElse(null)`. */
         fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

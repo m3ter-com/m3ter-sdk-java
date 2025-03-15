@@ -66,18 +66,42 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** The destination system for the integration. */
+    /**
+     * The destination system for the integration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun destination(): String = destination.getRequired("destination")
 
-    /** The unique identifier (UUID) of the entity the integration is for. */
+    /**
+     * The unique identifier (UUID) of the entity the integration is for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun entityId(): String = entityId.getRequired("entityId")
 
-    /** The type of entity the integration is for _(e.g. Bill)_. */
+    /**
+     * The type of entity the integration is for _(e.g. Bill)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun entityType(): String = entityType.getRequired("entityType")
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun status(): Status = status.getRequired("status")
 
     /**
@@ -85,98 +109,202 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** The ID of the user who created this item. */
+    /**
+     * The ID of the user who created this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The date and time the integration was completed _(in ISO-8601 format)_. */
+    /**
+     * The date and time the integration was completed _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCompleted(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCompleted.getNullable("dtCompleted"))
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The date and time the integration was started _(in ISO-8601 format)_. */
+    /**
+     * The date and time the integration was started _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtStarted(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtStarted.getNullable("dtStarted"))
 
-    /** Describes any errors encountered during the integration run. */
+    /**
+     * Describes any errors encountered during the integration run.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun error(): Optional<String> = Optional.ofNullable(error.getNullable("error"))
 
-    /** The external ID in the destination system if available. */
+    /**
+     * The external ID in the destination system if available.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun externalId(): Optional<String> = Optional.ofNullable(externalId.getNullable("externalId"))
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * The ID of the user who last modified this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The URL of the entity in the destination system if available. */
+    /**
+     * The URL of the entity in the destination system if available.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The destination system for the integration. */
+    /**
+     * Returns the raw JSON value of [destination].
+     *
+     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destination") @ExcludeMissing fun _destination(): JsonField<String> = destination
 
-    /** The unique identifier (UUID) of the entity the integration is for. */
+    /**
+     * Returns the raw JSON value of [entityId].
+     *
+     * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("entityId") @ExcludeMissing fun _entityId(): JsonField<String> = entityId
 
-    /** The type of entity the integration is for _(e.g. Bill)_. */
+    /**
+     * Returns the raw JSON value of [entityType].
+     *
+     * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("entityType") @ExcludeMissing fun _entityType(): JsonField<String> = entityType
 
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The ID of the user who created this item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The date and time the integration was completed _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCompleted].
+     *
+     * Unlike [dtCompleted], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCompleted")
     @ExcludeMissing
     fun _dtCompleted(): JsonField<OffsetDateTime> = dtCompleted
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The date and time the integration was started _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtStarted].
+     *
+     * Unlike [dtStarted], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtStarted")
     @ExcludeMissing
     fun _dtStarted(): JsonField<OffsetDateTime> = dtStarted
 
-    /** Describes any errors encountered during the integration run. */
+    /**
+     * Returns the raw JSON value of [error].
+     *
+     * Unlike [error], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("error") @ExcludeMissing fun _error(): JsonField<String> = error
 
-    /** The external ID in the destination system if available. */
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("externalId") @ExcludeMissing fun _externalId(): JsonField<String> = externalId
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The URL of the entity in the destination system if available. */
+    /**
+     * Returns the raw JSON value of [url].
+     *
+     * Unlike [url], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
     @JsonAnyGetter
@@ -274,29 +402,57 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The destination system for the integration. */
         fun destination(destination: String) = destination(JsonField.of(destination))
 
-        /** The destination system for the integration. */
+        /**
+         * Sets [Builder.destination] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destination] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destination(destination: JsonField<String>) = apply { this.destination = destination }
 
         /** The unique identifier (UUID) of the entity the integration is for. */
         fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 
-        /** The unique identifier (UUID) of the entity the integration is for. */
+        /**
+         * Sets [Builder.entityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun entityId(entityId: JsonField<String>) = apply { this.entityId = entityId }
 
         /** The type of entity the integration is for _(e.g. Bill)_. */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
-        /** The type of entity the integration is for _(e.g. Bill)_. */
+        /**
+         * Sets [Builder.entityType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
         fun status(status: Status) = status(JsonField.of(status))
 
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
@@ -308,23 +464,35 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The ID of the user who created this item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The date and time the integration was completed _(in ISO-8601 format)_. */
         fun dtCompleted(dtCompleted: OffsetDateTime) = dtCompleted(JsonField.of(dtCompleted))
 
-        /** The date and time the integration was completed _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCompleted] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCompleted] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCompleted(dtCompleted: JsonField<OffsetDateTime>) = apply {
             this.dtCompleted = dtCompleted
         }
@@ -332,14 +500,26 @@ private constructor(
         /** The DateTime when this item was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -347,25 +527,48 @@ private constructor(
         /** The date and time the integration was started _(in ISO-8601 format)_. */
         fun dtStarted(dtStarted: OffsetDateTime) = dtStarted(JsonField.of(dtStarted))
 
-        /** The date and time the integration was started _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtStarted] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtStarted] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtStarted(dtStarted: JsonField<OffsetDateTime>) = apply { this.dtStarted = dtStarted }
 
         /** Describes any errors encountered during the integration run. */
         fun error(error: String) = error(JsonField.of(error))
 
-        /** Describes any errors encountered during the integration run. */
+        /**
+         * Sets [Builder.error] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.error] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun error(error: JsonField<String>) = apply { this.error = error }
 
         /** The external ID in the destination system if available. */
         fun externalId(externalId: String) = externalId(JsonField.of(externalId))
 
-        /** The external ID in the destination system if available. */
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /** The ID of the user who last modified this item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The ID of the user who last modified this item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -373,7 +576,12 @@ private constructor(
         /** The URL of the entity in the destination system if available. */
         fun url(url: String) = url(JsonField.of(url))
 
-        /** The URL of the entity in the destination system if available. */
+        /**
+         * Sets [Builder.url] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.url] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun url(url: JsonField<String>) = apply { this.url = url }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

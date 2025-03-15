@@ -125,10 +125,7 @@ private constructor(
          */
         fun dateCreatedEnd(dateCreatedEnd: String?) = apply { this.dateCreatedEnd = dateCreatedEnd }
 
-        /**
-         * Include only File Upload jobs created before this date. Required format is ISO-8601:
-         * yyyy-MM-dd'T'HH:mm:ss'Z'
-         */
+        /** Alias for calling [Builder.dateCreatedEnd] with `dateCreatedEnd.orElse(null)`. */
         fun dateCreatedEnd(dateCreatedEnd: Optional<String>) =
             dateCreatedEnd(dateCreatedEnd.getOrNull())
 
@@ -140,32 +137,33 @@ private constructor(
             this.dateCreatedStart = dateCreatedStart
         }
 
-        /**
-         * Include only File Upload jobs created on or after this date. Required format is ISO-8601:
-         * yyyy-MM-dd'T'HH:mm:ss'Z'
-         */
+        /** Alias for calling [Builder.dateCreatedStart] with `dateCreatedStart.orElse(null)`. */
         fun dateCreatedStart(dateCreatedStart: Optional<String>) =
             dateCreatedStart(dateCreatedStart.getOrNull())
 
         /** <<deprecated>> */
         fun fileKey(fileKey: String?) = apply { this.fileKey = fileKey }
 
-        /** <<deprecated>> */
+        /** Alias for calling [Builder.fileKey] with `fileKey.orElse(null)`. */
         fun fileKey(fileKey: Optional<String>) = fileKey(fileKey.getOrNull())
 
         /** `nextToken` for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** `nextToken` for multi page retrievals. */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of File Upload jobs to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of File Upload jobs to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of File Upload jobs to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

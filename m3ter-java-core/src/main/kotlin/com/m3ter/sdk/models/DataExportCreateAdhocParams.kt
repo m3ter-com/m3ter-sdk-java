@@ -310,11 +310,14 @@ private constructor(
         /** Request representing an operational data export configuration. */
         fun body(body: Body) = apply { this.body = body }
 
-        /** Request representing an operational data export configuration. */
+        /**
+         * Alias for calling [body] with
+         * `Body.ofAdHocOperationalDataRequest(adHocOperationalDataRequest)`.
+         */
         fun body(adHocOperationalDataRequest: AdHocOperationalDataRequest) =
             body(Body.ofAdHocOperationalDataRequest(adHocOperationalDataRequest))
 
-        /** Request representing an usage data export configuration. */
+        /** Alias for calling [body] with `Body.ofAdHocUsageDataRequest(adHocUsageDataRequest)`. */
         fun body(adHocUsageDataRequest: AdHocUsageDataRequest) =
             body(Body.ofAdHocUsageDataRequest(adHocUsageDataRequest))
 

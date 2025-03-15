@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
@@ -41,6 +42,9 @@ private constructor(
      * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
      *
      * For example: `"2024-03-01"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billLockDate(): Optional<LocalDate> = body.billLockDate()
 
@@ -50,22 +54,23 @@ private constructor(
      * - On Update, version is required and must match the existing version because a check is
      *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
      *   listed in the response
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+     * Returns the raw JSON value of [billLockDate].
      *
-     * For example: `"2024-03-01"`.
+     * Unlike [billLockDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billLockDate(): JsonField<LocalDate> = body._billLockDate()
 
     /**
-     * The version number:
-     * - Default value when newly created is one.
-     * - On Update, version is required and must match the existing version because a check is
-     *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
-     *   listed in the response
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -106,6 +111,9 @@ private constructor(
          * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
          *
          * For example: `"2024-03-01"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billLockDate(): Optional<LocalDate> =
             Optional.ofNullable(billLockDate.getNullable("billLockDate"))
@@ -116,24 +124,26 @@ private constructor(
          * - On Update, version is required and must match the existing version because a check is
          *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
          *   listed in the response
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+         * Returns the raw JSON value of [billLockDate].
          *
-         * For example: `"2024-03-01"`.
+         * Unlike [billLockDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("billLockDate")
         @ExcludeMissing
         fun _billLockDate(): JsonField<LocalDate> = billLockDate
 
         /**
-         * The version number:
-         * - Default value when newly created is one.
-         * - On Update, version is required and must match the existing version because a check is
-         *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
-         *   listed in the response
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -183,9 +193,11 @@ private constructor(
             fun billLockDate(billLockDate: LocalDate) = billLockDate(JsonField.of(billLockDate))
 
             /**
-             * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+             * Sets [Builder.billLockDate] to an arbitrary JSON value.
              *
-             * For example: `"2024-03-01"`.
+             * You should usually call [Builder.billLockDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billLockDate(billLockDate: JsonField<LocalDate>) = apply {
                 this.billLockDate = billLockDate
@@ -201,11 +213,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number:
-             * - Default value when newly created is one.
-             * - On Update, version is required and must match the existing version because a check
-             *   is performed to ensure sequential versioning is preserved. Version is incremented
-             *   by 1 and listed in the response
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -291,9 +303,11 @@ private constructor(
         fun billLockDate(billLockDate: LocalDate) = apply { body.billLockDate(billLockDate) }
 
         /**
-         * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+         * Sets [Builder.billLockDate] to an arbitrary JSON value.
          *
-         * For example: `"2024-03-01"`.
+         * You should usually call [Builder.billLockDate] with a well-typed [LocalDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun billLockDate(billLockDate: JsonField<LocalDate>) = apply {
             body.billLockDate(billLockDate)
@@ -309,11 +323,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number:
-         * - Default value when newly created is one.
-         * - On Update, version is required and must match the existing version because a check is
-         *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
-         *   listed in the response
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

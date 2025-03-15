@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -29,22 +30,49 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The headers */
+    /**
+     * The headers
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun headers(): Optional<Headers> = Optional.ofNullable(headers.getNullable("headers"))
 
-    /** UUID of the upload job */
+    /**
+     * UUID of the upload job
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun jobId(): Optional<String> = Optional.ofNullable(jobId.getNullable("jobId"))
 
-    /** The URL */
+    /**
+     * The URL
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
 
-    /** The headers */
+    /**
+     * Returns the raw JSON value of [headers].
+     *
+     * Unlike [headers], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("headers") @ExcludeMissing fun _headers(): JsonField<Headers> = headers
 
-    /** UUID of the upload job */
+    /**
+     * Returns the raw JSON value of [jobId].
+     *
+     * Unlike [jobId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("jobId") @ExcludeMissing fun _jobId(): JsonField<String> = jobId
 
-    /** The URL */
+    /**
+     * Returns the raw JSON value of [url].
+     *
+     * Unlike [url], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
     @JsonAnyGetter
@@ -97,19 +125,34 @@ private constructor(
         /** The headers */
         fun headers(headers: Headers) = headers(JsonField.of(headers))
 
-        /** The headers */
+        /**
+         * Sets [Builder.headers] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.headers] with a well-typed [Headers] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun headers(headers: JsonField<Headers>) = apply { this.headers = headers }
 
         /** UUID of the upload job */
         fun jobId(jobId: String) = jobId(JsonField.of(jobId))
 
-        /** UUID of the upload job */
+        /**
+         * Sets [Builder.jobId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.jobId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun jobId(jobId: JsonField<String>) = apply { this.jobId = jobId }
 
         /** The URL */
         fun url(url: String) = url(JsonField.of(url))
 
-        /** The URL */
+        /**
+         * Sets [Builder.url] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.url] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun url(url: JsonField<String>) = apply { this.url = url }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

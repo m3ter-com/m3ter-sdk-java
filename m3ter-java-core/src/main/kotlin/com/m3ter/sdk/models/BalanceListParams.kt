@@ -119,19 +119,19 @@ private constructor(
         /** The unique identifier (UUID) for the end customer's account. */
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        /** The unique identifier (UUID) for the end customer's account. */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** Only include Balances with end dates earlier than this date. */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
 
-        /** Only include Balances with end dates earlier than this date. */
+        /** Alias for calling [Builder.endDateEnd] with `endDateEnd.orElse(null)`. */
         fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /** Only include Balances with end dates equal to or later than this date. */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
 
-        /** Only include Balances with end dates equal to or later than this date. */
+        /** Alias for calling [Builder.endDateStart] with `endDateStart.orElse(null)`. */
         fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
 
         /**
@@ -140,19 +140,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for retrieving the next page of Balances. It is used to fetch the next
-         * page of Balances in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of Balances to return per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** The maximum number of Balances to return per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** The maximum number of Balances to return per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

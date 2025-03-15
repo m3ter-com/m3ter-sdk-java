@@ -43,27 +43,52 @@ private constructor(
 
     fun id(): String = id
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun pricingBands(): List<PricingBand> = body.pricingBands()
 
     /**
      * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
      * of Plan Template._(Required)_
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun startDate(): OffsetDateTime = body.startDate()
 
-    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    /**
+     * Optional Product ID this Pricing should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountingProductId(): Optional<String> = body.accountingProductId()
 
     /**
      * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
      * segmented aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun aggregationId(): Optional<String> = body.aggregationId()
 
-    /** Unique short code for the Pricing. */
+    /**
+     * Unique short code for the Pricing.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
-    /** UUID of the Compound Aggregation used to create the Pricing. */
+    /**
+     * UUID of the Compound Aggregation used to create the Pricing.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun compoundAggregationId(): Optional<String> = body.compoundAggregationId()
 
     /**
@@ -76,10 +101,18 @@ private constructor(
      *
      * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
      * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun cumulative(): Optional<Boolean> = body.cumulative()
 
-    /** Displayed on Bill line items. */
+    /**
+     * Displayed on Bill line items.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
     /**
@@ -87,12 +120,18 @@ private constructor(
      * Plan Template.
      *
      * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun endDate(): Optional<OffsetDateTime> = body.endDate()
 
     /**
      * The minimum spend amount per billing cycle for end customer Accounts on a Plan to which the
      * Pricing is applied.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpend(): Optional<Double> = body.minimumSpend()
 
@@ -103,22 +142,43 @@ private constructor(
      *
      * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
      * arrears/in advance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
-    /** Minimum spend description _(displayed on the bill line item)_. */
+    /**
+     * Minimum spend description _(displayed on the bill line item)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun minimumSpendDescription(): Optional<String> = body.minimumSpendDescription()
 
     /**
      * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
      * pricing structure.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun overagePricingBands(): Optional<List<PricingBand>> = body.overagePricingBands()
 
-    /** UUID of the Plan the Pricing is created for. */
+    /**
+     * UUID of the Plan the Pricing is created for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planId(): Optional<String> = body.planId()
 
-    /** UUID of the Plan Template the Pricing is created for. */
+    /**
+     * UUID of the Plan Template the Pricing is created for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planTemplateId(): Optional<String> = body.planTemplateId()
 
     /**
@@ -134,6 +194,9 @@ private constructor(
      * this call, together with some examples, see the
      * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
      * in our User Documentation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun segment(): Optional<Segment> = body.segment()
 
@@ -143,6 +206,9 @@ private constructor(
      *   account, and is not reset for pricing band rates at the start of each billing period.
      * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of each
      *   billing period.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun tiersSpanPlan(): Optional<Boolean> = body.tiersSpanPlan()
 
@@ -156,6 +222,9 @@ private constructor(
      *   _(negative amount)_. To prevent negative billing, the bill will be capped at the total of
      *   other line items for the entire bill, which might include other Products the Account
      *   consumes.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun type(): Optional<Type> = body.type()
 
@@ -166,132 +235,147 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
+    /**
+     * Returns the raw JSON value of [pricingBands].
+     *
+     * Unlike [pricingBands], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _pricingBands(): JsonField<List<PricingBand>> = body._pricingBands()
 
     /**
-     * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
-     * of Plan Template._(Required)_
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
 
-    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
     /**
-     * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for a
-     * segmented aggregation.
+     * Returns the raw JSON value of [aggregationId].
+     *
+     * Unlike [aggregationId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _aggregationId(): JsonField<String> = body._aggregationId()
 
-    /** Unique short code for the Pricing. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
-    /** UUID of the Compound Aggregation used to create the Pricing. */
+    /**
+     * Returns the raw JSON value of [compoundAggregationId].
+     *
+     * Unlike [compoundAggregationId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _compoundAggregationId(): JsonField<String> = body._compoundAggregationId()
 
     /**
-     * Controls whether or not charge rates under a set of pricing bands configured for a Pricing
-     * are applied according to each separate band or at the highest band reached.
+     * Returns the raw JSON value of [cumulative].
      *
-     * _(Optional)_. The default value is **FALSE**.
-     * - When TRUE, at billing charge rates are applied according to each separate band.
-     * - When FALSE, at billing charge rates are applied according to highest band reached.
-     *
-     * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-     * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+     * Unlike [cumulative], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _cumulative(): JsonField<Boolean> = body._cumulative()
 
-    /** Displayed on Bill line items. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan or
-     * Plan Template.
+     * Returns the raw JSON value of [endDate].
      *
-     * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
     /**
-     * The minimum spend amount per billing cycle for end customer Accounts on a Plan to which the
-     * Pricing is applied.
+     * Returns the raw JSON value of [minimumSpend].
+     *
+     * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _minimumSpend(): JsonField<Double> = body._minimumSpend()
 
     /**
-     * The default value is **FALSE**.
-     * - When TRUE, minimum spend is billed at the start of each billing period.
-     * - When FALSE, minimum spend is billed at the end of each billing period.
+     * Returns the raw JSON value of [minimumSpendBillInAdvance].
      *
-     * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
-     * arrears/in advance.
+     * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _minimumSpendBillInAdvance(): JsonField<Boolean> = body._minimumSpendBillInAdvance()
 
-    /** Minimum spend description _(displayed on the bill line item)_. */
+    /**
+     * Returns the raw JSON value of [minimumSpendDescription].
+     *
+     * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _minimumSpendDescription(): JsonField<String> = body._minimumSpendDescription()
 
     /**
-     * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-     * pricing structure.
+     * Returns the raw JSON value of [overagePricingBands].
+     *
+     * Unlike [overagePricingBands], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _overagePricingBands(): JsonField<List<PricingBand>> = body._overagePricingBands()
 
-    /** UUID of the Plan the Pricing is created for. */
+    /**
+     * Returns the raw JSON value of [planId].
+     *
+     * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _planId(): JsonField<String> = body._planId()
 
-    /** UUID of the Plan Template the Pricing is created for. */
+    /**
+     * Returns the raw JSON value of [planTemplateId].
+     *
+     * Unlike [planTemplateId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _planTemplateId(): JsonField<String> = body._planTemplateId()
 
     /**
-     * Specifies the segment value which you are defining a Pricing for using this call:
-     * - For each segment value defined on a Segmented Aggregation you must create a separate
-     *   Pricing and use the appropriate `aggregationId` parameter for the call.
-     * - If you specify a segment value that has not been defined for the Aggregation, you'll
-     *   receive an error.
-     * - If you've defined segment values for the Aggregation using a single wildcard or multiple
-     *   wildcards, you can create Pricing for these wildcard segment values also.
+     * Returns the raw JSON value of [segment].
      *
-     * For more details on creating Pricings for segment values on a Segmented Aggregation using
-     * this call, together with some examples, see the
-     * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
-     * in our User Documentation.
+     * Unlike [segment], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _segment(): JsonField<Segment> = body._segment()
 
     /**
-     * The default value is **FALSE**.
-     * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
-     *   account, and is not reset for pricing band rates at the start of each billing period.
-     * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of each
-     *   billing period.
+     * Returns the raw JSON value of [tiersSpanPlan].
+     *
+     * Unlike [tiersSpanPlan], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _tiersSpanPlan(): JsonField<Boolean> = body._tiersSpanPlan()
 
     /**
-     * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the bill as
-     *   a debit.
-     * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-     *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
-     *   total of other line items for the same Product.
-     * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a credit
-     *   _(negative amount)_. To prevent negative billing, the bill will be capped at the total of
-     *   other line items for the entire bill, which might include other Products the Account
-     *   consumes.
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _type(): JsonField<Type> = body._type()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -378,29 +462,54 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun pricingBands(): List<PricingBand> = pricingBands.getRequired("pricingBands")
 
         /**
          * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
          * Plan of Plan Template._(Required)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Optional Product ID this Pricing should be attributed to for accounting purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountingProductId(): Optional<String> =
             Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
         /**
          * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
          * a segmented aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun aggregationId(): Optional<String> =
             Optional.ofNullable(aggregationId.getNullable("aggregationId"))
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Unique short code for the Pricing.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
-        /** UUID of the Compound Aggregation used to create the Pricing. */
+        /**
+         * UUID of the Compound Aggregation used to create the Pricing.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun compoundAggregationId(): Optional<String> =
             Optional.ofNullable(compoundAggregationId.getNullable("compoundAggregationId"))
 
@@ -414,11 +523,19 @@ private constructor(
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun cumulative(): Optional<Boolean> =
             Optional.ofNullable(cumulative.getNullable("cumulative"))
 
-        /** Displayed on Bill line items. */
+        /**
+         * Displayed on Bill line items.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
@@ -427,6 +544,9 @@ private constructor(
          * or Plan Template.
          *
          * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun endDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(endDate.getNullable("endDate"))
@@ -434,6 +554,9 @@ private constructor(
         /**
          * The minimum spend amount per billing cycle for end customer Accounts on a Plan to which
          * the Pricing is applied.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpend(): Optional<Double> =
             Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
@@ -445,25 +568,46 @@ private constructor(
          *
          * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
          * arrears/in advance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Minimum spend description _(displayed on the bill line item)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun minimumSpendDescription(): Optional<String> =
             Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
 
         /**
          * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
          * pricing structure.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun overagePricingBands(): Optional<List<PricingBand>> =
             Optional.ofNullable(overagePricingBands.getNullable("overagePricingBands"))
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * UUID of the Plan the Pricing is created for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * UUID of the Plan Template the Pricing is created for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun planTemplateId(): Optional<String> =
             Optional.ofNullable(planTemplateId.getNullable("planTemplateId"))
 
@@ -480,6 +624,9 @@ private constructor(
          * this call, together with some examples, see the
          * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
          * in our User Documentation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun segment(): Optional<Segment> = Optional.ofNullable(segment.getNullable("segment"))
 
@@ -489,6 +636,9 @@ private constructor(
          *   account, and is not reset for pricing band rates at the start of each billing period.
          * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
          *   each billing period.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun tiersSpanPlan(): Optional<Boolean> =
             Optional.ofNullable(tiersSpanPlan.getNullable("tiersSpanPlan"))
@@ -503,6 +653,9 @@ private constructor(
          *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
          *   total of other line items for the entire bill, which might include other Products the
          *   Account consumes.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
 
@@ -513,158 +666,178 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
+        /**
+         * Returns the raw JSON value of [pricingBands].
+         *
+         * Unlike [pricingBands], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("pricingBands")
         @ExcludeMissing
         fun _pricingBands(): JsonField<List<PricingBand>> = pricingBands
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Returns the raw JSON value of [accountingProductId].
+         *
+         * Unlike [accountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         fun _accountingProductId(): JsonField<String> = accountingProductId
 
         /**
-         * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
-         * a segmented aggregation.
+         * Returns the raw JSON value of [aggregationId].
+         *
+         * Unlike [aggregationId], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("aggregationId")
         @ExcludeMissing
         fun _aggregationId(): JsonField<String> = aggregationId
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-        /** UUID of the Compound Aggregation used to create the Pricing. */
+        /**
+         * Returns the raw JSON value of [compoundAggregationId].
+         *
+         * Unlike [compoundAggregationId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("compoundAggregationId")
         @ExcludeMissing
         fun _compoundAggregationId(): JsonField<String> = compoundAggregationId
 
         /**
-         * Controls whether or not charge rates under a set of pricing bands configured for a
-         * Pricing are applied according to each separate band or at the highest band reached.
+         * Returns the raw JSON value of [cumulative].
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
-         *
-         * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-         * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         * Unlike [cumulative], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("cumulative")
         @ExcludeMissing
         fun _cumulative(): JsonField<Boolean> = cumulative
 
-        /** Displayed on Bill line items. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
-         * or Plan Template.
+         * Returns the raw JSON value of [endDate].
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
         /**
-         * The minimum spend amount per billing cycle for end customer Accounts on a Plan to which
-         * the Pricing is applied.
+         * Returns the raw JSON value of [minimumSpend].
+         *
+         * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("minimumSpend")
         @ExcludeMissing
         fun _minimumSpend(): JsonField<Double> = minimumSpend
 
         /**
-         * The default value is **FALSE**.
-         * - When TRUE, minimum spend is billed at the start of each billing period.
-         * - When FALSE, minimum spend is billed at the end of each billing period.
+         * Returns the raw JSON value of [minimumSpendBillInAdvance].
          *
-         * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
-         * arrears/in advance.
+         * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("minimumSpendBillInAdvance")
         @ExcludeMissing
         fun _minimumSpendBillInAdvance(): JsonField<Boolean> = minimumSpendBillInAdvance
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Returns the raw JSON value of [minimumSpendDescription].
+         *
+         * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("minimumSpendDescription")
         @ExcludeMissing
         fun _minimumSpendDescription(): JsonField<String> = minimumSpendDescription
 
         /**
-         * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-         * pricing structure.
+         * Returns the raw JSON value of [overagePricingBands].
+         *
+         * Unlike [overagePricingBands], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("overagePricingBands")
         @ExcludeMissing
         fun _overagePricingBands(): JsonField<List<PricingBand>> = overagePricingBands
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * Returns the raw JSON value of [planId].
+         *
+         * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("planId") @ExcludeMissing fun _planId(): JsonField<String> = planId
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * Returns the raw JSON value of [planTemplateId].
+         *
+         * Unlike [planTemplateId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("planTemplateId")
         @ExcludeMissing
         fun _planTemplateId(): JsonField<String> = planTemplateId
 
         /**
-         * Specifies the segment value which you are defining a Pricing for using this call:
-         * - For each segment value defined on a Segmented Aggregation you must create a separate
-         *   Pricing and use the appropriate `aggregationId` parameter for the call.
-         * - If you specify a segment value that has not been defined for the Aggregation, you'll
-         *   receive an error.
-         * - If you've defined segment values for the Aggregation using a single wildcard or
-         *   multiple wildcards, you can create Pricing for these wildcard segment values also.
+         * Returns the raw JSON value of [segment].
          *
-         * For more details on creating Pricings for segment values on a Segmented Aggregation using
-         * this call, together with some examples, see the
-         * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
-         * in our User Documentation.
+         * Unlike [segment], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("segment") @ExcludeMissing fun _segment(): JsonField<Segment> = segment
 
         /**
-         * The default value is **FALSE**.
-         * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
-         *   account, and is not reset for pricing band rates at the start of each billing period.
-         * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
-         *   each billing period.
+         * Returns the raw JSON value of [tiersSpanPlan].
+         *
+         * Unlike [tiersSpanPlan], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("tiersSpanPlan")
         @ExcludeMissing
         fun _tiersSpanPlan(): JsonField<Boolean> = tiersSpanPlan
 
         /**
-         * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
-         *   bill as a debit.
-         * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
-         *   total of other line items for the same Product.
-         * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
-         *   total of other line items for the entire bill, which might include other Products the
-         *   Account consumes.
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -768,10 +941,22 @@ private constructor(
             fun pricingBands(pricingBands: List<PricingBand>) =
                 pricingBands(JsonField.of(pricingBands))
 
+            /**
+             * Sets [Builder.pricingBands] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pricingBands] with a well-typed `List<PricingBand>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun pricingBands(pricingBands: JsonField<List<PricingBand>>) = apply {
                 this.pricingBands = pricingBands.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [PricingBand] to [pricingBands].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addPricingBand(pricingBand: PricingBand) = apply {
                 pricingBands =
                     (pricingBands ?: JsonField.of(mutableListOf())).also {
@@ -786,8 +971,11 @@ private constructor(
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             /**
-             * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for
-             * the Plan of Plan Template._(Required)_
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
@@ -797,7 +985,13 @@ private constructor(
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
 
-            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            /**
+             * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun accountingProductId(accountingProductId: JsonField<String>) = apply {
                 this.accountingProductId = accountingProductId
             }
@@ -809,8 +1003,11 @@ private constructor(
             fun aggregationId(aggregationId: String) = aggregationId(JsonField.of(aggregationId))
 
             /**
-             * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing
-             * for a segmented aggregation.
+             * Sets [Builder.aggregationId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.aggregationId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun aggregationId(aggregationId: JsonField<String>) = apply {
                 this.aggregationId = aggregationId
@@ -819,14 +1016,26 @@ private constructor(
             /** Unique short code for the Pricing. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Unique short code for the Pricing. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /** UUID of the Compound Aggregation used to create the Pricing. */
             fun compoundAggregationId(compoundAggregationId: String) =
                 compoundAggregationId(JsonField.of(compoundAggregationId))
 
-            /** UUID of the Compound Aggregation used to create the Pricing. */
+            /**
+             * Sets [Builder.compoundAggregationId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.compoundAggregationId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun compoundAggregationId(compoundAggregationId: JsonField<String>) = apply {
                 this.compoundAggregationId = compoundAggregationId
             }
@@ -846,23 +1055,24 @@ private constructor(
             fun cumulative(cumulative: Boolean) = cumulative(JsonField.of(cumulative))
 
             /**
-             * Controls whether or not charge rates under a set of pricing bands configured for a
-             * Pricing are applied according to each separate band or at the highest band reached.
+             * Sets [Builder.cumulative] to an arbitrary JSON value.
              *
-             * _(Optional)_. The default value is **FALSE**.
-             * - When TRUE, at billing charge rates are applied according to each separate band.
-             * - When FALSE, at billing charge rates are applied according to highest band reached.
-             *
-             * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require.
-             * For example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to
-             * **FALSE**.
+             * You should usually call [Builder.cumulative] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun cumulative(cumulative: JsonField<Boolean>) = apply { this.cumulative = cumulative }
 
             /** Displayed on Bill line items. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** Displayed on Bill line items. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -876,10 +1086,11 @@ private constructor(
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the
-             * Plan or Plan Template.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
              *
-             * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
@@ -890,8 +1101,11 @@ private constructor(
             fun minimumSpend(minimumSpend: Double) = minimumSpend(JsonField.of(minimumSpend))
 
             /**
-             * The minimum spend amount per billing cycle for end customer Accounts on a Plan to
-             * which the Pricing is applied.
+             * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpend] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
                 this.minimumSpend = minimumSpend
@@ -909,12 +1123,11 @@ private constructor(
                 minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
 
             /**
-             * The default value is **FALSE**.
-             * - When TRUE, minimum spend is billed at the start of each billing period.
-             * - When FALSE, minimum spend is billed at the end of each billing period.
+             * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
              *
-             * _(Optional)_. Overrides the setting at Organization level for minimum spend billing
-             * in arrears/in advance.
+             * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
@@ -924,7 +1137,13 @@ private constructor(
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
-            /** Minimum spend description _(displayed on the bill line item)_. */
+            /**
+             * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
                 this.minimumSpendDescription = minimumSpendDescription
             }
@@ -937,16 +1156,20 @@ private constructor(
                 overagePricingBands(JsonField.of(overagePricingBands))
 
             /**
-             * Specify Prepayment/Balance overage pricing in pricing bands for the case of a
-             * **Tiered** pricing structure.
+             * Sets [Builder.overagePricingBands] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.overagePricingBands] with a well-typed
+             * `List<PricingBand>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun overagePricingBands(overagePricingBands: JsonField<List<PricingBand>>) = apply {
                 this.overagePricingBands = overagePricingBands.map { it.toMutableList() }
             }
 
             /**
-             * Specify Prepayment/Balance overage pricing in pricing bands for the case of a
-             * **Tiered** pricing structure.
+             * Adds a single [PricingBand] to [overagePricingBands].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addOveragePricingBand(overagePricingBand: PricingBand) = apply {
                 overagePricingBands =
@@ -958,14 +1181,26 @@ private constructor(
             /** UUID of the Plan the Pricing is created for. */
             fun planId(planId: String) = planId(JsonField.of(planId))
 
-            /** UUID of the Plan the Pricing is created for. */
+            /**
+             * Sets [Builder.planId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
             /** UUID of the Plan Template the Pricing is created for. */
             fun planTemplateId(planTemplateId: String) =
                 planTemplateId(JsonField.of(planTemplateId))
 
-            /** UUID of the Plan Template the Pricing is created for. */
+            /**
+             * Sets [Builder.planTemplateId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planTemplateId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planTemplateId(planTemplateId: JsonField<String>) = apply {
                 this.planTemplateId = planTemplateId
             }
@@ -987,18 +1222,11 @@ private constructor(
             fun segment(segment: Segment) = segment(JsonField.of(segment))
 
             /**
-             * Specifies the segment value which you are defining a Pricing for using this call:
-             * - For each segment value defined on a Segmented Aggregation you must create a
-             *   separate Pricing and use the appropriate `aggregationId` parameter for the call.
-             * - If you specify a segment value that has not been defined for the Aggregation,
-             *   you'll receive an error.
-             * - If you've defined segment values for the Aggregation using a single wildcard or
-             *   multiple wildcards, you can create Pricing for these wildcard segment values also.
+             * Sets [Builder.segment] to an arbitrary JSON value.
              *
-             * For more details on creating Pricings for segment values on a Segmented Aggregation
-             * using this call, together with some examples, see the
-             * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
-             * in our User Documentation.
+             * You should usually call [Builder.segment] with a well-typed [Segment] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun segment(segment: JsonField<Segment>) = apply { this.segment = segment }
 
@@ -1013,12 +1241,11 @@ private constructor(
             fun tiersSpanPlan(tiersSpanPlan: Boolean) = tiersSpanPlan(JsonField.of(tiersSpanPlan))
 
             /**
-             * The default value is **FALSE**.
-             * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
-             *   account, and is not reset for pricing band rates at the start of each billing
-             *   period.
-             * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
-             *   each billing period.
+             * Sets [Builder.tiersSpanPlan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tiersSpanPlan] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun tiersSpanPlan(tiersSpanPlan: JsonField<Boolean>) = apply {
                 this.tiersSpanPlan = tiersSpanPlan
@@ -1038,15 +1265,11 @@ private constructor(
             fun type(type: Type) = type(JsonField.of(type))
 
             /**
-             * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
-             *   bill as a debit.
-             * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as
-             *   a credit _(negative amount)_. To prevent negative billing, the bill will be capped
-             *   at the total of other line items for the same Product.
-             * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as
-             *   a credit _(negative amount)_. To prevent negative billing, the bill will be capped
-             *   at the total of other line items for the entire bill, which might include other
-             *   Products the Account consumes.
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
@@ -1061,12 +1284,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1177,10 +1399,22 @@ private constructor(
             body.pricingBands(pricingBands)
         }
 
+        /**
+         * Sets [Builder.pricingBands] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.pricingBands] with a well-typed `List<PricingBand>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun pricingBands(pricingBands: JsonField<List<PricingBand>>) = apply {
             body.pricingBands(pricingBands)
         }
 
+        /**
+         * Adds a single [PricingBand] to [pricingBands].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addPricingBand(pricingBand: PricingBand) = apply { body.addPricingBand(pricingBand) }
 
         /**
@@ -1190,8 +1424,11 @@ private constructor(
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
@@ -1200,7 +1437,13 @@ private constructor(
             body.accountingProductId(accountingProductId)
         }
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountingProductId(accountingProductId: JsonField<String>) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -1212,8 +1455,11 @@ private constructor(
         fun aggregationId(aggregationId: String) = apply { body.aggregationId(aggregationId) }
 
         /**
-         * UUID of the Aggregation used to create the Pricing. Use this when creating a Pricing for
-         * a segmented aggregation.
+         * Sets [Builder.aggregationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun aggregationId(aggregationId: JsonField<String>) = apply {
             body.aggregationId(aggregationId)
@@ -1222,7 +1468,12 @@ private constructor(
         /** Unique short code for the Pricing. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /** UUID of the Compound Aggregation used to create the Pricing. */
@@ -1230,7 +1481,13 @@ private constructor(
             body.compoundAggregationId(compoundAggregationId)
         }
 
-        /** UUID of the Compound Aggregation used to create the Pricing. */
+        /**
+         * Sets [Builder.compoundAggregationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.compoundAggregationId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun compoundAggregationId(compoundAggregationId: JsonField<String>) = apply {
             body.compoundAggregationId(compoundAggregationId)
         }
@@ -1249,22 +1506,24 @@ private constructor(
         fun cumulative(cumulative: Boolean) = apply { body.cumulative(cumulative) }
 
         /**
-         * Controls whether or not charge rates under a set of pricing bands configured for a
-         * Pricing are applied according to each separate band or at the highest band reached.
+         * Sets [Builder.cumulative] to an arbitrary JSON value.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
-         *
-         * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-         * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         * You should usually call [Builder.cumulative] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun cumulative(cumulative: JsonField<Boolean>) = apply { body.cumulative(cumulative) }
 
         /** Displayed on Bill line items. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** Displayed on Bill line items. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
@@ -1276,10 +1535,11 @@ private constructor(
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
-         * or Plan Template.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
@@ -1290,8 +1550,11 @@ private constructor(
         fun minimumSpend(minimumSpend: Double) = apply { body.minimumSpend(minimumSpend) }
 
         /**
-         * The minimum spend amount per billing cycle for end customer Accounts on a Plan to which
-         * the Pricing is applied.
+         * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpend] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
             body.minimumSpend(minimumSpend)
@@ -1310,12 +1573,11 @@ private constructor(
         }
 
         /**
-         * The default value is **FALSE**.
-         * - When TRUE, minimum spend is billed at the start of each billing period.
-         * - When FALSE, minimum spend is billed at the end of each billing period.
+         * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
          *
-         * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
-         * arrears/in advance.
+         * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
@@ -1326,7 +1588,13 @@ private constructor(
             body.minimumSpendDescription(minimumSpendDescription)
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -1340,16 +1608,20 @@ private constructor(
         }
 
         /**
-         * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-         * pricing structure.
+         * Sets [Builder.overagePricingBands] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.overagePricingBands] with a well-typed
+         * `List<PricingBand>` value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun overagePricingBands(overagePricingBands: JsonField<List<PricingBand>>) = apply {
             body.overagePricingBands(overagePricingBands)
         }
 
         /**
-         * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-         * pricing structure.
+         * Adds a single [PricingBand] to [overagePricingBands].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addOveragePricingBand(overagePricingBand: PricingBand) = apply {
             body.addOveragePricingBand(overagePricingBand)
@@ -1358,13 +1630,24 @@ private constructor(
         /** UUID of the Plan the Pricing is created for. */
         fun planId(planId: String) = apply { body.planId(planId) }
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * Sets [Builder.planId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun planId(planId: JsonField<String>) = apply { body.planId(planId) }
 
         /** UUID of the Plan Template the Pricing is created for. */
         fun planTemplateId(planTemplateId: String) = apply { body.planTemplateId(planTemplateId) }
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * Sets [Builder.planTemplateId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planTemplateId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun planTemplateId(planTemplateId: JsonField<String>) = apply {
             body.planTemplateId(planTemplateId)
         }
@@ -1386,18 +1669,10 @@ private constructor(
         fun segment(segment: Segment) = apply { body.segment(segment) }
 
         /**
-         * Specifies the segment value which you are defining a Pricing for using this call:
-         * - For each segment value defined on a Segmented Aggregation you must create a separate
-         *   Pricing and use the appropriate `aggregationId` parameter for the call.
-         * - If you specify a segment value that has not been defined for the Aggregation, you'll
-         *   receive an error.
-         * - If you've defined segment values for the Aggregation using a single wildcard or
-         *   multiple wildcards, you can create Pricing for these wildcard segment values also.
+         * Sets [Builder.segment] to an arbitrary JSON value.
          *
-         * For more details on creating Pricings for segment values on a Segmented Aggregation using
-         * this call, together with some examples, see the
-         * [Using API Call to Create Segmented Pricings](https://www.m3ter.com/docs/guides/plans-and-pricing/pricing-plans/pricing-plans-using-segmented-aggregations#using-api-call-to-create-a-segmented-pricing)
-         * in our User Documentation.
+         * You should usually call [Builder.segment] with a well-typed [Segment] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun segment(segment: JsonField<Segment>) = apply { body.segment(segment) }
 
@@ -1411,11 +1686,11 @@ private constructor(
         fun tiersSpanPlan(tiersSpanPlan: Boolean) = apply { body.tiersSpanPlan(tiersSpanPlan) }
 
         /**
-         * The default value is **FALSE**.
-         * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
-         *   account, and is not reset for pricing band rates at the start of each billing period.
-         * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
-         *   each billing period.
+         * Sets [Builder.tiersSpanPlan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tiersSpanPlan] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun tiersSpanPlan(tiersSpanPlan: JsonField<Boolean>) = apply {
             body.tiersSpanPlan(tiersSpanPlan)
@@ -1435,15 +1710,10 @@ private constructor(
         fun type(type: Type) = apply { body.type(type) }
 
         /**
-         * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
-         *   bill as a debit.
-         * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
-         *   total of other line items for the same Product.
-         * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
-         *   total of other line items for the entire bill, which might include other Products the
-         *   Account consumes.
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
@@ -1458,12 +1728,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

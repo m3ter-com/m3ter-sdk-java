@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -66,10 +67,19 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** Request containing the usage data measurements for submission. */
+    /**
+     * Request containing the usage data measurements for submission.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun measurements(): List<Measurement> = body.measurements()
 
-    /** Request containing the usage data measurements for submission. */
+    /**
+     * Returns the raw JSON value of [measurements].
+     *
+     * Unlike [measurements], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _measurements(): JsonField<List<Measurement>> = body._measurements()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -102,10 +112,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Request containing the usage data measurements for submission. */
+        /**
+         * Request containing the usage data measurements for submission.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun measurements(): List<Measurement> = measurements.getRequired("measurements")
 
-        /** Request containing the usage data measurements for submission. */
+        /**
+         * Returns the raw JSON value of [measurements].
+         *
+         * Unlike [measurements], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("measurements")
         @ExcludeMissing
         fun _measurements(): JsonField<List<Measurement>> = measurements
@@ -156,12 +176,22 @@ private constructor(
             fun measurements(measurements: List<Measurement>) =
                 measurements(JsonField.of(measurements))
 
-            /** Request containing the usage data measurements for submission. */
+            /**
+             * Sets [Builder.measurements] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.measurements] with a well-typed `List<Measurement>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun measurements(measurements: JsonField<List<Measurement>>) = apply {
                 this.measurements = measurements.map { it.toMutableList() }
             }
 
-            /** Request containing the usage data measurements for submission. */
+            /**
+             * Adds a single [Measurement] to [measurements].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addMeasurement(measurement: Measurement) = apply {
                 measurements =
                     (measurements ?: JsonField.of(mutableListOf())).also {
@@ -253,12 +283,22 @@ private constructor(
             body.measurements(measurements)
         }
 
-        /** Request containing the usage data measurements for submission. */
+        /**
+         * Sets [Builder.measurements] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.measurements] with a well-typed `List<Measurement>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun measurements(measurements: JsonField<List<Measurement>>) = apply {
             body.measurements(measurements)
         }
 
-        /** Request containing the usage data measurements for submission. */
+        /**
+         * Adds a single [Measurement] to [measurements].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addMeasurement(measurement: Measurement) = apply { body.addMeasurement(measurement) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -426,16 +466,36 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Code of the Account the measurement is for. */
+        /**
+         * Code of the Account the measurement is for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun account(): String = account.getRequired("account")
 
-        /** Short code identifying the Meter the measurement is for. */
+        /**
+         * Short code identifying the Meter the measurement is for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun meter(): String = meter.getRequired("meter")
 
-        /** Timestamp for the measurement _(in ISO 8601 format)_. */
+        /**
+         * Timestamp for the measurement _(in ISO 8601 format)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun ts(): OffsetDateTime = ts.getRequired("ts")
 
-        /** 'cost' values */
+        /**
+         * 'cost' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun cost(): Optional<Cost> = Optional.ofNullable(cost.getNullable("cost"))
 
         /**
@@ -443,75 +503,165 @@ private constructor(
          *
          * Can be used in the case a usage event needs to have an explicit start and end rather than
          * being instantaneous.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun ets(): Optional<OffsetDateTime> = Optional.ofNullable(ets.getNullable("ets"))
 
-        /** 'income' values */
+        /**
+         * 'income' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun income(): Optional<Income> = Optional.ofNullable(income.getNullable("income"))
 
-        /** 'measure' values */
+        /**
+         * 'measure' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun measure(): Optional<Measure> = Optional.ofNullable(measure.getNullable("measure"))
 
-        /** 'metadata' values */
+        /**
+         * 'metadata' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
 
-        /** 'other' values */
+        /**
+         * 'other' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun other(): Optional<Other> = Optional.ofNullable(other.getNullable("other"))
 
-        /** Unique ID for this measurement. */
+        /**
+         * Unique ID for this measurement.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun uid(): Optional<String> = Optional.ofNullable(uid.getNullable("uid"))
 
-        /** 'what' values */
+        /**
+         * 'what' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun what(): Optional<What> = Optional.ofNullable(what.getNullable("what"))
 
-        /** 'where' values */
+        /**
+         * 'where' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun where(): Optional<Where> = Optional.ofNullable(where.getNullable("where"))
 
-        /** 'who' values */
+        /**
+         * 'who' values
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun who(): Optional<Who> = Optional.ofNullable(who.getNullable("who"))
 
-        /** Code of the Account the measurement is for. */
+        /**
+         * Returns the raw JSON value of [account].
+         *
+         * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("account") @ExcludeMissing fun _account(): JsonField<String> = account
 
-        /** Short code identifying the Meter the measurement is for. */
+        /**
+         * Returns the raw JSON value of [meter].
+         *
+         * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("meter") @ExcludeMissing fun _meter(): JsonField<String> = meter
 
-        /** Timestamp for the measurement _(in ISO 8601 format)_. */
+        /**
+         * Returns the raw JSON value of [ts].
+         *
+         * Unlike [ts], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("ts") @ExcludeMissing fun _ts(): JsonField<OffsetDateTime> = ts
 
-        /** 'cost' values */
+        /**
+         * Returns the raw JSON value of [cost].
+         *
+         * Unlike [cost], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("cost") @ExcludeMissing fun _cost(): JsonField<Cost> = cost
 
         /**
-         * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+         * Returns the raw JSON value of [ets].
          *
-         * Can be used in the case a usage event needs to have an explicit start and end rather than
-         * being instantaneous.
+         * Unlike [ets], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("ets") @ExcludeMissing fun _ets(): JsonField<OffsetDateTime> = ets
 
-        /** 'income' values */
+        /**
+         * Returns the raw JSON value of [income].
+         *
+         * Unlike [income], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("income") @ExcludeMissing fun _income(): JsonField<Income> = income
 
-        /** 'measure' values */
+        /**
+         * Returns the raw JSON value of [measure].
+         *
+         * Unlike [measure], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("measure") @ExcludeMissing fun _measure(): JsonField<Measure> = measure
 
-        /** 'metadata' values */
+        /**
+         * Returns the raw JSON value of [metadata].
+         *
+         * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
-        /** 'other' values */
+        /**
+         * Returns the raw JSON value of [other].
+         *
+         * Unlike [other], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("other") @ExcludeMissing fun _other(): JsonField<Other> = other
 
-        /** Unique ID for this measurement. */
+        /**
+         * Returns the raw JSON value of [uid].
+         *
+         * Unlike [uid], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("uid") @ExcludeMissing fun _uid(): JsonField<String> = uid
 
-        /** 'what' values */
+        /**
+         * Returns the raw JSON value of [what].
+         *
+         * Unlike [what], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("what") @ExcludeMissing fun _what(): JsonField<What> = what
 
-        /** 'where' values */
+        /**
+         * Returns the raw JSON value of [where].
+         *
+         * Unlike [where], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("where") @ExcludeMissing fun _where(): JsonField<Where> = where
 
-        /** 'who' values */
+        /**
+         * Returns the raw JSON value of [who].
+         *
+         * Unlike [who], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("who") @ExcludeMissing fun _who(): JsonField<Who> = who
 
         @JsonAnyGetter
@@ -597,25 +747,49 @@ private constructor(
             /** Code of the Account the measurement is for. */
             fun account(account: String) = account(JsonField.of(account))
 
-            /** Code of the Account the measurement is for. */
+            /**
+             * Sets [Builder.account] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.account] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun account(account: JsonField<String>) = apply { this.account = account }
 
             /** Short code identifying the Meter the measurement is for. */
             fun meter(meter: String) = meter(JsonField.of(meter))
 
-            /** Short code identifying the Meter the measurement is for. */
+            /**
+             * Sets [Builder.meter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meter] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun meter(meter: JsonField<String>) = apply { this.meter = meter }
 
             /** Timestamp for the measurement _(in ISO 8601 format)_. */
             fun ts(ts: OffsetDateTime) = ts(JsonField.of(ts))
 
-            /** Timestamp for the measurement _(in ISO 8601 format)_. */
+            /**
+             * Sets [Builder.ts] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.ts] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun ts(ts: JsonField<OffsetDateTime>) = apply { this.ts = ts }
 
             /** 'cost' values */
             fun cost(cost: Cost) = cost(JsonField.of(cost))
 
-            /** 'cost' values */
+            /**
+             * Sets [Builder.cost] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.cost] with a well-typed [Cost] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun cost(cost: JsonField<Cost>) = apply { this.cost = cost }
 
             /**
@@ -627,59 +801,108 @@ private constructor(
             fun ets(ets: OffsetDateTime) = ets(JsonField.of(ets))
 
             /**
-             * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+             * Sets [Builder.ets] to an arbitrary JSON value.
              *
-             * Can be used in the case a usage event needs to have an explicit start and end rather
-             * than being instantaneous.
+             * You should usually call [Builder.ets] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun ets(ets: JsonField<OffsetDateTime>) = apply { this.ets = ets }
 
             /** 'income' values */
             fun income(income: Income) = income(JsonField.of(income))
 
-            /** 'income' values */
+            /**
+             * Sets [Builder.income] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.income] with a well-typed [Income] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun income(income: JsonField<Income>) = apply { this.income = income }
 
             /** 'measure' values */
             fun measure(measure: Measure) = measure(JsonField.of(measure))
 
-            /** 'measure' values */
+            /**
+             * Sets [Builder.measure] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.measure] with a well-typed [Measure] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun measure(measure: JsonField<Measure>) = apply { this.measure = measure }
 
             /** 'metadata' values */
             fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
-            /** 'metadata' values */
+            /**
+             * Sets [Builder.metadata] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /** 'other' values */
             fun other(other: Other) = other(JsonField.of(other))
 
-            /** 'other' values */
+            /**
+             * Sets [Builder.other] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.other] with a well-typed [Other] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun other(other: JsonField<Other>) = apply { this.other = other }
 
             /** Unique ID for this measurement. */
             fun uid(uid: String) = uid(JsonField.of(uid))
 
-            /** Unique ID for this measurement. */
+            /**
+             * Sets [Builder.uid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.uid] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun uid(uid: JsonField<String>) = apply { this.uid = uid }
 
             /** 'what' values */
             fun what(what: What) = what(JsonField.of(what))
 
-            /** 'what' values */
+            /**
+             * Sets [Builder.what] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.what] with a well-typed [What] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun what(what: JsonField<What>) = apply { this.what = what }
 
             /** 'where' values */
             fun where(where: Where) = where(JsonField.of(where))
 
-            /** 'where' values */
+            /**
+             * Sets [Builder.where] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.where] with a well-typed [Where] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun where(where: JsonField<Where>) = apply { this.where = where }
 
             /** 'who' values */
             fun who(who: Who) = who(JsonField.of(who))
 
-            /** 'who' values */
+            /**
+             * Sets [Builder.who] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.who] with a well-typed [Who] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun who(who: JsonField<Who>) = apply { this.who = who }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

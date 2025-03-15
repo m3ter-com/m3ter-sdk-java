@@ -132,12 +132,7 @@ private constructor(
          */
         fun active(active: String?) = apply { this.active = active }
 
-        /**
-         * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled
-         * BillJobs from the results.
-         * - TRUE - only active BillJobs.
-         * - FALSE - all BillJobs including completed and cancelled BillJobs.
-         */
+        /** Alias for calling [Builder.active] with `active.orElse(null)`. */
         fun active(active: Optional<String>) = active(active.getOrNull())
 
         /**
@@ -146,19 +141,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of BillJobs
-         * in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of BillJobs to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of BillJobs to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of BillJobs to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
@@ -174,17 +170,7 @@ private constructor(
          */
         fun status(status: String?) = apply { this.status = status }
 
-        /**
-         * Filter BillJobs by specific status. Allows for targeted retrieval of BillJobs based on
-         * their current processing status.
-         *
-         * Possible states are:
-         * - PENDING
-         * - INITIALIZING
-         * - RUNNING
-         * - COMPLETE
-         * - CANCELLED
-         */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<String>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

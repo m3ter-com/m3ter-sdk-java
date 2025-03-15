@@ -40,10 +40,19 @@ private constructor(
 
     fun id(): String = id
 
-    /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
+    /**
+     * The new status you want to assign to the Bill. Must be one "Pending" or "Approved".
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun status(): Status = body.status()
 
-    /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _status(): JsonField<Status> = body._status()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -77,10 +86,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
+        /**
+         * The new status you want to assign to the Bill. Must be one "Pending" or "Approved".
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun status(): Status = status.getRequired("status")
 
-        /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
+        /**
+         * Returns the raw JSON value of [status].
+         *
+         * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
         @JsonAnyGetter
@@ -131,7 +149,11 @@ private constructor(
             fun status(status: Status) = status(JsonField.of(status))
 
             /**
-             * The new status you want to assign to the Bill. Must be one "Pending" or "Approved".
+             * Sets [Builder.status] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.status] with a well-typed [Status] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun status(status: JsonField<Status>) = apply { this.status = status }
 
@@ -218,7 +240,12 @@ private constructor(
         /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
         fun status(status: Status) = apply { body.status(status) }
 
-        /** The new status you want to assign to the Bill. Must be one "Pending" or "Approved". */
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { body.status(status) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

@@ -46,7 +46,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the schedule */
+    /**
+     * The id of the schedule
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -54,10 +59,18 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** List of account IDs for which the usage data will be exported. */
+    /**
+     * List of account IDs for which the usage data will be exported.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountIds(): Optional<List<String>> =
         Optional.ofNullable(accountIds.getNullable("accountIds"))
 
@@ -72,6 +85,9 @@ private constructor(
      * - **LATEST**. Uses the most recent value. Note: Based on the timestamp `ts` value of usage
      *   data measurement submissions. If using this method, please ensure _distinct_ `ts` values
      *   are used for usage data measurement submissions.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun aggregation(): Optional<Aggregation> =
         Optional.ofNullable(aggregation.getNullable("aggregation"))
@@ -95,11 +111,19 @@ private constructor(
      *
      * **NOTE**: If you define an `aggregationFrequency` other than **ORIGINAL** and do not define
      * an `aggregation` method, then you'll receive and error.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun aggregationFrequency(): Optional<AggregationFrequency> =
         Optional.ofNullable(aggregationFrequency.getNullable("aggregationFrequency"))
 
-    /** List of meter IDs for which the usage data will be exported. */
+    /**
+     * List of meter IDs for which the usage data will be exported.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun meterIds(): Optional<List<String>> = Optional.ofNullable(meterIds.getNullable("meterIds"))
 
     /**
@@ -121,88 +145,66 @@ private constructor(
      * For more details and examples, see the
      * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
      * section in our main User Documentation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun timePeriod(): Optional<TimePeriod> =
         Optional.ofNullable(timePeriod.getNullable("timePeriod"))
 
-    /** The id of the schedule */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** List of account IDs for which the usage data will be exported. */
+    /**
+     * Returns the raw JSON value of [accountIds].
+     *
+     * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("accountIds")
     @ExcludeMissing
     fun _accountIds(): JsonField<List<String>> = accountIds
 
     /**
-     * Specifies the aggregation method applied to usage data collected in the numeric Data Fields
-     * of Meters included for the Data Export Schedule - that is, Data Fields of type **MEASURE**,
-     * **INCOME**, or **COST**:
-     * - **SUM**. Adds the values.
-     * - **MIN**. Uses the minimum value.
-     * - **MAX**. Uses the maximum value.
-     * - **COUNT**. Counts the number of values.
-     * - **LATEST**. Uses the most recent value. Note: Based on the timestamp `ts` value of usage
-     *   data measurement submissions. If using this method, please ensure _distinct_ `ts` values
-     *   are used for usage data measurement submissions.
+     * Returns the raw JSON value of [aggregation].
+     *
+     * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("aggregation")
     @ExcludeMissing
     fun _aggregation(): JsonField<Aggregation> = aggregation
 
     /**
-     * Specifies the time period for the aggregation of usage data included each time the Data
-     * Export Schedule runs:
-     * - **ORIGINAL**. Usage data is _not aggregated_. If you select to not aggregate, then raw
-     *   usage data measurements collected by all Data Field types and any Derived Fields on the
-     *   selected Meters are included in the export. This is the _Default_.
+     * Returns the raw JSON value of [aggregationFrequency].
      *
-     * If you want to aggregate usage data for the Export Schedule you must define an
-     * `aggregationFrequency`:
-     * - **HOUR**. Aggregated hourly.
-     * - **DAY**. Aggregated daily.
-     * - **WEEK**. Aggregated weekly.
-     * - **MONTH**. Aggregated monthly.
-     * - If you select to aggregate usage data for a Export Schedule, then only the aggregated usage
-     *   data collected by numeric Data Fields of type **MEASURE**, **INCOME**, or **COST** on
-     *   selected Meters are included in the export.
-     *
-     * **NOTE**: If you define an `aggregationFrequency` other than **ORIGINAL** and do not define
-     * an `aggregation` method, then you'll receive and error.
+     * Unlike [aggregationFrequency], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("aggregationFrequency")
     @ExcludeMissing
     fun _aggregationFrequency(): JsonField<AggregationFrequency> = aggregationFrequency
 
-    /** List of meter IDs for which the usage data will be exported. */
+    /**
+     * Returns the raw JSON value of [meterIds].
+     *
+     * Unlike [meterIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("meterIds") @ExcludeMissing fun _meterIds(): JsonField<List<String>> = meterIds
 
     /**
-     * Define a time period to control the range of usage data you want the data export to contain
-     * when it runs:
-     * - **TODAY**. Data collected for the current day up until the time the export runs.
-     * - **YESTERDAY**. Data collected for the day before the export runs - that is, the 24 hour
-     *   period from midnight to midnight of the day before.
-     * - **WEEK_TO_DATE**. Data collected for the period covering the current week to the date and
-     *   time the export runs, and weeks run Monday to Monday.
-     * - **CURRENT_MONTH**. Data collected for the current month in which the export is ran up to
-     *   and including the date and time the export runs.
-     * - **LAST_30_DAYS**. Data collected for the 30 days prior to the date the export is ran.
-     * - **LAST_35_DAYS**. Data collected for the 35 days prior to the date the export is ran.
-     * - **PREVIOUS_WEEK**. Data collected for the previous full week period, and weeks run Monday
-     *   to Monday.
-     * - **PREVIOUS_MONTH**. Data collected for the previous full month period.
+     * Returns the raw JSON value of [timePeriod].
      *
-     * For more details and examples, see the
-     * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
-     * section in our main User Documentation.
+     * Unlike [timePeriod], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("timePeriod")
     @ExcludeMissing
@@ -275,7 +277,12 @@ private constructor(
         /** The id of the schedule */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The id of the schedule */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -287,22 +294,32 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** List of account IDs for which the usage data will be exported. */
         fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
 
-        /** List of account IDs for which the usage data will be exported. */
+        /**
+         * Sets [Builder.accountIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountIds(accountIds: JsonField<List<String>>) = apply {
             this.accountIds = accountIds.map { it.toMutableList() }
         }
 
-        /** List of account IDs for which the usage data will be exported. */
+        /**
+         * Adds a single [String] to [accountIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAccountId(accountId: String) = apply {
             accountIds =
                 (accountIds ?: JsonField.of(mutableListOf())).also {
@@ -325,16 +342,11 @@ private constructor(
         fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
         /**
-         * Specifies the aggregation method applied to usage data collected in the numeric Data
-         * Fields of Meters included for the Data Export Schedule - that is, Data Fields of type
-         * **MEASURE**, **INCOME**, or **COST**:
-         * - **SUM**. Adds the values.
-         * - **MIN**. Uses the minimum value.
-         * - **MAX**. Uses the maximum value.
-         * - **COUNT**. Counts the number of values.
-         * - **LATEST**. Uses the most recent value. Note: Based on the timestamp `ts` value of
-         *   usage data measurement submissions. If using this method, please ensure _distinct_ `ts`
-         *   values are used for usage data measurement submissions.
+         * Sets [Builder.aggregation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun aggregation(aggregation: JsonField<Aggregation>) = apply {
             this.aggregation = aggregation
@@ -364,24 +376,11 @@ private constructor(
             aggregationFrequency(JsonField.of(aggregationFrequency))
 
         /**
-         * Specifies the time period for the aggregation of usage data included each time the Data
-         * Export Schedule runs:
-         * - **ORIGINAL**. Usage data is _not aggregated_. If you select to not aggregate, then raw
-         *   usage data measurements collected by all Data Field types and any Derived Fields on the
-         *   selected Meters are included in the export. This is the _Default_.
+         * Sets [Builder.aggregationFrequency] to an arbitrary JSON value.
          *
-         * If you want to aggregate usage data for the Export Schedule you must define an
-         * `aggregationFrequency`:
-         * - **HOUR**. Aggregated hourly.
-         * - **DAY**. Aggregated daily.
-         * - **WEEK**. Aggregated weekly.
-         * - **MONTH**. Aggregated monthly.
-         * - If you select to aggregate usage data for a Export Schedule, then only the aggregated
-         *   usage data collected by numeric Data Fields of type **MEASURE**, **INCOME**, or
-         *   **COST** on selected Meters are included in the export.
-         *
-         * **NOTE**: If you define an `aggregationFrequency` other than **ORIGINAL** and do not
-         * define an `aggregation` method, then you'll receive and error.
+         * You should usually call [Builder.aggregationFrequency] with a well-typed
+         * [AggregationFrequency] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
          */
         fun aggregationFrequency(aggregationFrequency: JsonField<AggregationFrequency>) = apply {
             this.aggregationFrequency = aggregationFrequency
@@ -390,12 +389,22 @@ private constructor(
         /** List of meter IDs for which the usage data will be exported. */
         fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
 
-        /** List of meter IDs for which the usage data will be exported. */
+        /**
+         * Sets [Builder.meterIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.meterIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun meterIds(meterIds: JsonField<List<String>>) = apply {
             this.meterIds = meterIds.map { it.toMutableList() }
         }
 
-        /** List of meter IDs for which the usage data will be exported. */
+        /**
+         * Adds a single [String] to [meterIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addMeterId(meterId: String) = apply {
             meterIds =
                 (meterIds ?: JsonField.of(mutableListOf())).also {
@@ -426,24 +435,11 @@ private constructor(
         fun timePeriod(timePeriod: TimePeriod) = timePeriod(JsonField.of(timePeriod))
 
         /**
-         * Define a time period to control the range of usage data you want the data export to
-         * contain when it runs:
-         * - **TODAY**. Data collected for the current day up until the time the export runs.
-         * - **YESTERDAY**. Data collected for the day before the export runs - that is, the 24 hour
-         *   period from midnight to midnight of the day before.
-         * - **WEEK_TO_DATE**. Data collected for the period covering the current week to the date
-         *   and time the export runs, and weeks run Monday to Monday.
-         * - **CURRENT_MONTH**. Data collected for the current month in which the export is ran up
-         *   to and including the date and time the export runs.
-         * - **LAST_30_DAYS**. Data collected for the 30 days prior to the date the export is ran.
-         * - **LAST_35_DAYS**. Data collected for the 35 days prior to the date the export is ran.
-         * - **PREVIOUS_WEEK**. Data collected for the previous full week period, and weeks run
-         *   Monday to Monday.
-         * - **PREVIOUS_MONTH**. Data collected for the previous full month period.
+         * Sets [Builder.timePeriod] to an arbitrary JSON value.
          *
-         * For more details and examples, see the
-         * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
-         * section in our main User Documentation.
+         * You should usually call [Builder.timePeriod] with a well-typed [TimePeriod] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun timePeriod(timePeriod: JsonField<TimePeriod>) = apply { this.timePeriod = timePeriod }
 

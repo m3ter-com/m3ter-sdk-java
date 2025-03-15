@@ -59,7 +59,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the Data Export Schedule. */
+    /**
+     * The id of the Data Export Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -67,103 +72,204 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** Unique short code of the Data Export Schedule. */
+    /**
+     * Unique short code of the Data Export Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
-    /** The id of the user who created this Schedule. */
+    /**
+     * The id of the user who created this Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The Export Destination ids. */
+    /**
+     * The Export Destination ids.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun destinationIds(): Optional<List<String>> =
         Optional.ofNullable(destinationIds.getNullable("destinationIds"))
 
-    /** The DateTime when the Data Export Schedule was created. */
+    /**
+     * The DateTime when the Data Export Schedule was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when the Schedule was last modified. */
+    /**
+     * The DateTime when the Schedule was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun exportFileFormat(): Optional<ExportFileFormat> =
         Optional.ofNullable(exportFileFormat.getNullable("exportFileFormat"))
 
-    /** The id of the user who last modified this Data Export Schedule. */
+    /**
+     * The id of the user who last modified this Data Export Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The name of the Data Export Schedule. */
+    /**
+     * The name of the Data Export Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
     /**
      * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
      * conjunction with the `scheduleType` parameter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun period(): Optional<Long> = Optional.ofNullable(period.getNullable("period"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun scheduleType(): Optional<ScheduleType> =
         Optional.ofNullable(scheduleType.getNullable("scheduleType"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun sourceType(): Optional<SourceType> =
         Optional.ofNullable(sourceType.getNullable("sourceType"))
 
-    /** The id of the Data Export Schedule. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** Unique short code of the Data Export Schedule. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-    /** The id of the user who created this Schedule. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The Export Destination ids. */
+    /**
+     * Returns the raw JSON value of [destinationIds].
+     *
+     * Unlike [destinationIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destinationIds")
     @ExcludeMissing
     fun _destinationIds(): JsonField<List<String>> = destinationIds
 
-    /** The DateTime when the Data Export Schedule was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when the Schedule was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
+    /**
+     * Returns the raw JSON value of [exportFileFormat].
+     *
+     * Unlike [exportFileFormat], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("exportFileFormat")
     @ExcludeMissing
     fun _exportFileFormat(): JsonField<ExportFileFormat> = exportFileFormat
 
-    /** The id of the user who last modified this Data Export Schedule. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The name of the Data Export Schedule. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
-     * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
-     * conjunction with the `scheduleType` parameter.
+     * Returns the raw JSON value of [period].
+     *
+     * Unlike [period], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("period") @ExcludeMissing fun _period(): JsonField<Long> = period
 
+    /**
+     * Returns the raw JSON value of [scheduleType].
+     *
+     * Unlike [scheduleType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("scheduleType")
     @ExcludeMissing
     fun _scheduleType(): JsonField<ScheduleType> = scheduleType
 
+    /**
+     * Returns the raw JSON value of [sourceType].
+     *
+     * Unlike [sourceType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("sourceType")
     @ExcludeMissing
     fun _sourceType(): JsonField<SourceType> = sourceType
@@ -253,7 +359,12 @@ private constructor(
         /** The id of the Data Export Schedule. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The id of the Data Export Schedule. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -265,35 +376,56 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Unique short code of the Data Export Schedule. */
         fun code(code: String) = code(JsonField.of(code))
 
-        /** Unique short code of the Data Export Schedule. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** The id of the user who created this Schedule. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The id of the user who created this Schedule. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The Export Destination ids. */
         fun destinationIds(destinationIds: List<String>) =
             destinationIds(JsonField.of(destinationIds))
 
-        /** The Export Destination ids. */
+        /**
+         * Sets [Builder.destinationIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun destinationIds(destinationIds: JsonField<List<String>>) = apply {
             this.destinationIds = destinationIds.map { it.toMutableList() }
         }
 
-        /** The Export Destination ids. */
+        /**
+         * Adds a single [String] to [destinationIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addDestinationId(destinationId: String) = apply {
             destinationIds =
                 (destinationIds ?: JsonField.of(mutableListOf())).also {
@@ -304,14 +436,26 @@ private constructor(
         /** The DateTime when the Data Export Schedule was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when the Data Export Schedule was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when the Schedule was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when the Schedule was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -319,6 +463,13 @@ private constructor(
         fun exportFileFormat(exportFileFormat: ExportFileFormat) =
             exportFileFormat(JsonField.of(exportFileFormat))
 
+        /**
+         * Sets [Builder.exportFileFormat] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.exportFileFormat] with a well-typed [ExportFileFormat]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun exportFileFormat(exportFileFormat: JsonField<ExportFileFormat>) = apply {
             this.exportFileFormat = exportFileFormat
         }
@@ -326,7 +477,13 @@ private constructor(
         /** The id of the user who last modified this Data Export Schedule. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The id of the user who last modified this Data Export Schedule. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -334,7 +491,12 @@ private constructor(
         /** The name of the Data Export Schedule. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the Data Export Schedule. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -344,19 +506,35 @@ private constructor(
         fun period(period: Long) = period(JsonField.of(period))
 
         /**
-         * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
-         * conjunction with the `scheduleType` parameter.
+         * Sets [Builder.period] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.period] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun period(period: JsonField<Long>) = apply { this.period = period }
 
         fun scheduleType(scheduleType: ScheduleType) = scheduleType(JsonField.of(scheduleType))
 
+        /**
+         * Sets [Builder.scheduleType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scheduleType] with a well-typed [ScheduleType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun scheduleType(scheduleType: JsonField<ScheduleType>) = apply {
             this.scheduleType = scheduleType
         }
 
         fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
 
+        /**
+         * Sets [Builder.sourceType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sourceType] with a well-typed [SourceType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun sourceType(sourceType: JsonField<SourceType>) = apply { this.sourceType = sourceType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -136,17 +136,13 @@ private constructor(
         fun active(active: Boolean?) = apply { this.active = active }
 
         /**
-         * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-         * - **TRUE** - only active Notifications are returned.
-         * - **FALSE** - only inactive Notifications are returned.
+         * Alias for [Builder.active].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun active(active: Boolean) = active(active as Boolean?)
 
-        /**
-         * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-         * - **TRUE** - only active Notifications are returned.
-         * - **FALSE** - only inactive Notifications are returned.
-         */
+        /** Alias for calling [Builder.active] with `active.orElse(null)`. */
         fun active(active: Optional<Boolean>) = active(active.getOrNull())
 
         /**
@@ -155,19 +151,20 @@ private constructor(
          */
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
-        /**
-         * Use this to filter the Notifications returned - only those Notifications that are based
-         * on the _Event type_ specified by `eventName` are returned.
-         */
+        /** Alias for calling [Builder.eventName] with `eventName.orElse(null)`. */
         fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         /** A list of specific Notification UUIDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** A list of specific Notification UUIDs to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** A list of specific Notification UUIDs to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /**
@@ -176,19 +173,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * Notifications in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Notifications to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of Notifications to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of Notifications to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

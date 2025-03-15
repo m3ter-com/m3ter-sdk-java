@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -26,10 +27,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** `accepted` is returned when successful. */
+    /**
+     * `accepted` is returned when successful.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun result(): Optional<String> = Optional.ofNullable(result.getNullable("result"))
 
-    /** `accepted` is returned when successful. */
+    /**
+     * Returns the raw JSON value of [result].
+     *
+     * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<String> = result
 
     @JsonAnyGetter
@@ -72,7 +82,12 @@ private constructor(
         /** `accepted` is returned when successful. */
         fun result(result: String) = result(JsonField.of(result))
 
-        /** `accepted` is returned when successful. */
+        /**
+         * Sets [Builder.result] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.result] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun result(result: JsonField<String>) = apply { this.result = result }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

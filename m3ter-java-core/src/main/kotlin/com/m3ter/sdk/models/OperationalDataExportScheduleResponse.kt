@@ -34,7 +34,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the schedule. */
+    /**
+     * The id of the schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -42,25 +47,41 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** A list of the entities whose operational data is included in the data export. */
+    /**
+     * A list of the entities whose operational data is included in the data export.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun operationalDataTypes(): Optional<List<OperationalDataType>> =
         Optional.ofNullable(operationalDataTypes.getNullable("operationalDataTypes"))
 
-    /** The id of the schedule. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** A list of the entities whose operational data is included in the data export. */
+    /**
+     * Returns the raw JSON value of [operationalDataTypes].
+     *
+     * Unlike [operationalDataTypes], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("operationalDataTypes")
     @ExcludeMissing
     fun _operationalDataTypes(): JsonField<List<OperationalDataType>> = operationalDataTypes
@@ -124,7 +145,12 @@ private constructor(
         /** The id of the schedule. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The id of the schedule. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -136,10 +162,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -147,13 +173,23 @@ private constructor(
         fun operationalDataTypes(operationalDataTypes: List<OperationalDataType>) =
             operationalDataTypes(JsonField.of(operationalDataTypes))
 
-        /** A list of the entities whose operational data is included in the data export. */
+        /**
+         * Sets [Builder.operationalDataTypes] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.operationalDataTypes] with a well-typed
+         * `List<OperationalDataType>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
         fun operationalDataTypes(operationalDataTypes: JsonField<List<OperationalDataType>>) =
             apply {
                 this.operationalDataTypes = operationalDataTypes.map { it.toMutableList() }
             }
 
-        /** A list of the entities whose operational data is included in the data export. */
+        /**
+         * Adds a single [OperationalDataType] to [operationalDataTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addOperationalDataType(operationalDataType: OperationalDataType) = apply {
             operationalDataTypes =
                 (operationalDataTypes ?: JsonField.of(mutableListOf())).also {

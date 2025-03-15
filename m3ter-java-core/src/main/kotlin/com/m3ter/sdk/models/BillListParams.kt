@@ -194,25 +194,25 @@ private constructor(
         /** Optional filter. An Account ID - returns the Bills for the single specified Account. */
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        /** Optional filter. An Account ID - returns the Bills for the single specified Account. */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
         fun billDate(billDate: String?) = apply { this.billDate = billDate }
 
-        /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
+        /** Alias for calling [Builder.billDate] with `billDate.orElse(null)`. */
         fun billDate(billDate: Optional<String>) = billDate(billDate.getOrNull())
 
         /** Only include Bills with bill dates earlier than this date. */
         fun billDateEnd(billDateEnd: String?) = apply { this.billDateEnd = billDateEnd }
 
-        /** Only include Bills with bill dates earlier than this date. */
+        /** Alias for calling [Builder.billDateEnd] with `billDateEnd.orElse(null)`. */
         fun billDateEnd(billDateEnd: Optional<String>) = billDateEnd(billDateEnd.getOrNull())
 
         /** Only include Bills with bill dates equal to or later than this date. */
         fun billDateStart(billDateStart: String?) = apply { this.billDateStart = billDateStart }
 
-        /** Only include Bills with bill dates equal to or later than this date. */
+        /** Alias for calling [Builder.billDateStart] with `billDateStart.orElse(null)`. */
         fun billDateStart(billDateStart: Optional<String>) =
             billDateStart(billDateStart.getOrNull())
 
@@ -220,6 +220,7 @@ private constructor(
             this.billingFrequency = billingFrequency
         }
 
+        /** Alias for calling [Builder.billingFrequency] with `billingFrequency.orElse(null)`. */
         fun billingFrequency(billingFrequency: Optional<String>) =
             billingFrequency(billingFrequency.getOrNull())
 
@@ -228,11 +229,15 @@ private constructor(
             this.excludeLineItems = excludeLineItems
         }
 
-        /** Exclude Line Items */
+        /**
+         * Alias for [Builder.excludeLineItems].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun excludeLineItems(excludeLineItems: Boolean) =
             excludeLineItems(excludeLineItems as Boolean?)
 
-        /** Exclude Line Items */
+        /** Alias for calling [Builder.excludeLineItems] with `excludeLineItems.orElse(null)`. */
         fun excludeLineItems(excludeLineItems: Optional<Boolean>) =
             excludeLineItems(excludeLineItems.getOrNull())
 
@@ -241,7 +246,10 @@ private constructor(
             this.externalInvoiceDateEnd = externalInvoiceDateEnd
         }
 
-        /** Only include Bills with external invoice dates earlier than this date. */
+        /**
+         * Alias for calling [Builder.externalInvoiceDateEnd] with
+         * `externalInvoiceDateEnd.orElse(null)`.
+         */
         fun externalInvoiceDateEnd(externalInvoiceDateEnd: Optional<String>) =
             externalInvoiceDateEnd(externalInvoiceDateEnd.getOrNull())
 
@@ -250,17 +258,24 @@ private constructor(
             this.externalInvoiceDateStart = externalInvoiceDateStart
         }
 
-        /** Only include Bills with external invoice dates equal to or later than this date. */
+        /**
+         * Alias for calling [Builder.externalInvoiceDateStart] with
+         * `externalInvoiceDateStart.orElse(null)`.
+         */
         fun externalInvoiceDateStart(externalInvoiceDateStart: Optional<String>) =
             externalInvoiceDateStart(externalInvoiceDateStart.getOrNull())
 
         /** Optional filter. The list of Bill IDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** Optional filter. The list of Bill IDs to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** Optional filter. The list of Bill IDs to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /** Include Bill Total */
@@ -268,11 +283,15 @@ private constructor(
             this.includeBillTotal = includeBillTotal
         }
 
-        /** Include Bill Total */
+        /**
+         * Alias for [Builder.includeBillTotal].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun includeBillTotal(includeBillTotal: Boolean) =
             includeBillTotal(includeBillTotal as Boolean?)
 
-        /** Include Bill Total */
+        /** Alias for calling [Builder.includeBillTotal] with `includeBillTotal.orElse(null)`. */
         fun includeBillTotal(includeBillTotal: Optional<Boolean>) =
             includeBillTotal(includeBillTotal.getOrNull())
 
@@ -284,17 +303,13 @@ private constructor(
         fun locked(locked: Boolean?) = apply { this.locked = locked }
 
         /**
-         * Boolean flag specifying whether to include Bills with "locked" status.
-         * - **TRUE** - the list inlcudes "locked" Bills.
-         * - **FALSE** - excludes "locked" Bills from the list.
+         * Alias for [Builder.locked].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun locked(locked: Boolean) = locked(locked as Boolean?)
 
-        /**
-         * Boolean flag specifying whether to include Bills with "locked" status.
-         * - **TRUE** - the list inlcudes "locked" Bills.
-         * - **FALSE** - excludes "locked" Bills from the list.
-         */
+        /** Alias for calling [Builder.locked] with `locked.orElse(null)`. */
         fun locked(locked: Optional<Boolean>) = locked(locked.getOrNull())
 
         /**
@@ -303,25 +318,26 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in
-         * a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Bills to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of Bills to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of Bills to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** Only include Bills having the given status */
         fun status(status: Status?) = apply { this.status = status }
 
-        /** Only include Bills having the given status */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

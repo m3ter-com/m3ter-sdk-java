@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -35,24 +36,62 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): Double = amount.getRequired("amount")
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun date(): LocalDate = date.getRequired("date")
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun servicePeriodEndDate(): OffsetDateTime =
         servicePeriodEndDate.getRequired("servicePeriodEndDate")
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun servicePeriodStartDate(): OffsetDateTime =
         servicePeriodStartDate.getRequired("servicePeriodStartDate")
 
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
+    /**
+     * Returns the raw JSON value of [date].
+     *
+     * Unlike [date], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("date") @ExcludeMissing fun _date(): JsonField<LocalDate> = date
 
+    /**
+     * Returns the raw JSON value of [servicePeriodEndDate].
+     *
+     * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("servicePeriodEndDate")
     @ExcludeMissing
     fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
 
+    /**
+     * Returns the raw JSON value of [servicePeriodStartDate].
+     *
+     * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("servicePeriodStartDate")
     @ExcludeMissing
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
@@ -113,15 +152,34 @@ private constructor(
 
         fun amount(amount: Double) = amount(JsonField.of(amount))
 
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
         fun date(date: LocalDate) = date(JsonField.of(date))
 
+        /**
+         * Sets [Builder.date] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.date] with a well-typed [LocalDate] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun date(date: JsonField<LocalDate>) = apply { this.date = date }
 
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
             servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
+        /**
+         * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodEndDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
             this.servicePeriodEndDate = servicePeriodEndDate
         }
@@ -129,6 +187,13 @@ private constructor(
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
             servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
+        /**
+         * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
             this.servicePeriodStartDate = servicePeriodStartDate
         }

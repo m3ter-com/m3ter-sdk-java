@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -30,21 +31,34 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The list of Commitments information. */
+    /**
+     * The list of Commitments information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun data(): Optional<List<CommitmentResponse>> = Optional.ofNullable(data.getNullable("data"))
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Commitments
      * in a paginated list.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
-    /** The list of Commitments information. */
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<CommitmentResponse>> = data
 
     /**
-     * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Commitments
-     * in a paginated list.
+     * Returns the raw JSON value of [nextToken].
+     *
+     * Unlike [nextToken], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("nextToken") @ExcludeMissing fun _nextToken(): JsonField<String> = nextToken
 
@@ -89,12 +103,22 @@ private constructor(
         /** The list of Commitments information. */
         fun data(data: List<CommitmentResponse>) = data(JsonField.of(data))
 
-        /** The list of Commitments information. */
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<CommitmentResponse>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun data(data: JsonField<List<CommitmentResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
-        /** The list of Commitments information. */
+        /**
+         * Adds a single [CommitmentResponse] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: CommitmentResponse) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -109,8 +133,11 @@ private constructor(
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * Commitments in a paginated list.
+         * Sets [Builder.nextToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.nextToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
 

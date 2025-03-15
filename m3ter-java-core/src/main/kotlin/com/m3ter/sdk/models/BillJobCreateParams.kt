@@ -58,13 +58,21 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+    /**
+     * An array of UUIDs representing the end customer Accounts associated with the BillJob.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountIds(): Optional<List<String>> = body.accountIds()
 
     /**
      * The specific billing date _(in ISO 8601 format)_, determining when the Bill was generated.
      *
      * For example: `"2023-01-24"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billDate(): Optional<LocalDate> = body.billDate()
 
@@ -73,6 +81,9 @@ private constructor(
      *
      * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set to 3,
      * Bills are issued every three months.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billFrequencyInterval(): Optional<Long> = body.billFrequencyInterval()
 
@@ -87,6 +98,9 @@ private constructor(
      *   the entire calendar year following.
      * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
      *   such as for billing of Prepayment/Commitment fees using a custom billing schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billingFrequency(): Optional<BillingFrequency> = body.billingFrequency()
 
@@ -94,12 +108,18 @@ private constructor(
      * An array of currency conversion rates from Bill currency to Organization currency. For
      * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
      * calculated in GBP and then converted to USD using the defined rate.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun currencyConversions(): Optional<List<CurrencyConversion>> = body.currencyConversions()
 
     /**
      * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_, determining
      * the first Bill date for daily Bills.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dayEpoch(): Optional<LocalDate> = body.dayEpoch()
 
@@ -107,6 +127,9 @@ private constructor(
      * The due date _(in ISO 8601 format)_ for payment of the Bill.
      *
      * For example: `"2023-02-24"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dueDate(): Optional<LocalDate> = body.dueDate()
 
@@ -125,6 +148,9 @@ private constructor(
      * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use the
      * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
      * call.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun externalInvoiceDate(): Optional<LocalDate> = body.externalInvoiceDate()
 
@@ -133,21 +159,35 @@ private constructor(
      * time range for the associated Bills.
      *
      * For example: `"2023-03-24"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun lastDateInBillingPeriod(): Optional<LocalDate> = body.lastDateInBillingPeriod()
 
     /**
      * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_, determining
      * the first Bill date for monthly Bills.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun monthEpoch(): Optional<LocalDate> = body.monthEpoch()
 
-    /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+    /**
+     * The currency code used for the Bill, such as USD, GBP, or EUR.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun targetCurrency(): Optional<String> = body.targetCurrency()
 
     /**
      * Specifies the time zone used for the generated Bills, ensuring alignment with the local time
      * zone.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun timezone(): Optional<String> = body.timezone()
 
@@ -158,133 +198,137 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
      * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_, determining
      * the first Bill date for weekly Bills.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun weekEpoch(): Optional<LocalDate> = body.weekEpoch()
 
     /**
      * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_, determining
      * the first Bill date for yearly Bills.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun yearEpoch(): Optional<LocalDate> = body.yearEpoch()
 
-    /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+    /**
+     * Returns the raw JSON value of [accountIds].
+     *
+     * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountIds(): JsonField<List<String>> = body._accountIds()
 
     /**
-     * The specific billing date _(in ISO 8601 format)_, determining when the Bill was generated.
+     * Returns the raw JSON value of [billDate].
      *
-     * For example: `"2023-01-24"`.
+     * Unlike [billDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billDate(): JsonField<LocalDate> = body._billDate()
 
     /**
-     * How often Bills are issued - used in conjunction with `billingFrequency`.
+     * Returns the raw JSON value of [billFrequencyInterval].
      *
-     * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set to 3,
-     * Bills are issued every three months.
+     * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _billFrequencyInterval(): JsonField<Long> = body._billFrequencyInterval()
 
     /**
-     * How often Bills are generated.
-     * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
-     *   following.
-     * - **Monthly**. Starting at midnight on the morning of the first day of each month covering
-     *   the entire calendar month following.
-     * - **Annually**. Starting at midnight on the morning of the first day of each year covering
-     *   the entire calendar year following.
-     * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
-     *   such as for billing of Prepayment/Commitment fees using a custom billing schedule.
+     * Returns the raw JSON value of [billingFrequency].
+     *
+     * Unlike [billingFrequency], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _billingFrequency(): JsonField<BillingFrequency> = body._billingFrequency()
 
     /**
-     * An array of currency conversion rates from Bill currency to Organization currency. For
-     * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
-     * calculated in GBP and then converted to USD using the defined rate.
+     * Returns the raw JSON value of [currencyConversions].
+     *
+     * Unlike [currencyConversions], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _currencyConversions(): JsonField<List<CurrencyConversion>> = body._currencyConversions()
 
     /**
-     * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_, determining
-     * the first Bill date for daily Bills.
+     * Returns the raw JSON value of [dayEpoch].
+     *
+     * Unlike [dayEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dayEpoch(): JsonField<LocalDate> = body._dayEpoch()
 
     /**
-     * The due date _(in ISO 8601 format)_ for payment of the Bill.
+     * Returns the raw JSON value of [dueDate].
      *
-     * For example: `"2023-02-24"`.
+     * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dueDate(): JsonField<LocalDate> = body._dueDate()
 
     /**
-     * For accounting purposes, the date set at Organization level to use for external invoicing
-     * with respect to billing periods - two options:
-     * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage revenue in
-     *   the following period.
-     * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
-     *   that it's consumed, instead of in the following period.
+     * Returns the raw JSON value of [externalInvoiceDate].
      *
-     * For example, if the retrieved Bill was on a monthly billing frequency and the billing period
-     * for the Bill is September 2023 and the _External invoice date_ is set at
-     * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
-     *
-     * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use the
-     * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
-     * call.
+     * Unlike [externalInvoiceDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _externalInvoiceDate(): JsonField<LocalDate> = body._externalInvoiceDate()
 
     /**
-     * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining the
-     * time range for the associated Bills.
+     * Returns the raw JSON value of [lastDateInBillingPeriod].
      *
-     * For example: `"2023-03-24"`.
+     * Unlike [lastDateInBillingPeriod], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _lastDateInBillingPeriod(): JsonField<LocalDate> = body._lastDateInBillingPeriod()
 
     /**
-     * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_, determining
-     * the first Bill date for monthly Bills.
+     * Returns the raw JSON value of [monthEpoch].
+     *
+     * Unlike [monthEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _monthEpoch(): JsonField<LocalDate> = body._monthEpoch()
 
-    /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+    /**
+     * Returns the raw JSON value of [targetCurrency].
+     *
+     * Unlike [targetCurrency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _targetCurrency(): JsonField<String> = body._targetCurrency()
 
     /**
-     * Specifies the time zone used for the generated Bills, ensuring alignment with the local time
-     * zone.
+     * Returns the raw JSON value of [timezone].
+     *
+     * Unlike [timezone], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _timezone(): JsonField<String> = body._timezone()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
     /**
-     * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_, determining
-     * the first Bill date for weekly Bills.
+     * Returns the raw JSON value of [weekEpoch].
+     *
+     * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _weekEpoch(): JsonField<LocalDate> = body._weekEpoch()
 
     /**
-     * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_, determining
-     * the first Bill date for yearly Bills.
+     * Returns the raw JSON value of [yearEpoch].
+     *
+     * Unlike [yearEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _yearEpoch(): JsonField<LocalDate> = body._yearEpoch()
 
@@ -360,7 +404,12 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+        /**
+         * An array of UUIDs representing the end customer Accounts associated with the BillJob.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountIds(): Optional<List<String>> =
             Optional.ofNullable(accountIds.getNullable("accountIds"))
 
@@ -369,6 +418,9 @@ private constructor(
          * generated.
          *
          * For example: `"2023-01-24"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billDate(): Optional<LocalDate> = Optional.ofNullable(billDate.getNullable("billDate"))
 
@@ -377,6 +429,9 @@ private constructor(
          *
          * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set
          * to 3, Bills are issued every three months.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billFrequencyInterval(): Optional<Long> =
             Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
@@ -393,6 +448,9 @@ private constructor(
          * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
          *   Account, such as for billing of Prepayment/Commitment fees using a custom billing
          *   schedule.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billingFrequency(): Optional<BillingFrequency> =
             Optional.ofNullable(billingFrequency.getNullable("billingFrequency"))
@@ -401,6 +459,9 @@ private constructor(
          * An array of currency conversion rates from Bill currency to Organization currency. For
          * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
          * calculated in GBP and then converted to USD using the defined rate.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currencyConversions(): Optional<List<CurrencyConversion>> =
             Optional.ofNullable(currencyConversions.getNullable("currencyConversions"))
@@ -408,6 +469,9 @@ private constructor(
         /**
          * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_,
          * determining the first Bill date for daily Bills.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun dayEpoch(): Optional<LocalDate> = Optional.ofNullable(dayEpoch.getNullable("dayEpoch"))
 
@@ -415,6 +479,9 @@ private constructor(
          * The due date _(in ISO 8601 format)_ for payment of the Bill.
          *
          * For example: `"2023-02-24"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("dueDate"))
 
@@ -434,6 +501,9 @@ private constructor(
          * the
          * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
          * call.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun externalInvoiceDate(): Optional<LocalDate> =
             Optional.ofNullable(externalInvoiceDate.getNullable("externalInvoiceDate"))
@@ -443,6 +513,9 @@ private constructor(
          * the time range for the associated Bills.
          *
          * For example: `"2023-03-24"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun lastDateInBillingPeriod(): Optional<LocalDate> =
             Optional.ofNullable(lastDateInBillingPeriod.getNullable("lastDateInBillingPeriod"))
@@ -450,17 +523,28 @@ private constructor(
         /**
          * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_,
          * determining the first Bill date for monthly Bills.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun monthEpoch(): Optional<LocalDate> =
             Optional.ofNullable(monthEpoch.getNullable("monthEpoch"))
 
-        /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+        /**
+         * The currency code used for the Bill, such as USD, GBP, or EUR.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun targetCurrency(): Optional<String> =
             Optional.ofNullable(targetCurrency.getNullable("targetCurrency"))
 
         /**
          * Specifies the time zone used for the generated Bills, ensuring alignment with the local
          * time zone.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun timezone(): Optional<String> = Optional.ofNullable(timezone.getNullable("timezone"))
 
@@ -471,12 +555,18 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
          * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
          * determining the first Bill date for weekly Bills.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun weekEpoch(): Optional<LocalDate> =
             Optional.ofNullable(weekEpoch.getNullable("weekEpoch"))
@@ -484,143 +574,139 @@ private constructor(
         /**
          * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_,
          * determining the first Bill date for yearly Bills.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun yearEpoch(): Optional<LocalDate> =
             Optional.ofNullable(yearEpoch.getNullable("yearEpoch"))
 
-        /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+        /**
+         * Returns the raw JSON value of [accountIds].
+         *
+         * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountIds")
         @ExcludeMissing
         fun _accountIds(): JsonField<List<String>> = accountIds
 
         /**
-         * The specific billing date _(in ISO 8601 format)_, determining when the Bill was
-         * generated.
+         * Returns the raw JSON value of [billDate].
          *
-         * For example: `"2023-01-24"`.
+         * Unlike [billDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("billDate") @ExcludeMissing fun _billDate(): JsonField<LocalDate> = billDate
 
         /**
-         * How often Bills are issued - used in conjunction with `billingFrequency`.
+         * Returns the raw JSON value of [billFrequencyInterval].
          *
-         * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set
-         * to 3, Bills are issued every three months.
+         * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
         fun _billFrequencyInterval(): JsonField<Long> = billFrequencyInterval
 
         /**
-         * How often Bills are generated.
-         * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-         * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
-         *   following.
-         * - **Monthly**. Starting at midnight on the morning of the first day of each month
-         *   covering the entire calendar month following.
-         * - **Annually**. Starting at midnight on the morning of the first day of each year
-         *   covering the entire calendar year following.
-         * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
-         *   Account, such as for billing of Prepayment/Commitment fees using a custom billing
-         *   schedule.
+         * Returns the raw JSON value of [billingFrequency].
+         *
+         * Unlike [billingFrequency], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("billingFrequency")
         @ExcludeMissing
         fun _billingFrequency(): JsonField<BillingFrequency> = billingFrequency
 
         /**
-         * An array of currency conversion rates from Bill currency to Organization currency. For
-         * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
-         * calculated in GBP and then converted to USD using the defined rate.
+         * Returns the raw JSON value of [currencyConversions].
+         *
+         * Unlike [currencyConversions], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("currencyConversions")
         @ExcludeMissing
         fun _currencyConversions(): JsonField<List<CurrencyConversion>> = currencyConversions
 
         /**
-         * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for daily Bills.
+         * Returns the raw JSON value of [dayEpoch].
+         *
+         * Unlike [dayEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dayEpoch") @ExcludeMissing fun _dayEpoch(): JsonField<LocalDate> = dayEpoch
 
         /**
-         * The due date _(in ISO 8601 format)_ for payment of the Bill.
+         * Returns the raw JSON value of [dueDate].
          *
-         * For example: `"2023-02-24"`.
+         * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dueDate") @ExcludeMissing fun _dueDate(): JsonField<LocalDate> = dueDate
 
         /**
-         * For accounting purposes, the date set at Organization level to use for external invoicing
-         * with respect to billing periods - two options:
-         * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage revenue
-         *   in the following period.
-         * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
-         *   that it's consumed, instead of in the following period.
+         * Returns the raw JSON value of [externalInvoiceDate].
          *
-         * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-         * period for the Bill is September 2023 and the _External invoice date_ is set at
-         * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
-         *
-         * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use
-         * the
-         * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
-         * call.
+         * Unlike [externalInvoiceDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("externalInvoiceDate")
         @ExcludeMissing
         fun _externalInvoiceDate(): JsonField<LocalDate> = externalInvoiceDate
 
         /**
-         * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining
-         * the time range for the associated Bills.
+         * Returns the raw JSON value of [lastDateInBillingPeriod].
          *
-         * For example: `"2023-03-24"`.
+         * Unlike [lastDateInBillingPeriod], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("lastDateInBillingPeriod")
         @ExcludeMissing
         fun _lastDateInBillingPeriod(): JsonField<LocalDate> = lastDateInBillingPeriod
 
         /**
-         * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for monthly Bills.
+         * Returns the raw JSON value of [monthEpoch].
+         *
+         * Unlike [monthEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("monthEpoch")
         @ExcludeMissing
         fun _monthEpoch(): JsonField<LocalDate> = monthEpoch
 
-        /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+        /**
+         * Returns the raw JSON value of [targetCurrency].
+         *
+         * Unlike [targetCurrency], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("targetCurrency")
         @ExcludeMissing
         fun _targetCurrency(): JsonField<String> = targetCurrency
 
         /**
-         * Specifies the time zone used for the generated Bills, ensuring alignment with the local
-         * time zone.
+         * Returns the raw JSON value of [timezone].
+         *
+         * Unlike [timezone], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("timezone") @ExcludeMissing fun _timezone(): JsonField<String> = timezone
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         /**
-         * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for weekly Bills.
+         * Returns the raw JSON value of [weekEpoch].
+         *
+         * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("weekEpoch")
         @ExcludeMissing
         fun _weekEpoch(): JsonField<LocalDate> = weekEpoch
 
         /**
-         * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for yearly Bills.
+         * Returns the raw JSON value of [yearEpoch].
+         *
+         * Unlike [yearEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("yearEpoch")
         @ExcludeMissing
@@ -709,14 +795,20 @@ private constructor(
             fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
 
             /**
-             * An array of UUIDs representing the end customer Accounts associated with the BillJob.
+             * Sets [Builder.accountIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun accountIds(accountIds: JsonField<List<String>>) = apply {
                 this.accountIds = accountIds.map { it.toMutableList() }
             }
 
             /**
-             * An array of UUIDs representing the end customer Accounts associated with the BillJob.
+             * Adds a single [String] to [accountIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addAccountId(accountId: String) = apply {
                 accountIds =
@@ -734,10 +826,11 @@ private constructor(
             fun billDate(billDate: LocalDate) = billDate(JsonField.of(billDate))
 
             /**
-             * The specific billing date _(in ISO 8601 format)_, determining when the Bill was
-             * generated.
+             * Sets [Builder.billDate] to an arbitrary JSON value.
              *
-             * For example: `"2023-01-24"`.
+             * You should usually call [Builder.billDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billDate(billDate: JsonField<LocalDate>) = apply { this.billDate = billDate }
 
@@ -751,10 +844,11 @@ private constructor(
                 billFrequencyInterval(JsonField.of(billFrequencyInterval))
 
             /**
-             * How often Bills are issued - used in conjunction with `billingFrequency`.
+             * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
              *
-             * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is
-             * set to 3, Bills are issued every three months.
+             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
                 this.billFrequencyInterval = billFrequencyInterval
@@ -778,18 +872,11 @@ private constructor(
                 billingFrequency(JsonField.of(billingFrequency))
 
             /**
-             * How often Bills are generated.
-             * - **Daily**. Starting at midnight each day, covering a twenty-four hour period
-             *   following.
-             * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
-             *   following.
-             * - **Monthly**. Starting at midnight on the morning of the first day of each month
-             *   covering the entire calendar month following.
-             * - **Annually**. Starting at midnight on the morning of the first day of each year
-             *   covering the entire calendar year following.
-             * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
-             *   Account, such as for billing of Prepayment/Commitment fees using a custom billing
-             *   schedule.
+             * Sets [Builder.billingFrequency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingFrequency] with a well-typed
+             * [BillingFrequency] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun billingFrequency(billingFrequency: JsonField<BillingFrequency>) = apply {
                 this.billingFrequency = billingFrequency
@@ -804,9 +891,11 @@ private constructor(
                 currencyConversions(JsonField.of(currencyConversions))
 
             /**
-             * An array of currency conversion rates from Bill currency to Organization currency.
-             * For example, if Account is billed in GBP and Organization is set to USD, Bill line
-             * items are calculated in GBP and then converted to USD using the defined rate.
+             * Sets [Builder.currencyConversions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currencyConversions] with a well-typed
+             * `List<CurrencyConversion>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
              */
             fun currencyConversions(currencyConversions: JsonField<List<CurrencyConversion>>) =
                 apply {
@@ -814,9 +903,9 @@ private constructor(
                 }
 
             /**
-             * An array of currency conversion rates from Bill currency to Organization currency.
-             * For example, if Account is billed in GBP and Organization is set to USD, Bill line
-             * items are calculated in GBP and then converted to USD using the defined rate.
+             * Adds a single [CurrencyConversion] to [currencyConversions].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
                 currencyConversions =
@@ -832,8 +921,11 @@ private constructor(
             fun dayEpoch(dayEpoch: LocalDate) = dayEpoch(JsonField.of(dayEpoch))
 
             /**
-             * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_,
-             * determining the first Bill date for daily Bills.
+             * Sets [Builder.dayEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dayEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun dayEpoch(dayEpoch: JsonField<LocalDate>) = apply { this.dayEpoch = dayEpoch }
 
@@ -845,9 +937,11 @@ private constructor(
             fun dueDate(dueDate: LocalDate) = dueDate(JsonField.of(dueDate))
 
             /**
-             * The due date _(in ISO 8601 format)_ for payment of the Bill.
+             * Sets [Builder.dueDate] to an arbitrary JSON value.
              *
-             * For example: `"2023-02-24"`.
+             * You should usually call [Builder.dueDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun dueDate(dueDate: JsonField<LocalDate>) = apply { this.dueDate = dueDate }
 
@@ -872,21 +966,11 @@ private constructor(
                 externalInvoiceDate(JsonField.of(externalInvoiceDate))
 
             /**
-             * For accounting purposes, the date set at Organization level to use for external
-             * invoicing with respect to billing periods - two options:
-             * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage
-             *   revenue in the following period.
-             * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same
-             *   period that it's consumed, instead of in the following period.
+             * Sets [Builder.externalInvoiceDate] to an arbitrary JSON value.
              *
-             * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-             * period for the Bill is September 2023 and the _External invoice date_ is set at
-             * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
-             *
-             * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can
-             * use the
-             * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
-             * call.
+             * You should usually call [Builder.externalInvoiceDate] with a well-typed [LocalDate]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun externalInvoiceDate(externalInvoiceDate: JsonField<LocalDate>) = apply {
                 this.externalInvoiceDate = externalInvoiceDate
@@ -902,10 +986,11 @@ private constructor(
                 lastDateInBillingPeriod(JsonField.of(lastDateInBillingPeriod))
 
             /**
-             * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period,
-             * defining the time range for the associated Bills.
+             * Sets [Builder.lastDateInBillingPeriod] to an arbitrary JSON value.
              *
-             * For example: `"2023-03-24"`.
+             * You should usually call [Builder.lastDateInBillingPeriod] with a well-typed
+             * [LocalDate] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun lastDateInBillingPeriod(lastDateInBillingPeriod: JsonField<LocalDate>) = apply {
                 this.lastDateInBillingPeriod = lastDateInBillingPeriod
@@ -918,8 +1003,11 @@ private constructor(
             fun monthEpoch(monthEpoch: LocalDate) = monthEpoch(JsonField.of(monthEpoch))
 
             /**
-             * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_,
-             * determining the first Bill date for monthly Bills.
+             * Sets [Builder.monthEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.monthEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun monthEpoch(monthEpoch: JsonField<LocalDate>) = apply {
                 this.monthEpoch = monthEpoch
@@ -929,7 +1017,13 @@ private constructor(
             fun targetCurrency(targetCurrency: String) =
                 targetCurrency(JsonField.of(targetCurrency))
 
-            /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+            /**
+             * Sets [Builder.targetCurrency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetCurrency] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun targetCurrency(targetCurrency: JsonField<String>) = apply {
                 this.targetCurrency = targetCurrency
             }
@@ -941,8 +1035,11 @@ private constructor(
             fun timezone(timezone: String) = timezone(JsonField.of(timezone))
 
             /**
-             * Specifies the time zone used for the generated Bills, ensuring alignment with the
-             * local time zone.
+             * Sets [Builder.timezone] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timezone] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
@@ -957,12 +1054,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -973,8 +1069,11 @@ private constructor(
             fun weekEpoch(weekEpoch: LocalDate) = weekEpoch(JsonField.of(weekEpoch))
 
             /**
-             * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
-             * determining the first Bill date for weekly Bills.
+             * Sets [Builder.weekEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.weekEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun weekEpoch(weekEpoch: JsonField<LocalDate>) = apply { this.weekEpoch = weekEpoch }
 
@@ -985,8 +1084,11 @@ private constructor(
             fun yearEpoch(yearEpoch: LocalDate) = yearEpoch(JsonField.of(yearEpoch))
 
             /**
-             * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_,
-             * determining the first Bill date for yearly Bills.
+             * Sets [Builder.yearEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.yearEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun yearEpoch(yearEpoch: JsonField<LocalDate>) = apply { this.yearEpoch = yearEpoch }
 
@@ -1085,10 +1187,20 @@ private constructor(
         /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
         fun accountIds(accountIds: List<String>) = apply { body.accountIds(accountIds) }
 
-        /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+        /**
+         * Sets [Builder.accountIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountIds(accountIds: JsonField<List<String>>) = apply { body.accountIds(accountIds) }
 
-        /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
+        /**
+         * Adds a single [String] to [accountIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAccountId(accountId: String) = apply { body.addAccountId(accountId) }
 
         /**
@@ -1100,10 +1212,11 @@ private constructor(
         fun billDate(billDate: LocalDate) = apply { body.billDate(billDate) }
 
         /**
-         * The specific billing date _(in ISO 8601 format)_, determining when the Bill was
-         * generated.
+         * Sets [Builder.billDate] to an arbitrary JSON value.
          *
-         * For example: `"2023-01-24"`.
+         * You should usually call [Builder.billDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billDate(billDate: JsonField<LocalDate>) = apply { body.billDate(billDate) }
 
@@ -1118,10 +1231,11 @@ private constructor(
         }
 
         /**
-         * How often Bills are issued - used in conjunction with `billingFrequency`.
+         * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
          *
-         * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set
-         * to 3, Bills are issued every three months.
+         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
@@ -1145,17 +1259,11 @@ private constructor(
         }
 
         /**
-         * How often Bills are generated.
-         * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-         * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
-         *   following.
-         * - **Monthly**. Starting at midnight on the morning of the first day of each month
-         *   covering the entire calendar month following.
-         * - **Annually**. Starting at midnight on the morning of the first day of each year
-         *   covering the entire calendar year following.
-         * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
-         *   Account, such as for billing of Prepayment/Commitment fees using a custom billing
-         *   schedule.
+         * Sets [Builder.billingFrequency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingFrequency] with a well-typed [BillingFrequency]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun billingFrequency(billingFrequency: JsonField<BillingFrequency>) = apply {
             body.billingFrequency(billingFrequency)
@@ -1171,18 +1279,20 @@ private constructor(
         }
 
         /**
-         * An array of currency conversion rates from Bill currency to Organization currency. For
-         * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
-         * calculated in GBP and then converted to USD using the defined rate.
+         * Sets [Builder.currencyConversions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currencyConversions] with a well-typed
+         * `List<CurrencyConversion>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
         fun currencyConversions(currencyConversions: JsonField<List<CurrencyConversion>>) = apply {
             body.currencyConversions(currencyConversions)
         }
 
         /**
-         * An array of currency conversion rates from Bill currency to Organization currency. For
-         * example, if Account is billed in GBP and Organization is set to USD, Bill line items are
-         * calculated in GBP and then converted to USD using the defined rate.
+         * Adds a single [CurrencyConversion] to [currencyConversions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
             body.addCurrencyConversion(currencyConversion)
@@ -1195,8 +1305,11 @@ private constructor(
         fun dayEpoch(dayEpoch: LocalDate) = apply { body.dayEpoch(dayEpoch) }
 
         /**
-         * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for daily Bills.
+         * Sets [Builder.dayEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dayEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun dayEpoch(dayEpoch: JsonField<LocalDate>) = apply { body.dayEpoch(dayEpoch) }
 
@@ -1208,9 +1321,11 @@ private constructor(
         fun dueDate(dueDate: LocalDate) = apply { body.dueDate(dueDate) }
 
         /**
-         * The due date _(in ISO 8601 format)_ for payment of the Bill.
+         * Sets [Builder.dueDate] to an arbitrary JSON value.
          *
-         * For example: `"2023-02-24"`.
+         * You should usually call [Builder.dueDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun dueDate(dueDate: JsonField<LocalDate>) = apply { body.dueDate(dueDate) }
 
@@ -1236,21 +1351,11 @@ private constructor(
         }
 
         /**
-         * For accounting purposes, the date set at Organization level to use for external invoicing
-         * with respect to billing periods - two options:
-         * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage revenue
-         *   in the following period.
-         * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
-         *   that it's consumed, instead of in the following period.
+         * Sets [Builder.externalInvoiceDate] to an arbitrary JSON value.
          *
-         * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-         * period for the Bill is September 2023 and the _External invoice date_ is set at
-         * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
-         *
-         * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use
-         * the
-         * [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/GetOrganizationConfig)
-         * call.
+         * You should usually call [Builder.externalInvoiceDate] with a well-typed [LocalDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun externalInvoiceDate(externalInvoiceDate: JsonField<LocalDate>) = apply {
             body.externalInvoiceDate(externalInvoiceDate)
@@ -1267,10 +1372,11 @@ private constructor(
         }
 
         /**
-         * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining
-         * the time range for the associated Bills.
+         * Sets [Builder.lastDateInBillingPeriod] to an arbitrary JSON value.
          *
-         * For example: `"2023-03-24"`.
+         * You should usually call [Builder.lastDateInBillingPeriod] with a well-typed [LocalDate]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun lastDateInBillingPeriod(lastDateInBillingPeriod: JsonField<LocalDate>) = apply {
             body.lastDateInBillingPeriod(lastDateInBillingPeriod)
@@ -1283,15 +1389,24 @@ private constructor(
         fun monthEpoch(monthEpoch: LocalDate) = apply { body.monthEpoch(monthEpoch) }
 
         /**
-         * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for monthly Bills.
+         * Sets [Builder.monthEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.monthEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun monthEpoch(monthEpoch: JsonField<LocalDate>) = apply { body.monthEpoch(monthEpoch) }
 
         /** The currency code used for the Bill, such as USD, GBP, or EUR. */
         fun targetCurrency(targetCurrency: String) = apply { body.targetCurrency(targetCurrency) }
 
-        /** The currency code used for the Bill, such as USD, GBP, or EUR. */
+        /**
+         * Sets [Builder.targetCurrency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetCurrency] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun targetCurrency(targetCurrency: JsonField<String>) = apply {
             body.targetCurrency(targetCurrency)
         }
@@ -1303,8 +1418,10 @@ private constructor(
         fun timezone(timezone: String) = apply { body.timezone(timezone) }
 
         /**
-         * Specifies the time zone used for the generated Bills, ensuring alignment with the local
-         * time zone.
+         * Sets [Builder.timezone] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.timezone] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun timezone(timezone: JsonField<String>) = apply { body.timezone(timezone) }
 
@@ -1319,12 +1436,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 
@@ -1335,8 +1450,11 @@ private constructor(
         fun weekEpoch(weekEpoch: LocalDate) = apply { body.weekEpoch(weekEpoch) }
 
         /**
-         * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for weekly Bills.
+         * Sets [Builder.weekEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.weekEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun weekEpoch(weekEpoch: JsonField<LocalDate>) = apply { body.weekEpoch(weekEpoch) }
 
@@ -1347,8 +1465,11 @@ private constructor(
         fun yearEpoch(yearEpoch: LocalDate) = apply { body.yearEpoch(yearEpoch) }
 
         /**
-         * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_,
-         * determining the first Bill date for yearly Bills.
+         * Sets [Builder.yearEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.yearEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun yearEpoch(yearEpoch: JsonField<LocalDate>) = apply { body.yearEpoch(yearEpoch) }
 
