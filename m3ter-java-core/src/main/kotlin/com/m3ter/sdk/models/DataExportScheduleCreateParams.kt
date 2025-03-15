@@ -295,11 +295,17 @@ private constructor(
         /** Request representing an operational schedule configuration. */
         fun body(body: Body) = apply { this.body = body }
 
-        /** Request representing an operational schedule configuration. */
+        /**
+         * Alias for calling [body] with
+         * `Body.ofOperationalDataExportScheduleRequest(operationalDataExportScheduleRequest)`.
+         */
         fun body(operationalDataExportScheduleRequest: OperationalDataExportScheduleRequest) =
             body(Body.ofOperationalDataExportScheduleRequest(operationalDataExportScheduleRequest))
 
-        /** Request representing an usage schedule configuration. */
+        /**
+         * Alias for calling [body] with
+         * `Body.ofUsageDataExportScheduleRequest(usageDataExportScheduleRequest)`.
+         */
         fun body(usageDataExportScheduleRequest: UsageDataExportScheduleRequest) =
             body(Body.ofUsageDataExportScheduleRequest(usageDataExportScheduleRequest))
 

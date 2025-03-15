@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -43,19 +44,37 @@ private constructor(
 
     fun id(): String = id
 
-    /** Currency code for the PlanGroup (For example, USD). */
+    /**
+     * Currency code for the PlanGroup (For example, USD).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun currency(): String = body.currency()
 
-    /** The name of the PlanGroup. */
+    /**
+     * The name of the PlanGroup.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
      * Optional. This PlanGroup is created as bespoke for the associated Account with this Account
      * ID.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun accountId(): Optional<String> = body.accountId()
 
-    /** The short code representing the PlanGroup. */
+    /**
+     * The short code representing the PlanGroup.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
@@ -69,13 +88,26 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
-    /** The minimum spend amount for the PlanGroup. */
+    /**
+     * The minimum spend amount for the PlanGroup.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun minimumSpend(): Optional<Double> = body.minimumSpend()
 
-    /** Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes. */
+    /**
+     * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun minimumSpendAccountingProductId(): Optional<String> = body.minimumSpendAccountingProductId()
 
     /**
@@ -83,17 +115,33 @@ private constructor(
      * setting at Organizational level for minimum spend billing in arrears/in advance.
      * - **TRUE** - minimum spend is billed at the start of each billing period.
      * - **FALSE** - minimum spend is billed at the end of each billing period.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
-    /** Description of the minimum spend, displayed on the bill line item. */
+    /**
+     * Description of the minimum spend, displayed on the bill line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun minimumSpendDescription(): Optional<String> = body.minimumSpendDescription()
 
-    /** Standing charge amount for the PlanGroup. */
+    /**
+     * Standing charge amount for the PlanGroup.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun standingCharge(): Optional<Double> = body.standingCharge()
 
     /**
      * Optional. Product ID to attribute the PlanGroup's standing charge for accounting purposes.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeAccountingProductId(): Optional<String> =
         body.standingChargeAccountingProductId()
@@ -103,10 +151,18 @@ private constructor(
      * setting at Organizational level for standing charge billing in arrears/in advance.
      * - **TRUE** - standing charge is billed at the start of each billing period.
      * - **FALSE** - standing charge is billed at the end of each billing period.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeBillInAdvance(): Optional<Boolean> = body.standingChargeBillInAdvance()
 
-    /** Description of the standing charge, displayed on the bill line item. */
+    /**
+     * Description of the standing charge, displayed on the bill line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun standingChargeDescription(): Optional<String> = body.standingChargeDescription()
 
     /**
@@ -116,83 +172,115 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** Currency code for the PlanGroup (For example, USD). */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<String> = body._currency()
 
-    /** The name of the PlanGroup. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * Optional. This PlanGroup is created as bespoke for the associated Account with this Account
-     * ID.
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _accountId(): JsonField<String> = body._accountId()
 
-    /** The short code representing the PlanGroup. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational level,
-     * `customField` values defined at individual level override values of `customFields` with the
-     * same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
-    /** The minimum spend amount for the PlanGroup. */
+    /**
+     * Returns the raw JSON value of [minimumSpend].
+     *
+     * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _minimumSpend(): JsonField<Double> = body._minimumSpend()
 
-    /** Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes. */
+    /**
+     * Returns the raw JSON value of [minimumSpendAccountingProductId].
+     *
+     * Unlike [minimumSpendAccountingProductId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _minimumSpendAccountingProductId(): JsonField<String> =
         body._minimumSpendAccountingProductId()
 
     /**
-     * A boolean flag that determines when the minimum spend is billed. This flag overrides the
-     * setting at Organizational level for minimum spend billing in arrears/in advance.
-     * - **TRUE** - minimum spend is billed at the start of each billing period.
-     * - **FALSE** - minimum spend is billed at the end of each billing period.
+     * Returns the raw JSON value of [minimumSpendBillInAdvance].
+     *
+     * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _minimumSpendBillInAdvance(): JsonField<Boolean> = body._minimumSpendBillInAdvance()
 
-    /** Description of the minimum spend, displayed on the bill line item. */
+    /**
+     * Returns the raw JSON value of [minimumSpendDescription].
+     *
+     * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _minimumSpendDescription(): JsonField<String> = body._minimumSpendDescription()
 
-    /** Standing charge amount for the PlanGroup. */
+    /**
+     * Returns the raw JSON value of [standingCharge].
+     *
+     * Unlike [standingCharge], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _standingCharge(): JsonField<Double> = body._standingCharge()
 
     /**
-     * Optional. Product ID to attribute the PlanGroup's standing charge for accounting purposes.
+     * Returns the raw JSON value of [standingChargeAccountingProductId].
+     *
+     * Unlike [standingChargeAccountingProductId], this method doesn't throw if the JSON field has
+     * an unexpected type.
      */
     fun _standingChargeAccountingProductId(): JsonField<String> =
         body._standingChargeAccountingProductId()
 
     /**
-     * A boolean flag that determines when the standing charge is billed. This flag overrides the
-     * setting at Organizational level for standing charge billing in arrears/in advance.
-     * - **TRUE** - standing charge is billed at the start of each billing period.
-     * - **FALSE** - standing charge is billed at the end of each billing period.
+     * Returns the raw JSON value of [standingChargeBillInAdvance].
+     *
+     * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _standingChargeBillInAdvance(): JsonField<Boolean> = body._standingChargeBillInAdvance()
 
-    /** Description of the standing charge, displayed on the bill line item. */
+    /**
+     * Returns the raw JSON value of [standingChargeDescription].
+     *
+     * Unlike [standingChargeDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _standingChargeDescription(): JsonField<String> = body._standingChargeDescription()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -266,19 +354,37 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Currency code for the PlanGroup (For example, USD). */
+        /**
+         * Currency code for the PlanGroup (For example, USD).
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
-        /** The name of the PlanGroup. */
+        /**
+         * The name of the PlanGroup.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
          * Optional. This PlanGroup is created as bespoke for the associated Account with this
          * Account ID.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
 
-        /** The short code representing the PlanGroup. */
+        /**
+         * The short code representing the PlanGroup.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
@@ -292,16 +398,27 @@ private constructor(
          * See
          * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
 
-        /** The minimum spend amount for the PlanGroup. */
+        /**
+         * The minimum spend amount for the PlanGroup.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun minimumSpend(): Optional<Double> =
             Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
 
         /**
          * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpendAccountingProductId(): Optional<String> =
             Optional.ofNullable(
@@ -313,21 +430,37 @@ private constructor(
          * setting at Organizational level for minimum spend billing in arrears/in advance.
          * - **TRUE** - minimum spend is billed at the start of each billing period.
          * - **FALSE** - minimum spend is billed at the end of each billing period.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
 
-        /** Description of the minimum spend, displayed on the bill line item. */
+        /**
+         * Description of the minimum spend, displayed on the bill line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun minimumSpendDescription(): Optional<String> =
             Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
 
-        /** Standing charge amount for the PlanGroup. */
+        /**
+         * Standing charge amount for the PlanGroup.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun standingCharge(): Optional<Double> =
             Optional.ofNullable(standingCharge.getNullable("standingCharge"))
 
         /**
          * Optional. Product ID to attribute the PlanGroup's standing charge for accounting
          * purposes.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeAccountingProductId(): Optional<String> =
             Optional.ofNullable(
@@ -339,13 +472,21 @@ private constructor(
          * the setting at Organizational level for standing charge billing in arrears/in advance.
          * - **TRUE** - standing charge is billed at the start of each billing period.
          * - **FALSE** - standing charge is billed at the end of each billing period.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(
                 standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance")
             )
 
-        /** Description of the standing charge, displayed on the bill line item. */
+        /**
+         * Description of the standing charge, displayed on the bill line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun standingChargeDescription(): Optional<String> =
             Optional.ofNullable(standingChargeDescription.getNullable("standingChargeDescription"))
 
@@ -356,75 +497,105 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Currency code for the PlanGroup (For example, USD). */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-        /** The name of the PlanGroup. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * Optional. This PlanGroup is created as bespoke for the associated Account with this
-         * Account ID.
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
-        /** The short code representing the PlanGroup. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Returns the raw JSON value of [customFields].
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
-        /** The minimum spend amount for the PlanGroup. */
+        /**
+         * Returns the raw JSON value of [minimumSpend].
+         *
+         * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("minimumSpend")
         @ExcludeMissing
         fun _minimumSpend(): JsonField<Double> = minimumSpend
 
         /**
-         * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes.
+         * Returns the raw JSON value of [minimumSpendAccountingProductId].
+         *
+         * Unlike [minimumSpendAccountingProductId], this method doesn't throw if the JSON field has
+         * an unexpected type.
          */
         @JsonProperty("minimumSpendAccountingProductId")
         @ExcludeMissing
         fun _minimumSpendAccountingProductId(): JsonField<String> = minimumSpendAccountingProductId
 
         /**
-         * A boolean flag that determines when the minimum spend is billed. This flag overrides the
-         * setting at Organizational level for minimum spend billing in arrears/in advance.
-         * - **TRUE** - minimum spend is billed at the start of each billing period.
-         * - **FALSE** - minimum spend is billed at the end of each billing period.
+         * Returns the raw JSON value of [minimumSpendBillInAdvance].
+         *
+         * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("minimumSpendBillInAdvance")
         @ExcludeMissing
         fun _minimumSpendBillInAdvance(): JsonField<Boolean> = minimumSpendBillInAdvance
 
-        /** Description of the minimum spend, displayed on the bill line item. */
+        /**
+         * Returns the raw JSON value of [minimumSpendDescription].
+         *
+         * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("minimumSpendDescription")
         @ExcludeMissing
         fun _minimumSpendDescription(): JsonField<String> = minimumSpendDescription
 
-        /** Standing charge amount for the PlanGroup. */
+        /**
+         * Returns the raw JSON value of [standingCharge].
+         *
+         * Unlike [standingCharge], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("standingCharge")
         @ExcludeMissing
         fun _standingCharge(): JsonField<Double> = standingCharge
 
         /**
-         * Optional. Product ID to attribute the PlanGroup's standing charge for accounting
-         * purposes.
+         * Returns the raw JSON value of [standingChargeAccountingProductId].
+         *
+         * Unlike [standingChargeAccountingProductId], this method doesn't throw if the JSON field
+         * has an unexpected type.
          */
         @JsonProperty("standingChargeAccountingProductId")
         @ExcludeMissing
@@ -432,27 +603,29 @@ private constructor(
             standingChargeAccountingProductId
 
         /**
-         * A boolean flag that determines when the standing charge is billed. This flag overrides
-         * the setting at Organizational level for standing charge billing in arrears/in advance.
-         * - **TRUE** - standing charge is billed at the start of each billing period.
-         * - **FALSE** - standing charge is billed at the end of each billing period.
+         * Returns the raw JSON value of [standingChargeBillInAdvance].
+         *
+         * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("standingChargeBillInAdvance")
         @ExcludeMissing
         fun _standingChargeBillInAdvance(): JsonField<Boolean> = standingChargeBillInAdvance
 
-        /** Description of the standing charge, displayed on the bill line item. */
+        /**
+         * Returns the raw JSON value of [standingChargeDescription].
+         *
+         * Unlike [standingChargeDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("standingChargeDescription")
         @ExcludeMissing
         fun _standingChargeDescription(): JsonField<String> = standingChargeDescription
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -541,13 +714,25 @@ private constructor(
             /** Currency code for the PlanGroup (For example, USD). */
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            /** Currency code for the PlanGroup (For example, USD). */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /** The name of the PlanGroup. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the PlanGroup. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -557,15 +742,24 @@ private constructor(
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
             /**
-             * Optional. This PlanGroup is created as bespoke for the associated Account with this
-             * Account ID.
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /** The short code representing the PlanGroup. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** The short code representing the PlanGroup. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -583,16 +777,11 @@ private constructor(
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
             /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
+             * Sets [Builder.customFields] to an arbitrary JSON value.
              *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
@@ -601,7 +790,13 @@ private constructor(
             /** The minimum spend amount for the PlanGroup. */
             fun minimumSpend(minimumSpend: Double) = minimumSpend(JsonField.of(minimumSpend))
 
-            /** The minimum spend amount for the PlanGroup. */
+            /**
+             * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpend] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
                 this.minimumSpend = minimumSpend
             }
@@ -614,8 +809,11 @@ private constructor(
                 minimumSpendAccountingProductId(JsonField.of(minimumSpendAccountingProductId))
 
             /**
-             * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting
-             * purposes.
+             * Sets [Builder.minimumSpendAccountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendAccountingProductId] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun minimumSpendAccountingProductId(
                 minimumSpendAccountingProductId: JsonField<String>
@@ -631,10 +829,11 @@ private constructor(
                 minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
 
             /**
-             * A boolean flag that determines when the minimum spend is billed. This flag overrides
-             * the setting at Organizational level for minimum spend billing in arrears/in advance.
-             * - **TRUE** - minimum spend is billed at the start of each billing period.
-             * - **FALSE** - minimum spend is billed at the end of each billing period.
+             * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
@@ -644,7 +843,13 @@ private constructor(
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
-            /** Description of the minimum spend, displayed on the bill line item. */
+            /**
+             * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
                 this.minimumSpendDescription = minimumSpendDescription
             }
@@ -653,7 +858,13 @@ private constructor(
             fun standingCharge(standingCharge: Double) =
                 standingCharge(JsonField.of(standingCharge))
 
-            /** Standing charge amount for the PlanGroup. */
+            /**
+             * Sets [Builder.standingCharge] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingCharge] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun standingCharge(standingCharge: JsonField<Double>) = apply {
                 this.standingCharge = standingCharge
             }
@@ -666,8 +877,11 @@ private constructor(
                 standingChargeAccountingProductId(JsonField.of(standingChargeAccountingProductId))
 
             /**
-             * Optional. Product ID to attribute the PlanGroup's standing charge for accounting
-             * purposes.
+             * Sets [Builder.standingChargeAccountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeAccountingProductId] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun standingChargeAccountingProductId(
                 standingChargeAccountingProductId: JsonField<String>
@@ -684,11 +898,11 @@ private constructor(
                 standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
 
             /**
-             * A boolean flag that determines when the standing charge is billed. This flag
-             * overrides the setting at Organizational level for standing charge billing in
-             * arrears/in advance.
-             * - **TRUE** - standing charge is billed at the start of each billing period.
-             * - **FALSE** - standing charge is billed at the end of each billing period.
+             * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) =
                 apply {
@@ -699,7 +913,13 @@ private constructor(
             fun standingChargeDescription(standingChargeDescription: String) =
                 standingChargeDescription(JsonField.of(standingChargeDescription))
 
-            /** Description of the standing charge, displayed on the bill line item. */
+            /**
+             * Sets [Builder.standingChargeDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeDescription] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun standingChargeDescription(standingChargeDescription: JsonField<String>) = apply {
                 this.standingChargeDescription = standingChargeDescription
             }
@@ -715,12 +935,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -825,13 +1044,23 @@ private constructor(
         /** Currency code for the PlanGroup (For example, USD). */
         fun currency(currency: String) = apply { body.currency(currency) }
 
-        /** Currency code for the PlanGroup (For example, USD). */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /** The name of the PlanGroup. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the PlanGroup. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -841,15 +1070,23 @@ private constructor(
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
         /**
-         * Optional. This PlanGroup is created as bespoke for the associated Account with this
-         * Account ID.
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /** The short code representing the PlanGroup. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** The short code representing the PlanGroup. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -867,16 +1104,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
@@ -885,7 +1117,13 @@ private constructor(
         /** The minimum spend amount for the PlanGroup. */
         fun minimumSpend(minimumSpend: Double) = apply { body.minimumSpend(minimumSpend) }
 
-        /** The minimum spend amount for the PlanGroup. */
+        /**
+         * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpend] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
             body.minimumSpend(minimumSpend)
         }
@@ -898,7 +1136,11 @@ private constructor(
         }
 
         /**
-         * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes.
+         * Sets [Builder.minimumSpendAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendAccountingProductId] with a well-typed
+         * [String] value instead. This method is primarily for setting the field to an undocumented
+         * or not yet supported value.
          */
         fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: JsonField<String>) =
             apply {
@@ -916,10 +1158,11 @@ private constructor(
         }
 
         /**
-         * A boolean flag that determines when the minimum spend is billed. This flag overrides the
-         * setting at Organizational level for minimum spend billing in arrears/in advance.
-         * - **TRUE** - minimum spend is billed at the start of each billing period.
-         * - **FALSE** - minimum spend is billed at the end of each billing period.
+         * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
@@ -930,7 +1173,13 @@ private constructor(
             body.minimumSpendDescription(minimumSpendDescription)
         }
 
-        /** Description of the minimum spend, displayed on the bill line item. */
+        /**
+         * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -938,7 +1187,13 @@ private constructor(
         /** Standing charge amount for the PlanGroup. */
         fun standingCharge(standingCharge: Double) = apply { body.standingCharge(standingCharge) }
 
-        /** Standing charge amount for the PlanGroup. */
+        /**
+         * Sets [Builder.standingCharge] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingCharge] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun standingCharge(standingCharge: JsonField<Double>) = apply {
             body.standingCharge(standingCharge)
         }
@@ -952,8 +1207,11 @@ private constructor(
         }
 
         /**
-         * Optional. Product ID to attribute the PlanGroup's standing charge for accounting
-         * purposes.
+         * Sets [Builder.standingChargeAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeAccountingProductId] with a well-typed
+         * [String] value instead. This method is primarily for setting the field to an undocumented
+         * or not yet supported value.
          */
         fun standingChargeAccountingProductId(
             standingChargeAccountingProductId: JsonField<String>
@@ -970,10 +1228,11 @@ private constructor(
         }
 
         /**
-         * A boolean flag that determines when the standing charge is billed. This flag overrides
-         * the setting at Organizational level for standing charge billing in arrears/in advance.
-         * - **TRUE** - standing charge is billed at the start of each billing period.
-         * - **FALSE** - standing charge is billed at the end of each billing period.
+         * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) = apply {
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
@@ -984,7 +1243,13 @@ private constructor(
             body.standingChargeDescription(standingChargeDescription)
         }
 
-        /** Description of the standing charge, displayed on the bill line item. */
+        /**
+         * Sets [Builder.standingChargeDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun standingChargeDescription(standingChargeDescription: JsonField<String>) = apply {
             body.standingChargeDescription(standingChargeDescription)
         }
@@ -1000,12 +1265,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

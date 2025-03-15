@@ -44,48 +44,102 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the user who created this item for the resource group. */
+    /**
+     * The id of the user who created this item for the resource group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The DateTime when the item was created for the resource group. */
+    /**
+     * The DateTime when the item was created for the resource group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when the resource group item was last modified. */
+    /**
+     * The DateTime when the resource group item was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The id of the user who last modified this item for the resource group. */
+    /**
+     * The id of the user who last modified this item for the resource group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The UUID of the item. */
+    /**
+     * The UUID of the item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun targetId(): Optional<String> = Optional.ofNullable(targetId.getNullable("targetId"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun targetType(): Optional<TargetType> =
         Optional.ofNullable(targetType.getNullable("targetType"))
 
-    /** The id of the user who created this item for the resource group. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The DateTime when the item was created for the resource group. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when the resource group item was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The id of the user who last modified this item for the resource group. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The UUID of the item. */
+    /**
+     * Returns the raw JSON value of [targetId].
+     *
+     * Unlike [targetId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("targetId") @ExcludeMissing fun _targetId(): JsonField<String> = targetId
 
+    /**
+     * Returns the raw JSON value of [targetType].
+     *
+     * Unlike [targetType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("targetType")
     @ExcludeMissing
     fun _targetType(): JsonField<TargetType> = targetType
@@ -148,20 +202,38 @@ private constructor(
         /** The id of the user who created this item for the resource group. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The id of the user who created this item for the resource group. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The DateTime when the item was created for the resource group. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when the item was created for the resource group. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when the resource group item was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when the resource group item was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -169,7 +241,13 @@ private constructor(
         /** The id of the user who last modified this item for the resource group. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The id of the user who last modified this item for the resource group. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -177,11 +255,23 @@ private constructor(
         /** The UUID of the item. */
         fun targetId(targetId: String) = targetId(JsonField.of(targetId))
 
-        /** The UUID of the item. */
+        /**
+         * Sets [Builder.targetId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun targetId(targetId: JsonField<String>) = apply { this.targetId = targetId }
 
         fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
 
+        /**
+         * Sets [Builder.targetType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetType] with a well-typed [TargetType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun targetType(targetType: JsonField<TargetType>) = apply { this.targetType = targetType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

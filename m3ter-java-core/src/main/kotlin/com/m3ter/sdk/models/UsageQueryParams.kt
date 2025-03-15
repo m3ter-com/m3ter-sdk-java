@@ -45,40 +45,113 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** ISO 8601 formatted end date to filter by. */
+    /**
+     * ISO 8601 formatted end date to filter by.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun endDate(): OffsetDateTime = body.endDate()
 
-    /** ISO 8601 formatted start date to filter by. */
+    /**
+     * ISO 8601 formatted start date to filter by.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun startDate(): OffsetDateTime = body.startDate()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountIds(): Optional<List<String>> = body.accountIds()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun aggregations(): Optional<List<Aggregation>> = body.aggregations()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dimensionFilters(): Optional<List<DimensionFilter>> = body.dimensionFilters()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun groups(): Optional<List<Group>> = body.groups()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun limit(): Optional<Long> = body.limit()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun meterIds(): Optional<List<String>> = body.meterIds()
 
-    /** ISO 8601 formatted end date to filter by. */
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
-    /** ISO 8601 formatted start date to filter by. */
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
 
+    /**
+     * Returns the raw JSON value of [accountIds].
+     *
+     * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountIds(): JsonField<List<String>> = body._accountIds()
 
+    /**
+     * Returns the raw JSON value of [aggregations].
+     *
+     * Unlike [aggregations], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _aggregations(): JsonField<List<Aggregation>> = body._aggregations()
 
+    /**
+     * Returns the raw JSON value of [dimensionFilters].
+     *
+     * Unlike [dimensionFilters], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _dimensionFilters(): JsonField<List<DimensionFilter>> = body._dimensionFilters()
 
+    /**
+     * Returns the raw JSON value of [groups].
+     *
+     * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _groups(): JsonField<List<Group>> = body._groups()
 
+    /**
+     * Returns the raw JSON value of [limit].
+     *
+     * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _limit(): JsonField<Long> = body._limit()
 
+    /**
+     * Returns the raw JSON value of [meterIds].
+     *
+     * Unlike [meterIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _meterIds(): JsonField<List<String>> = body._meterIds()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -132,52 +205,126 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** ISO 8601 formatted end date to filter by. */
+        /**
+         * ISO 8601 formatted end date to filter by.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
 
-        /** ISO 8601 formatted start date to filter by. */
+        /**
+         * ISO 8601 formatted start date to filter by.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountIds(): Optional<List<String>> =
             Optional.ofNullable(accountIds.getNullable("accountIds"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun aggregations(): Optional<List<Aggregation>> =
             Optional.ofNullable(aggregations.getNullable("aggregations"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun dimensionFilters(): Optional<List<DimensionFilter>> =
             Optional.ofNullable(dimensionFilters.getNullable("dimensionFilters"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun groups(): Optional<List<Group>> = Optional.ofNullable(groups.getNullable("groups"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun limit(): Optional<Long> = Optional.ofNullable(limit.getNullable("limit"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun meterIds(): Optional<List<String>> =
             Optional.ofNullable(meterIds.getNullable("meterIds"))
 
-        /** ISO 8601 formatted end date to filter by. */
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-        /** ISO 8601 formatted start date to filter by. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+        /**
+         * Returns the raw JSON value of [accountIds].
+         *
+         * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountIds")
         @ExcludeMissing
         fun _accountIds(): JsonField<List<String>> = accountIds
 
+        /**
+         * Returns the raw JSON value of [aggregations].
+         *
+         * Unlike [aggregations], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("aggregations")
         @ExcludeMissing
         fun _aggregations(): JsonField<List<Aggregation>> = aggregations
 
+        /**
+         * Returns the raw JSON value of [dimensionFilters].
+         *
+         * Unlike [dimensionFilters], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("dimensionFilters")
         @ExcludeMissing
         fun _dimensionFilters(): JsonField<List<DimensionFilter>> = dimensionFilters
 
+        /**
+         * Returns the raw JSON value of [groups].
+         *
+         * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("groups") @ExcludeMissing fun _groups(): JsonField<List<Group>> = groups
 
+        /**
+         * Returns the raw JSON value of [limit].
+         *
+         * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("limit") @ExcludeMissing fun _limit(): JsonField<Long> = limit
 
+        /**
+         * Returns the raw JSON value of [meterIds].
+         *
+         * Unlike [meterIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("meterIds")
         @ExcludeMissing
         fun _meterIds(): JsonField<List<String>> = meterIds
@@ -249,23 +396,47 @@ private constructor(
             /** ISO 8601 formatted end date to filter by. */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
-            /** ISO 8601 formatted end date to filter by. */
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** ISO 8601 formatted start date to filter by. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** ISO 8601 formatted start date to filter by. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
 
             fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
 
+            /**
+             * Sets [Builder.accountIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountIds(accountIds: JsonField<List<String>>) = apply {
                 this.accountIds = accountIds.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [String] to [accountIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAccountId(accountId: String) = apply {
                 accountIds =
                     (accountIds ?: JsonField.of(mutableListOf())).also {
@@ -276,10 +447,22 @@ private constructor(
             fun aggregations(aggregations: List<Aggregation>) =
                 aggregations(JsonField.of(aggregations))
 
+            /**
+             * Sets [Builder.aggregations] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.aggregations] with a well-typed `List<Aggregation>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun aggregations(aggregations: JsonField<List<Aggregation>>) = apply {
                 this.aggregations = aggregations.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [Aggregation] to [aggregations].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addAggregation(aggregation: Aggregation) = apply {
                 aggregations =
                     (aggregations ?: JsonField.of(mutableListOf())).also {
@@ -290,10 +473,22 @@ private constructor(
             fun dimensionFilters(dimensionFilters: List<DimensionFilter>) =
                 dimensionFilters(JsonField.of(dimensionFilters))
 
+            /**
+             * Sets [Builder.dimensionFilters] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dimensionFilters] with a well-typed
+             * `List<DimensionFilter>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
             fun dimensionFilters(dimensionFilters: JsonField<List<DimensionFilter>>) = apply {
                 this.dimensionFilters = dimensionFilters.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [DimensionFilter] to [dimensionFilters].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addDimensionFilter(dimensionFilter: DimensionFilter) = apply {
                 dimensionFilters =
                     (dimensionFilters ?: JsonField.of(mutableListOf())).also {
@@ -303,10 +498,22 @@ private constructor(
 
             fun groups(groups: List<Group>) = groups(JsonField.of(groups))
 
+            /**
+             * Sets [Builder.groups] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groups] with a well-typed `List<Group>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun groups(groups: JsonField<List<Group>>) = apply {
                 this.groups = groups.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [Group] to [groups].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addGroup(group: Group) = apply {
                 groups =
                     (groups ?: JsonField.of(mutableListOf())).also {
@@ -314,28 +521,52 @@ private constructor(
                     }
             }
 
-            /** Group by account */
+            /**
+             * Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`.
+             */
             fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) =
                 addGroup(Group.ofDataExplorerAccount(dataExplorerAccount))
 
-            /** Group by dimension */
+            /**
+             * Alias for calling [addGroup] with
+             * `Group.ofDataExplorerDimension(dataExplorerDimension)`.
+             */
             fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) =
                 addGroup(Group.ofDataExplorerDimension(dataExplorerDimension))
 
-            /** Group by time */
+            /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
             fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) =
                 addGroup(Group.ofDataExplorerTime(dataExplorerTime))
 
             fun limit(limit: Long) = limit(JsonField.of(limit))
 
+            /**
+             * Sets [Builder.limit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
 
             fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
 
+            /**
+             * Sets [Builder.meterIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meterIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun meterIds(meterIds: JsonField<List<String>>) = apply {
                 this.meterIds = meterIds.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [String] to [meterIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addMeterId(meterId: String) = apply {
                 meterIds =
                     (meterIds ?: JsonField.of(mutableListOf())).also {
@@ -433,72 +664,152 @@ private constructor(
         /** ISO 8601 formatted end date to filter by. */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
-        /** ISO 8601 formatted end date to filter by. */
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
         /** ISO 8601 formatted start date to filter by. */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
-        /** ISO 8601 formatted start date to filter by. */
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
         fun accountIds(accountIds: List<String>) = apply { body.accountIds(accountIds) }
 
+        /**
+         * Sets [Builder.accountIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountIds(accountIds: JsonField<List<String>>) = apply { body.accountIds(accountIds) }
 
+        /**
+         * Adds a single [String] to [accountIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAccountId(accountId: String) = apply { body.addAccountId(accountId) }
 
         fun aggregations(aggregations: List<Aggregation>) = apply {
             body.aggregations(aggregations)
         }
 
+        /**
+         * Sets [Builder.aggregations] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregations] with a well-typed `List<Aggregation>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun aggregations(aggregations: JsonField<List<Aggregation>>) = apply {
             body.aggregations(aggregations)
         }
 
+        /**
+         * Adds a single [Aggregation] to [aggregations].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAggregation(aggregation: Aggregation) = apply { body.addAggregation(aggregation) }
 
         fun dimensionFilters(dimensionFilters: List<DimensionFilter>) = apply {
             body.dimensionFilters(dimensionFilters)
         }
 
+        /**
+         * Sets [Builder.dimensionFilters] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dimensionFilters] with a well-typed
+         * `List<DimensionFilter>` value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
         fun dimensionFilters(dimensionFilters: JsonField<List<DimensionFilter>>) = apply {
             body.dimensionFilters(dimensionFilters)
         }
 
+        /**
+         * Adds a single [DimensionFilter] to [dimensionFilters].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addDimensionFilter(dimensionFilter: DimensionFilter) = apply {
             body.addDimensionFilter(dimensionFilter)
         }
 
         fun groups(groups: List<Group>) = apply { body.groups(groups) }
 
+        /**
+         * Sets [Builder.groups] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groups] with a well-typed `List<Group>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun groups(groups: JsonField<List<Group>>) = apply { body.groups(groups) }
 
+        /**
+         * Adds a single [Group] to [groups].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addGroup(group: Group) = apply { body.addGroup(group) }
 
-        /** Group by account */
+        /** Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`. */
         fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) = apply {
             body.addGroup(dataExplorerAccount)
         }
 
-        /** Group by dimension */
+        /**
+         * Alias for calling [addGroup] with `Group.ofDataExplorerDimension(dataExplorerDimension)`.
+         */
         fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) = apply {
             body.addGroup(dataExplorerDimension)
         }
 
-        /** Group by time */
+        /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
         fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) = apply {
             body.addGroup(dataExplorerTime)
         }
 
         fun limit(limit: Long) = apply { body.limit(limit) }
 
+        /**
+         * Sets [Builder.limit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun limit(limit: JsonField<Long>) = apply { body.limit(limit) }
 
         fun meterIds(meterIds: List<String>) = apply { body.meterIds(meterIds) }
 
+        /**
+         * Sets [Builder.meterIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.meterIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun meterIds(meterIds: JsonField<List<String>>) = apply { body.meterIds(meterIds) }
 
+        /**
+         * Adds a single [String] to [meterIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addMeterId(meterId: String) = apply { body.addMeterId(meterId) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -647,30 +958,66 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Field code */
+        /**
+         * Field code
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun fieldCode(): String = fieldCode.getRequired("fieldCode")
 
-        /** Type of field */
+        /**
+         * Type of field
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun fieldType(): FieldType = fieldType.getRequired("fieldType")
 
-        /** Aggregation function */
+        /**
+         * Aggregation function
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun function(): Function = function.getRequired("function")
 
-        /** Meter ID */
+        /**
+         * Meter ID
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun meterId(): String = meterId.getRequired("meterId")
 
-        /** Field code */
+        /**
+         * Returns the raw JSON value of [fieldCode].
+         *
+         * Unlike [fieldCode], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("fieldCode") @ExcludeMissing fun _fieldCode(): JsonField<String> = fieldCode
 
-        /** Type of field */
+        /**
+         * Returns the raw JSON value of [fieldType].
+         *
+         * Unlike [fieldType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("fieldType")
         @ExcludeMissing
         fun _fieldType(): JsonField<FieldType> = fieldType
 
-        /** Aggregation function */
+        /**
+         * Returns the raw JSON value of [function].
+         *
+         * Unlike [function], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("function") @ExcludeMissing fun _function(): JsonField<Function> = function
 
-        /** Meter ID */
+        /**
+         * Returns the raw JSON value of [meterId].
+         *
+         * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
         @JsonAnyGetter
@@ -730,25 +1077,49 @@ private constructor(
             /** Field code */
             fun fieldCode(fieldCode: String) = fieldCode(JsonField.of(fieldCode))
 
-            /** Field code */
+            /**
+             * Sets [Builder.fieldCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fieldCode] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun fieldCode(fieldCode: JsonField<String>) = apply { this.fieldCode = fieldCode }
 
             /** Type of field */
             fun fieldType(fieldType: FieldType) = fieldType(JsonField.of(fieldType))
 
-            /** Type of field */
+            /**
+             * Sets [Builder.fieldType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fieldType] with a well-typed [FieldType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun fieldType(fieldType: JsonField<FieldType>) = apply { this.fieldType = fieldType }
 
             /** Aggregation function */
             fun function(function: Function) = function(JsonField.of(function))
 
-            /** Aggregation function */
+            /**
+             * Sets [Builder.function] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.function] with a well-typed [Function] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun function(function: JsonField<Function>) = apply { this.function = function }
 
             /** Meter ID */
             fun meterId(meterId: String) = meterId(JsonField.of(meterId))
 
-            /** Meter ID */
+            /**
+             * Sets [Builder.meterId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1054,22 +1425,49 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Field code */
+        /**
+         * Field code
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun fieldCode(): String = fieldCode.getRequired("fieldCode")
 
-        /** Meter ID */
+        /**
+         * Meter ID
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun meterId(): String = meterId.getRequired("meterId")
 
-        /** Values to filter by */
+        /**
+         * Values to filter by
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun values(): List<String> = values.getRequired("values")
 
-        /** Field code */
+        /**
+         * Returns the raw JSON value of [fieldCode].
+         *
+         * Unlike [fieldCode], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("fieldCode") @ExcludeMissing fun _fieldCode(): JsonField<String> = fieldCode
 
-        /** Meter ID */
+        /**
+         * Returns the raw JSON value of [meterId].
+         *
+         * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
-        /** Values to filter by */
+        /**
+         * Returns the raw JSON value of [values].
+         *
+         * Unlike [values], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("values") @ExcludeMissing fun _values(): JsonField<List<String>> = values
 
         @JsonAnyGetter
@@ -1125,24 +1523,46 @@ private constructor(
             /** Field code */
             fun fieldCode(fieldCode: String) = fieldCode(JsonField.of(fieldCode))
 
-            /** Field code */
+            /**
+             * Sets [Builder.fieldCode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fieldCode] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun fieldCode(fieldCode: JsonField<String>) = apply { this.fieldCode = fieldCode }
 
             /** Meter ID */
             fun meterId(meterId: String) = meterId(JsonField.of(meterId))
 
-            /** Meter ID */
+            /**
+             * Sets [Builder.meterId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             /** Values to filter by */
             fun values(values: List<String>) = values(JsonField.of(values))
 
-            /** Values to filter by */
+            /**
+             * Sets [Builder.values] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.values] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun values(values: JsonField<List<String>>) = apply {
                 this.values = values.map { it.toMutableList() }
             }
 
-            /** Values to filter by */
+            /**
+             * Adds a single [String] to [values].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addValue(value: String) = apply {
                 values =
                     (values ?: JsonField.of(mutableListOf())).also {
@@ -1396,9 +1816,19 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
+            /**
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
             fun groupType(): Optional<GroupType> =
                 Optional.ofNullable(groupType.getNullable("groupType"))
 
+            /**
+             * Returns the raw JSON value of [groupType].
+             *
+             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("groupType")
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
@@ -1444,6 +1874,13 @@ private constructor(
 
                 fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
 
+                /**
+                 * Sets [Builder.groupType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun groupType(groupType: JsonField<GroupType>) = apply {
                     this.groupType = groupType
                 }
@@ -1620,23 +2057,54 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** Field code to group by */
+            /**
+             * Field code to group by
+             *
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun fieldCode(): String = fieldCode.getRequired("fieldCode")
 
-            /** Meter ID to group by */
+            /**
+             * Meter ID to group by
+             *
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun meterId(): String = meterId.getRequired("meterId")
 
+            /**
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
             fun groupType(): Optional<GroupType> =
                 Optional.ofNullable(groupType.getNullable("groupType"))
 
-            /** Field code to group by */
+            /**
+             * Returns the raw JSON value of [fieldCode].
+             *
+             * Unlike [fieldCode], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("fieldCode")
             @ExcludeMissing
             fun _fieldCode(): JsonField<String> = fieldCode
 
-            /** Meter ID to group by */
+            /**
+             * Returns the raw JSON value of [meterId].
+             *
+             * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+             */
             @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
+            /**
+             * Returns the raw JSON value of [groupType].
+             *
+             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("groupType")
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
@@ -1695,17 +2163,36 @@ private constructor(
                 /** Field code to group by */
                 fun fieldCode(fieldCode: String) = fieldCode(JsonField.of(fieldCode))
 
-                /** Field code to group by */
+                /**
+                 * Sets [Builder.fieldCode] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.fieldCode] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun fieldCode(fieldCode: JsonField<String>) = apply { this.fieldCode = fieldCode }
 
                 /** Meter ID to group by */
                 fun meterId(meterId: String) = meterId(JsonField.of(meterId))
 
-                /** Meter ID to group by */
+                /**
+                 * Sets [Builder.meterId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.meterId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
                 fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
 
+                /**
+                 * Sets [Builder.groupType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun groupType(groupType: JsonField<GroupType>) = apply {
                     this.groupType = groupType
                 }
@@ -1884,17 +2371,38 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /** Frequency of usage data */
+            /**
+             * Frequency of usage data
+             *
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
             fun frequency(): Frequency = frequency.getRequired("frequency")
 
+            /**
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
             fun groupType(): Optional<GroupType> =
                 Optional.ofNullable(groupType.getNullable("groupType"))
 
-            /** Frequency of usage data */
+            /**
+             * Returns the raw JSON value of [frequency].
+             *
+             * Unlike [frequency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("frequency")
             @ExcludeMissing
             fun _frequency(): JsonField<Frequency> = frequency
 
+            /**
+             * Returns the raw JSON value of [groupType].
+             *
+             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
             @JsonProperty("groupType")
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
@@ -1948,13 +2456,26 @@ private constructor(
                 /** Frequency of usage data */
                 fun frequency(frequency: Frequency) = frequency(JsonField.of(frequency))
 
-                /** Frequency of usage data */
+                /**
+                 * Sets [Builder.frequency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.frequency] with a well-typed [Frequency] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun frequency(frequency: JsonField<Frequency>) = apply {
                     this.frequency = frequency
                 }
 
                 fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
 
+                /**
+                 * Sets [Builder.groupType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
                 fun groupType(groupType: JsonField<GroupType>) = apply {
                     this.groupType = groupType
                 }

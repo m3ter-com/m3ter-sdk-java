@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -41,10 +42,20 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** The Account ID the CounterAdjustment is created for. */
+    /**
+     * The Account ID the CounterAdjustment is created for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accountId(): String = body.accountId()
 
-    /** The ID of the Counter used for the CounterAdjustment on the Account. */
+    /**
+     * The ID of the Counter used for the CounterAdjustment on the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun counterId(): String = body.counterId()
 
     /**
@@ -53,6 +64,9 @@ private constructor(
      * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
      * granularity - you cannot create more than one CounterAdjustment for any given day using the
      * same Counter and you'll receive an error if you try to do this.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun date(): String = body.date()
 
@@ -62,10 +76,18 @@ private constructor(
      * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15 and
      * has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do not enter_
      * the plus or minus value relative to the previous Counter value on the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun value(): Long = body.value()
 
-    /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+    /**
+     * Purchase Order Number for the Counter Adjustment. _(Optional)_
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun purchaseOrderNumber(): Optional<String> = body.purchaseOrderNumber()
 
     /**
@@ -75,43 +97,52 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The Account ID the CounterAdjustment is created for. */
+    /**
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountId(): JsonField<String> = body._accountId()
 
-    /** The ID of the Counter used for the CounterAdjustment on the Account. */
+    /**
+     * Returns the raw JSON value of [counterId].
+     *
+     * Unlike [counterId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _counterId(): JsonField<String> = body._counterId()
 
     /**
-     * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+     * Returns the raw JSON value of [date].
      *
-     * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
-     * granularity - you cannot create more than one CounterAdjustment for any given day using the
-     * same Counter and you'll receive an error if you try to do this.
+     * Unlike [date], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _date(): JsonField<String> = body._date()
 
     /**
-     * Integer Value of the Counter used for the CounterAdjustment.
+     * Returns the raw JSON value of [value].
      *
-     * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15 and
-     * has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do not enter_
-     * the plus or minus value relative to the previous Counter value on the Account.
+     * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _value(): JsonField<Long> = body._value()
 
-    /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+    /**
+     * Returns the raw JSON value of [purchaseOrderNumber].
+     *
+     * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _purchaseOrderNumber(): JsonField<String> = body._purchaseOrderNumber()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -160,10 +191,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The Account ID the CounterAdjustment is created for. */
+        /**
+         * The Account ID the CounterAdjustment is created for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun accountId(): String = accountId.getRequired("accountId")
 
-        /** The ID of the Counter used for the CounterAdjustment on the Account. */
+        /**
+         * The ID of the Counter used for the CounterAdjustment on the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun counterId(): String = counterId.getRequired("counterId")
 
         /**
@@ -172,6 +213,9 @@ private constructor(
          * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
          * granularity - you cannot create more than one CounterAdjustment for any given day using
          * the same Counter and you'll receive an error if you try to do this.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun date(): String = date.getRequired("date")
 
@@ -181,10 +225,18 @@ private constructor(
          * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15
          * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
          * not enter_ the plus or minus value relative to the previous Counter value on the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun value(): Long = value.getRequired("value")
 
-        /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+        /**
+         * Purchase Order Number for the Counter Adjustment. _(Optional)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun purchaseOrderNumber(): Optional<String> =
             Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
 
@@ -195,45 +247,54 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The Account ID the CounterAdjustment is created for. */
+        /**
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
-        /** The ID of the Counter used for the CounterAdjustment on the Account. */
+        /**
+         * Returns the raw JSON value of [counterId].
+         *
+         * Unlike [counterId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("counterId") @ExcludeMissing fun _counterId(): JsonField<String> = counterId
 
         /**
-         * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+         * Returns the raw JSON value of [date].
          *
-         * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
-         * granularity - you cannot create more than one CounterAdjustment for any given day using
-         * the same Counter and you'll receive an error if you try to do this.
+         * Unlike [date], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("date") @ExcludeMissing fun _date(): JsonField<String> = date
 
         /**
-         * Integer Value of the Counter used for the CounterAdjustment.
+         * Returns the raw JSON value of [value].
          *
-         * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15
-         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
-         * not enter_ the plus or minus value relative to the previous Counter value on the Account.
+         * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Long> = value
 
-        /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+        /**
+         * Returns the raw JSON value of [purchaseOrderNumber].
+         *
+         * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("purchaseOrderNumber")
         @ExcludeMissing
         fun _purchaseOrderNumber(): JsonField<String> = purchaseOrderNumber
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -300,13 +361,25 @@ private constructor(
             /** The Account ID the CounterAdjustment is created for. */
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
-            /** The Account ID the CounterAdjustment is created for. */
+            /**
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /** The ID of the Counter used for the CounterAdjustment on the Account. */
             fun counterId(counterId: String) = counterId(JsonField.of(counterId))
 
-            /** The ID of the Counter used for the CounterAdjustment on the Account. */
+            /**
+             * Sets [Builder.counterId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.counterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun counterId(counterId: JsonField<String>) = apply { this.counterId = counterId }
 
             /**
@@ -320,12 +393,11 @@ private constructor(
             fun date(date: String) = date(JsonField.of(date))
 
             /**
-             * The date the CounterAdjustment is created for the Account _(in ISO-8601 date
-             * format)_.
+             * Sets [Builder.date] to an arbitrary JSON value.
              *
-             * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
-             * granularity - you cannot create more than one CounterAdjustment for any given day
-             * using the same Counter and you'll receive an error if you try to do this.
+             * You should usually call [Builder.date] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun date(date: JsonField<String>) = apply { this.date = date }
 
@@ -340,12 +412,11 @@ private constructor(
             fun value(value: Long) = value(JsonField.of(value))
 
             /**
-             * Integer Value of the Counter used for the CounterAdjustment.
+             * Sets [Builder.value] to an arbitrary JSON value.
              *
-             * **Note:** Use the new absolute value for the Counter for the selected date - if it
-             * was 15 and has increased to 20, enter 20; if it was 15 and has decreased to 10,
-             * enter 10. _Do not enter_ the plus or minus value relative to the previous Counter
-             * value on the Account.
+             * You should usually call [Builder.value] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun value(value: JsonField<Long>) = apply { this.value = value }
 
@@ -353,7 +424,13 @@ private constructor(
             fun purchaseOrderNumber(purchaseOrderNumber: String) =
                 purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
 
-            /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+            /**
+             * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
                 this.purchaseOrderNumber = purchaseOrderNumber
             }
@@ -369,12 +446,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -469,13 +545,25 @@ private constructor(
         /** The Account ID the CounterAdjustment is created for. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
-        /** The Account ID the CounterAdjustment is created for. */
+        /**
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /** The ID of the Counter used for the CounterAdjustment on the Account. */
         fun counterId(counterId: String) = apply { body.counterId(counterId) }
 
-        /** The ID of the Counter used for the CounterAdjustment on the Account. */
+        /**
+         * Sets [Builder.counterId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun counterId(counterId: JsonField<String>) = apply { body.counterId(counterId) }
 
         /**
@@ -488,11 +576,10 @@ private constructor(
         fun date(date: String) = apply { body.date(date) }
 
         /**
-         * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+         * Sets [Builder.date] to an arbitrary JSON value.
          *
-         * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
-         * granularity - you cannot create more than one CounterAdjustment for any given day using
-         * the same Counter and you'll receive an error if you try to do this.
+         * You should usually call [Builder.date] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun date(date: JsonField<String>) = apply { body.date(date) }
 
@@ -506,11 +593,10 @@ private constructor(
         fun value(value: Long) = apply { body.value(value) }
 
         /**
-         * Integer Value of the Counter used for the CounterAdjustment.
+         * Sets [Builder.value] to an arbitrary JSON value.
          *
-         * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15
-         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
-         * not enter_ the plus or minus value relative to the previous Counter value on the Account.
+         * You should usually call [Builder.value] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun value(value: JsonField<Long>) = apply { body.value(value) }
 
@@ -519,7 +605,13 @@ private constructor(
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
 
-        /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+        /**
+         * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
@@ -535,12 +627,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

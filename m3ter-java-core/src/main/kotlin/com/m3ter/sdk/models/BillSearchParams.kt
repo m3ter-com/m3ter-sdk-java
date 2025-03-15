@@ -153,16 +153,20 @@ private constructor(
         /** `fromDocument` for multi page retrievals. */
         fun fromDocument(fromDocument: Long?) = apply { this.fromDocument = fromDocument }
 
-        /** `fromDocument` for multi page retrievals. */
+        /**
+         * Alias for [Builder.fromDocument].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun fromDocument(fromDocument: Long) = fromDocument(fromDocument as Long?)
 
-        /** `fromDocument` for multi page retrievals. */
+        /** Alias for calling [Builder.fromDocument] with `fromDocument.orElse(null)`. */
         fun fromDocument(fromDocument: Optional<Long>) = fromDocument(fromDocument.getOrNull())
 
         /** Search Operator to be used while querying search. */
         fun operator(operator: Operator?) = apply { this.operator = operator }
 
-        /** Search Operator to be used while querying search. */
+        /** Alias for calling [Builder.operator] with `operator.orElse(null)`. */
         fun operator(operator: Optional<Operator>) = operator(operator.getOrNull())
 
         /**
@@ -173,17 +177,13 @@ private constructor(
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
         /**
-         * Number of Bills to retrieve per page.
+         * Alias for [Builder.pageSize].
          *
-         * **NOTE:** If not defined, default is 10.
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /**
-         * Number of Bills to retrieve per page.
-         *
-         * **NOTE:** If not defined, default is 10.
-         */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
@@ -208,26 +208,7 @@ private constructor(
          */
         fun searchQuery(searchQuery: String?) = apply { this.searchQuery = searchQuery }
 
-        /**
-         * Query for data using special syntax:
-         * - Query parameters should be delimited using $ (dollar sign).
-         * - Allowed comparators are:
-         *     - (greater than) >
-         *     - (greater than or equal to) >=
-         *     - (equal to) :
-         *     - (less than) <
-         *     - (less than or equal to) <=
-         *     - (match phrase/prefix) ~
-         * - Allowed parameters: accountId, locked, billDate, startDate, endDate, dueDate,
-         *   billingFrequency, id, createdBy, dtCreated, lastModifiedBy, ids.
-         * - Query example:
-         *     - searchQuery=startDate>2023-01-01$accountId:62eaad67-5790-407e-b853-881564f0e543.
-         *     - This query is translated into: find Bills that startDate is older than 2023-01-01
-         *       AND accountId is equal to 62eaad67-5790-407e-b853-881564f0e543.
-         *
-         * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend
-         * treating this as a "starts with" comparator for your search query.
-         */
+        /** Alias for calling [Builder.searchQuery] with `searchQuery.orElse(null)`. */
         fun searchQuery(searchQuery: Optional<String>) = searchQuery(searchQuery.getOrNull())
 
         /**
@@ -236,16 +217,13 @@ private constructor(
          */
         fun sortBy(sortBy: String?) = apply { this.sortBy = sortBy }
 
-        /**
-         * Name of the parameter on which sorting is performed. Use any field available on the Bill
-         * entity to sort by, such as `accountId`, `endDate`, and so on.
-         */
+        /** Alias for calling [Builder.sortBy] with `sortBy.orElse(null)`. */
         fun sortBy(sortBy: Optional<String>) = sortBy(sortBy.getOrNull())
 
         /** Sorting order. */
         fun sortOrder(sortOrder: SortOrder?) = apply { this.sortOrder = sortOrder }
 
-        /** Sorting order. */
+        /** Alias for calling [Builder.sortOrder] with `sortOrder.orElse(null)`. */
         fun sortOrder(sortOrder: Optional<SortOrder>) = sortOrder(sortOrder.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

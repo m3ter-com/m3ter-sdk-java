@@ -44,16 +44,36 @@ private constructor(
 
     fun id(): String = id
 
-    /** Code of the Account. This is a unique short code used for the Account. */
+    /**
+     * Code of the Account. This is a unique short code used for the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun code(): String = body.code()
 
-    /** Contact email for the Account. */
+    /**
+     * Contact email for the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun emailAddress(): String = body.emailAddress()
 
-    /** Name of the Account. */
+    /**
+     * Name of the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
-    /** Contact address. */
+    /**
+     * Contact address.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun address(): Optional<Address> = body.address()
 
     /**
@@ -61,6 +81,9 @@ private constructor(
      * - **None**. Statements will not be auto-generated.
      * - **JSON**. Statements are auto-generated in JSON format.
      * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
         body.autoGenerateStatementMode()
@@ -78,12 +101,18 @@ private constructor(
      * - If not defined, then the relevant Epoch date set for the billing frequency period at
      *   Organization level will be used instead.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billEpoch(): Optional<LocalDate> = body.billEpoch()
 
     /**
      * Configuration data for the Account Supported settings:
      * - SendBillsToThirdParties ("true"/"false")
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun configData(): Optional<ConfigData> = body.configData()
 
@@ -101,6 +130,9 @@ private constructor(
      * - If the Account belongs to a Parent/Child Account hierarchy, then the
      *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
      *   always to Prepayment then Balance order.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
         body.creditApplicationOrder()
@@ -116,6 +148,9 @@ private constructor(
      * level to ensure the billing process can convert line items calculated using the Plan currency
      * into the selected billing currency. If you don't add these conversion rates, then bills will
      * fail for the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun currency(): Optional<String> = body.currency()
 
@@ -130,6 +165,9 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
@@ -139,10 +177,18 @@ private constructor(
      *
      * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
      * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun daysBeforeBillDue(): Optional<Long> = body.daysBeforeBillDue()
 
-    /** Parent Account ID, or null if this Account does not have a parent. */
+    /**
+     * Parent Account ID, or null if this Account does not have a parent.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun parentAccountId(): Optional<String> = body.parentAccountId()
 
     /**
@@ -151,6 +197,9 @@ private constructor(
      * Optional attribute - allows you to set a purchase order number that comes through into
      * invoicing. For example, your financial systems might require this as a reference for clearing
      * payments.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun purchaseOrderNumber(): Optional<String> = body.purchaseOrderNumber()
 
@@ -167,6 +216,9 @@ private constructor(
      * See
      * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
      * in the m3ter documentation for more details.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun statementDefinitionId(): Optional<String> = body.statementDefinitionId()
 
@@ -177,142 +229,121 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** Code of the Account. This is a unique short code used for the Account. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
-    /** Contact email for the Account. */
+    /**
+     * Returns the raw JSON value of [emailAddress].
+     *
+     * Unlike [emailAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _emailAddress(): JsonField<String> = body._emailAddress()
 
-    /** Name of the Account. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** Contact address. */
+    /**
+     * Returns the raw JSON value of [address].
+     *
+     * Unlike [address], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _address(): JsonField<Address> = body._address()
 
     /**
-     * Specify whether to auto-generate statements once Bills are approved or locked.
-     * - **None**. Statements will not be auto-generated.
-     * - **JSON**. Statements are auto-generated in JSON format.
-     * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+     * Returns the raw JSON value of [autoGenerateStatementMode].
+     *
+     * Unlike [autoGenerateStatementMode], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _autoGenerateStatementMode(): JsonField<AutoGenerateStatementMode> =
         body._autoGenerateStatementMode()
 
     /**
-     * Optional setting to define a _billing cycle date_, which sets the date of the first Bill and
-     * acts as a reference for when in the applied billing frequency period subsequent bills are
-     * created:
-     * - For example, if you attach a Plan to an Account where the Plan is configured for monthly
-     *   billing frequency and you've defined the period the Plan will apply to the Account to be
-     *   from January 1st, 2022 until January 1st, 2023. You then set a `billEpoch` date of February
-     *   15th, 2022. The first Bill will be created for the Account on February 15th, and subsequent
-     *   Bills created on the 15th of the months following for the remainder of the billing period -
-     *   March 15th, April 15th, and so on.
-     * - If not defined, then the relevant Epoch date set for the billing frequency period at
-     *   Organization level will be used instead.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [billEpoch].
+     *
+     * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billEpoch(): JsonField<LocalDate> = body._billEpoch()
 
     /**
-     * Configuration data for the Account Supported settings:
-     * - SendBillsToThirdParties ("true"/"false")
+     * Returns the raw JSON value of [configData].
+     *
+     * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _configData(): JsonField<ConfigData> = body._configData()
 
     /**
-     * Define the order in which any Prepayment or Balance amounts on the Account are to be
-     * drawn-down against for billing. Four options:
-     * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-     * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-     * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-     * - `"BALANCE"`. Only draw-down against Balance credit.
+     * Returns the raw JSON value of [creditApplicationOrder].
      *
-     * **NOTES:**
-     * - Any setting you define here overrides the setting for credit application order at
-     *   Organization level.
-     * - If the Account belongs to a Parent/Child Account hierarchy, then the
-     *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-     *   always to Prepayment then Balance order.
+     * Unlike [creditApplicationOrder], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _creditApplicationOrder(): JsonField<List<CreditApplicationOrder>> =
         body._creditApplicationOrder()
 
     /**
-     * Account level billing currency, such as USD or GBP. Optional attribute:
-     * - If you define an Account currency, this will be used for bills.
-     * - If you do not define a currency, the billing currency defined at Organizational level will
-     *   be used.
+     * Returns the raw JSON value of [currency].
      *
-     * **Note:** If you've attached a Plan to the Account that uses a different currency to the
-     * billing currency, then you must add the relevant currency conversion rate at Organization
-     * level to ensure the billing process can convert line items calculated using the Plan currency
-     * into the selected billing currency. If you don't add these conversion rates, then bills will
-     * fail for the Account.
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _currency(): JsonField<String> = body._currency()
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational level,
-     * `customField` values defined at individual level override values of `customFields` with the
-     * same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
     /**
-     * Enter the number of days after the Bill generation date that you want to show on Bills as the
-     * due date.
+     * Returns the raw JSON value of [daysBeforeBillDue].
      *
-     * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-     * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+     * Unlike [daysBeforeBillDue], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _daysBeforeBillDue(): JsonField<Long> = body._daysBeforeBillDue()
 
-    /** Parent Account ID, or null if this Account does not have a parent. */
+    /**
+     * Returns the raw JSON value of [parentAccountId].
+     *
+     * Unlike [parentAccountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _parentAccountId(): JsonField<String> = body._parentAccountId()
 
     /**
-     * Purchase Order Number of the Account.
+     * Returns the raw JSON value of [purchaseOrderNumber].
      *
-     * Optional attribute - allows you to set a purchase order number that comes through into
-     * invoicing. For example, your financial systems might require this as a reference for clearing
-     * payments.
+     * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _purchaseOrderNumber(): JsonField<String> = body._purchaseOrderNumber()
 
     /**
-     * The UUID of the statement definition used when Bill statements are generated for the Account.
-     * If no statement definition is specified for the Account, the statement definition specified
-     * at Organizational level is used.
+     * Returns the raw JSON value of [statementDefinitionId].
      *
-     * Bill statements can be used as informative backing sheets to invoices. Based on the usage
-     * breakdown defined in the statement definition, generated statements give a breakdown of usage
-     * charges on Account Bills, which helps customers better understand usage charges incurred over
-     * the billing period.
-     *
-     * See
-     * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-     * in the m3ter documentation for more details.
+     * Unlike [statementDefinitionId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _statementDefinitionId(): JsonField<String> = body._statementDefinitionId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -392,16 +423,36 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Code of the Account. This is a unique short code used for the Account. */
+        /**
+         * Code of the Account. This is a unique short code used for the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun code(): String = code.getRequired("code")
 
-        /** Contact email for the Account. */
+        /**
+         * Contact email for the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun emailAddress(): String = emailAddress.getRequired("emailAddress")
 
-        /** Name of the Account. */
+        /**
+         * Name of the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
-        /** Contact address. */
+        /**
+         * Contact address.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun address(): Optional<Address> = Optional.ofNullable(address.getNullable("address"))
 
         /**
@@ -409,6 +460,9 @@ private constructor(
          * - **None**. Statements will not be auto-generated.
          * - **JSON**. Statements are auto-generated in JSON format.
          * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
             Optional.ofNullable(autoGenerateStatementMode.getNullable("autoGenerateStatementMode"))
@@ -426,6 +480,9 @@ private constructor(
          * - If not defined, then the relevant Epoch date set for the billing frequency period at
          *   Organization level will be used instead.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billEpoch(): Optional<LocalDate> =
             Optional.ofNullable(billEpoch.getNullable("billEpoch"))
@@ -433,6 +490,9 @@ private constructor(
         /**
          * Configuration data for the Account Supported settings:
          * - SendBillsToThirdParties ("true"/"false")
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun configData(): Optional<ConfigData> =
             Optional.ofNullable(configData.getNullable("configData"))
@@ -451,6 +511,9 @@ private constructor(
          * - If the Account belongs to a Parent/Child Account hierarchy, then the
          *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
          *   always to Prepayment then Balance order.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
             Optional.ofNullable(creditApplicationOrder.getNullable("creditApplicationOrder"))
@@ -466,6 +529,9 @@ private constructor(
          * level to ensure the billing process can convert line items calculated using the Plan
          * currency into the selected billing currency. If you don't add these conversion rates,
          * then bills will fail for the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
 
@@ -480,6 +546,9 @@ private constructor(
          * See
          * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
@@ -490,11 +559,19 @@ private constructor(
          *
          * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
          * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun daysBeforeBillDue(): Optional<Long> =
             Optional.ofNullable(daysBeforeBillDue.getNullable("daysBeforeBillDue"))
 
-        /** Parent Account ID, or null if this Account does not have a parent. */
+        /**
+         * Parent Account ID, or null if this Account does not have a parent.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun parentAccountId(): Optional<String> =
             Optional.ofNullable(parentAccountId.getNullable("parentAccountId"))
 
@@ -504,6 +581,9 @@ private constructor(
          * Optional attribute - allows you to set a purchase order number that comes through into
          * invoicing. For example, your financial systems might require this as a reference for
          * clearing payments.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun purchaseOrderNumber(): Optional<String> =
             Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
@@ -521,6 +601,9 @@ private constructor(
          * See
          * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
          * in the m3ter documentation for more details.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun statementDefinitionId(): Optional<String> =
             Optional.ofNullable(statementDefinitionId.getNullable("statementDefinitionId"))
@@ -532,28 +615,48 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Code of the Account. This is a unique short code used for the Account. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-        /** Contact email for the Account. */
+        /**
+         * Returns the raw JSON value of [emailAddress].
+         *
+         * Unlike [emailAddress], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("emailAddress")
         @ExcludeMissing
         fun _emailAddress(): JsonField<String> = emailAddress
 
-        /** Name of the Account. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** Contact address. */
+        /**
+         * Returns the raw JSON value of [address].
+         *
+         * Unlike [address], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("address") @ExcludeMissing fun _address(): JsonField<Address> = address
 
         /**
-         * Specify whether to auto-generate statements once Bills are approved or locked.
-         * - **None**. Statements will not be auto-generated.
-         * - **JSON**. Statements are auto-generated in JSON format.
-         * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         * Returns the raw JSON value of [autoGenerateStatementMode].
+         *
+         * Unlike [autoGenerateStatementMode], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("autoGenerateStatementMode")
         @ExcludeMissing
@@ -561,45 +664,28 @@ private constructor(
             autoGenerateStatementMode
 
         /**
-         * Optional setting to define a _billing cycle date_, which sets the date of the first Bill
-         * and acts as a reference for when in the applied billing frequency period subsequent bills
-         * are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
-         *   monthly billing frequency and you've defined the period the Plan will apply to the
-         *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-         *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
-         *   on February 15th, and subsequent Bills created on the 15th of the months following for
-         *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the relevant Epoch date set for the billing frequency period at
-         *   Organization level will be used instead.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [billEpoch].
+         *
+         * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("billEpoch")
         @ExcludeMissing
         fun _billEpoch(): JsonField<LocalDate> = billEpoch
 
         /**
-         * Configuration data for the Account Supported settings:
-         * - SendBillsToThirdParties ("true"/"false")
+         * Returns the raw JSON value of [configData].
+         *
+         * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("configData")
         @ExcludeMissing
         fun _configData(): JsonField<ConfigData> = configData
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on the Account are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Returns the raw JSON value of [creditApplicationOrder].
          *
-         * **NOTES:**
-         * - Any setting you define here overrides the setting for credit application order at
-         *   Organization level.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * Unlike [creditApplicationOrder], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("creditApplicationOrder")
         @ExcludeMissing
@@ -607,87 +693,66 @@ private constructor(
             creditApplicationOrder
 
         /**
-         * Account level billing currency, such as USD or GBP. Optional attribute:
-         * - If you define an Account currency, this will be used for bills.
-         * - If you do not define a currency, the billing currency defined at Organizational level
-         *   will be used.
+         * Returns the raw JSON value of [currency].
          *
-         * **Note:** If you've attached a Plan to the Account that uses a different currency to the
-         * billing currency, then you must add the relevant currency conversion rate at Organization
-         * level to ensure the billing process can convert line items calculated using the Plan
-         * currency into the selected billing currency. If you don't add these conversion rates,
-         * then bills will fail for the Account.
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Returns the raw JSON value of [customFields].
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
         /**
-         * Enter the number of days after the Bill generation date that you want to show on Bills as
-         * the due date.
+         * Returns the raw JSON value of [daysBeforeBillDue].
          *
-         * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-         * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         * Unlike [daysBeforeBillDue], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
         fun _daysBeforeBillDue(): JsonField<Long> = daysBeforeBillDue
 
-        /** Parent Account ID, or null if this Account does not have a parent. */
+        /**
+         * Returns the raw JSON value of [parentAccountId].
+         *
+         * Unlike [parentAccountId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("parentAccountId")
         @ExcludeMissing
         fun _parentAccountId(): JsonField<String> = parentAccountId
 
         /**
-         * Purchase Order Number of the Account.
+         * Returns the raw JSON value of [purchaseOrderNumber].
          *
-         * Optional attribute - allows you to set a purchase order number that comes through into
-         * invoicing. For example, your financial systems might require this as a reference for
-         * clearing payments.
+         * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("purchaseOrderNumber")
         @ExcludeMissing
         fun _purchaseOrderNumber(): JsonField<String> = purchaseOrderNumber
 
         /**
-         * The UUID of the statement definition used when Bill statements are generated for the
-         * Account. If no statement definition is specified for the Account, the statement
-         * definition specified at Organizational level is used.
+         * Returns the raw JSON value of [statementDefinitionId].
          *
-         * Bill statements can be used as informative backing sheets to invoices. Based on the usage
-         * breakdown defined in the statement definition, generated statements give a breakdown of
-         * usage charges on Account Bills, which helps customers better understand usage charges
-         * incurred over the billing period.
-         *
-         * See
-         * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-         * in the m3ter documentation for more details.
+         * Unlike [statementDefinitionId], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("statementDefinitionId")
         @ExcludeMissing
         fun _statementDefinitionId(): JsonField<String> = statementDefinitionId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -782,13 +847,25 @@ private constructor(
             /** Code of the Account. This is a unique short code used for the Account. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Code of the Account. This is a unique short code used for the Account. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /** Contact email for the Account. */
             fun emailAddress(emailAddress: String) = emailAddress(JsonField.of(emailAddress))
 
-            /** Contact email for the Account. */
+            /**
+             * Sets [Builder.emailAddress] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.emailAddress] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun emailAddress(emailAddress: JsonField<String>) = apply {
                 this.emailAddress = emailAddress
             }
@@ -796,13 +873,25 @@ private constructor(
             /** Name of the Account. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Name of the Account. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** Contact address. */
             fun address(address: Address) = address(JsonField.of(address))
 
-            /** Contact address. */
+            /**
+             * Sets [Builder.address] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.address] with a well-typed [Address] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun address(address: JsonField<Address>) = apply { this.address = address }
 
             /**
@@ -815,10 +904,11 @@ private constructor(
                 autoGenerateStatementMode(JsonField.of(autoGenerateStatementMode))
 
             /**
-             * Specify whether to auto-generate statements once Bills are approved or locked.
-             * - **None**. Statements will not be auto-generated.
-             * - **JSON**. Statements are auto-generated in JSON format.
-             * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+             * Sets [Builder.autoGenerateStatementMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.autoGenerateStatementMode] with a well-typed
+             * [AutoGenerateStatementMode] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
              */
             fun autoGenerateStatementMode(
                 autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>
@@ -842,19 +932,11 @@ private constructor(
             fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
 
             /**
-             * Optional setting to define a _billing cycle date_, which sets the date of the first
-             * Bill and acts as a reference for when in the applied billing frequency period
-             * subsequent bills are created:
-             * - For example, if you attach a Plan to an Account where the Plan is configured for
-             *   monthly billing frequency and you've defined the period the Plan will apply to the
-             *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-             *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the
-             *   Account on February 15th, and subsequent Bills created on the 15th of the months
-             *   following for the remainder of the billing period - March 15th, April 15th, and so
-             *   on.
-             * - If not defined, then the relevant Epoch date set for the billing frequency period
-             *   at Organization level will be used instead.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.billEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { this.billEpoch = billEpoch }
 
@@ -865,8 +947,11 @@ private constructor(
             fun configData(configData: ConfigData) = configData(JsonField.of(configData))
 
             /**
-             * Configuration data for the Account Supported settings:
-             * - SendBillsToThirdParties ("true"/"false")
+             * Sets [Builder.configData] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.configData] with a well-typed [ConfigData] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun configData(configData: JsonField<ConfigData>) = apply {
                 this.configData = configData
@@ -893,21 +978,11 @@ private constructor(
                 creditApplicationOrder(JsonField.of(creditApplicationOrder))
 
             /**
-             * Define the order in which any Prepayment or Balance amounts on the Account are to be
-             * drawn-down against for billing. Four options:
-             * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance
-             *   credit.
-             * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment
-             *   credit.
-             * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-             * - `"BALANCE"`. Only draw-down against Balance credit.
+             * Sets [Builder.creditApplicationOrder] to an arbitrary JSON value.
              *
-             * **NOTES:**
-             * - Any setting you define here overrides the setting for credit application order at
-             *   Organization level.
-             * - If the Account belongs to a Parent/Child Account hierarchy, then the
-             *   `creditApplicationOrder` settings are not available, and the draw-down order
-             *   defaults always to Prepayment then Balance order.
+             * You should usually call [Builder.creditApplicationOrder] with a well-typed
+             * `List<CreditApplicationOrder>` value instead. This method is primarily for setting
+             * the field to an undocumented or not yet supported value.
              */
             fun creditApplicationOrder(
                 creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
@@ -916,21 +991,9 @@ private constructor(
             }
 
             /**
-             * Define the order in which any Prepayment or Balance amounts on the Account are to be
-             * drawn-down against for billing. Four options:
-             * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance
-             *   credit.
-             * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment
-             *   credit.
-             * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-             * - `"BALANCE"`. Only draw-down against Balance credit.
+             * Adds a single [CreditApplicationOrder] to [Builder.creditApplicationOrder].
              *
-             * **NOTES:**
-             * - Any setting you define here overrides the setting for credit application order at
-             *   Organization level.
-             * - If the Account belongs to a Parent/Child Account hierarchy, then the
-             *   `creditApplicationOrder` settings are not available, and the draw-down order
-             *   defaults always to Prepayment then Balance order.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
                 this.creditApplicationOrder =
@@ -954,16 +1017,11 @@ private constructor(
             fun currency(currency: String) = currency(JsonField.of(currency))
 
             /**
-             * Account level billing currency, such as USD or GBP. Optional attribute:
-             * - If you define an Account currency, this will be used for bills.
-             * - If you do not define a currency, the billing currency defined at Organizational
-             *   level will be used.
+             * Sets [Builder.currency] to an arbitrary JSON value.
              *
-             * **Note:** If you've attached a Plan to the Account that uses a different currency to
-             * the billing currency, then you must add the relevant currency conversion rate at
-             * Organization level to ensure the billing process can convert line items calculated
-             * using the Plan currency into the selected billing currency. If you don't add these
-             * conversion rates, then bills will fail for the Account.
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -982,16 +1040,11 @@ private constructor(
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
             /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
+             * Sets [Builder.customFields] to an arbitrary JSON value.
              *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
@@ -1008,11 +1061,11 @@ private constructor(
                 daysBeforeBillDue(JsonField.of(daysBeforeBillDue))
 
             /**
-             * Enter the number of days after the Bill generation date that you want to show on
-             * Bills as the due date.
+             * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
              *
-             * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will
-             * take precedence over any `daysBeforeBillDue` setting defined at Organization level.
+             * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
                 this.daysBeforeBillDue = daysBeforeBillDue
@@ -1022,7 +1075,13 @@ private constructor(
             fun parentAccountId(parentAccountId: String) =
                 parentAccountId(JsonField.of(parentAccountId))
 
-            /** Parent Account ID, or null if this Account does not have a parent. */
+            /**
+             * Sets [Builder.parentAccountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.parentAccountId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun parentAccountId(parentAccountId: JsonField<String>) = apply {
                 this.parentAccountId = parentAccountId
             }
@@ -1038,11 +1097,11 @@ private constructor(
                 purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
 
             /**
-             * Purchase Order Number of the Account.
+             * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
              *
-             * Optional attribute - allows you to set a purchase order number that comes through
-             * into invoicing. For example, your financial systems might require this as a reference
-             * for clearing payments.
+             * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
                 this.purchaseOrderNumber = purchaseOrderNumber
@@ -1066,18 +1125,11 @@ private constructor(
                 statementDefinitionId(JsonField.of(statementDefinitionId))
 
             /**
-             * The UUID of the statement definition used when Bill statements are generated for the
-             * Account. If no statement definition is specified for the Account, the statement
-             * definition specified at Organizational level is used.
+             * Sets [Builder.statementDefinitionId] to an arbitrary JSON value.
              *
-             * Bill statements can be used as informative backing sheets to invoices. Based on the
-             * usage breakdown defined in the statement definition, generated statements give a
-             * breakdown of usage charges on Account Bills, which helps customers better understand
-             * usage charges incurred over the billing period.
-             *
-             * See
-             * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-             * in the m3ter documentation for more details.
+             * You should usually call [Builder.statementDefinitionId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun statementDefinitionId(statementDefinitionId: JsonField<String>) = apply {
                 this.statementDefinitionId = statementDefinitionId
@@ -1094,12 +1146,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1206,13 +1257,24 @@ private constructor(
         /** Code of the Account. This is a unique short code used for the Account. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Code of the Account. This is a unique short code used for the Account. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /** Contact email for the Account. */
         fun emailAddress(emailAddress: String) = apply { body.emailAddress(emailAddress) }
 
-        /** Contact email for the Account. */
+        /**
+         * Sets [Builder.emailAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.emailAddress] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun emailAddress(emailAddress: JsonField<String>) = apply {
             body.emailAddress(emailAddress)
         }
@@ -1220,13 +1282,23 @@ private constructor(
         /** Name of the Account. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** Name of the Account. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** Contact address. */
         fun address(address: Address) = apply { body.address(address) }
 
-        /** Contact address. */
+        /**
+         * Sets [Builder.address] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.address] with a well-typed [Address] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun address(address: JsonField<Address>) = apply { body.address(address) }
 
         /**
@@ -1241,10 +1313,11 @@ private constructor(
             }
 
         /**
-         * Specify whether to auto-generate statements once Bills are approved or locked.
-         * - **None**. Statements will not be auto-generated.
-         * - **JSON**. Statements are auto-generated in JSON format.
-         * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         * Sets [Builder.autoGenerateStatementMode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoGenerateStatementMode] with a well-typed
+         * [AutoGenerateStatementMode] value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
         fun autoGenerateStatementMode(
             autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>
@@ -1267,18 +1340,11 @@ private constructor(
         fun billEpoch(billEpoch: LocalDate) = apply { body.billEpoch(billEpoch) }
 
         /**
-         * Optional setting to define a _billing cycle date_, which sets the date of the first Bill
-         * and acts as a reference for when in the applied billing frequency period subsequent bills
-         * are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
-         *   monthly billing frequency and you've defined the period the Plan will apply to the
-         *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-         *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
-         *   on February 15th, and subsequent Bills created on the 15th of the months following for
-         *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the relevant Epoch date set for the billing frequency period at
-         *   Organization level will be used instead.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.billEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { body.billEpoch(billEpoch) }
 
@@ -1289,8 +1355,11 @@ private constructor(
         fun configData(configData: ConfigData) = apply { body.configData(configData) }
 
         /**
-         * Configuration data for the Account Supported settings:
-         * - SendBillsToThirdParties ("true"/"false")
+         * Sets [Builder.configData] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.configData] with a well-typed [ConfigData] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun configData(configData: JsonField<ConfigData>) = apply { body.configData(configData) }
 
@@ -1314,38 +1383,20 @@ private constructor(
         }
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on the Account are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Sets [Builder.creditApplicationOrder] to an arbitrary JSON value.
          *
-         * **NOTES:**
-         * - Any setting you define here overrides the setting for credit application order at
-         *   Organization level.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * You should usually call [Builder.creditApplicationOrder] with a well-typed
+         * `List<CreditApplicationOrder>` value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
          */
         fun creditApplicationOrder(
             creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
         ) = apply { body.creditApplicationOrder(creditApplicationOrder) }
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on the Account are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Adds a single [CreditApplicationOrder] to [Builder.creditApplicationOrder].
          *
-         * **NOTES:**
-         * - Any setting you define here overrides the setting for credit application order at
-         *   Organization level.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
             body.addCreditApplicationOrder(creditApplicationOrder)
@@ -1366,16 +1417,10 @@ private constructor(
         fun currency(currency: String) = apply { body.currency(currency) }
 
         /**
-         * Account level billing currency, such as USD or GBP. Optional attribute:
-         * - If you define an Account currency, this will be used for bills.
-         * - If you do not define a currency, the billing currency defined at Organizational level
-         *   will be used.
+         * Sets [Builder.currency] to an arbitrary JSON value.
          *
-         * **Note:** If you've attached a Plan to the Account that uses a different currency to the
-         * billing currency, then you must add the relevant currency conversion rate at Organization
-         * level to ensure the billing process can convert line items calculated using the Plan
-         * currency into the selected billing currency. If you don't add these conversion rates,
-         * then bills will fail for the Account.
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
@@ -1394,16 +1439,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
@@ -1421,11 +1461,11 @@ private constructor(
         }
 
         /**
-         * Enter the number of days after the Bill generation date that you want to show on Bills as
-         * the due date.
+         * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
          *
-         * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-         * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
             body.daysBeforeBillDue(daysBeforeBillDue)
@@ -1436,7 +1476,13 @@ private constructor(
             body.parentAccountId(parentAccountId)
         }
 
-        /** Parent Account ID, or null if this Account does not have a parent. */
+        /**
+         * Sets [Builder.parentAccountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.parentAccountId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun parentAccountId(parentAccountId: JsonField<String>) = apply {
             body.parentAccountId(parentAccountId)
         }
@@ -1453,11 +1499,11 @@ private constructor(
         }
 
         /**
-         * Purchase Order Number of the Account.
+         * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
          *
-         * Optional attribute - allows you to set a purchase order number that comes through into
-         * invoicing. For example, your financial systems might require this as a reference for
-         * clearing payments.
+         * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
             body.purchaseOrderNumber(purchaseOrderNumber)
@@ -1482,18 +1528,11 @@ private constructor(
         }
 
         /**
-         * The UUID of the statement definition used when Bill statements are generated for the
-         * Account. If no statement definition is specified for the Account, the statement
-         * definition specified at Organizational level is used.
+         * Sets [Builder.statementDefinitionId] to an arbitrary JSON value.
          *
-         * Bill statements can be used as informative backing sheets to invoices. Based on the usage
-         * breakdown defined in the statement definition, generated statements give a breakdown of
-         * usage charges on Account Bills, which helps customers better understand usage charges
-         * incurred over the billing period.
-         *
-         * See
-         * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-         * in the m3ter documentation for more details.
+         * You should usually call [Builder.statementDefinitionId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun statementDefinitionId(statementDefinitionId: JsonField<String>) = apply {
             body.statementDefinitionId(statementDefinitionId)
@@ -1510,12 +1549,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

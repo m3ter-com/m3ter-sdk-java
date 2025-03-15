@@ -55,6 +55,9 @@ private constructor(
      *   **Income**, or **Cost** `targetField`.
      * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun aggregation(): Aggregation = body.aggregation()
 
@@ -62,10 +65,18 @@ private constructor(
      * The UUID of the Meter used as the source of usage data for the Aggregation.
      *
      * Each Aggregation is a child of a Meter, so the Meter must be selected.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun meterId(): String = body.meterId()
 
-    /** Descriptive name for the Aggregation. */
+    /**
+     * Descriptive name for the Aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -75,6 +86,9 @@ private constructor(
      *
      * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically set
      * to `"UP"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun quantityPerUnit(): Double = body.quantityPerUnit()
 
@@ -91,29 +105,56 @@ private constructor(
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun rounding(): Rounding = body.rounding()
 
     /**
      * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for the
      * Aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun targetField(): String = body.targetField()
 
     /**
      * User defined label for units shown for Bill line items, indicating to your customers what
      * they are being charged for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun unit(): String = body.unit()
 
-    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    /**
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountingProductId(): Optional<String> = body.accountingProductId()
 
-    /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+    /**
+     * Code of the new Aggregation. A unique short code to identify the Aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun customSql(): Optional<String> = body.customSql()
 
     /**
@@ -122,6 +163,9 @@ private constructor(
      * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
      * This ensures that any null values are passed in correctly to the Compound Aggregation
      * calculation with a value = 0.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun defaultValue(): Optional<Double> = body.defaultValue()
 
@@ -133,6 +177,9 @@ private constructor(
      *
      * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on the
      * target Meter, such as one that concatenates two string `dataFields`, can also be segmented.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun segmentedFields(): Optional<List<String>> = body.segmentedFields()
 
@@ -147,6 +194,9 @@ private constructor(
      * details on how to do this with an example, see
      * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
      * in our main User Docs.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun segments(): Optional<List<Segment>> = body.segments()
 
@@ -157,132 +207,115 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * Specifies the computation method applied to usage data collected in `targetField`.
-     * Aggregation unit value depends on the **Category** configured for the selected targetField.
+     * Returns the raw JSON value of [aggregation].
      *
-     * Enum:
-     * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
-     *   `targetField`.
-     * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
-     *   `targetField`.
-     * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
-     *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
-     *   **Cost** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
-     *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
-     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
-     *   data measurment submissions.
-     * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
-     *   **Income**, or **Cost** `targetField`.
-     * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
-     *   applied to a **Metadata** `targetField`.
+     * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _aggregation(): JsonField<Aggregation> = body._aggregation()
 
     /**
-     * The UUID of the Meter used as the source of usage data for the Aggregation.
+     * Returns the raw JSON value of [meterId].
      *
-     * Each Aggregation is a child of a Meter, so the Meter must be selected.
+     * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _meterId(): JsonField<String> = body._meterId()
 
-    /** Descriptive name for the Aggregation. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit for
-     * billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per 500
-     * KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+     * Returns the raw JSON value of [quantityPerUnit].
      *
-     * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically set
-     * to `"UP"`.
+     * Unlike [quantityPerUnit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _quantityPerUnit(): JsonField<Double> = body._quantityPerUnit()
 
     /**
-     * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+     * Returns the raw JSON value of [rounding].
      *
-     * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-     *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
-     *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
-     *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
-     *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
-     *
-     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+     * Unlike [rounding], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _rounding(): JsonField<Rounding> = body._rounding()
 
     /**
-     * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for the
-     * Aggregation.
+     * Returns the raw JSON value of [targetField].
+     *
+     * Unlike [targetField], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _targetField(): JsonField<String> = body._targetField()
 
     /**
-     * User defined label for units shown for Bill line items, indicating to your customers what
-     * they are being charged for.
+     * Returns the raw JSON value of [unit].
+     *
+     * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _unit(): JsonField<String> = body._unit()
 
-    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
-    /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
+    /**
+     * Returns the raw JSON value of [customFields].
+     *
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
+    /**
+     * Returns the raw JSON value of [customSql].
+     *
+     * Unlike [customSql], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _customSql(): JsonField<String> = body._customSql()
 
     /**
-     * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+     * Returns the raw JSON value of [defaultValue].
      *
-     * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
-     * This ensures that any null values are passed in correctly to the Compound Aggregation
-     * calculation with a value = 0.
+     * Unlike [defaultValue], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _defaultValue(): JsonField<Double> = body._defaultValue()
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-     * collected by a single Meter. Works together with `segments`.
+     * Returns the raw JSON value of [segmentedFields].
      *
-     * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-     *
-     * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on the
-     * target Meter, such as one that concatenates two string `dataFields`, can also be segmented.
+     * Unlike [segmentedFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _segmentedFields(): JsonField<List<String>> = body._segmentedFields()
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-     * collected by a single Meter. Works together with `segmentedFields`.
+     * Returns the raw JSON value of [segments].
      *
-     * Enter the values that are to be used as the segments, read from the fields in the meter
-     * pointed at by `segmentedFields`.
-     *
-     * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
-     * details on how to do this with an example, see
-     * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-     * in our main User Docs.
+     * Unlike [segments], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _segments(): JsonField<List<Segment>> = body._segments()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -380,6 +413,9 @@ private constructor(
          *   **Income**, or **Cost** `targetField`.
          * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun aggregation(): Aggregation = aggregation.getRequired("aggregation")
 
@@ -387,10 +423,18 @@ private constructor(
          * The UUID of the Meter used as the source of usage data for the Aggregation.
          *
          * Each Aggregation is a child of a Meter, so the Meter must be selected.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun meterId(): String = meterId.getRequired("meterId")
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Descriptive name for the Aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -400,6 +444,9 @@ private constructor(
          *
          * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
          * set to `"UP"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun quantityPerUnit(): Double = quantityPerUnit.getRequired("quantityPerUnit")
 
@@ -416,31 +463,58 @@ private constructor(
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun rounding(): Rounding = rounding.getRequired("rounding")
 
         /**
          * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for the
          * Aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun targetField(): String = targetField.getRequired("targetField")
 
         /**
          * User defined label for units shown for Bill line items, indicating to your customers what
          * they are being charged for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun unit(): String = unit.getRequired("unit")
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountingProductId(): Optional<String> =
             Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Code of the new Aggregation. A unique short code to identify the Aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun customSql(): Optional<String> = Optional.ofNullable(customSql.getNullable("customSql"))
 
         /**
@@ -449,6 +523,9 @@ private constructor(
          * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
          * This ensures that any null values are passed in correctly to the Compound Aggregation
          * calculation with a value = 0.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun defaultValue(): Optional<Double> =
             Optional.ofNullable(defaultValue.getNullable("defaultValue"))
@@ -462,6 +539,9 @@ private constructor(
          * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on
          * the target Meter, such as one that concatenates two string `dataFields`, can also be
          * segmented.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun segmentedFields(): Optional<List<String>> =
             Optional.ofNullable(segmentedFields.getNullable("segmentedFields"))
@@ -477,6 +557,9 @@ private constructor(
          * details on how to do this with an example, see
          * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
          * in our main User Docs.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun segments(): Optional<List<Segment>> =
             Optional.ofNullable(segments.getNullable("segments"))
@@ -488,150 +571,135 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * Specifies the computation method applied to usage data collected in `targetField`.
-         * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * Returns the raw JSON value of [aggregation].
          *
-         * Enum:
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
-         *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
-         *   used for usage data measurment submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
-         *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
-         *   be applied to a **Metadata** `targetField`.
+         * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("aggregation")
         @ExcludeMissing
         fun _aggregation(): JsonField<Aggregation> = aggregation
 
         /**
-         * The UUID of the Meter used as the source of usage data for the Aggregation.
+         * Returns the raw JSON value of [meterId].
          *
-         * Each Aggregation is a child of a Meter, so the Meter must be selected.
+         * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit
-         * for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per
-         * 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+         * Returns the raw JSON value of [quantityPerUnit].
          *
-         * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
-         * set to `"UP"`.
+         * Unlike [quantityPerUnit], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("quantityPerUnit")
         @ExcludeMissing
         fun _quantityPerUnit(): JsonField<Double> = quantityPerUnit
 
         /**
-         * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+         * Returns the raw JSON value of [rounding].
          *
-         * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-         *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
-         *   you would typically set Rounding to **UP**. For example, suppose you charge by
-         *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-         *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-         *
-         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         * Unlike [rounding], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("rounding") @ExcludeMissing fun _rounding(): JsonField<Rounding> = rounding
 
         /**
-         * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for the
-         * Aggregation.
+         * Returns the raw JSON value of [targetField].
+         *
+         * Unlike [targetField], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("targetField")
         @ExcludeMissing
         fun _targetField(): JsonField<String> = targetField
 
         /**
-         * User defined label for units shown for Bill line items, indicating to your customers what
-         * they are being charged for.
+         * Returns the raw JSON value of [unit].
+         *
+         * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Returns the raw JSON value of [accountingProductId].
+         *
+         * Unlike [accountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         fun _accountingProductId(): JsonField<String> = accountingProductId
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
+        /**
+         * Returns the raw JSON value of [customFields].
+         *
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
+        /**
+         * Returns the raw JSON value of [customSql].
+         *
+         * Unlike [customSql], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("customSql") @ExcludeMissing fun _customSql(): JsonField<String> = customSql
 
         /**
-         * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+         * Returns the raw JSON value of [defaultValue].
          *
-         * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
-         * This ensures that any null values are passed in correctly to the Compound Aggregation
-         * calculation with a value = 0.
+         * Unlike [defaultValue], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("defaultValue")
         @ExcludeMissing
         fun _defaultValue(): JsonField<Double> = defaultValue
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segments`.
+         * Returns the raw JSON value of [segmentedFields].
          *
-         * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-         *
-         * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on
-         * the target Meter, such as one that concatenates two string `dataFields`, can also be
-         * segmented.
+         * Unlike [segmentedFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("segmentedFields")
         @ExcludeMissing
         fun _segmentedFields(): JsonField<List<String>> = segmentedFields
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segmentedFields`.
+         * Returns the raw JSON value of [segments].
          *
-         * Enter the values that are to be used as the segments, read from the fields in the meter
-         * pointed at by `segmentedFields`.
-         *
-         * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
-         * details on how to do this with an example, see
-         * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-         * in our main User Docs.
+         * Unlike [segments], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("segments")
         @ExcludeMissing
         fun _segments(): JsonField<List<Segment>> = segments
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -751,27 +819,11 @@ private constructor(
             fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
             /**
-             * Specifies the computation method applied to usage data collected in `targetField`.
-             * Aggregation unit value depends on the **Category** configured for the selected
-             * targetField.
+             * Sets [Builder.aggregation] to an arbitrary JSON value.
              *
-             * Enum:
-             * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
-             *   `targetField`.
-             * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
-             *   **Cost** `targetField`.
-             * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
-             *   **Cost** `targetField`.
-             * - **COUNT**. Counts the number of values. Can be applied to a **Measure**,
-             *   **Income**, or **Cost** `targetField`.
-             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
-             *   **Income**, or **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of
-             *   usage data measurement submissions. If using this method, please ensure _distinct_
-             *   `ts` values are used for usage data measurment submissions.
-             * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
-             *   **Income**, or **Cost** `targetField`.
-             * - **UNIQUE**. Uses unique values and returns a count of the number of unique values.
-             *   Can be applied to a **Metadata** `targetField`.
+             * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun aggregation(aggregation: JsonField<Aggregation>) = apply {
                 this.aggregation = aggregation
@@ -785,16 +837,24 @@ private constructor(
             fun meterId(meterId: String) = meterId(JsonField.of(meterId))
 
             /**
-             * The UUID of the Meter used as the source of usage data for the Aggregation.
+             * Sets [Builder.meterId] to an arbitrary JSON value.
              *
-             * Each Aggregation is a child of a Meter, so the Meter must be selected.
+             * You should usually call [Builder.meterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             /** Descriptive name for the Aggregation. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Descriptive name for the Aggregation. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -810,13 +870,11 @@ private constructor(
                 quantityPerUnit(JsonField.of(quantityPerUnit))
 
             /**
-             * Defines how much of a quantity equates to 1 unit. Used when setting the price per
-             * unit for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of
-             * $0.25 per 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per
-             * unit.
+             * Sets [Builder.quantityPerUnit] to an arbitrary JSON value.
              *
-             * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is
-             * typically set to `"UP"`.
+             * You should usually call [Builder.quantityPerUnit] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun quantityPerUnit(quantityPerUnit: JsonField<Double>) = apply {
                 this.quantityPerUnit = quantityPerUnit
@@ -841,20 +899,11 @@ private constructor(
             fun rounding(rounding: Rounding) = rounding(JsonField.of(rounding))
 
             /**
-             * Specifies how you want to deal with non-integer, fractional number Aggregation
-             * values.
+             * Sets [Builder.rounding] to an arbitrary JSON value.
              *
-             * **NOTES:**
-             * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
-             *   to 4.
-             * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-             *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than
-             *   one, you would typically set Rounding to **UP**. For example, suppose you charge by
-             *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-             *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-             *
-             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+             * You should usually call [Builder.rounding] with a well-typed [Rounding] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
@@ -865,8 +914,11 @@ private constructor(
             fun targetField(targetField: String) = targetField(JsonField.of(targetField))
 
             /**
-             * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for
-             * the Aggregation.
+             * Sets [Builder.targetField] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetField] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun targetField(targetField: JsonField<String>) = apply {
                 this.targetField = targetField
@@ -879,8 +931,11 @@ private constructor(
             fun unit(unit: String) = unit(JsonField.of(unit))
 
             /**
-             * User defined label for units shown for Bill line items, indicating to your customers
-             * what they are being charged for.
+             * Sets [Builder.unit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
@@ -891,7 +946,11 @@ private constructor(
                 accountingProductId(JsonField.of(accountingProductId))
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun accountingProductId(accountingProductId: JsonField<String>) = apply {
                 this.accountingProductId = accountingProductId
@@ -900,17 +959,37 @@ private constructor(
             /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
+            /**
+             * Sets [Builder.customFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
             }
 
             fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
+            /**
+             * Sets [Builder.customSql] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customSql] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customSql(customSql: JsonField<String>) = apply { this.customSql = customSql }
 
             /**
@@ -924,12 +1003,11 @@ private constructor(
             fun defaultValue(defaultValue: Double) = defaultValue(JsonField.of(defaultValue))
 
             /**
-             * Aggregation value used when no usage data is available to be aggregated.
-             * _(Optional)_.
+             * Sets [Builder.defaultValue] to an arbitrary JSON value.
              *
-             * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound
-             * Aggregation. This ensures that any null values are passed in correctly to the
-             * Compound Aggregation calculation with a value = 0.
+             * You should usually call [Builder.defaultValue] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun defaultValue(defaultValue: JsonField<Double>) = apply {
                 this.defaultValue = defaultValue
@@ -949,28 +1027,20 @@ private constructor(
                 segmentedFields(JsonField.of(segmentedFields))
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
-             * data collected by a single Meter. Works together with `segments`.
+             * Sets [Builder.segmentedFields] to an arbitrary JSON value.
              *
-             * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-             *
-             * String `dataFields` on the target Meter can be segmented. Any string `derivedFields`
-             * on the target Meter, such as one that concatenates two string `dataFields`, can also
-             * be segmented.
+             * You should usually call [Builder.segmentedFields] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun segmentedFields(segmentedFields: JsonField<List<String>>) = apply {
                 this.segmentedFields = segmentedFields.map { it.toMutableList() }
             }
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
-             * data collected by a single Meter. Works together with `segments`.
+             * Adds a single [String] to [segmentedFields].
              *
-             * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-             *
-             * String `dataFields` on the target Meter can be segmented. Any string `derivedFields`
-             * on the target Meter, such as one that concatenates two string `dataFields`, can also
-             * be segmented.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addSegmentedField(segmentedField: String) = apply {
                 segmentedFields =
@@ -994,32 +1064,20 @@ private constructor(
             fun segments(segments: List<Segment>) = segments(JsonField.of(segments))
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
-             * data collected by a single Meter. Works together with `segmentedFields`.
+             * Sets [Builder.segments] to an arbitrary JSON value.
              *
-             * Enter the values that are to be used as the segments, read from the fields in the
-             * meter pointed at by `segmentedFields`.
-             *
-             * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For
-             * more details on how to do this with an example, see
-             * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-             * in our main User Docs.
+             * You should usually call [Builder.segments] with a well-typed `List<Segment>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun segments(segments: JsonField<List<Segment>>) = apply {
                 this.segments = segments.map { it.toMutableList() }
             }
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
-             * data collected by a single Meter. Works together with `segmentedFields`.
+             * Adds a single [Segment] to [segments].
              *
-             * Enter the values that are to be used as the segments, read from the fields in the
-             * meter pointed at by `segmentedFields`.
-             *
-             * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For
-             * more details on how to do this with an example, see
-             * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-             * in our main User Docs.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addSegment(segment: Segment) = apply {
                 segments =
@@ -1039,12 +1097,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1173,27 +1230,11 @@ private constructor(
         fun aggregation(aggregation: Aggregation) = apply { body.aggregation(aggregation) }
 
         /**
-         * Specifies the computation method applied to usage data collected in `targetField`.
-         * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * Sets [Builder.aggregation] to an arbitrary JSON value.
          *
-         * Enum:
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
-         *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
-         *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
-         *   used for usage data measurment submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
-         *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
-         *   be applied to a **Metadata** `targetField`.
+         * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun aggregation(aggregation: JsonField<Aggregation>) = apply {
             body.aggregation(aggregation)
@@ -1207,16 +1248,22 @@ private constructor(
         fun meterId(meterId: String) = apply { body.meterId(meterId) }
 
         /**
-         * The UUID of the Meter used as the source of usage data for the Aggregation.
+         * Sets [Builder.meterId] to an arbitrary JSON value.
          *
-         * Each Aggregation is a child of a Meter, so the Meter must be selected.
+         * You should usually call [Builder.meterId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun meterId(meterId: JsonField<String>) = apply { body.meterId(meterId) }
 
         /** Descriptive name for the Aggregation. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -1232,12 +1279,11 @@ private constructor(
         }
 
         /**
-         * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit
-         * for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per
-         * 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+         * Sets [Builder.quantityPerUnit] to an arbitrary JSON value.
          *
-         * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
-         * set to `"UP"`.
+         * You should usually call [Builder.quantityPerUnit] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun quantityPerUnit(quantityPerUnit: JsonField<Double>) = apply {
             body.quantityPerUnit(quantityPerUnit)
@@ -1260,18 +1306,11 @@ private constructor(
         fun rounding(rounding: Rounding) = apply { body.rounding(rounding) }
 
         /**
-         * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+         * Sets [Builder.rounding] to an arbitrary JSON value.
          *
-         * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-         *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
-         *   you would typically set Rounding to **UP**. For example, suppose you charge by
-         *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-         *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-         *
-         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         * You should usually call [Builder.rounding] with a well-typed [Rounding] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun rounding(rounding: JsonField<Rounding>) = apply { body.rounding(rounding) }
 
@@ -1282,8 +1321,11 @@ private constructor(
         fun targetField(targetField: String) = apply { body.targetField(targetField) }
 
         /**
-         * `Code` of the target `dataField` or `derivedField` on the Meter used as the basis for the
-         * Aggregation.
+         * Sets [Builder.targetField] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetField] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun targetField(targetField: JsonField<String>) = apply { body.targetField(targetField) }
 
@@ -1294,8 +1336,10 @@ private constructor(
         fun unit(unit: String) = apply { body.unit(unit) }
 
         /**
-         * User defined label for units shown for Bill line items, indicating to your customers what
-         * they are being charged for.
+         * Sets [Builder.unit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
@@ -1304,7 +1348,13 @@ private constructor(
             body.accountingProductId(accountingProductId)
         }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountingProductId(accountingProductId: JsonField<String>) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -1312,17 +1362,36 @@ private constructor(
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
+        /**
+         * Sets [Builder.customFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
         }
 
         fun customSql(customSql: String) = apply { body.customSql(customSql) }
 
+        /**
+         * Sets [Builder.customSql] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customSql] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun customSql(customSql: JsonField<String>) = apply { body.customSql(customSql) }
 
         /**
@@ -1335,11 +1404,11 @@ private constructor(
         fun defaultValue(defaultValue: Double) = apply { body.defaultValue(defaultValue) }
 
         /**
-         * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+         * Sets [Builder.defaultValue] to an arbitrary JSON value.
          *
-         * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
-         * This ensures that any null values are passed in correctly to the Compound Aggregation
-         * calculation with a value = 0.
+         * You should usually call [Builder.defaultValue] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun defaultValue(defaultValue: JsonField<Double>) = apply {
             body.defaultValue(defaultValue)
@@ -1360,28 +1429,20 @@ private constructor(
         }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segments`.
+         * Sets [Builder.segmentedFields] to an arbitrary JSON value.
          *
-         * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-         *
-         * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on
-         * the target Meter, such as one that concatenates two string `dataFields`, can also be
-         * segmented.
+         * You should usually call [Builder.segmentedFields] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun segmentedFields(segmentedFields: JsonField<List<String>>) = apply {
             body.segmentedFields(segmentedFields)
         }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segments`.
+         * Adds a single [String] to [segmentedFields].
          *
-         * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
-         *
-         * String `dataFields` on the target Meter can be segmented. Any string `derivedFields` on
-         * the target Meter, such as one that concatenates two string `dataFields`, can also be
-         * segmented.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addSegmentedField(segmentedField: String) = apply {
             body.addSegmentedField(segmentedField)
@@ -1402,30 +1463,18 @@ private constructor(
         fun segments(segments: List<Segment>) = apply { body.segments(segments) }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segmentedFields`.
+         * Sets [Builder.segments] to an arbitrary JSON value.
          *
-         * Enter the values that are to be used as the segments, read from the fields in the meter
-         * pointed at by `segmentedFields`.
-         *
-         * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
-         * details on how to do this with an example, see
-         * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-         * in our main User Docs.
+         * You should usually call [Builder.segments] with a well-typed `List<Segment>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun segments(segments: JsonField<List<Segment>>) = apply { body.segments(segments) }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
-         * collected by a single Meter. Works together with `segmentedFields`.
+         * Adds a single [Segment] to [segments].
          *
-         * Enter the values that are to be used as the segments, read from the fields in the meter
-         * pointed at by `segmentedFields`.
-         *
-         * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
-         * details on how to do this with an example, see
-         * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
-         * in our main User Docs.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addSegment(segment: Segment) = apply { body.addSegment(segment) }
 
@@ -1440,12 +1489,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

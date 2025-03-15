@@ -35,35 +35,65 @@ private constructor(
 
     /**
      * A flexible object to include any additional configuration data specific to the integration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun configData(): ConfigData = body.configData()
 
-    /** Base model for defining integration credentials across different types of integrations. */
+    /**
+     * Base model for defining integration credentials across different types of integrations.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun credentials(): Credentials = body.credentials()
 
     /**
      * Denotes the integration destination. This field identifies the target platform or service for
      * the integration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun destination(): String = body.destination()
 
-    /** The unique identifier (UUID) for the integration destination. */
+    /**
+     * The unique identifier (UUID) for the integration destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun destinationId(): String = body.destinationId()
 
     /**
      * The unique identifier (UUID) of the entity. This field is used to specify which entity's
      * integration configuration you're updating.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun entityId(): String = body.entityId()
 
     /**
      * Specifies the type of entity for which the integration configuration is being updated. Must
      * be a valid alphanumeric string.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun entityType(): String = body.entityType()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun integrationCredentialsId(): String = body.integrationCredentialsId()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -73,49 +103,73 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * A flexible object to include any additional configuration data specific to the integration.
+     * Returns the raw JSON value of [configData].
+     *
+     * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _configData(): JsonField<ConfigData> = body._configData()
 
-    /** Base model for defining integration credentials across different types of integrations. */
+    /**
+     * Returns the raw JSON value of [credentials].
+     *
+     * Unlike [credentials], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _credentials(): JsonField<Credentials> = body._credentials()
 
     /**
-     * Denotes the integration destination. This field identifies the target platform or service for
-     * the integration.
+     * Returns the raw JSON value of [destination].
+     *
+     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _destination(): JsonField<String> = body._destination()
 
-    /** The unique identifier (UUID) for the integration destination. */
+    /**
+     * Returns the raw JSON value of [destinationId].
+     *
+     * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _destinationId(): JsonField<String> = body._destinationId()
 
     /**
-     * The unique identifier (UUID) of the entity. This field is used to specify which entity's
-     * integration configuration you're updating.
+     * Returns the raw JSON value of [entityId].
+     *
+     * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _entityId(): JsonField<String> = body._entityId()
 
     /**
-     * Specifies the type of entity for which the integration configuration is being updated. Must
-     * be a valid alphanumeric string.
+     * Returns the raw JSON value of [entityType].
+     *
+     * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _entityType(): JsonField<String> = body._entityType()
 
+    /**
+     * Returns the raw JSON value of [integrationCredentialsId].
+     *
+     * Unlike [integrationCredentialsId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _integrationCredentialsId(): JsonField<String> = body._integrationCredentialsId()
 
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -176,38 +230,66 @@ private constructor(
         /**
          * A flexible object to include any additional configuration data specific to the
          * integration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun configData(): ConfigData = configData.getRequired("configData")
 
         /**
          * Base model for defining integration credentials across different types of integrations.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun credentials(): Credentials = credentials.getRequired("credentials")
 
         /**
          * Denotes the integration destination. This field identifies the target platform or service
          * for the integration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun destination(): String = destination.getRequired("destination")
 
-        /** The unique identifier (UUID) for the integration destination. */
+        /**
+         * The unique identifier (UUID) for the integration destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun destinationId(): String = destinationId.getRequired("destinationId")
 
         /**
          * The unique identifier (UUID) of the entity. This field is used to specify which entity's
          * integration configuration you're updating.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun entityId(): String = entityId.getRequired("entityId")
 
         /**
          * Specifies the type of entity for which the integration configuration is being updated.
          * Must be a valid alphanumeric string.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun entityType(): String = entityType.getRequired("entityType")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun integrationCredentialsId(): String =
             integrationCredentialsId.getRequired("integrationCredentialsId")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -217,64 +299,86 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * A flexible object to include any additional configuration data specific to the
-         * integration.
+         * Returns the raw JSON value of [configData].
+         *
+         * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("configData")
         @ExcludeMissing
         fun _configData(): JsonField<ConfigData> = configData
 
         /**
-         * Base model for defining integration credentials across different types of integrations.
+         * Returns the raw JSON value of [credentials].
+         *
+         * Unlike [credentials], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("credentials")
         @ExcludeMissing
         fun _credentials(): JsonField<Credentials> = credentials
 
         /**
-         * Denotes the integration destination. This field identifies the target platform or service
-         * for the integration.
+         * Returns the raw JSON value of [destination].
+         *
+         * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("destination")
         @ExcludeMissing
         fun _destination(): JsonField<String> = destination
 
-        /** The unique identifier (UUID) for the integration destination. */
+        /**
+         * Returns the raw JSON value of [destinationId].
+         *
+         * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("destinationId")
         @ExcludeMissing
         fun _destinationId(): JsonField<String> = destinationId
 
         /**
-         * The unique identifier (UUID) of the entity. This field is used to specify which entity's
-         * integration configuration you're updating.
+         * Returns the raw JSON value of [entityId].
+         *
+         * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("entityId") @ExcludeMissing fun _entityId(): JsonField<String> = entityId
 
         /**
-         * Specifies the type of entity for which the integration configuration is being updated.
-         * Must be a valid alphanumeric string.
+         * Returns the raw JSON value of [entityType].
+         *
+         * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("entityType")
         @ExcludeMissing
         fun _entityType(): JsonField<String> = entityType
 
+        /**
+         * Returns the raw JSON value of [integrationCredentialsId].
+         *
+         * Unlike [integrationCredentialsId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("integrationCredentialsId")
         @ExcludeMissing
         fun _integrationCredentialsId(): JsonField<String> = integrationCredentialsId
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -358,8 +462,11 @@ private constructor(
             fun configData(configData: ConfigData) = configData(JsonField.of(configData))
 
             /**
-             * A flexible object to include any additional configuration data specific to the
-             * integration.
+             * Sets [Builder.configData] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.configData] with a well-typed [ConfigData] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun configData(configData: JsonField<ConfigData>) = apply {
                 this.configData = configData
@@ -372,8 +479,11 @@ private constructor(
             fun credentials(credentials: Credentials) = credentials(JsonField.of(credentials))
 
             /**
-             * Base model for defining integration credentials across different types of
-             * integrations.
+             * Sets [Builder.credentials] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.credentials] with a well-typed [Credentials] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun credentials(credentials: JsonField<Credentials>) = apply {
                 this.credentials = credentials
@@ -386,8 +496,11 @@ private constructor(
             fun destination(destination: String) = destination(JsonField.of(destination))
 
             /**
-             * Denotes the integration destination. This field identifies the target platform or
-             * service for the integration.
+             * Sets [Builder.destination] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.destination] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun destination(destination: JsonField<String>) = apply {
                 this.destination = destination
@@ -396,7 +509,13 @@ private constructor(
             /** The unique identifier (UUID) for the integration destination. */
             fun destinationId(destinationId: String) = destinationId(JsonField.of(destinationId))
 
-            /** The unique identifier (UUID) for the integration destination. */
+            /**
+             * Sets [Builder.destinationId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.destinationId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun destinationId(destinationId: JsonField<String>) = apply {
                 this.destinationId = destinationId
             }
@@ -408,8 +527,11 @@ private constructor(
             fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 
             /**
-             * The unique identifier (UUID) of the entity. This field is used to specify which
-             * entity's integration configuration you're updating.
+             * Sets [Builder.entityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entityId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun entityId(entityId: JsonField<String>) = apply { this.entityId = entityId }
 
@@ -420,20 +542,37 @@ private constructor(
             fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
             /**
-             * Specifies the type of entity for which the integration configuration is being
-             * updated. Must be a valid alphanumeric string.
+             * Sets [Builder.entityType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entityType] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
             fun integrationCredentialsId(integrationCredentialsId: String) =
                 integrationCredentialsId(JsonField.of(integrationCredentialsId))
 
+            /**
+             * Sets [Builder.integrationCredentialsId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.integrationCredentialsId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun integrationCredentialsId(integrationCredentialsId: JsonField<String>) = apply {
                 this.integrationCredentialsId = integrationCredentialsId
             }
 
             fun name(name: String) = name(JsonField.of(name))
 
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -447,12 +586,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -561,8 +699,11 @@ private constructor(
         fun configData(configData: ConfigData) = apply { body.configData(configData) }
 
         /**
-         * A flexible object to include any additional configuration data specific to the
-         * integration.
+         * Sets [Builder.configData] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.configData] with a well-typed [ConfigData] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun configData(configData: JsonField<ConfigData>) = apply { body.configData(configData) }
 
@@ -572,7 +713,11 @@ private constructor(
         fun credentials(credentials: Credentials) = apply { body.credentials(credentials) }
 
         /**
-         * Base model for defining integration credentials across different types of integrations.
+         * Sets [Builder.credentials] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.credentials] with a well-typed [Credentials] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun credentials(credentials: JsonField<Credentials>) = apply {
             body.credentials(credentials)
@@ -585,15 +730,24 @@ private constructor(
         fun destination(destination: String) = apply { body.destination(destination) }
 
         /**
-         * Denotes the integration destination. This field identifies the target platform or service
-         * for the integration.
+         * Sets [Builder.destination] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destination] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun destination(destination: JsonField<String>) = apply { body.destination(destination) }
 
         /** The unique identifier (UUID) for the integration destination. */
         fun destinationId(destinationId: String) = apply { body.destinationId(destinationId) }
 
-        /** The unique identifier (UUID) for the integration destination. */
+        /**
+         * Sets [Builder.destinationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destinationId(destinationId: JsonField<String>) = apply {
             body.destinationId(destinationId)
         }
@@ -605,8 +759,10 @@ private constructor(
         fun entityId(entityId: String) = apply { body.entityId(entityId) }
 
         /**
-         * The unique identifier (UUID) of the entity. This field is used to specify which entity's
-         * integration configuration you're updating.
+         * Sets [Builder.entityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun entityId(entityId: JsonField<String>) = apply { body.entityId(entityId) }
 
@@ -617,8 +773,11 @@ private constructor(
         fun entityType(entityType: String) = apply { body.entityType(entityType) }
 
         /**
-         * Specifies the type of entity for which the integration configuration is being updated.
-         * Must be a valid alphanumeric string.
+         * Sets [Builder.entityType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun entityType(entityType: JsonField<String>) = apply { body.entityType(entityType) }
 
@@ -626,12 +785,25 @@ private constructor(
             body.integrationCredentialsId(integrationCredentialsId)
         }
 
+        /**
+         * Sets [Builder.integrationCredentialsId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.integrationCredentialsId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun integrationCredentialsId(integrationCredentialsId: JsonField<String>) = apply {
             body.integrationCredentialsId(integrationCredentialsId)
         }
 
         fun name(name: String) = apply { body.name(name) }
 
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -645,12 +817,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 
@@ -884,9 +1054,18 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Specifies the type of authorization required for the integration. */
+        /**
+         * Specifies the type of authorization required for the integration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun type(): Type = type.getRequired("type")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun destination(): Optional<Destination> =
             Optional.ofNullable(destination.getNullable("destination"))
 
@@ -894,10 +1073,18 @@ private constructor(
          * A flag to indicate whether the credentials are empty.
          * - TRUE - empty credentials.
          * - FALSE - credential details required.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun empty(): Optional<Boolean> = Optional.ofNullable(empty.getNullable("empty"))
 
-        /** The name of the credentials */
+        /**
+         * The name of the credentials
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
         /**
@@ -907,33 +1094,46 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Specifies the type of authorization required for the integration. */
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+        /**
+         * Returns the raw JSON value of [destination].
+         *
+         * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("destination")
         @ExcludeMissing
         fun _destination(): JsonField<Destination> = destination
 
         /**
-         * A flag to indicate whether the credentials are empty.
-         * - TRUE - empty credentials.
-         * - FALSE - credential details required.
+         * Returns the raw JSON value of [empty].
+         *
+         * Unlike [empty], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("empty") @ExcludeMissing fun _empty(): JsonField<Boolean> = empty
 
-        /** The name of the credentials */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -994,11 +1194,24 @@ private constructor(
             /** Specifies the type of authorization required for the integration. */
             fun type(type: Type) = type(JsonField.of(type))
 
-            /** Specifies the type of authorization required for the integration. */
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun destination(destination: Destination) = destination(JsonField.of(destination))
 
+            /**
+             * Sets [Builder.destination] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.destination] with a well-typed [Destination] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun destination(destination: JsonField<Destination>) = apply {
                 this.destination = destination
             }
@@ -1011,16 +1224,24 @@ private constructor(
             fun empty(empty: Boolean) = empty(JsonField.of(empty))
 
             /**
-             * A flag to indicate whether the credentials are empty.
-             * - TRUE - empty credentials.
-             * - FALSE - credential details required.
+             * Sets [Builder.empty] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.empty] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun empty(empty: JsonField<Boolean>) = apply { this.empty = empty }
 
             /** The name of the credentials */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the credentials */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -1034,12 +1255,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 

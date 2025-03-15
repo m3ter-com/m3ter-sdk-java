@@ -43,10 +43,20 @@ private constructor(
 
     fun id(): String = id
 
-    /** The unique identifier (UUID) for the end customer Account. */
+    /**
+     * The unique identifier (UUID) for the end customer Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accountId(): String = body.accountId()
 
-    /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+    /**
+     * The currency code used for the Balance amount. For example: USD, GBP or EUR.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun currency(): String = body.currency()
 
     /**
@@ -56,30 +66,59 @@ private constructor(
      * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
      * period for continued draw-down against the Balance if any amount remains when the specified
      * `endDate` is reached.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun endDate(): OffsetDateTime = body.endDate()
 
-    /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+    /**
+     * The date _(in ISO 8601 format)_ when the Balance becomes active.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun startDate(): OffsetDateTime = body.startDate()
 
     /**
      * A description for the bill line items for draw-down charges against the Balance.
      * _(Optional)._
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun balanceDrawDownDescription(): Optional<String> = body.balanceDrawDownDescription()
 
-    /** Unique short code for the Balance. */
+    /**
+     * Unique short code for the Balance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
      * Optional Product ID this Balance Consumptions should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun consumptionsAccountingProductId(): Optional<String> = body.consumptionsAccountingProductId()
 
-    /** A description of the Balance. */
+    /**
+     * A description of the Balance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
-    /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+    /**
+     * Optional Product ID this Balance Fees should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun feesAccountingProductId(): Optional<String> = body.feesAccountingProductId()
 
     /**
@@ -93,13 +132,26 @@ private constructor(
      *
      * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against the
      * Balance amount at billing.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun lineItemTypes(): Optional<List<LineItemType>> = body.lineItemTypes()
 
-    /** The official name for the Balance. */
+    /**
+     * The official name for the Balance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = body.name()
 
-    /** A description for Bill line items overage charges. */
+    /**
+     * A description for Bill line items overage charges.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun overageDescription(): Optional<String> = body.overageDescription()
 
     /**
@@ -107,6 +159,9 @@ private constructor(
      * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate is
      * $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any usage
      * charged above the original Balance amount is charged at $11 per unit of usage.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun overageSurchargePercent(): Optional<Double> = body.overageSurchargePercent()
 
@@ -116,6 +171,9 @@ private constructor(
      *
      * **Note:** If you don't specify any Products for Balance draw-down, by default the consumption
      * charges for any Product the Account consumes will be drawn-down against the Balance amount.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun productIds(): Optional<List<String>> = body.productIds()
 
@@ -132,6 +190,9 @@ private constructor(
      *   `rolloverEndDate`, you'll receive an error when trying to create or update the Balance.
      * - If you don't want to grant any grace period for outstanding Balance amounts, then do not
      *   use `rolloverAmount` and `rolloverEndDate`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun rolloverAmount(): Optional<Double> = body.rolloverAmount()
 
@@ -141,6 +202,9 @@ private constructor(
      *
      * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be carried
      * over and made available for draw-down.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun rolloverEndDate(): Optional<OffsetDateTime> = body.rolloverEndDate()
 
@@ -151,118 +215,134 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The unique identifier (UUID) for the end customer Account. */
+    /**
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountId(): JsonField<String> = body._accountId()
 
-    /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _currency(): JsonField<String> = body._currency()
 
     /**
-     * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
-     * Account.
+     * Returns the raw JSON value of [endDate].
      *
-     * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
-     * period for continued draw-down against the Balance if any amount remains when the specified
-     * `endDate` is reached.
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
-    /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
 
     /**
-     * A description for the bill line items for draw-down charges against the Balance.
-     * _(Optional)._
+     * Returns the raw JSON value of [balanceDrawDownDescription].
+     *
+     * Unlike [balanceDrawDownDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _balanceDrawDownDescription(): JsonField<String> = body._balanceDrawDownDescription()
 
-    /** Unique short code for the Balance. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * Optional Product ID this Balance Consumptions should be attributed to for accounting purposes
+     * Returns the raw JSON value of [consumptionsAccountingProductId].
+     *
+     * Unlike [consumptionsAccountingProductId], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _consumptionsAccountingProductId(): JsonField<String> =
         body._consumptionsAccountingProductId()
 
-    /** A description of the Balance. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
-    /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+    /**
+     * Returns the raw JSON value of [feesAccountingProductId].
+     *
+     * Unlike [feesAccountingProductId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _feesAccountingProductId(): JsonField<String> = body._feesAccountingProductId()
 
     /**
-     * Specify the line item charge types that can draw-down at billing against the Balance amount.
-     * Options are:
-     * - `"MINIMUM_SPEND"`
-     * - `"STANDING_CHARGE"`
-     * - `"USAGE"`
-     * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-     * - `"COUNTER_ADJUSTMENT_DEBIT"`
+     * Returns the raw JSON value of [lineItemTypes].
      *
-     * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against the
-     * Balance amount at billing.
+     * Unlike [lineItemTypes], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _lineItemTypes(): JsonField<List<LineItemType>> = body._lineItemTypes()
 
-    /** The official name for the Balance. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** A description for Bill line items overage charges. */
+    /**
+     * Returns the raw JSON value of [overageDescription].
+     *
+     * Unlike [overageDescription], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _overageDescription(): JsonField<String> = body._overageDescription()
 
     /**
-     * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-     * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate is
-     * $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any usage
-     * charged above the original Balance amount is charged at $11 per unit of usage.
+     * Returns the raw JSON value of [overageSurchargePercent].
+     *
+     * Unlike [overageSurchargePercent], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _overageSurchargePercent(): JsonField<Double> = body._overageSurchargePercent()
 
     /**
-     * Specify the Products whose consumption charges due at billing can be drawn-down against the
-     * Balance amount.
+     * Returns the raw JSON value of [productIds].
      *
-     * **Note:** If you don't specify any Products for Balance draw-down, by default the consumption
-     * charges for any Product the Account consumes will be drawn-down against the Balance amount.
+     * Unlike [productIds], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _productIds(): JsonField<List<String>> = body._productIds()
 
     /**
-     * The maximum amount that can be carried over past the Balance end date for draw-down at
-     * billing if there is any unused Balance amount when the end date is reached. Works with
-     * `rolloverEndDate` to define the amount and duration of a Balance "grace period". _(Optional)_
+     * Returns the raw JSON value of [rolloverAmount].
      *
-     * **Notes:**
-     * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
-     *   over after the Balance end date is reached will be drawn-down against up to the specified
-     *   `rolloverEndDate`.
-     * - You must enter a `rolloverEndDate`. If you only enter a `rolloverAmount` without entering a
-     *   `rolloverEndDate`, you'll receive an error when trying to create or update the Balance.
-     * - If you don't want to grant any grace period for outstanding Balance amounts, then do not
-     *   use `rolloverAmount` and `rolloverEndDate`.
+     * Unlike [rolloverAmount], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _rolloverAmount(): JsonField<Double> = body._rolloverAmount()
 
     /**
-     * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance amounts
-     * can be carried over and drawn-down against at billing.
+     * Returns the raw JSON value of [rolloverEndDate].
      *
-     * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be carried
-     * over and made available for draw-down.
+     * Unlike [rolloverEndDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _rolloverEndDate(): JsonField<OffsetDateTime> = body._rolloverEndDate()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -345,10 +425,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The unique identifier (UUID) for the end customer Account. */
+        /**
+         * The unique identifier (UUID) for the end customer Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun accountId(): String = accountId.getRequired("accountId")
 
-        /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+        /**
+         * The currency code used for the Balance amount. For example: USD, GBP or EUR.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun currency(): String = currency.getRequired("currency")
 
         /**
@@ -358,38 +448,67 @@ private constructor(
          * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
          * period for continued draw-down against the Balance if any amount remains when the
          * specified `endDate` is reached.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /**
+         * The date _(in ISO 8601 format)_ when the Balance becomes active.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
         /**
          * A description for the bill line items for draw-down charges against the Balance.
          * _(Optional)._
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun balanceDrawDownDescription(): Optional<String> =
             Optional.ofNullable(
                 balanceDrawDownDescription.getNullable("balanceDrawDownDescription")
             )
 
-        /** Unique short code for the Balance. */
+        /**
+         * Unique short code for the Balance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
          * Optional Product ID this Balance Consumptions should be attributed to for accounting
          * purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun consumptionsAccountingProductId(): Optional<String> =
             Optional.ofNullable(
                 consumptionsAccountingProductId.getNullable("consumptionsAccountingProductId")
             )
 
-        /** A description of the Balance. */
+        /**
+         * A description of the Balance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
-        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        /**
+         * Optional Product ID this Balance Fees should be attributed to for accounting purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun feesAccountingProductId(): Optional<String> =
             Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
@@ -404,14 +523,27 @@ private constructor(
          *
          * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
          * the Balance amount at billing.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun lineItemTypes(): Optional<List<LineItemType>> =
             Optional.ofNullable(lineItemTypes.getNullable("lineItemTypes"))
 
-        /** The official name for the Balance. */
+        /**
+         * The official name for the Balance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-        /** A description for Bill line items overage charges. */
+        /**
+         * A description for Bill line items overage charges.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun overageDescription(): Optional<String> =
             Optional.ofNullable(overageDescription.getNullable("overageDescription"))
 
@@ -420,6 +552,9 @@ private constructor(
          * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate
          * is $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any
          * usage charged above the original Balance amount is charged at $11 per unit of usage.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun overageSurchargePercent(): Optional<Double> =
             Optional.ofNullable(overageSurchargePercent.getNullable("overageSurchargePercent"))
@@ -431,6 +566,9 @@ private constructor(
          * **Note:** If you don't specify any Products for Balance draw-down, by default the
          * consumption charges for any Product the Account consumes will be drawn-down against the
          * Balance amount.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun productIds(): Optional<List<String>> =
             Optional.ofNullable(productIds.getNullable("productIds"))
@@ -450,6 +588,9 @@ private constructor(
          *   the Balance.
          * - If you don't want to grant any grace period for outstanding Balance amounts, then do
          *   not use `rolloverAmount` and `rolloverEndDate`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun rolloverAmount(): Optional<Double> =
             Optional.ofNullable(rolloverAmount.getNullable("rolloverAmount"))
@@ -460,6 +601,9 @@ private constructor(
          *
          * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
          * carried over and made available for draw-down.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun rolloverEndDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(rolloverEndDate.getNullable("rolloverEndDate"))
@@ -471,143 +615,158 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The unique identifier (UUID) for the end customer Account. */
+        /**
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
-        /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+        /**
+         * Returns the raw JSON value of [currency].
+         *
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
         /**
-         * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
-         * Account.
+         * Returns the raw JSON value of [endDate].
          *
-         * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
-         * period for continued draw-down against the Balance if any amount remains when the
-         * specified `endDate` is reached.
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
         /**
-         * A description for the bill line items for draw-down charges against the Balance.
-         * _(Optional)._
+         * Returns the raw JSON value of [balanceDrawDownDescription].
+         *
+         * Unlike [balanceDrawDownDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("balanceDrawDownDescription")
         @ExcludeMissing
         fun _balanceDrawDownDescription(): JsonField<String> = balanceDrawDownDescription
 
-        /** Unique short code for the Balance. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * Optional Product ID this Balance Consumptions should be attributed to for accounting
-         * purposes
+         * Returns the raw JSON value of [consumptionsAccountingProductId].
+         *
+         * Unlike [consumptionsAccountingProductId], this method doesn't throw if the JSON field has
+         * an unexpected type.
          */
         @JsonProperty("consumptionsAccountingProductId")
         @ExcludeMissing
         fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
 
-        /** A description of the Balance. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
-        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        /**
+         * Returns the raw JSON value of [feesAccountingProductId].
+         *
+         * Unlike [feesAccountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("feesAccountingProductId")
         @ExcludeMissing
         fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
         /**
-         * Specify the line item charge types that can draw-down at billing against the Balance
-         * amount. Options are:
-         * - `"MINIMUM_SPEND"`
-         * - `"STANDING_CHARGE"`
-         * - `"USAGE"`
-         * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-         * - `"COUNTER_ADJUSTMENT_DEBIT"`
+         * Returns the raw JSON value of [lineItemTypes].
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
-         * the Balance amount at billing.
+         * Unlike [lineItemTypes], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("lineItemTypes")
         @ExcludeMissing
         fun _lineItemTypes(): JsonField<List<LineItemType>> = lineItemTypes
 
-        /** The official name for the Balance. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** A description for Bill line items overage charges. */
+        /**
+         * Returns the raw JSON value of [overageDescription].
+         *
+         * Unlike [overageDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("overageDescription")
         @ExcludeMissing
         fun _overageDescription(): JsonField<String> = overageDescription
 
         /**
-         * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-         * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate
-         * is $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any
-         * usage charged above the original Balance amount is charged at $11 per unit of usage.
+         * Returns the raw JSON value of [overageSurchargePercent].
+         *
+         * Unlike [overageSurchargePercent], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("overageSurchargePercent")
         @ExcludeMissing
         fun _overageSurchargePercent(): JsonField<Double> = overageSurchargePercent
 
         /**
-         * Specify the Products whose consumption charges due at billing can be drawn-down against
-         * the Balance amount.
+         * Returns the raw JSON value of [productIds].
          *
-         * **Note:** If you don't specify any Products for Balance draw-down, by default the
-         * consumption charges for any Product the Account consumes will be drawn-down against the
-         * Balance amount.
+         * Unlike [productIds], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("productIds")
         @ExcludeMissing
         fun _productIds(): JsonField<List<String>> = productIds
 
         /**
-         * The maximum amount that can be carried over past the Balance end date for draw-down at
-         * billing if there is any unused Balance amount when the end date is reached. Works with
-         * `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-         * _(Optional)_
+         * Returns the raw JSON value of [rolloverAmount].
          *
-         * **Notes:**
-         * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
-         *   over after the Balance end date is reached will be drawn-down against up to the
-         *   specified `rolloverEndDate`.
-         * - You must enter a `rolloverEndDate`. If you only enter a `rolloverAmount` without
-         *   entering a `rolloverEndDate`, you'll receive an error when trying to create or update
-         *   the Balance.
-         * - If you don't want to grant any grace period for outstanding Balance amounts, then do
-         *   not use `rolloverAmount` and `rolloverEndDate`.
+         * Unlike [rolloverAmount], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("rolloverAmount")
         @ExcludeMissing
         fun _rolloverAmount(): JsonField<Double> = rolloverAmount
 
         /**
-         * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
-         * amounts can be carried over and drawn-down against at billing.
+         * Returns the raw JSON value of [rolloverEndDate].
          *
-         * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
-         * carried over and made available for draw-down.
+         * Unlike [rolloverEndDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("rolloverEndDate")
         @ExcludeMissing
         fun _rolloverEndDate(): JsonField<OffsetDateTime> = rolloverEndDate
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -707,13 +866,25 @@ private constructor(
             /** The unique identifier (UUID) for the end customer Account. */
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
-            /** The unique identifier (UUID) for the end customer Account. */
+            /**
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+            /**
+             * Sets [Builder.currency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /**
@@ -727,19 +898,24 @@ private constructor(
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             /**
-             * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for
-             * the Account.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
              *
-             * **Note:** You can use the `rolloverEndDate` request parameter to define an extended
-             * grace period for continued draw-down against the Balance if any amount remains when
-             * the specified `endDate` is reached.
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
@@ -752,8 +928,11 @@ private constructor(
                 balanceDrawDownDescription(JsonField.of(balanceDrawDownDescription))
 
             /**
-             * A description for the bill line items for draw-down charges against the Balance.
-             * _(Optional)._
+             * Sets [Builder.balanceDrawDownDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.balanceDrawDownDescription] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun balanceDrawDownDescription(balanceDrawDownDescription: JsonField<String>) = apply {
                 this.balanceDrawDownDescription = balanceDrawDownDescription
@@ -762,7 +941,13 @@ private constructor(
             /** Unique short code for the Balance. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Unique short code for the Balance. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -773,8 +958,11 @@ private constructor(
                 consumptionsAccountingProductId(JsonField.of(consumptionsAccountingProductId))
 
             /**
-             * Optional Product ID this Balance Consumptions should be attributed to for accounting
-             * purposes
+             * Sets [Builder.consumptionsAccountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.consumptionsAccountingProductId] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun consumptionsAccountingProductId(
                 consumptionsAccountingProductId: JsonField<String>
@@ -783,7 +971,13 @@ private constructor(
             /** A description of the Balance. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** A description of the Balance. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -795,7 +989,11 @@ private constructor(
                 feesAccountingProductId(JsonField.of(feesAccountingProductId))
 
             /**
-             * Optional Product ID this Balance Fees should be attributed to for accounting purposes
+             * Sets [Builder.feesAccountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.feesAccountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
                 this.feesAccountingProductId = feesAccountingProductId
@@ -817,32 +1015,20 @@ private constructor(
                 lineItemTypes(JsonField.of(lineItemTypes))
 
             /**
-             * Specify the line item charge types that can draw-down at billing against the Balance
-             * amount. Options are:
-             * - `"MINIMUM_SPEND"`
-             * - `"STANDING_CHARGE"`
-             * - `"USAGE"`
-             * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-             * - `"COUNTER_ADJUSTMENT_DEBIT"`
+             * Sets [Builder.lineItemTypes] to an arbitrary JSON value.
              *
-             * **NOTE:** If no charge types are specified, by default _all types_ can draw-down
-             * against the Balance amount at billing.
+             * You should usually call [Builder.lineItemTypes] with a well-typed
+             * `List<LineItemType>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun lineItemTypes(lineItemTypes: JsonField<List<LineItemType>>) = apply {
                 this.lineItemTypes = lineItemTypes.map { it.toMutableList() }
             }
 
             /**
-             * Specify the line item charge types that can draw-down at billing against the Balance
-             * amount. Options are:
-             * - `"MINIMUM_SPEND"`
-             * - `"STANDING_CHARGE"`
-             * - `"USAGE"`
-             * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-             * - `"COUNTER_ADJUSTMENT_DEBIT"`
+             * Adds a single [LineItemType] to [lineItemTypes].
              *
-             * **NOTE:** If no charge types are specified, by default _all types_ can draw-down
-             * against the Balance amount at billing.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addLineItemType(lineItemType: LineItemType) = apply {
                 lineItemTypes =
@@ -854,14 +1040,26 @@ private constructor(
             /** The official name for the Balance. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The official name for the Balance. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** A description for Bill line items overage charges. */
             fun overageDescription(overageDescription: String) =
                 overageDescription(JsonField.of(overageDescription))
 
-            /** A description for Bill line items overage charges. */
+            /**
+             * Sets [Builder.overageDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.overageDescription] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun overageDescription(overageDescription: JsonField<String>) = apply {
                 this.overageDescription = overageDescription
             }
@@ -877,11 +1075,11 @@ private constructor(
                 overageSurchargePercent(JsonField.of(overageSurchargePercent))
 
             /**
-             * Define a surcharge level, as a percentage of regular usage rating, applied to
-             * overages _(usage charges that exceed the Balance amount)_. For example, if the
-             * regular usage rate is $10 per unit of usage consumed and `overageSurchargePercent` is
-             * set at 10%, then any usage charged above the original Balance amount is charged at
-             * $11 per unit of usage.
+             * Sets [Builder.overageSurchargePercent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.overageSurchargePercent] with a well-typed [Double]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun overageSurchargePercent(overageSurchargePercent: JsonField<Double>) = apply {
                 this.overageSurchargePercent = overageSurchargePercent
@@ -898,24 +1096,20 @@ private constructor(
             fun productIds(productIds: List<String>) = productIds(JsonField.of(productIds))
 
             /**
-             * Specify the Products whose consumption charges due at billing can be drawn-down
-             * against the Balance amount.
+             * Sets [Builder.productIds] to an arbitrary JSON value.
              *
-             * **Note:** If you don't specify any Products for Balance draw-down, by default the
-             * consumption charges for any Product the Account consumes will be drawn-down against
-             * the Balance amount.
+             * You should usually call [Builder.productIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun productIds(productIds: JsonField<List<String>>) = apply {
                 this.productIds = productIds.map { it.toMutableList() }
             }
 
             /**
-             * Specify the Products whose consumption charges due at billing can be drawn-down
-             * against the Balance amount.
+             * Adds a single [String] to [productIds].
              *
-             * **Note:** If you don't specify any Products for Balance draw-down, by default the
-             * consumption charges for any Product the Account consumes will be drawn-down against
-             * the Balance amount.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addProductId(productId: String) = apply {
                 productIds =
@@ -944,20 +1138,11 @@ private constructor(
                 rolloverAmount(JsonField.of(rolloverAmount))
 
             /**
-             * The maximum amount that can be carried over past the Balance end date for draw-down
-             * at billing if there is any unused Balance amount when the end date is reached. Works
-             * with `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-             * _(Optional)_
+             * Sets [Builder.rolloverAmount] to an arbitrary JSON value.
              *
-             * **Notes:**
-             * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount
-             *   left over after the Balance end date is reached will be drawn-down against up to
-             *   the specified `rolloverEndDate`.
-             * - You must enter a `rolloverEndDate`. If you only enter a `rolloverAmount` without
-             *   entering a `rolloverEndDate`, you'll receive an error when trying to create or
-             *   update the Balance.
-             * - If you don't want to grant any grace period for outstanding Balance amounts, then
-             *   do not use `rolloverAmount` and `rolloverEndDate`.
+             * You should usually call [Builder.rolloverAmount] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun rolloverAmount(rolloverAmount: JsonField<Double>) = apply {
                 this.rolloverAmount = rolloverAmount
@@ -974,11 +1159,11 @@ private constructor(
                 rolloverEndDate(JsonField.of(rolloverEndDate))
 
             /**
-             * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
-             * amounts can be carried over and drawn-down against at billing.
+             * Sets [Builder.rolloverEndDate] to an arbitrary JSON value.
              *
-             * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
-             * carried over and made available for draw-down.
+             * You should usually call [Builder.rolloverEndDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun rolloverEndDate(rolloverEndDate: JsonField<OffsetDateTime>) = apply {
                 this.rolloverEndDate = rolloverEndDate
@@ -995,12 +1180,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1110,13 +1294,24 @@ private constructor(
         /** The unique identifier (UUID) for the end customer Account. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
-        /** The unique identifier (UUID) for the end customer Account. */
+        /**
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
         fun currency(currency: String) = apply { body.currency(currency) }
 
-        /** The currency code used for the Balance amount. For example: USD, GBP or EUR. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /**
@@ -1130,19 +1325,24 @@ private constructor(
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
-         * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
-         * Account.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
          *
-         * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
-         * period for continued draw-down against the Balance if any amount remains when the
-         * specified `endDate` is reached.
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
         /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
         /**
@@ -1154,8 +1354,11 @@ private constructor(
         }
 
         /**
-         * A description for the bill line items for draw-down charges against the Balance.
-         * _(Optional)._
+         * Sets [Builder.balanceDrawDownDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balanceDrawDownDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun balanceDrawDownDescription(balanceDrawDownDescription: JsonField<String>) = apply {
             body.balanceDrawDownDescription(balanceDrawDownDescription)
@@ -1164,7 +1367,12 @@ private constructor(
         /** Unique short code for the Balance. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Unique short code for the Balance. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -1176,8 +1384,11 @@ private constructor(
         }
 
         /**
-         * Optional Product ID this Balance Consumptions should be attributed to for accounting
-         * purposes
+         * Sets [Builder.consumptionsAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.consumptionsAccountingProductId] with a well-typed
+         * [String] value instead. This method is primarily for setting the field to an undocumented
+         * or not yet supported value.
          */
         fun consumptionsAccountingProductId(consumptionsAccountingProductId: JsonField<String>) =
             apply {
@@ -1187,7 +1398,13 @@ private constructor(
         /** A description of the Balance. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** A description of the Balance. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
@@ -1195,7 +1412,13 @@ private constructor(
             body.feesAccountingProductId(feesAccountingProductId)
         }
 
-        /** Optional Product ID this Balance Fees should be attributed to for accounting purposes */
+        /**
+         * Sets [Builder.feesAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.feesAccountingProductId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
             body.feesAccountingProductId(feesAccountingProductId)
         }
@@ -1217,32 +1440,20 @@ private constructor(
         }
 
         /**
-         * Specify the line item charge types that can draw-down at billing against the Balance
-         * amount. Options are:
-         * - `"MINIMUM_SPEND"`
-         * - `"STANDING_CHARGE"`
-         * - `"USAGE"`
-         * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-         * - `"COUNTER_ADJUSTMENT_DEBIT"`
+         * Sets [Builder.lineItemTypes] to an arbitrary JSON value.
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
-         * the Balance amount at billing.
+         * You should usually call [Builder.lineItemTypes] with a well-typed `List<LineItemType>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun lineItemTypes(lineItemTypes: JsonField<List<LineItemType>>) = apply {
             body.lineItemTypes(lineItemTypes)
         }
 
         /**
-         * Specify the line item charge types that can draw-down at billing against the Balance
-         * amount. Options are:
-         * - `"MINIMUM_SPEND"`
-         * - `"STANDING_CHARGE"`
-         * - `"USAGE"`
-         * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-         * - `"COUNTER_ADJUSTMENT_DEBIT"`
+         * Adds a single [LineItemType] to [lineItemTypes].
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
-         * the Balance amount at billing.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addLineItemType(lineItemType: LineItemType) = apply {
             body.addLineItemType(lineItemType)
@@ -1251,7 +1462,12 @@ private constructor(
         /** The official name for the Balance. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The official name for the Balance. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** A description for Bill line items overage charges. */
@@ -1259,7 +1475,13 @@ private constructor(
             body.overageDescription(overageDescription)
         }
 
-        /** A description for Bill line items overage charges. */
+        /**
+         * Sets [Builder.overageDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.overageDescription] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun overageDescription(overageDescription: JsonField<String>) = apply {
             body.overageDescription(overageDescription)
         }
@@ -1275,10 +1497,11 @@ private constructor(
         }
 
         /**
-         * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-         * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate
-         * is $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any
-         * usage charged above the original Balance amount is charged at $11 per unit of usage.
+         * Sets [Builder.overageSurchargePercent] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.overageSurchargePercent] with a well-typed [Double]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun overageSurchargePercent(overageSurchargePercent: JsonField<Double>) = apply {
             body.overageSurchargePercent(overageSurchargePercent)
@@ -1295,22 +1518,18 @@ private constructor(
         fun productIds(productIds: List<String>) = apply { body.productIds(productIds) }
 
         /**
-         * Specify the Products whose consumption charges due at billing can be drawn-down against
-         * the Balance amount.
+         * Sets [Builder.productIds] to an arbitrary JSON value.
          *
-         * **Note:** If you don't specify any Products for Balance draw-down, by default the
-         * consumption charges for any Product the Account consumes will be drawn-down against the
-         * Balance amount.
+         * You should usually call [Builder.productIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun productIds(productIds: JsonField<List<String>>) = apply { body.productIds(productIds) }
 
         /**
-         * Specify the Products whose consumption charges due at billing can be drawn-down against
-         * the Balance amount.
+         * Adds a single [String] to [productIds].
          *
-         * **Note:** If you don't specify any Products for Balance draw-down, by default the
-         * consumption charges for any Product the Account consumes will be drawn-down against the
-         * Balance amount.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addProductId(productId: String) = apply { body.addProductId(productId) }
 
@@ -1333,20 +1552,11 @@ private constructor(
         fun rolloverAmount(rolloverAmount: Double) = apply { body.rolloverAmount(rolloverAmount) }
 
         /**
-         * The maximum amount that can be carried over past the Balance end date for draw-down at
-         * billing if there is any unused Balance amount when the end date is reached. Works with
-         * `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-         * _(Optional)_
+         * Sets [Builder.rolloverAmount] to an arbitrary JSON value.
          *
-         * **Notes:**
-         * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
-         *   over after the Balance end date is reached will be drawn-down against up to the
-         *   specified `rolloverEndDate`.
-         * - You must enter a `rolloverEndDate`. If you only enter a `rolloverAmount` without
-         *   entering a `rolloverEndDate`, you'll receive an error when trying to create or update
-         *   the Balance.
-         * - If you don't want to grant any grace period for outstanding Balance amounts, then do
-         *   not use `rolloverAmount` and `rolloverEndDate`.
+         * You should usually call [Builder.rolloverAmount] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun rolloverAmount(rolloverAmount: JsonField<Double>) = apply {
             body.rolloverAmount(rolloverAmount)
@@ -1364,11 +1574,11 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
-         * amounts can be carried over and drawn-down against at billing.
+         * Sets [Builder.rolloverEndDate] to an arbitrary JSON value.
          *
-         * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
-         * carried over and made available for draw-down.
+         * You should usually call [Builder.rolloverEndDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun rolloverEndDate(rolloverEndDate: JsonField<OffsetDateTime>) = apply {
             body.rolloverEndDate(rolloverEndDate)
@@ -1385,12 +1595,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

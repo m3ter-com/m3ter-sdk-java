@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -34,30 +35,66 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The access token. */
+    /**
+     * The access token.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accessToken(): String = accessToken.getRequired("access_token")
 
-    /** Token expiry time in seconds. */
+    /**
+     * Token expiry time in seconds.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun expiresIn(): Long = expiresIn.getRequired("expires_in")
 
-    /** Not used. */
+    /**
+     * Not used.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
 
-    /** The token type, which in this case is "bearer". */
+    /**
+     * The token type, which in this case is "bearer".
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun tokenType(): Optional<String> = Optional.ofNullable(tokenType.getNullable("token_type"))
 
-    /** The access token. */
+    /**
+     * Returns the raw JSON value of [accessToken].
+     *
+     * Unlike [accessToken], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("access_token")
     @ExcludeMissing
     fun _accessToken(): JsonField<String> = accessToken
 
-    /** Token expiry time in seconds. */
+    /**
+     * Returns the raw JSON value of [expiresIn].
+     *
+     * Unlike [expiresIn], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("expires_in") @ExcludeMissing fun _expiresIn(): JsonField<Long> = expiresIn
 
-    /** Not used. */
+    /**
+     * Returns the raw JSON value of [scope].
+     *
+     * Unlike [scope], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("scope") @ExcludeMissing fun _scope(): JsonField<String> = scope
 
-    /** The token type, which in this case is "bearer". */
+    /**
+     * Returns the raw JSON value of [tokenType].
+     *
+     * Unlike [tokenType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("token_type") @ExcludeMissing fun _tokenType(): JsonField<String> = tokenType
 
     @JsonAnyGetter
@@ -119,25 +156,47 @@ private constructor(
         /** The access token. */
         fun accessToken(accessToken: String) = accessToken(JsonField.of(accessToken))
 
-        /** The access token. */
+        /**
+         * Sets [Builder.accessToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accessToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accessToken(accessToken: JsonField<String>) = apply { this.accessToken = accessToken }
 
         /** Token expiry time in seconds. */
         fun expiresIn(expiresIn: Long) = expiresIn(JsonField.of(expiresIn))
 
-        /** Token expiry time in seconds. */
+        /**
+         * Sets [Builder.expiresIn] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expiresIn] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun expiresIn(expiresIn: JsonField<Long>) = apply { this.expiresIn = expiresIn }
 
         /** Not used. */
         fun scope(scope: String) = scope(JsonField.of(scope))
 
-        /** Not used. */
+        /**
+         * Sets [Builder.scope] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scope] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun scope(scope: JsonField<String>) = apply { this.scope = scope }
 
         /** The token type, which in this case is "bearer". */
         fun tokenType(tokenType: String) = tokenType(JsonField.of(tokenType))
 
-        /** The token type, which in this case is "bearer". */
+        /**
+         * Sets [Builder.tokenType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tokenType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun tokenType(tokenType: JsonField<String>) = apply { this.tokenType = tokenType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

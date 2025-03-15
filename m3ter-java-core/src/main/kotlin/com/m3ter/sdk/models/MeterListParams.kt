@@ -118,40 +118,46 @@ private constructor(
          */
         fun codes(codes: List<String>?) = apply { this.codes = codes?.toMutableList() }
 
-        /**
-         * List of Meter codes to retrieve. These are the unique short codes that identify each
-         * Meter.
-         */
+        /** Alias for calling [Builder.codes] with `codes.orElse(null)`. */
         fun codes(codes: Optional<List<String>>) = codes(codes.getOrNull())
 
         /**
-         * List of Meter codes to retrieve. These are the unique short codes that identify each
-         * Meter.
+         * Adds a single [String] to [codes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addCode(code: String) = apply { codes = (codes ?: mutableListOf()).apply { add(code) } }
 
         /** List of Meter IDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** List of Meter IDs to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** List of Meter IDs to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /** `nextToken` for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** `nextToken` for multi page retrievals. */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of Meters to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of Meters to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of Meters to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** The UUIDs of the Products to retrieve Meters for. */
@@ -159,10 +165,14 @@ private constructor(
             this.productId = productId?.toMutableList()
         }
 
-        /** The UUIDs of the Products to retrieve Meters for. */
+        /** Alias for calling [Builder.productId] with `productId.orElse(null)`. */
         fun productId(productId: Optional<List<String>>) = productId(productId.getOrNull())
 
-        /** The UUIDs of the Products to retrieve Meters for. */
+        /**
+         * Adds a single [String] to [Builder.productId].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addProductId(productId: String) = apply {
             this.productId = (this.productId ?: mutableListOf()).apply { add(productId) }
         }

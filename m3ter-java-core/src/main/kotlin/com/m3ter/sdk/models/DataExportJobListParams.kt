@@ -129,7 +129,7 @@ private constructor(
         /** Include only Job entities created before this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z' */
         fun dateCreatedEnd(dateCreatedEnd: String?) = apply { this.dateCreatedEnd = dateCreatedEnd }
 
-        /** Include only Job entities created before this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z' */
+        /** Alias for calling [Builder.dateCreatedEnd] with `dateCreatedEnd.orElse(null)`. */
         fun dateCreatedEnd(dateCreatedEnd: Optional<String>) =
             dateCreatedEnd(dateCreatedEnd.getOrNull())
 
@@ -140,46 +140,52 @@ private constructor(
             this.dateCreatedStart = dateCreatedStart
         }
 
-        /**
-         * Include only Job entities created on or after this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
-         */
+        /** Alias for calling [Builder.dateCreatedStart] with `dateCreatedStart.orElse(null)`. */
         fun dateCreatedStart(dateCreatedStart: Optional<String>) =
             dateCreatedStart(dateCreatedStart.getOrNull())
 
         /** List Job entities for the given UUIDs */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** List Job entities for the given UUIDs */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** List Job entities for the given UUIDs */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** nextToken for multi page retrievals */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of Jobs to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of Jobs to retrieve per page */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of Jobs to retrieve per page */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** List Job entities for the schedule UUID */
         fun scheduleId(scheduleId: String?) = apply { this.scheduleId = scheduleId }
 
-        /** List Job entities for the schedule UUID */
+        /** Alias for calling [Builder.scheduleId] with `scheduleId.orElse(null)`. */
         fun scheduleId(scheduleId: Optional<String>) = scheduleId(scheduleId.getOrNull())
 
         /** List Job entities for the status */
         fun status(status: Status?) = apply { this.status = status }
 
-        /** List Job entities for the status */
+        /** Alias for calling [Builder.status] with `status.orElse(null)`. */
         fun status(status: Optional<Status>) = status(status.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

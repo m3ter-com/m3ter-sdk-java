@@ -123,7 +123,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -131,39 +136,71 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** The unique identifier (UUID) for the end customer Account the Commitment is added to. */
+    /**
+     * The unique identifier (UUID) for the end customer Account the Commitment is added to.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
 
     /**
      * The unique identifier (UUID) for the Product linked to the Commitment for accounting
      * purposes.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun accountingProductId(): Optional<String> =
         Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
-    /** The total amount that the customer has committed to pay. */
+    /**
+     * The total amount that the customer has committed to pay.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun amount(): Optional<Double> = Optional.ofNullable(amount.getNullable("amount"))
 
-    /** The amount to be billed in the first invoice. */
+    /**
+     * The amount to be billed in the first invoice.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun amountFirstBill(): Optional<Double> =
         Optional.ofNullable(amountFirstBill.getNullable("amountFirstBill"))
 
     /**
      * The amount that the customer has already paid upfront at the start of the Commitment service
      * period.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun amountPrePaid(): Optional<Double> =
         Optional.ofNullable(amountPrePaid.getNullable("amountPrePaid"))
 
-    /** The total amount of the Commitment that the customer has spent so far. */
+    /**
+     * The total amount of the Commitment that the customer has spent so far.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun amountSpent(): Optional<Double> =
         Optional.ofNullable(amountSpent.getNullable("amountSpent"))
 
     /**
      * The starting date _(in ISO-8601 date format)_ from which the billing cycles are calculated.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billEpoch(): Optional<LocalDate> = Optional.ofNullable(billEpoch.getNullable("billEpoch"))
 
@@ -171,6 +208,9 @@ private constructor(
      * How often the Commitment fees are applied to bills. For example, if the plan being used to
      * bill for Commitment fees is set to issue bills every three months and the `billingInterval`
      * is set to 2, then the Commitment fees are applied every six months.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billingInterval(): Optional<Long> =
         Optional.ofNullable(billingInterval.getNullable("billingInterval"))
@@ -180,11 +220,19 @@ private constructor(
      * example, if bills are issued every three months and the `billingOffset` is 0, then the charge
      * is applied to the first bill (at three months); if set to 1, it's applied to the next bill
      * (at six months), and so on.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billingOffset(): Optional<Long> =
         Optional.ofNullable(billingOffset.getNullable("billingOffset"))
 
-    /** The unique identifier (UUID) for the Product Plan used for billing Commitment fees due. */
+    /**
+     * The unique identifier (UUID) for the Product Plan used for billing Commitment fees due.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun billingPlanId(): Optional<String> =
         Optional.ofNullable(billingPlanId.getNullable("billingPlanId"))
 
@@ -195,6 +243,9 @@ private constructor(
      * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
      * - **Parent Summary** - single bill line item for all Accounts.
      * - **Child** - the Child Account is billed.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun childBillingMode(): Optional<ChildBillingMode> =
         Optional.ofNullable(childBillingMode.getNullable("childBillingMode"))
@@ -204,44 +255,89 @@ private constructor(
      * billing period)_ or arrears _(end of each billing period)_.
      * - **TRUE** - bill in advance _(start of each billing period)_.
      * - **FALSE** - bill in arrears _(end of each billing period)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun commitmentFeeBillInAdvance(): Optional<Boolean> =
         Optional.ofNullable(commitmentFeeBillInAdvance.getNullable("commitmentFeeBillInAdvance"))
 
-    /** A textual description of the Commitment fee. */
+    /**
+     * A textual description of the Commitment fee.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun commitmentFeeDescription(): Optional<String> =
         Optional.ofNullable(commitmentFeeDescription.getNullable("commitmentFeeDescription"))
 
-    /** A textual description of the Commitment usage. */
+    /**
+     * A textual description of the Commitment usage.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun commitmentUsageDescription(): Optional<String> =
         Optional.ofNullable(commitmentUsageDescription.getNullable("commitmentUsageDescription"))
 
     /**
      * The unique identifier (UUID) for a Contract you've created for the Account and to which the
      * Commitment has been added.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun contractId(): Optional<String> = Optional.ofNullable(contractId.getNullable("contractId"))
 
-    /** The unique identifier (UUID) of the user who created this Commitment. */
+    /**
+     * The unique identifier (UUID) of the user who created this Commitment.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The currency used for the Commitment. For example, 'USD'. */
+    /**
+     * The currency used for the Commitment. For example, 'USD'.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun drawdownsAccountingProductId(): Optional<String> =
         Optional.ofNullable(
             drawdownsAccountingProductId.getNullable("drawdownsAccountingProductId")
         )
 
-    /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Commitment was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Commitment was last modified. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Commitment was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The end date of the Commitment period in ISO-8601 format. */
+    /**
+     * The end date of the Commitment period in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun endDate(): Optional<LocalDate> = Optional.ofNullable(endDate.getNullable("endDate"))
 
     /**
@@ -252,14 +348,26 @@ private constructor(
      * - `amount` - the billed amount.
      * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the bill
      *   covers _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun feeDates(): Optional<List<CommitmentFee>> =
         Optional.ofNullable(feeDates.getNullable("feeDates"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun feesAccountingProductId(): Optional<String> =
         Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
 
-    /** The unique identifier (UUID) of the user who last modified this Commitment. */
+    /**
+     * The unique identifier (UUID) of the user who last modified this Commitment.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
@@ -271,15 +379,28 @@ private constructor(
      * - `USAGE`
      * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
      * - `"COUNTER_ADJUSTMENT_DEBIT"`
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun lineItemTypes(): Optional<List<LineItemType>> =
         Optional.ofNullable(lineItemTypes.getNullable("lineItemTypes"))
 
-    /** A textual description of the overage charges. */
+    /**
+     * A textual description of the overage charges.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun overageDescription(): Optional<String> =
         Optional.ofNullable(overageDescription.getNullable("overageDescription"))
 
-    /** The percentage surcharge applied to the usage charges that exceed the Commitment amount. */
+    /**
+     * The percentage surcharge applied to the usage charges that exceed the Commitment amount.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun overageSurchargePercent(): Optional<Double> =
         Optional.ofNullable(overageSurchargePercent.getNullable("overageSurchargePercent"))
 
@@ -289,6 +410,9 @@ private constructor(
      *
      * **Note:** If not used, then charges due for all Products the Account consumes will be made
      * available for draw-down against the Commitment.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun productIds(): Optional<List<String>> =
         Optional.ofNullable(productIds.getNullable("productIds"))
@@ -300,213 +424,295 @@ private constructor(
      * usage" charges, not simply as "usage" charges:
      * - **TRUE** - billed separately.
      * - **FALSE** - billed together.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun separateOverageUsage(): Optional<Boolean> =
         Optional.ofNullable(separateOverageUsage.getNullable("separateOverageUsage"))
 
-    /** The start date of the Commitment period in ISO-8601 format. */
+    /**
+     * The start date of the Commitment period in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun startDate(): Optional<LocalDate> = Optional.ofNullable(startDate.getNullable("startDate"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The unique identifier (UUID) for the end customer Account the Commitment is added to. */
+    /**
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
     /**
-     * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-     * purposes.
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("accountingProductId")
     @ExcludeMissing
     fun _accountingProductId(): JsonField<String> = accountingProductId
 
-    /** The total amount that the customer has committed to pay. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
-    /** The amount to be billed in the first invoice. */
+    /**
+     * Returns the raw JSON value of [amountFirstBill].
+     *
+     * Unlike [amountFirstBill], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amountFirstBill")
     @ExcludeMissing
     fun _amountFirstBill(): JsonField<Double> = amountFirstBill
 
     /**
-     * The amount that the customer has already paid upfront at the start of the Commitment service
-     * period.
+     * Returns the raw JSON value of [amountPrePaid].
+     *
+     * Unlike [amountPrePaid], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("amountPrePaid")
     @ExcludeMissing
     fun _amountPrePaid(): JsonField<Double> = amountPrePaid
 
-    /** The total amount of the Commitment that the customer has spent so far. */
+    /**
+     * Returns the raw JSON value of [amountSpent].
+     *
+     * Unlike [amountSpent], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amountSpent") @ExcludeMissing fun _amountSpent(): JsonField<Double> = amountSpent
 
     /**
-     * The starting date _(in ISO-8601 date format)_ from which the billing cycles are calculated.
+     * Returns the raw JSON value of [billEpoch].
+     *
+     * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("billEpoch") @ExcludeMissing fun _billEpoch(): JsonField<LocalDate> = billEpoch
 
     /**
-     * How often the Commitment fees are applied to bills. For example, if the plan being used to
-     * bill for Commitment fees is set to issue bills every three months and the `billingInterval`
-     * is set to 2, then the Commitment fees are applied every six months.
+     * Returns the raw JSON value of [billingInterval].
+     *
+     * Unlike [billingInterval], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("billingInterval")
     @ExcludeMissing
     fun _billingInterval(): JsonField<Long> = billingInterval
 
     /**
-     * The offset for when the Commitment fees are first applied to bills on the Account. For
-     * example, if bills are issued every three months and the `billingOffset` is 0, then the charge
-     * is applied to the first bill (at three months); if set to 1, it's applied to the next bill
-     * (at six months), and so on.
+     * Returns the raw JSON value of [billingOffset].
+     *
+     * Unlike [billingOffset], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("billingOffset")
     @ExcludeMissing
     fun _billingOffset(): JsonField<Long> = billingOffset
 
-    /** The unique identifier (UUID) for the Product Plan used for billing Commitment fees due. */
+    /**
+     * Returns the raw JSON value of [billingPlanId].
+     *
+     * Unlike [billingPlanId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("billingPlanId")
     @ExcludeMissing
     fun _billingPlanId(): JsonField<String> = billingPlanId
 
     /**
-     * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
-     * billing mode. The mode determines how billing will be handled and shown on bills for charges
-     * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * Returns the raw JSON value of [childBillingMode].
+     *
+     * Unlike [childBillingMode], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("childBillingMode")
     @ExcludeMissing
     fun _childBillingMode(): JsonField<ChildBillingMode> = childBillingMode
 
     /**
-     * A boolean value indicating whether the Commitment fee is billed in advance _(start of each
-     * billing period)_ or arrears _(end of each billing period)_.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * Returns the raw JSON value of [commitmentFeeBillInAdvance].
+     *
+     * Unlike [commitmentFeeBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("commitmentFeeBillInAdvance")
     @ExcludeMissing
     fun _commitmentFeeBillInAdvance(): JsonField<Boolean> = commitmentFeeBillInAdvance
 
-    /** A textual description of the Commitment fee. */
+    /**
+     * Returns the raw JSON value of [commitmentFeeDescription].
+     *
+     * Unlike [commitmentFeeDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("commitmentFeeDescription")
     @ExcludeMissing
     fun _commitmentFeeDescription(): JsonField<String> = commitmentFeeDescription
 
-    /** A textual description of the Commitment usage. */
+    /**
+     * Returns the raw JSON value of [commitmentUsageDescription].
+     *
+     * Unlike [commitmentUsageDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("commitmentUsageDescription")
     @ExcludeMissing
     fun _commitmentUsageDescription(): JsonField<String> = commitmentUsageDescription
 
     /**
-     * The unique identifier (UUID) for a Contract you've created for the Account and to which the
-     * Commitment has been added.
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("contractId") @ExcludeMissing fun _contractId(): JsonField<String> = contractId
 
-    /** The unique identifier (UUID) of the user who created this Commitment. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The currency used for the Commitment. For example, 'USD'. */
+    /**
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+    /**
+     * Returns the raw JSON value of [drawdownsAccountingProductId].
+     *
+     * Unlike [drawdownsAccountingProductId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("drawdownsAccountingProductId")
     @ExcludeMissing
     fun _drawdownsAccountingProductId(): JsonField<String> = drawdownsAccountingProductId
 
-    /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The date and time _(in ISO-8601 format)_ when the Commitment was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The end date of the Commitment period in ISO-8601 format. */
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<LocalDate> = endDate
 
     /**
-     * Used for billing any outstanding Commitment fees _on a schedule_.
+     * Returns the raw JSON value of [feeDates].
      *
-     * An array defining a series of bill dates and amounts covering specified service periods:
-     * - `date` - the billing date _(in ISO-8601 format)_.
-     * - `amount` - the billed amount.
-     * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the bill
-     *   covers _(in ISO-8601 format)_.
+     * Unlike [feeDates], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("feeDates")
     @ExcludeMissing
     fun _feeDates(): JsonField<List<CommitmentFee>> = feeDates
 
+    /**
+     * Returns the raw JSON value of [feesAccountingProductId].
+     *
+     * Unlike [feesAccountingProductId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("feesAccountingProductId")
     @ExcludeMissing
     fun _feesAccountingProductId(): JsonField<String> = feesAccountingProductId
 
-    /** The unique identifier (UUID) of the user who last modified this Commitment. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
     /**
-     * Specifies the line item charge types that can draw-down at billing against the Commitment
-     * amount. Options are:
-     * - `MINIMUM_SPEND`
-     * - `STANDING_CHARGE`
-     * - `USAGE`
-     * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-     * - `"COUNTER_ADJUSTMENT_DEBIT"`
+     * Returns the raw JSON value of [lineItemTypes].
+     *
+     * Unlike [lineItemTypes], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("lineItemTypes")
     @ExcludeMissing
     fun _lineItemTypes(): JsonField<List<LineItemType>> = lineItemTypes
 
-    /** A textual description of the overage charges. */
+    /**
+     * Returns the raw JSON value of [overageDescription].
+     *
+     * Unlike [overageDescription], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("overageDescription")
     @ExcludeMissing
     fun _overageDescription(): JsonField<String> = overageDescription
 
-    /** The percentage surcharge applied to the usage charges that exceed the Commitment amount. */
+    /**
+     * Returns the raw JSON value of [overageSurchargePercent].
+     *
+     * Unlike [overageSurchargePercent], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("overageSurchargePercent")
     @ExcludeMissing
     fun _overageSurchargePercent(): JsonField<Double> = overageSurchargePercent
 
     /**
-     * A list of unique identifiers (UUIDs) for Products the Account consumes. Charges due for these
-     * Products will be made available for draw-down against the Commitment.
+     * Returns the raw JSON value of [productIds].
      *
-     * **Note:** If not used, then charges due for all Products the Account consumes will be made
-     * available for draw-down against the Commitment.
+     * Unlike [productIds], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("productIds")
     @ExcludeMissing
     fun _productIds(): JsonField<List<String>> = productIds
 
     /**
-     * A boolean value indicating whether the overage usage is billed separately or together. If
-     * overage usage is separated and a Commitment amount has been consumed by an Account, any
-     * subsequent line items on Bills against the Account for usage will show as separate "overage
-     * usage" charges, not simply as "usage" charges:
-     * - **TRUE** - billed separately.
-     * - **FALSE** - billed together.
+     * Returns the raw JSON value of [separateOverageUsage].
+     *
+     * Unlike [separateOverageUsage], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("separateOverageUsage")
     @ExcludeMissing
     fun _separateOverageUsage(): JsonField<Boolean> = separateOverageUsage
 
-    /** The start date of the Commitment period in ISO-8601 format. */
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("startDate") @ExcludeMissing fun _startDate(): JsonField<LocalDate> = startDate
 
     @JsonAnyGetter
@@ -648,7 +854,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -660,17 +871,23 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The unique identifier (UUID) for the end customer Account the Commitment is added to. */
         fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
-        /** The unique identifier (UUID) for the end customer Account the Commitment is added to. */
+        /**
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
         /**
@@ -681,8 +898,11 @@ private constructor(
             accountingProductId(JsonField.of(accountingProductId))
 
         /**
-         * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-         * purposes.
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun accountingProductId(accountingProductId: JsonField<String>) = apply {
             this.accountingProductId = accountingProductId
@@ -691,14 +911,25 @@ private constructor(
         /** The total amount that the customer has committed to pay. */
         fun amount(amount: Double) = amount(JsonField.of(amount))
 
-        /** The total amount that the customer has committed to pay. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
         /** The amount to be billed in the first invoice. */
         fun amountFirstBill(amountFirstBill: Double) =
             amountFirstBill(JsonField.of(amountFirstBill))
 
-        /** The amount to be billed in the first invoice. */
+        /**
+         * Sets [Builder.amountFirstBill] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountFirstBill] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun amountFirstBill(amountFirstBill: JsonField<Double>) = apply {
             this.amountFirstBill = amountFirstBill
         }
@@ -710,8 +941,11 @@ private constructor(
         fun amountPrePaid(amountPrePaid: Double) = amountPrePaid(JsonField.of(amountPrePaid))
 
         /**
-         * The amount that the customer has already paid upfront at the start of the Commitment
-         * service period.
+         * Sets [Builder.amountPrePaid] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountPrePaid] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun amountPrePaid(amountPrePaid: JsonField<Double>) = apply {
             this.amountPrePaid = amountPrePaid
@@ -720,7 +954,13 @@ private constructor(
         /** The total amount of the Commitment that the customer has spent so far. */
         fun amountSpent(amountSpent: Double) = amountSpent(JsonField.of(amountSpent))
 
-        /** The total amount of the Commitment that the customer has spent so far. */
+        /**
+         * Sets [Builder.amountSpent] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountSpent] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun amountSpent(amountSpent: JsonField<Double>) = apply { this.amountSpent = amountSpent }
 
         /**
@@ -730,8 +970,11 @@ private constructor(
         fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
 
         /**
-         * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
-         * calculated.
+         * Sets [Builder.billEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { this.billEpoch = billEpoch }
 
@@ -743,9 +986,11 @@ private constructor(
         fun billingInterval(billingInterval: Long) = billingInterval(JsonField.of(billingInterval))
 
         /**
-         * How often the Commitment fees are applied to bills. For example, if the plan being used
-         * to bill for Commitment fees is set to issue bills every three months and the
-         * `billingInterval` is set to 2, then the Commitment fees are applied every six months.
+         * Sets [Builder.billingInterval] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingInterval] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billingInterval(billingInterval: JsonField<Long>) = apply {
             this.billingInterval = billingInterval
@@ -760,10 +1005,11 @@ private constructor(
         fun billingOffset(billingOffset: Long) = billingOffset(JsonField.of(billingOffset))
 
         /**
-         * The offset for when the Commitment fees are first applied to bills on the Account. For
-         * example, if bills are issued every three months and the `billingOffset` is 0, then the
-         * charge is applied to the first bill (at three months); if set to 1, it's applied to the
-         * next bill (at six months), and so on.
+         * Sets [Builder.billingOffset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingOffset] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billingOffset(billingOffset: JsonField<Long>) = apply {
             this.billingOffset = billingOffset
@@ -775,7 +1021,11 @@ private constructor(
         fun billingPlanId(billingPlanId: String) = billingPlanId(JsonField.of(billingPlanId))
 
         /**
-         * The unique identifier (UUID) for the Product Plan used for billing Commitment fees due.
+         * Sets [Builder.billingPlanId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingPlanId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billingPlanId(billingPlanId: JsonField<String>) = apply {
             this.billingPlanId = billingPlanId
@@ -793,12 +1043,11 @@ private constructor(
             childBillingMode(JsonField.of(childBillingMode))
 
         /**
-         * If the Account is either a Parent or a Child Account, this specifies the Account
-         * hierarchy billing mode. The mode determines how billing will be handled and shown on
-         * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * Sets [Builder.childBillingMode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.childBillingMode] with a well-typed [ChildBillingMode]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun childBillingMode(childBillingMode: JsonField<ChildBillingMode>) = apply {
             this.childBillingMode = childBillingMode
@@ -814,10 +1063,11 @@ private constructor(
             commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
 
         /**
-         * A boolean value indicating whether the Commitment fee is billed in advance _(start of
-         * each billing period)_ or arrears _(end of each billing period)_.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Sets [Builder.commitmentFeeBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.commitmentFeeBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: JsonField<Boolean>) = apply {
             this.commitmentFeeBillInAdvance = commitmentFeeBillInAdvance
@@ -827,7 +1077,13 @@ private constructor(
         fun commitmentFeeDescription(commitmentFeeDescription: String) =
             commitmentFeeDescription(JsonField.of(commitmentFeeDescription))
 
-        /** A textual description of the Commitment fee. */
+        /**
+         * Sets [Builder.commitmentFeeDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.commitmentFeeDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun commitmentFeeDescription(commitmentFeeDescription: JsonField<String>) = apply {
             this.commitmentFeeDescription = commitmentFeeDescription
         }
@@ -836,7 +1092,13 @@ private constructor(
         fun commitmentUsageDescription(commitmentUsageDescription: String) =
             commitmentUsageDescription(JsonField.of(commitmentUsageDescription))
 
-        /** A textual description of the Commitment usage. */
+        /**
+         * Sets [Builder.commitmentUsageDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.commitmentUsageDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun commitmentUsageDescription(commitmentUsageDescription: JsonField<String>) = apply {
             this.commitmentUsageDescription = commitmentUsageDescription
         }
@@ -848,26 +1110,47 @@ private constructor(
         fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
         /**
-         * The unique identifier (UUID) for a Contract you've created for the Account and to which
-         * the Commitment has been added.
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
         /** The unique identifier (UUID) of the user who created this Commitment. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The unique identifier (UUID) of the user who created this Commitment. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The currency used for the Commitment. For example, 'USD'. */
         fun currency(currency: String) = currency(JsonField.of(currency))
 
-        /** The currency used for the Commitment. For example, 'USD'. */
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
             drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
 
+        /**
+         * Sets [Builder.drawdownsAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.drawdownsAccountingProductId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: JsonField<String>) = apply {
             this.drawdownsAccountingProductId = drawdownsAccountingProductId
         }
@@ -875,14 +1158,26 @@ private constructor(
         /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The date and time _(in ISO-8601 format)_ when the Commitment was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The date and time _(in ISO-8601 format)_ when the Commitment was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -890,7 +1185,13 @@ private constructor(
         /** The end date of the Commitment period in ISO-8601 format. */
         fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
 
-        /** The end date of the Commitment period in ISO-8601 format. */
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun endDate(endDate: JsonField<LocalDate>) = apply { this.endDate = endDate }
 
         /**
@@ -905,26 +1206,20 @@ private constructor(
         fun feeDates(feeDates: List<CommitmentFee>) = feeDates(JsonField.of(feeDates))
 
         /**
-         * Used for billing any outstanding Commitment fees _on a schedule_.
+         * Sets [Builder.feeDates] to an arbitrary JSON value.
          *
-         * An array defining a series of bill dates and amounts covering specified service periods:
-         * - `date` - the billing date _(in ISO-8601 format)_.
-         * - `amount` - the billed amount.
-         * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the
-         *   bill covers _(in ISO-8601 format)_.
+         * You should usually call [Builder.feeDates] with a well-typed `List<CommitmentFee>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun feeDates(feeDates: JsonField<List<CommitmentFee>>) = apply {
             this.feeDates = feeDates.map { it.toMutableList() }
         }
 
         /**
-         * Used for billing any outstanding Commitment fees _on a schedule_.
+         * Adds a single [CommitmentFee] to [feeDates].
          *
-         * An array defining a series of bill dates and amounts covering specified service periods:
-         * - `date` - the billing date _(in ISO-8601 format)_.
-         * - `amount` - the billed amount.
-         * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the
-         *   bill covers _(in ISO-8601 format)_.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addFeeDate(feeDate: CommitmentFee) = apply {
             feeDates =
@@ -936,6 +1231,13 @@ private constructor(
         fun feesAccountingProductId(feesAccountingProductId: String) =
             feesAccountingProductId(JsonField.of(feesAccountingProductId))
 
+        /**
+         * Sets [Builder.feesAccountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.feesAccountingProductId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun feesAccountingProductId(feesAccountingProductId: JsonField<String>) = apply {
             this.feesAccountingProductId = feesAccountingProductId
         }
@@ -943,7 +1245,13 @@ private constructor(
         /** The unique identifier (UUID) of the user who last modified this Commitment. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) of the user who last modified this Commitment. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -961,26 +1269,20 @@ private constructor(
             lineItemTypes(JsonField.of(lineItemTypes))
 
         /**
-         * Specifies the line item charge types that can draw-down at billing against the Commitment
-         * amount. Options are:
-         * - `MINIMUM_SPEND`
-         * - `STANDING_CHARGE`
-         * - `USAGE`
-         * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-         * - `"COUNTER_ADJUSTMENT_DEBIT"`
+         * Sets [Builder.lineItemTypes] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lineItemTypes] with a well-typed `List<LineItemType>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun lineItemTypes(lineItemTypes: JsonField<List<LineItemType>>) = apply {
             this.lineItemTypes = lineItemTypes.map { it.toMutableList() }
         }
 
         /**
-         * Specifies the line item charge types that can draw-down at billing against the Commitment
-         * amount. Options are:
-         * - `MINIMUM_SPEND`
-         * - `STANDING_CHARGE`
-         * - `USAGE`
-         * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
-         * - `"COUNTER_ADJUSTMENT_DEBIT"`
+         * Adds a single [LineItemType] to [lineItemTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addLineItemType(lineItemType: LineItemType) = apply {
             lineItemTypes =
@@ -993,7 +1295,13 @@ private constructor(
         fun overageDescription(overageDescription: String) =
             overageDescription(JsonField.of(overageDescription))
 
-        /** A textual description of the overage charges. */
+        /**
+         * Sets [Builder.overageDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.overageDescription] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun overageDescription(overageDescription: JsonField<String>) = apply {
             this.overageDescription = overageDescription
         }
@@ -1005,7 +1313,11 @@ private constructor(
             overageSurchargePercent(JsonField.of(overageSurchargePercent))
 
         /**
-         * The percentage surcharge applied to the usage charges that exceed the Commitment amount.
+         * Sets [Builder.overageSurchargePercent] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.overageSurchargePercent] with a well-typed [Double]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun overageSurchargePercent(overageSurchargePercent: JsonField<Double>) = apply {
             this.overageSurchargePercent = overageSurchargePercent
@@ -1021,22 +1333,20 @@ private constructor(
         fun productIds(productIds: List<String>) = productIds(JsonField.of(productIds))
 
         /**
-         * A list of unique identifiers (UUIDs) for Products the Account consumes. Charges due for
-         * these Products will be made available for draw-down against the Commitment.
+         * Sets [Builder.productIds] to an arbitrary JSON value.
          *
-         * **Note:** If not used, then charges due for all Products the Account consumes will be
-         * made available for draw-down against the Commitment.
+         * You should usually call [Builder.productIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun productIds(productIds: JsonField<List<String>>) = apply {
             this.productIds = productIds.map { it.toMutableList() }
         }
 
         /**
-         * A list of unique identifiers (UUIDs) for Products the Account consumes. Charges due for
-         * these Products will be made available for draw-down against the Commitment.
+         * Adds a single [String] to [productIds].
          *
-         * **Note:** If not used, then charges due for all Products the Account consumes will be
-         * made available for draw-down against the Commitment.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addProductId(productId: String) = apply {
             productIds =
@@ -1057,12 +1367,11 @@ private constructor(
             separateOverageUsage(JsonField.of(separateOverageUsage))
 
         /**
-         * A boolean value indicating whether the overage usage is billed separately or together. If
-         * overage usage is separated and a Commitment amount has been consumed by an Account, any
-         * subsequent line items on Bills against the Account for usage will show as separate
-         * "overage usage" charges, not simply as "usage" charges:
-         * - **TRUE** - billed separately.
-         * - **FALSE** - billed together.
+         * Sets [Builder.separateOverageUsage] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.separateOverageUsage] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun separateOverageUsage(separateOverageUsage: JsonField<Boolean>) = apply {
             this.separateOverageUsage = separateOverageUsage
@@ -1071,7 +1380,13 @@ private constructor(
         /** The start date of the Commitment period in ISO-8601 format. */
         fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))
 
-        /** The start date of the Commitment period in ISO-8601 format. */
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

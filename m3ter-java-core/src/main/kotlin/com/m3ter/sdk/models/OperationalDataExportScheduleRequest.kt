@@ -36,10 +36,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** A list of the entities whose operational data is included in the data export. */
+    /**
+     * A list of the entities whose operational data is included in the data export.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun operationalDataTypes(): List<OperationalDataType> =
         operationalDataTypes.getRequired("operationalDataTypes")
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun sourceType(): SourceType = sourceType.getRequired("sourceType")
 
     /**
@@ -49,25 +58,35 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-    /** A list of the entities whose operational data is included in the data export. */
+    /**
+     * Returns the raw JSON value of [operationalDataTypes].
+     *
+     * Unlike [operationalDataTypes], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("operationalDataTypes")
     @ExcludeMissing
     fun _operationalDataTypes(): JsonField<List<OperationalDataType>> = operationalDataTypes
 
+    /**
+     * Returns the raw JSON value of [sourceType].
+     *
+     * Unlike [sourceType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("sourceType")
     @ExcludeMissing
     fun _sourceType(): JsonField<SourceType> = sourceType
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -129,13 +148,23 @@ private constructor(
         fun operationalDataTypes(operationalDataTypes: List<OperationalDataType>) =
             operationalDataTypes(JsonField.of(operationalDataTypes))
 
-        /** A list of the entities whose operational data is included in the data export. */
+        /**
+         * Sets [Builder.operationalDataTypes] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.operationalDataTypes] with a well-typed
+         * `List<OperationalDataType>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
         fun operationalDataTypes(operationalDataTypes: JsonField<List<OperationalDataType>>) =
             apply {
                 this.operationalDataTypes = operationalDataTypes.map { it.toMutableList() }
             }
 
-        /** A list of the entities whose operational data is included in the data export. */
+        /**
+         * Adds a single [OperationalDataType] to [operationalDataTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addOperationalDataType(operationalDataType: OperationalDataType) = apply {
             operationalDataTypes =
                 (operationalDataTypes ?: JsonField.of(mutableListOf())).also {
@@ -145,6 +174,13 @@ private constructor(
 
         fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
 
+        /**
+         * Sets [Builder.sourceType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sourceType] with a well-typed [SourceType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun sourceType(sourceType: JsonField<SourceType>) = apply { this.sourceType = sourceType }
 
         /**
@@ -158,12 +194,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 

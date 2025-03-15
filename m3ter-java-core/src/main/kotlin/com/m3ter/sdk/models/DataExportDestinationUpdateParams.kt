@@ -42,10 +42,20 @@ private constructor(
 
     fun id(): String = id
 
-    /** Name of the S3 bucket for the Export Destination. */
+    /**
+     * Name of the S3 bucket for the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun bucketName(): String = body.bucketName()
 
-    /** The code of the Export Destination. */
+    /**
+     * The code of the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun code(): String = body.code()
 
     /**
@@ -64,10 +74,18 @@ private constructor(
      * use to create the required IAM Role ARN, see
      * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
      * in our main User documentation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun iamRoleArn(): String = body.iamRoleArn()
 
-    /** The name of the Export Destination. */
+    /**
+     * The name of the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -84,12 +102,18 @@ private constructor(
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      * - Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun partitionOrder(): Optional<PartitionOrder> = body.partitionOrder()
 
     /**
      * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then the
      * root of the bucket will be used.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun prefix(): Optional<String> = body.prefix()
 
@@ -100,67 +124,58 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** Name of the S3 bucket for the Export Destination. */
+    /**
+     * Returns the raw JSON value of [bucketName].
+     *
+     * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _bucketName(): JsonField<String> = body._bucketName()
 
-    /** The code of the Export Destination. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an IAM
-     * role with PutObject permission for the specified `bucketName`. Create a suitable IAM role in
-     * your AWS account and enter ARN:
+     * Returns the raw JSON value of [iamRoleArn].
      *
-     * **Formatting Constraints:**
-     * - The IAM role ARN must begin with "arn:aws:iam".
-     * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-     *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-     * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-     *   returned.
-     *
-     * **More Details:** For more details and examples of the Permission and Trust Policies you can
-     * use to create the required IAM Role ARN, see
-     * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-     * in our main User documentation.
+     * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _iamRoleArn(): JsonField<String> = body._iamRoleArn()
 
-    /** The name of the Export Destination. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * Specify how you want the file path to be structured in your bucket destination - by Time
-     * first (Default) or Type first.
+     * Returns the raw JSON value of [partitionOrder].
      *
-     * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
-     *   available, such as `account`, `commitment`, `meter`, and so on.
-     *
-     * Example for Usage Data Export using .CSV format:
-     * - Time first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+     * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _partitionOrder(): JsonField<PartitionOrder> = body._partitionOrder()
 
     /**
-     * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then the
-     * root of the bucket will be used.
+     * Returns the raw JSON value of [prefix].
+     *
+     * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _prefix(): JsonField<String> = body._prefix()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -213,10 +228,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Name of the S3 bucket for the Export Destination. */
+        /**
+         * Name of the S3 bucket for the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun bucketName(): String = bucketName.getRequired("bucketName")
 
-        /** The code of the Export Destination. */
+        /**
+         * The code of the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun code(): String = code.getRequired("code")
 
         /**
@@ -235,10 +260,18 @@ private constructor(
          * can use to create the required IAM Role ARN, see
          * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
          * in our main User documentation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun iamRoleArn(): String = iamRoleArn.getRequired("iamRoleArn")
 
-        /** The name of the Export Destination. */
+        /**
+         * The name of the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -255,6 +288,9 @@ private constructor(
          *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
          * - Type first:
          *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun partitionOrder(): Optional<PartitionOrder> =
             Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
@@ -262,6 +298,9 @@ private constructor(
         /**
          * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
          * the root of the bucket will be used.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
 
@@ -272,73 +311,65 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Name of the S3 bucket for the Export Destination. */
+        /**
+         * Returns the raw JSON value of [bucketName].
+         *
+         * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("bucketName")
         @ExcludeMissing
         fun _bucketName(): JsonField<String> = bucketName
 
-        /** The code of the Export Destination. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
-         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
-         * role in your AWS account and enter ARN:
+         * Returns the raw JSON value of [iamRoleArn].
          *
-         * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-         *   returned.
-         *
-         * **More Details:** For more details and examples of the Permission and Trust Policies you
-         * can use to create the required IAM Role ARN, see
-         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-         * in our main User documentation.
+         * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("iamRoleArn")
         @ExcludeMissing
         fun _iamRoleArn(): JsonField<String> = iamRoleArn
 
-        /** The name of the Export Destination. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
+         * Returns the raw JSON value of [partitionOrder].
          *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("partitionOrder")
         @ExcludeMissing
         fun _partitionOrder(): JsonField<PartitionOrder> = partitionOrder
 
         /**
-         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
-         * the root of the bucket will be used.
+         * Returns the raw JSON value of [prefix].
+         *
+         * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -408,13 +439,25 @@ private constructor(
             /** Name of the S3 bucket for the Export Destination. */
             fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
 
-            /** Name of the S3 bucket for the Export Destination. */
+            /**
+             * Sets [Builder.bucketName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.bucketName] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun bucketName(bucketName: JsonField<String>) = apply { this.bucketName = bucketName }
 
             /** The code of the Export Destination. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** The code of the Export Destination. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -437,28 +480,24 @@ private constructor(
             fun iamRoleArn(iamRoleArn: String) = iamRoleArn(JsonField.of(iamRoleArn))
 
             /**
-             * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume
-             * an IAM role with PutObject permission for the specified `bucketName`. Create a
-             * suitable IAM role in your AWS account and enter ARN:
+             * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
              *
-             * **Formatting Constraints:**
-             * - The IAM role ARN must begin with "arn:aws:iam".
-             * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>".
-             *   For example: "arn:aws:iam::922609978421:role/IAMRole636".
-             * - If the `iamRoleArn` used doesn't comply with this format, then an error message
-             *   will be returned.
-             *
-             * **More Details:** For more details and examples of the Permission and Trust Policies
-             * you can use to create the required IAM Role ARN, see
-             * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-             * in our main User documentation.
+             * You should usually call [Builder.iamRoleArn] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { this.iamRoleArn = iamRoleArn }
 
             /** The name of the Export Destination. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the Export Destination. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -479,38 +518,16 @@ private constructor(
             fun partitionOrder(partitionOrder: PartitionOrder?) =
                 partitionOrder(JsonField.ofNullable(partitionOrder))
 
-            /**
-             * Specify how you want the file path to be structured in your bucket destination - by
-             * Time first (Default) or Type first.
-             *
-             * Type is dependent on whether the Export is for Usage data or Operational data:
-             * - **Usage.** Type is `measurements`.
-             * - **Operational.** Type is one of the entities for which operational data exports are
-             *   available, such as `account`, `commitment`, `meter`, and so on.
-             *
-             * Example for Usage Data Export using .CSV format:
-             * - Time first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             * - Type first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             */
+            /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
             fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
                 partitionOrder(partitionOrder.getOrNull())
 
             /**
-             * Specify how you want the file path to be structured in your bucket destination - by
-             * Time first (Default) or Type first.
+             * Sets [Builder.partitionOrder] to an arbitrary JSON value.
              *
-             * Type is dependent on whether the Export is for Usage data or Operational data:
-             * - **Usage.** Type is `measurements`.
-             * - **Operational.** Type is one of the entities for which operational data exports are
-             *   available, such as `account`, `commitment`, `meter`, and so on.
-             *
-             * Example for Usage Data Export using .CSV format:
-             * - Time first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             * - Type first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+             * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
                 this.partitionOrder = partitionOrder
@@ -523,8 +540,11 @@ private constructor(
             fun prefix(prefix: String) = prefix(JsonField.of(prefix))
 
             /**
-             * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`,
-             * then the root of the bucket will be used.
+             * Sets [Builder.prefix] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prefix] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
 
@@ -539,12 +559,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -647,13 +666,24 @@ private constructor(
         /** Name of the S3 bucket for the Export Destination. */
         fun bucketName(bucketName: String) = apply { body.bucketName(bucketName) }
 
-        /** Name of the S3 bucket for the Export Destination. */
+        /**
+         * Sets [Builder.bucketName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.bucketName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun bucketName(bucketName: JsonField<String>) = apply { body.bucketName(bucketName) }
 
         /** The code of the Export Destination. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** The code of the Export Destination. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -676,28 +706,23 @@ private constructor(
         fun iamRoleArn(iamRoleArn: String) = apply { body.iamRoleArn(iamRoleArn) }
 
         /**
-         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
-         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
-         * role in your AWS account and enter ARN:
+         * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
          *
-         * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-         *   returned.
-         *
-         * **More Details:** For more details and examples of the Permission and Trust Policies you
-         * can use to create the required IAM Role ARN, see
-         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-         * in our main User documentation.
+         * You should usually call [Builder.iamRoleArn] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { body.iamRoleArn(iamRoleArn) }
 
         /** The name of the Export Destination. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the Export Destination. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -719,38 +744,16 @@ private constructor(
             body.partitionOrder(partitionOrder)
         }
 
-        /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
-         *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         */
+        /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
         fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
             partitionOrder(partitionOrder.getOrNull())
 
         /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
+         * Sets [Builder.partitionOrder] to an arbitrary JSON value.
          *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
             body.partitionOrder(partitionOrder)
@@ -763,8 +766,10 @@ private constructor(
         fun prefix(prefix: String) = apply { body.prefix(prefix) }
 
         /**
-         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
-         * the root of the bucket will be used.
+         * Sets [Builder.prefix] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.prefix] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun prefix(prefix: JsonField<String>) = apply { body.prefix(prefix) }
 
@@ -779,12 +784,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

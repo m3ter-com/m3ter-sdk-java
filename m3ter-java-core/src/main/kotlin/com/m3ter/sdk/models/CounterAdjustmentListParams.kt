@@ -145,54 +145,60 @@ private constructor(
         /** List CounterAdjustment items for the Account UUID. */
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        /** List CounterAdjustment items for the Account UUID. */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         /** List CounterAdjustment items for the Counter UUID. */
         fun counterId(counterId: String?) = apply { this.counterId = counterId }
 
-        /** List CounterAdjustment items for the Counter UUID. */
+        /** Alias for calling [Builder.counterId] with `counterId.orElse(null)`. */
         fun counterId(counterId: Optional<String>) = counterId(counterId.getOrNull())
 
         /** List CounterAdjustment items for the given date. */
         fun date(date: String?) = apply { this.date = date }
 
-        /** List CounterAdjustment items for the given date. */
+        /** Alias for calling [Builder.date] with `date.orElse(null)`. */
         fun date(date: Optional<String>) = date(date.getOrNull())
 
         fun dateEnd(dateEnd: String?) = apply { this.dateEnd = dateEnd }
 
+        /** Alias for calling [Builder.dateEnd] with `dateEnd.orElse(null)`. */
         fun dateEnd(dateEnd: Optional<String>) = dateEnd(dateEnd.getOrNull())
 
         fun dateStart(dateStart: String?) = apply { this.dateStart = dateStart }
 
+        /** Alias for calling [Builder.dateStart] with `dateStart.orElse(null)`. */
         fun dateStart(dateStart: Optional<String>) = dateStart(dateStart.getOrNull())
 
         /** Only include CounterAdjustments with end dates earlier than this date. */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
 
-        /** Only include CounterAdjustments with end dates earlier than this date. */
+        /** Alias for calling [Builder.endDateEnd] with `endDateEnd.orElse(null)`. */
         fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /** Only include CounterAdjustments with end dates equal to or later than this date. */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
 
-        /** Only include CounterAdjustments with end dates equal to or later than this date. */
+        /** Alias for calling [Builder.endDateStart] with `endDateStart.orElse(null)`. */
         fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
 
         /** nextToken for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** nextToken for multi page retrievals. */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of CounterAdjustments to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of CounterAdjustments to retrieve per page */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of CounterAdjustments to retrieve per page */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

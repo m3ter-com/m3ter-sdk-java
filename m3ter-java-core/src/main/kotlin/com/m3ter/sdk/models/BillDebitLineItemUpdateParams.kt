@@ -40,33 +40,82 @@ private constructor(
 
     fun id(): String = id
 
-    /** The amount for the line item. */
+    /**
+     * The amount for the line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): Double = body.amount()
 
-    /** The description for the line item. */
+    /**
+     * The description for the line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun description(): String = body.description()
 
-    /** The UUID of the Product. */
+    /**
+     * The UUID of the Product.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun productId(): String = body.productId()
 
-    /** The UUID of the bill for the line item. */
+    /**
+     * The UUID of the bill for the line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun referencedBillId(): String = body.referencedBillId()
 
-    /** The UUID of the line item. */
+    /**
+     * The UUID of the line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun referencedLineItemId(): String = body.referencedLineItemId()
 
-    /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+    /**
+     * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun servicePeriodEndDate(): OffsetDateTime = body.servicePeriodEndDate()
 
-    /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+    /**
+     * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun servicePeriodStartDate(): OffsetDateTime = body.servicePeriodStartDate()
 
-    /** The ID of the Debit Reason given for this debit line item. */
+    /**
+     * The ID of the Debit Reason given for this debit line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun debitReasonId(): Optional<String> = body.debitReasonId()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lineItemType(): Optional<LineItemType> = body.lineItemType()
 
-    /** The UUID of the line item reason. */
+    /**
+     * The UUID of the line item reason.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun reasonId(): Optional<String> = body.reasonId()
 
     /**
@@ -76,45 +125,90 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The amount for the line item. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _amount(): JsonField<Double> = body._amount()
 
-    /** The description for the line item. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
-    /** The UUID of the Product. */
+    /**
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _productId(): JsonField<String> = body._productId()
 
-    /** The UUID of the bill for the line item. */
+    /**
+     * Returns the raw JSON value of [referencedBillId].
+     *
+     * Unlike [referencedBillId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _referencedBillId(): JsonField<String> = body._referencedBillId()
 
-    /** The UUID of the line item. */
+    /**
+     * Returns the raw JSON value of [referencedLineItemId].
+     *
+     * Unlike [referencedLineItemId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _referencedLineItemId(): JsonField<String> = body._referencedLineItemId()
 
-    /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+    /**
+     * Returns the raw JSON value of [servicePeriodEndDate].
+     *
+     * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = body._servicePeriodEndDate()
 
-    /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+    /**
+     * Returns the raw JSON value of [servicePeriodStartDate].
+     *
+     * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = body._servicePeriodStartDate()
 
-    /** The ID of the Debit Reason given for this debit line item. */
+    /**
+     * Returns the raw JSON value of [debitReasonId].
+     *
+     * Unlike [debitReasonId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _debitReasonId(): JsonField<String> = body._debitReasonId()
 
+    /**
+     * Returns the raw JSON value of [lineItemType].
+     *
+     * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _lineItemType(): JsonField<LineItemType> = body._lineItemType()
 
-    /** The UUID of the line item reason. */
+    /**
+     * Returns the raw JSON value of [reasonId].
+     *
+     * Unlike [reasonId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _reasonId(): JsonField<String> = body._reasonId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -180,38 +274,87 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The amount for the line item. */
+        /**
+         * The amount for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
-        /** The description for the line item. */
+        /**
+         * The description for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun description(): String = description.getRequired("description")
 
-        /** The UUID of the Product. */
+        /**
+         * The UUID of the Product.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun productId(): String = productId.getRequired("productId")
 
-        /** The UUID of the bill for the line item. */
+        /**
+         * The UUID of the bill for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun referencedBillId(): String = referencedBillId.getRequired("referencedBillId")
 
-        /** The UUID of the line item. */
+        /**
+         * The UUID of the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun referencedLineItemId(): String =
             referencedLineItemId.getRequired("referencedLineItemId")
 
-        /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+        /**
+         * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun servicePeriodEndDate(): OffsetDateTime =
             servicePeriodEndDate.getRequired("servicePeriodEndDate")
 
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+        /**
+         * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun servicePeriodStartDate(): OffsetDateTime =
             servicePeriodStartDate.getRequired("servicePeriodStartDate")
 
-        /** The ID of the Debit Reason given for this debit line item. */
+        /**
+         * The ID of the Debit Reason given for this debit line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun debitReasonId(): Optional<String> =
             Optional.ofNullable(debitReasonId.getNullable("debitReasonId"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun lineItemType(): Optional<LineItemType> =
             Optional.ofNullable(lineItemType.getNullable("lineItemType"))
 
-        /** The UUID of the line item reason. */
+        /**
+         * The UUID of the line item reason.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun reasonId(): Optional<String> = Optional.ofNullable(reasonId.getNullable("reasonId"))
 
         /**
@@ -221,59 +364,106 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The amount for the line item. */
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
-        /** The description for the line item. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
-        /** The UUID of the Product. */
+        /**
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
-        /** The UUID of the bill for the line item. */
+        /**
+         * Returns the raw JSON value of [referencedBillId].
+         *
+         * Unlike [referencedBillId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("referencedBillId")
         @ExcludeMissing
         fun _referencedBillId(): JsonField<String> = referencedBillId
 
-        /** The UUID of the line item. */
+        /**
+         * Returns the raw JSON value of [referencedLineItemId].
+         *
+         * Unlike [referencedLineItemId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("referencedLineItemId")
         @ExcludeMissing
         fun _referencedLineItemId(): JsonField<String> = referencedLineItemId
 
-        /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+        /**
+         * Returns the raw JSON value of [servicePeriodEndDate].
+         *
+         * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("servicePeriodEndDate")
         @ExcludeMissing
         fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
 
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+        /**
+         * Returns the raw JSON value of [servicePeriodStartDate].
+         *
+         * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("servicePeriodStartDate")
         @ExcludeMissing
         fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
-        /** The ID of the Debit Reason given for this debit line item. */
+        /**
+         * Returns the raw JSON value of [debitReasonId].
+         *
+         * Unlike [debitReasonId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("debitReasonId")
         @ExcludeMissing
         fun _debitReasonId(): JsonField<String> = debitReasonId
 
+        /**
+         * Returns the raw JSON value of [lineItemType].
+         *
+         * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("lineItemType")
         @ExcludeMissing
         fun _lineItemType(): JsonField<LineItemType> = lineItemType
 
-        /** The UUID of the line item reason. */
+        /**
+         * Returns the raw JSON value of [reasonId].
+         *
+         * Unlike [reasonId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("reasonId") @ExcludeMissing fun _reasonId(): JsonField<String> = reasonId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -358,13 +548,25 @@ private constructor(
             /** The amount for the line item. */
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            /** The amount for the line item. */
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             /** The description for the line item. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** The description for the line item. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -372,14 +574,26 @@ private constructor(
             /** The UUID of the Product. */
             fun productId(productId: String) = productId(JsonField.of(productId))
 
-            /** The UUID of the Product. */
+            /**
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
             /** The UUID of the bill for the line item. */
             fun referencedBillId(referencedBillId: String) =
                 referencedBillId(JsonField.of(referencedBillId))
 
-            /** The UUID of the bill for the line item. */
+            /**
+             * Sets [Builder.referencedBillId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.referencedBillId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun referencedBillId(referencedBillId: JsonField<String>) = apply {
                 this.referencedBillId = referencedBillId
             }
@@ -388,7 +602,13 @@ private constructor(
             fun referencedLineItemId(referencedLineItemId: String) =
                 referencedLineItemId(JsonField.of(referencedLineItemId))
 
-            /** The UUID of the line item. */
+            /**
+             * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.referencedLineItemId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
                 this.referencedLineItemId = referencedLineItemId
             }
@@ -397,7 +617,13 @@ private constructor(
             fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
                 servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
-            /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+            /**
+             * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodEndDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
                 this.servicePeriodEndDate = servicePeriodEndDate
             }
@@ -409,7 +635,11 @@ private constructor(
                 servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
             /**
-             * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+             * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
                 this.servicePeriodStartDate = servicePeriodStartDate
@@ -418,13 +648,26 @@ private constructor(
             /** The ID of the Debit Reason given for this debit line item. */
             fun debitReasonId(debitReasonId: String) = debitReasonId(JsonField.of(debitReasonId))
 
-            /** The ID of the Debit Reason given for this debit line item. */
+            /**
+             * Sets [Builder.debitReasonId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.debitReasonId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun debitReasonId(debitReasonId: JsonField<String>) = apply {
                 this.debitReasonId = debitReasonId
             }
 
             fun lineItemType(lineItemType: LineItemType) = lineItemType(JsonField.of(lineItemType))
 
+            /**
+             * Sets [Builder.lineItemType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
                 this.lineItemType = lineItemType
             }
@@ -432,7 +675,13 @@ private constructor(
             /** The UUID of the line item reason. */
             fun reasonId(reasonId: String) = reasonId(JsonField.of(reasonId))
 
-            /** The UUID of the line item reason. */
+            /**
+             * Sets [Builder.reasonId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.reasonId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun reasonId(reasonId: JsonField<String>) = apply { this.reasonId = reasonId }
 
             /**
@@ -446,12 +695,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -564,19 +812,36 @@ private constructor(
         /** The amount for the line item. */
         fun amount(amount: Double) = apply { body.amount(amount) }
 
-        /** The amount for the line item. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Double>) = apply { body.amount(amount) }
 
         /** The description for the line item. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** The description for the line item. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** The UUID of the Product. */
         fun productId(productId: String) = apply { body.productId(productId) }
 
-        /** The UUID of the Product. */
+        /**
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
         /** The UUID of the bill for the line item. */
@@ -584,7 +849,13 @@ private constructor(
             body.referencedBillId(referencedBillId)
         }
 
-        /** The UUID of the bill for the line item. */
+        /**
+         * Sets [Builder.referencedBillId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedBillId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun referencedBillId(referencedBillId: JsonField<String>) = apply {
             body.referencedBillId(referencedBillId)
         }
@@ -594,7 +865,13 @@ private constructor(
             body.referencedLineItemId(referencedLineItemId)
         }
 
-        /** The UUID of the line item. */
+        /**
+         * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedLineItemId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
             body.referencedLineItemId(referencedLineItemId)
         }
@@ -604,7 +881,13 @@ private constructor(
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
 
-        /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+        /**
+         * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodEndDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
@@ -614,7 +897,13 @@ private constructor(
             body.servicePeriodStartDate(servicePeriodStartDate)
         }
 
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+        /**
+         * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
             body.servicePeriodStartDate(servicePeriodStartDate)
         }
@@ -622,13 +911,26 @@ private constructor(
         /** The ID of the Debit Reason given for this debit line item. */
         fun debitReasonId(debitReasonId: String) = apply { body.debitReasonId(debitReasonId) }
 
-        /** The ID of the Debit Reason given for this debit line item. */
+        /**
+         * Sets [Builder.debitReasonId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.debitReasonId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun debitReasonId(debitReasonId: JsonField<String>) = apply {
             body.debitReasonId(debitReasonId)
         }
 
         fun lineItemType(lineItemType: LineItemType) = apply { body.lineItemType(lineItemType) }
 
+        /**
+         * Sets [Builder.lineItemType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
             body.lineItemType(lineItemType)
         }
@@ -636,7 +938,12 @@ private constructor(
         /** The UUID of the line item reason. */
         fun reasonId(reasonId: String) = apply { body.reasonId(reasonId) }
 
-        /** The UUID of the line item reason. */
+        /**
+         * Sets [Builder.reasonId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reasonId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun reasonId(reasonId: JsonField<String>) = apply { body.reasonId(reasonId) }
 
         /**
@@ -650,12 +957,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

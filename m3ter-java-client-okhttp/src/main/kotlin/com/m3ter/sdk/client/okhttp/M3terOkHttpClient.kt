@@ -150,6 +150,7 @@ class M3terOkHttpClient private constructor() {
 
         fun token(token: String?) = apply { clientOptions.token(token) }
 
+        /** Alias for calling [Builder.token] with `token.orElse(null)`. */
         fun token(token: Optional<String>) = token(token.getOrNull())
 
         fun orgId(orgId: String) = apply { clientOptions.orgId(orgId) }

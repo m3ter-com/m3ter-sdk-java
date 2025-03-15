@@ -45,6 +45,9 @@ private constructor(
      * rates for Product consumption by an Account, you must define a currency conversion rate from
      * the pricing currency to the billing currency before you run billing for the Account,
      * otherwise billing will fail. See below for the `currencyConversions` request parameter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun currency(): String = body.currency()
 
@@ -57,6 +60,9 @@ private constructor(
      *   Account on that date and subsequent Bills are created for the Account each day following
      *   through to the end of the billing service period.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun dayEpoch(): String = body.dayEpoch()
 
@@ -66,6 +72,9 @@ private constructor(
      *
      * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
      * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun daysBeforeBillDue(): Long = body.daysBeforeBillDue()
 
@@ -80,10 +89,18 @@ private constructor(
      *   month following through to the end of the billing service period - February 15th, March
      *   15th, and so on.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun monthEpoch(): String = body.monthEpoch()
 
-    /** Sets the timezone for the Organization. */
+    /**
+     * Sets the timezone for the Organization.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun timezone(): String = body.timezone()
 
     /**
@@ -97,6 +114,9 @@ private constructor(
      *   Account on Saturday of each week following through to the end of the billing service
      *   period.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun weekEpoch(): String = body.weekEpoch()
 
@@ -111,6 +131,9 @@ private constructor(
      *   each year following through to the end of the billing service period - January 1st, 2023,
      *   January 1st, 2024 and so on.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun yearEpoch(): String = body.yearEpoch()
 
@@ -121,6 +144,9 @@ private constructor(
      * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
      * auto-approval of Bills for Organization, which occurs when the specified time period has
      * elapsed after Bill generation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun autoApproveBillsGracePeriod(): Optional<Long> = body.autoApproveBillsGracePeriod()
 
@@ -131,6 +157,9 @@ private constructor(
      * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables auto-approval
      * of Bills for Organization, which occurs when the specified time period has elapsed after Bill
      * generation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun autoApproveBillsGracePeriodUnit(): Optional<String> = body.autoApproveBillsGracePeriodUnit()
 
@@ -142,6 +171,9 @@ private constructor(
      * - **None**. Statements will not be auto-generated.
      * - **JSON**. Statements are auto-generated in JSON format.
      * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
         body.autoGenerateStatementMode()
@@ -156,6 +188,9 @@ private constructor(
      *   of the `billId`.
      * - If you do not define a `billPrefix`, the Bill response schema for API calls that retrieve
      *   Bill data will not contain a `sequentialInvoiceNumber`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billPrefix(): Optional<String> = body.billPrefix()
 
@@ -164,6 +199,9 @@ private constructor(
      * start of each billing period, or billed in arrears at the end of each billing period.
      * - **TRUE** - bill in advance _(start of each billing period)_.
      * - **FALSE** - bill in arrears _(end of each billing period)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun commitmentFeeBillInAdvance(): Optional<Boolean> = body.commitmentFeeBillInAdvance()
 
@@ -171,6 +209,9 @@ private constructor(
      * Boolean setting to consolidate different billing frequencies onto the same bill.
      * - **TRUE** - consolidate different billing frequencies onto the same bill.
      * - **FALSE** - bills are not consolidated.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun consolidateBills(): Optional<Boolean> = body.consolidateBills()
 
@@ -188,6 +229,9 @@ private constructor(
      * - If the Account belongs to a Parent/Child Account hierarchy, then the
      *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
      *   always to Prepayment then Balance order.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
         body.creditApplicationOrder()
@@ -203,6 +247,9 @@ private constructor(
      *   converted into billing currency amounts to appear on Bills. If you haven't defined a
      *   currency conversion rate from pricing to billing currency, billing will fail for the
      *   Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun currencyConversions(): Optional<List<CurrencyConversion>> = body.currencyConversions()
 
@@ -212,12 +259,18 @@ private constructor(
      *
      * Statement definitions are used to generate bill statements, which are informative backing
      * sheets to invoices.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun defaultStatementDefinitionId(): Optional<String> = body.defaultStatementDefinitionId()
 
     /**
      * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
      * `LAST_DAY_OF_ARREARS`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun externalInvoiceDate(): Optional<String> = body.externalInvoiceDate()
 
@@ -226,6 +279,9 @@ private constructor(
      * of each billing period, or billed in arrears at the end of each billing period.
      * - **TRUE** - bill in advance _(start of each billing period)_.
      * - **FALSE** - bill in arrears _(end of each billing period)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
@@ -237,6 +293,9 @@ private constructor(
      * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on. Eight
      *   options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
      * - **Default.** The default is **0**, which disables scheduling.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun scheduledBillInterval(): Optional<Double> = body.scheduledBillInterval()
 
@@ -248,6 +307,9 @@ private constructor(
      * `seqenceStartNumber` as **100**, the first Bill created after updating your Organization
      * Configuration will have a `sequentialInvoiceNumber` assigned of **INVOICE-101**. Subsequent
      * Bills created will be numbered in time sequence for their initial creation date/time.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun sequenceStartNumber(): Optional<Long> = body.sequenceStartNumber()
 
@@ -256,6 +318,9 @@ private constructor(
      * each billing period, or billed in arrears at the end of each billing period.
      * - **TRUE** - bill in advance _(start of each billing period)_.
      * - **FALSE** - bill in arrears _(end of each billing period)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeBillInAdvance(): Optional<Boolean> = body.standingChargeBillInAdvance()
 
@@ -263,6 +328,9 @@ private constructor(
      * Boolean setting that supresses generating bills that have no line items.
      * - **TRUE** - prevents generating bills with no line items.
      * - **FALSE** - bills are still generated even when they have no line items.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun suppressedEmptyBills(): Optional<Boolean> = body.suppressedEmptyBills()
 
@@ -273,249 +341,188 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * The currency code for the Organization. For example: USD, GBP, or EUR:
-     * - This defines the _billing currency_ for the Organization. You can override this by
-     *   selecting a different billing currency at individual Account level.
-     * - You must first define the currencies you want to use in your Organization. See the
-     *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API Reference.
+     * Returns the raw JSON value of [currency].
      *
-     * **Note:** If you use a different currency as the _pricing currency_ for Plans to set charge
-     * rates for Product consumption by an Account, you must define a currency conversion rate from
-     * the pricing currency to the billing currency before you run billing for the Account,
-     * otherwise billing will fail. See below for the `currencyConversions` request parameter.
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _currency(): JsonField<String> = body._currency()
 
     /**
-     * Optional setting that defines the billing cycle date for Accounts that are billed daily.
-     * Defines the date of the first Bill:
-     * - For example, suppose the Plan you attach to an Account is configured for daily billing
-     *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
-     *   you set a `dayEpoch` date of January 2nd, 2022, then the first Bill is created for the
-     *   Account on that date and subsequent Bills are created for the Account each day following
-     *   through to the end of the billing service period.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [dayEpoch].
+     *
+     * Unlike [dayEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dayEpoch(): JsonField<String> = body._dayEpoch()
 
     /**
-     * Enter the number of days after the Bill generation date that you want to show on Bills as the
-     * due date.
+     * Returns the raw JSON value of [daysBeforeBillDue].
      *
-     * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-     * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+     * Unlike [daysBeforeBillDue], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _daysBeforeBillDue(): JsonField<Long> = body._daysBeforeBillDue()
 
     /**
-     * Optional setting that defines the billing cycle date for Accounts that are billed monthly.
-     * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
-     * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for monthly billing
-     *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
-     *   you set a `monthEpoch` date of January 15th, 2022, then the first Bill is created for the
-     *   Account on that date and subsequent Bills are created for the Account on the 15th of each
-     *   month following through to the end of the billing service period - February 15th, March
-     *   15th, and so on.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [monthEpoch].
+     *
+     * Unlike [monthEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _monthEpoch(): JsonField<String> = body._monthEpoch()
 
-    /** Sets the timezone for the Organization. */
+    /**
+     * Returns the raw JSON value of [timezone].
+     *
+     * Unlike [timezone], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _timezone(): JsonField<String> = body._timezone()
 
     /**
-     * Optional setting that defines the billing cycle date for Accounts that are billed weekly.
-     * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
-     * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for weekly billing
-     *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
-     *   you set a `weekEpoch` date of January 15th, 2022, which falls on a Saturday, then the first
-     *   Bill is created for the Account on that date and subsequent Bills are created for the
-     *   Account on Saturday of each week following through to the end of the billing service
-     *   period.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [weekEpoch].
+     *
+     * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _weekEpoch(): JsonField<String> = body._weekEpoch()
 
     /**
-     * Optional setting that defines the billing cycle date for Accounts that are billed yearly.
-     * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
-     * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for yearly billing
-     *   frequency and will apply to the Account from January 1st, 2022 until January 15th, 2028. If
-     *   you set a `yearEpoch` date of January 1st, 2023, then the first Bill is created for the
-     *   Account on that date and subsequent Bills are created for the Account on January 1st of
-     *   each year following through to the end of the billing service period - January 1st, 2023,
-     *   January 1st, 2024 and so on.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [yearEpoch].
+     *
+     * Unlike [yearEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _yearEpoch(): JsonField<String> = body._yearEpoch()
 
     /**
-     * Grace period before bills are auto-approved. Used in combination with
-     * `autoApproveBillsGracePeriodUnit` parameter.
+     * Returns the raw JSON value of [autoApproveBillsGracePeriod].
      *
-     * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
-     * auto-approval of Bills for Organization, which occurs when the specified time period has
-     * elapsed after Bill generation.
+     * Unlike [autoApproveBillsGracePeriod], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _autoApproveBillsGracePeriod(): JsonField<Long> = body._autoApproveBillsGracePeriod()
 
     /**
-     * Time unit of grace period before bills are auto-approved. Used in combination with
-     * `autoApproveBillsGracePeriod` parameter. Allowed options are MINUTES, HOURS, or DAYS.
+     * Returns the raw JSON value of [autoApproveBillsGracePeriodUnit].
      *
-     * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables auto-approval
-     * of Bills for Organization, which occurs when the specified time period has elapsed after Bill
-     * generation.
+     * Unlike [autoApproveBillsGracePeriodUnit], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _autoApproveBillsGracePeriodUnit(): JsonField<String> =
         body._autoApproveBillsGracePeriodUnit()
 
     /**
-     * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It will
-     * not auto-generate if a bill is in _pending_ state.
+     * Returns the raw JSON value of [autoGenerateStatementMode].
      *
-     * The default value is **None**.
-     * - **None**. Statements will not be auto-generated.
-     * - **JSON**. Statements are auto-generated in JSON format.
-     * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+     * Unlike [autoGenerateStatementMode], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _autoGenerateStatementMode(): JsonField<AutoGenerateStatementMode> =
         body._autoGenerateStatementMode()
 
     /**
-     * Prefix to be used for sequential invoice numbers. This will be combined with the
-     * `sequenceStartNumber`.
+     * Returns the raw JSON value of [billPrefix].
      *
-     * **NOTES:**
-     * - If you do not define a `billPrefix`, a default will be used in the Console for the Bill
-     *   **REFERENCE** number. This default will concatenate **INV-** with the last four characters
-     *   of the `billId`.
-     * - If you do not define a `billPrefix`, the Bill response schema for API calls that retrieve
-     *   Bill data will not contain a `sequentialInvoiceNumber`.
+     * Unlike [billPrefix], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billPrefix(): JsonField<String> = body._billPrefix()
 
     /**
-     * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance at the
-     * start of each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * Returns the raw JSON value of [commitmentFeeBillInAdvance].
+     *
+     * Unlike [commitmentFeeBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _commitmentFeeBillInAdvance(): JsonField<Boolean> = body._commitmentFeeBillInAdvance()
 
     /**
-     * Boolean setting to consolidate different billing frequencies onto the same bill.
-     * - **TRUE** - consolidate different billing frequencies onto the same bill.
-     * - **FALSE** - bills are not consolidated.
+     * Returns the raw JSON value of [consolidateBills].
+     *
+     * Unlike [consolidateBills], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _consolidateBills(): JsonField<Boolean> = body._consolidateBills()
 
     /**
-     * Define the order in which any Prepayment or Balance amounts on Accounts are to be drawn-down
-     * against for billing. Four options:
-     * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-     * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-     * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-     * - `"BALANCE"`. Only draw-down against Balance credit.
+     * Returns the raw JSON value of [creditApplicationOrder].
      *
-     * **NOTES:**
-     * - You can override this Organization-level setting for `creditApplicationOrder` at the level
-     *   of an individual Account.
-     * - If the Account belongs to a Parent/Child Account hierarchy, then the
-     *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-     *   always to Prepayment then Balance order.
+     * Unlike [creditApplicationOrder], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _creditApplicationOrder(): JsonField<List<CreditApplicationOrder>> =
         body._creditApplicationOrder()
 
     /**
-     * Define currency conversion rates from _pricing currency_ to _billing currency_:
-     * - You can use the `currency` request parameter with this call to define the billing currency
-     *   for your Organization - see above.
-     * - You can also define a billing currency at the individual Account level and this will
-     *   override the Organization billing currency.
-     * - A Plan used to set Product consumption charge rates on an Account might use a different
-     *   pricing currency. At billing, charges are calculated in the pricing currency and then
-     *   converted into billing currency amounts to appear on Bills. If you haven't defined a
-     *   currency conversion rate from pricing to billing currency, billing will fail for the
-     *   Account.
+     * Returns the raw JSON value of [currencyConversions].
+     *
+     * Unlike [currencyConversions], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _currencyConversions(): JsonField<List<CurrencyConversion>> = body._currencyConversions()
 
     /**
-     * Organization level default `statementDefinitionId` to be used when there is no statement
-     * definition linked to the account.
+     * Returns the raw JSON value of [defaultStatementDefinitionId].
      *
-     * Statement definitions are used to generate bill statements, which are informative backing
-     * sheets to invoices.
+     * Unlike [defaultStatementDefinitionId], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _defaultStatementDefinitionId(): JsonField<String> = body._defaultStatementDefinitionId()
 
     /**
-     * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
-     * `LAST_DAY_OF_ARREARS`.
+     * Returns the raw JSON value of [externalInvoiceDate].
+     *
+     * Unlike [externalInvoiceDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _externalInvoiceDate(): JsonField<String> = body._externalInvoiceDate()
 
     /**
-     * Boolean setting to specify whether minimum spend amounts are billed in advance at the start
-     * of each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * Returns the raw JSON value of [minimumSpendBillInAdvance].
+     *
+     * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _minimumSpendBillInAdvance(): JsonField<Boolean> = body._minimumSpendBillInAdvance()
 
     /**
-     * Sets the required interval for updating bills. It is an optional parameter that can be set
-     * as:
-     * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5** (30
-     *   minutes).
-     * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on. Eight
-     *   options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-     * - **Default.** The default is **0**, which disables scheduling.
+     * Returns the raw JSON value of [scheduledBillInterval].
+     *
+     * Unlike [scheduledBillInterval], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _scheduledBillInterval(): JsonField<Double> = body._scheduledBillInterval()
 
     /**
-     * The starting number to be used for sequential invoice numbers. This will be combined with the
-     * `billPrefix`.
+     * Returns the raw JSON value of [sequenceStartNumber].
      *
-     * For example, if you define `billPrefix` to be **INVOICE-** and you set the
-     * `seqenceStartNumber` as **100**, the first Bill created after updating your Organization
-     * Configuration will have a `sequentialInvoiceNumber` assigned of **INVOICE-101**. Subsequent
-     * Bills created will be numbered in time sequence for their initial creation date/time.
+     * Unlike [sequenceStartNumber], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _sequenceStartNumber(): JsonField<Long> = body._sequenceStartNumber()
 
     /**
-     * Boolean setting to specify whether the standing charge is billed in advance at the start of
-     * each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * Returns the raw JSON value of [standingChargeBillInAdvance].
+     *
+     * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _standingChargeBillInAdvance(): JsonField<Boolean> = body._standingChargeBillInAdvance()
 
     /**
-     * Boolean setting that supresses generating bills that have no line items.
-     * - **TRUE** - prevents generating bills with no line items.
-     * - **FALSE** - bills are still generated even when they have no line items.
+     * Returns the raw JSON value of [suppressedEmptyBills].
+     *
+     * Unlike [suppressedEmptyBills], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _suppressedEmptyBills(): JsonField<Boolean> = body._suppressedEmptyBills()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -629,6 +636,9 @@ private constructor(
          * rate from the pricing currency to the billing currency before you run billing for the
          * Account, otherwise billing will fail. See below for the `currencyConversions` request
          * parameter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun currency(): String = currency.getRequired("currency")
 
@@ -641,6 +651,9 @@ private constructor(
          *   the Account on that date and subsequent Bills are created for the Account each day
          *   following through to the end of the billing service period.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun dayEpoch(): String = dayEpoch.getRequired("dayEpoch")
 
@@ -650,6 +663,9 @@ private constructor(
          *
          * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
          * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun daysBeforeBillDue(): Long = daysBeforeBillDue.getRequired("daysBeforeBillDue")
 
@@ -664,10 +680,18 @@ private constructor(
          *   Account on the 15th of each month following through to the end of the billing service
          *   period - February 15th, March 15th, and so on.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun monthEpoch(): String = monthEpoch.getRequired("monthEpoch")
 
-        /** Sets the timezone for the Organization. */
+        /**
+         * Sets the timezone for the Organization.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun timezone(): String = timezone.getRequired("timezone")
 
         /**
@@ -681,6 +705,9 @@ private constructor(
          *   for the Account on Saturday of each week following through to the end of the billing
          *   service period.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun weekEpoch(): String = weekEpoch.getRequired("weekEpoch")
 
@@ -695,6 +722,9 @@ private constructor(
          *   on January 1st of each year following through to the end of the billing service
          *   period - January 1st, 2023, January 1st, 2024 and so on.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun yearEpoch(): String = yearEpoch.getRequired("yearEpoch")
 
@@ -705,6 +735,9 @@ private constructor(
          * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
          * auto-approval of Bills for Organization, which occurs when the specified time period has
          * elapsed after Bill generation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun autoApproveBillsGracePeriod(): Optional<Long> =
             Optional.ofNullable(
@@ -718,6 +751,9 @@ private constructor(
          * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables
          * auto-approval of Bills for Organization, which occurs when the specified time period has
          * elapsed after Bill generation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun autoApproveBillsGracePeriodUnit(): Optional<String> =
             Optional.ofNullable(
@@ -732,6 +768,9 @@ private constructor(
          * - **None**. Statements will not be auto-generated.
          * - **JSON**. Statements are auto-generated in JSON format.
          * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
             Optional.ofNullable(autoGenerateStatementMode.getNullable("autoGenerateStatementMode"))
@@ -746,6 +785,9 @@ private constructor(
          *   characters of the `billId`.
          * - If you do not define a `billPrefix`, the Bill response schema for API calls that
          *   retrieve Bill data will not contain a `sequentialInvoiceNumber`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billPrefix(): Optional<String> =
             Optional.ofNullable(billPrefix.getNullable("billPrefix"))
@@ -755,6 +797,9 @@ private constructor(
          * the start of each billing period, or billed in arrears at the end of each billing period.
          * - **TRUE** - bill in advance _(start of each billing period)_.
          * - **FALSE** - bill in arrears _(end of each billing period)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun commitmentFeeBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(
@@ -765,6 +810,9 @@ private constructor(
          * Boolean setting to consolidate different billing frequencies onto the same bill.
          * - **TRUE** - consolidate different billing frequencies onto the same bill.
          * - **FALSE** - bills are not consolidated.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun consolidateBills(): Optional<Boolean> =
             Optional.ofNullable(consolidateBills.getNullable("consolidateBills"))
@@ -783,6 +831,9 @@ private constructor(
          * - If the Account belongs to a Parent/Child Account hierarchy, then the
          *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
          *   always to Prepayment then Balance order.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
             Optional.ofNullable(creditApplicationOrder.getNullable("creditApplicationOrder"))
@@ -798,6 +849,9 @@ private constructor(
          *   converted into billing currency amounts to appear on Bills. If you haven't defined a
          *   currency conversion rate from pricing to billing currency, billing will fail for the
          *   Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currencyConversions(): Optional<List<CurrencyConversion>> =
             Optional.ofNullable(currencyConversions.getNullable("currencyConversions"))
@@ -808,6 +862,9 @@ private constructor(
          *
          * Statement definitions are used to generate bill statements, which are informative backing
          * sheets to invoices.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun defaultStatementDefinitionId(): Optional<String> =
             Optional.ofNullable(
@@ -817,6 +874,9 @@ private constructor(
         /**
          * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
          * `LAST_DAY_OF_ARREARS`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun externalInvoiceDate(): Optional<String> =
             Optional.ofNullable(externalInvoiceDate.getNullable("externalInvoiceDate"))
@@ -826,6 +886,9 @@ private constructor(
          * start of each billing period, or billed in arrears at the end of each billing period.
          * - **TRUE** - bill in advance _(start of each billing period)_.
          * - **FALSE** - bill in arrears _(end of each billing period)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
@@ -838,6 +901,9 @@ private constructor(
          * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on.
          *   Eight options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
          * - **Default.** The default is **0**, which disables scheduling.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun scheduledBillInterval(): Optional<Double> =
             Optional.ofNullable(scheduledBillInterval.getNullable("scheduledBillInterval"))
@@ -851,6 +917,9 @@ private constructor(
          * Configuration will have a `sequentialInvoiceNumber` assigned of **INVOICE-101**.
          * Subsequent Bills created will be numbered in time sequence for their initial creation
          * date/time.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun sequenceStartNumber(): Optional<Long> =
             Optional.ofNullable(sequenceStartNumber.getNullable("sequenceStartNumber"))
@@ -860,6 +929,9 @@ private constructor(
          * of each billing period, or billed in arrears at the end of each billing period.
          * - **TRUE** - bill in advance _(start of each billing period)_.
          * - **FALSE** - bill in arrears _(end of each billing period)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(
@@ -870,6 +942,9 @@ private constructor(
          * Boolean setting that supresses generating bills that have no line items.
          * - **TRUE** - prevents generating bills with no line items.
          * - **FALSE** - bills are still generated even when they have no line items.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun suppressedEmptyBills(): Optional<Boolean> =
             Optional.ofNullable(suppressedEmptyBills.getNullable("suppressedEmptyBills"))
@@ -881,126 +956,91 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * The currency code for the Organization. For example: USD, GBP, or EUR:
-         * - This defines the _billing currency_ for the Organization. You can override this by
-         *   selecting a different billing currency at individual Account level.
-         * - You must first define the currencies you want to use in your Organization. See the
-         *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API Reference.
+         * Returns the raw JSON value of [currency].
          *
-         * **Note:** If you use a different currency as the _pricing currency_ for Plans to set
-         * charge rates for Product consumption by an Account, you must define a currency conversion
-         * rate from the pricing currency to the billing currency before you run billing for the
-         * Account, otherwise billing will fail. See below for the `currencyConversions` request
-         * parameter.
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed daily.
-         * Defines the date of the first Bill:
-         * - For example, suppose the Plan you attach to an Account is configured for daily billing
-         *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
-         *   If you set a `dayEpoch` date of January 2nd, 2022, then the first Bill is created for
-         *   the Account on that date and subsequent Bills are created for the Account each day
-         *   following through to the end of the billing service period.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [dayEpoch].
+         *
+         * Unlike [dayEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dayEpoch") @ExcludeMissing fun _dayEpoch(): JsonField<String> = dayEpoch
 
         /**
-         * Enter the number of days after the Bill generation date that you want to show on Bills as
-         * the due date.
+         * Returns the raw JSON value of [daysBeforeBillDue].
          *
-         * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-         * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         * Unlike [daysBeforeBillDue], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
         fun _daysBeforeBillDue(): JsonField<Long> = daysBeforeBillDue
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed
-         * monthly. Defines the date of the first Bill and then acts as reference for when
-         * subsequent Bills are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for monthly
-         *   billing frequency and will apply to the Account from January 1st, 2022 until June
-         *   30th, 2022. If you set a `monthEpoch` date of January 15th, 2022, then the first Bill
-         *   is created for the Account on that date and subsequent Bills are created for the
-         *   Account on the 15th of each month following through to the end of the billing service
-         *   period - February 15th, March 15th, and so on.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [monthEpoch].
+         *
+         * Unlike [monthEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("monthEpoch")
         @ExcludeMissing
         fun _monthEpoch(): JsonField<String> = monthEpoch
 
-        /** Sets the timezone for the Organization. */
+        /**
+         * Returns the raw JSON value of [timezone].
+         *
+         * Unlike [timezone], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("timezone") @ExcludeMissing fun _timezone(): JsonField<String> = timezone
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed weekly.
-         * Defines the date of the first Bill and then acts as reference for when subsequent Bills
-         * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for weekly billing
-         *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
-         *   If you set a `weekEpoch` date of January 15th, 2022, which falls on a Saturday, then
-         *   the first Bill is created for the Account on that date and subsequent Bills are created
-         *   for the Account on Saturday of each week following through to the end of the billing
-         *   service period.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [weekEpoch].
+         *
+         * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("weekEpoch") @ExcludeMissing fun _weekEpoch(): JsonField<String> = weekEpoch
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed yearly.
-         * Defines the date of the first Bill and then acts as reference for when subsequent Bills
-         * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for yearly billing
-         *   frequency and will apply to the Account from January 1st, 2022 until January
-         *   15th, 2028. If you set a `yearEpoch` date of January 1st, 2023, then the first Bill is
-         *   created for the Account on that date and subsequent Bills are created for the Account
-         *   on January 1st of each year following through to the end of the billing service
-         *   period - January 1st, 2023, January 1st, 2024 and so on.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [yearEpoch].
+         *
+         * Unlike [yearEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("yearEpoch") @ExcludeMissing fun _yearEpoch(): JsonField<String> = yearEpoch
 
         /**
-         * Grace period before bills are auto-approved. Used in combination with
-         * `autoApproveBillsGracePeriodUnit` parameter.
+         * Returns the raw JSON value of [autoApproveBillsGracePeriod].
          *
-         * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
-         * auto-approval of Bills for Organization, which occurs when the specified time period has
-         * elapsed after Bill generation.
+         * Unlike [autoApproveBillsGracePeriod], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("autoApproveBillsGracePeriod")
         @ExcludeMissing
         fun _autoApproveBillsGracePeriod(): JsonField<Long> = autoApproveBillsGracePeriod
 
         /**
-         * Time unit of grace period before bills are auto-approved. Used in combination with
-         * `autoApproveBillsGracePeriod` parameter. Allowed options are MINUTES, HOURS, or DAYS.
+         * Returns the raw JSON value of [autoApproveBillsGracePeriodUnit].
          *
-         * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables
-         * auto-approval of Bills for Organization, which occurs when the specified time period has
-         * elapsed after Bill generation.
+         * Unlike [autoApproveBillsGracePeriodUnit], this method doesn't throw if the JSON field has
+         * an unexpected type.
          */
         @JsonProperty("autoApproveBillsGracePeriodUnit")
         @ExcludeMissing
         fun _autoApproveBillsGracePeriodUnit(): JsonField<String> = autoApproveBillsGracePeriodUnit
 
         /**
-         * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It
-         * will not auto-generate if a bill is in _pending_ state.
+         * Returns the raw JSON value of [autoGenerateStatementMode].
          *
-         * The default value is **None**.
-         * - **None**. Statements will not be auto-generated.
-         * - **JSON**. Statements are auto-generated in JSON format.
-         * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         * Unlike [autoGenerateStatementMode], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("autoGenerateStatementMode")
         @ExcludeMissing
@@ -1008,53 +1048,39 @@ private constructor(
             autoGenerateStatementMode
 
         /**
-         * Prefix to be used for sequential invoice numbers. This will be combined with the
-         * `sequenceStartNumber`.
+         * Returns the raw JSON value of [billPrefix].
          *
-         * **NOTES:**
-         * - If you do not define a `billPrefix`, a default will be used in the Console for the Bill
-         *   **REFERENCE** number. This default will concatenate **INV-** with the last four
-         *   characters of the `billId`.
-         * - If you do not define a `billPrefix`, the Bill response schema for API calls that
-         *   retrieve Bill data will not contain a `sequentialInvoiceNumber`.
+         * Unlike [billPrefix], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("billPrefix")
         @ExcludeMissing
         fun _billPrefix(): JsonField<String> = billPrefix
 
         /**
-         * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance at
-         * the start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Returns the raw JSON value of [commitmentFeeBillInAdvance].
+         *
+         * Unlike [commitmentFeeBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("commitmentFeeBillInAdvance")
         @ExcludeMissing
         fun _commitmentFeeBillInAdvance(): JsonField<Boolean> = commitmentFeeBillInAdvance
 
         /**
-         * Boolean setting to consolidate different billing frequencies onto the same bill.
-         * - **TRUE** - consolidate different billing frequencies onto the same bill.
-         * - **FALSE** - bills are not consolidated.
+         * Returns the raw JSON value of [consolidateBills].
+         *
+         * Unlike [consolidateBills], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("consolidateBills")
         @ExcludeMissing
         fun _consolidateBills(): JsonField<Boolean> = consolidateBills
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on Accounts are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Returns the raw JSON value of [creditApplicationOrder].
          *
-         * **NOTES:**
-         * - You can override this Organization-level setting for `creditApplicationOrder` at the
-         *   level of an individual Account.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * Unlike [creditApplicationOrder], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("creditApplicationOrder")
         @ExcludeMissing
@@ -1062,103 +1088,89 @@ private constructor(
             creditApplicationOrder
 
         /**
-         * Define currency conversion rates from _pricing currency_ to _billing currency_:
-         * - You can use the `currency` request parameter with this call to define the billing
-         *   currency for your Organization - see above.
-         * - You can also define a billing currency at the individual Account level and this will
-         *   override the Organization billing currency.
-         * - A Plan used to set Product consumption charge rates on an Account might use a different
-         *   pricing currency. At billing, charges are calculated in the pricing currency and then
-         *   converted into billing currency amounts to appear on Bills. If you haven't defined a
-         *   currency conversion rate from pricing to billing currency, billing will fail for the
-         *   Account.
+         * Returns the raw JSON value of [currencyConversions].
+         *
+         * Unlike [currencyConversions], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("currencyConversions")
         @ExcludeMissing
         fun _currencyConversions(): JsonField<List<CurrencyConversion>> = currencyConversions
 
         /**
-         * Organization level default `statementDefinitionId` to be used when there is no statement
-         * definition linked to the account.
+         * Returns the raw JSON value of [defaultStatementDefinitionId].
          *
-         * Statement definitions are used to generate bill statements, which are informative backing
-         * sheets to invoices.
+         * Unlike [defaultStatementDefinitionId], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("defaultStatementDefinitionId")
         @ExcludeMissing
         fun _defaultStatementDefinitionId(): JsonField<String> = defaultStatementDefinitionId
 
         /**
-         * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
-         * `LAST_DAY_OF_ARREARS`.
+         * Returns the raw JSON value of [externalInvoiceDate].
+         *
+         * Unlike [externalInvoiceDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("externalInvoiceDate")
         @ExcludeMissing
         fun _externalInvoiceDate(): JsonField<String> = externalInvoiceDate
 
         /**
-         * Boolean setting to specify whether minimum spend amounts are billed in advance at the
-         * start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Returns the raw JSON value of [minimumSpendBillInAdvance].
+         *
+         * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("minimumSpendBillInAdvance")
         @ExcludeMissing
         fun _minimumSpendBillInAdvance(): JsonField<Boolean> = minimumSpendBillInAdvance
 
         /**
-         * Sets the required interval for updating bills. It is an optional parameter that can be
-         * set as:
-         * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
-         *   (30 minutes).
-         * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on.
-         *   Eight options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-         * - **Default.** The default is **0**, which disables scheduling.
+         * Returns the raw JSON value of [scheduledBillInterval].
+         *
+         * Unlike [scheduledBillInterval], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("scheduledBillInterval")
         @ExcludeMissing
         fun _scheduledBillInterval(): JsonField<Double> = scheduledBillInterval
 
         /**
-         * The starting number to be used for sequential invoice numbers. This will be combined with
-         * the `billPrefix`.
+         * Returns the raw JSON value of [sequenceStartNumber].
          *
-         * For example, if you define `billPrefix` to be **INVOICE-** and you set the
-         * `seqenceStartNumber` as **100**, the first Bill created after updating your Organization
-         * Configuration will have a `sequentialInvoiceNumber` assigned of **INVOICE-101**.
-         * Subsequent Bills created will be numbered in time sequence for their initial creation
-         * date/time.
+         * Unlike [sequenceStartNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("sequenceStartNumber")
         @ExcludeMissing
         fun _sequenceStartNumber(): JsonField<Long> = sequenceStartNumber
 
         /**
-         * Boolean setting to specify whether the standing charge is billed in advance at the start
-         * of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Returns the raw JSON value of [standingChargeBillInAdvance].
+         *
+         * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("standingChargeBillInAdvance")
         @ExcludeMissing
         fun _standingChargeBillInAdvance(): JsonField<Boolean> = standingChargeBillInAdvance
 
         /**
-         * Boolean setting that supresses generating bills that have no line items.
-         * - **TRUE** - prevents generating bills with no line items.
-         * - **FALSE** - bills are still generated even when they have no line items.
+         * Returns the raw JSON value of [suppressedEmptyBills].
+         *
+         * Unlike [suppressedEmptyBills], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("suppressedEmptyBills")
         @ExcludeMissing
         fun _suppressedEmptyBills(): JsonField<Boolean> = suppressedEmptyBills
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -1295,18 +1307,11 @@ private constructor(
             fun currency(currency: String) = currency(JsonField.of(currency))
 
             /**
-             * The currency code for the Organization. For example: USD, GBP, or EUR:
-             * - This defines the _billing currency_ for the Organization. You can override this by
-             *   selecting a different billing currency at individual Account level.
-             * - You must first define the currencies you want to use in your Organization. See the
-             *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API
-             *   Reference.
+             * Sets [Builder.currency] to an arbitrary JSON value.
              *
-             * **Note:** If you use a different currency as the _pricing currency_ for Plans to set
-             * charge rates for Product consumption by an Account, you must define a currency
-             * conversion rate from the pricing currency to the billing currency before you run
-             * billing for the Account, otherwise billing will fail. See below for the
-             * `currencyConversions` request parameter.
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
@@ -1323,14 +1328,11 @@ private constructor(
             fun dayEpoch(dayEpoch: String) = dayEpoch(JsonField.of(dayEpoch))
 
             /**
-             * Optional setting that defines the billing cycle date for Accounts that are billed
-             * daily. Defines the date of the first Bill:
-             * - For example, suppose the Plan you attach to an Account is configured for daily
-             *   billing frequency and will apply to the Account from January 1st, 2022 until June
-             *   30th, 2022. If you set a `dayEpoch` date of January 2nd, 2022, then the first Bill
-             *   is created for the Account on that date and subsequent Bills are created for the
-             *   Account each day following through to the end of the billing service period.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.dayEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dayEpoch] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun dayEpoch(dayEpoch: JsonField<String>) = apply { this.dayEpoch = dayEpoch }
 
@@ -1345,11 +1347,11 @@ private constructor(
                 daysBeforeBillDue(JsonField.of(daysBeforeBillDue))
 
             /**
-             * Enter the number of days after the Bill generation date that you want to show on
-             * Bills as the due date.
+             * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
              *
-             * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will
-             * take precedence over any `daysBeforeBillDue` setting defined at Organization level.
+             * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
                 this.daysBeforeBillDue = daysBeforeBillDue
@@ -1370,23 +1372,24 @@ private constructor(
             fun monthEpoch(monthEpoch: String) = monthEpoch(JsonField.of(monthEpoch))
 
             /**
-             * Optional setting that defines the billing cycle date for Accounts that are billed
-             * monthly. Defines the date of the first Bill and then acts as reference for when
-             * subsequent Bills are created for the Account:
-             * - For example, suppose the Plan you attach to an Account is configured for monthly
-             *   billing frequency and will apply to the Account from January 1st, 2022 until June
-             *   30th, 2022. If you set a `monthEpoch` date of January 15th, 2022, then the first
-             *   Bill is created for the Account on that date and subsequent Bills are created for
-             *   the Account on the 15th of each month following through to the end of the billing
-             *   service period - February 15th, March 15th, and so on.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.monthEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.monthEpoch] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun monthEpoch(monthEpoch: JsonField<String>) = apply { this.monthEpoch = monthEpoch }
 
             /** Sets the timezone for the Organization. */
             fun timezone(timezone: String) = timezone(JsonField.of(timezone))
 
-            /** Sets the timezone for the Organization. */
+            /**
+             * Sets [Builder.timezone] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.timezone] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
             /**
@@ -1404,16 +1407,11 @@ private constructor(
             fun weekEpoch(weekEpoch: String) = weekEpoch(JsonField.of(weekEpoch))
 
             /**
-             * Optional setting that defines the billing cycle date for Accounts that are billed
-             * weekly. Defines the date of the first Bill and then acts as reference for when
-             * subsequent Bills are created for the Account:
-             * - For example, suppose the Plan you attach to an Account is configured for weekly
-             *   billing frequency and will apply to the Account from January 1st, 2022 until June
-             *   30th, 2022. If you set a `weekEpoch` date of January 15th, 2022, which falls on a
-             *   Saturday, then the first Bill is created for the Account on that date and
-             *   subsequent Bills are created for the Account on Saturday of each week following
-             *   through to the end of the billing service period.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.weekEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.weekEpoch] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun weekEpoch(weekEpoch: JsonField<String>) = apply { this.weekEpoch = weekEpoch }
 
@@ -1432,16 +1430,11 @@ private constructor(
             fun yearEpoch(yearEpoch: String) = yearEpoch(JsonField.of(yearEpoch))
 
             /**
-             * Optional setting that defines the billing cycle date for Accounts that are billed
-             * yearly. Defines the date of the first Bill and then acts as reference for when
-             * subsequent Bills are created for the Account:
-             * - For example, suppose the Plan you attach to an Account is configured for yearly
-             *   billing frequency and will apply to the Account from January 1st, 2022 until
-             *   January 15th, 2028. If you set a `yearEpoch` date of January 1st, 2023, then the
-             *   first Bill is created for the Account on that date and subsequent Bills are created
-             *   for the Account on January 1st of each year following through to the end of the
-             *   billing service period - January 1st, 2023, January 1st, 2024 and so on.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.yearEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.yearEpoch] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun yearEpoch(yearEpoch: JsonField<String>) = apply { this.yearEpoch = yearEpoch }
 
@@ -1457,12 +1450,11 @@ private constructor(
                 autoApproveBillsGracePeriod(JsonField.of(autoApproveBillsGracePeriod))
 
             /**
-             * Grace period before bills are auto-approved. Used in combination with
-             * `autoApproveBillsGracePeriodUnit` parameter.
+             * Sets [Builder.autoApproveBillsGracePeriod] to an arbitrary JSON value.
              *
-             * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
-             * auto-approval of Bills for Organization, which occurs when the specified time period
-             * has elapsed after Bill generation.
+             * You should usually call [Builder.autoApproveBillsGracePeriod] with a well-typed
+             * [Long] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: JsonField<Long>) = apply {
                 this.autoApproveBillsGracePeriod = autoApproveBillsGracePeriod
@@ -1480,12 +1472,11 @@ private constructor(
                 autoApproveBillsGracePeriodUnit(JsonField.of(autoApproveBillsGracePeriodUnit))
 
             /**
-             * Time unit of grace period before bills are auto-approved. Used in combination with
-             * `autoApproveBillsGracePeriod` parameter. Allowed options are MINUTES, HOURS, or DAYS.
+             * Sets [Builder.autoApproveBillsGracePeriodUnit] to an arbitrary JSON value.
              *
-             * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables
-             * auto-approval of Bills for Organization, which occurs when the specified time period
-             * has elapsed after Bill generation.
+             * You should usually call [Builder.autoApproveBillsGracePeriodUnit] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun autoApproveBillsGracePeriodUnit(
                 autoApproveBillsGracePeriodUnit: JsonField<String>
@@ -1504,13 +1495,11 @@ private constructor(
                 autoGenerateStatementMode(JsonField.of(autoGenerateStatementMode))
 
             /**
-             * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It
-             * will not auto-generate if a bill is in _pending_ state.
+             * Sets [Builder.autoGenerateStatementMode] to an arbitrary JSON value.
              *
-             * The default value is **None**.
-             * - **None**. Statements will not be auto-generated.
-             * - **JSON**. Statements are auto-generated in JSON format.
-             * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+             * You should usually call [Builder.autoGenerateStatementMode] with a well-typed
+             * [AutoGenerateStatementMode] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
              */
             fun autoGenerateStatementMode(
                 autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>
@@ -1530,15 +1519,11 @@ private constructor(
             fun billPrefix(billPrefix: String) = billPrefix(JsonField.of(billPrefix))
 
             /**
-             * Prefix to be used for sequential invoice numbers. This will be combined with the
-             * `sequenceStartNumber`.
+             * Sets [Builder.billPrefix] to an arbitrary JSON value.
              *
-             * **NOTES:**
-             * - If you do not define a `billPrefix`, a default will be used in the Console for the
-             *   Bill **REFERENCE** number. This default will concatenate **INV-** with the last
-             *   four characters of the `billId`.
-             * - If you do not define a `billPrefix`, the Bill response schema for API calls that
-             *   retrieve Bill data will not contain a `sequentialInvoiceNumber`.
+             * You should usually call [Builder.billPrefix] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billPrefix(billPrefix: JsonField<String>) = apply { this.billPrefix = billPrefix }
 
@@ -1553,11 +1538,11 @@ private constructor(
                 commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
 
             /**
-             * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance
-             * at the start of each billing period, or billed in arrears at the end of each billing
-             * period.
-             * - **TRUE** - bill in advance _(start of each billing period)_.
-             * - **FALSE** - bill in arrears _(end of each billing period)_.
+             * Sets [Builder.commitmentFeeBillInAdvance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.commitmentFeeBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: JsonField<Boolean>) = apply {
                 this.commitmentFeeBillInAdvance = commitmentFeeBillInAdvance
@@ -1572,9 +1557,11 @@ private constructor(
                 consolidateBills(JsonField.of(consolidateBills))
 
             /**
-             * Boolean setting to consolidate different billing frequencies onto the same bill.
-             * - **TRUE** - consolidate different billing frequencies onto the same bill.
-             * - **FALSE** - bills are not consolidated.
+             * Sets [Builder.consolidateBills] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.consolidateBills] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun consolidateBills(consolidateBills: JsonField<Boolean>) = apply {
                 this.consolidateBills = consolidateBills
@@ -1601,21 +1588,11 @@ private constructor(
                 creditApplicationOrder(JsonField.of(creditApplicationOrder))
 
             /**
-             * Define the order in which any Prepayment or Balance amounts on Accounts are to be
-             * drawn-down against for billing. Four options:
-             * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance
-             *   credit.
-             * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment
-             *   credit.
-             * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-             * - `"BALANCE"`. Only draw-down against Balance credit.
+             * Sets [Builder.creditApplicationOrder] to an arbitrary JSON value.
              *
-             * **NOTES:**
-             * - You can override this Organization-level setting for `creditApplicationOrder` at
-             *   the level of an individual Account.
-             * - If the Account belongs to a Parent/Child Account hierarchy, then the
-             *   `creditApplicationOrder` settings are not available, and the draw-down order
-             *   defaults always to Prepayment then Balance order.
+             * You should usually call [Builder.creditApplicationOrder] with a well-typed
+             * `List<CreditApplicationOrder>` value instead. This method is primarily for setting
+             * the field to an undocumented or not yet supported value.
              */
             fun creditApplicationOrder(
                 creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
@@ -1624,21 +1601,9 @@ private constructor(
             }
 
             /**
-             * Define the order in which any Prepayment or Balance amounts on Accounts are to be
-             * drawn-down against for billing. Four options:
-             * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance
-             *   credit.
-             * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment
-             *   credit.
-             * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-             * - `"BALANCE"`. Only draw-down against Balance credit.
+             * Adds a single [CreditApplicationOrder] to [Builder.creditApplicationOrder].
              *
-             * **NOTES:**
-             * - You can override this Organization-level setting for `creditApplicationOrder` at
-             *   the level of an individual Account.
-             * - If the Account belongs to a Parent/Child Account hierarchy, then the
-             *   `creditApplicationOrder` settings are not available, and the draw-down order
-             *   defaults always to Prepayment then Balance order.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
                 this.creditApplicationOrder =
@@ -1663,16 +1628,11 @@ private constructor(
                 currencyConversions(JsonField.of(currencyConversions))
 
             /**
-             * Define currency conversion rates from _pricing currency_ to _billing currency_:
-             * - You can use the `currency` request parameter with this call to define the billing
-             *   currency for your Organization - see above.
-             * - You can also define a billing currency at the individual Account level and this
-             *   will override the Organization billing currency.
-             * - A Plan used to set Product consumption charge rates on an Account might use a
-             *   different pricing currency. At billing, charges are calculated in the pricing
-             *   currency and then converted into billing currency amounts to appear on Bills. If
-             *   you haven't defined a currency conversion rate from pricing to billing currency,
-             *   billing will fail for the Account.
+             * Sets [Builder.currencyConversions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currencyConversions] with a well-typed
+             * `List<CurrencyConversion>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
              */
             fun currencyConversions(currencyConversions: JsonField<List<CurrencyConversion>>) =
                 apply {
@@ -1680,16 +1640,9 @@ private constructor(
                 }
 
             /**
-             * Define currency conversion rates from _pricing currency_ to _billing currency_:
-             * - You can use the `currency` request parameter with this call to define the billing
-             *   currency for your Organization - see above.
-             * - You can also define a billing currency at the individual Account level and this
-             *   will override the Organization billing currency.
-             * - A Plan used to set Product consumption charge rates on an Account might use a
-             *   different pricing currency. At billing, charges are calculated in the pricing
-             *   currency and then converted into billing currency amounts to appear on Bills. If
-             *   you haven't defined a currency conversion rate from pricing to billing currency,
-             *   billing will fail for the Account.
+             * Adds a single [CurrencyConversion] to [currencyConversions].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
                 currencyConversions =
@@ -1709,11 +1662,11 @@ private constructor(
                 defaultStatementDefinitionId(JsonField.of(defaultStatementDefinitionId))
 
             /**
-             * Organization level default `statementDefinitionId` to be used when there is no
-             * statement definition linked to the account.
+             * Sets [Builder.defaultStatementDefinitionId] to an arbitrary JSON value.
              *
-             * Statement definitions are used to generate bill statements, which are informative
-             * backing sheets to invoices.
+             * You should usually call [Builder.defaultStatementDefinitionId] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun defaultStatementDefinitionId(defaultStatementDefinitionId: JsonField<String>) =
                 apply {
@@ -1728,8 +1681,11 @@ private constructor(
                 externalInvoiceDate(JsonField.of(externalInvoiceDate))
 
             /**
-             * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
-             * `LAST_DAY_OF_ARREARS`.
+             * Sets [Builder.externalInvoiceDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalInvoiceDate] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun externalInvoiceDate(externalInvoiceDate: JsonField<String>) = apply {
                 this.externalInvoiceDate = externalInvoiceDate
@@ -1745,10 +1701,11 @@ private constructor(
                 minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
 
             /**
-             * Boolean setting to specify whether minimum spend amounts are billed in advance at the
-             * start of each billing period, or billed in arrears at the end of each billing period.
-             * - **TRUE** - bill in advance _(start of each billing period)_.
-             * - **FALSE** - bill in arrears _(end of each billing period)_.
+             * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
@@ -1767,13 +1724,11 @@ private constructor(
                 scheduledBillInterval(JsonField.of(scheduledBillInterval))
 
             /**
-             * Sets the required interval for updating bills. It is an optional parameter that can
-             * be set as:
-             * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and
-             *   **0.5** (30 minutes).
-             * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so
-             *   on. Eight options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-             * - **Default.** The default is **0**, which disables scheduling.
+             * Sets [Builder.scheduledBillInterval] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.scheduledBillInterval] with a well-typed [Double]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun scheduledBillInterval(scheduledBillInterval: JsonField<Double>) = apply {
                 this.scheduledBillInterval = scheduledBillInterval
@@ -1793,14 +1748,11 @@ private constructor(
                 sequenceStartNumber(JsonField.of(sequenceStartNumber))
 
             /**
-             * The starting number to be used for sequential invoice numbers. This will be combined
-             * with the `billPrefix`.
+             * Sets [Builder.sequenceStartNumber] to an arbitrary JSON value.
              *
-             * For example, if you define `billPrefix` to be **INVOICE-** and you set the
-             * `seqenceStartNumber` as **100**, the first Bill created after updating your
-             * Organization Configuration will have a `sequentialInvoiceNumber` assigned of
-             * **INVOICE-101**. Subsequent Bills created will be numbered in time sequence for their
-             * initial creation date/time.
+             * You should usually call [Builder.sequenceStartNumber] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun sequenceStartNumber(sequenceStartNumber: JsonField<Long>) = apply {
                 this.sequenceStartNumber = sequenceStartNumber
@@ -1816,10 +1768,11 @@ private constructor(
                 standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
 
             /**
-             * Boolean setting to specify whether the standing charge is billed in advance at the
-             * start of each billing period, or billed in arrears at the end of each billing period.
-             * - **TRUE** - bill in advance _(start of each billing period)_.
-             * - **FALSE** - bill in arrears _(end of each billing period)_.
+             * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) =
                 apply {
@@ -1835,9 +1788,11 @@ private constructor(
                 suppressedEmptyBills(JsonField.of(suppressedEmptyBills))
 
             /**
-             * Boolean setting that supresses generating bills that have no line items.
-             * - **TRUE** - prevents generating bills with no line items.
-             * - **FALSE** - bills are still generated even when they have no line items.
+             * Sets [Builder.suppressedEmptyBills] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.suppressedEmptyBills] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun suppressedEmptyBills(suppressedEmptyBills: JsonField<Boolean>) = apply {
                 this.suppressedEmptyBills = suppressedEmptyBills
@@ -1854,12 +1809,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1987,17 +1941,10 @@ private constructor(
         fun currency(currency: String) = apply { body.currency(currency) }
 
         /**
-         * The currency code for the Organization. For example: USD, GBP, or EUR:
-         * - This defines the _billing currency_ for the Organization. You can override this by
-         *   selecting a different billing currency at individual Account level.
-         * - You must first define the currencies you want to use in your Organization. See the
-         *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API Reference.
+         * Sets [Builder.currency] to an arbitrary JSON value.
          *
-         * **Note:** If you use a different currency as the _pricing currency_ for Plans to set
-         * charge rates for Product consumption by an Account, you must define a currency conversion
-         * rate from the pricing currency to the billing currency before you run billing for the
-         * Account, otherwise billing will fail. See below for the `currencyConversions` request
-         * parameter.
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
@@ -2014,14 +1961,10 @@ private constructor(
         fun dayEpoch(dayEpoch: String) = apply { body.dayEpoch(dayEpoch) }
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed daily.
-         * Defines the date of the first Bill:
-         * - For example, suppose the Plan you attach to an Account is configured for daily billing
-         *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
-         *   If you set a `dayEpoch` date of January 2nd, 2022, then the first Bill is created for
-         *   the Account on that date and subsequent Bills are created for the Account each day
-         *   following through to the end of the billing service period.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.dayEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dayEpoch] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun dayEpoch(dayEpoch: JsonField<String>) = apply { body.dayEpoch(dayEpoch) }
 
@@ -2037,11 +1980,11 @@ private constructor(
         }
 
         /**
-         * Enter the number of days after the Bill generation date that you want to show on Bills as
-         * the due date.
+         * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
          *
-         * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
-         * precedence over any `daysBeforeBillDue` setting defined at Organization level.
+         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
             body.daysBeforeBillDue(daysBeforeBillDue)
@@ -2062,23 +2005,23 @@ private constructor(
         fun monthEpoch(monthEpoch: String) = apply { body.monthEpoch(monthEpoch) }
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed
-         * monthly. Defines the date of the first Bill and then acts as reference for when
-         * subsequent Bills are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for monthly
-         *   billing frequency and will apply to the Account from January 1st, 2022 until June
-         *   30th, 2022. If you set a `monthEpoch` date of January 15th, 2022, then the first Bill
-         *   is created for the Account on that date and subsequent Bills are created for the
-         *   Account on the 15th of each month following through to the end of the billing service
-         *   period - February 15th, March 15th, and so on.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.monthEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.monthEpoch] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun monthEpoch(monthEpoch: JsonField<String>) = apply { body.monthEpoch(monthEpoch) }
 
         /** Sets the timezone for the Organization. */
         fun timezone(timezone: String) = apply { body.timezone(timezone) }
 
-        /** Sets the timezone for the Organization. */
+        /**
+         * Sets [Builder.timezone] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.timezone] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun timezone(timezone: JsonField<String>) = apply { body.timezone(timezone) }
 
         /**
@@ -2096,16 +2039,11 @@ private constructor(
         fun weekEpoch(weekEpoch: String) = apply { body.weekEpoch(weekEpoch) }
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed weekly.
-         * Defines the date of the first Bill and then acts as reference for when subsequent Bills
-         * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for weekly billing
-         *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
-         *   If you set a `weekEpoch` date of January 15th, 2022, which falls on a Saturday, then
-         *   the first Bill is created for the Account on that date and subsequent Bills are created
-         *   for the Account on Saturday of each week following through to the end of the billing
-         *   service period.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.weekEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.weekEpoch] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun weekEpoch(weekEpoch: JsonField<String>) = apply { body.weekEpoch(weekEpoch) }
 
@@ -2124,16 +2062,11 @@ private constructor(
         fun yearEpoch(yearEpoch: String) = apply { body.yearEpoch(yearEpoch) }
 
         /**
-         * Optional setting that defines the billing cycle date for Accounts that are billed yearly.
-         * Defines the date of the first Bill and then acts as reference for when subsequent Bills
-         * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for yearly billing
-         *   frequency and will apply to the Account from January 1st, 2022 until January
-         *   15th, 2028. If you set a `yearEpoch` date of January 1st, 2023, then the first Bill is
-         *   created for the Account on that date and subsequent Bills are created for the Account
-         *   on January 1st of each year following through to the end of the billing service
-         *   period - January 1st, 2023, January 1st, 2024 and so on.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.yearEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.yearEpoch] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun yearEpoch(yearEpoch: JsonField<String>) = apply { body.yearEpoch(yearEpoch) }
 
@@ -2150,12 +2083,11 @@ private constructor(
         }
 
         /**
-         * Grace period before bills are auto-approved. Used in combination with
-         * `autoApproveBillsGracePeriodUnit` parameter.
+         * Sets [Builder.autoApproveBillsGracePeriod] to an arbitrary JSON value.
          *
-         * **Note:** When used in combination with `autoApproveBillsGracePeriodUnit` enables
-         * auto-approval of Bills for Organization, which occurs when the specified time period has
-         * elapsed after Bill generation.
+         * You should usually call [Builder.autoApproveBillsGracePeriod] with a well-typed [Long]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: JsonField<Long>) = apply {
             body.autoApproveBillsGracePeriod(autoApproveBillsGracePeriod)
@@ -2174,12 +2106,11 @@ private constructor(
         }
 
         /**
-         * Time unit of grace period before bills are auto-approved. Used in combination with
-         * `autoApproveBillsGracePeriod` parameter. Allowed options are MINUTES, HOURS, or DAYS.
+         * Sets [Builder.autoApproveBillsGracePeriodUnit] to an arbitrary JSON value.
          *
-         * **Note:** When used in combination with `autoApproveBillsGracePeriod` enables
-         * auto-approval of Bills for Organization, which occurs when the specified time period has
-         * elapsed after Bill generation.
+         * You should usually call [Builder.autoApproveBillsGracePeriodUnit] with a well-typed
+         * [String] value instead. This method is primarily for setting the field to an undocumented
+         * or not yet supported value.
          */
         fun autoApproveBillsGracePeriodUnit(autoApproveBillsGracePeriodUnit: JsonField<String>) =
             apply {
@@ -2201,13 +2132,11 @@ private constructor(
             }
 
         /**
-         * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It
-         * will not auto-generate if a bill is in _pending_ state.
+         * Sets [Builder.autoGenerateStatementMode] to an arbitrary JSON value.
          *
-         * The default value is **None**.
-         * - **None**. Statements will not be auto-generated.
-         * - **JSON**. Statements are auto-generated in JSON format.
-         * - **JSON and CSV**. Statements are auto-generated in both JSON and CSV formats.
+         * You should usually call [Builder.autoGenerateStatementMode] with a well-typed
+         * [AutoGenerateStatementMode] value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
         fun autoGenerateStatementMode(
             autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>
@@ -2227,15 +2156,11 @@ private constructor(
         fun billPrefix(billPrefix: String) = apply { body.billPrefix(billPrefix) }
 
         /**
-         * Prefix to be used for sequential invoice numbers. This will be combined with the
-         * `sequenceStartNumber`.
+         * Sets [Builder.billPrefix] to an arbitrary JSON value.
          *
-         * **NOTES:**
-         * - If you do not define a `billPrefix`, a default will be used in the Console for the Bill
-         *   **REFERENCE** number. This default will concatenate **INV-** with the last four
-         *   characters of the `billId`.
-         * - If you do not define a `billPrefix`, the Bill response schema for API calls that
-         *   retrieve Bill data will not contain a `sequentialInvoiceNumber`.
+         * You should usually call [Builder.billPrefix] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billPrefix(billPrefix: JsonField<String>) = apply { body.billPrefix(billPrefix) }
 
@@ -2250,10 +2175,11 @@ private constructor(
         }
 
         /**
-         * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance at
-         * the start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Sets [Builder.commitmentFeeBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.commitmentFeeBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: JsonField<Boolean>) = apply {
             body.commitmentFeeBillInAdvance(commitmentFeeBillInAdvance)
@@ -2269,9 +2195,11 @@ private constructor(
         }
 
         /**
-         * Boolean setting to consolidate different billing frequencies onto the same bill.
-         * - **TRUE** - consolidate different billing frequencies onto the same bill.
-         * - **FALSE** - bills are not consolidated.
+         * Sets [Builder.consolidateBills] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.consolidateBills] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun consolidateBills(consolidateBills: JsonField<Boolean>) = apply {
             body.consolidateBills(consolidateBills)
@@ -2297,38 +2225,20 @@ private constructor(
         }
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on Accounts are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Sets [Builder.creditApplicationOrder] to an arbitrary JSON value.
          *
-         * **NOTES:**
-         * - You can override this Organization-level setting for `creditApplicationOrder` at the
-         *   level of an individual Account.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * You should usually call [Builder.creditApplicationOrder] with a well-typed
+         * `List<CreditApplicationOrder>` value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
          */
         fun creditApplicationOrder(
             creditApplicationOrder: JsonField<List<CreditApplicationOrder>>
         ) = apply { body.creditApplicationOrder(creditApplicationOrder) }
 
         /**
-         * Define the order in which any Prepayment or Balance amounts on Accounts are to be
-         * drawn-down against for billing. Four options:
-         * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
-         * - `"BALANCE","PREPAYMENT"`. Draw-down against Balance credit before Prepayment credit.
-         * - `"PREPAYMENT"`. Only draw-down against Prepayment credit.
-         * - `"BALANCE"`. Only draw-down against Balance credit.
+         * Adds a single [CreditApplicationOrder] to [Builder.creditApplicationOrder].
          *
-         * **NOTES:**
-         * - You can override this Organization-level setting for `creditApplicationOrder` at the
-         *   level of an individual Account.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
-         *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
-         *   always to Prepayment then Balance order.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addCreditApplicationOrder(creditApplicationOrder: CreditApplicationOrder) = apply {
             body.addCreditApplicationOrder(creditApplicationOrder)
@@ -2351,32 +2261,20 @@ private constructor(
         }
 
         /**
-         * Define currency conversion rates from _pricing currency_ to _billing currency_:
-         * - You can use the `currency` request parameter with this call to define the billing
-         *   currency for your Organization - see above.
-         * - You can also define a billing currency at the individual Account level and this will
-         *   override the Organization billing currency.
-         * - A Plan used to set Product consumption charge rates on an Account might use a different
-         *   pricing currency. At billing, charges are calculated in the pricing currency and then
-         *   converted into billing currency amounts to appear on Bills. If you haven't defined a
-         *   currency conversion rate from pricing to billing currency, billing will fail for the
-         *   Account.
+         * Sets [Builder.currencyConversions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currencyConversions] with a well-typed
+         * `List<CurrencyConversion>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
         fun currencyConversions(currencyConversions: JsonField<List<CurrencyConversion>>) = apply {
             body.currencyConversions(currencyConversions)
         }
 
         /**
-         * Define currency conversion rates from _pricing currency_ to _billing currency_:
-         * - You can use the `currency` request parameter with this call to define the billing
-         *   currency for your Organization - see above.
-         * - You can also define a billing currency at the individual Account level and this will
-         *   override the Organization billing currency.
-         * - A Plan used to set Product consumption charge rates on an Account might use a different
-         *   pricing currency. At billing, charges are calculated in the pricing currency and then
-         *   converted into billing currency amounts to appear on Bills. If you haven't defined a
-         *   currency conversion rate from pricing to billing currency, billing will fail for the
-         *   Account.
+         * Adds a single [CurrencyConversion] to [currencyConversions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addCurrencyConversion(currencyConversion: CurrencyConversion) = apply {
             body.addCurrencyConversion(currencyConversion)
@@ -2394,11 +2292,11 @@ private constructor(
         }
 
         /**
-         * Organization level default `statementDefinitionId` to be used when there is no statement
-         * definition linked to the account.
+         * Sets [Builder.defaultStatementDefinitionId] to an arbitrary JSON value.
          *
-         * Statement definitions are used to generate bill statements, which are informative backing
-         * sheets to invoices.
+         * You should usually call [Builder.defaultStatementDefinitionId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun defaultStatementDefinitionId(defaultStatementDefinitionId: JsonField<String>) = apply {
             body.defaultStatementDefinitionId(defaultStatementDefinitionId)
@@ -2413,8 +2311,11 @@ private constructor(
         }
 
         /**
-         * Date to use for the invoice date. Allowed values are `FIRST_DAY_OF_NEXT_PERIOD` or
-         * `LAST_DAY_OF_ARREARS`.
+         * Sets [Builder.externalInvoiceDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalInvoiceDate] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun externalInvoiceDate(externalInvoiceDate: JsonField<String>) = apply {
             body.externalInvoiceDate(externalInvoiceDate)
@@ -2431,10 +2332,11 @@ private constructor(
         }
 
         /**
-         * Boolean setting to specify whether minimum spend amounts are billed in advance at the
-         * start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
@@ -2454,13 +2356,11 @@ private constructor(
         }
 
         /**
-         * Sets the required interval for updating bills. It is an optional parameter that can be
-         * set as:
-         * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
-         *   (30 minutes).
-         * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on.
-         *   Eight options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-         * - **Default.** The default is **0**, which disables scheduling.
+         * Sets [Builder.scheduledBillInterval] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scheduledBillInterval] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun scheduledBillInterval(scheduledBillInterval: JsonField<Double>) = apply {
             body.scheduledBillInterval(scheduledBillInterval)
@@ -2481,14 +2381,11 @@ private constructor(
         }
 
         /**
-         * The starting number to be used for sequential invoice numbers. This will be combined with
-         * the `billPrefix`.
+         * Sets [Builder.sequenceStartNumber] to an arbitrary JSON value.
          *
-         * For example, if you define `billPrefix` to be **INVOICE-** and you set the
-         * `seqenceStartNumber` as **100**, the first Bill created after updating your Organization
-         * Configuration will have a `sequentialInvoiceNumber` assigned of **INVOICE-101**.
-         * Subsequent Bills created will be numbered in time sequence for their initial creation
-         * date/time.
+         * You should usually call [Builder.sequenceStartNumber] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun sequenceStartNumber(sequenceStartNumber: JsonField<Long>) = apply {
             body.sequenceStartNumber(sequenceStartNumber)
@@ -2505,10 +2402,11 @@ private constructor(
         }
 
         /**
-         * Boolean setting to specify whether the standing charge is billed in advance at the start
-         * of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) = apply {
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
@@ -2524,9 +2422,11 @@ private constructor(
         }
 
         /**
-         * Boolean setting that supresses generating bills that have no line items.
-         * - **TRUE** - prevents generating bills with no line items.
-         * - **FALSE** - bills are still generated even when they have no line items.
+         * Sets [Builder.suppressedEmptyBills] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.suppressedEmptyBills] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun suppressedEmptyBills(suppressedEmptyBills: JsonField<Boolean>) = apply {
             body.suppressedEmptyBills(suppressedEmptyBills)
@@ -2543,12 +2443,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

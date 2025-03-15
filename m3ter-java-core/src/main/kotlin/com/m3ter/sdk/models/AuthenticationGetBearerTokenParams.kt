@@ -30,16 +30,34 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** The grant type. */
+    /**
+     * The grant type.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun grantType(): GrantType = body.grantType()
 
-    /** Not used. The JWT scope. */
+    /**
+     * Not used. The JWT scope.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun scope(): Optional<String> = body.scope()
 
-    /** The grant type. */
+    /**
+     * Returns the raw JSON value of [grantType].
+     *
+     * Unlike [grantType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _grantType(): JsonField<GrantType> = body._grantType()
 
-    /** Not used. The JWT scope. */
+    /**
+     * Returns the raw JSON value of [scope].
+     *
+     * Unlike [scope], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _scope(): JsonField<String> = body._scope()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -68,18 +86,36 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The grant type. */
+        /**
+         * The grant type.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun grantType(): GrantType = grantType.getRequired("grant_type")
 
-        /** Not used. The JWT scope. */
+        /**
+         * Not used. The JWT scope.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
 
-        /** The grant type. */
+        /**
+         * Returns the raw JSON value of [grantType].
+         *
+         * Unlike [grantType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("grant_type")
         @ExcludeMissing
         fun _grantType(): JsonField<GrantType> = grantType
 
-        /** Not used. The JWT scope. */
+        /**
+         * Returns the raw JSON value of [scope].
+         *
+         * Unlike [scope], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("scope") @ExcludeMissing fun _scope(): JsonField<String> = scope
 
         @JsonAnyGetter
@@ -130,13 +166,25 @@ private constructor(
             /** The grant type. */
             fun grantType(grantType: GrantType) = grantType(JsonField.of(grantType))
 
-            /** The grant type. */
+            /**
+             * Sets [Builder.grantType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.grantType] with a well-typed [GrantType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun grantType(grantType: JsonField<GrantType>) = apply { this.grantType = grantType }
 
             /** Not used. The JWT scope. */
             fun scope(scope: String) = scope(JsonField.of(scope))
 
-            /** Not used. The JWT scope. */
+            /**
+             * Sets [Builder.scope] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.scope] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun scope(scope: JsonField<String>) = apply { this.scope = scope }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -220,13 +268,24 @@ private constructor(
         /** The grant type. */
         fun grantType(grantType: GrantType) = apply { body.grantType(grantType) }
 
-        /** The grant type. */
+        /**
+         * Sets [Builder.grantType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.grantType] with a well-typed [GrantType] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun grantType(grantType: JsonField<GrantType>) = apply { body.grantType(grantType) }
 
         /** Not used. The JWT scope. */
         fun scope(scope: String) = apply { body.scope(scope) }
 
-        /** Not used. The JWT scope. */
+        /**
+         * Sets [Builder.scope] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scope] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun scope(scope: JsonField<String>) = apply { body.scope(scope) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

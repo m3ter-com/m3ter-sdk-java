@@ -48,10 +48,18 @@ private constructor(
      * the calculation. For example, if the simple Aggregation referenced has a base value of 100
      * and has **Quantity per unit** set at 10, the Compound Aggregation calculation _will use the
      * base value of 100 not 10_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun calculation(): String = body.calculation()
 
-    /** Descriptive name for the Aggregation. */
+    /**
+     * Descriptive name for the Aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -61,6 +69,9 @@ private constructor(
      *
      * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically set
      * to `"UP"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun quantityPerUnit(): Double = body.quantityPerUnit()
 
@@ -77,21 +88,41 @@ private constructor(
      *   97.8 rounded up to 98 \* 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun rounding(): Rounding = body.rounding()
 
     /**
      * User defined label for units shown for Bill line items, indicating to your customers what
      * they are being charged for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun unit(): String = body.unit()
 
-    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    /**
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountingProductId(): Optional<String> = body.accountingProductId()
 
-    /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+    /**
+     * Code of the new Aggregation. A unique short code to identify the Aggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
@@ -104,6 +135,9 @@ private constructor(
      * **Note:** If any of the simple Aggregations you reference in a Compound Aggregation
      * calculation might have null values, you must set their Default Value to 0. This ensures that
      * any null values passed into the Compound Aggregation are passed in correctly with value = 0.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun evaluateNullAggregations(): Optional<Boolean> = body.evaluateNullAggregations()
 
@@ -111,6 +145,9 @@ private constructor(
      * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
      *
      * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun productId(): Optional<String> = body.productId()
 
@@ -121,92 +158,88 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * String that represents the formula for the calculation. This formula determines how the
-     * CompoundAggregation value is calculated. The calculation can reference simple Aggregations or
-     * Custom Fields. This field is required when creating or updating a CompoundAggregation.
+     * Returns the raw JSON value of [calculation].
      *
-     * **NOTE:** If a simple Aggregation referenced by a Compound Aggregation has a **Quantity per
-     * unit** defined or a **Rounding** defined, these will not be factored into the value used by
-     * the calculation. For example, if the simple Aggregation referenced has a base value of 100
-     * and has **Quantity per unit** set at 10, the Compound Aggregation calculation _will use the
-     * base value of 100 not 10_.
+     * Unlike [calculation], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _calculation(): JsonField<String> = body._calculation()
 
-    /** Descriptive name for the Aggregation. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit for
-     * billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per 500
-     * KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+     * Returns the raw JSON value of [quantityPerUnit].
      *
-     * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically set
-     * to `"UP"`.
+     * Unlike [quantityPerUnit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _quantityPerUnit(): JsonField<Double> = body._quantityPerUnit()
 
     /**
-     * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+     * Returns the raw JSON value of [rounding].
      *
-     * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-     *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
-     *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
-     *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
-     *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
-     *
-     * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+     * Unlike [rounding], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _rounding(): JsonField<Rounding> = body._rounding()
 
     /**
-     * User defined label for units shown for Bill line items, indicating to your customers what
-     * they are being charged for.
+     * Returns the raw JSON value of [unit].
+     *
+     * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _unit(): JsonField<String> = body._unit()
 
-    /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+    /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
-    /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
+    /**
+     * Returns the raw JSON value of [customFields].
+     *
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
     /**
-     * Boolean True / False flag:
-     * - **TRUE** - set to TRUE if you want to allow null values from the simple Aggregations
-     *   referenced in the Compound Aggregation to be passed in. Simple Aggregations based on Meter
-     *   Target Fields where no usage data is available will have null values.
-     * - **FALSE** Default.
+     * Returns the raw JSON value of [evaluateNullAggregations].
      *
-     * **Note:** If any of the simple Aggregations you reference in a Compound Aggregation
-     * calculation might have null values, you must set their Default Value to 0. This ensures that
-     * any null values passed into the Compound Aggregation are passed in correctly with value = 0.
+     * Unlike [evaluateNullAggregations], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _evaluateNullAggregations(): JsonField<Boolean> = body._evaluateNullAggregations()
 
     /**
-     * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
+     * Returns the raw JSON value of [productId].
      *
-     * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _productId(): JsonField<String> = body._productId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -281,10 +314,18 @@ private constructor(
          * used by the calculation. For example, if the simple Aggregation referenced has a base
          * value of 100 and has **Quantity per unit** set at 10, the Compound Aggregation
          * calculation _will use the base value of 100 not 10_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun calculation(): String = calculation.getRequired("calculation")
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Descriptive name for the Aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -294,6 +335,9 @@ private constructor(
          *
          * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
          * set to `"UP"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun quantityPerUnit(): Double = quantityPerUnit.getRequired("quantityPerUnit")
 
@@ -310,22 +354,42 @@ private constructor(
          *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun rounding(): Rounding = rounding.getRequired("rounding")
 
         /**
          * User defined label for units shown for Bill line items, indicating to your customers what
          * they are being charged for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun unit(): String = unit.getRequired("unit")
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountingProductId(): Optional<String> =
             Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Code of the new Aggregation. A unique short code to identify the Aggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
 
@@ -340,6 +404,9 @@ private constructor(
          * calculation might have null values, you must set their Default Value to 0. This ensures
          * that any null values passed into the Compound Aggregation are passed in correctly with
          * value = 0.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun evaluateNullAggregations(): Optional<Boolean> =
             Optional.ofNullable(evaluateNullAggregations.getNullable("evaluateNullAggregations"))
@@ -348,6 +415,9 @@ private constructor(
          * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
          *
          * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
@@ -358,104 +428,100 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * String that represents the formula for the calculation. This formula determines how the
-         * CompoundAggregation value is calculated. The calculation can reference simple
-         * Aggregations or Custom Fields. This field is required when creating or updating a
-         * CompoundAggregation.
+         * Returns the raw JSON value of [calculation].
          *
-         * **NOTE:** If a simple Aggregation referenced by a Compound Aggregation has a **Quantity
-         * per unit** defined or a **Rounding** defined, these will not be factored into the value
-         * used by the calculation. For example, if the simple Aggregation referenced has a base
-         * value of 100 and has **Quantity per unit** set at 10, the Compound Aggregation
-         * calculation _will use the base value of 100 not 10_.
+         * Unlike [calculation], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("calculation")
         @ExcludeMissing
         fun _calculation(): JsonField<String> = calculation
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit
-         * for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per
-         * 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+         * Returns the raw JSON value of [quantityPerUnit].
          *
-         * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
-         * set to `"UP"`.
+         * Unlike [quantityPerUnit], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("quantityPerUnit")
         @ExcludeMissing
         fun _quantityPerUnit(): JsonField<Double> = quantityPerUnit
 
         /**
-         * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+         * Returns the raw JSON value of [rounding].
          *
-         * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-         *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
-         *   you would typically set Rounding to **UP**. For example, suppose you charge by
-         *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-         *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-         *
-         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         * Unlike [rounding], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("rounding") @ExcludeMissing fun _rounding(): JsonField<Rounding> = rounding
 
         /**
-         * User defined label for units shown for Bill line items, indicating to your customers what
-         * they are being charged for.
+         * Returns the raw JSON value of [unit].
+         *
+         * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Returns the raw JSON value of [accountingProductId].
+         *
+         * Unlike [accountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         fun _accountingProductId(): JsonField<String> = accountingProductId
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
+        /**
+         * Returns the raw JSON value of [customFields].
+         *
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
         /**
-         * Boolean True / False flag:
-         * - **TRUE** - set to TRUE if you want to allow null values from the simple Aggregations
-         *   referenced in the Compound Aggregation to be passed in. Simple Aggregations based on
-         *   Meter Target Fields where no usage data is available will have null values.
-         * - **FALSE** Default.
+         * Returns the raw JSON value of [evaluateNullAggregations].
          *
-         * **Note:** If any of the simple Aggregations you reference in a Compound Aggregation
-         * calculation might have null values, you must set their Default Value to 0. This ensures
-         * that any null values passed into the Compound Aggregation are passed in correctly with
-         * value = 0.
+         * Unlike [evaluateNullAggregations], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("evaluateNullAggregations")
         @ExcludeMissing
         fun _evaluateNullAggregations(): JsonField<Boolean> = evaluateNullAggregations
 
         /**
-         * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
+         * Returns the raw JSON value of [productId].
          *
-         * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -550,16 +616,11 @@ private constructor(
             fun calculation(calculation: String) = calculation(JsonField.of(calculation))
 
             /**
-             * String that represents the formula for the calculation. This formula determines how
-             * the CompoundAggregation value is calculated. The calculation can reference simple
-             * Aggregations or Custom Fields. This field is required when creating or updating a
-             * CompoundAggregation.
+             * Sets [Builder.calculation] to an arbitrary JSON value.
              *
-             * **NOTE:** If a simple Aggregation referenced by a Compound Aggregation has a
-             * **Quantity per unit** defined or a **Rounding** defined, these will not be factored
-             * into the value used by the calculation. For example, if the simple Aggregation
-             * referenced has a base value of 100 and has **Quantity per unit** set at 10, the
-             * Compound Aggregation calculation _will use the base value of 100 not 10_.
+             * You should usually call [Builder.calculation] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun calculation(calculation: JsonField<String>) = apply {
                 this.calculation = calculation
@@ -568,7 +629,13 @@ private constructor(
             /** Descriptive name for the Aggregation. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Descriptive name for the Aggregation. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -584,13 +651,11 @@ private constructor(
                 quantityPerUnit(JsonField.of(quantityPerUnit))
 
             /**
-             * Defines how much of a quantity equates to 1 unit. Used when setting the price per
-             * unit for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of
-             * $0.25 per 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per
-             * unit.
+             * Sets [Builder.quantityPerUnit] to an arbitrary JSON value.
              *
-             * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is
-             * typically set to `"UP"`.
+             * You should usually call [Builder.quantityPerUnit] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun quantityPerUnit(quantityPerUnit: JsonField<Double>) = apply {
                 this.quantityPerUnit = quantityPerUnit
@@ -615,20 +680,11 @@ private constructor(
             fun rounding(rounding: Rounding) = rounding(JsonField.of(rounding))
 
             /**
-             * Specifies how you want to deal with non-integer, fractional number Aggregation
-             * values.
+             * Sets [Builder.rounding] to an arbitrary JSON value.
              *
-             * **NOTES:**
-             * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
-             *   to 4.
-             * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-             *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than
-             *   one, you would typically set Rounding to **UP**. For example, suppose you charge by
-             *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-             *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-             *
-             * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+             * You should usually call [Builder.rounding] with a well-typed [Rounding] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
@@ -639,8 +695,11 @@ private constructor(
             fun unit(unit: String) = unit(JsonField.of(unit))
 
             /**
-             * User defined label for units shown for Bill line items, indicating to your customers
-             * what they are being charged for.
+             * Sets [Builder.unit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
@@ -651,7 +710,11 @@ private constructor(
                 accountingProductId(JsonField.of(accountingProductId))
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun accountingProductId(accountingProductId: JsonField<String>) = apply {
                 this.accountingProductId = accountingProductId
@@ -660,11 +723,24 @@ private constructor(
             /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
+            /**
+             * Sets [Builder.customFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
             }
@@ -686,17 +762,11 @@ private constructor(
                 evaluateNullAggregations(JsonField.of(evaluateNullAggregations))
 
             /**
-             * Boolean True / False flag:
-             * - **TRUE** - set to TRUE if you want to allow null values from the simple
-             *   Aggregations referenced in the Compound Aggregation to be passed in. Simple
-             *   Aggregations based on Meter Target Fields where no usage data is available will
-             *   have null values.
-             * - **FALSE** Default.
+             * Sets [Builder.evaluateNullAggregations] to an arbitrary JSON value.
              *
-             * **Note:** If any of the simple Aggregations you reference in a Compound Aggregation
-             * calculation might have null values, you must set their Default Value to 0. This
-             * ensures that any null values passed into the Compound Aggregation are passed in
-             * correctly with value = 0.
+             * You should usually call [Builder.evaluateNullAggregations] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun evaluateNullAggregations(evaluateNullAggregations: JsonField<Boolean>) = apply {
                 this.evaluateNullAggregations = evaluateNullAggregations
@@ -710,9 +780,11 @@ private constructor(
             fun productId(productId: String) = productId(JsonField.of(productId))
 
             /**
-             * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
+             * Sets [Builder.productId] to an arbitrary JSON value.
              *
-             * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
@@ -727,12 +799,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -847,23 +918,23 @@ private constructor(
         fun calculation(calculation: String) = apply { body.calculation(calculation) }
 
         /**
-         * String that represents the formula for the calculation. This formula determines how the
-         * CompoundAggregation value is calculated. The calculation can reference simple
-         * Aggregations or Custom Fields. This field is required when creating or updating a
-         * CompoundAggregation.
+         * Sets [Builder.calculation] to an arbitrary JSON value.
          *
-         * **NOTE:** If a simple Aggregation referenced by a Compound Aggregation has a **Quantity
-         * per unit** defined or a **Rounding** defined, these will not be factored into the value
-         * used by the calculation. For example, if the simple Aggregation referenced has a base
-         * value of 100 and has **Quantity per unit** set at 10, the Compound Aggregation
-         * calculation _will use the base value of 100 not 10_.
+         * You should usually call [Builder.calculation] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun calculation(calculation: JsonField<String>) = apply { body.calculation(calculation) }
 
         /** Descriptive name for the Aggregation. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** Descriptive name for the Aggregation. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -879,12 +950,11 @@ private constructor(
         }
 
         /**
-         * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit
-         * for billing purposes - if charging for kilobytes per second (KiBy/s) at rate of $0.25 per
-         * 500 KiBy/s, then set quantityPerUnit to 500 and price Plan at $0.25 per unit.
+         * Sets [Builder.quantityPerUnit] to an arbitrary JSON value.
          *
-         * **Note:** If `quantityPerUnit` is set to a value other than one, `rounding` is typically
-         * set to `"UP"`.
+         * You should usually call [Builder.quantityPerUnit] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun quantityPerUnit(quantityPerUnit: JsonField<Double>) = apply {
             body.quantityPerUnit(quantityPerUnit)
@@ -907,18 +977,11 @@ private constructor(
         fun rounding(rounding: Rounding) = apply { body.rounding(rounding) }
 
         /**
-         * Specifies how you want to deal with non-integer, fractional number Aggregation values.
+         * Sets [Builder.rounding] to an arbitrary JSON value.
          *
-         * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
-         *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
-         *   you would typically set Rounding to **UP**. For example, suppose you charge by
-         *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
-         *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
-         *
-         * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
+         * You should usually call [Builder.rounding] with a well-typed [Rounding] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun rounding(rounding: JsonField<Rounding>) = apply { body.rounding(rounding) }
 
@@ -929,8 +992,10 @@ private constructor(
         fun unit(unit: String) = apply { body.unit(unit) }
 
         /**
-         * User defined label for units shown for Bill line items, indicating to your customers what
-         * they are being charged for.
+         * Sets [Builder.unit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
@@ -939,7 +1004,13 @@ private constructor(
             body.accountingProductId(accountingProductId)
         }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountingProductId(accountingProductId: JsonField<String>) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -947,11 +1018,23 @@ private constructor(
         /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Code of the new Aggregation. A unique short code to identify the Aggregation. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
+        /**
+         * Sets [Builder.customFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
         }
@@ -973,16 +1056,11 @@ private constructor(
         }
 
         /**
-         * Boolean True / False flag:
-         * - **TRUE** - set to TRUE if you want to allow null values from the simple Aggregations
-         *   referenced in the Compound Aggregation to be passed in. Simple Aggregations based on
-         *   Meter Target Fields where no usage data is available will have null values.
-         * - **FALSE** Default.
+         * Sets [Builder.evaluateNullAggregations] to an arbitrary JSON value.
          *
-         * **Note:** If any of the simple Aggregations you reference in a Compound Aggregation
-         * calculation might have null values, you must set their Default Value to 0. This ensures
-         * that any null values passed into the Compound Aggregation are passed in correctly with
-         * value = 0.
+         * You should usually call [Builder.evaluateNullAggregations] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun evaluateNullAggregations(evaluateNullAggregations: JsonField<Boolean>) = apply {
             body.evaluateNullAggregations(evaluateNullAggregations)
@@ -996,9 +1074,11 @@ private constructor(
         fun productId(productId: String) = apply { body.productId(productId) }
 
         /**
-         * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
+         * Sets [Builder.productId] to an arbitrary JSON value.
          *
-         * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
@@ -1013,12 +1093,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

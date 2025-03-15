@@ -110,10 +110,7 @@ private constructor(
          */
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
-        /**
-         * The name of the specific Event Type to use as a list filter, for example
-         * `configuration.commitment.created`.
-         */
+        /** Alias for calling [Builder.eventName] with `eventName.orElse(null)`. */
         fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

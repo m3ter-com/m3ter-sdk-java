@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -47,27 +48,46 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
      * The referenced configuration or billing entity for which the desired scheduled Event will
      * trigger.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun entity(): String = entity.getRequired("entity")
 
     /**
      * A DateTime field for which the desired scheduled Event will trigger - this must be a DateTime
      * field on the referenced billing or configuration entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun field(): String = field.getRequired("field")
 
-    /** The name of the custom Scheduled Event Configuration. */
+    /**
+     * The name of the custom Scheduled Event Configuration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = name.getRequired("name")
 
     /**
      * The offset in days from the specified DateTime field on the referenced entity when the
      * scheduled Event will trigger.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun offset(): Long = offset.getRequired("offset")
 
@@ -76,70 +96,119 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** The ID of the user who created this item. */
+    /**
+     * The ID of the user who created this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * The ID of the user who last modified this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The referenced configuration or billing entity for which the desired scheduled Event will
-     * trigger.
+     * Returns the raw JSON value of [entity].
+     *
+     * Unlike [entity], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("entity") @ExcludeMissing fun _entity(): JsonField<String> = entity
 
     /**
-     * A DateTime field for which the desired scheduled Event will trigger - this must be a DateTime
-     * field on the referenced billing or configuration entity.
+     * Returns the raw JSON value of [field].
+     *
+     * Unlike [field], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<String> = field
 
-    /** The name of the custom Scheduled Event Configuration. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
-     * The offset in days from the specified DateTime field on the referenced entity when the
-     * scheduled Event will trigger.
+     * Returns the raw JSON value of [offset].
+     *
+     * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Long> = offset
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The ID of the user who created this item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
@@ -225,7 +294,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -235,8 +309,10 @@ private constructor(
         fun entity(entity: String) = entity(JsonField.of(entity))
 
         /**
-         * The referenced configuration or billing entity for which the desired scheduled Event will
-         * trigger.
+         * Sets [Builder.entity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entity] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun entity(entity: JsonField<String>) = apply { this.entity = entity }
 
@@ -247,15 +323,22 @@ private constructor(
         fun field(field: String) = field(JsonField.of(field))
 
         /**
-         * A DateTime field for which the desired scheduled Event will trigger - this must be a
-         * DateTime field on the referenced billing or configuration entity.
+         * Sets [Builder.field] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.field] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun field(field: JsonField<String>) = apply { this.field = field }
 
         /** The name of the custom Scheduled Event Configuration. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the custom Scheduled Event Configuration. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -265,8 +348,10 @@ private constructor(
         fun offset(offset: Long) = offset(JsonField.of(offset))
 
         /**
-         * The offset in days from the specified DateTime field on the referenced entity when the
-         * scheduled Event will trigger.
+         * Sets [Builder.offset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun offset(offset: JsonField<Long>) = apply { this.offset = offset }
 
@@ -279,30 +364,48 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The ID of the user who created this item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The DateTime when this item was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -310,7 +413,13 @@ private constructor(
         /** The ID of the user who last modified this item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The ID of the user who last modified this item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }

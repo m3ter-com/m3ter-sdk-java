@@ -143,7 +143,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -151,78 +156,162 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** A unique identifier (UUID) for the Aggregation that contributes to this Bill line item. */
+    /**
+     * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun aggregationId(): Optional<String> =
         Optional.ofNullable(aggregationId.getNullable("aggregationId"))
 
     /**
      * Represents the average unit price calculated across all pricing bands or tiers for this line
      * item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun averageUnitPrice(): Optional<Double> =
         Optional.ofNullable(averageUnitPrice.getNullable("averageUnitPrice"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun balanceId(): Optional<String> = Optional.ofNullable(balanceId.getNullable("balanceId"))
 
     /**
      * Array containing the pricing band information, which shows the details for each pricing band
      * or tier.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun bandUsage(): Optional<List<BandUsage>> =
         Optional.ofNullable(bandUsage.getNullable("bandUsage"))
 
-    /** The unique identifier (UUID) for the Bill that includes this line item. */
+    /**
+     * The unique identifier (UUID) for the Bill that includes this line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun billId(): Optional<String> = Optional.ofNullable(billId.getNullable("billId"))
 
-    /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
+    /**
+     * The unique identifier (UUID) of the Commitment _(if this is used)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun commitmentId(): Optional<String> =
         Optional.ofNullable(commitmentId.getNullable("commitmentId"))
 
-    /** A unique identifier (UUID) for the Compound Aggregation, if applicable. */
+    /**
+     * A unique identifier (UUID) for the Compound Aggregation, if applicable.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun compoundAggregationId(): Optional<String> =
         Optional.ofNullable(compoundAggregationId.getNullable("compoundAggregationId"))
 
-    /** The unique identifier (UUID) for the contract associated with this line item. */
+    /**
+     * The unique identifier (UUID) for the contract associated with this line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun contractId(): Optional<String> = Optional.ofNullable(contractId.getNullable("contractId"))
 
-    /** The currency conversion rate _(if used)_ for the line item. */
+    /**
+     * The currency conversion rate _(if used)_ for the line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun conversionRate(): Optional<Double> =
         Optional.ofNullable(conversionRate.getNullable("conversionRate"))
 
-    /** The subtotal amount for this line item after currency conversion, if applicable. */
+    /**
+     * The subtotal amount for this line item after currency conversion, if applicable.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun convertedSubtotal(): Optional<Double> =
         Optional.ofNullable(convertedSubtotal.getNullable("convertedSubtotal"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun counterId(): Optional<String> = Optional.ofNullable(counterId.getNullable("counterId"))
 
-    /** The unique identifier (UUID) for the user who created the Bill line item. */
+    /**
+     * The unique identifier (UUID) for the user who created the Bill line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The unique identifier (UUID) for the type of credit applied to this line item. */
+    /**
+     * The unique identifier (UUID) for the type of credit applied to this line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun creditTypeId(): Optional<String> =
         Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
 
     /**
      * The currency in which the line item is billed, represented as a currency code. For example,
      * USD, GBP, or EUR.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
 
-    /** A detailed description providing context for the line item within the Bill. */
+    /**
+     * A detailed description providing context for the line item within the Bill.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> =
         Optional.ofNullable(description.getNullable("description"))
 
-    /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
+    /**
+     * The date and time _(in ISO 8601 format)_ when the Bill line item was first created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
+    /**
+     * The date and time _(in ISO 8601 format)_ when the Bill line item was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun group(): Optional<Group> = Optional.ofNullable(group.getNullable("group"))
 
     /**
@@ -233,56 +322,111 @@ private constructor(
      * See
      * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
      * for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun jsonUsageGenerated(): Optional<Boolean> =
         Optional.ofNullable(jsonUsageGenerated.getNullable("jsonUsageGenerated"))
 
-    /** The unique identifier (UUID) for the user who last modified this Bill line item. */
+    /**
+     * The unique identifier (UUID) for the user who last modified this Bill line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lineItemType(): Optional<LineItemType> =
         Optional.ofNullable(lineItemType.getNullable("lineItemType"))
 
-    /** The unique identifier (UUID) of the Meter responsible for tracking usage. */
+    /**
+     * The unique identifier (UUID) of the Meter responsible for tracking usage.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun meterId(): Optional<String> = Optional.ofNullable(meterId.getNullable("meterId"))
 
     /**
      * The UUID of the PlanGroup.
      *
      * The unique identifier (UUID) for the PlanGroup, if applicable.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun planGroupId(): Optional<String> =
         Optional.ofNullable(planGroupId.getNullable("planGroupId"))
 
-    /** A unique identifier (UUID) for the billing Plan associated with this line item, */
+    /**
+     * A unique identifier (UUID) for the billing Plan associated with this line item,
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
 
-    /** The unique identifier (UUID) of the Pricing used for this line item, */
+    /**
+     * The unique identifier (UUID) of the Pricing used for this line item,
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun pricingId(): Optional<String> = Optional.ofNullable(pricingId.getNullable("pricingId"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun productCode(): Optional<String> =
         Optional.ofNullable(productCode.getNullable("productCode"))
 
-    /** The unique identifier (UUID) for the associated Product. */
+    /**
+     * The unique identifier (UUID) for the associated Product.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
-    /** The name of the Product associated with this line item. */
+    /**
+     * The name of the Product associated with this line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun productName(): Optional<String> =
         Optional.ofNullable(productName.getNullable("productName"))
 
-    /** The amount of the product or service used in this line item. */
+    /**
+     * The amount of the product or service used in this line item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun quantity(): Optional<Double> = Optional.ofNullable(quantity.getNullable("quantity"))
 
     /**
      * The UUID of the reason used for the line item.
      *
      * A unique identifier (UUID) for the reason or justification for this line item, if applicable.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun reasonId(): Optional<String> = Optional.ofNullable(reasonId.getNullable("reasonId"))
 
     /**
      * A unique identifier (UUID) for a Bill that this line item may be related to or derived from.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun referencedBillId(): Optional<String> =
         Optional.ofNullable(referencedBillId.getNullable("referencedBillId"))
@@ -290,6 +434,9 @@ private constructor(
     /**
      * A unique identifier (UUID) for another line item that this line item may be related to or
      * derived from.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun referencedLineItemId(): Optional<String> =
         Optional.ofNullable(referencedLineItemId.getNullable("referencedLineItemId"))
@@ -297,28 +444,54 @@ private constructor(
     /**
      * Specifies the segment name or identifier when segmented Aggregation is used. This is relevant
      * for more complex billing structures.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun segment(): Optional<Segment> = Optional.ofNullable(segment.getNullable("segment"))
 
-    /** The number used for sequential invoices. */
+    /**
+     * The number used for sequential invoices.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun sequenceNumber(): Optional<Long> =
         Optional.ofNullable(sequenceNumber.getNullable("sequenceNumber"))
 
-    /** The _(exclusive)_ end date for the service period in ISO 68601 format. */
+    /**
+     * The _(exclusive)_ end date for the service period in ISO 68601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun servicePeriodEndDate(): Optional<OffsetDateTime> =
         Optional.ofNullable(servicePeriodEndDate.getNullable("servicePeriodEndDate"))
 
-    /** The _(inclusive)_ start date for the service period in ISO 8601 format. */
+    /**
+     * The _(inclusive)_ start date for the service period in ISO 8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun servicePeriodStartDate(): Optional<OffsetDateTime> =
         Optional.ofNullable(servicePeriodStartDate.getNullable("servicePeriodStartDate"))
 
     /**
      * The subtotal amount when not currency converted _(in the cases where currency conversion is
      * required)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun subtotal(): Optional<Double> = Optional.ofNullable(subtotal.getNullable("subtotal"))
 
-    /** Specifies the unit type. For example: **MB**, **GB**, **api_calls**, and so on. */
+    /**
+     * Specifies the unit type. For example: **MB**, **GB**, **api_calls**, and so on.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
     /**
@@ -326,206 +499,340 @@ private constructor(
      * `unit` field. For example: 400 api_calls.
      *
      * In this example, the unit type of **api_calls** is read from the `unit` field.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun units(): Optional<Double> = Optional.ofNullable(units.getNullable("units"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** A unique identifier (UUID) for the Aggregation that contributes to this Bill line item. */
+    /**
+     * Returns the raw JSON value of [aggregationId].
+     *
+     * Unlike [aggregationId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("aggregationId")
     @ExcludeMissing
     fun _aggregationId(): JsonField<String> = aggregationId
 
     /**
-     * Represents the average unit price calculated across all pricing bands or tiers for this line
-     * item.
+     * Returns the raw JSON value of [averageUnitPrice].
+     *
+     * Unlike [averageUnitPrice], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("averageUnitPrice")
     @ExcludeMissing
     fun _averageUnitPrice(): JsonField<Double> = averageUnitPrice
 
+    /**
+     * Returns the raw JSON value of [balanceId].
+     *
+     * Unlike [balanceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("balanceId") @ExcludeMissing fun _balanceId(): JsonField<String> = balanceId
 
     /**
-     * Array containing the pricing band information, which shows the details for each pricing band
-     * or tier.
+     * Returns the raw JSON value of [bandUsage].
+     *
+     * Unlike [bandUsage], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("bandUsage")
     @ExcludeMissing
     fun _bandUsage(): JsonField<List<BandUsage>> = bandUsage
 
-    /** The unique identifier (UUID) for the Bill that includes this line item. */
+    /**
+     * Returns the raw JSON value of [billId].
+     *
+     * Unlike [billId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("billId") @ExcludeMissing fun _billId(): JsonField<String> = billId
 
-    /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
+    /**
+     * Returns the raw JSON value of [commitmentId].
+     *
+     * Unlike [commitmentId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("commitmentId")
     @ExcludeMissing
     fun _commitmentId(): JsonField<String> = commitmentId
 
-    /** A unique identifier (UUID) for the Compound Aggregation, if applicable. */
+    /**
+     * Returns the raw JSON value of [compoundAggregationId].
+     *
+     * Unlike [compoundAggregationId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("compoundAggregationId")
     @ExcludeMissing
     fun _compoundAggregationId(): JsonField<String> = compoundAggregationId
 
-    /** The unique identifier (UUID) for the contract associated with this line item. */
+    /**
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("contractId") @ExcludeMissing fun _contractId(): JsonField<String> = contractId
 
-    /** The currency conversion rate _(if used)_ for the line item. */
+    /**
+     * Returns the raw JSON value of [conversionRate].
+     *
+     * Unlike [conversionRate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("conversionRate")
     @ExcludeMissing
     fun _conversionRate(): JsonField<Double> = conversionRate
 
-    /** The subtotal amount for this line item after currency conversion, if applicable. */
+    /**
+     * Returns the raw JSON value of [convertedSubtotal].
+     *
+     * Unlike [convertedSubtotal], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("convertedSubtotal")
     @ExcludeMissing
     fun _convertedSubtotal(): JsonField<Double> = convertedSubtotal
 
+    /**
+     * Returns the raw JSON value of [counterId].
+     *
+     * Unlike [counterId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("counterId") @ExcludeMissing fun _counterId(): JsonField<String> = counterId
 
-    /** The unique identifier (UUID) for the user who created the Bill line item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The unique identifier (UUID) for the type of credit applied to this line item. */
+    /**
+     * Returns the raw JSON value of [creditTypeId].
+     *
+     * Unlike [creditTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("creditTypeId")
     @ExcludeMissing
     fun _creditTypeId(): JsonField<String> = creditTypeId
 
     /**
-     * The currency in which the line item is billed, represented as a currency code. For example,
-     * USD, GBP, or EUR.
+     * Returns the raw JSON value of [currency].
+     *
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-    /** A detailed description providing context for the line item within the Bill. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
-    /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
+    /**
+     * Returns the raw JSON value of [group].
+     *
+     * Unlike [group], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("group") @ExcludeMissing fun _group(): JsonField<Group> = group
 
     /**
-     * Boolean flag indicating whether the Bill line item has associated statement usage in JSON
-     * format. When a Bill statement is generated, usage line items have their usage stored in JSON
-     * format.
+     * Returns the raw JSON value of [jsonUsageGenerated].
      *
-     * See
-     * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-     * for more information.
+     * Unlike [jsonUsageGenerated], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("jsonUsageGenerated")
     @ExcludeMissing
     fun _jsonUsageGenerated(): JsonField<Boolean> = jsonUsageGenerated
 
-    /** The unique identifier (UUID) for the user who last modified this Bill line item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    /**
+     * Returns the raw JSON value of [lineItemType].
+     *
+     * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lineItemType")
     @ExcludeMissing
     fun _lineItemType(): JsonField<LineItemType> = lineItemType
 
-    /** The unique identifier (UUID) of the Meter responsible for tracking usage. */
+    /**
+     * Returns the raw JSON value of [meterId].
+     *
+     * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
     /**
-     * The UUID of the PlanGroup.
+     * Returns the raw JSON value of [planGroupId].
      *
-     * The unique identifier (UUID) for the PlanGroup, if applicable.
+     * Unlike [planGroupId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("planGroupId") @ExcludeMissing fun _planGroupId(): JsonField<String> = planGroupId
 
-    /** A unique identifier (UUID) for the billing Plan associated with this line item, */
+    /**
+     * Returns the raw JSON value of [planId].
+     *
+     * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("planId") @ExcludeMissing fun _planId(): JsonField<String> = planId
 
-    /** The unique identifier (UUID) of the Pricing used for this line item, */
+    /**
+     * Returns the raw JSON value of [pricingId].
+     *
+     * Unlike [pricingId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("pricingId") @ExcludeMissing fun _pricingId(): JsonField<String> = pricingId
 
+    /**
+     * Returns the raw JSON value of [productCode].
+     *
+     * Unlike [productCode], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("productCode") @ExcludeMissing fun _productCode(): JsonField<String> = productCode
 
-    /** The unique identifier (UUID) for the associated Product. */
+    /**
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
-    /** The name of the Product associated with this line item. */
+    /**
+     * Returns the raw JSON value of [productName].
+     *
+     * Unlike [productName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("productName") @ExcludeMissing fun _productName(): JsonField<String> = productName
 
-    /** The amount of the product or service used in this line item. */
+    /**
+     * Returns the raw JSON value of [quantity].
+     *
+     * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     /**
-     * The UUID of the reason used for the line item.
+     * Returns the raw JSON value of [reasonId].
      *
-     * A unique identifier (UUID) for the reason or justification for this line item, if applicable.
+     * Unlike [reasonId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("reasonId") @ExcludeMissing fun _reasonId(): JsonField<String> = reasonId
 
     /**
-     * A unique identifier (UUID) for a Bill that this line item may be related to or derived from.
+     * Returns the raw JSON value of [referencedBillId].
+     *
+     * Unlike [referencedBillId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("referencedBillId")
     @ExcludeMissing
     fun _referencedBillId(): JsonField<String> = referencedBillId
 
     /**
-     * A unique identifier (UUID) for another line item that this line item may be related to or
-     * derived from.
+     * Returns the raw JSON value of [referencedLineItemId].
+     *
+     * Unlike [referencedLineItemId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("referencedLineItemId")
     @ExcludeMissing
     fun _referencedLineItemId(): JsonField<String> = referencedLineItemId
 
     /**
-     * Specifies the segment name or identifier when segmented Aggregation is used. This is relevant
-     * for more complex billing structures.
+     * Returns the raw JSON value of [segment].
+     *
+     * Unlike [segment], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("segment") @ExcludeMissing fun _segment(): JsonField<Segment> = segment
 
-    /** The number used for sequential invoices. */
+    /**
+     * Returns the raw JSON value of [sequenceNumber].
+     *
+     * Unlike [sequenceNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("sequenceNumber")
     @ExcludeMissing
     fun _sequenceNumber(): JsonField<Long> = sequenceNumber
 
-    /** The _(exclusive)_ end date for the service period in ISO 68601 format. */
+    /**
+     * Returns the raw JSON value of [servicePeriodEndDate].
+     *
+     * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("servicePeriodEndDate")
     @ExcludeMissing
     fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
 
-    /** The _(inclusive)_ start date for the service period in ISO 8601 format. */
+    /**
+     * Returns the raw JSON value of [servicePeriodStartDate].
+     *
+     * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("servicePeriodStartDate")
     @ExcludeMissing
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
     /**
-     * The subtotal amount when not currency converted _(in the cases where currency conversion is
-     * required)_.
+     * Returns the raw JSON value of [subtotal].
+     *
+     * Unlike [subtotal], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<Double> = subtotal
 
-    /** Specifies the unit type. For example: **MB**, **GB**, **api_calls**, and so on. */
+    /**
+     * Returns the raw JSON value of [unit].
+     *
+     * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
     /**
-     * The number of units rated in the line item, each of which is of the type specified in the
-     * `unit` field. For example: 400 api_calls.
+     * Returns the raw JSON value of [units].
      *
-     * In this example, the unit type of **api_calls** is read from the `unit` field.
+     * Unlike [units], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("units") @ExcludeMissing fun _units(): JsonField<Double> = units
 
@@ -695,7 +1002,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -707,10 +1019,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -720,7 +1032,11 @@ private constructor(
         fun aggregationId(aggregationId: String) = aggregationId(JsonField.of(aggregationId))
 
         /**
-         * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
+         * Sets [Builder.aggregationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun aggregationId(aggregationId: JsonField<String>) = apply {
             this.aggregationId = aggregationId
@@ -734,8 +1050,11 @@ private constructor(
             averageUnitPrice(JsonField.of(averageUnitPrice))
 
         /**
-         * Represents the average unit price calculated across all pricing bands or tiers for this
-         * line item.
+         * Sets [Builder.averageUnitPrice] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.averageUnitPrice] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun averageUnitPrice(averageUnitPrice: JsonField<Double>) = apply {
             this.averageUnitPrice = averageUnitPrice
@@ -743,6 +1062,13 @@ private constructor(
 
         fun balanceId(balanceId: String) = balanceId(JsonField.of(balanceId))
 
+        /**
+         * Sets [Builder.balanceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balanceId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun balanceId(balanceId: JsonField<String>) = apply { this.balanceId = balanceId }
 
         /**
@@ -752,16 +1078,20 @@ private constructor(
         fun bandUsage(bandUsage: List<BandUsage>) = bandUsage(JsonField.of(bandUsage))
 
         /**
-         * Array containing the pricing band information, which shows the details for each pricing
-         * band or tier.
+         * Sets [Builder.bandUsage] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.bandUsage] with a well-typed `List<BandUsage>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun bandUsage(bandUsage: JsonField<List<BandUsage>>) = apply {
             this.bandUsage = bandUsage.map { it.toMutableList() }
         }
 
         /**
-         * Array containing the pricing band information, which shows the details for each pricing
-         * band or tier.
+         * Adds a single [BandUsage] to [Builder.bandUsage].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addBandUsage(bandUsage: BandUsage) = apply {
             this.bandUsage =
@@ -773,13 +1103,24 @@ private constructor(
         /** The unique identifier (UUID) for the Bill that includes this line item. */
         fun billId(billId: String) = billId(JsonField.of(billId))
 
-        /** The unique identifier (UUID) for the Bill that includes this line item. */
+        /**
+         * Sets [Builder.billId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun billId(billId: JsonField<String>) = apply { this.billId = billId }
 
         /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
         fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
 
-        /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
+        /**
+         * Sets [Builder.commitmentId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.commitmentId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun commitmentId(commitmentId: JsonField<String>) = apply {
             this.commitmentId = commitmentId
         }
@@ -788,7 +1129,13 @@ private constructor(
         fun compoundAggregationId(compoundAggregationId: String) =
             compoundAggregationId(JsonField.of(compoundAggregationId))
 
-        /** A unique identifier (UUID) for the Compound Aggregation, if applicable. */
+        /**
+         * Sets [Builder.compoundAggregationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.compoundAggregationId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun compoundAggregationId(compoundAggregationId: JsonField<String>) = apply {
             this.compoundAggregationId = compoundAggregationId
         }
@@ -796,13 +1143,25 @@ private constructor(
         /** The unique identifier (UUID) for the contract associated with this line item. */
         fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
-        /** The unique identifier (UUID) for the contract associated with this line item. */
+        /**
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
         /** The currency conversion rate _(if used)_ for the line item. */
         fun conversionRate(conversionRate: Double) = conversionRate(JsonField.of(conversionRate))
 
-        /** The currency conversion rate _(if used)_ for the line item. */
+        /**
+         * Sets [Builder.conversionRate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.conversionRate] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun conversionRate(conversionRate: JsonField<Double>) = apply {
             this.conversionRate = conversionRate
         }
@@ -811,25 +1170,50 @@ private constructor(
         fun convertedSubtotal(convertedSubtotal: Double) =
             convertedSubtotal(JsonField.of(convertedSubtotal))
 
-        /** The subtotal amount for this line item after currency conversion, if applicable. */
+        /**
+         * Sets [Builder.convertedSubtotal] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.convertedSubtotal] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun convertedSubtotal(convertedSubtotal: JsonField<Double>) = apply {
             this.convertedSubtotal = convertedSubtotal
         }
 
         fun counterId(counterId: String) = counterId(JsonField.of(counterId))
 
+        /**
+         * Sets [Builder.counterId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun counterId(counterId: JsonField<String>) = apply { this.counterId = counterId }
 
         /** The unique identifier (UUID) for the user who created the Bill line item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The unique identifier (UUID) for the user who created the Bill line item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The unique identifier (UUID) for the type of credit applied to this line item. */
         fun creditTypeId(creditTypeId: String) = creditTypeId(JsonField.of(creditTypeId))
 
-        /** The unique identifier (UUID) for the type of credit applied to this line item. */
+        /**
+         * Sets [Builder.creditTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.creditTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun creditTypeId(creditTypeId: JsonField<String>) = apply {
             this.creditTypeId = creditTypeId
         }
@@ -841,34 +1225,60 @@ private constructor(
         fun currency(currency: String) = currency(JsonField.of(currency))
 
         /**
-         * The currency in which the line item is billed, represented as a currency code. For
-         * example, USD, GBP, or EUR.
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /** A detailed description providing context for the line item within the Bill. */
         fun description(description: String) = description(JsonField.of(description))
 
-        /** A detailed description providing context for the line item within the Bill. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
         /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
 
         fun group(group: Group) = group(JsonField.of(group))
 
+        /**
+         * Sets [Builder.group] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.group] with a well-typed [Group] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun group(group: JsonField<Group>) = apply { this.group = group }
 
         /**
@@ -884,13 +1294,11 @@ private constructor(
             jsonUsageGenerated(JsonField.of(jsonUsageGenerated))
 
         /**
-         * Boolean flag indicating whether the Bill line item has associated statement usage in JSON
-         * format. When a Bill statement is generated, usage line items have their usage stored in
-         * JSON format.
+         * Sets [Builder.jsonUsageGenerated] to an arbitrary JSON value.
          *
-         * See
-         * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-         * for more information.
+         * You should usually call [Builder.jsonUsageGenerated] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun jsonUsageGenerated(jsonUsageGenerated: JsonField<Boolean>) = apply {
             this.jsonUsageGenerated = jsonUsageGenerated
@@ -899,13 +1307,26 @@ private constructor(
         /** The unique identifier (UUID) for the user who last modified this Bill line item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) for the user who last modified this Bill line item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
 
         fun lineItemType(lineItemType: LineItemType) = lineItemType(JsonField.of(lineItemType))
 
+        /**
+         * Sets [Builder.lineItemType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
             this.lineItemType = lineItemType
         }
@@ -913,7 +1334,12 @@ private constructor(
         /** The unique identifier (UUID) of the Meter responsible for tracking usage. */
         fun meterId(meterId: String) = meterId(JsonField.of(meterId))
 
-        /** The unique identifier (UUID) of the Meter responsible for tracking usage. */
+        /**
+         * Sets [Builder.meterId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.meterId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
         /**
@@ -924,44 +1350,81 @@ private constructor(
         fun planGroupId(planGroupId: String) = planGroupId(JsonField.of(planGroupId))
 
         /**
-         * The UUID of the PlanGroup.
+         * Sets [Builder.planGroupId] to an arbitrary JSON value.
          *
-         * The unique identifier (UUID) for the PlanGroup, if applicable.
+         * You should usually call [Builder.planGroupId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun planGroupId(planGroupId: JsonField<String>) = apply { this.planGroupId = planGroupId }
 
         /** A unique identifier (UUID) for the billing Plan associated with this line item, */
         fun planId(planId: String) = planId(JsonField.of(planId))
 
-        /** A unique identifier (UUID) for the billing Plan associated with this line item, */
+        /**
+         * Sets [Builder.planId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
         /** The unique identifier (UUID) of the Pricing used for this line item, */
         fun pricingId(pricingId: String) = pricingId(JsonField.of(pricingId))
 
-        /** The unique identifier (UUID) of the Pricing used for this line item, */
+        /**
+         * Sets [Builder.pricingId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.pricingId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun pricingId(pricingId: JsonField<String>) = apply { this.pricingId = pricingId }
 
         fun productCode(productCode: String) = productCode(JsonField.of(productCode))
 
+        /**
+         * Sets [Builder.productCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productCode] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun productCode(productCode: JsonField<String>) = apply { this.productCode = productCode }
 
         /** The unique identifier (UUID) for the associated Product. */
         fun productId(productId: String) = productId(JsonField.of(productId))
 
-        /** The unique identifier (UUID) for the associated Product. */
+        /**
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
         /** The name of the Product associated with this line item. */
         fun productName(productName: String) = productName(JsonField.of(productName))
 
-        /** The name of the Product associated with this line item. */
+        /**
+         * Sets [Builder.productName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun productName(productName: JsonField<String>) = apply { this.productName = productName }
 
         /** The amount of the product or service used in this line item. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
-        /** The amount of the product or service used in this line item. */
+        /**
+         * Sets [Builder.quantity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.quantity] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         /**
@@ -973,10 +1436,10 @@ private constructor(
         fun reasonId(reasonId: String) = reasonId(JsonField.of(reasonId))
 
         /**
-         * The UUID of the reason used for the line item.
+         * Sets [Builder.reasonId] to an arbitrary JSON value.
          *
-         * A unique identifier (UUID) for the reason or justification for this line item, if
-         * applicable.
+         * You should usually call [Builder.reasonId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun reasonId(reasonId: JsonField<String>) = apply { this.reasonId = reasonId }
 
@@ -988,8 +1451,11 @@ private constructor(
             referencedBillId(JsonField.of(referencedBillId))
 
         /**
-         * A unique identifier (UUID) for a Bill that this line item may be related to or derived
-         * from.
+         * Sets [Builder.referencedBillId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedBillId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun referencedBillId(referencedBillId: JsonField<String>) = apply {
             this.referencedBillId = referencedBillId
@@ -1003,8 +1469,11 @@ private constructor(
             referencedLineItemId(JsonField.of(referencedLineItemId))
 
         /**
-         * A unique identifier (UUID) for another line item that this line item may be related to or
-         * derived from.
+         * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedLineItemId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
             this.referencedLineItemId = referencedLineItemId
@@ -1017,15 +1486,23 @@ private constructor(
         fun segment(segment: Segment) = segment(JsonField.of(segment))
 
         /**
-         * Specifies the segment name or identifier when segmented Aggregation is used. This is
-         * relevant for more complex billing structures.
+         * Sets [Builder.segment] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.segment] with a well-typed [Segment] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun segment(segment: JsonField<Segment>) = apply { this.segment = segment }
 
         /** The number used for sequential invoices. */
         fun sequenceNumber(sequenceNumber: Long) = sequenceNumber(JsonField.of(sequenceNumber))
 
-        /** The number used for sequential invoices. */
+        /**
+         * Sets [Builder.sequenceNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sequenceNumber] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun sequenceNumber(sequenceNumber: JsonField<Long>) = apply {
             this.sequenceNumber = sequenceNumber
         }
@@ -1034,7 +1511,13 @@ private constructor(
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
             servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
-        /** The _(exclusive)_ end date for the service period in ISO 68601 format. */
+        /**
+         * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodEndDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
             this.servicePeriodEndDate = servicePeriodEndDate
         }
@@ -1043,7 +1526,13 @@ private constructor(
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
             servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
-        /** The _(inclusive)_ start date for the service period in ISO 8601 format. */
+        /**
+         * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
             this.servicePeriodStartDate = servicePeriodStartDate
         }
@@ -1055,15 +1544,22 @@ private constructor(
         fun subtotal(subtotal: Double) = subtotal(JsonField.of(subtotal))
 
         /**
-         * The subtotal amount when not currency converted _(in the cases where currency conversion
-         * is required)_.
+         * Sets [Builder.subtotal] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.subtotal] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun subtotal(subtotal: JsonField<Double>) = apply { this.subtotal = subtotal }
 
         /** Specifies the unit type. For example: **MB**, **GB**, **api_calls**, and so on. */
         fun unit(unit: String) = unit(JsonField.of(unit))
 
-        /** Specifies the unit type. For example: **MB**, **GB**, **api_calls**, and so on. */
+        /**
+         * Sets [Builder.unit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
         /**
@@ -1075,10 +1571,10 @@ private constructor(
         fun units(units: Double) = units(JsonField.of(units))
 
         /**
-         * The number of units rated in the line item, each of which is of the type specified in the
-         * `unit` field. For example: 400 api_calls.
+         * Sets [Builder.units] to an arbitrary JSON value.
          *
-         * In this example, the unit type of **api_calls** is read from the `unit` field.
+         * You should usually call [Builder.units] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun units(units: JsonField<Double>) = apply { this.units = units }
 
@@ -1187,83 +1683,164 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Usage amount within the band. */
+        /**
+         * Usage amount within the band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun bandQuantity(): Optional<Double> =
             Optional.ofNullable(bandQuantity.getNullable("bandQuantity"))
 
-        /** Subtotal amount for the band. */
+        /**
+         * Subtotal amount for the band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun bandSubtotal(): Optional<Double> =
             Optional.ofNullable(bandSubtotal.getNullable("bandSubtotal"))
 
-        /** The number of units used within the band. */
+        /**
+         * The number of units used within the band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun bandUnits(): Optional<Double> = Optional.ofNullable(bandUnits.getNullable("bandUnits"))
 
-        /** The UUID of the credit type. */
+        /**
+         * The UUID of the credit type.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun creditTypeId(): Optional<String> =
             Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
 
         /**
          * Fixed price is a charge entered for certain pricing types such as Stairstep, Custom
          * Tiered, and Custom Volume. It is a set price and not dependent on usage.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun fixedPrice(): Optional<Double> =
             Optional.ofNullable(fixedPrice.getNullable("fixedPrice"))
 
-        /** The lower limit _(start)_ of the pricing band. */
+        /**
+         * The lower limit _(start)_ of the pricing band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun lowerLimit(): Optional<Double> =
             Optional.ofNullable(lowerLimit.getNullable("lowerLimit"))
 
-        /** The UUID for the pricing band. */
+        /**
+         * The UUID for the pricing band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun pricingBandId(): Optional<String> =
             Optional.ofNullable(pricingBandId.getNullable("pricingBandId"))
 
-        /** The price per unit in the band. */
+        /**
+         * The price per unit in the band.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun unitPrice(): Optional<Double> = Optional.ofNullable(unitPrice.getNullable("unitPrice"))
 
-        /** The subtotal of the unit usage. */
+        /**
+         * The subtotal of the unit usage.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun unitSubtotal(): Optional<Double> =
             Optional.ofNullable(unitSubtotal.getNullable("unitSubtotal"))
 
-        /** Usage amount within the band. */
+        /**
+         * Returns the raw JSON value of [bandQuantity].
+         *
+         * Unlike [bandQuantity], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("bandQuantity")
         @ExcludeMissing
         fun _bandQuantity(): JsonField<Double> = bandQuantity
 
-        /** Subtotal amount for the band. */
+        /**
+         * Returns the raw JSON value of [bandSubtotal].
+         *
+         * Unlike [bandSubtotal], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("bandSubtotal")
         @ExcludeMissing
         fun _bandSubtotal(): JsonField<Double> = bandSubtotal
 
-        /** The number of units used within the band. */
+        /**
+         * Returns the raw JSON value of [bandUnits].
+         *
+         * Unlike [bandUnits], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("bandUnits") @ExcludeMissing fun _bandUnits(): JsonField<Double> = bandUnits
 
-        /** The UUID of the credit type. */
+        /**
+         * Returns the raw JSON value of [creditTypeId].
+         *
+         * Unlike [creditTypeId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("creditTypeId")
         @ExcludeMissing
         fun _creditTypeId(): JsonField<String> = creditTypeId
 
         /**
-         * Fixed price is a charge entered for certain pricing types such as Stairstep, Custom
-         * Tiered, and Custom Volume. It is a set price and not dependent on usage.
+         * Returns the raw JSON value of [fixedPrice].
+         *
+         * Unlike [fixedPrice], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("fixedPrice")
         @ExcludeMissing
         fun _fixedPrice(): JsonField<Double> = fixedPrice
 
-        /** The lower limit _(start)_ of the pricing band. */
+        /**
+         * Returns the raw JSON value of [lowerLimit].
+         *
+         * Unlike [lowerLimit], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("lowerLimit")
         @ExcludeMissing
         fun _lowerLimit(): JsonField<Double> = lowerLimit
 
-        /** The UUID for the pricing band. */
+        /**
+         * Returns the raw JSON value of [pricingBandId].
+         *
+         * Unlike [pricingBandId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("pricingBandId")
         @ExcludeMissing
         fun _pricingBandId(): JsonField<String> = pricingBandId
 
-        /** The price per unit in the band. */
+        /**
+         * Returns the raw JSON value of [unitPrice].
+         *
+         * Unlike [unitPrice], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("unitPrice") @ExcludeMissing fun _unitPrice(): JsonField<Double> = unitPrice
 
-        /** The subtotal of the unit usage. */
+        /**
+         * Returns the raw JSON value of [unitSubtotal].
+         *
+         * Unlike [unitSubtotal], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("unitSubtotal")
         @ExcludeMissing
         fun _unitSubtotal(): JsonField<Double> = unitSubtotal
@@ -1330,7 +1907,13 @@ private constructor(
             /** Usage amount within the band. */
             fun bandQuantity(bandQuantity: Double) = bandQuantity(JsonField.of(bandQuantity))
 
-            /** Usage amount within the band. */
+            /**
+             * Sets [Builder.bandQuantity] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.bandQuantity] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun bandQuantity(bandQuantity: JsonField<Double>) = apply {
                 this.bandQuantity = bandQuantity
             }
@@ -1338,7 +1921,13 @@ private constructor(
             /** Subtotal amount for the band. */
             fun bandSubtotal(bandSubtotal: Double) = bandSubtotal(JsonField.of(bandSubtotal))
 
-            /** Subtotal amount for the band. */
+            /**
+             * Sets [Builder.bandSubtotal] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.bandSubtotal] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun bandSubtotal(bandSubtotal: JsonField<Double>) = apply {
                 this.bandSubtotal = bandSubtotal
             }
@@ -1346,13 +1935,25 @@ private constructor(
             /** The number of units used within the band. */
             fun bandUnits(bandUnits: Double) = bandUnits(JsonField.of(bandUnits))
 
-            /** The number of units used within the band. */
+            /**
+             * Sets [Builder.bandUnits] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.bandUnits] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun bandUnits(bandUnits: JsonField<Double>) = apply { this.bandUnits = bandUnits }
 
             /** The UUID of the credit type. */
             fun creditTypeId(creditTypeId: String) = creditTypeId(JsonField.of(creditTypeId))
 
-            /** The UUID of the credit type. */
+            /**
+             * Sets [Builder.creditTypeId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditTypeId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditTypeId(creditTypeId: JsonField<String>) = apply {
                 this.creditTypeId = creditTypeId
             }
@@ -1364,21 +1965,36 @@ private constructor(
             fun fixedPrice(fixedPrice: Double) = fixedPrice(JsonField.of(fixedPrice))
 
             /**
-             * Fixed price is a charge entered for certain pricing types such as Stairstep, Custom
-             * Tiered, and Custom Volume. It is a set price and not dependent on usage.
+             * Sets [Builder.fixedPrice] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fixedPrice] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun fixedPrice(fixedPrice: JsonField<Double>) = apply { this.fixedPrice = fixedPrice }
 
             /** The lower limit _(start)_ of the pricing band. */
             fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
-            /** The lower limit _(start)_ of the pricing band. */
+            /**
+             * Sets [Builder.lowerLimit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lowerLimit] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun lowerLimit(lowerLimit: JsonField<Double>) = apply { this.lowerLimit = lowerLimit }
 
             /** The UUID for the pricing band. */
             fun pricingBandId(pricingBandId: String) = pricingBandId(JsonField.of(pricingBandId))
 
-            /** The UUID for the pricing band. */
+            /**
+             * Sets [Builder.pricingBandId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pricingBandId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun pricingBandId(pricingBandId: JsonField<String>) = apply {
                 this.pricingBandId = pricingBandId
             }
@@ -1386,13 +2002,25 @@ private constructor(
             /** The price per unit in the band. */
             fun unitPrice(unitPrice: Double) = unitPrice(JsonField.of(unitPrice))
 
-            /** The price per unit in the band. */
+            /**
+             * Sets [Builder.unitPrice] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitPrice] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun unitPrice(unitPrice: JsonField<Double>) = apply { this.unitPrice = unitPrice }
 
             /** The subtotal of the unit usage. */
             fun unitSubtotal(unitSubtotal: Double) = unitSubtotal(JsonField.of(unitSubtotal))
 
-            /** The subtotal of the unit usage. */
+            /**
+             * Sets [Builder.unitSubtotal] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitSubtotal] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun unitSubtotal(unitSubtotal: JsonField<Double>) = apply {
                 this.unitSubtotal = unitSubtotal
             }

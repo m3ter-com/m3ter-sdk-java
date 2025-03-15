@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -31,12 +32,16 @@ private constructor(
     /**
      * An array containing a list of all Event Types for which Notification rules can be configured.
      * Each Event Type is represented by a string.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun events(): Optional<List<String>> = Optional.ofNullable(events.getNullable("events"))
 
     /**
-     * An array containing a list of all Event Types for which Notification rules can be configured.
-     * Each Event Type is represented by a string.
+     * Returns the raw JSON value of [events].
+     *
+     * Unlike [events], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<List<String>> = events
 
@@ -82,16 +87,20 @@ private constructor(
         fun events(events: List<String>) = events(JsonField.of(events))
 
         /**
-         * An array containing a list of all Event Types for which Notification rules can be
-         * configured. Each Event Type is represented by a string.
+         * Sets [Builder.events] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.events] with a well-typed `List<String>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun events(events: JsonField<List<String>>) = apply {
             this.events = events.map { it.toMutableList() }
         }
 
         /**
-         * An array containing a list of all Event Types for which Notification rules can be
-         * configured. Each Event Type is represented by a string.
+         * Adds a single [String] to [events].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addEvent(event: String) = apply {
             events =

@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -64,7 +65,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -72,126 +78,245 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** CustomFields added to Account entities. */
+    /**
+     * CustomFields added to Account entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
 
-    /** CustomFields added to accountPlan entities. */
+    /**
+     * CustomFields added to accountPlan entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountPlan(): Optional<AccountPlan> =
         Optional.ofNullable(accountPlan.getNullable("accountPlan"))
 
-    /** CustomFields added to simple Aggregation entities. */
+    /**
+     * CustomFields added to simple Aggregation entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun aggregation(): Optional<Aggregation> =
         Optional.ofNullable(aggregation.getNullable("aggregation"))
 
-    /** CustomFields added to Compound Aggregation entities. */
+    /**
+     * CustomFields added to Compound Aggregation entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun compoundAggregation(): Optional<CompoundAggregation> =
         Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
 
-    /** The id of the user who created this custom field. */
+    /**
+     * The id of the user who created this custom field.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when the Organization was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
     /**
      * The DateTime when a custom field was last modified - created, modified, or deleted - for the
      * Organization _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The id of the user who last modified this custom field. */
+    /**
+     * The id of the user who last modified this custom field.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** CustomFields added to Meter entities. */
+    /**
+     * CustomFields added to Meter entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
 
-    /** CustomFields added to the Organization. */
+    /**
+     * CustomFields added to the Organization.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun organization(): Optional<Organization> =
         Optional.ofNullable(organization.getNullable("organization"))
 
-    /** CustomFields added to Plan entities. */
+    /**
+     * CustomFields added to Plan entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
 
-    /** CustomFields added to planTemplate entities. */
+    /**
+     * CustomFields added to planTemplate entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planTemplate(): Optional<PlanTemplate> =
         Optional.ofNullable(planTemplate.getNullable("planTemplate"))
 
-    /** CustomFields added to Product entities. */
+    /**
+     * CustomFields added to Product entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** CustomFields added to Account entities. */
+    /**
+     * Returns the raw JSON value of [account].
+     *
+     * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("account") @ExcludeMissing fun _account(): JsonField<Account> = account
 
-    /** CustomFields added to accountPlan entities. */
+    /**
+     * Returns the raw JSON value of [accountPlan].
+     *
+     * Unlike [accountPlan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("accountPlan")
     @ExcludeMissing
     fun _accountPlan(): JsonField<AccountPlan> = accountPlan
 
-    /** CustomFields added to simple Aggregation entities. */
+    /**
+     * Returns the raw JSON value of [aggregation].
+     *
+     * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("aggregation")
     @ExcludeMissing
     fun _aggregation(): JsonField<Aggregation> = aggregation
 
-    /** CustomFields added to Compound Aggregation entities. */
+    /**
+     * Returns the raw JSON value of [compoundAggregation].
+     *
+     * Unlike [compoundAggregation], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("compoundAggregation")
     @ExcludeMissing
     fun _compoundAggregation(): JsonField<CompoundAggregation> = compoundAggregation
 
-    /** The id of the user who created this custom field. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
     /**
-     * The DateTime when a custom field was last modified - created, modified, or deleted - for the
-     * Organization _(in ISO-8601 format)_.
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The id of the user who last modified this custom field. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** CustomFields added to Meter entities. */
+    /**
+     * Returns the raw JSON value of [meter].
+     *
+     * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("meter") @ExcludeMissing fun _meter(): JsonField<Meter> = meter
 
-    /** CustomFields added to the Organization. */
+    /**
+     * Returns the raw JSON value of [organization].
+     *
+     * Unlike [organization], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("organization")
     @ExcludeMissing
     fun _organization(): JsonField<Organization> = organization
 
-    /** CustomFields added to Plan entities. */
+    /**
+     * Returns the raw JSON value of [plan].
+     *
+     * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
-    /** CustomFields added to planTemplate entities. */
+    /**
+     * Returns the raw JSON value of [planTemplate].
+     *
+     * Unlike [planTemplate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("planTemplate")
     @ExcludeMissing
     fun _planTemplate(): JsonField<PlanTemplate> = planTemplate
 
-    /** CustomFields added to Product entities. */
+    /**
+     * Returns the raw JSON value of [product].
+     *
+     * Unlike [product], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
 
     @JsonAnyGetter
@@ -282,7 +407,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -294,23 +424,34 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** CustomFields added to Account entities. */
         fun account(account: Account) = account(JsonField.of(account))
 
-        /** CustomFields added to Account entities. */
+        /**
+         * Sets [Builder.account] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.account] with a well-typed [Account] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun account(account: JsonField<Account>) = apply { this.account = account }
 
         /** CustomFields added to accountPlan entities. */
         fun accountPlan(accountPlan: AccountPlan) = accountPlan(JsonField.of(accountPlan))
 
-        /** CustomFields added to accountPlan entities. */
+        /**
+         * Sets [Builder.accountPlan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountPlan] with a well-typed [AccountPlan] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountPlan(accountPlan: JsonField<AccountPlan>) = apply {
             this.accountPlan = accountPlan
         }
@@ -318,7 +459,13 @@ private constructor(
         /** CustomFields added to simple Aggregation entities. */
         fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
-        /** CustomFields added to simple Aggregation entities. */
+        /**
+         * Sets [Builder.aggregation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun aggregation(aggregation: JsonField<Aggregation>) = apply {
             this.aggregation = aggregation
         }
@@ -327,7 +474,13 @@ private constructor(
         fun compoundAggregation(compoundAggregation: CompoundAggregation) =
             compoundAggregation(JsonField.of(compoundAggregation))
 
-        /** CustomFields added to Compound Aggregation entities. */
+        /**
+         * Sets [Builder.compoundAggregation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.compoundAggregation] with a well-typed
+         * [CompoundAggregation] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
             this.compoundAggregation = compoundAggregation
         }
@@ -335,13 +488,25 @@ private constructor(
         /** The id of the user who created this custom field. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The id of the user who created this custom field. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
@@ -352,8 +517,11 @@ private constructor(
             dtLastModified(JsonField.of(dtLastModified))
 
         /**
-         * The DateTime when a custom field was last modified - created, modified, or deleted - for
-         * the Organization _(in ISO-8601 format)_.
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
@@ -362,7 +530,13 @@ private constructor(
         /** The id of the user who last modified this custom field. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The id of the user who last modified this custom field. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -370,13 +544,24 @@ private constructor(
         /** CustomFields added to Meter entities. */
         fun meter(meter: Meter) = meter(JsonField.of(meter))
 
-        /** CustomFields added to Meter entities. */
+        /**
+         * Sets [Builder.meter] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.meter] with a well-typed [Meter] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun meter(meter: JsonField<Meter>) = apply { this.meter = meter }
 
         /** CustomFields added to the Organization. */
         fun organization(organization: Organization) = organization(JsonField.of(organization))
 
-        /** CustomFields added to the Organization. */
+        /**
+         * Sets [Builder.organization] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.organization] with a well-typed [Organization] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun organization(organization: JsonField<Organization>) = apply {
             this.organization = organization
         }
@@ -384,13 +569,24 @@ private constructor(
         /** CustomFields added to Plan entities. */
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
-        /** CustomFields added to Plan entities. */
+        /**
+         * Sets [Builder.plan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** CustomFields added to planTemplate entities. */
         fun planTemplate(planTemplate: PlanTemplate) = planTemplate(JsonField.of(planTemplate))
 
-        /** CustomFields added to planTemplate entities. */
+        /**
+         * Sets [Builder.planTemplate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planTemplate] with a well-typed [PlanTemplate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun planTemplate(planTemplate: JsonField<PlanTemplate>) = apply {
             this.planTemplate = planTemplate
         }
@@ -398,7 +594,12 @@ private constructor(
         /** CustomFields added to Product entities. */
         fun product(product: Product) = product(JsonField.of(product))
 
-        /** CustomFields added to Product entities. */
+        /**
+         * Sets [Builder.product] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.product] with a well-typed [Product] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun product(product: JsonField<Product>) = apply { this.product = product }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

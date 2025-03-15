@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -32,23 +33,53 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun initialCreditAmount(): Optional<Double> =
         Optional.ofNullable(initialCreditAmount.getNullable("initialCreditAmount"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun totalCreditAmount(): Optional<Double> =
         Optional.ofNullable(totalCreditAmount.getNullable("totalCreditAmount"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun totalDebitAmount(): Optional<Double> =
         Optional.ofNullable(totalDebitAmount.getNullable("totalDebitAmount"))
 
+    /**
+     * Returns the raw JSON value of [initialCreditAmount].
+     *
+     * Unlike [initialCreditAmount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("initialCreditAmount")
     @ExcludeMissing
     fun _initialCreditAmount(): JsonField<Double> = initialCreditAmount
 
+    /**
+     * Returns the raw JSON value of [totalCreditAmount].
+     *
+     * Unlike [totalCreditAmount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("totalCreditAmount")
     @ExcludeMissing
     fun _totalCreditAmount(): JsonField<Double> = totalCreditAmount
 
+    /**
+     * Returns the raw JSON value of [totalDebitAmount].
+     *
+     * Unlike [totalDebitAmount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("totalDebitAmount")
     @ExcludeMissing
     fun _totalDebitAmount(): JsonField<Double> = totalDebitAmount
@@ -102,6 +133,13 @@ private constructor(
         fun initialCreditAmount(initialCreditAmount: Double) =
             initialCreditAmount(JsonField.of(initialCreditAmount))
 
+        /**
+         * Sets [Builder.initialCreditAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.initialCreditAmount] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun initialCreditAmount(initialCreditAmount: JsonField<Double>) = apply {
             this.initialCreditAmount = initialCreditAmount
         }
@@ -109,6 +147,13 @@ private constructor(
         fun totalCreditAmount(totalCreditAmount: Double) =
             totalCreditAmount(JsonField.of(totalCreditAmount))
 
+        /**
+         * Sets [Builder.totalCreditAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.totalCreditAmount] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun totalCreditAmount(totalCreditAmount: JsonField<Double>) = apply {
             this.totalCreditAmount = totalCreditAmount
         }
@@ -116,6 +161,13 @@ private constructor(
         fun totalDebitAmount(totalDebitAmount: Double) =
             totalDebitAmount(JsonField.of(totalDebitAmount))
 
+        /**
+         * Sets [Builder.totalDebitAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.totalDebitAmount] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun totalDebitAmount(totalDebitAmount: JsonField<Double>) = apply {
             this.totalDebitAmount = totalDebitAmount
         }

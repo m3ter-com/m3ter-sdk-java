@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -30,12 +31,30 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun data(): Optional<List<AccountResponse>> = Optional.ofNullable(data.getNullable("data"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
 
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<AccountResponse>> = data
 
+    /**
+     * Returns the raw JSON value of [nextToken].
+     *
+     * Unlike [nextToken], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("nextToken") @ExcludeMissing fun _nextToken(): JsonField<String> = nextToken
 
     @JsonAnyGetter
@@ -78,10 +97,22 @@ private constructor(
 
         fun data(data: List<AccountResponse>) = data(JsonField.of(data))
 
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<AccountResponse>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun data(data: JsonField<List<AccountResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [AccountResponse] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: AccountResponse) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -91,6 +122,13 @@ private constructor(
 
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
+        /**
+         * Sets [Builder.nextToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.nextToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

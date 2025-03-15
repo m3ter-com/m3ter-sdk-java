@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -69,74 +70,141 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The unique identifier (UUID) of this user. */
+    /**
+     * The unique identifier (UUID) of this user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
-    /** The user's contact telephone number. */
+    /**
+     * The user's contact telephone number.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun contactNumber(): Optional<String> =
         Optional.ofNullable(contactNumber.getNullable("contactNumber"))
 
-    /** The user who created this user. */
+    /**
+     * The user who created this user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The date and time _(in ISO-8601 format)_ when the user was created. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the user was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
     /**
      * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
      * update the date and time a user's access expires.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dtEndAccess(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
 
-    /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the user was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The email address for this user. */
+    /**
+     * The email address for this user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
 
     /**
      * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter terms
      * and conditions.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun firstAcceptedTermsAndConditions(): Optional<OffsetDateTime> =
         Optional.ofNullable(
             firstAcceptedTermsAndConditions.getNullable("firstAcceptedTermsAndConditions")
         )
 
-    /** The first name of the user. */
+    /**
+     * The first name of the user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun firstName(): Optional<String> = Optional.ofNullable(firstName.getNullable("firstName"))
 
     /**
      * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms and
      * conditions.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun lastAcceptedTermsAndConditions(): Optional<OffsetDateTime> =
         Optional.ofNullable(
             lastAcceptedTermsAndConditions.getNullable("lastAcceptedTermsAndConditions")
         )
 
-    /** The unique identifier (UUID) of the user who last modified this user record. */
+    /**
+     * The unique identifier (UUID) of the user who last modified this user record.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The surname of the user. */
+    /**
+     * The surname of the user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastName(): Optional<String> = Optional.ofNullable(lastName.getNullable("lastName"))
 
-    /** An array listing the Organizations where this user has access. */
+    /**
+     * An array listing the Organizations where this user has access.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun organizations(): Optional<List<String>> =
         Optional.ofNullable(organizations.getNullable("organizations"))
 
     /**
      * An array of permission statements for the user. Each permission statement defines a specific
      * permission for the user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
         Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
 
-    /** Indicates whether this is a m3ter Support user. */
+    /**
+     * Indicates whether this is a m3ter Support user.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun supportUser(): Optional<Boolean> =
         Optional.ofNullable(supportUser.getNullable("supportUser"))
 
@@ -145,93 +213,146 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-    /** The unique identifier (UUID) of this user. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The user's contact telephone number. */
+    /**
+     * Returns the raw JSON value of [contactNumber].
+     *
+     * Unlike [contactNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("contactNumber")
     @ExcludeMissing
     fun _contactNumber(): JsonField<String> = contactNumber
 
-    /** The user who created this user. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The date and time _(in ISO-8601 format)_ when the user was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
-     * update the date and time a user's access expires.
+     * Returns the raw JSON value of [dtEndAccess].
+     *
+     * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("dtEndAccess")
     @ExcludeMissing
     fun _dtEndAccess(): JsonField<OffsetDateTime> = dtEndAccess
 
-    /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The email address for this user. */
+    /**
+     * Returns the raw JSON value of [email].
+     *
+     * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter terms
-     * and conditions.
+     * Returns the raw JSON value of [firstAcceptedTermsAndConditions].
+     *
+     * Unlike [firstAcceptedTermsAndConditions], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("firstAcceptedTermsAndConditions")
     @ExcludeMissing
     fun _firstAcceptedTermsAndConditions(): JsonField<OffsetDateTime> =
         firstAcceptedTermsAndConditions
 
-    /** The first name of the user. */
+    /**
+     * Returns the raw JSON value of [firstName].
+     *
+     * Unlike [firstName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("firstName") @ExcludeMissing fun _firstName(): JsonField<String> = firstName
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms and
-     * conditions.
+     * Returns the raw JSON value of [lastAcceptedTermsAndConditions].
+     *
+     * Unlike [lastAcceptedTermsAndConditions], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     @JsonProperty("lastAcceptedTermsAndConditions")
     @ExcludeMissing
     fun _lastAcceptedTermsAndConditions(): JsonField<OffsetDateTime> =
         lastAcceptedTermsAndConditions
 
-    /** The unique identifier (UUID) of the user who last modified this user record. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The surname of the user. */
+    /**
+     * Returns the raw JSON value of [lastName].
+     *
+     * Unlike [lastName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastName") @ExcludeMissing fun _lastName(): JsonField<String> = lastName
 
-    /** An array listing the Organizations where this user has access. */
+    /**
+     * Returns the raw JSON value of [organizations].
+     *
+     * Unlike [organizations], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("organizations")
     @ExcludeMissing
     fun _organizations(): JsonField<List<String>> = organizations
 
     /**
-     * An array of permission statements for the user. Each permission statement defines a specific
-     * permission for the user.
+     * Returns the raw JSON value of [permissionPolicy].
+     *
+     * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("permissionPolicy")
     @ExcludeMissing
     fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
-    /** Indicates whether this is a m3ter Support user. */
+    /**
+     * Returns the raw JSON value of [supportUser].
+     *
+     * Unlike [supportUser], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("supportUser")
     @ExcludeMissing
     fun _supportUser(): JsonField<Boolean> = supportUser
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -318,13 +439,24 @@ private constructor(
         /** The unique identifier (UUID) of this user. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The unique identifier (UUID) of this user. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The user's contact telephone number. */
         fun contactNumber(contactNumber: String) = contactNumber(JsonField.of(contactNumber))
 
-        /** The user's contact telephone number. */
+        /**
+         * Sets [Builder.contactNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contactNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun contactNumber(contactNumber: JsonField<String>) = apply {
             this.contactNumber = contactNumber
         }
@@ -332,13 +464,25 @@ private constructor(
         /** The user who created this user. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The user who created this user. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The date and time _(in ISO-8601 format)_ when the user was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO-8601 format)_ when the user was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
@@ -348,8 +492,11 @@ private constructor(
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
-         * update the date and time a user's access expires.
+         * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
             this.dtEndAccess = dtEndAccess
@@ -359,7 +506,13 @@ private constructor(
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -367,7 +520,12 @@ private constructor(
         /** The email address for this user. */
         fun email(email: String) = email(JsonField.of(email))
 
-        /** The email address for this user. */
+        /**
+         * Sets [Builder.email] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.email] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun email(email: JsonField<String>) = apply { this.email = email }
 
         /**
@@ -378,8 +536,11 @@ private constructor(
             firstAcceptedTermsAndConditions(JsonField.of(firstAcceptedTermsAndConditions))
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter
-         * terms and conditions.
+         * Sets [Builder.firstAcceptedTermsAndConditions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.firstAcceptedTermsAndConditions] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun firstAcceptedTermsAndConditions(
             firstAcceptedTermsAndConditions: JsonField<OffsetDateTime>
@@ -388,7 +549,13 @@ private constructor(
         /** The first name of the user. */
         fun firstName(firstName: String) = firstName(JsonField.of(firstName))
 
-        /** The first name of the user. */
+        /**
+         * Sets [Builder.firstName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.firstName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
         /**
@@ -399,8 +566,11 @@ private constructor(
             lastAcceptedTermsAndConditions(JsonField.of(lastAcceptedTermsAndConditions))
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms
-         * and conditions.
+         * Sets [Builder.lastAcceptedTermsAndConditions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastAcceptedTermsAndConditions] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun lastAcceptedTermsAndConditions(
             lastAcceptedTermsAndConditions: JsonField<OffsetDateTime>
@@ -409,7 +579,13 @@ private constructor(
         /** The unique identifier (UUID) of the user who last modified this user record. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) of the user who last modified this user record. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -417,18 +593,33 @@ private constructor(
         /** The surname of the user. */
         fun lastName(lastName: String) = lastName(JsonField.of(lastName))
 
-        /** The surname of the user. */
+        /**
+         * Sets [Builder.lastName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastName] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
         /** An array listing the Organizations where this user has access. */
         fun organizations(organizations: List<String>) = organizations(JsonField.of(organizations))
 
-        /** An array listing the Organizations where this user has access. */
+        /**
+         * Sets [Builder.organizations] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.organizations] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun organizations(organizations: JsonField<List<String>>) = apply {
             this.organizations = organizations.map { it.toMutableList() }
         }
 
-        /** An array listing the Organizations where this user has access. */
+        /**
+         * Adds a single [String] to [organizations].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addOrganization(organization: String) = apply {
             organizations =
                 (organizations ?: JsonField.of(mutableListOf())).also {
@@ -444,8 +635,11 @@ private constructor(
             permissionPolicy(JsonField.of(permissionPolicy))
 
         /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
+         * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.permissionPolicy] with a well-typed
+         * `List<PermissionStatementResponse>` value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
          */
         fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
             apply {
@@ -453,8 +647,9 @@ private constructor(
             }
 
         /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
+         * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             this.permissionPolicy =
@@ -466,7 +661,13 @@ private constructor(
         /** Indicates whether this is a m3ter Support user. */
         fun supportUser(supportUser: Boolean) = supportUser(JsonField.of(supportUser))
 
-        /** Indicates whether this is a m3ter Support user. */
+        /**
+         * Sets [Builder.supportUser] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.supportUser] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun supportUser(supportUser: JsonField<Boolean>) = apply { this.supportUser = supportUser }
 
         /**
@@ -478,10 +679,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 

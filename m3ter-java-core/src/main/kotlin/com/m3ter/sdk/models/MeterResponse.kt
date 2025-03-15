@@ -15,6 +15,7 @@ import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -59,7 +60,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -67,13 +73,26 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** Code of the Meter - unique short code used to identify the Meter. */
+    /**
+     * Code of the Meter - unique short code used to identify the Meter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
-    /** The id of the user who created this meter. */
+    /**
+     * The id of the user who created this meter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
     /**
@@ -87,6 +106,9 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> =
         Optional.ofNullable(customFields.getNullable("customFields"))
@@ -95,6 +117,9 @@ private constructor(
      * Used to submit categorized raw usage data values for ingest into the platform - either
      * numeric quantitative values or non-numeric data values. At least one required per Meter;
      * maximum 15 per Meter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dataFields(): Optional<List<DataFieldResponse>> =
         Optional.ofNullable(dataFields.getNullable("dataFields"))
@@ -103,104 +128,165 @@ private constructor(
      * Used to submit usage data values for ingest into the platform that are the result of a
      * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
      * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun derivedFields(): Optional<List<DerivedField>> =
         Optional.ofNullable(derivedFields.getNullable("derivedFields"))
 
-    /** The DateTime when the meter was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when the meter was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when the meter was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when the meter was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** UUID of the MeterGroup the Meter belongs to. _(Optional)_. */
+    /**
+     * UUID of the MeterGroup the Meter belongs to. _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun groupId(): Optional<String> = Optional.ofNullable(groupId.getNullable("groupId"))
 
-    /** The id of the user who last modified this meter. */
+    /**
+     * The id of the user who last modified this meter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** Descriptive name for the Meter. */
+    /**
+     * Descriptive name for the Meter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global. */
+    /**
+     * UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** Code of the Meter - unique short code used to identify the Meter. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-    /** The id of the user who created this meter. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational
-     * level,`customField` values defined at individual level override values of `customFields` with
-     * the same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("customFields")
     @ExcludeMissing
     fun _customFields(): JsonField<CustomFields> = customFields
 
     /**
-     * Used to submit categorized raw usage data values for ingest into the platform - either
-     * numeric quantitative values or non-numeric data values. At least one required per Meter;
-     * maximum 15 per Meter.
+     * Returns the raw JSON value of [dataFields].
+     *
+     * Unlike [dataFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("dataFields")
     @ExcludeMissing
     fun _dataFields(): JsonField<List<DataFieldResponse>> = dataFields
 
     /**
-     * Used to submit usage data values for ingest into the platform that are the result of a
-     * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-     * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+     * Returns the raw JSON value of [derivedFields].
+     *
+     * Unlike [derivedFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("derivedFields")
     @ExcludeMissing
     fun _derivedFields(): JsonField<List<DerivedField>> = derivedFields
 
-    /** The DateTime when the meter was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when the meter was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** UUID of the MeterGroup the Meter belongs to. _(Optional)_. */
+    /**
+     * Returns the raw JSON value of [groupId].
+     *
+     * Unlike [groupId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("groupId") @ExcludeMissing fun _groupId(): JsonField<String> = groupId
 
-    /** The id of the user who last modified this meter. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** Descriptive name for the Meter. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /** UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global. */
+    /**
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
     @JsonAnyGetter
@@ -285,7 +371,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -297,23 +388,34 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Code of the Meter - unique short code used to identify the Meter. */
         fun code(code: String) = code(JsonField.of(code))
 
-        /** Code of the Meter - unique short code used to identify the Meter. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** The id of the user who created this meter. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The id of the user who created this meter. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /**
@@ -331,16 +433,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational
-         * level,`customField` values defined at individual level override values of `customFields`
-         * with the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             this.customFields = customFields
@@ -354,18 +451,20 @@ private constructor(
         fun dataFields(dataFields: List<DataFieldResponse>) = dataFields(JsonField.of(dataFields))
 
         /**
-         * Used to submit categorized raw usage data values for ingest into the platform - either
-         * numeric quantitative values or non-numeric data values. At least one required per Meter;
-         * maximum 15 per Meter.
+         * Sets [Builder.dataFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dataFields] with a well-typed `List<DataFieldResponse>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun dataFields(dataFields: JsonField<List<DataFieldResponse>>) = apply {
             this.dataFields = dataFields.map { it.toMutableList() }
         }
 
         /**
-         * Used to submit categorized raw usage data values for ingest into the platform - either
-         * numeric quantitative values or non-numeric data values. At least one required per Meter;
-         * maximum 15 per Meter.
+         * Adds a single [DataFieldResponse] to [dataFields].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addDataField(dataField: DataFieldResponse) = apply {
             dataFields =
@@ -383,18 +482,20 @@ private constructor(
             derivedFields(JsonField.of(derivedFields))
 
         /**
-         * Used to submit usage data values for ingest into the platform that are the result of a
-         * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         * Sets [Builder.derivedFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.derivedFields] with a well-typed `List<DerivedField>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun derivedFields(derivedFields: JsonField<List<DerivedField>>) = apply {
             this.derivedFields = derivedFields.map { it.toMutableList() }
         }
 
         /**
-         * Used to submit usage data values for ingest into the platform that are the result of a
-         * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         * Adds a single [DerivedField] to [derivedFields].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addDerivedField(derivedField: DerivedField) = apply {
             derivedFields =
@@ -406,14 +507,26 @@ private constructor(
         /** The DateTime when the meter was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when the meter was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when the meter was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when the meter was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -421,13 +534,24 @@ private constructor(
         /** UUID of the MeterGroup the Meter belongs to. _(Optional)_. */
         fun groupId(groupId: String) = groupId(JsonField.of(groupId))
 
-        /** UUID of the MeterGroup the Meter belongs to. _(Optional)_. */
+        /**
+         * Sets [Builder.groupId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groupId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun groupId(groupId: JsonField<String>) = apply { this.groupId = groupId }
 
         /** The id of the user who last modified this meter. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The id of the user who last modified this meter. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -435,7 +559,12 @@ private constructor(
         /** Descriptive name for the Meter. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** Descriptive name for the Meter. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -444,7 +573,11 @@ private constructor(
         fun productId(productId: String) = productId(JsonField.of(productId))
 
         /**
-         * UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global.
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
@@ -600,7 +733,12 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+        /**
+         * The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER).
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun category(): DataFieldResponse.Category = category.getRequired("category")
 
         /**
@@ -608,15 +746,26 @@ private constructor(
          *
          * **NOTE:** Code has a maximum length of 80 characters and can only contain letters,
          * numbers, underscore, and the dollar character, and must not start with a number.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun code(): String = code.getRequired("code")
 
-        /** Descriptive name of the field. */
+        /**
+         * Descriptive name of the field.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
          * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
          * (UCUM). Required only for numeric field categories.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
@@ -624,35 +773,46 @@ private constructor(
          * The calculation used to transform the value of submitted `dataFields` in usage data.
          * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
          * _(Example: datafieldms datafieldgb)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun calculation(): String = calculation.getRequired("calculation")
 
-        /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+        /**
+         * Returns the raw JSON value of [category].
+         *
+         * Unlike [category], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("category")
         @ExcludeMissing
         fun _category(): JsonField<DataFieldResponse.Category> = category
 
         /**
-         * Short code to identify the field
+         * Returns the raw JSON value of [code].
          *
-         * **NOTE:** Code has a maximum length of 80 characters and can only contain letters,
-         * numbers, underscore, and the dollar character, and must not start with a number.
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-        /** Descriptive name of the field. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
-         * (UCUM). Required only for numeric field categories.
+         * Returns the raw JSON value of [unit].
+         *
+         * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
         /**
-         * The calculation used to transform the value of submitted `dataFields` in usage data.
-         * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
-         * _(Example: datafieldms datafieldgb)_
+         * Returns the raw JSON value of [calculation].
+         *
+         * Unlike [calculation], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("calculation")
         @ExcludeMissing
@@ -721,7 +881,13 @@ private constructor(
             /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
             fun category(category: DataFieldResponse.Category) = category(JsonField.of(category))
 
-            /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+            /**
+             * Sets [Builder.category] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.category] with a well-typed
+             * [DataFieldResponse.Category] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
             fun category(category: JsonField<DataFieldResponse.Category>) = apply {
                 this.category = category
             }
@@ -735,17 +901,24 @@ private constructor(
             fun code(code: String) = code(JsonField.of(code))
 
             /**
-             * Short code to identify the field
+             * Sets [Builder.code] to an arbitrary JSON value.
              *
-             * **NOTE:** Code has a maximum length of 80 characters and can only contain letters,
-             * numbers, underscore, and the dollar character, and must not start with a number.
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /** Descriptive name of the field. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Descriptive name of the field. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -755,8 +928,11 @@ private constructor(
             fun unit(unit: String) = unit(JsonField.of(unit))
 
             /**
-             * The units to measure the data with. Should conform to _Unified Code for Units of
-             * Measure_ (UCUM). Required only for numeric field categories.
+             * Sets [Builder.unit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
@@ -768,9 +944,11 @@ private constructor(
             fun calculation(calculation: String) = calculation(JsonField.of(calculation))
 
             /**
-             * The calculation used to transform the value of submitted `dataFields` in usage data.
-             * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
-             * _(Example: datafieldms datafieldgb)_
+             * Sets [Builder.calculation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.calculation] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun calculation(calculation: JsonField<String>) = apply {
                 this.calculation = calculation

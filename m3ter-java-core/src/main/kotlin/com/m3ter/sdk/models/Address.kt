@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -48,48 +49,120 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun addressLine1(): Optional<String> =
         Optional.ofNullable(addressLine1.getNullable("addressLine1"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun addressLine2(): Optional<String> =
         Optional.ofNullable(addressLine2.getNullable("addressLine2"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun addressLine3(): Optional<String> =
         Optional.ofNullable(addressLine3.getNullable("addressLine3"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun addressLine4(): Optional<String> =
         Optional.ofNullable(addressLine4.getNullable("addressLine4"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun postCode(): Optional<String> = Optional.ofNullable(postCode.getNullable("postCode"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
 
+    /**
+     * Returns the raw JSON value of [addressLine1].
+     *
+     * Unlike [addressLine1], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("addressLine1")
     @ExcludeMissing
     fun _addressLine1(): JsonField<String> = addressLine1
 
+    /**
+     * Returns the raw JSON value of [addressLine2].
+     *
+     * Unlike [addressLine2], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("addressLine2")
     @ExcludeMissing
     fun _addressLine2(): JsonField<String> = addressLine2
 
+    /**
+     * Returns the raw JSON value of [addressLine3].
+     *
+     * Unlike [addressLine3], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("addressLine3")
     @ExcludeMissing
     fun _addressLine3(): JsonField<String> = addressLine3
 
+    /**
+     * Returns the raw JSON value of [addressLine4].
+     *
+     * Unlike [addressLine4], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("addressLine4")
     @ExcludeMissing
     fun _addressLine4(): JsonField<String> = addressLine4
 
+    /**
+     * Returns the raw JSON value of [country].
+     *
+     * Unlike [country], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
+    /**
+     * Returns the raw JSON value of [locality].
+     *
+     * Unlike [locality], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("locality") @ExcludeMissing fun _locality(): JsonField<String> = locality
 
+    /**
+     * Returns the raw JSON value of [postCode].
+     *
+     * Unlike [postCode], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("postCode") @ExcludeMissing fun _postCode(): JsonField<String> = postCode
 
+    /**
+     * Returns the raw JSON value of [region].
+     *
+     * Unlike [region], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("region") @ExcludeMissing fun _region(): JsonField<String> = region
 
     @JsonAnyGetter
@@ -150,42 +223,94 @@ private constructor(
 
         fun addressLine1(addressLine1: String) = addressLine1(JsonField.of(addressLine1))
 
+        /**
+         * Sets [Builder.addressLine1] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.addressLine1] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun addressLine1(addressLine1: JsonField<String>) = apply {
             this.addressLine1 = addressLine1
         }
 
         fun addressLine2(addressLine2: String) = addressLine2(JsonField.of(addressLine2))
 
+        /**
+         * Sets [Builder.addressLine2] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.addressLine2] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun addressLine2(addressLine2: JsonField<String>) = apply {
             this.addressLine2 = addressLine2
         }
 
         fun addressLine3(addressLine3: String) = addressLine3(JsonField.of(addressLine3))
 
+        /**
+         * Sets [Builder.addressLine3] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.addressLine3] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun addressLine3(addressLine3: JsonField<String>) = apply {
             this.addressLine3 = addressLine3
         }
 
         fun addressLine4(addressLine4: String) = addressLine4(JsonField.of(addressLine4))
 
+        /**
+         * Sets [Builder.addressLine4] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.addressLine4] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun addressLine4(addressLine4: JsonField<String>) = apply {
             this.addressLine4 = addressLine4
         }
 
         fun country(country: String) = country(JsonField.of(country))
 
+        /**
+         * Sets [Builder.country] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.country] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun country(country: JsonField<String>) = apply { this.country = country }
 
         fun locality(locality: String) = locality(JsonField.of(locality))
 
+        /**
+         * Sets [Builder.locality] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.locality] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun locality(locality: JsonField<String>) = apply { this.locality = locality }
 
         fun postCode(postCode: String) = postCode(JsonField.of(postCode))
 
+        /**
+         * Sets [Builder.postCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.postCode] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun postCode(postCode: JsonField<String>) = apply { this.postCode = postCode }
 
         fun region(region: String) = region(JsonField.of(region))
 
+        /**
+         * Sets [Builder.region] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.region] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun region(region: JsonField<String>) = apply { this.region = region }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

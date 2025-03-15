@@ -71,13 +71,28 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** The type of destination _(e.g. Netsuite, webhooks)_. */
+    /**
+     * The type of destination _(e.g. Netsuite, webhooks)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun destination(): String = destination.getRequired("destination")
 
-    /** The type of entity the integration is for _(e.g. Bill)_. */
+    /**
+     * The type of entity the integration is for _(e.g. Bill)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun entityType(): String = entityType.getRequired("entityType")
 
     /**
@@ -85,6 +100,9 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
@@ -92,25 +110,53 @@ private constructor(
      * A flag indicating whether the integration configuration is authorized.
      * - TRUE - authorized.
      * - FALSE - not authorized.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun authorized(): Optional<Boolean> = Optional.ofNullable(authorized.getNullable("authorized"))
 
-    /** Configuration data for the integration */
+    /**
+     * Configuration data for the integration
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun configData(): Optional<ConfigData> =
         Optional.ofNullable(configData.getNullable("configData"))
 
-    /** The ID of the user who created this item. */
+    /**
+     * The ID of the user who created this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The unique identifier (UUID) of the entity the integration is for. */
+    /**
+     * The unique identifier (UUID) of the entity the integration is for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun destinationId(): Optional<String> =
         Optional.ofNullable(destinationId.getNullable("destinationId"))
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
@@ -118,105 +164,180 @@ private constructor(
      * A flag indicating whether the integration configuration is currently enabled or disabled.
      * - TRUE - enabled.
      * - FALSE - disabled.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun enabled(): Optional<Boolean> = Optional.ofNullable(enabled.getNullable("enabled"))
 
     /**
      * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
      * notification configuration. Optional.)_
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun entityId(): Optional<String> = Optional.ofNullable(entityId.getNullable("entityId"))
 
-    /** UUID of the credentials to use for this integration */
+    /**
+     * UUID of the credentials to use for this integration
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun integrationCredentialsId(): Optional<String> =
         Optional.ofNullable(integrationCredentialsId.getNullable("integrationCredentialsId"))
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * The ID of the user who last modified this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The name of the configuration */
+    /**
+     * The name of the configuration
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** Specifies the type of trigger for the integration. */
+    /**
+     * Specifies the type of trigger for the integration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     @Deprecated("deprecated")
     fun triggerType(): Optional<TriggerType> =
         Optional.ofNullable(triggerType.getNullable("triggerType"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The type of destination _(e.g. Netsuite, webhooks)_. */
+    /**
+     * Returns the raw JSON value of [destination].
+     *
+     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destination") @ExcludeMissing fun _destination(): JsonField<String> = destination
 
-    /** The type of entity the integration is for _(e.g. Bill)_. */
+    /**
+     * Returns the raw JSON value of [entityType].
+     *
+     * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("entityType") @ExcludeMissing fun _entityType(): JsonField<String> = entityType
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
-     * A flag indicating whether the integration configuration is authorized.
-     * - TRUE - authorized.
-     * - FALSE - not authorized.
+     * Returns the raw JSON value of [authorized].
+     *
+     * Unlike [authorized], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("authorized") @ExcludeMissing fun _authorized(): JsonField<Boolean> = authorized
 
-    /** Configuration data for the integration */
+    /**
+     * Returns the raw JSON value of [configData].
+     *
+     * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("configData")
     @ExcludeMissing
     fun _configData(): JsonField<ConfigData> = configData
 
-    /** The ID of the user who created this item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The unique identifier (UUID) of the entity the integration is for. */
+    /**
+     * Returns the raw JSON value of [destinationId].
+     *
+     * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destinationId")
     @ExcludeMissing
     fun _destinationId(): JsonField<String> = destinationId
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
     /**
-     * A flag indicating whether the integration configuration is currently enabled or disabled.
-     * - TRUE - enabled.
-     * - FALSE - disabled.
+     * Returns the raw JSON value of [enabled].
+     *
+     * Unlike [enabled], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("enabled") @ExcludeMissing fun _enabled(): JsonField<Boolean> = enabled
 
     /**
-     * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-     * notification configuration. Optional.)_
+     * Returns the raw JSON value of [entityId].
+     *
+     * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("entityId") @ExcludeMissing fun _entityId(): JsonField<String> = entityId
 
-    /** UUID of the credentials to use for this integration */
+    /**
+     * Returns the raw JSON value of [integrationCredentialsId].
+     *
+     * Unlike [integrationCredentialsId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     @JsonProperty("integrationCredentialsId")
     @ExcludeMissing
     fun _integrationCredentialsId(): JsonField<String> = integrationCredentialsId
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The name of the configuration */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /** Specifies the type of trigger for the integration. */
+    /**
+     * Returns the raw JSON value of [triggerType].
+     *
+     * Unlike [triggerType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @Deprecated("deprecated")
     @JsonProperty("triggerType")
     @ExcludeMissing
@@ -319,19 +440,36 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The type of destination _(e.g. Netsuite, webhooks)_. */
         fun destination(destination: String) = destination(JsonField.of(destination))
 
-        /** The type of destination _(e.g. Netsuite, webhooks)_. */
+        /**
+         * Sets [Builder.destination] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destination] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destination(destination: JsonField<String>) = apply { this.destination = destination }
 
         /** The type of entity the integration is for _(e.g. Bill)_. */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
-        /** The type of entity the integration is for _(e.g. Bill)_. */
+        /**
+         * Sets [Builder.entityType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
         /**
@@ -343,10 +481,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -358,28 +496,48 @@ private constructor(
         fun authorized(authorized: Boolean) = authorized(JsonField.of(authorized))
 
         /**
-         * A flag indicating whether the integration configuration is authorized.
-         * - TRUE - authorized.
-         * - FALSE - not authorized.
+         * Sets [Builder.authorized] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.authorized] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun authorized(authorized: JsonField<Boolean>) = apply { this.authorized = authorized }
 
         /** Configuration data for the integration */
         fun configData(configData: ConfigData) = configData(JsonField.of(configData))
 
-        /** Configuration data for the integration */
+        /**
+         * Sets [Builder.configData] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.configData] with a well-typed [ConfigData] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun configData(configData: JsonField<ConfigData>) = apply { this.configData = configData }
 
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The ID of the user who created this item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The unique identifier (UUID) of the entity the integration is for. */
         fun destinationId(destinationId: String) = destinationId(JsonField.of(destinationId))
 
-        /** The unique identifier (UUID) of the entity the integration is for. */
+        /**
+         * Sets [Builder.destinationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destinationId(destinationId: JsonField<String>) = apply {
             this.destinationId = destinationId
         }
@@ -387,14 +545,26 @@ private constructor(
         /** The DateTime when this item was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -407,9 +577,10 @@ private constructor(
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
 
         /**
-         * A flag indicating whether the integration configuration is currently enabled or disabled.
-         * - TRUE - enabled.
-         * - FALSE - disabled.
+         * Sets [Builder.enabled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.enabled] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
@@ -420,8 +591,10 @@ private constructor(
         fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 
         /**
-         * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-         * notification configuration. Optional.)_
+         * Sets [Builder.entityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun entityId(entityId: JsonField<String>) = apply { this.entityId = entityId }
 
@@ -429,7 +602,13 @@ private constructor(
         fun integrationCredentialsId(integrationCredentialsId: String) =
             integrationCredentialsId(JsonField.of(integrationCredentialsId))
 
-        /** UUID of the credentials to use for this integration */
+        /**
+         * Sets [Builder.integrationCredentialsId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.integrationCredentialsId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun integrationCredentialsId(integrationCredentialsId: JsonField<String>) = apply {
             this.integrationCredentialsId = integrationCredentialsId
         }
@@ -437,7 +616,13 @@ private constructor(
         /** The ID of the user who last modified this item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The ID of the user who last modified this item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -445,14 +630,25 @@ private constructor(
         /** The name of the configuration */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the configuration */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** Specifies the type of trigger for the integration. */
         @Deprecated("deprecated")
         fun triggerType(triggerType: TriggerType) = triggerType(JsonField.of(triggerType))
 
-        /** Specifies the type of trigger for the integration. */
+        /**
+         * Sets [Builder.triggerType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.triggerType] with a well-typed [TriggerType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         @Deprecated("deprecated")
         fun triggerType(triggerType: JsonField<TriggerType>) = apply {
             this.triggerType = triggerType
