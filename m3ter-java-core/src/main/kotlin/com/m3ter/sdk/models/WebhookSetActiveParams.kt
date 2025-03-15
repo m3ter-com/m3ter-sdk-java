@@ -108,10 +108,14 @@ private constructor(
         /** active status of the webhook */
         fun active(active: Boolean?) = apply { this.active = active }
 
-        /** active status of the webhook */
+        /**
+         * Alias for [Builder.active].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun active(active: Boolean) = active(active as Boolean?)
 
-        /** active status of the webhook */
+        /** Alias for calling [Builder.active] with `active.orElse(null)`. */
         fun active(active: Optional<Boolean>) = active(active.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

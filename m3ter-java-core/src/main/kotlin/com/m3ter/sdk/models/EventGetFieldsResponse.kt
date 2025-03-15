@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -34,16 +35,16 @@ private constructor(
      * `configuration.commitment.created` Event Type.
      *
      * **Note:** `new` represents the attributes the newly created object has.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun events(): Optional<Events> = Optional.ofNullable(events.getNullable("events"))
 
     /**
-     * An object containing the list of Fields for the queried Event Type.
+     * Returns the raw JSON value of [events].
      *
-     * See the 200 Response sample where we have queried to get the Fields for the
-     * `configuration.commitment.created` Event Type.
-     *
-     * **Note:** `new` represents the attributes the newly created object has.
+     * Unlike [events], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<Events> = events
 
@@ -93,12 +94,10 @@ private constructor(
         fun events(events: Events) = events(JsonField.of(events))
 
         /**
-         * An object containing the list of Fields for the queried Event Type.
+         * Sets [Builder.events] to an arbitrary JSON value.
          *
-         * See the 200 Response sample where we have queried to get the Fields for the
-         * `configuration.commitment.created` Event Type.
-         *
-         * **Note:** `new` represents the attributes the newly created object has.
+         * You should usually call [Builder.events] with a well-typed [Events] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun events(events: JsonField<Events>) = apply { this.events = events }
 

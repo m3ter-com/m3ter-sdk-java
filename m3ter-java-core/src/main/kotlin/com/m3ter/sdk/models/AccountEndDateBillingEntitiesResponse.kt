@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -35,37 +36,54 @@ private constructor(
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
      * details of the entities for which the update failed.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun failedEntities(): Optional<FailedEntities> =
         Optional.ofNullable(failedEntities.getNullable("failedEntities"))
 
-    /** A message indicating the status of the operation. */
+    /**
+     * A message indicating the status of the operation.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun statusMessage(): Optional<String> =
         Optional.ofNullable(statusMessage.getNullable("statusMessage"))
 
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
      * details of the updated entities.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun updatedEntities(): Optional<UpdatedEntities> =
         Optional.ofNullable(updatedEntities.getNullable("updatedEntities"))
 
     /**
-     * A dictionary with keys as identifiers of billing entities and values as lists containing
-     * details of the entities for which the update failed.
+     * Returns the raw JSON value of [failedEntities].
+     *
+     * Unlike [failedEntities], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("failedEntities")
     @ExcludeMissing
     fun _failedEntities(): JsonField<FailedEntities> = failedEntities
 
-    /** A message indicating the status of the operation. */
+    /**
+     * Returns the raw JSON value of [statusMessage].
+     *
+     * Unlike [statusMessage], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("statusMessage")
     @ExcludeMissing
     fun _statusMessage(): JsonField<String> = statusMessage
 
     /**
-     * A dictionary with keys as identifiers of billing entities and values as lists containing
-     * details of the updated entities.
+     * Returns the raw JSON value of [updatedEntities].
+     *
+     * Unlike [updatedEntities], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("updatedEntities")
     @ExcludeMissing
@@ -126,8 +144,11 @@ private constructor(
             failedEntities(JsonField.of(failedEntities))
 
         /**
-         * A dictionary with keys as identifiers of billing entities and values as lists containing
-         * details of the entities for which the update failed.
+         * Sets [Builder.failedEntities] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.failedEntities] with a well-typed [FailedEntities] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun failedEntities(failedEntities: JsonField<FailedEntities>) = apply {
             this.failedEntities = failedEntities
@@ -136,7 +157,13 @@ private constructor(
         /** A message indicating the status of the operation. */
         fun statusMessage(statusMessage: String) = statusMessage(JsonField.of(statusMessage))
 
-        /** A message indicating the status of the operation. */
+        /**
+         * Sets [Builder.statusMessage] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.statusMessage] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun statusMessage(statusMessage: JsonField<String>) = apply {
             this.statusMessage = statusMessage
         }
@@ -149,8 +176,11 @@ private constructor(
             updatedEntities(JsonField.of(updatedEntities))
 
         /**
-         * A dictionary with keys as identifiers of billing entities and values as lists containing
-         * details of the updated entities.
+         * Sets [Builder.updatedEntities] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.updatedEntities] with a well-typed [UpdatedEntities]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun updatedEntities(updatedEntities: JsonField<UpdatedEntities>) = apply {
             this.updatedEntities = updatedEntities
@@ -211,33 +241,79 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountplan(): Optional<SetString> =
             Optional.ofNullable(accountplan.getNullable("ACCOUNTPLAN"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun contract(): Optional<SetString> = Optional.ofNullable(contract.getNullable("CONTRACT"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun counterPricings(): Optional<SetString> =
             Optional.ofNullable(counterPricings.getNullable("COUNTER_PRICINGS"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun prepayment(): Optional<SetString> =
             Optional.ofNullable(prepayment.getNullable("PREPAYMENT"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun pricings(): Optional<SetString> = Optional.ofNullable(pricings.getNullable("PRICINGS"))
 
+        /**
+         * Returns the raw JSON value of [accountplan].
+         *
+         * Unlike [accountplan], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("ACCOUNTPLAN")
         @ExcludeMissing
         fun _accountplan(): JsonField<SetString> = accountplan
 
+        /**
+         * Returns the raw JSON value of [contract].
+         *
+         * Unlike [contract], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("CONTRACT") @ExcludeMissing fun _contract(): JsonField<SetString> = contract
 
+        /**
+         * Returns the raw JSON value of [counterPricings].
+         *
+         * Unlike [counterPricings], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("COUNTER_PRICINGS")
         @ExcludeMissing
         fun _counterPricings(): JsonField<SetString> = counterPricings
 
+        /**
+         * Returns the raw JSON value of [prepayment].
+         *
+         * Unlike [prepayment], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("PREPAYMENT")
         @ExcludeMissing
         fun _prepayment(): JsonField<SetString> = prepayment
 
+        /**
+         * Returns the raw JSON value of [pricings].
+         *
+         * Unlike [pricings], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("PRICINGS") @ExcludeMissing fun _pricings(): JsonField<SetString> = pricings
 
         @JsonAnyGetter
@@ -289,29 +365,64 @@ private constructor(
 
             fun accountplan(accountplan: SetString) = accountplan(JsonField.of(accountplan))
 
+            /**
+             * Sets [Builder.accountplan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountplan] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountplan(accountplan: JsonField<SetString>) = apply {
                 this.accountplan = accountplan
             }
 
             fun contract(contract: SetString) = contract(JsonField.of(contract))
 
+            /**
+             * Sets [Builder.contract] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contract] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun contract(contract: JsonField<SetString>) = apply { this.contract = contract }
 
             fun counterPricings(counterPricings: SetString) =
                 counterPricings(JsonField.of(counterPricings))
 
+            /**
+             * Sets [Builder.counterPricings] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.counterPricings] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun counterPricings(counterPricings: JsonField<SetString>) = apply {
                 this.counterPricings = counterPricings
             }
 
             fun prepayment(prepayment: SetString) = prepayment(JsonField.of(prepayment))
 
+            /**
+             * Sets [Builder.prepayment] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prepayment] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun prepayment(prepayment: JsonField<SetString>) = apply {
                 this.prepayment = prepayment
             }
 
             fun pricings(pricings: SetString) = pricings(JsonField.of(pricings))
 
+            /**
+             * Sets [Builder.pricings] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pricings] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun pricings(pricings: JsonField<SetString>) = apply { this.pricings = pricings }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -389,33 +500,79 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountplan(): Optional<SetString> =
             Optional.ofNullable(accountplan.getNullable("ACCOUNTPLAN"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun contract(): Optional<SetString> = Optional.ofNullable(contract.getNullable("CONTRACT"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun counterPricings(): Optional<SetString> =
             Optional.ofNullable(counterPricings.getNullable("COUNTER_PRICINGS"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun prepayment(): Optional<SetString> =
             Optional.ofNullable(prepayment.getNullable("PREPAYMENT"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun pricings(): Optional<SetString> = Optional.ofNullable(pricings.getNullable("PRICINGS"))
 
+        /**
+         * Returns the raw JSON value of [accountplan].
+         *
+         * Unlike [accountplan], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("ACCOUNTPLAN")
         @ExcludeMissing
         fun _accountplan(): JsonField<SetString> = accountplan
 
+        /**
+         * Returns the raw JSON value of [contract].
+         *
+         * Unlike [contract], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("CONTRACT") @ExcludeMissing fun _contract(): JsonField<SetString> = contract
 
+        /**
+         * Returns the raw JSON value of [counterPricings].
+         *
+         * Unlike [counterPricings], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("COUNTER_PRICINGS")
         @ExcludeMissing
         fun _counterPricings(): JsonField<SetString> = counterPricings
 
+        /**
+         * Returns the raw JSON value of [prepayment].
+         *
+         * Unlike [prepayment], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("PREPAYMENT")
         @ExcludeMissing
         fun _prepayment(): JsonField<SetString> = prepayment
 
+        /**
+         * Returns the raw JSON value of [pricings].
+         *
+         * Unlike [pricings], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("PRICINGS") @ExcludeMissing fun _pricings(): JsonField<SetString> = pricings
 
         @JsonAnyGetter
@@ -467,29 +624,64 @@ private constructor(
 
             fun accountplan(accountplan: SetString) = accountplan(JsonField.of(accountplan))
 
+            /**
+             * Sets [Builder.accountplan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountplan] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountplan(accountplan: JsonField<SetString>) = apply {
                 this.accountplan = accountplan
             }
 
             fun contract(contract: SetString) = contract(JsonField.of(contract))
 
+            /**
+             * Sets [Builder.contract] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contract] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun contract(contract: JsonField<SetString>) = apply { this.contract = contract }
 
             fun counterPricings(counterPricings: SetString) =
                 counterPricings(JsonField.of(counterPricings))
 
+            /**
+             * Sets [Builder.counterPricings] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.counterPricings] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun counterPricings(counterPricings: JsonField<SetString>) = apply {
                 this.counterPricings = counterPricings
             }
 
             fun prepayment(prepayment: SetString) = prepayment(JsonField.of(prepayment))
 
+            /**
+             * Sets [Builder.prepayment] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prepayment] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun prepayment(prepayment: JsonField<SetString>) = apply {
                 this.prepayment = prepayment
             }
 
             fun pricings(pricings: SetString) = pricings(JsonField.of(pricings))
 
+            /**
+             * Sets [Builder.pricings] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pricings] with a well-typed [SetString] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun pricings(pricings: JsonField<SetString>) = apply { this.pricings = pricings }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

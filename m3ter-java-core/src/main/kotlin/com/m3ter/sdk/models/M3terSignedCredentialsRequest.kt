@@ -40,18 +40,27 @@ private constructor(
     /**
      * The API key provided by m3ter. This key is part of the credential set required for signing
      * requests and authenticating with m3ter services.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun apiKey(): String = apiKey.getRequired("apiKey")
 
     /**
      * The secret associated with the API key. This secret is used in conjunction with the API key
      * to generate a signature for secure authentication.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun secret(): String = secret.getRequired("secret")
 
     /**
      * Specifies the authorization type. For this schema, it is exclusively set to
      * M3TER_SIGNED_REQUEST.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun type(): Type = type.getRequired("type")
 
@@ -59,6 +68,9 @@ private constructor(
      * A flag to indicate whether the credentials are empty.
      * - TRUE - empty credentials.
      * - FALSE - credential details required.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun empty(): Optional<Boolean> = Optional.ofNullable(empty.getNullable("empty"))
 
@@ -69,41 +81,44 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
     /**
-     * The API key provided by m3ter. This key is part of the credential set required for signing
-     * requests and authenticating with m3ter services.
+     * Returns the raw JSON value of [apiKey].
+     *
+     * Unlike [apiKey], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("apiKey") @ExcludeMissing fun _apiKey(): JsonField<String> = apiKey
 
     /**
-     * The secret associated with the API key. This secret is used in conjunction with the API key
-     * to generate a signature for secure authentication.
+     * Returns the raw JSON value of [secret].
+     *
+     * Unlike [secret], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("secret") @ExcludeMissing fun _secret(): JsonField<String> = secret
 
     /**
-     * Specifies the authorization type. For this schema, it is exclusively set to
-     * M3TER_SIGNED_REQUEST.
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
     /**
-     * A flag to indicate whether the credentials are empty.
-     * - TRUE - empty credentials.
-     * - FALSE - credential details required.
+     * Returns the raw JSON value of [empty].
+     *
+     * Unlike [empty], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("empty") @ExcludeMissing fun _empty(): JsonField<Boolean> = empty
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -171,8 +186,10 @@ private constructor(
         fun apiKey(apiKey: String) = apiKey(JsonField.of(apiKey))
 
         /**
-         * The API key provided by m3ter. This key is part of the credential set required for
-         * signing requests and authenticating with m3ter services.
+         * Sets [Builder.apiKey] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.apiKey] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun apiKey(apiKey: JsonField<String>) = apply { this.apiKey = apiKey }
 
@@ -183,8 +200,10 @@ private constructor(
         fun secret(secret: String) = secret(JsonField.of(secret))
 
         /**
-         * The secret associated with the API key. This secret is used in conjunction with the API
-         * key to generate a signature for secure authentication.
+         * Sets [Builder.secret] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.secret] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun secret(secret: JsonField<String>) = apply { this.secret = secret }
 
@@ -195,8 +214,10 @@ private constructor(
         fun type(type: Type) = type(JsonField.of(type))
 
         /**
-         * Specifies the authorization type. For this schema, it is exclusively set to
-         * M3TER_SIGNED_REQUEST.
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
@@ -208,9 +229,10 @@ private constructor(
         fun empty(empty: Boolean) = empty(JsonField.of(empty))
 
         /**
-         * A flag to indicate whether the credentials are empty.
-         * - TRUE - empty credentials.
-         * - FALSE - credential details required.
+         * Sets [Builder.empty] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.empty] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun empty(empty: JsonField<Boolean>) = apply { this.empty = empty }
 
@@ -225,12 +247,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 

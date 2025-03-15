@@ -45,12 +45,20 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** The unique identifier (UUID) for the Account. */
+    /**
+     * The unique identifier (UUID) for the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accountId(): String = body.accountId()
 
     /**
      * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming active
      * for the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun startDate(): OffsetDateTime = body.startDate()
 
@@ -65,6 +73,9 @@ private constructor(
      *   March 15th, April 15th, and so on.
      * - If not defined, then the `billEpoch` date set for the Account will be used instead.
      * - The date is in ISO-8601 format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billEpoch(): Optional<LocalDate> = body.billEpoch()
 
@@ -75,15 +86,26 @@ private constructor(
      * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
      * - **Parent Summary** - single bill line item for all Accounts.
      * - **Child** - the Child Account is billed.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun childBillingMode(): Optional<ChildBillingMode> = body.childBillingMode()
 
-    /** A unique short code for the AccountPlan or AccountPlanGroup. */
+    /**
+     * A unique short code for the AccountPlan or AccountPlanGroup.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
      * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan Group
      * being attached to the Account.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun contractId(): Optional<String> = body.contractId()
 
@@ -98,6 +120,9 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
@@ -105,6 +130,9 @@ private constructor(
      * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases to be
      * active for the Account. If not specified, the AccountPlan or AccountPlanGroup remains active
      * indefinitely.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun endDate(): Optional<OffsetDateTime> = body.endDate()
 
@@ -114,6 +142,9 @@ private constructor(
      *
      * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
      * `planGroupId` must be used per call.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun planGroupId(): Optional<String> = body.planGroupId()
 
@@ -123,6 +154,9 @@ private constructor(
      *
      * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId` or
      * `planGroupId` must be used per call.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun planId(): Optional<String> = body.planId()
 
@@ -133,97 +167,87 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The unique identifier (UUID) for the Account. */
+    /**
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountId(): JsonField<String> = body._accountId()
 
     /**
-     * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming active
-     * for the Account.
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
 
     /**
-     * Optional setting to define a _billing cycle date_, which acts as a reference for when in the
-     * applied billing frequency period bills are created:
-     * - For example, if you attach a Plan to an Account where the Plan is configured for monthly
-     *   billing frequency and you've defined the period the Plan will apply to the Account to be
-     *   from January 1st, 2022 until January 1st, 2023. You then set a `billEpoch` date of February
-     *   15th, 2022. The first Bill will be created for the Account on February 15th, and subsequent
-     *   Bills created on the 15th of the months following for the remainder of the billing period -
-     *   March 15th, April 15th, and so on.
-     * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-     * - The date is in ISO-8601 format.
+     * Returns the raw JSON value of [billEpoch].
+     *
+     * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billEpoch(): JsonField<LocalDate> = body._billEpoch()
 
     /**
-     * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
-     * billing mode. The mode determines how billing will be handled and shown on bills for charges
-     * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * Returns the raw JSON value of [childBillingMode].
+     *
+     * Unlike [childBillingMode], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _childBillingMode(): JsonField<ChildBillingMode> = body._childBillingMode()
 
-    /** A unique short code for the AccountPlan or AccountPlanGroup. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan Group
-     * being attached to the Account.
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _contractId(): JsonField<String> = body._contractId()
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational level,
-     * `customField` values defined at individual level override values of `customFields` with the
-     * same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases to be
-     * active for the Account. If not specified, the AccountPlan or AccountPlanGroup remains active
-     * indefinitely.
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
     /**
-     * The unique identifier (UUID) of the PlanGroup to be attached to the Account to create an
-     * AccountPlanGroup.
+     * Returns the raw JSON value of [planGroupId].
      *
-     * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
-     * `planGroupId` must be used per call.
+     * Unlike [planGroupId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _planGroupId(): JsonField<String> = body._planGroupId()
 
     /**
-     * The unique identifier (UUID) of the Plan to be attached to the Account to create an
-     * AccountPlan.
+     * Returns the raw JSON value of [planId].
      *
-     * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId` or
-     * `planGroupId` must be used per call.
+     * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _planId(): JsonField<String> = body._planId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -287,12 +311,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The unique identifier (UUID) for the Account. */
+        /**
+         * The unique identifier (UUID) for the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun accountId(): String = accountId.getRequired("accountId")
 
         /**
          * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming
          * active for the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
@@ -307,6 +339,9 @@ private constructor(
          *   the remainder of the billing period - March 15th, April 15th, and so on.
          * - If not defined, then the `billEpoch` date set for the Account will be used instead.
          * - The date is in ISO-8601 format.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billEpoch(): Optional<LocalDate> =
             Optional.ofNullable(billEpoch.getNullable("billEpoch"))
@@ -318,16 +353,27 @@ private constructor(
          * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
          * - **Parent Summary** - single bill line item for all Accounts.
          * - **Child** - the Child Account is billed.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun childBillingMode(): Optional<ChildBillingMode> =
             Optional.ofNullable(childBillingMode.getNullable("childBillingMode"))
 
-        /** A unique short code for the AccountPlan or AccountPlanGroup. */
+        /**
+         * A unique short code for the AccountPlan or AccountPlanGroup.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
          * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan
          * Group being attached to the Account.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun contractId(): Optional<String> =
             Optional.ofNullable(contractId.getNullable("contractId"))
@@ -343,6 +389,9 @@ private constructor(
          * See
          * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
@@ -351,6 +400,9 @@ private constructor(
          * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
          * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
          * remains active indefinitely.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun endDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(endDate.getNullable("endDate"))
@@ -361,6 +413,9 @@ private constructor(
          *
          * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
          * `planGroupId` must be used per call.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun planGroupId(): Optional<String> =
             Optional.ofNullable(planGroupId.getNullable("planGroupId"))
@@ -371,6 +426,9 @@ private constructor(
          *
          * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId` or
          * `planGroupId` must be used per call.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
 
@@ -381,109 +439,100 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The unique identifier (UUID) for the Account. */
+        /**
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
         /**
-         * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming
-         * active for the Account.
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
         /**
-         * Optional setting to define a _billing cycle date_, which acts as a reference for when in
-         * the applied billing frequency period bills are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
-         *   monthly billing frequency and you've defined the period the Plan will apply to the
-         *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-         *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
-         *   on February 15th, and subsequent Bills created on the 15th of the months following for
-         *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-         * - The date is in ISO-8601 format.
+         * Returns the raw JSON value of [billEpoch].
+         *
+         * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("billEpoch")
         @ExcludeMissing
         fun _billEpoch(): JsonField<LocalDate> = billEpoch
 
         /**
-         * If the Account is either a Parent or a Child Account, this specifies the Account
-         * hierarchy billing mode. The mode determines how billing will be handled and shown on
-         * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * Returns the raw JSON value of [childBillingMode].
+         *
+         * Unlike [childBillingMode], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("childBillingMode")
         @ExcludeMissing
         fun _childBillingMode(): JsonField<ChildBillingMode> = childBillingMode
 
-        /** A unique short code for the AccountPlan or AccountPlanGroup. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan
-         * Group being attached to the Account.
+         * Returns the raw JSON value of [contractId].
+         *
+         * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("contractId")
         @ExcludeMissing
         fun _contractId(): JsonField<String> = contractId
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Returns the raw JSON value of [customFields].
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
-         * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
-         * remains active indefinitely.
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
         /**
-         * The unique identifier (UUID) of the PlanGroup to be attached to the Account to create an
-         * AccountPlanGroup.
+         * Returns the raw JSON value of [planGroupId].
          *
-         * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
-         * `planGroupId` must be used per call.
+         * Unlike [planGroupId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("planGroupId")
         @ExcludeMissing
         fun _planGroupId(): JsonField<String> = planGroupId
 
         /**
-         * The unique identifier (UUID) of the Plan to be attached to the Account to create an
-         * AccountPlan.
+         * Returns the raw JSON value of [planId].
          *
-         * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId` or
-         * `planGroupId` must be used per call.
+         * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("planId") @ExcludeMissing fun _planId(): JsonField<String> = planId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -563,7 +612,13 @@ private constructor(
             /** The unique identifier (UUID) for the Account. */
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
-            /** The unique identifier (UUID) for the Account. */
+            /**
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /**
@@ -573,8 +628,11 @@ private constructor(
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             /**
-             * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup
-             * becoming active for the Account.
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
@@ -596,17 +654,11 @@ private constructor(
             fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
 
             /**
-             * Optional setting to define a _billing cycle date_, which acts as a reference for when
-             * in the applied billing frequency period bills are created:
-             * - For example, if you attach a Plan to an Account where the Plan is configured for
-             *   monthly billing frequency and you've defined the period the Plan will apply to the
-             *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-             *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the
-             *   Account on February 15th, and subsequent Bills created on the 15th of the months
-             *   following for the remainder of the billing period - March 15th, April 15th, and so
-             *   on.
-             * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-             * - The date is in ISO-8601 format.
+             * Sets [Builder.billEpoch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billEpoch] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { this.billEpoch = billEpoch }
 
@@ -622,12 +674,11 @@ private constructor(
                 childBillingMode(JsonField.of(childBillingMode))
 
             /**
-             * If the Account is either a Parent or a Child Account, this specifies the Account
-             * hierarchy billing mode. The mode determines how billing will be handled and shown on
-             * bills for charges due on the Parent Account, and charges due on Child Accounts:
-             * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-             * - **Parent Summary** - single bill line item for all Accounts.
-             * - **Child** - the Child Account is billed.
+             * Sets [Builder.childBillingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.childBillingMode] with a well-typed
+             * [ChildBillingMode] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun childBillingMode(childBillingMode: JsonField<ChildBillingMode>) = apply {
                 this.childBillingMode = childBillingMode
@@ -636,7 +687,13 @@ private constructor(
             /** A unique short code for the AccountPlan or AccountPlanGroup. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** A unique short code for the AccountPlan or AccountPlanGroup. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -646,8 +703,11 @@ private constructor(
             fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
             /**
-             * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan
-             * Group being attached to the Account.
+             * Sets [Builder.contractId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contractId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
@@ -666,16 +726,11 @@ private constructor(
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
             /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
+             * Sets [Builder.customFields] to an arbitrary JSON value.
              *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
@@ -689,9 +744,11 @@ private constructor(
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup
-             * ceases to be active for the Account. If not specified, the AccountPlan or
-             * AccountPlanGroup remains active indefinitely.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
@@ -705,11 +762,11 @@ private constructor(
             fun planGroupId(planGroupId: String) = planGroupId(JsonField.of(planGroupId))
 
             /**
-             * The unique identifier (UUID) of the PlanGroup to be attached to the Account to create
-             * an AccountPlanGroup.
+             * Sets [Builder.planGroupId] to an arbitrary JSON value.
              *
-             * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
-             * `planGroupId` must be used per call.
+             * You should usually call [Builder.planGroupId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun planGroupId(planGroupId: JsonField<String>) = apply {
                 this.planGroupId = planGroupId
@@ -725,11 +782,11 @@ private constructor(
             fun planId(planId: String) = planId(JsonField.of(planId))
 
             /**
-             * The unique identifier (UUID) of the Plan to be attached to the Account to create an
-             * AccountPlan.
+             * Sets [Builder.planId] to an arbitrary JSON value.
              *
-             * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId`
-             * or `planGroupId` must be used per call.
+             * You should usually call [Builder.planId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
@@ -744,12 +801,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -846,7 +902,13 @@ private constructor(
         /** The unique identifier (UUID) for the Account. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
-        /** The unique identifier (UUID) for the Account. */
+        /**
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /**
@@ -856,8 +918,11 @@ private constructor(
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming
-         * active for the Account.
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
@@ -876,16 +941,11 @@ private constructor(
         fun billEpoch(billEpoch: LocalDate) = apply { body.billEpoch(billEpoch) }
 
         /**
-         * Optional setting to define a _billing cycle date_, which acts as a reference for when in
-         * the applied billing frequency period bills are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
-         *   monthly billing frequency and you've defined the period the Plan will apply to the
-         *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
-         *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
-         *   on February 15th, and subsequent Bills created on the 15th of the months following for
-         *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-         * - The date is in ISO-8601 format.
+         * Sets [Builder.billEpoch] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billEpoch] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { body.billEpoch(billEpoch) }
 
@@ -902,12 +962,11 @@ private constructor(
         }
 
         /**
-         * If the Account is either a Parent or a Child Account, this specifies the Account
-         * hierarchy billing mode. The mode determines how billing will be handled and shown on
-         * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * Sets [Builder.childBillingMode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.childBillingMode] with a well-typed [ChildBillingMode]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun childBillingMode(childBillingMode: JsonField<ChildBillingMode>) = apply {
             body.childBillingMode(childBillingMode)
@@ -916,7 +975,12 @@ private constructor(
         /** A unique short code for the AccountPlan or AccountPlanGroup. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** A unique short code for the AccountPlan or AccountPlanGroup. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -926,8 +990,11 @@ private constructor(
         fun contractId(contractId: String) = apply { body.contractId(contractId) }
 
         /**
-         * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan
-         * Group being attached to the Account.
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
 
@@ -946,16 +1013,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
@@ -969,9 +1031,11 @@ private constructor(
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
-         * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
-         * remains active indefinitely.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
@@ -985,11 +1049,11 @@ private constructor(
         fun planGroupId(planGroupId: String) = apply { body.planGroupId(planGroupId) }
 
         /**
-         * The unique identifier (UUID) of the PlanGroup to be attached to the Account to create an
-         * AccountPlanGroup.
+         * Sets [Builder.planGroupId] to an arbitrary JSON value.
          *
-         * **Note:** Exclusive of the `planId` request parameter - exactly one of `planId` or
-         * `planGroupId` must be used per call.
+         * You should usually call [Builder.planGroupId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun planGroupId(planGroupId: JsonField<String>) = apply { body.planGroupId(planGroupId) }
 
@@ -1003,11 +1067,10 @@ private constructor(
         fun planId(planId: String) = apply { body.planId(planId) }
 
         /**
-         * The unique identifier (UUID) of the Plan to be attached to the Account to create an
-         * AccountPlan.
+         * Sets [Builder.planId] to an arbitrary JSON value.
          *
-         * **Note:** Exclusive of the `planGroupId` request parameter - exactly one of `planId` or
-         * `planGroupId` must be used per call.
+         * You should usually call [Builder.planId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun planId(planId: JsonField<String>) = apply { body.planId(planId) }
 
@@ -1022,12 +1085,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

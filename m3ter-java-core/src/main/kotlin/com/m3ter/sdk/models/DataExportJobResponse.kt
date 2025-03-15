@@ -46,7 +46,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the Export Job. */
+    /**
+     * The id of the Export Job.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -54,53 +59,104 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** When the data Export Job was created. */
+    /**
+     * When the data Export Job was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dateCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dateCreated.getNullable("dateCreated"))
 
-    /** The id of the data Export Schedule. */
+    /**
+     * The id of the data Export Schedule.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun scheduleId(): Optional<String> = Optional.ofNullable(scheduleId.getNullable("scheduleId"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun sourceType(): Optional<SourceType> =
         Optional.ofNullable(sourceType.getNullable("sourceType"))
 
-    /** When the data Export Job started running */
+    /**
+     * When the data Export Job started running
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun startedAt(): Optional<OffsetDateTime> =
         Optional.ofNullable(startedAt.getNullable("startedAt"))
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
 
-    /** The id of the Export Job. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** When the data Export Job was created. */
+    /**
+     * Returns the raw JSON value of [dateCreated].
+     *
+     * Unlike [dateCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dateCreated")
     @ExcludeMissing
     fun _dateCreated(): JsonField<OffsetDateTime> = dateCreated
 
-    /** The id of the data Export Schedule. */
+    /**
+     * Returns the raw JSON value of [scheduleId].
+     *
+     * Unlike [scheduleId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("scheduleId") @ExcludeMissing fun _scheduleId(): JsonField<String> = scheduleId
 
+    /**
+     * Returns the raw JSON value of [sourceType].
+     *
+     * Unlike [sourceType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("sourceType")
     @ExcludeMissing
     fun _sourceType(): JsonField<SourceType> = sourceType
 
-    /** When the data Export Job started running */
+    /**
+     * Returns the raw JSON value of [startedAt].
+     *
+     * Unlike [startedAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("startedAt")
     @ExcludeMissing
     fun _startedAt(): JsonField<OffsetDateTime> = startedAt
 
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     @JsonAnyGetter
@@ -167,7 +223,12 @@ private constructor(
         /** The id of the Export Job. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The id of the Export Job. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -179,17 +240,23 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** When the data Export Job was created. */
         fun dateCreated(dateCreated: OffsetDateTime) = dateCreated(JsonField.of(dateCreated))
 
-        /** When the data Export Job was created. */
+        /**
+         * Sets [Builder.dateCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dateCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dateCreated(dateCreated: JsonField<OffsetDateTime>) = apply {
             this.dateCreated = dateCreated
         }
@@ -197,21 +264,46 @@ private constructor(
         /** The id of the data Export Schedule. */
         fun scheduleId(scheduleId: String) = scheduleId(JsonField.of(scheduleId))
 
-        /** The id of the data Export Schedule. */
+        /**
+         * Sets [Builder.scheduleId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scheduleId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun scheduleId(scheduleId: JsonField<String>) = apply { this.scheduleId = scheduleId }
 
         fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
 
+        /**
+         * Sets [Builder.sourceType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sourceType] with a well-typed [SourceType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun sourceType(sourceType: JsonField<SourceType>) = apply { this.sourceType = sourceType }
 
         /** When the data Export Job started running */
         fun startedAt(startedAt: OffsetDateTime) = startedAt(JsonField.of(startedAt))
 
-        /** When the data Export Job started running */
+        /**
+         * Sets [Builder.startedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startedAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun startedAt(startedAt: JsonField<OffsetDateTime>) = apply { this.startedAt = startedAt }
 
         fun status(status: Status) = status(JsonField.of(status))
 
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

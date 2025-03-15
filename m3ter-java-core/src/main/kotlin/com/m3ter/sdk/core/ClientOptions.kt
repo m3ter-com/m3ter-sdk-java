@@ -110,6 +110,7 @@ private constructor(
 
         fun token(token: String?) = apply { this.token = token }
 
+        /** Alias for calling [Builder.token] with `token.orElse(null)`. */
         fun token(token: Optional<String>) = token(token.getOrNull())
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }

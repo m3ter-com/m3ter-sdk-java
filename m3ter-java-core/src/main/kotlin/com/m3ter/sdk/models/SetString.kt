@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -24,8 +25,17 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun empty(): Optional<Boolean> = Optional.ofNullable(empty.getNullable("empty"))
 
+    /**
+     * Returns the raw JSON value of [empty].
+     *
+     * Unlike [empty], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("empty") @ExcludeMissing fun _empty(): JsonField<Boolean> = empty
 
     @JsonAnyGetter
@@ -65,6 +75,12 @@ private constructor(
 
         fun empty(empty: Boolean) = empty(JsonField.of(empty))
 
+        /**
+         * Sets [Builder.empty] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.empty] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun empty(empty: JsonField<Boolean>) = apply { this.empty = empty }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

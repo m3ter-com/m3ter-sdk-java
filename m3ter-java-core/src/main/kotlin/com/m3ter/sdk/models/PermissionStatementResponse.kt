@@ -47,6 +47,9 @@ private constructor(
      * "config:retrieve",
      * "config:update"
      * ```
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun action(): List<Action> = action.getRequired("action")
 
@@ -55,6 +58,9 @@ private constructor(
      *
      * **NOTE:** Use lower case, for example: `"allow"`. If you use upper case, you'll receive an
      * error.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun effect(): Effect = effect.getRequired("effect")
 
@@ -62,36 +68,30 @@ private constructor(
      * See
      * [Statements - Available Resources](https://www.m3ter.com/docs/guides/managing-organization-and-users/creating-and-managing-permissions#statements---available-resources)
      * for a listing of available resources for Permission Policy statements.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun resource(): List<String> = resource.getRequired("resource")
 
     /**
-     * The actions available to users who are assigned the Permission Policy - what they can do or
-     * cannot do with respect to the specified resource.
+     * Returns the raw JSON value of [action].
      *
-     * **NOTE:** Use lower case and a colon-separated format, for example, if you want to confer
-     * full CRUD, use:
-     * ```
-     * "config:create",
-     * "config:delete",
-     * "config:retrieve",
-     * "config:update"
-     * ```
+     * Unlike [action], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("action") @ExcludeMissing fun _action(): JsonField<List<Action>> = action
 
     /**
-     * Specifies whether or not the user is allowed to perform the action on the resource.
+     * Returns the raw JSON value of [effect].
      *
-     * **NOTE:** Use lower case, for example: `"allow"`. If you use upper case, you'll receive an
-     * error.
+     * Unlike [effect], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("effect") @ExcludeMissing fun _effect(): JsonField<Effect> = effect
 
     /**
-     * See
-     * [Statements - Available Resources](https://www.m3ter.com/docs/guides/managing-organization-and-users/creating-and-managing-permissions#statements---available-resources)
-     * for a listing of available resources for Permission Policy statements.
+     * Returns the raw JSON value of [resource].
+     *
+     * Unlike [resource], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("resource") @ExcludeMissing fun _resource(): JsonField<List<String>> = resource
 
@@ -161,34 +161,20 @@ private constructor(
         fun action(action: List<Action>) = action(JsonField.of(action))
 
         /**
-         * The actions available to users who are assigned the Permission Policy - what they can do
-         * or cannot do with respect to the specified resource.
+         * Sets [Builder.action] to an arbitrary JSON value.
          *
-         * **NOTE:** Use lower case and a colon-separated format, for example, if you want to confer
-         * full CRUD, use:
-         * ```
-         * "config:create",
-         * "config:delete",
-         * "config:retrieve",
-         * "config:update"
-         * ```
+         * You should usually call [Builder.action] with a well-typed `List<Action>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun action(action: JsonField<List<Action>>) = apply {
             this.action = action.map { it.toMutableList() }
         }
 
         /**
-         * The actions available to users who are assigned the Permission Policy - what they can do
-         * or cannot do with respect to the specified resource.
+         * Adds a single [Action] to [Builder.action].
          *
-         * **NOTE:** Use lower case and a colon-separated format, for example, if you want to confer
-         * full CRUD, use:
-         * ```
-         * "config:create",
-         * "config:delete",
-         * "config:retrieve",
-         * "config:update"
-         * ```
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addAction(action: Action) = apply {
             this.action =
@@ -206,10 +192,10 @@ private constructor(
         fun effect(effect: Effect) = effect(JsonField.of(effect))
 
         /**
-         * Specifies whether or not the user is allowed to perform the action on the resource.
+         * Sets [Builder.effect] to an arbitrary JSON value.
          *
-         * **NOTE:** Use lower case, for example: `"allow"`. If you use upper case, you'll receive
-         * an error.
+         * You should usually call [Builder.effect] with a well-typed [Effect] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun effect(effect: JsonField<Effect>) = apply { this.effect = effect }
 
@@ -221,18 +207,20 @@ private constructor(
         fun resource(resource: List<String>) = resource(JsonField.of(resource))
 
         /**
-         * See
-         * [Statements - Available Resources](https://www.m3ter.com/docs/guides/managing-organization-and-users/creating-and-managing-permissions#statements---available-resources)
-         * for a listing of available resources for Permission Policy statements.
+         * Sets [Builder.resource] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.resource] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun resource(resource: JsonField<List<String>>) = apply {
             this.resource = resource.map { it.toMutableList() }
         }
 
         /**
-         * See
-         * [Statements - Available Resources](https://www.m3ter.com/docs/guides/managing-organization-and-users/creating-and-managing-permissions#statements---available-resources)
-         * for a listing of available resources for Permission Policy statements.
+         * Adds a single [String] to [Builder.resource].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addResource(resource: String) = apply {
             this.resource =

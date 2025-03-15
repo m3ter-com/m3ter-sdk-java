@@ -57,7 +57,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -65,36 +70,77 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** The code of the data Export Destination. */
+    /**
+     * The code of the data Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
-    /** The id of the user who created the Export Destination. */
+    /**
+     * The id of the user who created the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The DateTime when the Export Destination was created. */
+    /**
+     * The DateTime when the Export Destination was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when the Export Destination was last modified. */
+    /**
+     * The DateTime when the Export Destination was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The id of the user who last modified the Export Destination. */
+    /**
+     * The id of the user who last modified the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The name of the data Export Destination. */
+    /**
+     * The name of the data Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** Name of the S3 bucket for the Export Destination. */
+    /**
+     * Name of the S3 bucket for the Export Destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun bucketName(): Optional<String> = Optional.ofNullable(bucketName.getNullable("bucketName"))
 
     /**
      * The specified IAM role ARN with PutObject permission for the specified `bucketName`, which
      * allows the service to upload Data Exports to your S3 bucket.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun iamRoleArn(): Optional<String> = Optional.ofNullable(iamRoleArn.getNullable("iamRoleArn"))
 
@@ -112,6 +158,9 @@ private constructor(
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      * - Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun partitionOrder(): Optional<PartitionOrder> =
         Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
@@ -119,75 +168,101 @@ private constructor(
     /**
      * Location in specified S3 bucket for the Export Destination. If no `prefix` is specified, then
      * the root of the bucket is used.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The code of the data Export Destination. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-    /** The id of the user who created the Export Destination. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The DateTime when the Export Destination was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when the Export Destination was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The id of the user who last modified the Export Destination. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The name of the data Export Destination. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /** Name of the S3 bucket for the Export Destination. */
+    /**
+     * Returns the raw JSON value of [bucketName].
+     *
+     * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("bucketName") @ExcludeMissing fun _bucketName(): JsonField<String> = bucketName
 
     /**
-     * The specified IAM role ARN with PutObject permission for the specified `bucketName`, which
-     * allows the service to upload Data Exports to your S3 bucket.
+     * Returns the raw JSON value of [iamRoleArn].
+     *
+     * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("iamRoleArn") @ExcludeMissing fun _iamRoleArn(): JsonField<String> = iamRoleArn
 
     /**
-     * Specify how you want the file path to be structured in your bucket destination - by Time
-     * first (Default) or Type first.
+     * Returns the raw JSON value of [partitionOrder].
      *
-     * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
-     *   available, such as `account`, `commitment`, `meter`, and so on.
-     *
-     * Example for Usage Data Export using .CSV format:
-     * - Time first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+     * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("partitionOrder")
     @ExcludeMissing
     fun _partitionOrder(): JsonField<PartitionOrder> = partitionOrder
 
     /**
-     * Location in specified S3 bucket for the Export Destination. If no `prefix` is specified, then
-     * the root of the bucket is used.
+     * Returns the raw JSON value of [prefix].
+     *
+     * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
 
@@ -286,7 +361,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -298,36 +378,59 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The code of the data Export Destination. */
         fun code(code: String) = code(JsonField.of(code))
 
-        /** The code of the data Export Destination. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** The id of the user who created the Export Destination. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The id of the user who created the Export Destination. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The DateTime when the Export Destination was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when the Export Destination was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when the Export Destination was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when the Export Destination was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -335,7 +438,13 @@ private constructor(
         /** The id of the user who last modified the Export Destination. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The id of the user who last modified the Export Destination. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -343,13 +452,24 @@ private constructor(
         /** The name of the data Export Destination. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the data Export Destination. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** Name of the S3 bucket for the Export Destination. */
         fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
 
-        /** Name of the S3 bucket for the Export Destination. */
+        /**
+         * Sets [Builder.bucketName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.bucketName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun bucketName(bucketName: JsonField<String>) = apply { this.bucketName = bucketName }
 
         /**
@@ -359,8 +479,11 @@ private constructor(
         fun iamRoleArn(iamRoleArn: String) = iamRoleArn(JsonField.of(iamRoleArn))
 
         /**
-         * The specified IAM role ARN with PutObject permission for the specified `bucketName`,
-         * which allows the service to upload Data Exports to your S3 bucket.
+         * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.iamRoleArn] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { this.iamRoleArn = iamRoleArn }
 
@@ -383,19 +506,11 @@ private constructor(
             partitionOrder(JsonField.of(partitionOrder))
 
         /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
+         * Sets [Builder.partitionOrder] to an arbitrary JSON value.
          *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
             this.partitionOrder = partitionOrder
@@ -408,8 +523,10 @@ private constructor(
         fun prefix(prefix: String) = prefix(JsonField.of(prefix))
 
         /**
-         * Location in specified S3 bucket for the Export Destination. If no `prefix` is specified,
-         * then the root of the bucket is used.
+         * Sets [Builder.prefix] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.prefix] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
 

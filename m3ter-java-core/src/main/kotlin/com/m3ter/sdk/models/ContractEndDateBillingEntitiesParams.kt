@@ -54,31 +54,47 @@ private constructor(
      * Defines which billing entities associated with the Account will have the specified end-date
      * applied. For example, if you want the specified end-date to be applied to all
      * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun billingEntities(): List<BillingEntity> = body.billingEntities()
 
-    /** The end date and time applied to the specified billing entities _(in ISO 8601 format)_. */
+    /**
+     * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun endDate(): OffsetDateTime = body.endDate()
 
     /**
      * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
      * end-date to be applied to any billing entities associated with Child Accounts. _(Optional)_
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun applyToChildren(): Optional<Boolean> = body.applyToChildren()
 
     /**
-     * Defines which billing entities associated with the Account will have the specified end-date
-     * applied. For example, if you want the specified end-date to be applied to all
-     * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+     * Returns the raw JSON value of [billingEntities].
+     *
+     * Unlike [billingEntities], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billingEntities(): JsonField<List<BillingEntity>> = body._billingEntities()
 
-    /** The end date and time applied to the specified billing entities _(in ISO 8601 format)_. */
+    /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
     /**
-     * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-     * end-date to be applied to any billing entities associated with Child Accounts. _(Optional)_
+     * Returns the raw JSON value of [applyToChildren].
+     *
+     * Unlike [applyToChildren], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _applyToChildren(): JsonField<Boolean> = body._applyToChildren()
 
@@ -123,11 +139,17 @@ private constructor(
          * Defines which billing entities associated with the Account will have the specified
          * end-date applied. For example, if you want the specified end-date to be applied to all
          * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun billingEntities(): List<BillingEntity> = billingEntities.getRequired("billingEntities")
 
         /**
          * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
 
@@ -135,28 +157,35 @@ private constructor(
          * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
          * end-date to be applied to any billing entities associated with Child Accounts.
          * _(Optional)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun applyToChildren(): Optional<Boolean> =
             Optional.ofNullable(applyToChildren.getNullable("applyToChildren"))
 
         /**
-         * Defines which billing entities associated with the Account will have the specified
-         * end-date applied. For example, if you want the specified end-date to be applied to all
-         * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+         * Returns the raw JSON value of [billingEntities].
+         *
+         * Unlike [billingEntities], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("billingEntities")
         @ExcludeMissing
         fun _billingEntities(): JsonField<List<BillingEntity>> = billingEntities
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
         /**
-         * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-         * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * Returns the raw JSON value of [applyToChildren].
+         *
+         * Unlike [applyToChildren], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("applyToChildren")
         @ExcludeMissing
@@ -220,18 +249,20 @@ private constructor(
                 billingEntities(JsonField.of(billingEntities))
 
             /**
-             * Defines which billing entities associated with the Account will have the specified
-             * end-date applied. For example, if you want the specified end-date to be applied to
-             * all Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+             * Sets [Builder.billingEntities] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntities] with a well-typed
+             * `List<BillingEntity>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
              */
             fun billingEntities(billingEntities: JsonField<List<BillingEntity>>) = apply {
                 this.billingEntities = billingEntities.map { it.toMutableList() }
             }
 
             /**
-             * Defines which billing entities associated with the Account will have the specified
-             * end-date applied. For example, if you want the specified end-date to be applied to
-             * all Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+             * Adds a single [BillingEntity] to [billingEntities].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addBillingEntity(billingEntity: BillingEntity) = apply {
                 billingEntities =
@@ -247,8 +278,11 @@ private constructor(
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             /**
-             * The end date and time applied to the specified billing entities _(in ISO 8601
-             * format)_.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
@@ -261,9 +295,11 @@ private constructor(
                 applyToChildren(JsonField.of(applyToChildren))
 
             /**
-             * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-             * end-date to be applied to any billing entities associated with Child Accounts.
-             * _(Optional)_
+             * Sets [Builder.applyToChildren] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.applyToChildren] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun applyToChildren(applyToChildren: JsonField<Boolean>) = apply {
                 this.applyToChildren = applyToChildren
@@ -370,18 +406,20 @@ private constructor(
         }
 
         /**
-         * Defines which billing entities associated with the Account will have the specified
-         * end-date applied. For example, if you want the specified end-date to be applied to all
-         * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+         * Sets [Builder.billingEntities] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingEntities] with a well-typed `List<BillingEntity>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun billingEntities(billingEntities: JsonField<List<BillingEntity>>) = apply {
             body.billingEntities(billingEntities)
         }
 
         /**
-         * Defines which billing entities associated with the Account will have the specified
-         * end-date applied. For example, if you want the specified end-date to be applied to all
-         * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+         * Adds a single [BillingEntity] to [billingEntities].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addBillingEntity(billingEntity: BillingEntity) = apply {
             body.addBillingEntity(billingEntity)
@@ -393,7 +431,11 @@ private constructor(
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
@@ -407,9 +449,11 @@ private constructor(
         }
 
         /**
-         * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-         * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * Sets [Builder.applyToChildren] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.applyToChildren] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun applyToChildren(applyToChildren: JsonField<Boolean>) = apply {
             body.applyToChildren(applyToChildren)

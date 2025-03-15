@@ -51,70 +51,146 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** UUID of the file upload job. */
+    /**
+     * UUID of the file upload job.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
     /**
      * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size in
      * bytes of the file uploaded.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun contentLength(): Optional<Long> =
         Optional.ofNullable(contentLength.getNullable("contentLength"))
 
-    /** The number of rows that failed processing during ingest. */
+    /**
+     * The number of rows that failed processing during ingest.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun failedRows(): Optional<Long> = Optional.ofNullable(failedRows.getNullable("failedRows"))
 
-    /** The name of the measurements file for the upload job. */
+    /**
+     * The name of the measurements file for the upload job.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun fileName(): Optional<String> = Optional.ofNullable(fileName.getNullable("fileName"))
 
-    /** The number of rows that were processed during ingest. */
+    /**
+     * The number of rows that were processed during ingest.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun processedRows(): Optional<Long> =
         Optional.ofNullable(processedRows.getNullable("processedRows"))
 
-    /** The status of the file upload job. */
+    /**
+     * The status of the file upload job.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
 
-    /** The total number of rows in the file. */
+    /**
+     * The total number of rows in the file.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun totalRows(): Optional<Long> = Optional.ofNullable(totalRows.getNullable("totalRows"))
 
-    /** The upload date for the upload job _(in ISO-8601 format)_. */
+    /**
+     * The upload date for the upload job _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun uploadDate(): Optional<String> = Optional.ofNullable(uploadDate.getNullable("uploadDate"))
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * The version number. Default value when newly created is one.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-    /** UUID of the file upload job. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size in
-     * bytes of the file uploaded.
+     * Returns the raw JSON value of [contentLength].
+     *
+     * Unlike [contentLength], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("contentLength")
     @ExcludeMissing
     fun _contentLength(): JsonField<Long> = contentLength
 
-    /** The number of rows that failed processing during ingest. */
+    /**
+     * Returns the raw JSON value of [failedRows].
+     *
+     * Unlike [failedRows], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("failedRows") @ExcludeMissing fun _failedRows(): JsonField<Long> = failedRows
 
-    /** The name of the measurements file for the upload job. */
+    /**
+     * Returns the raw JSON value of [fileName].
+     *
+     * Unlike [fileName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("fileName") @ExcludeMissing fun _fileName(): JsonField<String> = fileName
 
-    /** The number of rows that were processed during ingest. */
+    /**
+     * Returns the raw JSON value of [processedRows].
+     *
+     * Unlike [processedRows], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("processedRows")
     @ExcludeMissing
     fun _processedRows(): JsonField<Long> = processedRows
 
-    /** The status of the file upload job. */
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
-    /** The total number of rows in the file. */
+    /**
+     * Returns the raw JSON value of [totalRows].
+     *
+     * Unlike [totalRows], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("totalRows") @ExcludeMissing fun _totalRows(): JsonField<Long> = totalRows
 
-    /** The upload date for the upload job _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [uploadDate].
+     *
+     * Unlike [uploadDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("uploadDate") @ExcludeMissing fun _uploadDate(): JsonField<String> = uploadDate
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnyGetter
@@ -179,7 +255,12 @@ private constructor(
         /** UUID of the file upload job. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** UUID of the file upload job. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -189,8 +270,11 @@ private constructor(
         fun contentLength(contentLength: Long) = contentLength(JsonField.of(contentLength))
 
         /**
-         * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size
-         * in bytes of the file uploaded.
+         * Sets [Builder.contentLength] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contentLength] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun contentLength(contentLength: JsonField<Long>) = apply {
             this.contentLength = contentLength
@@ -199,19 +283,35 @@ private constructor(
         /** The number of rows that failed processing during ingest. */
         fun failedRows(failedRows: Long) = failedRows(JsonField.of(failedRows))
 
-        /** The number of rows that failed processing during ingest. */
+        /**
+         * Sets [Builder.failedRows] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.failedRows] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun failedRows(failedRows: JsonField<Long>) = apply { this.failedRows = failedRows }
 
         /** The name of the measurements file for the upload job. */
         fun fileName(fileName: String) = fileName(JsonField.of(fileName))
 
-        /** The name of the measurements file for the upload job. */
+        /**
+         * Sets [Builder.fileName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fileName] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun fileName(fileName: JsonField<String>) = apply { this.fileName = fileName }
 
         /** The number of rows that were processed during ingest. */
         fun processedRows(processedRows: Long) = processedRows(JsonField.of(processedRows))
 
-        /** The number of rows that were processed during ingest. */
+        /**
+         * Sets [Builder.processedRows] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.processedRows] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun processedRows(processedRows: JsonField<Long>) = apply {
             this.processedRows = processedRows
         }
@@ -219,25 +319,46 @@ private constructor(
         /** The status of the file upload job. */
         fun status(status: Status) = status(JsonField.of(status))
 
-        /** The status of the file upload job. */
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /** The total number of rows in the file. */
         fun totalRows(totalRows: Long) = totalRows(JsonField.of(totalRows))
 
-        /** The total number of rows in the file. */
+        /**
+         * Sets [Builder.totalRows] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.totalRows] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun totalRows(totalRows: JsonField<Long>) = apply { this.totalRows = totalRows }
 
         /** The upload date for the upload job _(in ISO-8601 format)_. */
         fun uploadDate(uploadDate: String) = uploadDate(JsonField.of(uploadDate))
 
-        /** The upload date for the upload job _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.uploadDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.uploadDate] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun uploadDate(uploadDate: JsonField<String>) = apply { this.uploadDate = uploadDate }
 
         /** The version number. Default value when newly created is one. */
         fun version(version: Long) = version(JsonField.of(version))
 
-        /** The version number. Default value when newly created is one. */
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

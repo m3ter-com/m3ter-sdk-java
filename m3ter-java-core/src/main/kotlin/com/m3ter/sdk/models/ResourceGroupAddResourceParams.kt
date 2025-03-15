@@ -43,6 +43,9 @@ private constructor(
      * The id of the item or group you want to:
      * - _Add Item_ call: add to a Resource Group.
      * - _Remove Item_ call: remove from the Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun targetId(): String = body.targetId()
 
@@ -55,32 +58,39 @@ private constructor(
      *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
      *       nested Resource Group
      *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun targetType(): TargetType = body.targetType()
 
-    /** The version number of the group. */
+    /**
+     * The version number of the group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * The id of the item or group you want to:
-     * - _Add Item_ call: add to a Resource Group.
-     * - _Remove Item_ call: remove from the Resource Group.
+     * Returns the raw JSON value of [targetId].
+     *
+     * Unlike [targetId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _targetId(): JsonField<String> = body._targetId()
 
     /**
-     * When adding to or removing from a Resource Group, specify whether a single item or group:
-     * - `item`
-     *     - _Add Item_ call: use to add a single meter to a Resource Group
-     *     - _Remove Item_ call: use to remove a single from a Resource Group.
-     * - `group`
-     *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
-     *       nested Resource Group
-     *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     * Returns the raw JSON value of [targetType].
+     *
+     * Unlike [targetType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _targetType(): JsonField<TargetType> = body._targetType()
 
-    /** The version number of the group. */
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _version(): JsonField<Long> = body._version()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -125,6 +135,9 @@ private constructor(
          * The id of the item or group you want to:
          * - _Add Item_ call: add to a Resource Group.
          * - _Remove Item_ call: remove from the Resource Group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun targetId(): String = targetId.getRequired("targetId")
 
@@ -137,34 +150,41 @@ private constructor(
          *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
          *       nested Resource Group
          *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun targetType(): TargetType = targetType.getRequired("targetType")
 
-        /** The version number of the group. */
+        /**
+         * The version number of the group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * Returns the raw JSON value of [targetId].
+         *
+         * Unlike [targetId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("targetId") @ExcludeMissing fun _targetId(): JsonField<String> = targetId
 
         /**
-         * When adding to or removing from a Resource Group, specify whether a single item or group:
-         * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
-         * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
-         *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         * Returns the raw JSON value of [targetType].
+         *
+         * Unlike [targetType], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("targetType")
         @ExcludeMissing
         fun _targetType(): JsonField<TargetType> = targetType
 
-        /** The version number of the group. */
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         @JsonAnyGetter
@@ -224,9 +244,11 @@ private constructor(
             fun targetId(targetId: String) = targetId(JsonField.of(targetId))
 
             /**
-             * The id of the item or group you want to:
-             * - _Add Item_ call: add to a Resource Group.
-             * - _Remove Item_ call: remove from the Resource Group.
+             * Sets [Builder.targetId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun targetId(targetId: JsonField<String>) = apply { this.targetId = targetId }
 
@@ -244,15 +266,11 @@ private constructor(
             fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
 
             /**
-             * When adding to or removing from a Resource Group, specify whether a single item or
-             * group:
-             * - `item`
-             *     - _Add Item_ call: use to add a single meter to a Resource Group
-             *     - _Remove Item_ call: use to remove a single from a Resource Group.
-             * - `group`
-             *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form
-             *       a nested Resource Group
-             *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+             * Sets [Builder.targetType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetType] with a well-typed [TargetType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun targetType(targetType: JsonField<TargetType>) = apply {
                 this.targetType = targetType
@@ -261,7 +279,13 @@ private constructor(
             /** The version number of the group. */
             fun version(version: Long) = version(JsonField.of(version))
 
-            /** The version number of the group. */
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -367,9 +391,10 @@ private constructor(
         fun targetId(targetId: String) = apply { body.targetId(targetId) }
 
         /**
-         * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * Sets [Builder.targetId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun targetId(targetId: JsonField<String>) = apply { body.targetId(targetId) }
 
@@ -386,21 +411,23 @@ private constructor(
         fun targetType(targetType: TargetType) = apply { body.targetType(targetType) }
 
         /**
-         * When adding to or removing from a Resource Group, specify whether a single item or group:
-         * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
-         * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
-         *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         * Sets [Builder.targetType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetType] with a well-typed [TargetType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun targetType(targetType: JsonField<TargetType>) = apply { body.targetType(targetType) }
 
         /** The version number of the group. */
         fun version(version: Long) = apply { body.version(version) }
 
-        /** The version number of the group. */
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

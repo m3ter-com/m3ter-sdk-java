@@ -106,7 +106,7 @@ private constructor(
         /** The file path */
         fun file(file: String?) = apply { this.file = file }
 
-        /** The file path */
+        /** Alias for calling [Builder.file] with `file.orElse(null)`. */
         fun file(file: Optional<String>) = file(file.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

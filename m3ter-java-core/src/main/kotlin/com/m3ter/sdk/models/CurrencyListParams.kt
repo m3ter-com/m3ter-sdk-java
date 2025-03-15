@@ -134,28 +134,26 @@ private constructor(
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 
         /**
-         * Filter by archived flag. A True / False flag indicating whether to return Currencies that
-         * are archived _(obsolete)_.
-         * - TRUE - return archived Currencies.
-         * - FALSE - archived Currencies are not returned.
+         * Alias for [Builder.archived].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun archived(archived: Boolean) = archived(archived as Boolean?)
 
-        /**
-         * Filter by archived flag. A True / False flag indicating whether to return Currencies that
-         * are archived _(obsolete)_.
-         * - TRUE - return archived Currencies.
-         * - FALSE - archived Currencies are not returned.
-         */
+        /** Alias for calling [Builder.archived] with `archived.orElse(null)`. */
         fun archived(archived: Optional<Boolean>) = archived(archived.getOrNull())
 
         /** An optional parameter to retrieve specific Currencies based on their short codes. */
         fun codes(codes: List<String>?) = apply { this.codes = codes?.toMutableList() }
 
-        /** An optional parameter to retrieve specific Currencies based on their short codes. */
+        /** Alias for calling [Builder.codes] with `codes.orElse(null)`. */
         fun codes(codes: Optional<List<String>>) = codes(codes.getOrNull())
 
-        /** An optional parameter to retrieve specific Currencies based on their short codes. */
+        /**
+         * Adds a single [String] to [codes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addCode(code: String) = apply { codes = (codes ?: mutableListOf()).apply { add(code) } }
 
         /**
@@ -164,15 +162,13 @@ private constructor(
          */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /**
-         * An optional parameter to filter the list based on specific Currency unique identifiers
-         * (UUIDs).
-         */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
-         * An optional parameter to filter the list based on specific Currency unique identifiers
-         * (UUIDs).
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
@@ -182,19 +178,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * Currencies in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Currencies to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of Currencies to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of Currencies to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

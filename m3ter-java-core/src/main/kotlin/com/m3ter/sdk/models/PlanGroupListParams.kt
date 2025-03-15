@@ -116,10 +116,14 @@ private constructor(
             this.accountId = accountId?.toMutableList()
         }
 
-        /** Optional filter. The list of Account IDs to which the PlanGroups belong. */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<List<String>>) = accountId(accountId.getOrNull())
 
-        /** Optional filter. The list of Account IDs to which the PlanGroups belong. */
+        /**
+         * Adds a single [String] to [Builder.accountId].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAccountId(accountId: String) = apply {
             this.accountId = (this.accountId ?: mutableListOf()).apply { add(accountId) }
         }
@@ -127,10 +131,14 @@ private constructor(
         /** Optional filter. The list of PlanGroup IDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** Optional filter. The list of PlanGroup IDs to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** Optional filter. The list of PlanGroup IDs to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /**
@@ -139,19 +147,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * PlanGroups in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of PlanGroups to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of PlanGroups to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of PlanGroups to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

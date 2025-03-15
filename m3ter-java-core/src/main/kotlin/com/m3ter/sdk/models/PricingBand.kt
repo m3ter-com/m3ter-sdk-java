@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -37,35 +38,80 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Fixed price charged for the Pricing band. */
+    /**
+     * Fixed price charged for the Pricing band.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun fixedPrice(): Double = fixedPrice.getRequired("fixedPrice")
 
-    /** Lower limit for the Pricing band. */
+    /**
+     * Lower limit for the Pricing band.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun lowerLimit(): Double = lowerLimit.getRequired("lowerLimit")
 
-    /** Unit price charged for the Pricing band. */
+    /**
+     * Unit price charged for the Pricing band.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun unitPrice(): Double = unitPrice.getRequired("unitPrice")
 
-    /** The ID for the Pricing band. */
+    /**
+     * The ID for the Pricing band.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
-    /** **OBSOLETE - this is deprecated and no longer used.** */
+    /**
+     * **OBSOLETE - this is deprecated and no longer used.**
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun creditTypeId(): Optional<String> =
         Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
 
-    /** Fixed price charged for the Pricing band. */
+    /**
+     * Returns the raw JSON value of [fixedPrice].
+     *
+     * Unlike [fixedPrice], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("fixedPrice") @ExcludeMissing fun _fixedPrice(): JsonField<Double> = fixedPrice
 
-    /** Lower limit for the Pricing band. */
+    /**
+     * Returns the raw JSON value of [lowerLimit].
+     *
+     * Unlike [lowerLimit], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lowerLimit") @ExcludeMissing fun _lowerLimit(): JsonField<Double> = lowerLimit
 
-    /** Unit price charged for the Pricing band. */
+    /**
+     * Returns the raw JSON value of [unitPrice].
+     *
+     * Unlike [unitPrice], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("unitPrice") @ExcludeMissing fun _unitPrice(): JsonField<Double> = unitPrice
 
-    /** The ID for the Pricing band. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** **OBSOLETE - this is deprecated and no longer used.** */
+    /**
+     * Returns the raw JSON value of [creditTypeId].
+     *
+     * Unlike [creditTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("creditTypeId")
     @ExcludeMissing
     fun _creditTypeId(): JsonField<String> = creditTypeId
@@ -129,31 +175,60 @@ private constructor(
         /** Fixed price charged for the Pricing band. */
         fun fixedPrice(fixedPrice: Double) = fixedPrice(JsonField.of(fixedPrice))
 
-        /** Fixed price charged for the Pricing band. */
+        /**
+         * Sets [Builder.fixedPrice] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fixedPrice] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun fixedPrice(fixedPrice: JsonField<Double>) = apply { this.fixedPrice = fixedPrice }
 
         /** Lower limit for the Pricing band. */
         fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
-        /** Lower limit for the Pricing band. */
+        /**
+         * Sets [Builder.lowerLimit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lowerLimit] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun lowerLimit(lowerLimit: JsonField<Double>) = apply { this.lowerLimit = lowerLimit }
 
         /** Unit price charged for the Pricing band. */
         fun unitPrice(unitPrice: Double) = unitPrice(JsonField.of(unitPrice))
 
-        /** Unit price charged for the Pricing band. */
+        /**
+         * Sets [Builder.unitPrice] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unitPrice] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun unitPrice(unitPrice: JsonField<Double>) = apply { this.unitPrice = unitPrice }
 
         /** The ID for the Pricing band. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The ID for the Pricing band. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** **OBSOLETE - this is deprecated and no longer used.** */
         fun creditTypeId(creditTypeId: String) = creditTypeId(JsonField.of(creditTypeId))
 
-        /** **OBSOLETE - this is deprecated and no longer used.** */
+        /**
+         * Sets [Builder.creditTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.creditTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun creditTypeId(creditTypeId: JsonField<String>) = apply {
             this.creditTypeId = creditTypeId
         }

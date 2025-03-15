@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -45,6 +46,9 @@ private constructor(
     /**
      * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set or
      * update the expiration of the user's access.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dtEndAccess(): Optional<OffsetDateTime> = body.dtEndAccess()
 
@@ -55,6 +59,9 @@ private constructor(
      * See
      * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
      * for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun permissionPolicy(): Optional<List<PermissionStatementResponse>> = body.permissionPolicy()
 
@@ -65,32 +72,31 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set or
-     * update the expiration of the user's access.
+     * Returns the raw JSON value of [dtEndAccess].
+     *
+     * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dtEndAccess(): JsonField<OffsetDateTime> = body._dtEndAccess()
 
     /**
-     * An array of permission statements for the user. Each permission statement defines a specific
-     * permission for the user.
+     * Returns the raw JSON value of [permissionPolicy].
      *
-     * See
-     * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-     * for more information.
+     * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = body._permissionPolicy()
 
     /**
-     * The version number of the entity:
-     * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-     *   response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -135,6 +141,9 @@ private constructor(
         /**
          * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
          * or update the expiration of the user's access.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun dtEndAccess(): Optional<OffsetDateTime> =
             Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
@@ -146,6 +155,9 @@ private constructor(
          * See
          * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
          * for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
             Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
@@ -157,36 +169,35 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
-         * or update the expiration of the user's access.
+         * Returns the raw JSON value of [dtEndAccess].
+         *
+         * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dtEndAccess")
         @ExcludeMissing
         fun _dtEndAccess(): JsonField<OffsetDateTime> = dtEndAccess
 
         /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
+         * Returns the raw JSON value of [permissionPolicy].
          *
-         * See
-         * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-         * for more information.
+         * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
         fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
         /**
-         * The version number of the entity:
-         * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-         *   response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -239,8 +250,11 @@ private constructor(
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
 
             /**
-             * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to
-             * set or update the expiration of the user's access.
+             * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
                 this.dtEndAccess = dtEndAccess
@@ -258,12 +272,11 @@ private constructor(
                 permissionPolicy(JsonField.of(permissionPolicy))
 
             /**
-             * An array of permission statements for the user. Each permission statement defines a
-             * specific permission for the user.
+             * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
              *
-             * See
-             * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-             * for more information.
+             * You should usually call [Builder.permissionPolicy] with a well-typed
+             * `List<PermissionStatementResponse>` value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
              */
             fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
                 apply {
@@ -271,12 +284,9 @@ private constructor(
                 }
 
             /**
-             * An array of permission statements for the user. Each permission statement defines a
-             * specific permission for the user.
+             * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
              *
-             * See
-             * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-             * for more information.
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
                 this.permissionPolicy =
@@ -296,12 +306,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-             *   response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -397,8 +406,11 @@ private constructor(
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
-         * or update the expiration of the user's access.
+         * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
             body.dtEndAccess(dtEndAccess)
@@ -417,12 +429,11 @@ private constructor(
         }
 
         /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
+         * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
          *
-         * See
-         * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-         * for more information.
+         * You should usually call [Builder.permissionPolicy] with a well-typed
+         * `List<PermissionStatementResponse>` value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
          */
         fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
             apply {
@@ -430,12 +441,9 @@ private constructor(
             }
 
         /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
+         * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
          *
-         * See
-         * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-         * for more information.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             body.addPermissionPolicy(permissionPolicy)
@@ -452,12 +460,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-         *   response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

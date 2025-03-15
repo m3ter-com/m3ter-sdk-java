@@ -186,14 +186,12 @@ private constructor(
          */
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        /**
-         * The Account ID associated with the Event to filter the results. Returns the Events that
-         * have been generated for the Account.
-         */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
+        /** Alias for calling [Builder.eventName] with `eventName.orElse(null)`. */
         fun eventName(eventName: Optional<String>) = eventName(eventName.getOrNull())
 
         /**
@@ -205,13 +203,7 @@ private constructor(
          */
         fun eventType(eventType: String?) = apply { this.eventType = eventType }
 
-        /**
-         * The category of Events to filter the results by. Options:
-         * - Notification
-         * - IntegrationEvent
-         * - IngestValidationFailure
-         * - DataExportJobFailure
-         */
+        /** Alias for calling [Builder.eventType] with `eventType.orElse(null)`. */
         fun eventType(eventType: Optional<String>) = eventType(eventType.getOrNull())
 
         /**
@@ -221,17 +213,13 @@ private constructor(
          */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /**
-         * List of Event UUIDs to filter the results.
-         *
-         * **NOTE:** cannot be used with other filters.
-         */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
-         * List of Event UUIDs to filter the results.
+         * Adds a single [String] to [ids].
          *
-         * **NOTE:** cannot be used with other filters.
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
@@ -245,17 +233,13 @@ private constructor(
         }
 
         /**
-         * A Boolean flag indicating whether to return Events that have been actioned.
-         * - **TRUE** - include actioned Events.
-         * - **FALSE** - exclude actioned Events.
+         * Alias for [Builder.includeActioned].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun includeActioned(includeActioned: Boolean) = includeActioned(includeActioned as Boolean?)
 
-        /**
-         * A Boolean flag indicating whether to return Events that have been actioned.
-         * - **TRUE** - include actioned Events.
-         * - **FALSE** - exclude actioned Events.
-         */
+        /** Alias for calling [Builder.includeActioned] with `includeActioned.orElse(null)`. */
         fun includeActioned(includeActioned: Optional<Boolean>) =
             includeActioned(includeActioned.getOrNull())
 
@@ -265,10 +249,7 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Events in
-         * a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /**
@@ -279,10 +260,7 @@ private constructor(
             this.notificationCode = notificationCode
         }
 
-        /**
-         * Short code of the Notification to filter the results. Returns the Events that have
-         * triggered the Notification.
-         */
+        /** Alias for calling [Builder.notificationCode] with `notificationCode.orElse(null)`. */
         fun notificationCode(notificationCode: Optional<String>) =
             notificationCode(notificationCode.getOrNull())
 
@@ -292,24 +270,26 @@ private constructor(
          */
         fun notificationId(notificationId: String?) = apply { this.notificationId = notificationId }
 
-        /**
-         * Notification UUID to filter the results. Returns the Events that have triggered the
-         * Notification.
-         */
+        /** Alias for calling [Builder.notificationId] with `notificationId.orElse(null)`. */
         fun notificationId(notificationId: Optional<String>) =
             notificationId(notificationId.getOrNull())
 
         /** The maximum number of Events to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** The maximum number of Events to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** The maximum number of Events to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun resourceId(resourceId: String?) = apply { this.resourceId = resourceId }
 
+        /** Alias for calling [Builder.resourceId] with `resourceId.orElse(null)`. */
         fun resourceId(resourceId: Optional<String>) = resourceId(resourceId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

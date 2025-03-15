@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -29,12 +30,16 @@ private constructor(
     /**
      * A message indicating the success or failure of the Bills' approval, along with relevant
      * details.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun message(): Optional<String> = Optional.ofNullable(message.getNullable("message"))
 
     /**
-     * A message indicating the success or failure of the Bills' approval, along with relevant
-     * details.
+     * Returns the raw JSON value of [message].
+     *
+     * Unlike [message], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("message") @ExcludeMissing fun _message(): JsonField<String> = message
 
@@ -80,8 +85,10 @@ private constructor(
         fun message(message: String) = message(JsonField.of(message))
 
         /**
-         * A message indicating the success or failure of the Bills' approval, along with relevant
-         * details.
+         * Sets [Builder.message] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.message] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun message(message: JsonField<String>) = apply { this.message = message }
 
