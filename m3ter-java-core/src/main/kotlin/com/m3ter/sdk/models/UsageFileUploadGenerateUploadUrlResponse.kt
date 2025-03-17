@@ -174,6 +174,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UsageFileUploadGenerateUploadUrlResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): UsageFileUploadGenerateUploadUrlResponse =
             UsageFileUploadGenerateUploadUrlResponse(
                 headers,
@@ -243,6 +248,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Headers].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Headers = Headers(additionalProperties.toImmutable())
         }
 

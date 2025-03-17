@@ -60,6 +60,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [M3terError].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): M3terError = M3terError(additionalProperties.toImmutable())
     }
 

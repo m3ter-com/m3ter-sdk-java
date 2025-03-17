@@ -111,6 +111,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [BillApproveResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): BillApproveResponse =
             BillApproveResponse(message, additionalProperties.toImmutable())
     }

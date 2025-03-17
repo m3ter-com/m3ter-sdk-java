@@ -226,6 +226,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ResourceGroupListPermissionsParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .type()
+         * .resourceGroupId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ResourceGroupListPermissionsParams =
             ResourceGroupListPermissionsParams(
                 checkRequired("orgId", orgId),

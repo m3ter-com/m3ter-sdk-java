@@ -109,6 +109,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [SubmitMeasurementsResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): SubmitMeasurementsResponse =
             SubmitMeasurementsResponse(result, additionalProperties.toImmutable())
     }

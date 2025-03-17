@@ -260,6 +260,20 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ResourceGroupListContentsParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .type()
+         * .resourceGroupId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ResourceGroupListContentsParams =
             ResourceGroupListContentsParams(
                 checkRequired("orgId", orgId),

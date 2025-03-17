@@ -236,6 +236,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalMappingListByM3terEntityParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .entity()
+         * .m3terId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalMappingListByM3terEntityParams =
             ExternalMappingListByM3terEntityParams(
                 checkRequired("orgId", orgId),

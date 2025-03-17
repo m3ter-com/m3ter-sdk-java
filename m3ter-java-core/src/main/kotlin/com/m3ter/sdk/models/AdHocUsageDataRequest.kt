@@ -465,6 +465,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AdHocUsageDataRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AdHocUsageDataRequest =
             AdHocUsageDataRequest(
                 checkRequired("aggregationFrequency", aggregationFrequency),

@@ -106,6 +106,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [DownloadUrlResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): DownloadUrlResponse =
             DownloadUrlResponse(url, additionalProperties.toImmutable())
     }
