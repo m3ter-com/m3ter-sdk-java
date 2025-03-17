@@ -1269,6 +1269,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [BillResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): BillResponse =
             BillResponse(
                 checkRequired("id", id),
@@ -2858,6 +2871,27 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [LineItem].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .averageUnitPrice()
+             * .conversionRate()
+             * .convertedSubtotal()
+             * .currency()
+             * .description()
+             * .lineItemType()
+             * .quantity()
+             * .subtotal()
+             * .unit()
+             * .units()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): LineItem =
                 LineItem(
                     checkRequired("averageUnitPrice", averageUnitPrice),
@@ -3163,6 +3197,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Group].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Group = Group(additionalProperties.toImmutable())
             }
 
@@ -3249,6 +3288,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Segment].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Segment = Segment(additionalProperties.toImmutable())
             }
 
@@ -3689,6 +3733,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [UsagePerPricingBand].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): UsagePerPricingBand =
                     UsagePerPricingBand(
                         bandQuantity,

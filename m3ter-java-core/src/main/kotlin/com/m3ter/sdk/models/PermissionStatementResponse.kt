@@ -248,6 +248,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PermissionStatementResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .action()
+         * .effect()
+         * .resource()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PermissionStatementResponse =
             PermissionStatementResponse(
                 checkRequired("action", action).map { it.toImmutable() },

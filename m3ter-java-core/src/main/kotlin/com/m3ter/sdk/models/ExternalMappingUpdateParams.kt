@@ -519,6 +519,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .externalId()
+             * .externalSystem()
+             * .externalTable()
+             * .m3terEntity()
+             * .m3terId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("externalId", externalId),
@@ -814,6 +830,24 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalMappingUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .externalId()
+         * .externalSystem()
+         * .externalTable()
+         * .m3terEntity()
+         * .m3terId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalMappingUpdateParams =
             ExternalMappingUpdateParams(
                 checkRequired("orgId", orgId),

@@ -216,6 +216,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AdHocOperationalDataRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .operationalDataTypes()
+         * .sourceType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AdHocOperationalDataRequest =
             AdHocOperationalDataRequest(
                 checkRequired("operationalDataTypes", operationalDataTypes).map {

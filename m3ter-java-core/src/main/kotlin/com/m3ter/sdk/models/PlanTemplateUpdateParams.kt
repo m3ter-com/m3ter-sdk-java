@@ -1236,6 +1236,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .billFrequency()
+             * .currency()
+             * .name()
+             * .productId()
+             * .standingCharge()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("billFrequency", billFrequency),
@@ -1760,6 +1776,24 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PlanTemplateUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .billFrequency()
+         * .currency()
+         * .name()
+         * .productId()
+         * .standingCharge()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PlanTemplateUpdateParams =
             PlanTemplateUpdateParams(
                 checkRequired("orgId", orgId),
@@ -1975,6 +2009,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
         }
 

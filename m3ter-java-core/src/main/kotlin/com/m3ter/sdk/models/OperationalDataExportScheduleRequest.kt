@@ -220,6 +220,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [OperationalDataExportScheduleRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .operationalDataTypes()
+         * .sourceType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): OperationalDataExportScheduleRequest =
             OperationalDataExportScheduleRequest(
                 checkRequired("operationalDataTypes", operationalDataTypes).map {

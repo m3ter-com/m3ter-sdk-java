@@ -217,6 +217,21 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CommitmentFee].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .amount()
+         * .date()
+         * .servicePeriodEndDate()
+         * .servicePeriodStartDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CommitmentFee =
             CommitmentFee(
                 checkRequired("amount", amount),

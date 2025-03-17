@@ -198,6 +198,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PermissionPolicyRemoveFromUserGroupParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .permissionPolicyId()
+         * .principalPermissionRequest()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PermissionPolicyRemoveFromUserGroupParams =
             PermissionPolicyRemoveFromUserGroupParams(
                 checkRequired("orgId", orgId),

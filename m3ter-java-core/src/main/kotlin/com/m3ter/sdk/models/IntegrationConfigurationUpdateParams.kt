@@ -622,6 +622,25 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .configData()
+             * .credentials()
+             * .destination()
+             * .destinationId()
+             * .entityId()
+             * .entityType()
+             * .integrationCredentialsId()
+             * .name()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("configData", configData),
@@ -955,6 +974,27 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [IntegrationConfigurationUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .configData()
+         * .credentials()
+         * .destination()
+         * .destinationId()
+         * .entityId()
+         * .entityType()
+         * .integrationCredentialsId()
+         * .name()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): IntegrationConfigurationUpdateParams =
             IntegrationConfigurationUpdateParams(
                 checkRequired("orgId", orgId),
@@ -1027,6 +1067,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ConfigData].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ConfigData = ConfigData(additionalProperties.toImmutable())
         }
 
@@ -1297,6 +1342,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Credentials].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Credentials =
                 Credentials(
                     checkRequired("type", type),

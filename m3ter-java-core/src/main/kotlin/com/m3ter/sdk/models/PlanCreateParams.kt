@@ -1127,6 +1127,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .code()
+             * .name()
+             * .planTemplateId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("code", code),
@@ -1608,6 +1622,21 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PlanCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .code()
+         * .name()
+         * .planTemplateId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PlanCreateParams =
             PlanCreateParams(
                 checkRequired("orgId", orgId),
@@ -1688,6 +1717,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
         }
 

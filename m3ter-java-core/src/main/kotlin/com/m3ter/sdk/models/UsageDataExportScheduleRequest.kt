@@ -467,6 +467,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UsageDataExportScheduleRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * .timePeriod()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UsageDataExportScheduleRequest =
             UsageDataExportScheduleRequest(
                 checkRequired("aggregationFrequency", aggregationFrequency),

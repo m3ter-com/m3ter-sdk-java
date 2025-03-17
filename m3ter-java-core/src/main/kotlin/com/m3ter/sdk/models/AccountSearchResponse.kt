@@ -150,6 +150,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AccountSearchResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): AccountSearchResponse =
             AccountSearchResponse(
                 (data ?: JsonMissing.of()).map { it.toImmutable() },

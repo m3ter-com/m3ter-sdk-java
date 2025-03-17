@@ -621,6 +621,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CustomFieldsResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CustomFieldsResponse =
             CustomFieldsResponse(
                 checkRequired("id", id),
@@ -702,6 +715,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Account].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Account = Account(additionalProperties.toImmutable())
         }
 
@@ -782,6 +800,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountPlan].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AccountPlan = AccountPlan(additionalProperties.toImmutable())
         }
 
@@ -862,6 +885,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Aggregation].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Aggregation = Aggregation(additionalProperties.toImmutable())
         }
 
@@ -942,6 +970,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CompoundAggregation].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CompoundAggregation =
                 CompoundAggregation(additionalProperties.toImmutable())
         }
@@ -1023,6 +1056,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Meter].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Meter = Meter(additionalProperties.toImmutable())
         }
 
@@ -1103,6 +1141,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Organization].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Organization = Organization(additionalProperties.toImmutable())
         }
 
@@ -1183,6 +1226,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Plan].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Plan = Plan(additionalProperties.toImmutable())
         }
 
@@ -1263,6 +1311,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [PlanTemplate].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): PlanTemplate = PlanTemplate(additionalProperties.toImmutable())
         }
 
@@ -1343,6 +1396,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Product].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Product = Product(additionalProperties.toImmutable())
         }
 

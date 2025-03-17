@@ -1836,6 +1836,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .currency()
+             * .dayEpoch()
+             * .daysBeforeBillDue()
+             * .monthEpoch()
+             * .timezone()
+             * .weekEpoch()
+             * .yearEpoch()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("currency", currency),
@@ -2567,6 +2585,25 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [OrganizationConfigUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .currency()
+         * .dayEpoch()
+         * .daysBeforeBillDue()
+         * .monthEpoch()
+         * .timezone()
+         * .weekEpoch()
+         * .yearEpoch()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): OrganizationConfigUpdateParams =
             OrganizationConfigUpdateParams(
                 checkRequired("orgId", orgId),

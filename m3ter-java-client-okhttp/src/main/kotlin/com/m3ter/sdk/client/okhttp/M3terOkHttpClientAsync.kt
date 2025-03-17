@@ -157,6 +157,11 @@ class M3terOkHttpClientAsync private constructor() {
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
+        /**
+         * Returns an immutable instance of [M3terClientAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): M3terClientAsync =
             M3terClientAsyncImpl(
                 clientOptions

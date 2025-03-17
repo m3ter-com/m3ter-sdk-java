@@ -603,6 +603,23 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [IntegrationConfigurationResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .destination()
+         * .entityId()
+         * .entityType()
+         * .status()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): IntegrationConfigurationResponse =
             IntegrationConfigurationResponse(
                 checkRequired("id", id),

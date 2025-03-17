@@ -205,6 +205,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ContractEndDateBillingEntitiesResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): ContractEndDateBillingEntitiesResponse =
             ContractEndDateBillingEntitiesResponse(
                 failedEntities,
@@ -444,6 +449,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [FailedEntities].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): FailedEntities =
                 FailedEntities(
                     accountplan,
@@ -703,6 +713,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [UpdatedEntities].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): UpdatedEntities =
                 UpdatedEntities(
                     accountplan,

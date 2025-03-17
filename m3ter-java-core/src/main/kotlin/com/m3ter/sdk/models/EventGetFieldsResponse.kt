@@ -120,6 +120,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [EventGetFieldsResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): EventGetFieldsResponse =
             EventGetFieldsResponse(events, additionalProperties.toImmutable())
     }
@@ -191,6 +196,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Events].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Events = Events(additionalProperties.toImmutable())
         }
 

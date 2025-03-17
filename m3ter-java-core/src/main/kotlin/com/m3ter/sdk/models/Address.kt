@@ -332,6 +332,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Address].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): Address =
             Address(
                 addressLine1,

@@ -522,6 +522,24 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalMappingResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .externalId()
+         * .externalSystem()
+         * .externalTable()
+         * .m3terEntity()
+         * .m3terId()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalMappingResponse =
             ExternalMappingResponse(
                 checkRequired("id", id),
