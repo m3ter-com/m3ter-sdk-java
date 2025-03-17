@@ -9,7 +9,7 @@ repositories {
 
 allprojects {
     group = "com.m3ter.sdk"
-    version = "0.1.0-alpha.9" // x-release-please-version
+    version = "0.1.0-alpha.10" // x-release-please-version
 }
 
 subprojects {
