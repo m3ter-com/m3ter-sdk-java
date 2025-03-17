@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -49,10 +50,18 @@ private constructor(
      * The media type of the entity body sent, for example: `"contentType":"text/json"`.
      *
      * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload Service.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun contentType(): String = body.contentType()
 
-    /** The name of the measurements file to be uploaded. */
+    /**
+     * The name of the measurements file to be uploaded.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun fileName(): String = body.fileName()
 
     /**
@@ -60,24 +69,30 @@ private constructor(
      * bytes of the file to upload.
      *
      * **NOTE:** Required.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun contentLength(): Optional<Long> = body.contentLength()
 
     /**
-     * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+     * Returns the raw JSON value of [contentType].
      *
-     * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload Service.
+     * Unlike [contentType], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _contentType(): JsonField<String> = body._contentType()
 
-    /** The name of the measurements file to be uploaded. */
+    /**
+     * Returns the raw JSON value of [fileName].
+     *
+     * Unlike [fileName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _fileName(): JsonField<String> = body._fileName()
 
     /**
-     * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size in
-     * bytes of the file to upload.
+     * Returns the raw JSON value of [contentLength].
      *
-     * **NOTE:** Required.
+     * Unlike [contentLength], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _contentLength(): JsonField<Long> = body._contentLength()
 
@@ -123,10 +138,18 @@ private constructor(
          *
          * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
          * Service.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun contentType(): String = contentType.getRequired("contentType")
 
-        /** The name of the measurements file to be uploaded. */
+        /**
+         * The name of the measurements file to be uploaded.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun fileName(): String = fileName.getRequired("fileName")
 
         /**
@@ -134,28 +157,34 @@ private constructor(
          * in bytes of the file to upload.
          *
          * **NOTE:** Required.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun contentLength(): Optional<Long> =
             Optional.ofNullable(contentLength.getNullable("contentLength"))
 
         /**
-         * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+         * Returns the raw JSON value of [contentType].
          *
-         * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
-         * Service.
+         * Unlike [contentType], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("contentType")
         @ExcludeMissing
         fun _contentType(): JsonField<String> = contentType
 
-        /** The name of the measurements file to be uploaded. */
+        /**
+         * Returns the raw JSON value of [fileName].
+         *
+         * Unlike [fileName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("fileName") @ExcludeMissing fun _fileName(): JsonField<String> = fileName
 
         /**
-         * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size
-         * in bytes of the file to upload.
+         * Returns the raw JSON value of [contentLength].
          *
-         * **NOTE:** Required.
+         * Unlike [contentLength], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("contentLength")
         @ExcludeMissing
@@ -219,10 +248,11 @@ private constructor(
             fun contentType(contentType: String) = contentType(JsonField.of(contentType))
 
             /**
-             * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+             * Sets [Builder.contentType] to an arbitrary JSON value.
              *
-             * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
-             * Service.
+             * You should usually call [Builder.contentType] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun contentType(contentType: JsonField<String>) = apply {
                 this.contentType = contentType
@@ -231,7 +261,13 @@ private constructor(
             /** The name of the measurements file to be uploaded. */
             fun fileName(fileName: String) = fileName(JsonField.of(fileName))
 
-            /** The name of the measurements file to be uploaded. */
+            /**
+             * Sets [Builder.fileName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fileName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun fileName(fileName: JsonField<String>) = apply { this.fileName = fileName }
 
             /**
@@ -243,10 +279,11 @@ private constructor(
             fun contentLength(contentLength: Long) = contentLength(JsonField.of(contentLength))
 
             /**
-             * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the
-             * size in bytes of the file to upload.
+             * Sets [Builder.contentLength] to an arbitrary JSON value.
              *
-             * **NOTE:** Required.
+             * You should usually call [Builder.contentLength] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun contentLength(contentLength: JsonField<Long>) = apply {
                 this.contentLength = contentLength
@@ -347,17 +384,23 @@ private constructor(
         fun contentType(contentType: String) = apply { body.contentType(contentType) }
 
         /**
-         * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+         * Sets [Builder.contentType] to an arbitrary JSON value.
          *
-         * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
-         * Service.
+         * You should usually call [Builder.contentType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun contentType(contentType: JsonField<String>) = apply { body.contentType(contentType) }
 
         /** The name of the measurements file to be uploaded. */
         fun fileName(fileName: String) = apply { body.fileName(fileName) }
 
-        /** The name of the measurements file to be uploaded. */
+        /**
+         * Sets [Builder.fileName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.fileName] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun fileName(fileName: JsonField<String>) = apply { body.fileName(fileName) }
 
         /**
@@ -369,10 +412,11 @@ private constructor(
         fun contentLength(contentLength: Long) = apply { body.contentLength(contentLength) }
 
         /**
-         * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size
-         * in bytes of the file to upload.
+         * Sets [Builder.contentLength] to an arbitrary JSON value.
          *
-         * **NOTE:** Required.
+         * You should usually call [Builder.contentLength] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun contentLength(contentLength: JsonField<Long>) = apply {
             body.contentLength(contentLength)

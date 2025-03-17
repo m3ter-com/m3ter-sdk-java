@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -37,7 +38,12 @@ private constructor(
 
     fun id(): String = id
 
-    /** The name of the entity. */
+    /**
+     * The name of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -45,10 +51,18 @@ private constructor(
      * archived if it is obsolete.
      * - TRUE - the entity is in the archived state.
      * - FALSE - the entity is not in the archived state.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun archived(): Optional<Boolean> = body.archived()
 
-    /** The short code for the entity. */
+    /**
+     * The short code for the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
@@ -58,30 +72,37 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The name of the entity. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * A Boolean TRUE / FALSE flag indicating whether the entity is archived. An entity can be
-     * archived if it is obsolete.
-     * - TRUE - the entity is in the archived state.
-     * - FALSE - the entity is not in the archived state.
+     * Returns the raw JSON value of [archived].
+     *
+     * Unlike [archived], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _archived(): JsonField<Boolean> = body._archived()
 
-    /** The short code for the entity. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -125,7 +146,12 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The name of the entity. */
+        /**
+         * The name of the entity.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -133,10 +159,18 @@ private constructor(
          * archived if it is obsolete.
          * - TRUE - the entity is in the archived state.
          * - FALSE - the entity is not in the archived state.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun archived(): Optional<Boolean> = Optional.ofNullable(archived.getNullable("archived"))
 
-        /** The short code for the entity. */
+        /**
+         * The short code for the entity.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
@@ -146,30 +180,37 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The name of the entity. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * A Boolean TRUE / FALSE flag indicating whether the entity is archived. An entity can be
-         * archived if it is obsolete.
-         * - TRUE - the entity is in the archived state.
-         * - FALSE - the entity is not in the archived state.
+         * Returns the raw JSON value of [archived].
+         *
+         * Unlike [archived], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("archived") @ExcludeMissing fun _archived(): JsonField<Boolean> = archived
 
-        /** The short code for the entity. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -227,7 +268,13 @@ private constructor(
             /** The name of the entity. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the entity. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -239,17 +286,24 @@ private constructor(
             fun archived(archived: Boolean) = archived(JsonField.of(archived))
 
             /**
-             * A Boolean TRUE / FALSE flag indicating whether the entity is archived. An entity can
-             * be archived if it is obsolete.
-             * - TRUE - the entity is in the archived state.
-             * - FALSE - the entity is not in the archived state.
+             * Sets [Builder.archived] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.archived] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun archived(archived: JsonField<Boolean>) = apply { this.archived = archived }
 
             /** The short code for the entity. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** The short code for the entity. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -263,12 +317,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -362,7 +415,12 @@ private constructor(
         /** The name of the entity. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the entity. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -374,17 +432,23 @@ private constructor(
         fun archived(archived: Boolean) = apply { body.archived(archived) }
 
         /**
-         * A Boolean TRUE / FALSE flag indicating whether the entity is archived. An entity can be
-         * archived if it is obsolete.
-         * - TRUE - the entity is in the archived state.
-         * - FALSE - the entity is not in the archived state.
+         * Sets [Builder.archived] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.archived] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun archived(archived: JsonField<Boolean>) = apply { body.archived(archived) }
 
         /** The short code for the entity. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** The short code for the entity. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -398,12 +462,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

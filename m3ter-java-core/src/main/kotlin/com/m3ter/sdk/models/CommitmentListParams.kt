@@ -167,14 +167,12 @@ private constructor(
          */
         fun accountId(accountId: String?) = apply { this.accountId = accountId }
 
-        /**
-         * The unique identifier (UUID) for the Account. This parameter helps filter the Commitments
-         * related to a specific end-customer Account.
-         */
+        /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
 
         fun contractId(contractId: String?) = apply { this.contractId = contractId }
 
+        /** Alias for calling [Builder.contractId] with `contractId.orElse(null)`. */
         fun contractId(contractId: Optional<String>) = contractId(contractId.getOrNull())
 
         /**
@@ -183,10 +181,7 @@ private constructor(
          */
         fun date(date: String?) = apply { this.date = date }
 
-        /**
-         * A date _(in ISO-8601 format)_ to filter Commitments which are active on this specific
-         * date.
-         */
+        /** Alias for calling [Builder.date] with `date.orElse(null)`. */
         fun date(date: Optional<String>) = date(date.getOrNull())
 
         /**
@@ -195,10 +190,7 @@ private constructor(
          */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
 
-        /**
-         * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
-         * before this date will be included.
-         */
+        /** Alias for calling [Builder.endDateEnd] with `endDateEnd.orElse(null)`. */
         fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /**
@@ -207,10 +199,7 @@ private constructor(
          */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
 
-        /**
-         * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
-         * on or after this date will be included.
-         */
+        /** Alias for calling [Builder.endDateStart] with `endDateStart.orElse(null)`. */
         fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
 
         /**
@@ -219,15 +208,13 @@ private constructor(
          */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /**
-         * A list of unique identifiers (UUIDs) for the Commitments to retrieve. Use this to fetch
-         * specific Commitments in a single request.
-         */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
-         * A list of unique identifiers (UUIDs) for the Commitments to retrieve. Use this to fetch
-         * specific Commitments in a single request.
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
@@ -237,19 +224,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * Commitments in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of Commitments to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of Commitments to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of Commitments to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
@@ -258,10 +246,7 @@ private constructor(
          */
         fun productId(productId: String?) = apply { this.productId = productId }
 
-        /**
-         * The unique identifier (UUID) for the Product. This parameter helps filter the Commitments
-         * related to a specific Product.
-         */
+        /** Alias for calling [Builder.productId] with `productId.orElse(null)`. */
         fun productId(productId: Optional<String>) = productId(productId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

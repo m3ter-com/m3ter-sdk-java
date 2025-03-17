@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -39,12 +40,20 @@ private constructor(
 
     fun id(): String = id
 
-    /** The short code for the Notification. */
+    /**
+     * The short code for the Notification.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun code(): String = body.code()
 
     /**
      * The description for the Notification providing a brief overview of its purpose and
      * functionality.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun description(): String = body.description()
 
@@ -56,10 +65,18 @@ private constructor(
      * **Note:** If the Notification is set to always fire, then the Notification will always be
      * sent when the Event of the type it is based on occurs, and without any other conditions
      * defined by a calculation having to be met.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun eventName(): String = body.eventName()
 
-    /** The name of the Notification. */
+    /**
+     * The name of the Notification.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
@@ -67,6 +84,9 @@ private constructor(
      * sent when triggered by the Event they are based on:
      * - **TRUE** - set Notification as active.
      * - **FALSE** - set Notification as inactive.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun active(): Optional<Boolean> = body.active()
 
@@ -79,6 +99,9 @@ private constructor(
      *   to check for other conditions being true before triggering the Notification.
      * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
      *   calculation is checked and all conditions defined by the calculation are met.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun alwaysFireEvent(): Optional<Boolean> = body.alwaysFireEvent()
 
@@ -90,6 +113,9 @@ private constructor(
      * See
      * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun calculation(): Optional<String> = body.calculation()
 
@@ -100,70 +126,65 @@ private constructor(
      * - **Update:** On Update, version is required and must match the existing version because a
      *   check is performed to ensure sequential versioning is preserved. Version is incremented by
      *   1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The short code for the Notification. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * The description for the Notification providing a brief overview of its purpose and
-     * functionality.
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _description(): JsonField<String> = body._description()
 
     /**
-     * The name of the _Event type_ that the Notification is based on. When an Event of this type
-     * occurs and any calculation built into the Notification evaluates to `True`, the Notification
-     * is triggered.
+     * Returns the raw JSON value of [eventName].
      *
-     * **Note:** If the Notification is set to always fire, then the Notification will always be
-     * sent when the Event of the type it is based on occurs, and without any other conditions
-     * defined by a calculation having to be met.
+     * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _eventName(): JsonField<String> = body._eventName()
 
-    /** The name of the Notification. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * Boolean flag that sets the Notification as active or inactive. Only active Notifications are
-     * sent when triggered by the Event they are based on:
-     * - **TRUE** - set Notification as active.
-     * - **FALSE** - set Notification as inactive.
+     * Returns the raw JSON value of [active].
+     *
+     * Unlike [active], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _active(): JsonField<Boolean> = body._active()
 
     /**
-     * A Boolean flag indicating whether the Notification is always triggered, regardless of other
-     * conditions and omitting reference to any calculation. This means the Notification will be
-     * triggered simply by the Event it is based on occurring and with no further conditions having
-     * to be met.
-     * - **TRUE** - the Notification is always triggered and omits any reference to the calculation
-     *   to check for other conditions being true before triggering the Notification.
-     * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
-     *   calculation is checked and all conditions defined by the calculation are met.
+     * Returns the raw JSON value of [alwaysFireEvent].
+     *
+     * Unlike [alwaysFireEvent], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _alwaysFireEvent(): JsonField<Boolean> = body._alwaysFireEvent()
 
     /**
-     * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`, a
-     * Notification for the Event is created and sent to the configured destination. Calculations
-     * can reference numeric, string, and boolean Event fields.
+     * Returns the raw JSON value of [calculation].
      *
-     * See
-     * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
-     * in the m3ter documentation for more information.
+     * Unlike [calculation], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _calculation(): JsonField<String> = body._calculation()
 
     /**
-     * The version number for the Notification:
-     * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-     *   initial Create, version is set at 1 and listed in the response.
-     * - **Update:** On Update, version is required and must match the existing version because a
-     *   check is performed to ensure sequential versioning is preserved. Version is incremented by
-     *   1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -220,12 +241,20 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The short code for the Notification. */
+        /**
+         * The short code for the Notification.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun code(): String = code.getRequired("code")
 
         /**
          * The description for the Notification providing a brief overview of its purpose and
          * functionality.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun description(): String = description.getRequired("description")
 
@@ -237,10 +266,18 @@ private constructor(
          * **Note:** If the Notification is set to always fire, then the Notification will always be
          * sent when the Event of the type it is based on occurs, and without any other conditions
          * defined by a calculation having to be met.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun eventName(): String = eventName.getRequired("eventName")
 
-        /** The name of the Notification. */
+        /**
+         * The name of the Notification.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
@@ -248,6 +285,9 @@ private constructor(
          * are sent when triggered by the Event they are based on:
          * - **TRUE** - set Notification as active.
          * - **FALSE** - set Notification as inactive.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun active(): Optional<Boolean> = Optional.ofNullable(active.getNullable("active"))
 
@@ -261,6 +301,9 @@ private constructor(
          *   Notification.
          * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
          *   any calculation is checked and all conditions defined by the calculation are met.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun alwaysFireEvent(): Optional<Boolean> =
             Optional.ofNullable(alwaysFireEvent.getNullable("alwaysFireEvent"))
@@ -273,6 +316,9 @@ private constructor(
          * See
          * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun calculation(): Optional<String> =
             Optional.ofNullable(calculation.getNullable("calculation"))
@@ -284,77 +330,72 @@ private constructor(
          * - **Update:** On Update, version is required and must match the existing version because
          *   a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The short code for the Notification. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * The description for the Notification providing a brief overview of its purpose and
-         * functionality.
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
         /**
-         * The name of the _Event type_ that the Notification is based on. When an Event of this
-         * type occurs and any calculation built into the Notification evaluates to `True`, the
-         * Notification is triggered.
+         * Returns the raw JSON value of [eventName].
          *
-         * **Note:** If the Notification is set to always fire, then the Notification will always be
-         * sent when the Event of the type it is based on occurs, and without any other conditions
-         * defined by a calculation having to be met.
+         * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("eventName") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
 
-        /** The name of the Notification. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * Boolean flag that sets the Notification as active or inactive. Only active Notifications
-         * are sent when triggered by the Event they are based on:
-         * - **TRUE** - set Notification as active.
-         * - **FALSE** - set Notification as inactive.
+         * Returns the raw JSON value of [active].
+         *
+         * Unlike [active], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("active") @ExcludeMissing fun _active(): JsonField<Boolean> = active
 
         /**
-         * A Boolean flag indicating whether the Notification is always triggered, regardless of
-         * other conditions and omitting reference to any calculation. This means the Notification
-         * will be triggered simply by the Event it is based on occurring and with no further
-         * conditions having to be met.
-         * - **TRUE** - the Notification is always triggered and omits any reference to the
-         *   calculation to check for other conditions being true before triggering the
-         *   Notification.
-         * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
-         *   any calculation is checked and all conditions defined by the calculation are met.
+         * Returns the raw JSON value of [alwaysFireEvent].
+         *
+         * Unlike [alwaysFireEvent], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("alwaysFireEvent")
         @ExcludeMissing
         fun _alwaysFireEvent(): JsonField<Boolean> = alwaysFireEvent
 
         /**
-         * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`, a
-         * Notification for the Event is created and sent to the configured destination.
-         * Calculations can reference numeric, string, and boolean Event fields.
+         * Returns the raw JSON value of [calculation].
          *
-         * See
-         * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
-         * in the m3ter documentation for more information.
+         * Unlike [calculation], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("calculation")
         @ExcludeMissing
         fun _calculation(): JsonField<String> = calculation
 
         /**
-         * The version number for the Notification:
-         * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-         *   initial Create, version is set at 1 and listed in the response.
-         * - **Update:** On Update, version is required and must match the existing version because
-         *   a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -427,7 +468,13 @@ private constructor(
             /** The short code for the Notification. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** The short code for the Notification. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -437,8 +484,11 @@ private constructor(
             fun description(description: String) = description(JsonField.of(description))
 
             /**
-             * The description for the Notification providing a brief overview of its purpose and
-             * functionality.
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
@@ -456,20 +506,24 @@ private constructor(
             fun eventName(eventName: String) = eventName(JsonField.of(eventName))
 
             /**
-             * The name of the _Event type_ that the Notification is based on. When an Event of this
-             * type occurs and any calculation built into the Notification evaluates to `True`, the
-             * Notification is triggered.
+             * Sets [Builder.eventName] to an arbitrary JSON value.
              *
-             * **Note:** If the Notification is set to always fire, then the Notification will
-             * always be sent when the Event of the type it is based on occurs, and without any
-             * other conditions defined by a calculation having to be met.
+             * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
 
             /** The name of the Notification. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the Notification. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -481,10 +535,11 @@ private constructor(
             fun active(active: Boolean) = active(JsonField.of(active))
 
             /**
-             * Boolean flag that sets the Notification as active or inactive. Only active
-             * Notifications are sent when triggered by the Event they are based on:
-             * - **TRUE** - set Notification as active.
-             * - **FALSE** - set Notification as inactive.
+             * Sets [Builder.active] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.active] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun active(active: JsonField<Boolean>) = apply { this.active = active }
 
@@ -504,16 +559,11 @@ private constructor(
                 alwaysFireEvent(JsonField.of(alwaysFireEvent))
 
             /**
-             * A Boolean flag indicating whether the Notification is always triggered, regardless of
-             * other conditions and omitting reference to any calculation. This means the
-             * Notification will be triggered simply by the Event it is based on occurring and with
-             * no further conditions having to be met.
-             * - **TRUE** - the Notification is always triggered and omits any reference to the
-             *   calculation to check for other conditions being true before triggering the
-             *   Notification.
-             * - **FALSE** - the Notification is only triggered when the Event it is based on occurs
-             *   and any calculation is checked and all conditions defined by the calculation are
-             *   met.
+             * Sets [Builder.alwaysFireEvent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.alwaysFireEvent] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun alwaysFireEvent(alwaysFireEvent: JsonField<Boolean>) = apply {
                 this.alwaysFireEvent = alwaysFireEvent
@@ -531,13 +581,11 @@ private constructor(
             fun calculation(calculation: String) = calculation(JsonField.of(calculation))
 
             /**
-             * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`,
-             * a Notification for the Event is created and sent to the configured destination.
-             * Calculations can reference numeric, string, and boolean Event fields.
+             * Sets [Builder.calculation] to an arbitrary JSON value.
              *
-             * See
-             * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.calculation] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun calculation(calculation: JsonField<String>) = apply {
                 this.calculation = calculation
@@ -554,12 +602,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number for the Notification:
-             * - **Create:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update:** On Update, version is required and must match the existing version
-             *   because a check is performed to ensure sequential versioning is preserved. Version
-             *   is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -664,7 +711,12 @@ private constructor(
         /** The short code for the Notification. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** The short code for the Notification. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -674,8 +726,11 @@ private constructor(
         fun description(description: String) = apply { body.description(description) }
 
         /**
-         * The description for the Notification providing a brief overview of its purpose and
-         * functionality.
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
@@ -691,20 +746,23 @@ private constructor(
         fun eventName(eventName: String) = apply { body.eventName(eventName) }
 
         /**
-         * The name of the _Event type_ that the Notification is based on. When an Event of this
-         * type occurs and any calculation built into the Notification evaluates to `True`, the
-         * Notification is triggered.
+         * Sets [Builder.eventName] to an arbitrary JSON value.
          *
-         * **Note:** If the Notification is set to always fire, then the Notification will always be
-         * sent when the Event of the type it is based on occurs, and without any other conditions
-         * defined by a calculation having to be met.
+         * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun eventName(eventName: JsonField<String>) = apply { body.eventName(eventName) }
 
         /** The name of the Notification. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the Notification. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -716,10 +774,10 @@ private constructor(
         fun active(active: Boolean) = apply { body.active(active) }
 
         /**
-         * Boolean flag that sets the Notification as active or inactive. Only active Notifications
-         * are sent when triggered by the Event they are based on:
-         * - **TRUE** - set Notification as active.
-         * - **FALSE** - set Notification as inactive.
+         * Sets [Builder.active] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.active] with a well-typed [Boolean] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun active(active: JsonField<Boolean>) = apply { body.active(active) }
 
@@ -739,15 +797,11 @@ private constructor(
         }
 
         /**
-         * A Boolean flag indicating whether the Notification is always triggered, regardless of
-         * other conditions and omitting reference to any calculation. This means the Notification
-         * will be triggered simply by the Event it is based on occurring and with no further
-         * conditions having to be met.
-         * - **TRUE** - the Notification is always triggered and omits any reference to the
-         *   calculation to check for other conditions being true before triggering the
-         *   Notification.
-         * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
-         *   any calculation is checked and all conditions defined by the calculation are met.
+         * Sets [Builder.alwaysFireEvent] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.alwaysFireEvent] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun alwaysFireEvent(alwaysFireEvent: JsonField<Boolean>) = apply {
             body.alwaysFireEvent(alwaysFireEvent)
@@ -765,13 +819,11 @@ private constructor(
         fun calculation(calculation: String) = apply { body.calculation(calculation) }
 
         /**
-         * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`, a
-         * Notification for the Event is created and sent to the configured destination.
-         * Calculations can reference numeric, string, and boolean Event fields.
+         * Sets [Builder.calculation] to an arbitrary JSON value.
          *
-         * See
-         * [Creating Calculations](https://www.m3ter.com/docs/guides/utilizing-events-and-notifications/key-concepts-and-relationships#creating-calculations)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.calculation] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun calculation(calculation: JsonField<String>) = apply { body.calculation(calculation) }
 
@@ -786,12 +838,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number for the Notification:
-         * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-         *   initial Create, version is set at 1 and listed in the response.
-         * - **Update:** On Update, version is required and must match the existing version because
-         *   a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

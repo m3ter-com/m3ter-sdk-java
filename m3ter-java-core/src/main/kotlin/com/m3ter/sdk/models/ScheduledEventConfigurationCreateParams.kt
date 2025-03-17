@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -34,12 +35,18 @@ private constructor(
     /**
      * The referenced configuration or billing entity for which the desired scheduled Event will
      * trigger.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun entity(): String = body.entity()
 
     /**
      * A DateTime field for which the desired scheduled Event will trigger - this must be a DateTime
      * field on the referenced billing or configuration entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun field(): String = body.field()
 
@@ -51,12 +58,18 @@ private constructor(
      *
      * For example:
      * - `scheduled.bill.endDateEvent`
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun name(): String = body.name()
 
     /**
      * The offset in days from the specified DateTime field on the referenced entity when the
      * scheduled Event will trigger.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun offset(): Long = body.offset()
 
@@ -67,45 +80,44 @@ private constructor(
      * - **Update Entity**: On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * The referenced configuration or billing entity for which the desired scheduled Event will
-     * trigger.
+     * Returns the raw JSON value of [entity].
+     *
+     * Unlike [entity], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _entity(): JsonField<String> = body._entity()
 
     /**
-     * A DateTime field for which the desired scheduled Event will trigger - this must be a DateTime
-     * field on the referenced billing or configuration entity.
+     * Returns the raw JSON value of [field].
+     *
+     * Unlike [field], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _field(): JsonField<String> = body._field()
 
     /**
-     * The name of the custom Scheduled Event Configuration.
+     * Returns the raw JSON value of [name].
      *
-     * This must be in the format:
-     * - scheduled._name of entity_._custom event name_
-     *
-     * For example:
-     * - `scheduled.bill.endDateEvent`
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * The offset in days from the specified DateTime field on the referenced entity when the
-     * scheduled Event will trigger.
+     * Returns the raw JSON value of [offset].
+     *
+     * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _offset(): JsonField<Long> = body._offset()
 
     /**
-     * The version number of the scheduled event configuration:
-     * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-     *   Create, version is set at 1 and listed in the response.
-     * - **Update Entity**: On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -155,12 +167,18 @@ private constructor(
         /**
          * The referenced configuration or billing entity for which the desired scheduled Event will
          * trigger.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun entity(): String = entity.getRequired("entity")
 
         /**
          * A DateTime field for which the desired scheduled Event will trigger - this must be a
          * DateTime field on the referenced billing or configuration entity.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun field(): String = field.getRequired("field")
 
@@ -172,12 +190,18 @@ private constructor(
          *
          * For example:
          * - `scheduled.bill.endDateEvent`
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun name(): String = name.getRequired("name")
 
         /**
          * The offset in days from the specified DateTime field on the referenced entity when the
          * scheduled Event will trigger.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun offset(): Long = offset.getRequired("offset")
 
@@ -188,45 +212,44 @@ private constructor(
          * - **Update Entity**: On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * The referenced configuration or billing entity for which the desired scheduled Event will
-         * trigger.
+         * Returns the raw JSON value of [entity].
+         *
+         * Unlike [entity], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("entity") @ExcludeMissing fun _entity(): JsonField<String> = entity
 
         /**
-         * A DateTime field for which the desired scheduled Event will trigger - this must be a
-         * DateTime field on the referenced billing or configuration entity.
+         * Returns the raw JSON value of [field].
+         *
+         * Unlike [field], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<String> = field
 
         /**
-         * The name of the custom Scheduled Event Configuration.
+         * Returns the raw JSON value of [name].
          *
-         * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
-         *
-         * For example:
-         * - `scheduled.bill.endDateEvent`
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * The offset in days from the specified DateTime field on the referenced entity when the
-         * scheduled Event will trigger.
+         * Returns the raw JSON value of [offset].
+         *
+         * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Long> = offset
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -294,8 +317,11 @@ private constructor(
             fun entity(entity: String) = entity(JsonField.of(entity))
 
             /**
-             * The referenced configuration or billing entity for which the desired scheduled Event
-             * will trigger.
+             * Sets [Builder.entity] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entity] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun entity(entity: JsonField<String>) = apply { this.entity = entity }
 
@@ -306,8 +332,11 @@ private constructor(
             fun field(field: String) = field(JsonField.of(field))
 
             /**
-             * A DateTime field for which the desired scheduled Event will trigger - this must be a
-             * DateTime field on the referenced billing or configuration entity.
+             * Sets [Builder.field] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.field] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun field(field: JsonField<String>) = apply { this.field = field }
 
@@ -323,13 +352,11 @@ private constructor(
             fun name(name: String) = name(JsonField.of(name))
 
             /**
-             * The name of the custom Scheduled Event Configuration.
+             * Sets [Builder.name] to an arbitrary JSON value.
              *
-             * This must be in the format:
-             * - scheduled._name of entity_._custom event name_
-             *
-             * For example:
-             * - `scheduled.bill.endDateEvent`
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
@@ -340,8 +367,11 @@ private constructor(
             fun offset(offset: Long) = offset(JsonField.of(offset))
 
             /**
-             * The offset in days from the specified DateTime field on the referenced entity when
-             * the scheduled Event will trigger.
+             * Sets [Builder.offset] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun offset(offset: JsonField<Long>) = apply { this.offset = offset }
 
@@ -356,12 +386,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the scheduled event configuration:
-             * - **Create entity**: Not valid for initial insertion - do not use for Create. On
-             *   initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity**: On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -463,8 +492,10 @@ private constructor(
         fun entity(entity: String) = apply { body.entity(entity) }
 
         /**
-         * The referenced configuration or billing entity for which the desired scheduled Event will
-         * trigger.
+         * Sets [Builder.entity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entity] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun entity(entity: JsonField<String>) = apply { body.entity(entity) }
 
@@ -475,8 +506,10 @@ private constructor(
         fun field(field: String) = apply { body.field(field) }
 
         /**
-         * A DateTime field for which the desired scheduled Event will trigger - this must be a
-         * DateTime field on the referenced billing or configuration entity.
+         * Sets [Builder.field] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.field] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun field(field: JsonField<String>) = apply { body.field(field) }
 
@@ -492,13 +525,10 @@ private constructor(
         fun name(name: String) = apply { body.name(name) }
 
         /**
-         * The name of the custom Scheduled Event Configuration.
+         * Sets [Builder.name] to an arbitrary JSON value.
          *
-         * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
-         *
-         * For example:
-         * - `scheduled.bill.endDateEvent`
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
@@ -509,8 +539,10 @@ private constructor(
         fun offset(offset: Long) = apply { body.offset(offset) }
 
         /**
-         * The offset in days from the specified DateTime field on the referenced entity when the
-         * scheduled Event will trigger.
+         * Sets [Builder.offset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun offset(offset: JsonField<Long>) = apply { body.offset(offset) }
 
@@ -525,12 +557,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

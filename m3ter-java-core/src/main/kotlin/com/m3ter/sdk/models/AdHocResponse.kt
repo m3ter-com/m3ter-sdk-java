@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -25,10 +26,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The id of the job */
+    /**
+     * The id of the job
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun jobId(): Optional<String> = Optional.ofNullable(jobId.getNullable("jobId"))
 
-    /** The id of the job */
+    /**
+     * Returns the raw JSON value of [jobId].
+     *
+     * Unlike [jobId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("jobId") @ExcludeMissing fun _jobId(): JsonField<String> = jobId
 
     @JsonAnyGetter
@@ -69,7 +79,12 @@ private constructor(
         /** The id of the job */
         fun jobId(jobId: String) = jobId(JsonField.of(jobId))
 
-        /** The id of the job */
+        /**
+         * Sets [Builder.jobId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.jobId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun jobId(jobId: JsonField<String>) = apply { this.jobId = jobId }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

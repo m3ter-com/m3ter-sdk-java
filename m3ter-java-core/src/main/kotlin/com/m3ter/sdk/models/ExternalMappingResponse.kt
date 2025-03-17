@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -59,25 +60,53 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** The unique identifier (UUID) of the entity in the external system. */
+    /**
+     * The unique identifier (UUID) of the entity in the external system.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun externalId(): String = externalId.getRequired("externalId")
 
-    /** The name of the external system where the entity you are mapping resides. */
+    /**
+     * The name of the external system where the entity you are mapping resides.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun externalSystem(): String = externalSystem.getRequired("externalSystem")
 
-    /** The name of the table in the external system where the entity resides. */
+    /**
+     * The name of the table in the external system where the entity resides.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun externalTable(): String = externalTable.getRequired("externalTable")
 
     /**
      * The name of the m3ter entity that is part of the External Mapping. For example, this could be
      * "Account".
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun m3terEntity(): String = m3terEntity.getRequired("m3terEntity")
 
-    /** The unique identifier (UUID) of the m3ter entity. */
+    /**
+     * The unique identifier (UUID) of the m3ter entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun m3terId(): String = m3terId.getRequired("m3terId")
 
     /**
@@ -85,80 +114,149 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
-    /** The ID of the user who created this item. */
+    /**
+     * The ID of the user who created this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** UUID of the configuration this mapping is for */
+    /**
+     * UUID of the configuration this mapping is for
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun integrationConfigId(): Optional<String> =
         Optional.ofNullable(integrationConfigId.getNullable("integrationConfigId"))
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * The ID of the user who last modified this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The unique identifier (UUID) of the entity in the external system. */
+    /**
+     * Returns the raw JSON value of [externalId].
+     *
+     * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("externalId") @ExcludeMissing fun _externalId(): JsonField<String> = externalId
 
-    /** The name of the external system where the entity you are mapping resides. */
+    /**
+     * Returns the raw JSON value of [externalSystem].
+     *
+     * Unlike [externalSystem], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("externalSystem")
     @ExcludeMissing
     fun _externalSystem(): JsonField<String> = externalSystem
 
-    /** The name of the table in the external system where the entity resides. */
+    /**
+     * Returns the raw JSON value of [externalTable].
+     *
+     * Unlike [externalTable], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("externalTable")
     @ExcludeMissing
     fun _externalTable(): JsonField<String> = externalTable
 
     /**
-     * The name of the m3ter entity that is part of the External Mapping. For example, this could be
-     * "Account".
+     * Returns the raw JSON value of [m3terEntity].
+     *
+     * Unlike [m3terEntity], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("m3terEntity") @ExcludeMissing fun _m3terEntity(): JsonField<String> = m3terEntity
 
-    /** The unique identifier (UUID) of the m3ter entity. */
+    /**
+     * Returns the raw JSON value of [m3terId].
+     *
+     * Unlike [m3terId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("m3terId") @ExcludeMissing fun _m3terId(): JsonField<String> = m3terId
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
-    /** The ID of the user who created this item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** UUID of the configuration this mapping is for */
+    /**
+     * Returns the raw JSON value of [integrationConfigId].
+     *
+     * Unlike [integrationConfigId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("integrationConfigId")
     @ExcludeMissing
     fun _integrationConfigId(): JsonField<String> = integrationConfigId
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
@@ -247,19 +345,36 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The unique identifier (UUID) of the entity in the external system. */
         fun externalId(externalId: String) = externalId(JsonField.of(externalId))
 
-        /** The unique identifier (UUID) of the entity in the external system. */
+        /**
+         * Sets [Builder.externalId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /** The name of the external system where the entity you are mapping resides. */
         fun externalSystem(externalSystem: String) = externalSystem(JsonField.of(externalSystem))
 
-        /** The name of the external system where the entity you are mapping resides. */
+        /**
+         * Sets [Builder.externalSystem] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalSystem] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun externalSystem(externalSystem: JsonField<String>) = apply {
             this.externalSystem = externalSystem
         }
@@ -267,7 +382,13 @@ private constructor(
         /** The name of the table in the external system where the entity resides. */
         fun externalTable(externalTable: String) = externalTable(JsonField.of(externalTable))
 
-        /** The name of the table in the external system where the entity resides. */
+        /**
+         * Sets [Builder.externalTable] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalTable] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun externalTable(externalTable: JsonField<String>) = apply {
             this.externalTable = externalTable
         }
@@ -279,15 +400,23 @@ private constructor(
         fun m3terEntity(m3terEntity: String) = m3terEntity(JsonField.of(m3terEntity))
 
         /**
-         * The name of the m3ter entity that is part of the External Mapping. For example, this
-         * could be "Account".
+         * Sets [Builder.m3terEntity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.m3terEntity] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun m3terEntity(m3terEntity: JsonField<String>) = apply { this.m3terEntity = m3terEntity }
 
         /** The unique identifier (UUID) of the m3ter entity. */
         fun m3terId(m3terId: String) = m3terId(JsonField.of(m3terId))
 
-        /** The unique identifier (UUID) of the m3ter entity. */
+        /**
+         * Sets [Builder.m3terId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.m3terId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun m3terId(m3terId: JsonField<String>) = apply { this.m3terId = m3terId }
 
         /**
@@ -299,30 +428,48 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The ID of the user who created this item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The DateTime when this item was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -331,7 +478,13 @@ private constructor(
         fun integrationConfigId(integrationConfigId: String) =
             integrationConfigId(JsonField.of(integrationConfigId))
 
-        /** UUID of the configuration this mapping is for */
+        /**
+         * Sets [Builder.integrationConfigId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.integrationConfigId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun integrationConfigId(integrationConfigId: JsonField<String>) = apply {
             this.integrationConfigId = integrationConfigId
         }
@@ -339,7 +492,13 @@ private constructor(
         /** The ID of the user who last modified this item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The ID of the user who last modified this item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }

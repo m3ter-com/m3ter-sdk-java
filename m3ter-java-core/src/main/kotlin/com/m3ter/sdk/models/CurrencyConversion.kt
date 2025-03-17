@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -34,22 +35,49 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Currency to convert from. For example: GBP. */
+    /**
+     * Currency to convert from. For example: GBP.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun from(): String = from.getRequired("from")
 
-    /** Currency to convert to. For example: USD. */
+    /**
+     * Currency to convert to. For example: USD.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun to(): String = to.getRequired("to")
 
-    /** Conversion rate between currencies. */
+    /**
+     * Conversion rate between currencies.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun multiplier(): Optional<Double> = Optional.ofNullable(multiplier.getNullable("multiplier"))
 
-    /** Currency to convert from. For example: GBP. */
+    /**
+     * Returns the raw JSON value of [from].
+     *
+     * Unlike [from], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("from") @ExcludeMissing fun _from(): JsonField<String> = from
 
-    /** Currency to convert to. For example: USD. */
+    /**
+     * Returns the raw JSON value of [to].
+     *
+     * Unlike [to], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("to") @ExcludeMissing fun _to(): JsonField<String> = to
 
-    /** Conversion rate between currencies. */
+    /**
+     * Returns the raw JSON value of [multiplier].
+     *
+     * Unlike [multiplier], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("multiplier") @ExcludeMissing fun _multiplier(): JsonField<Double> = multiplier
 
     @JsonAnyGetter
@@ -104,19 +132,35 @@ private constructor(
         /** Currency to convert from. For example: GBP. */
         fun from(from: String) = from(JsonField.of(from))
 
-        /** Currency to convert from. For example: GBP. */
+        /**
+         * Sets [Builder.from] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.from] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun from(from: JsonField<String>) = apply { this.from = from }
 
         /** Currency to convert to. For example: USD. */
         fun to(to: String) = to(JsonField.of(to))
 
-        /** Currency to convert to. For example: USD. */
+        /**
+         * Sets [Builder.to] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.to] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun to(to: JsonField<String>) = apply { this.to = to }
 
         /** Conversion rate between currencies. */
         fun multiplier(multiplier: Double) = multiplier(JsonField.of(multiplier))
 
-        /** Conversion rate between currencies. */
+        /**
+         * Sets [Builder.multiplier] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.multiplier] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun multiplier(multiplier: JsonField<Double>) = apply { this.multiplier = multiplier }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

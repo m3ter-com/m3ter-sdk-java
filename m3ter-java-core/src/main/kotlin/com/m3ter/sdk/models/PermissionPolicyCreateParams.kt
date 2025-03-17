@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -59,8 +60,16 @@ private constructor(
 
     fun orgId(): String = orgId
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun permissionPolicy(): List<PermissionStatementResponse> = body.permissionPolicy()
 
     /**
@@ -70,20 +79,31 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
+    /**
+     * Returns the raw JSON value of [permissionPolicy].
+     *
+     * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = body._permissionPolicy()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - do not use for Create.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -124,8 +144,16 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun permissionPolicy(): List<PermissionStatementResponse> =
             permissionPolicy.getRequired("permissionPolicy")
 
@@ -136,22 +164,33 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
+        /**
+         * Returns the raw JSON value of [permissionPolicy].
+         *
+         * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("permissionPolicy")
         @ExcludeMissing
         fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - do not use for
-         *   Create. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -207,16 +246,35 @@ private constructor(
 
             fun name(name: String) = name(JsonField.of(name))
 
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
                 permissionPolicy(JsonField.of(permissionPolicy))
 
+            /**
+             * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.permissionPolicy] with a well-typed
+             * `List<PermissionStatementResponse>` value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
+             */
             fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
                 apply {
                     this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
                 }
 
+            /**
+             * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
                 this.permissionPolicy =
                     (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
@@ -235,12 +293,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - do not use for
-             *   Create. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -328,17 +385,35 @@ private constructor(
 
         fun name(name: String) = apply { body.name(name) }
 
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) = apply {
             body.permissionPolicy(permissionPolicy)
         }
 
+        /**
+         * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.permissionPolicy] with a well-typed
+         * `List<PermissionStatementResponse>` value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
+         */
         fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
             apply {
                 body.permissionPolicy(permissionPolicy)
             }
 
+        /**
+         * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             body.addPermissionPolicy(permissionPolicy)
         }
@@ -354,12 +429,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - do not use for
-         *   Create. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

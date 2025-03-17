@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -41,21 +42,43 @@ private constructor(
 
     fun id(): String = id
 
-    /** UUID of the Counter used to create the pricing. */
+    /**
+     * UUID of the Counter used to create the pricing.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun counterId(): String = body.counterId()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun pricingBands(): List<PricingBand> = body.pricingBands()
 
     /**
      * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
      * of Plan Template._(Required)_
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun startDate(): OffsetDateTime = body.startDate()
 
-    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    /**
+     * Optional Product ID this Pricing should be attributed to for accounting purposes
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountingProductId(): Optional<String> = body.accountingProductId()
 
-    /** Unique short code for the Pricing. */
+    /**
+     * Unique short code for the Pricing.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
@@ -68,10 +91,18 @@ private constructor(
      *
      * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
      * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun cumulative(): Optional<Boolean> = body.cumulative()
 
-    /** Displayed on Bill line items. */
+    /**
+     * Displayed on Bill line items.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
     /**
@@ -79,13 +110,26 @@ private constructor(
      * Plan Template.
      *
      * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun endDate(): Optional<OffsetDateTime> = body.endDate()
 
-    /** UUID of the Plan the Pricing is created for. */
+    /**
+     * UUID of the Plan the Pricing is created for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planId(): Optional<String> = body.planId()
 
-    /** UUID of the Plan Template the Pricing is created for. */
+    /**
+     * UUID of the Plan Template the Pricing is created for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planTemplateId(): Optional<String> = body.planTemplateId()
 
     /**
@@ -96,6 +140,9 @@ private constructor(
      *   billing period.
      *
      * _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun proRateAdjustmentCredit(): Optional<Boolean> = body.proRateAdjustmentCredit()
 
@@ -107,6 +154,9 @@ private constructor(
      *   billing period.
      *
      * _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun proRateAdjustmentDebit(): Optional<Boolean> = body.proRateAdjustmentDebit()
 
@@ -118,6 +168,9 @@ private constructor(
      *   billing period.
      *
      * _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun proRateRunningTotal(): Optional<Boolean> = body.proRateRunningTotal()
 
@@ -127,6 +180,9 @@ private constructor(
      * - When FALSE, running totals are billed at the end of each billing period.
      *
      * _(Optional)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun runningTotalBillInAdvance(): Optional<Boolean> = body.runningTotalBillInAdvance()
 
@@ -137,105 +193,119 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** UUID of the Counter used to create the pricing. */
+    /**
+     * Returns the raw JSON value of [counterId].
+     *
+     * Unlike [counterId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _counterId(): JsonField<String> = body._counterId()
 
+    /**
+     * Returns the raw JSON value of [pricingBands].
+     *
+     * Unlike [pricingBands], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _pricingBands(): JsonField<List<PricingBand>> = body._pricingBands()
 
     /**
-     * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
-     * of Plan Template._(Required)_
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
 
-    /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+    /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _accountingProductId(): JsonField<String> = body._accountingProductId()
 
-    /** Unique short code for the Pricing. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * Controls whether or not charge rates under a set of pricing bands configured for a Pricing
-     * are applied according to each separate band or at the highest band reached.
+     * Returns the raw JSON value of [cumulative].
      *
-     * _(Optional)_. The default value is **FALSE**.
-     * - When TRUE, at billing charge rates are applied according to each separate band.
-     * - When FALSE, at billing charge rates are applied according to highest band reached.
-     *
-     * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-     * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+     * Unlike [cumulative], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _cumulative(): JsonField<Boolean> = body._cumulative()
 
-    /** Displayed on Bill line items. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan or
-     * Plan Template.
+     * Returns the raw JSON value of [endDate].
      *
-     * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
 
-    /** UUID of the Plan the Pricing is created for. */
+    /**
+     * Returns the raw JSON value of [planId].
+     *
+     * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _planId(): JsonField<String> = body._planId()
 
-    /** UUID of the Plan Template the Pricing is created for. */
+    /**
+     * Returns the raw JSON value of [planTemplateId].
+     *
+     * Unlike [planTemplateId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _planTemplateId(): JsonField<String> = body._planTemplateId()
 
     /**
-     * The default value is **TRUE**.
-     * - When TRUE, counter adjustment credits are prorated and are billed according to the number
-     *   of days in billing period.
-     * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
-     *   billing period.
+     * Returns the raw JSON value of [proRateAdjustmentCredit].
      *
-     * _(Optional)_.
+     * Unlike [proRateAdjustmentCredit], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _proRateAdjustmentCredit(): JsonField<Boolean> = body._proRateAdjustmentCredit()
 
     /**
-     * The default value is **TRUE**.
-     * - When TRUE, counter adjustment debits are prorated and are billed according to the number of
-     *   days in billing period.
-     * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
-     *   billing period.
+     * Returns the raw JSON value of [proRateAdjustmentDebit].
      *
-     * _(Optional)_.
+     * Unlike [proRateAdjustmentDebit], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _proRateAdjustmentDebit(): JsonField<Boolean> = body._proRateAdjustmentDebit()
 
     /**
-     * The default value is **TRUE**.
-     * - When TRUE, counter running total charges are prorated and are billed according to the
-     *   number of days in billing period.
-     * - When FALSE, counter running total charges are not prorated and are billed for the entire
-     *   billing period.
+     * Returns the raw JSON value of [proRateRunningTotal].
      *
-     * _(Optional)_.
+     * Unlike [proRateRunningTotal], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _proRateRunningTotal(): JsonField<Boolean> = body._proRateRunningTotal()
 
     /**
-     * The default value is **TRUE**.
-     * - When TRUE, running totals are billed at the start of each billing period.
-     * - When FALSE, running totals are billed at the end of each billing period.
+     * Returns the raw JSON value of [runningTotalBillInAdvance].
      *
-     * _(Optional)_.
+     * Unlike [runningTotalBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _runningTotalBillInAdvance(): JsonField<Boolean> = body._runningTotalBillInAdvance()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -312,22 +382,44 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** UUID of the Counter used to create the pricing. */
+        /**
+         * UUID of the Counter used to create the pricing.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun counterId(): String = counterId.getRequired("counterId")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun pricingBands(): List<PricingBand> = pricingBands.getRequired("pricingBands")
 
         /**
          * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
          * Plan of Plan Template._(Required)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Optional Product ID this Pricing should be attributed to for accounting purposes
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountingProductId(): Optional<String> =
             Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Unique short code for the Pricing.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
@@ -340,11 +432,19 @@ private constructor(
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun cumulative(): Optional<Boolean> =
             Optional.ofNullable(cumulative.getNullable("cumulative"))
 
-        /** Displayed on Bill line items. */
+        /**
+         * Displayed on Bill line items.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
@@ -353,14 +453,27 @@ private constructor(
          * or Plan Template.
          *
          * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun endDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(endDate.getNullable("endDate"))
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * UUID of the Plan the Pricing is created for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * UUID of the Plan Template the Pricing is created for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun planTemplateId(): Optional<String> =
             Optional.ofNullable(planTemplateId.getNullable("planTemplateId"))
 
@@ -372,6 +485,9 @@ private constructor(
          *   billing period.
          *
          * _(Optional)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun proRateAdjustmentCredit(): Optional<Boolean> =
             Optional.ofNullable(proRateAdjustmentCredit.getNullable("proRateAdjustmentCredit"))
@@ -384,6 +500,9 @@ private constructor(
          *   billing period.
          *
          * _(Optional)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun proRateAdjustmentDebit(): Optional<Boolean> =
             Optional.ofNullable(proRateAdjustmentDebit.getNullable("proRateAdjustmentDebit"))
@@ -396,6 +515,9 @@ private constructor(
          *   entire billing period.
          *
          * _(Optional)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun proRateRunningTotal(): Optional<Boolean> =
             Optional.ofNullable(proRateRunningTotal.getNullable("proRateRunningTotal"))
@@ -406,6 +528,9 @@ private constructor(
          * - When FALSE, running totals are billed at the end of each billing period.
          *
          * _(Optional)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun runningTotalBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(runningTotalBillInAdvance.getNullable("runningTotalBillInAdvance"))
@@ -417,125 +542,141 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** UUID of the Counter used to create the pricing. */
+        /**
+         * Returns the raw JSON value of [counterId].
+         *
+         * Unlike [counterId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("counterId") @ExcludeMissing fun _counterId(): JsonField<String> = counterId
 
+        /**
+         * Returns the raw JSON value of [pricingBands].
+         *
+         * Unlike [pricingBands], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("pricingBands")
         @ExcludeMissing
         fun _pricingBands(): JsonField<List<PricingBand>> = pricingBands
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Returns the raw JSON value of [accountingProductId].
+         *
+         * Unlike [accountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         fun _accountingProductId(): JsonField<String> = accountingProductId
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * Controls whether or not charge rates under a set of pricing bands configured for a
-         * Pricing are applied according to each separate band or at the highest band reached.
+         * Returns the raw JSON value of [cumulative].
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
-         *
-         * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-         * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         * Unlike [cumulative], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("cumulative")
         @ExcludeMissing
         fun _cumulative(): JsonField<Boolean> = cumulative
 
-        /** Displayed on Bill line items. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
-         * or Plan Template.
+         * Returns the raw JSON value of [endDate].
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * Returns the raw JSON value of [planId].
+         *
+         * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("planId") @ExcludeMissing fun _planId(): JsonField<String> = planId
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * Returns the raw JSON value of [planTemplateId].
+         *
+         * Unlike [planTemplateId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("planTemplateId")
         @ExcludeMissing
         fun _planTemplateId(): JsonField<String> = planTemplateId
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter adjustment credits are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * Returns the raw JSON value of [proRateAdjustmentCredit].
          *
-         * _(Optional)_.
+         * Unlike [proRateAdjustmentCredit], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("proRateAdjustmentCredit")
         @ExcludeMissing
         fun _proRateAdjustmentCredit(): JsonField<Boolean> = proRateAdjustmentCredit
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter adjustment debits are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * Returns the raw JSON value of [proRateAdjustmentDebit].
          *
-         * _(Optional)_.
+         * Unlike [proRateAdjustmentDebit], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("proRateAdjustmentDebit")
         @ExcludeMissing
         fun _proRateAdjustmentDebit(): JsonField<Boolean> = proRateAdjustmentDebit
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter running total charges are not prorated and are billed for the
-         *   entire billing period.
+         * Returns the raw JSON value of [proRateRunningTotal].
          *
-         * _(Optional)_.
+         * Unlike [proRateRunningTotal], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("proRateRunningTotal")
         @ExcludeMissing
         fun _proRateRunningTotal(): JsonField<Boolean> = proRateRunningTotal
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, running totals are billed at the start of each billing period.
-         * - When FALSE, running totals are billed at the end of each billing period.
+         * Returns the raw JSON value of [runningTotalBillInAdvance].
          *
-         * _(Optional)_.
+         * Unlike [runningTotalBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("runningTotalBillInAdvance")
         @ExcludeMissing
         fun _runningTotalBillInAdvance(): JsonField<Boolean> = runningTotalBillInAdvance
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -628,16 +769,34 @@ private constructor(
             /** UUID of the Counter used to create the pricing. */
             fun counterId(counterId: String) = counterId(JsonField.of(counterId))
 
-            /** UUID of the Counter used to create the pricing. */
+            /**
+             * Sets [Builder.counterId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.counterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun counterId(counterId: JsonField<String>) = apply { this.counterId = counterId }
 
             fun pricingBands(pricingBands: List<PricingBand>) =
                 pricingBands(JsonField.of(pricingBands))
 
+            /**
+             * Sets [Builder.pricingBands] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pricingBands] with a well-typed `List<PricingBand>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun pricingBands(pricingBands: JsonField<List<PricingBand>>) = apply {
                 this.pricingBands = pricingBands.map { it.toMutableList() }
             }
 
+            /**
+             * Adds a single [PricingBand] to [pricingBands].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addPricingBand(pricingBand: PricingBand) = apply {
                 pricingBands =
                     (pricingBands ?: JsonField.of(mutableListOf())).also {
@@ -652,8 +811,11 @@ private constructor(
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             /**
-             * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for
-             * the Plan of Plan Template._(Required)_
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
@@ -663,7 +825,13 @@ private constructor(
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
 
-            /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+            /**
+             * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun accountingProductId(accountingProductId: JsonField<String>) = apply {
                 this.accountingProductId = accountingProductId
             }
@@ -671,7 +839,13 @@ private constructor(
             /** Unique short code for the Pricing. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Unique short code for the Pricing. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -689,23 +863,24 @@ private constructor(
             fun cumulative(cumulative: Boolean) = cumulative(JsonField.of(cumulative))
 
             /**
-             * Controls whether or not charge rates under a set of pricing bands configured for a
-             * Pricing are applied according to each separate band or at the highest band reached.
+             * Sets [Builder.cumulative] to an arbitrary JSON value.
              *
-             * _(Optional)_. The default value is **FALSE**.
-             * - When TRUE, at billing charge rates are applied according to each separate band.
-             * - When FALSE, at billing charge rates are applied according to highest band reached.
-             *
-             * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require.
-             * For example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to
-             * **FALSE**.
+             * You should usually call [Builder.cumulative] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun cumulative(cumulative: JsonField<Boolean>) = apply { this.cumulative = cumulative }
 
             /** Displayed on Bill line items. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** Displayed on Bill line items. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -719,24 +894,37 @@ private constructor(
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the
-             * Plan or Plan Template.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
              *
-             * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** UUID of the Plan the Pricing is created for. */
             fun planId(planId: String) = planId(JsonField.of(planId))
 
-            /** UUID of the Plan the Pricing is created for. */
+            /**
+             * Sets [Builder.planId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
             /** UUID of the Plan Template the Pricing is created for. */
             fun planTemplateId(planTemplateId: String) =
                 planTemplateId(JsonField.of(planTemplateId))
 
-            /** UUID of the Plan Template the Pricing is created for. */
+            /**
+             * Sets [Builder.planTemplateId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planTemplateId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planTemplateId(planTemplateId: JsonField<String>) = apply {
                 this.planTemplateId = planTemplateId
             }
@@ -754,13 +942,11 @@ private constructor(
                 proRateAdjustmentCredit(JsonField.of(proRateAdjustmentCredit))
 
             /**
-             * The default value is **TRUE**.
-             * - When TRUE, counter adjustment credits are prorated and are billed according to the
-             *   number of days in billing period.
-             * - When FALSE, counter adjustment credits are not prorated and are billed for the
-             *   entire billing period.
+             * Sets [Builder.proRateAdjustmentCredit] to an arbitrary JSON value.
              *
-             * _(Optional)_.
+             * You should usually call [Builder.proRateAdjustmentCredit] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun proRateAdjustmentCredit(proRateAdjustmentCredit: JsonField<Boolean>) = apply {
                 this.proRateAdjustmentCredit = proRateAdjustmentCredit
@@ -779,13 +965,11 @@ private constructor(
                 proRateAdjustmentDebit(JsonField.of(proRateAdjustmentDebit))
 
             /**
-             * The default value is **TRUE**.
-             * - When TRUE, counter adjustment debits are prorated and are billed according to the
-             *   number of days in billing period.
-             * - When FALSE, counter adjustment debits are not prorated and are billed for the
-             *   entire billing period.
+             * Sets [Builder.proRateAdjustmentDebit] to an arbitrary JSON value.
              *
-             * _(Optional)_.
+             * You should usually call [Builder.proRateAdjustmentDebit] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun proRateAdjustmentDebit(proRateAdjustmentDebit: JsonField<Boolean>) = apply {
                 this.proRateAdjustmentDebit = proRateAdjustmentDebit
@@ -804,13 +988,11 @@ private constructor(
                 proRateRunningTotal(JsonField.of(proRateRunningTotal))
 
             /**
-             * The default value is **TRUE**.
-             * - When TRUE, counter running total charges are prorated and are billed according to
-             *   the number of days in billing period.
-             * - When FALSE, counter running total charges are not prorated and are billed for the
-             *   entire billing period.
+             * Sets [Builder.proRateRunningTotal] to an arbitrary JSON value.
              *
-             * _(Optional)_.
+             * You should usually call [Builder.proRateRunningTotal] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun proRateRunningTotal(proRateRunningTotal: JsonField<Boolean>) = apply {
                 this.proRateRunningTotal = proRateRunningTotal
@@ -827,11 +1009,11 @@ private constructor(
                 runningTotalBillInAdvance(JsonField.of(runningTotalBillInAdvance))
 
             /**
-             * The default value is **TRUE**.
-             * - When TRUE, running totals are billed at the start of each billing period.
-             * - When FALSE, running totals are billed at the end of each billing period.
+             * Sets [Builder.runningTotalBillInAdvance] to an arbitrary JSON value.
              *
-             * _(Optional)_.
+             * You should usually call [Builder.runningTotalBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun runningTotalBillInAdvance(runningTotalBillInAdvance: JsonField<Boolean>) = apply {
                 this.runningTotalBillInAdvance = runningTotalBillInAdvance
@@ -848,12 +1030,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -960,17 +1141,35 @@ private constructor(
         /** UUID of the Counter used to create the pricing. */
         fun counterId(counterId: String) = apply { body.counterId(counterId) }
 
-        /** UUID of the Counter used to create the pricing. */
+        /**
+         * Sets [Builder.counterId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.counterId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun counterId(counterId: JsonField<String>) = apply { body.counterId(counterId) }
 
         fun pricingBands(pricingBands: List<PricingBand>) = apply {
             body.pricingBands(pricingBands)
         }
 
+        /**
+         * Sets [Builder.pricingBands] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.pricingBands] with a well-typed `List<PricingBand>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun pricingBands(pricingBands: JsonField<List<PricingBand>>) = apply {
             body.pricingBands(pricingBands)
         }
 
+        /**
+         * Adds a single [PricingBand] to [pricingBands].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addPricingBand(pricingBand: PricingBand) = apply { body.addPricingBand(pricingBand) }
 
         /**
@@ -980,8 +1179,11 @@ private constructor(
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
@@ -990,7 +1192,13 @@ private constructor(
             body.accountingProductId(accountingProductId)
         }
 
-        /** Optional Product ID this Pricing should be attributed to for accounting purposes */
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountingProductId(accountingProductId: JsonField<String>) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -998,7 +1206,12 @@ private constructor(
         /** Unique short code for the Pricing. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Unique short code for the Pricing. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -1015,22 +1228,24 @@ private constructor(
         fun cumulative(cumulative: Boolean) = apply { body.cumulative(cumulative) }
 
         /**
-         * Controls whether or not charge rates under a set of pricing bands configured for a
-         * Pricing are applied according to each separate band or at the highest band reached.
+         * Sets [Builder.cumulative] to an arbitrary JSON value.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
-         *
-         * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
-         * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
+         * You should usually call [Builder.cumulative] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun cumulative(cumulative: JsonField<Boolean>) = apply { body.cumulative(cumulative) }
 
         /** Displayed on Bill line items. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** Displayed on Bill line items. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
@@ -1042,23 +1257,35 @@ private constructor(
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
-         * or Plan Template.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
         /** UUID of the Plan the Pricing is created for. */
         fun planId(planId: String) = apply { body.planId(planId) }
 
-        /** UUID of the Plan the Pricing is created for. */
+        /**
+         * Sets [Builder.planId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun planId(planId: JsonField<String>) = apply { body.planId(planId) }
 
         /** UUID of the Plan Template the Pricing is created for. */
         fun planTemplateId(planTemplateId: String) = apply { body.planTemplateId(planTemplateId) }
 
-        /** UUID of the Plan Template the Pricing is created for. */
+        /**
+         * Sets [Builder.planTemplateId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planTemplateId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun planTemplateId(planTemplateId: JsonField<String>) = apply {
             body.planTemplateId(planTemplateId)
         }
@@ -1077,13 +1304,11 @@ private constructor(
         }
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter adjustment credits are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * Sets [Builder.proRateAdjustmentCredit] to an arbitrary JSON value.
          *
-         * _(Optional)_.
+         * You should usually call [Builder.proRateAdjustmentCredit] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun proRateAdjustmentCredit(proRateAdjustmentCredit: JsonField<Boolean>) = apply {
             body.proRateAdjustmentCredit(proRateAdjustmentCredit)
@@ -1103,13 +1328,11 @@ private constructor(
         }
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter adjustment debits are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * Sets [Builder.proRateAdjustmentDebit] to an arbitrary JSON value.
          *
-         * _(Optional)_.
+         * You should usually call [Builder.proRateAdjustmentDebit] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun proRateAdjustmentDebit(proRateAdjustmentDebit: JsonField<Boolean>) = apply {
             body.proRateAdjustmentDebit(proRateAdjustmentDebit)
@@ -1129,13 +1352,11 @@ private constructor(
         }
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter running total charges are not prorated and are billed for the
-         *   entire billing period.
+         * Sets [Builder.proRateRunningTotal] to an arbitrary JSON value.
          *
-         * _(Optional)_.
+         * You should usually call [Builder.proRateRunningTotal] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun proRateRunningTotal(proRateRunningTotal: JsonField<Boolean>) = apply {
             body.proRateRunningTotal(proRateRunningTotal)
@@ -1153,11 +1374,11 @@ private constructor(
         }
 
         /**
-         * The default value is **TRUE**.
-         * - When TRUE, running totals are billed at the start of each billing period.
-         * - When FALSE, running totals are billed at the end of each billing period.
+         * Sets [Builder.runningTotalBillInAdvance] to an arbitrary JSON value.
          *
-         * _(Optional)_.
+         * You should usually call [Builder.runningTotalBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun runningTotalBillInAdvance(runningTotalBillInAdvance: JsonField<Boolean>) = apply {
             body.runningTotalBillInAdvance(runningTotalBillInAdvance)
@@ -1174,12 +1395,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

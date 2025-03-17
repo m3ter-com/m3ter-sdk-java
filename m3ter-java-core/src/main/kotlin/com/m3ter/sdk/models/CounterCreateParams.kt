@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -31,22 +32,38 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** Descriptive name for the Counter. */
+    /**
+     * Descriptive name for the Counter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
      * User defined label for units shown on Bill line items, and indicating to your customers what
      * they are being charged for.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun unit(): String = body.unit()
 
-    /** Code for the Counter. A unique short code to identify the Counter. */
+    /**
+     * Code for the Counter. A unique short code to identify the Counter.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
      * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
      * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
      * Product.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun productId(): Optional<String> = body.productId()
 
@@ -57,35 +74,44 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** Descriptive name for the Counter. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * User defined label for units shown on Bill line items, and indicating to your customers what
-     * they are being charged for.
+     * Returns the raw JSON value of [unit].
+     *
+     * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _unit(): JsonField<String> = body._unit()
 
-    /** Code for the Counter. A unique short code to identify the Counter. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
-     * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
-     * Product.
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _productId(): JsonField<String> = body._productId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -131,22 +157,38 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Descriptive name for the Counter. */
+        /**
+         * Descriptive name for the Counter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
          * User defined label for units shown on Bill line items, and indicating to your customers
          * what they are being charged for.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun unit(): String = unit.getRequired("unit")
 
-        /** Code for the Counter. A unique short code to identify the Counter. */
+        /**
+         * Code for the Counter. A unique short code to identify the Counter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
          * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
          * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
          * Product.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
 
@@ -157,35 +199,44 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Descriptive name for the Counter. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * User defined label for units shown on Bill line items, and indicating to your customers
-         * what they are being charged for.
+         * Returns the raw JSON value of [unit].
+         *
+         * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
-        /** Code for the Counter. A unique short code to identify the Counter. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
-         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
-         * Product.
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -247,7 +298,13 @@ private constructor(
             /** Descriptive name for the Counter. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Descriptive name for the Counter. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -257,15 +314,24 @@ private constructor(
             fun unit(unit: String) = unit(JsonField.of(unit))
 
             /**
-             * User defined label for units shown on Bill line items, and indicating to your
-             * customers what they are being charged for.
+             * Sets [Builder.unit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
             /** Code for the Counter. A unique short code to identify the Counter. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** Code for the Counter. A unique short code to identify the Counter. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -276,9 +342,11 @@ private constructor(
             fun productId(productId: String) = productId(JsonField.of(productId))
 
             /**
-             * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter
-             * is Global. A Global Counter can be used to price Plans or Plan Templates belonging to
-             * any Product.
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
@@ -293,12 +361,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -389,7 +456,12 @@ private constructor(
         /** Descriptive name for the Counter. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** Descriptive name for the Counter. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -399,15 +471,22 @@ private constructor(
         fun unit(unit: String) = apply { body.unit(unit) }
 
         /**
-         * User defined label for units shown on Bill line items, and indicating to your customers
-         * what they are being charged for.
+         * Sets [Builder.unit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
         /** Code for the Counter. A unique short code to identify the Counter. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** Code for the Counter. A unique short code to identify the Counter. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -418,9 +497,11 @@ private constructor(
         fun productId(productId: String) = apply { body.productId(productId) }
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
-         * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
-         * Product.
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
@@ -435,12 +516,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

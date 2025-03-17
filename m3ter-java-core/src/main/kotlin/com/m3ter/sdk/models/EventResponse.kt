@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -38,7 +39,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The uniqie identifier (UUID) of the Event. */
+    /**
+     * The uniqie identifier (UUID) of the Event.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -46,41 +52,60 @@ private constructor(
      *
      * You can action an Event to indicate that it has been followed up and resolved - this is
      * useful when dealing with integration error Events or ingest failure Events.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun dtActioned(): OffsetDateTime = dtActioned.getRequired("dtActioned")
 
     /**
      * The name of the Event as it is registered in the system. This name is used to categorize and
      * trigger associated actions.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun eventName(): String = eventName.getRequired("eventName")
 
-    /** The time when the Event was triggered, using the ISO 8601 date and time format. */
+    /**
+     * The time when the Event was triggered, using the ISO 8601 date and time format.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun eventTime(): OffsetDateTime = eventTime.getRequired("eventTime")
 
     /** The Data Transfer Object (DTO) containing the details of the Event. */
     @JsonProperty("m3terEvent") @ExcludeMissing fun _m3terEvent(): JsonValue = m3terEvent
 
-    /** The uniqie identifier (UUID) of the Event. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * When an Event was actioned. It follows the ISO 8601 date and time format.
+     * Returns the raw JSON value of [dtActioned].
      *
-     * You can action an Event to indicate that it has been followed up and resolved - this is
-     * useful when dealing with integration error Events or ingest failure Events.
+     * Unlike [dtActioned], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("dtActioned")
     @ExcludeMissing
     fun _dtActioned(): JsonField<OffsetDateTime> = dtActioned
 
     /**
-     * The name of the Event as it is registered in the system. This name is used to categorize and
-     * trigger associated actions.
+     * Returns the raw JSON value of [eventName].
+     *
+     * Unlike [eventName], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("eventName") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
 
-    /** The time when the Event was triggered, using the ISO 8601 date and time format. */
+    /**
+     * Returns the raw JSON value of [eventTime].
+     *
+     * Unlike [eventTime], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("eventTime")
     @ExcludeMissing
     fun _eventTime(): JsonField<OffsetDateTime> = eventTime
@@ -145,7 +170,12 @@ private constructor(
         /** The uniqie identifier (UUID) of the Event. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The uniqie identifier (UUID) of the Event. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -157,10 +187,11 @@ private constructor(
         fun dtActioned(dtActioned: OffsetDateTime) = dtActioned(JsonField.of(dtActioned))
 
         /**
-         * When an Event was actioned. It follows the ISO 8601 date and time format.
+         * Sets [Builder.dtActioned] to an arbitrary JSON value.
          *
-         * You can action an Event to indicate that it has been followed up and resolved - this is
-         * useful when dealing with integration error Events or ingest failure Events.
+         * You should usually call [Builder.dtActioned] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtActioned(dtActioned: JsonField<OffsetDateTime>) = apply {
             this.dtActioned = dtActioned
@@ -173,15 +204,24 @@ private constructor(
         fun eventName(eventName: String) = eventName(JsonField.of(eventName))
 
         /**
-         * The name of the Event as it is registered in the system. This name is used to categorize
-         * and trigger associated actions.
+         * Sets [Builder.eventName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
 
         /** The time when the Event was triggered, using the ISO 8601 date and time format. */
         fun eventTime(eventTime: OffsetDateTime) = eventTime(JsonField.of(eventTime))
 
-        /** The time when the Event was triggered, using the ISO 8601 date and time format. */
+        /**
+         * Sets [Builder.eventTime] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventTime] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun eventTime(eventTime: JsonField<OffsetDateTime>) = apply { this.eventTime = eventTime }
 
         /** The Data Transfer Object (DTO) containing the details of the Event. */

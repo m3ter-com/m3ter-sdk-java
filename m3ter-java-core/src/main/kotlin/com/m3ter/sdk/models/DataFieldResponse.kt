@@ -32,7 +32,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+    /**
+     * The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun category(): Category = category.getRequired("category")
 
     /**
@@ -40,35 +45,54 @@ private constructor(
      *
      * **NOTE:** Code has a maximum length of 80 characters and can only contain letters, numbers,
      * underscore, and the dollar character, and must not start with a number.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun code(): String = code.getRequired("code")
 
-    /** Descriptive name of the field. */
+    /**
+     * Descriptive name of the field.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = name.getRequired("name")
 
     /**
      * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
      * (UCUM). Required only for numeric field categories.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
 
-    /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+    /**
+     * Returns the raw JSON value of [category].
+     *
+     * Unlike [category], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("category") @ExcludeMissing fun _category(): JsonField<Category> = category
 
     /**
-     * Short code to identify the field
+     * Returns the raw JSON value of [code].
      *
-     * **NOTE:** Code has a maximum length of 80 characters and can only contain letters, numbers,
-     * underscore, and the dollar character, and must not start with a number.
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-    /** Descriptive name of the field. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
-     * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
-     * (UCUM). Required only for numeric field categories.
+     * Returns the raw JSON value of [unit].
+     *
+     * Unlike [unit], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
@@ -128,7 +152,13 @@ private constructor(
         /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
         fun category(category: Category) = category(JsonField.of(category))
 
-        /** The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER). */
+        /**
+         * Sets [Builder.category] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.category] with a well-typed [Category] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun category(category: JsonField<Category>) = apply { this.category = category }
 
         /**
@@ -140,17 +170,22 @@ private constructor(
         fun code(code: String) = code(JsonField.of(code))
 
         /**
-         * Short code to identify the field
+         * Sets [Builder.code] to an arbitrary JSON value.
          *
-         * **NOTE:** Code has a maximum length of 80 characters and can only contain letters,
-         * numbers, underscore, and the dollar character, and must not start with a number.
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** Descriptive name of the field. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** Descriptive name of the field. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -160,8 +195,10 @@ private constructor(
         fun unit(unit: String) = unit(JsonField.of(unit))
 
         /**
-         * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
-         * (UCUM). Required only for numeric field categories.
+         * Sets [Builder.unit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.unit] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 

@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -30,15 +31,33 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun data(): Optional<List<Data>> = Optional.ofNullable(data.getNullable("data"))
 
-    /** Flag to know if there are more data available than the one returned */
+    /**
+     * Flag to know if there are more data available than the one returned
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun hasMoreData(): Optional<Boolean> =
         Optional.ofNullable(hasMoreData.getNullable("hasMoreData"))
 
+    /**
+     * Returns the raw JSON value of [data].
+     *
+     * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
-    /** Flag to know if there are more data available than the one returned */
+    /**
+     * Returns the raw JSON value of [hasMoreData].
+     *
+     * Unlike [hasMoreData], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("hasMoreData")
     @ExcludeMissing
     fun _hasMoreData(): JsonField<Boolean> = hasMoreData
@@ -83,10 +102,21 @@ private constructor(
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
+        /**
+         * Sets [Builder.data] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.data] with a well-typed `List<Data>` value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun data(data: JsonField<List<Data>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
+        /**
+         * Adds a single [Data] to [Builder.data].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addData(data: Data) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
@@ -97,7 +127,13 @@ private constructor(
         /** Flag to know if there are more data available than the one returned */
         fun hasMoreData(hasMoreData: Boolean) = hasMoreData(JsonField.of(hasMoreData))
 
-        /** Flag to know if there are more data available than the one returned */
+        /**
+         * Sets [Builder.hasMoreData] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.hasMoreData] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun hasMoreData(hasMoreData: JsonField<Boolean>) = apply { this.hasMoreData = hasMoreData }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 import java.util.Optional
@@ -44,25 +45,46 @@ private constructor(
 
     fun id(): String = id
 
-    /** The unique identifier (UUID) of the Account associated with this Contract. */
+    /**
+     * The unique identifier (UUID) of the Account associated with this Contract.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun accountId(): String = body.accountId()
 
     /**
      * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
      * active until midnight on the day **_before_** this date.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun endDate(): LocalDate = body.endDate()
 
-    /** The name of the Contract. */
+    /**
+     * The name of the Contract.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
     /**
      * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning the
      * Contract is active from this date onward.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun startDate(): LocalDate = body.startDate()
 
-    /** The short code of the Contract. */
+    /**
+     * The short code of the Contract.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun code(): Optional<String> = body.code()
 
     /**
@@ -76,13 +98,26 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
-    /** The description of the Contract, which provides context and information. */
+    /**
+     * The description of the Contract, which provides context and information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
-    /** The Purchase Order Number associated with the Contract. */
+    /**
+     * The Purchase Order Number associated with the Contract.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun purchaseOrderNumber(): Optional<String> = body.purchaseOrderNumber()
 
     /**
@@ -92,57 +127,73 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The unique identifier (UUID) of the Account associated with this Contract. */
+    /**
+     * Returns the raw JSON value of [accountId].
+     *
+     * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountId(): JsonField<String> = body._accountId()
 
     /**
-     * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-     * active until midnight on the day **_before_** this date.
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<LocalDate> = body._endDate()
 
-    /** The name of the Contract. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
     /**
-     * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning the
-     * Contract is active from this date onward.
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _startDate(): JsonField<LocalDate> = body._startDate()
 
-    /** The short code of the Contract. */
+    /**
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational level,
-     * `customField` values defined at individual level override values of `customFields` with the
-     * same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
-    /** The description of the Contract, which provides context and information. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
-    /** The Purchase Order Number associated with the Contract. */
+    /**
+     * Returns the raw JSON value of [purchaseOrderNumber].
+     *
+     * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _purchaseOrderNumber(): JsonField<String> = body._purchaseOrderNumber()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -201,25 +252,46 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The unique identifier (UUID) of the Account associated with this Contract. */
+        /**
+         * The unique identifier (UUID) of the Account associated with this Contract.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun accountId(): String = accountId.getRequired("accountId")
 
         /**
          * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
          * active until midnight on the day **_before_** this date.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun endDate(): LocalDate = endDate.getRequired("endDate")
 
-        /** The name of the Contract. */
+        /**
+         * The name of the Contract.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
         /**
          * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
          * the Contract is active from this date onward.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): LocalDate = startDate.getRequired("startDate")
 
-        /** The short code of the Contract. */
+        /**
+         * The short code of the Contract.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
         /**
@@ -233,15 +305,28 @@ private constructor(
          * See
          * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
 
-        /** The description of the Contract, which provides context and information. */
+        /**
+         * The description of the Contract, which provides context and information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
-        /** The Purchase Order Number associated with the Contract. */
+        /**
+         * The Purchase Order Number associated with the Contract.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun purchaseOrderNumber(): Optional<String> =
             Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
 
@@ -252,65 +337,82 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The unique identifier (UUID) of the Account associated with this Contract. */
+        /**
+         * Returns the raw JSON value of [accountId].
+         *
+         * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
         /**
-         * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-         * active until midnight on the day **_before_** this date.
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<LocalDate> = endDate
 
-        /** The name of the Contract. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
-         * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
-         * the Contract is active from this date onward.
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("startDate")
         @ExcludeMissing
         fun _startDate(): JsonField<LocalDate> = startDate
 
-        /** The short code of the Contract. */
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Returns the raw JSON value of [customFields].
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
-        /** The description of the Contract, which provides context and information. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
-        /** The Purchase Order Number associated with the Contract. */
+        /**
+         * Returns the raw JSON value of [purchaseOrderNumber].
+         *
+         * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("purchaseOrderNumber")
         @ExcludeMissing
         fun _purchaseOrderNumber(): JsonField<String> = purchaseOrderNumber
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -386,7 +488,13 @@ private constructor(
             /** The unique identifier (UUID) of the Account associated with this Contract. */
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
 
-            /** The unique identifier (UUID) of the Account associated with this Contract. */
+            /**
+             * Sets [Builder.accountId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /**
@@ -396,15 +504,24 @@ private constructor(
             fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
 
             /**
-             * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the
-             * Contract is active until midnight on the day **_before_** this date.
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun endDate(endDate: JsonField<LocalDate>) = apply { this.endDate = endDate }
 
             /** The name of the Contract. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** The name of the Contract. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
@@ -414,15 +531,24 @@ private constructor(
             fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))
 
             /**
-             * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive,
-             * meaning the Contract is active from this date onward.
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [LocalDate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
             /** The short code of the Contract. */
             fun code(code: String) = code(JsonField.of(code))
 
-            /** The short code of the Contract. */
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
@@ -440,16 +566,11 @@ private constructor(
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
             /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
+             * Sets [Builder.customFields] to an arbitrary JSON value.
              *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
@@ -458,7 +579,13 @@ private constructor(
             /** The description of the Contract, which provides context and information. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** The description of the Contract, which provides context and information. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -467,7 +594,13 @@ private constructor(
             fun purchaseOrderNumber(purchaseOrderNumber: String) =
                 purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
 
-            /** The Purchase Order Number associated with the Contract. */
+            /**
+             * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
                 this.purchaseOrderNumber = purchaseOrderNumber
             }
@@ -483,12 +616,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -590,7 +722,13 @@ private constructor(
         /** The unique identifier (UUID) of the Account associated with this Contract. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
-        /** The unique identifier (UUID) of the Account associated with this Contract. */
+        /**
+         * Sets [Builder.accountId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /**
@@ -600,15 +738,23 @@ private constructor(
         fun endDate(endDate: LocalDate) = apply { body.endDate(endDate) }
 
         /**
-         * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-         * active until midnight on the day **_before_** this date.
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun endDate(endDate: JsonField<LocalDate>) = apply { body.endDate(endDate) }
 
         /** The name of the Contract. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** The name of the Contract. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
@@ -618,15 +764,23 @@ private constructor(
         fun startDate(startDate: LocalDate) = apply { body.startDate(startDate) }
 
         /**
-         * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
-         * the Contract is active from this date onward.
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [LocalDate] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun startDate(startDate: JsonField<LocalDate>) = apply { body.startDate(startDate) }
 
         /** The short code of the Contract. */
         fun code(code: String) = apply { body.code(code) }
 
-        /** The short code of the Contract. */
+        /**
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
@@ -644,16 +798,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
@@ -662,7 +811,13 @@ private constructor(
         /** The description of the Contract, which provides context and information. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** The description of the Contract, which provides context and information. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** The Purchase Order Number associated with the Contract. */
@@ -670,7 +825,13 @@ private constructor(
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
 
-        /** The Purchase Order Number associated with the Contract. */
+        /**
+         * Sets [Builder.purchaseOrderNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.purchaseOrderNumber] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun purchaseOrderNumber(purchaseOrderNumber: JsonField<String>) = apply {
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
@@ -686,12 +847,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

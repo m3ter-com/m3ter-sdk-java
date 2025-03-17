@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-03-15)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#104](https://github.com/m3ter-com/m3ter-sdk-java/issues/104)) ([96fd2b7](https://github.com/m3ter-com/m3ter-sdk-java/commit/96fd2b70a80e782d19959f9b2f0d542e438a05a2))
+* **internal:** version bump ([#102](https://github.com/m3ter-com/m3ter-sdk-java/issues/102)) ([da68a42](https://github.com/m3ter-com/m3ter-sdk-java/commit/da68a428ac4af503df65e87da8958d640b3050ba))
+
+
+### Documentation
+
+* deduplicate and refine comments ([#105](https://github.com/m3ter-com/m3ter-sdk-java/issues/105)) ([e93bf56](https://github.com/m3ter-com/m3ter-sdk-java/commit/e93bf564c99943c3afff1d729cb6a0156ac07d59))
+
 ## 0.1.0-alpha.9 (2025-03-11)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)

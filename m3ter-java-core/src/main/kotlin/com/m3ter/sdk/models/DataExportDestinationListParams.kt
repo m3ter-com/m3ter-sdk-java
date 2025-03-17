@@ -103,25 +103,33 @@ private constructor(
         /** List of Export Destination UUIDs to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** List of Export Destination UUIDs to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** List of Export Destination UUIDs to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** nextToken for multi page retrievals */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of returned Export Destinations to list per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of returned Export Destinations to list per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of returned Export Destinations to list per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

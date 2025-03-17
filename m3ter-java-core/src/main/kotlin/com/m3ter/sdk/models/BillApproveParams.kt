@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -68,10 +69,19 @@ private constructor(
      */
     fun externalInvoiceDateStart(): Optional<String> = Optional.ofNullable(externalInvoiceDateStart)
 
-    /** Use to specify a collection of Bills by their IDs for batch approval */
+    /**
+     * Use to specify a collection of Bills by their IDs for batch approval
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun billIds(): List<String> = body.billIds()
 
-    /** Use to specify a collection of Bills by their IDs for batch approval */
+    /**
+     * Returns the raw JSON value of [billIds].
+     *
+     * Unlike [billIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _billIds(): JsonField<List<String>> = body._billIds()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -115,10 +125,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Use to specify a collection of Bills by their IDs for batch approval */
+        /**
+         * Use to specify a collection of Bills by their IDs for batch approval
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun billIds(): List<String> = billIds.getRequired("billIds")
 
-        /** Use to specify a collection of Bills by their IDs for batch approval */
+        /**
+         * Returns the raw JSON value of [billIds].
+         *
+         * Unlike [billIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("billIds") @ExcludeMissing fun _billIds(): JsonField<List<String>> = billIds
 
         @JsonAnyGetter
@@ -166,12 +185,22 @@ private constructor(
             /** Use to specify a collection of Bills by their IDs for batch approval */
             fun billIds(billIds: List<String>) = billIds(JsonField.of(billIds))
 
-            /** Use to specify a collection of Bills by their IDs for batch approval */
+            /**
+             * Sets [Builder.billIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun billIds(billIds: JsonField<List<String>>) = apply {
                 this.billIds = billIds.map { it.toMutableList() }
             }
 
-            /** Use to specify a collection of Bills by their IDs for batch approval */
+            /**
+             * Adds a single [String] to [billIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
             fun addBillId(billId: String) = apply {
                 billIds =
                     (billIds ?: JsonField.of(mutableListOf())).also {
@@ -270,10 +299,7 @@ private constructor(
          */
         fun accountIds(accountIds: String?) = apply { this.accountIds = accountIds }
 
-        /**
-         * List of Account IDs to filter Bills. This allows you to approve Bills for specific
-         * Accounts within the Organization.
-         */
+        /** Alias for calling [Builder.accountIds] with `accountIds.orElse(null)`. */
         fun accountIds(accountIds: Optional<String>) = accountIds(accountIds.getOrNull())
 
         /**
@@ -285,8 +311,8 @@ private constructor(
         }
 
         /**
-         * End date for filtering Bills by external invoice date. Includes Bills with dates earlier
-         * than this date.
+         * Alias for calling [Builder.externalInvoiceDateEnd] with
+         * `externalInvoiceDateEnd.orElse(null)`.
          */
         fun externalInvoiceDateEnd(externalInvoiceDateEnd: Optional<String>) =
             externalInvoiceDateEnd(externalInvoiceDateEnd.getOrNull())
@@ -300,8 +326,8 @@ private constructor(
         }
 
         /**
-         * Start date for filtering Bills by external invoice date. Includes Bills with dates equal
-         * to or later than this date.
+         * Alias for calling [Builder.externalInvoiceDateStart] with
+         * `externalInvoiceDateStart.orElse(null)`.
          */
         fun externalInvoiceDateStart(externalInvoiceDateStart: Optional<String>) =
             externalInvoiceDateStart(externalInvoiceDateStart.getOrNull())
@@ -309,10 +335,20 @@ private constructor(
         /** Use to specify a collection of Bills by their IDs for batch approval */
         fun billIds(billIds: List<String>) = apply { body.billIds(billIds) }
 
-        /** Use to specify a collection of Bills by their IDs for batch approval */
+        /**
+         * Sets [Builder.billIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billIds] with a well-typed `List<String>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun billIds(billIds: JsonField<List<String>>) = apply { body.billIds(billIds) }
 
-        /** Use to specify a collection of Bills by their IDs for batch approval */
+        /**
+         * Adds a single [String] to [billIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addBillId(billId: String) = apply { body.addBillId(billId) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

@@ -175,14 +175,12 @@ private constructor(
          */
         fun account(account: String?) = apply { this.account = account }
 
-        /**
-         * The unique identifier (UUID) for the Account whose AccountPlans and AccountPlanGroups you
-         * want to retrieve.
-         */
+        /** Alias for calling [Builder.account] with `account.orElse(null)`. */
         fun account(account: Optional<String>) = account(account.getOrNull())
 
         fun contract(contract: String?) = apply { this.contract = contract }
 
+        /** Alias for calling [Builder.contract] with `contract.orElse(null)`. */
         fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
         /**
@@ -191,10 +189,7 @@ private constructor(
          */
         fun date(date: String?) = apply { this.date = date }
 
-        /**
-         * The specific date for which you want to retrieve active AccountPlans and
-         * AccountPlanGroups.
-         */
+        /** Alias for calling [Builder.date] with `date.orElse(null)`. */
         fun date(date: Optional<String>) = date(date.getOrNull())
 
         /**
@@ -203,15 +198,13 @@ private constructor(
          */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /**
-         * A list of unique identifiers (UUIDs) for specific AccountPlans and AccountPlanGroups you
-         * want to retrieve.
-         */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
         /**
-         * A list of unique identifiers (UUIDs) for specific AccountPlans and AccountPlanGroups you
-         * want to retrieve.
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
@@ -225,21 +218,13 @@ private constructor(
         fun includeall(includeall: Boolean?) = apply { this.includeall = includeall }
 
         /**
-         * A Boolean flag that specifies whether to include both active and inactive AccountPlans
-         * and AccountPlanGroups in the list.
-         * - **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in
-         *   the list.
-         * - **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
+         * Alias for [Builder.includeall].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun includeall(includeall: Boolean) = includeall(includeall as Boolean?)
 
-        /**
-         * A Boolean flag that specifies whether to include both active and inactive AccountPlans
-         * and AccountPlanGroups in the list.
-         * - **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in
-         *   the list.
-         * - **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
-         */
+        /** Alias for calling [Builder.includeall] with `includeall.orElse(null)`. */
         fun includeall(includeall: Optional<Boolean>) = includeall(includeall.getOrNull())
 
         /**
@@ -248,19 +233,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for retrieving the next page of AccountPlans and AccountPlanGroups. It is
-         * used to fetch the next page of AccountPlans and AccountPlanGroups in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /**
@@ -269,10 +255,7 @@ private constructor(
          */
         fun plan(plan: String?) = apply { this.plan = plan }
 
-        /**
-         * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
-         * AccountPlanGroups you want to retrieve.
-         */
+        /** Alias for calling [Builder.plan] with `plan.orElse(null)`. */
         fun plan(plan: Optional<String>) = plan(plan.getOrNull())
 
         /**
@@ -284,13 +267,7 @@ private constructor(
          */
         fun product(product: String?) = apply { this.product = product }
 
-        /**
-         * The unique identifier (UUID) for the Product whose associated AccountPlans you want to
-         * retrieve.
-         *
-         * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but
-         * must always use it in combination with the `account` query parameter.
-         */
+        /** Alias for calling [Builder.product] with `product.orElse(null)`. */
         fun product(product: Optional<String>) = product(product.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -31,31 +32,76 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** Updates to Account entity CustomFields. */
+    /**
+     * Updates to Account entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun account(): Optional<Account> = body.account()
 
-    /** Updates to accountPlan entity CustomFields. */
+    /**
+     * Updates to accountPlan entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountPlan(): Optional<AccountPlan> = body.accountPlan()
 
-    /** Updates to simple Aggregation entity CustomFields. */
+    /**
+     * Updates to simple Aggregation entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun aggregation(): Optional<Aggregation> = body.aggregation()
 
-    /** Updates to Compound Aggregation entity CustomFields. */
+    /**
+     * Updates to Compound Aggregation entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun compoundAggregation(): Optional<CompoundAggregation> = body.compoundAggregation()
 
-    /** Updates to Meter entity CustomFields. */
+    /**
+     * Updates to Meter entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun meter(): Optional<Meter> = body.meter()
 
-    /** Updates to Organization CustomFields. */
+    /**
+     * Updates to Organization CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun organization(): Optional<Organization> = body.organization()
 
-    /** Updates to Plan entity CustomFields. */
+    /**
+     * Updates to Plan entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun plan(): Optional<Plan> = body.plan()
 
-    /** Updates to planTemplate entity CustomFields. */
+    /**
+     * Updates to planTemplate entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun planTemplate(): Optional<PlanTemplate> = body.planTemplate()
 
-    /** Updates to Product entity CustomFields. */
+    /**
+     * Updates to Product entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun product(): Optional<Product> = body.product()
 
     /**
@@ -65,43 +111,80 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** Updates to Account entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [account].
+     *
+     * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _account(): JsonField<Account> = body._account()
 
-    /** Updates to accountPlan entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [accountPlan].
+     *
+     * Unlike [accountPlan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _accountPlan(): JsonField<AccountPlan> = body._accountPlan()
 
-    /** Updates to simple Aggregation entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [aggregation].
+     *
+     * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _aggregation(): JsonField<Aggregation> = body._aggregation()
 
-    /** Updates to Compound Aggregation entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [compoundAggregation].
+     *
+     * Unlike [compoundAggregation], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     fun _compoundAggregation(): JsonField<CompoundAggregation> = body._compoundAggregation()
 
-    /** Updates to Meter entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [meter].
+     *
+     * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _meter(): JsonField<Meter> = body._meter()
 
-    /** Updates to Organization CustomFields. */
+    /**
+     * Returns the raw JSON value of [organization].
+     *
+     * Unlike [organization], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _organization(): JsonField<Organization> = body._organization()
 
-    /** Updates to Plan entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [plan].
+     *
+     * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _plan(): JsonField<Plan> = body._plan()
 
-    /** Updates to planTemplate entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [planTemplate].
+     *
+     * Unlike [planTemplate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _planTemplate(): JsonField<PlanTemplate> = body._planTemplate()
 
-    /** Updates to Product entity CustomFields. */
+    /**
+     * Returns the raw JSON value of [product].
+     *
+     * Unlike [product], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _product(): JsonField<Product> = body._product()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -160,36 +243,81 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Updates to Account entity CustomFields. */
+        /**
+         * Updates to Account entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
 
-        /** Updates to accountPlan entity CustomFields. */
+        /**
+         * Updates to accountPlan entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun accountPlan(): Optional<AccountPlan> =
             Optional.ofNullable(accountPlan.getNullable("accountPlan"))
 
-        /** Updates to simple Aggregation entity CustomFields. */
+        /**
+         * Updates to simple Aggregation entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun aggregation(): Optional<Aggregation> =
             Optional.ofNullable(aggregation.getNullable("aggregation"))
 
-        /** Updates to Compound Aggregation entity CustomFields. */
+        /**
+         * Updates to Compound Aggregation entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun compoundAggregation(): Optional<CompoundAggregation> =
             Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
 
-        /** Updates to Meter entity CustomFields. */
+        /**
+         * Updates to Meter entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
 
-        /** Updates to Organization CustomFields. */
+        /**
+         * Updates to Organization CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun organization(): Optional<Organization> =
             Optional.ofNullable(organization.getNullable("organization"))
 
-        /** Updates to Plan entity CustomFields. */
+        /**
+         * Updates to Plan entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
 
-        /** Updates to planTemplate entity CustomFields. */
+        /**
+         * Updates to planTemplate entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun planTemplate(): Optional<PlanTemplate> =
             Optional.ofNullable(planTemplate.getNullable("planTemplate"))
 
-        /** Updates to Product entity CustomFields. */
+        /**
+         * Updates to Product entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
 
         /**
@@ -199,53 +327,92 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** Updates to Account entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [account].
+         *
+         * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("account") @ExcludeMissing fun _account(): JsonField<Account> = account
 
-        /** Updates to accountPlan entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [accountPlan].
+         *
+         * Unlike [accountPlan], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("accountPlan")
         @ExcludeMissing
         fun _accountPlan(): JsonField<AccountPlan> = accountPlan
 
-        /** Updates to simple Aggregation entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [aggregation].
+         *
+         * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("aggregation")
         @ExcludeMissing
         fun _aggregation(): JsonField<Aggregation> = aggregation
 
-        /** Updates to Compound Aggregation entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [compoundAggregation].
+         *
+         * Unlike [compoundAggregation], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("compoundAggregation")
         @ExcludeMissing
         fun _compoundAggregation(): JsonField<CompoundAggregation> = compoundAggregation
 
-        /** Updates to Meter entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [meter].
+         *
+         * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("meter") @ExcludeMissing fun _meter(): JsonField<Meter> = meter
 
-        /** Updates to Organization CustomFields. */
+        /**
+         * Returns the raw JSON value of [organization].
+         *
+         * Unlike [organization], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("organization")
         @ExcludeMissing
         fun _organization(): JsonField<Organization> = organization
 
-        /** Updates to Plan entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [plan].
+         *
+         * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
-        /** Updates to planTemplate entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [planTemplate].
+         *
+         * Unlike [planTemplate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("planTemplate")
         @ExcludeMissing
         fun _planTemplate(): JsonField<PlanTemplate> = planTemplate
 
-        /** Updates to Product entity CustomFields. */
+        /**
+         * Returns the raw JSON value of [product].
+         *
+         * Unlike [product], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -314,13 +481,25 @@ private constructor(
             /** Updates to Account entity CustomFields. */
             fun account(account: Account) = account(JsonField.of(account))
 
-            /** Updates to Account entity CustomFields. */
+            /**
+             * Sets [Builder.account] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.account] with a well-typed [Account] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun account(account: JsonField<Account>) = apply { this.account = account }
 
             /** Updates to accountPlan entity CustomFields. */
             fun accountPlan(accountPlan: AccountPlan) = accountPlan(JsonField.of(accountPlan))
 
-            /** Updates to accountPlan entity CustomFields. */
+            /**
+             * Sets [Builder.accountPlan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountPlan] with a well-typed [AccountPlan] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun accountPlan(accountPlan: JsonField<AccountPlan>) = apply {
                 this.accountPlan = accountPlan
             }
@@ -328,7 +507,13 @@ private constructor(
             /** Updates to simple Aggregation entity CustomFields. */
             fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
-            /** Updates to simple Aggregation entity CustomFields. */
+            /**
+             * Sets [Builder.aggregation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun aggregation(aggregation: JsonField<Aggregation>) = apply {
                 this.aggregation = aggregation
             }
@@ -337,7 +522,13 @@ private constructor(
             fun compoundAggregation(compoundAggregation: CompoundAggregation) =
                 compoundAggregation(JsonField.of(compoundAggregation))
 
-            /** Updates to Compound Aggregation entity CustomFields. */
+            /**
+             * Sets [Builder.compoundAggregation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.compoundAggregation] with a well-typed
+             * [CompoundAggregation] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
             fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
                 this.compoundAggregation = compoundAggregation
             }
@@ -345,13 +536,25 @@ private constructor(
             /** Updates to Meter entity CustomFields. */
             fun meter(meter: Meter) = meter(JsonField.of(meter))
 
-            /** Updates to Meter entity CustomFields. */
+            /**
+             * Sets [Builder.meter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meter] with a well-typed [Meter] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun meter(meter: JsonField<Meter>) = apply { this.meter = meter }
 
             /** Updates to Organization CustomFields. */
             fun organization(organization: Organization) = organization(JsonField.of(organization))
 
-            /** Updates to Organization CustomFields. */
+            /**
+             * Sets [Builder.organization] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.organization] with a well-typed [Organization] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun organization(organization: JsonField<Organization>) = apply {
                 this.organization = organization
             }
@@ -359,13 +562,25 @@ private constructor(
             /** Updates to Plan entity CustomFields. */
             fun plan(plan: Plan) = plan(JsonField.of(plan))
 
-            /** Updates to Plan entity CustomFields. */
+            /**
+             * Sets [Builder.plan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
             /** Updates to planTemplate entity CustomFields. */
             fun planTemplate(planTemplate: PlanTemplate) = planTemplate(JsonField.of(planTemplate))
 
-            /** Updates to planTemplate entity CustomFields. */
+            /**
+             * Sets [Builder.planTemplate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planTemplate] with a well-typed [PlanTemplate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun planTemplate(planTemplate: JsonField<PlanTemplate>) = apply {
                 this.planTemplate = planTemplate
             }
@@ -373,7 +588,13 @@ private constructor(
             /** Updates to Product entity CustomFields. */
             fun product(product: Product) = product(JsonField.of(product))
 
-            /** Updates to Product entity CustomFields. */
+            /**
+             * Sets [Builder.product] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.product] with a well-typed [Product] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun product(product: JsonField<Product>) = apply { this.product = product }
 
             /**
@@ -387,12 +608,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -486,13 +706,24 @@ private constructor(
         /** Updates to Account entity CustomFields. */
         fun account(account: Account) = apply { body.account(account) }
 
-        /** Updates to Account entity CustomFields. */
+        /**
+         * Sets [Builder.account] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.account] with a well-typed [Account] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun account(account: JsonField<Account>) = apply { body.account(account) }
 
         /** Updates to accountPlan entity CustomFields. */
         fun accountPlan(accountPlan: AccountPlan) = apply { body.accountPlan(accountPlan) }
 
-        /** Updates to accountPlan entity CustomFields. */
+        /**
+         * Sets [Builder.accountPlan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountPlan] with a well-typed [AccountPlan] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun accountPlan(accountPlan: JsonField<AccountPlan>) = apply {
             body.accountPlan(accountPlan)
         }
@@ -500,7 +731,13 @@ private constructor(
         /** Updates to simple Aggregation entity CustomFields. */
         fun aggregation(aggregation: Aggregation) = apply { body.aggregation(aggregation) }
 
-        /** Updates to simple Aggregation entity CustomFields. */
+        /**
+         * Sets [Builder.aggregation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun aggregation(aggregation: JsonField<Aggregation>) = apply {
             body.aggregation(aggregation)
         }
@@ -510,7 +747,13 @@ private constructor(
             body.compoundAggregation(compoundAggregation)
         }
 
-        /** Updates to Compound Aggregation entity CustomFields. */
+        /**
+         * Sets [Builder.compoundAggregation] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.compoundAggregation] with a well-typed
+         * [CompoundAggregation] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
         fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
             body.compoundAggregation(compoundAggregation)
         }
@@ -518,13 +761,24 @@ private constructor(
         /** Updates to Meter entity CustomFields. */
         fun meter(meter: Meter) = apply { body.meter(meter) }
 
-        /** Updates to Meter entity CustomFields. */
+        /**
+         * Sets [Builder.meter] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.meter] with a well-typed [Meter] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun meter(meter: JsonField<Meter>) = apply { body.meter(meter) }
 
         /** Updates to Organization CustomFields. */
         fun organization(organization: Organization) = apply { body.organization(organization) }
 
-        /** Updates to Organization CustomFields. */
+        /**
+         * Sets [Builder.organization] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.organization] with a well-typed [Organization] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun organization(organization: JsonField<Organization>) = apply {
             body.organization(organization)
         }
@@ -532,13 +786,24 @@ private constructor(
         /** Updates to Plan entity CustomFields. */
         fun plan(plan: Plan) = apply { body.plan(plan) }
 
-        /** Updates to Plan entity CustomFields. */
+        /**
+         * Sets [Builder.plan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun plan(plan: JsonField<Plan>) = apply { body.plan(plan) }
 
         /** Updates to planTemplate entity CustomFields. */
         fun planTemplate(planTemplate: PlanTemplate) = apply { body.planTemplate(planTemplate) }
 
-        /** Updates to planTemplate entity CustomFields. */
+        /**
+         * Sets [Builder.planTemplate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planTemplate] with a well-typed [PlanTemplate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun planTemplate(planTemplate: JsonField<PlanTemplate>) = apply {
             body.planTemplate(planTemplate)
         }
@@ -546,7 +811,12 @@ private constructor(
         /** Updates to Product entity CustomFields. */
         fun product(product: Product) = apply { body.product(product) }
 
-        /** Updates to Product entity CustomFields. */
+        /**
+         * Sets [Builder.product] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.product] with a well-typed [Product] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun product(product: JsonField<Product>) = apply { body.product(product) }
 
         /**
@@ -560,12 +830,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

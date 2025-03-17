@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -46,7 +47,12 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
     /**
@@ -54,16 +60,27 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
     /**
      * A unique short code to identify the Product. It should not contain control chracters or
      * spaces.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
-    /** The unique identifier (UUID) of the user who created this Product. */
+    /**
+     * The unique identifier (UUID) of the user who created this Product.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
     /**
@@ -77,77 +94,117 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> =
         Optional.ofNullable(customFields.getNullable("customFields"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Product was created. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Product was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Product was last modified. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Product was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The unique identifier (UUID) of the user who last modified this Product. */
+    /**
+     * The unique identifier (UUID) of the user who last modified this Product.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** Descriptive name for the Product providing context and information. */
+    /**
+     * Descriptive name for the Product providing context and information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
-     * A unique short code to identify the Product. It should not contain control chracters or
-     * spaces.
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
-    /** The unique identifier (UUID) of the user who created this Product. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational
-     * level,`customField` values defined at individual level override values of `customFields` with
-     * the same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("customFields")
     @ExcludeMissing
     fun _customFields(): JsonField<CustomFields> = customFields
 
-    /** The date and time _(in ISO-8601 format)_ when the Product was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The date and time _(in ISO-8601 format)_ when the Product was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The unique identifier (UUID) of the user who last modified this Product. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** Descriptive name for the Product providing context and information. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     @JsonAnyGetter
@@ -220,7 +277,12 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
@@ -232,10 +294,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -246,15 +308,23 @@ private constructor(
         fun code(code: String) = code(JsonField.of(code))
 
         /**
-         * A unique short code to identify the Product. It should not contain control chracters or
-         * spaces.
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** The unique identifier (UUID) of the user who created this Product. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The unique identifier (UUID) of the user who created this Product. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /**
@@ -272,16 +342,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational
-         * level,`customField` values defined at individual level override values of `customFields`
-         * with the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             this.customFields = customFields
@@ -290,14 +355,26 @@ private constructor(
         /** The date and time _(in ISO-8601 format)_ when the Product was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO-8601 format)_ when the Product was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The date and time _(in ISO-8601 format)_ when the Product was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The date and time _(in ISO-8601 format)_ when the Product was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -305,7 +382,13 @@ private constructor(
         /** The unique identifier (UUID) of the user who last modified this Product. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) of the user who last modified this Product. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -313,7 +396,12 @@ private constructor(
         /** Descriptive name for the Product providing context and information. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** Descriptive name for the Product providing context and information. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

@@ -126,35 +126,39 @@ private constructor(
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 
         /**
-         * Filter with this Boolean flag whether to include TransactionTypes that are archived.
-         * - TRUE - include archived TransactionTypes in the list.
-         * - FALSE - exclude archived TransactionTypes.
+         * Alias for [Builder.archived].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
          */
         fun archived(archived: Boolean) = archived(archived as Boolean?)
 
-        /**
-         * Filter with this Boolean flag whether to include TransactionTypes that are archived.
-         * - TRUE - include archived TransactionTypes in the list.
-         * - FALSE - exclude archived TransactionTypes.
-         */
+        /** Alias for calling [Builder.archived] with `archived.orElse(null)`. */
         fun archived(archived: Optional<Boolean>) = archived(archived.getOrNull())
 
         /** A list of TransactionType short codes to retrieve. */
         fun codes(codes: List<String>?) = apply { this.codes = codes?.toMutableList() }
 
-        /** A list of TransactionType short codes to retrieve. */
+        /** Alias for calling [Builder.codes] with `codes.orElse(null)`. */
         fun codes(codes: Optional<List<String>>) = codes(codes.getOrNull())
 
-        /** A list of TransactionType short codes to retrieve. */
+        /**
+         * Adds a single [String] to [codes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addCode(code: String) = apply { codes = (codes ?: mutableListOf()).apply { add(code) } }
 
         /** A list of TransactionType unique identifiers (UUIDs) to retrieve. */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** A list of TransactionType unique identifiers (UUIDs) to retrieve. */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** A list of TransactionType unique identifiers (UUIDs) to retrieve. */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /**
@@ -163,19 +167,20 @@ private constructor(
          */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * TransactionTypes in a paginated list.
-         */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of TransactionTypes to retrieve per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Specifies the maximum number of TransactionTypes to retrieve per page. */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Specifies the maximum number of TransactionTypes to retrieve per page. */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

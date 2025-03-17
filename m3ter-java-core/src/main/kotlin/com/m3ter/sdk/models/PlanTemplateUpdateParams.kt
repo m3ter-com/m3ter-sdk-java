@@ -54,6 +54,9 @@ private constructor(
      *   calendar month following.
      * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
      *   year following.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun billFrequency(): BillFrequency = body.billFrequency()
 
@@ -73,30 +76,52 @@ private constructor(
      *   body parameter for the
      *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
      *   call.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun currency(): String = body.currency()
 
-    /** Descriptive name for the PlanTemplate. */
+    /**
+     * Descriptive name for the PlanTemplate.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun name(): String = body.name()
 
-    /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+    /**
+     * The unique identifier (UUID) of the Product associated with this PlanTemplate.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun productId(): String = body.productId()
 
     /**
      * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated and
      * must be a non-negative number.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun standingCharge(): Double = body.standingCharge()
 
     /**
      * How often bills are issued. For example, if `billFrequency` is Monthly and
      * `billFrequencyInterval` is 3, bills are issued every three months.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun billFrequencyInterval(): Optional<Long> = body.billFrequencyInterval()
 
     /**
      * A unique, short code reference for the PlanTemplate. This code should not contain control
      * characters or spaces.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun code(): Optional<String> = body.code()
 
@@ -111,12 +136,18 @@ private constructor(
      * See
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
      * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
      * Plan based on the PlanTemplate. This must be a non-negative number.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpend(): Optional<Double> = body.minimumSpend()
 
@@ -127,10 +158,18 @@ private constructor(
      *
      * Overrides the setting at Organizational level for minimum spend billing in arrears/in
      * advance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
-    /** Minimum spend description _(displayed on the bill line item)_. */
+    /**
+     * Minimum spend description _(displayed on the bill line item)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun minimumSpendDescription(): Optional<String> = body.minimumSpendDescription()
 
     /**
@@ -138,6 +177,9 @@ private constructor(
      * plans, while higher numbers represent premium plans. This must be a non-negative integer.
      *
      * **NOTE: DEPRECATED** - do not use.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun ordinal(): Optional<Long> = body.ordinal()
 
@@ -148,16 +190,27 @@ private constructor(
      *
      * Overrides the setting at Organizational level for standing charge billing in arrears/in
      * advance.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeBillInAdvance(): Optional<Boolean> = body.standingChargeBillInAdvance()
 
-    /** Standing charge description _(displayed on the bill line item)_. */
+    /**
+     * Standing charge description _(displayed on the bill line item)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun standingChargeDescription(): Optional<String> = body.standingChargeDescription()
 
     /**
      * How often the standing charge is applied. For example, if the bill is issued every three
      * months and `standingChargeInterval` is 2, then the standing charge is applied every six
      * months.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeInterval(): Optional<Long> = body.standingChargeInterval()
 
@@ -166,6 +219,9 @@ private constructor(
      * issued every three months and the `standingChargeOfset` is 0, then the charge is applied to
      * the first bill _(at three months)_; if 1, it would be applied to the second bill _(at six
      * months)_, and so on.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun standingChargeOffset(): Optional<Long> = body.standingChargeOffset()
 
@@ -176,139 +232,135 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
     /**
-     * Determines the frequency at which bills are generated.
-     * - **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-     * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
-     *   calendar month following.
-     * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
-     *   year following.
+     * Returns the raw JSON value of [billFrequency].
+     *
+     * Unlike [billFrequency], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billFrequency(): JsonField<BillFrequency> = body._billFrequency()
 
     /**
-     * The ISO currency code for the currency used to charge end users - for example USD, GBP, EUR.
-     * This defines the _pricing currency_ and is inherited by any Plans based on the Plan Template.
+     * Returns the raw JSON value of [currency].
      *
-     * **Notes:**
-     * - You can define a currency at Organization-level or Account-level to be used as the _billing
-     *   currency_. This can be a different currency to that used for the Plan as the _pricing
-     *   currency_.
-     * - If the billing currency for an Account is different to the pricing currency used by a Plan
-     *   attached to the Account, you must ensure a _currency conversion rate_ is defined for your
-     *   Organization to convert the pricing currency into the billing currency at billing,
-     *   otherwise Bills will fail for the Account.
-     * - To define any required currency conversion rates, use the `currencyConversions` request
-     *   body parameter for the
-     *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
-     *   call.
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _currency(): JsonField<String> = body._currency()
 
-    /** Descriptive name for the PlanTemplate. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _name(): JsonField<String> = body._name()
 
-    /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+    /**
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _productId(): JsonField<String> = body._productId()
 
     /**
-     * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated and
-     * must be a non-negative number.
+     * Returns the raw JSON value of [standingCharge].
+     *
+     * Unlike [standingCharge], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _standingCharge(): JsonField<Double> = body._standingCharge()
 
     /**
-     * How often bills are issued. For example, if `billFrequency` is Monthly and
-     * `billFrequencyInterval` is 3, bills are issued every three months.
+     * Returns the raw JSON value of [billFrequencyInterval].
+     *
+     * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _billFrequencyInterval(): JsonField<Long> = body._billFrequencyInterval()
 
     /**
-     * A unique, short code reference for the PlanTemplate. This code should not contain control
-     * characters or spaces.
+     * Returns the raw JSON value of [code].
+     *
+     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _code(): JsonField<String> = body._code()
 
     /**
-     * User defined fields enabling you to attach custom data. The value for a custom field can be
-     * either a string or a number.
+     * Returns the raw JSON value of [customFields].
      *
-     * If `customFields` can also be defined for this entity at the Organizational level,
-     * `customField` values defined at individual level override values of `customFields` with the
-     * same name defined at Organization level.
-     *
-     * See
-     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-     * in the m3ter documentation for more information.
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _customFields(): JsonField<CustomFields> = body._customFields()
 
     /**
-     * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
-     * Plan based on the PlanTemplate. This must be a non-negative number.
+     * Returns the raw JSON value of [minimumSpend].
+     *
+     * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _minimumSpend(): JsonField<Double> = body._minimumSpend()
 
     /**
-     * A boolean that determines when the minimum spend is billed.
-     * - TRUE - minimum spend is billed at the start of each billing period.
-     * - FALSE - minimum spend is billed at the end of each billing period.
+     * Returns the raw JSON value of [minimumSpendBillInAdvance].
      *
-     * Overrides the setting at Organizational level for minimum spend billing in arrears/in
-     * advance.
+     * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _minimumSpendBillInAdvance(): JsonField<Boolean> = body._minimumSpendBillInAdvance()
 
-    /** Minimum spend description _(displayed on the bill line item)_. */
+    /**
+     * Returns the raw JSON value of [minimumSpendDescription].
+     *
+     * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _minimumSpendDescription(): JsonField<String> = body._minimumSpendDescription()
 
     /**
-     * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent more basic
-     * plans, while higher numbers represent premium plans. This must be a non-negative integer.
+     * Returns the raw JSON value of [ordinal].
      *
-     * **NOTE: DEPRECATED** - do not use.
+     * Unlike [ordinal], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _ordinal(): JsonField<Long> = body._ordinal()
 
     /**
-     * A boolean that determines when the standing charge is billed.
-     * - TRUE - standing charge is billed at the start of each billing period.
-     * - FALSE - standing charge is billed at the end of each billing period.
+     * Returns the raw JSON value of [standingChargeBillInAdvance].
      *
-     * Overrides the setting at Organizational level for standing charge billing in arrears/in
-     * advance.
+     * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _standingChargeBillInAdvance(): JsonField<Boolean> = body._standingChargeBillInAdvance()
 
-    /** Standing charge description _(displayed on the bill line item)_. */
+    /**
+     * Returns the raw JSON value of [standingChargeDescription].
+     *
+     * Unlike [standingChargeDescription], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
     fun _standingChargeDescription(): JsonField<String> = body._standingChargeDescription()
 
     /**
-     * How often the standing charge is applied. For example, if the bill is issued every three
-     * months and `standingChargeInterval` is 2, then the standing charge is applied every six
-     * months.
+     * Returns the raw JSON value of [standingChargeInterval].
+     *
+     * Unlike [standingChargeInterval], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _standingChargeInterval(): JsonField<Long> = body._standingChargeInterval()
 
     /**
-     * Defines an offset for when the standing charge is first applied. For example, if the bill is
-     * issued every three months and the `standingChargeOfset` is 0, then the charge is applied to
-     * the first bill _(at three months)_; if 1, it would be applied to the second bill _(at six
-     * months)_, and so on.
+     * Returns the raw JSON value of [standingChargeOffset].
+     *
+     * Unlike [standingChargeOffset], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _standingChargeOffset(): JsonField<Long> = body._standingChargeOffset()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -400,6 +452,9 @@ private constructor(
          *   calendar month following.
          * - **Annually**. Starting at midnight on first day of each year covering the entire
          *   calendar year following.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun billFrequency(): BillFrequency = billFrequency.getRequired("billFrequency")
 
@@ -420,24 +475,43 @@ private constructor(
          *   body parameter for the
          *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
          *   call.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun currency(): String = currency.getRequired("currency")
 
-        /** Descriptive name for the PlanTemplate. */
+        /**
+         * Descriptive name for the PlanTemplate.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun name(): String = name.getRequired("name")
 
-        /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+        /**
+         * The unique identifier (UUID) of the Product associated with this PlanTemplate.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun productId(): String = productId.getRequired("productId")
 
         /**
          * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
          * and must be a non-negative number.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun standingCharge(): Double = standingCharge.getRequired("standingCharge")
 
         /**
          * How often bills are issued. For example, if `billFrequency` is Monthly and
          * `billFrequencyInterval` is 3, bills are issued every three months.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun billFrequencyInterval(): Optional<Long> =
             Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
@@ -445,6 +519,9 @@ private constructor(
         /**
          * A unique, short code reference for the PlanTemplate. This code should not contain control
          * characters or spaces.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
 
@@ -459,6 +536,9 @@ private constructor(
          * See
          * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
          * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun customFields(): Optional<CustomFields> =
             Optional.ofNullable(customFields.getNullable("customFields"))
@@ -466,6 +546,9 @@ private constructor(
         /**
          * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
          * Plan based on the PlanTemplate. This must be a non-negative number.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpend(): Optional<Double> =
             Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
@@ -477,11 +560,19 @@ private constructor(
          *
          * Overrides the setting at Organizational level for minimum spend billing in arrears/in
          * advance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Minimum spend description _(displayed on the bill line item)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun minimumSpendDescription(): Optional<String> =
             Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
 
@@ -491,6 +582,9 @@ private constructor(
          * integer.
          *
          * **NOTE: DEPRECATED** - do not use.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun ordinal(): Optional<Long> = Optional.ofNullable(ordinal.getNullable("ordinal"))
 
@@ -501,13 +595,21 @@ private constructor(
          *
          * Overrides the setting at Organizational level for standing charge billing in arrears/in
          * advance.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeBillInAdvance(): Optional<Boolean> =
             Optional.ofNullable(
                 standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance")
             )
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /**
+         * Standing charge description _(displayed on the bill line item)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun standingChargeDescription(): Optional<String> =
             Optional.ofNullable(standingChargeDescription.getNullable("standingChargeDescription"))
 
@@ -515,6 +617,9 @@ private constructor(
          * How often the standing charge is applied. For example, if the bill is issued every three
          * months and `standingChargeInterval` is 2, then the standing charge is applied every six
          * months.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeInterval(): Optional<Long> =
             Optional.ofNullable(standingChargeInterval.getNullable("standingChargeInterval"))
@@ -524,6 +629,9 @@ private constructor(
          * is issued every three months and the `standingChargeOfset` is 0, then the charge is
          * applied to the first bill _(at three months)_; if 1, it would be applied to the second
          * bill _(at six months)_, and so on.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun standingChargeOffset(): Optional<Long> =
             Optional.ofNullable(standingChargeOffset.getNullable("standingChargeOffset"))
@@ -535,164 +643,161 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
         /**
-         * Determines the frequency at which bills are generated.
-         * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
-         *   following.
-         * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-         * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
-         *   calendar month following.
-         * - **Annually**. Starting at midnight on first day of each year covering the entire
-         *   calendar year following.
+         * Returns the raw JSON value of [billFrequency].
+         *
+         * Unlike [billFrequency], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("billFrequency")
         @ExcludeMissing
         fun _billFrequency(): JsonField<BillFrequency> = billFrequency
 
         /**
-         * The ISO currency code for the currency used to charge end users - for example USD, GBP,
-         * EUR. This defines the _pricing currency_ and is inherited by any Plans based on the Plan
-         * Template.
+         * Returns the raw JSON value of [currency].
          *
-         * **Notes:**
-         * - You can define a currency at Organization-level or Account-level to be used as the
-         *   _billing currency_. This can be a different currency to that used for the Plan as the
-         *   _pricing currency_.
-         * - If the billing currency for an Account is different to the pricing currency used by a
-         *   Plan attached to the Account, you must ensure a _currency conversion rate_ is defined
-         *   for your Organization to convert the pricing currency into the billing currency at
-         *   billing, otherwise Bills will fail for the Account.
-         * - To define any required currency conversion rates, use the `currencyConversions` request
-         *   body parameter for the
-         *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
-         *   call.
+         * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
-        /** Descriptive name for the PlanTemplate. */
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+        /**
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
         /**
-         * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
-         * and must be a non-negative number.
+         * Returns the raw JSON value of [standingCharge].
+         *
+         * Unlike [standingCharge], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("standingCharge")
         @ExcludeMissing
         fun _standingCharge(): JsonField<Double> = standingCharge
 
         /**
-         * How often bills are issued. For example, if `billFrequency` is Monthly and
-         * `billFrequencyInterval` is 3, bills are issued every three months.
+         * Returns the raw JSON value of [billFrequencyInterval].
+         *
+         * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
         fun _billFrequencyInterval(): JsonField<Long> = billFrequencyInterval
 
         /**
-         * A unique, short code reference for the PlanTemplate. This code should not contain control
-         * characters or spaces.
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Returns the raw JSON value of [customFields].
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("customFields")
         @ExcludeMissing
         fun _customFields(): JsonField<CustomFields> = customFields
 
         /**
-         * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
-         * Plan based on the PlanTemplate. This must be a non-negative number.
+         * Returns the raw JSON value of [minimumSpend].
+         *
+         * Unlike [minimumSpend], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("minimumSpend")
         @ExcludeMissing
         fun _minimumSpend(): JsonField<Double> = minimumSpend
 
         /**
-         * A boolean that determines when the minimum spend is billed.
-         * - TRUE - minimum spend is billed at the start of each billing period.
-         * - FALSE - minimum spend is billed at the end of each billing period.
+         * Returns the raw JSON value of [minimumSpendBillInAdvance].
          *
-         * Overrides the setting at Organizational level for minimum spend billing in arrears/in
-         * advance.
+         * Unlike [minimumSpendBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("minimumSpendBillInAdvance")
         @ExcludeMissing
         fun _minimumSpendBillInAdvance(): JsonField<Boolean> = minimumSpendBillInAdvance
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Returns the raw JSON value of [minimumSpendDescription].
+         *
+         * Unlike [minimumSpendDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("minimumSpendDescription")
         @ExcludeMissing
         fun _minimumSpendDescription(): JsonField<String> = minimumSpendDescription
 
         /**
-         * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent more
-         * basic plans, while higher numbers represent premium plans. This must be a non-negative
-         * integer.
+         * Returns the raw JSON value of [ordinal].
          *
-         * **NOTE: DEPRECATED** - do not use.
+         * Unlike [ordinal], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("ordinal") @ExcludeMissing fun _ordinal(): JsonField<Long> = ordinal
 
         /**
-         * A boolean that determines when the standing charge is billed.
-         * - TRUE - standing charge is billed at the start of each billing period.
-         * - FALSE - standing charge is billed at the end of each billing period.
+         * Returns the raw JSON value of [standingChargeBillInAdvance].
          *
-         * Overrides the setting at Organizational level for standing charge billing in arrears/in
-         * advance.
+         * Unlike [standingChargeBillInAdvance], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("standingChargeBillInAdvance")
         @ExcludeMissing
         fun _standingChargeBillInAdvance(): JsonField<Boolean> = standingChargeBillInAdvance
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /**
+         * Returns the raw JSON value of [standingChargeDescription].
+         *
+         * Unlike [standingChargeDescription], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("standingChargeDescription")
         @ExcludeMissing
         fun _standingChargeDescription(): JsonField<String> = standingChargeDescription
 
         /**
-         * How often the standing charge is applied. For example, if the bill is issued every three
-         * months and `standingChargeInterval` is 2, then the standing charge is applied every six
-         * months.
+         * Returns the raw JSON value of [standingChargeInterval].
+         *
+         * Unlike [standingChargeInterval], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("standingChargeInterval")
         @ExcludeMissing
         fun _standingChargeInterval(): JsonField<Long> = standingChargeInterval
 
         /**
-         * Defines an offset for when the standing charge is first applied. For example, if the bill
-         * is issued every three months and the `standingChargeOfset` is 0, then the charge is
-         * applied to the first bill _(at three months)_; if 1, it would be applied to the second
-         * bill _(at six months)_, and so on.
+         * Returns the raw JSON value of [standingChargeOffset].
+         *
+         * Unlike [standingChargeOffset], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("standingChargeOffset")
         @ExcludeMissing
         fun _standingChargeOffset(): JsonField<Long> = standingChargeOffset
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -805,15 +910,11 @@ private constructor(
                 billFrequency(JsonField.of(billFrequency))
 
             /**
-             * Determines the frequency at which bills are generated.
-             * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
-             *   following.
-             * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period
-             *   following.
-             * - **Monthly**. Starting at midnight on the first day of each month, covering the
-             *   entire calendar month following.
-             * - **Annually**. Starting at midnight on first day of each year covering the entire
-             *   calendar year following.
+             * Sets [Builder.billFrequency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billFrequency] with a well-typed [BillFrequency]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun billFrequency(billFrequency: JsonField<BillFrequency>) = apply {
                 this.billFrequency = billFrequency
@@ -840,35 +941,36 @@ private constructor(
             fun currency(currency: String) = currency(JsonField.of(currency))
 
             /**
-             * The ISO currency code for the currency used to charge end users - for example USD,
-             * GBP, EUR. This defines the _pricing currency_ and is inherited by any Plans based on
-             * the Plan Template.
+             * Sets [Builder.currency] to an arbitrary JSON value.
              *
-             * **Notes:**
-             * - You can define a currency at Organization-level or Account-level to be used as the
-             *   _billing currency_. This can be a different currency to that used for the Plan as
-             *   the _pricing currency_.
-             * - If the billing currency for an Account is different to the pricing currency used by
-             *   a Plan attached to the Account, you must ensure a _currency conversion rate_ is
-             *   defined for your Organization to convert the pricing currency into the billing
-             *   currency at billing, otherwise Bills will fail for the Account.
-             * - To define any required currency conversion rates, use the `currencyConversions`
-             *   request body parameter for the
-             *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
-             *   call.
+             * You should usually call [Builder.currency] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /** Descriptive name for the PlanTemplate. */
             fun name(name: String) = name(JsonField.of(name))
 
-            /** Descriptive name for the PlanTemplate. */
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
             fun productId(productId: String) = productId(JsonField.of(productId))
 
-            /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+            /**
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
             /**
@@ -879,8 +981,11 @@ private constructor(
                 standingCharge(JsonField.of(standingCharge))
 
             /**
-             * The fixed charge _(standing charge)_ applied to customer bills. This charge is
-             * prorated and must be a non-negative number.
+             * Sets [Builder.standingCharge] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingCharge] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun standingCharge(standingCharge: JsonField<Double>) = apply {
                 this.standingCharge = standingCharge
@@ -894,8 +999,11 @@ private constructor(
                 billFrequencyInterval(JsonField.of(billFrequencyInterval))
 
             /**
-             * How often bills are issued. For example, if `billFrequency` is Monthly and
-             * `billFrequencyInterval` is 3, bills are issued every three months.
+             * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
                 this.billFrequencyInterval = billFrequencyInterval
@@ -908,8 +1016,11 @@ private constructor(
             fun code(code: String) = code(JsonField.of(code))
 
             /**
-             * A unique, short code reference for the PlanTemplate. This code should not contain
-             * control characters or spaces.
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun code(code: JsonField<String>) = apply { this.code = code }
 
@@ -928,16 +1039,11 @@ private constructor(
             fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
 
             /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
+             * Sets [Builder.customFields] to an arbitrary JSON value.
              *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun customFields(customFields: JsonField<CustomFields>) = apply {
                 this.customFields = customFields
@@ -950,8 +1056,11 @@ private constructor(
             fun minimumSpend(minimumSpend: Double) = minimumSpend(JsonField.of(minimumSpend))
 
             /**
-             * The Product minimum spend amount per billing cycle for end customer Accounts on a
-             * pricing Plan based on the PlanTemplate. This must be a non-negative number.
+             * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpend] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
                 this.minimumSpend = minimumSpend
@@ -969,12 +1078,11 @@ private constructor(
                 minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
 
             /**
-             * A boolean that determines when the minimum spend is billed.
-             * - TRUE - minimum spend is billed at the start of each billing period.
-             * - FALSE - minimum spend is billed at the end of each billing period.
+             * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
              *
-             * Overrides the setting at Organizational level for minimum spend billing in arrears/in
-             * advance.
+             * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
@@ -984,7 +1092,13 @@ private constructor(
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
-            /** Minimum spend description _(displayed on the bill line item)_. */
+            /**
+             * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
                 this.minimumSpendDescription = minimumSpendDescription
             }
@@ -999,11 +1113,11 @@ private constructor(
             fun ordinal(ordinal: Long) = ordinal(JsonField.of(ordinal))
 
             /**
-             * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent
-             * more basic plans, while higher numbers represent premium plans. This must be a
-             * non-negative integer.
+             * Sets [Builder.ordinal] to an arbitrary JSON value.
              *
-             * **NOTE: DEPRECATED** - do not use.
+             * You should usually call [Builder.ordinal] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun ordinal(ordinal: JsonField<Long>) = apply { this.ordinal = ordinal }
 
@@ -1019,12 +1133,11 @@ private constructor(
                 standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
 
             /**
-             * A boolean that determines when the standing charge is billed.
-             * - TRUE - standing charge is billed at the start of each billing period.
-             * - FALSE - standing charge is billed at the end of each billing period.
+             * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
              *
-             * Overrides the setting at Organizational level for standing charge billing in
-             * arrears/in advance.
+             * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) =
                 apply {
@@ -1035,7 +1148,13 @@ private constructor(
             fun standingChargeDescription(standingChargeDescription: String) =
                 standingChargeDescription(JsonField.of(standingChargeDescription))
 
-            /** Standing charge description _(displayed on the bill line item)_. */
+            /**
+             * Sets [Builder.standingChargeDescription] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeDescription] with a well-typed
+             * [String] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
             fun standingChargeDescription(standingChargeDescription: JsonField<String>) = apply {
                 this.standingChargeDescription = standingChargeDescription
             }
@@ -1049,9 +1168,11 @@ private constructor(
                 standingChargeInterval(JsonField.of(standingChargeInterval))
 
             /**
-             * How often the standing charge is applied. For example, if the bill is issued every
-             * three months and `standingChargeInterval` is 2, then the standing charge is applied
-             * every six months.
+             * Sets [Builder.standingChargeInterval] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeInterval] with a well-typed [Long]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun standingChargeInterval(standingChargeInterval: JsonField<Long>) = apply {
                 this.standingChargeInterval = standingChargeInterval
@@ -1067,10 +1188,11 @@ private constructor(
                 standingChargeOffset(JsonField.of(standingChargeOffset))
 
             /**
-             * Defines an offset for when the standing charge is first applied. For example, if the
-             * bill is issued every three months and the `standingChargeOfset` is 0, then the charge
-             * is applied to the first bill _(at three months)_; if 1, it would be applied to the
-             * second bill _(at six months)_, and so on.
+             * Sets [Builder.standingChargeOffset] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.standingChargeOffset] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun standingChargeOffset(standingChargeOffset: JsonField<Long>) = apply {
                 this.standingChargeOffset = standingChargeOffset
@@ -1087,12 +1209,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -1215,14 +1336,11 @@ private constructor(
         }
 
         /**
-         * Determines the frequency at which bills are generated.
-         * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
-         *   following.
-         * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-         * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
-         *   calendar month following.
-         * - **Annually**. Starting at midnight on first day of each year covering the entire
-         *   calendar year following.
+         * Sets [Builder.billFrequency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billFrequency] with a well-typed [BillFrequency] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun billFrequency(billFrequency: JsonField<BillFrequency>) = apply {
             body.billFrequency(billFrequency)
@@ -1249,35 +1367,34 @@ private constructor(
         fun currency(currency: String) = apply { body.currency(currency) }
 
         /**
-         * The ISO currency code for the currency used to charge end users - for example USD, GBP,
-         * EUR. This defines the _pricing currency_ and is inherited by any Plans based on the Plan
-         * Template.
+         * Sets [Builder.currency] to an arbitrary JSON value.
          *
-         * **Notes:**
-         * - You can define a currency at Organization-level or Account-level to be used as the
-         *   _billing currency_. This can be a different currency to that used for the Plan as the
-         *   _pricing currency_.
-         * - If the billing currency for an Account is different to the pricing currency used by a
-         *   Plan attached to the Account, you must ensure a _currency conversion rate_ is defined
-         *   for your Organization to convert the pricing currency into the billing currency at
-         *   billing, otherwise Bills will fail for the Account.
-         * - To define any required currency conversion rates, use the `currencyConversions` request
-         *   body parameter for the
-         *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
-         *   call.
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /** Descriptive name for the PlanTemplate. */
         fun name(name: String) = apply { body.name(name) }
 
-        /** Descriptive name for the PlanTemplate. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
         fun productId(productId: String) = apply { body.productId(productId) }
 
-        /** The unique identifier (UUID) of the Product associated with this PlanTemplate. */
+        /**
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
         /**
@@ -1287,8 +1404,11 @@ private constructor(
         fun standingCharge(standingCharge: Double) = apply { body.standingCharge(standingCharge) }
 
         /**
-         * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
-         * and must be a non-negative number.
+         * Sets [Builder.standingCharge] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingCharge] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun standingCharge(standingCharge: JsonField<Double>) = apply {
             body.standingCharge(standingCharge)
@@ -1303,8 +1423,11 @@ private constructor(
         }
 
         /**
-         * How often bills are issued. For example, if `billFrequency` is Monthly and
-         * `billFrequencyInterval` is 3, bills are issued every three months.
+         * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
@@ -1317,8 +1440,10 @@ private constructor(
         fun code(code: String) = apply { body.code(code) }
 
         /**
-         * A unique, short code reference for the PlanTemplate. This code should not contain control
-         * characters or spaces.
+         * Sets [Builder.code] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.code] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
@@ -1337,16 +1462,11 @@ private constructor(
         fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
 
         /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
+         * Sets [Builder.customFields] to an arbitrary JSON value.
          *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun customFields(customFields: JsonField<CustomFields>) = apply {
             body.customFields(customFields)
@@ -1359,8 +1479,11 @@ private constructor(
         fun minimumSpend(minimumSpend: Double) = apply { body.minimumSpend(minimumSpend) }
 
         /**
-         * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
-         * Plan based on the PlanTemplate. This must be a non-negative number.
+         * Sets [Builder.minimumSpend] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpend] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun minimumSpend(minimumSpend: JsonField<Double>) = apply {
             body.minimumSpend(minimumSpend)
@@ -1379,12 +1502,11 @@ private constructor(
         }
 
         /**
-         * A boolean that determines when the minimum spend is billed.
-         * - TRUE - minimum spend is billed at the start of each billing period.
-         * - FALSE - minimum spend is billed at the end of each billing period.
+         * Sets [Builder.minimumSpendBillInAdvance] to an arbitrary JSON value.
          *
-         * Overrides the setting at Organizational level for minimum spend billing in arrears/in
-         * advance.
+         * You should usually call [Builder.minimumSpendBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: JsonField<Boolean>) = apply {
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
@@ -1395,7 +1517,13 @@ private constructor(
             body.minimumSpendDescription(minimumSpendDescription)
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /**
+         * Sets [Builder.minimumSpendDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.minimumSpendDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun minimumSpendDescription(minimumSpendDescription: JsonField<String>) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -1410,11 +1538,10 @@ private constructor(
         fun ordinal(ordinal: Long) = apply { body.ordinal(ordinal) }
 
         /**
-         * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent more
-         * basic plans, while higher numbers represent premium plans. This must be a non-negative
-         * integer.
+         * Sets [Builder.ordinal] to an arbitrary JSON value.
          *
-         * **NOTE: DEPRECATED** - do not use.
+         * You should usually call [Builder.ordinal] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun ordinal(ordinal: JsonField<Long>) = apply { body.ordinal(ordinal) }
 
@@ -1431,12 +1558,11 @@ private constructor(
         }
 
         /**
-         * A boolean that determines when the standing charge is billed.
-         * - TRUE - standing charge is billed at the start of each billing period.
-         * - FALSE - standing charge is billed at the end of each billing period.
+         * Sets [Builder.standingChargeBillInAdvance] to an arbitrary JSON value.
          *
-         * Overrides the setting at Organizational level for standing charge billing in arrears/in
-         * advance.
+         * You should usually call [Builder.standingChargeBillInAdvance] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: JsonField<Boolean>) = apply {
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
@@ -1447,7 +1573,13 @@ private constructor(
             body.standingChargeDescription(standingChargeDescription)
         }
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /**
+         * Sets [Builder.standingChargeDescription] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeDescription] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun standingChargeDescription(standingChargeDescription: JsonField<String>) = apply {
             body.standingChargeDescription(standingChargeDescription)
         }
@@ -1462,9 +1594,11 @@ private constructor(
         }
 
         /**
-         * How often the standing charge is applied. For example, if the bill is issued every three
-         * months and `standingChargeInterval` is 2, then the standing charge is applied every six
-         * months.
+         * Sets [Builder.standingChargeInterval] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeInterval] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun standingChargeInterval(standingChargeInterval: JsonField<Long>) = apply {
             body.standingChargeInterval(standingChargeInterval)
@@ -1481,10 +1615,11 @@ private constructor(
         }
 
         /**
-         * Defines an offset for when the standing charge is first applied. For example, if the bill
-         * is issued every three months and the `standingChargeOfset` is 0, then the charge is
-         * applied to the first bill _(at three months)_; if 1, it would be applied to the second
-         * bill _(at six months)_, and so on.
+         * Sets [Builder.standingChargeOffset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.standingChargeOffset] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun standingChargeOffset(standingChargeOffset: JsonField<Long>) = apply {
             body.standingChargeOffset(standingChargeOffset)
@@ -1501,12 +1636,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

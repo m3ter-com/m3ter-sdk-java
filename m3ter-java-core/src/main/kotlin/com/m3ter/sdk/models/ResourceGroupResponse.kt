@@ -13,6 +13,7 @@ import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -41,55 +42,118 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The unique identifier (UUID) of the Resource Group. */
+    /**
+     * The unique identifier (UUID) of the Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
-    /** The unique identifier (UUID) of the user who created this Resource Group. */
+    /**
+     * The unique identifier (UUID) of the user who created this Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Resource Group was created. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Resource Group was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Resource Group was last modified. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Resource Group was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The unique identifier (UUID) of the user who last modified this Resource Group. */
+    /**
+     * The unique identifier (UUID) of the user who last modified this Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** The name of the Resource Group. */
+    /**
+     * The name of the Resource Group.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * The version number. Default value when newly created is one.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-    /** The unique identifier (UUID) of the Resource Group. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The unique identifier (UUID) of the user who created this Resource Group. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The date and time _(in ISO-8601 format)_ when the Resource Group was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The date and time _(in ISO-8601 format)_ when the Resource Group was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The unique identifier (UUID) of the user who last modified this Resource Group. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** The name of the Resource Group. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnyGetter
@@ -148,26 +212,49 @@ private constructor(
         /** The unique identifier (UUID) of the Resource Group. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The unique identifier (UUID) of the Resource Group. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The unique identifier (UUID) of the user who created this Resource Group. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The unique identifier (UUID) of the user who created this Resource Group. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The date and time _(in ISO-8601 format)_ when the Resource Group was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO-8601 format)_ when the Resource Group was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The date and time _(in ISO-8601 format)_ when the Resource Group was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The date and time _(in ISO-8601 format)_ when the Resource Group was last modified. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -175,7 +262,13 @@ private constructor(
         /** The unique identifier (UUID) of the user who last modified this Resource Group. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) of the user who last modified this Resource Group. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -183,13 +276,23 @@ private constructor(
         /** The name of the Resource Group. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the Resource Group. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** The version number. Default value when newly created is one. */
         fun version(version: Long) = version(JsonField.of(version))
 
-        /** The version number. Default value when newly created is one. */
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

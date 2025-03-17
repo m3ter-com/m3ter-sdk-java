@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -55,13 +56,28 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The UUID of the entity. */
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun id(): String = id.getRequired("id")
 
-    /** the system the integration is for */
+    /**
+     * the system the integration is for
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun destination(): String = destination.getRequired("destination")
 
-    /** the type of credentials */
+    /**
+     * the type of credentials
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun type(): String = type.getRequired("type")
 
     /**
@@ -69,95 +85,171 @@ private constructor(
      * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
      *   response.
      * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun version(): Long = version.getRequired("version")
 
     /**
      * The API key provided by m3ter. This key is part of the credential set required for signing
      * requests and authenticating with m3ter services.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun apiKey(): Optional<String> = Optional.ofNullable(apiKey.getNullable("apiKey"))
 
-    /** The ID of the user who created this item. */
+    /**
+     * The ID of the user who created this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** the destinationId the integration is for */
+    /**
+     * the destinationId the integration is for
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun destinationId(): Optional<String> =
         Optional.ofNullable(destinationId.getNullable("destinationId"))
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was created _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * The ID of the user who last modified this item.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** the name of the credentials */
+    /**
+     * the name of the credentials
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
     /**
      * The secret associated with the API key. This secret is used in conjunction with the API key
      * to generate a signature for secure authentication.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun secret(): Optional<String> = Optional.ofNullable(secret.getNullable("secret"))
 
-    /** The UUID of the entity. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** the system the integration is for */
+    /**
+     * Returns the raw JSON value of [destination].
+     *
+     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destination") @ExcludeMissing fun _destination(): JsonField<String> = destination
 
-    /** the type of credentials */
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<String> = type
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
-     * The API key provided by m3ter. This key is part of the credential set required for signing
-     * requests and authenticating with m3ter services.
+     * Returns the raw JSON value of [apiKey].
+     *
+     * Unlike [apiKey], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("apiKey") @ExcludeMissing fun _apiKey(): JsonField<String> = apiKey
 
-    /** The ID of the user who created this item. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** the destinationId the integration is for */
+    /**
+     * Returns the raw JSON value of [destinationId].
+     *
+     * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("destinationId")
     @ExcludeMissing
     fun _destinationId(): JsonField<String> = destinationId
 
-    /** The DateTime when this item was created _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The ID of the user who last modified this item. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** the name of the credentials */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
-     * The secret associated with the API key. This secret is used in conjunction with the API key
-     * to generate a signature for secure authentication.
+     * Returns the raw JSON value of [secret].
+     *
+     * Unlike [secret], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("secret") @ExcludeMissing fun _secret(): JsonField<String> = secret
 
@@ -244,19 +336,35 @@ private constructor(
         /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The UUID of the entity. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** the system the integration is for */
         fun destination(destination: String) = destination(JsonField.of(destination))
 
-        /** the system the integration is for */
+        /**
+         * Sets [Builder.destination] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destination] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destination(destination: JsonField<String>) = apply { this.destination = destination }
 
         /** the type of credentials */
         fun type(type: String) = type(JsonField.of(type))
 
-        /** the type of credentials */
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun type(type: JsonField<String>) = apply { this.type = type }
 
         /**
@@ -268,10 +376,10 @@ private constructor(
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -282,21 +390,35 @@ private constructor(
         fun apiKey(apiKey: String) = apiKey(JsonField.of(apiKey))
 
         /**
-         * The API key provided by m3ter. This key is part of the credential set required for
-         * signing requests and authenticating with m3ter services.
+         * Sets [Builder.apiKey] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.apiKey] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun apiKey(apiKey: JsonField<String>) = apply { this.apiKey = apiKey }
 
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The ID of the user who created this item. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** the destinationId the integration is for */
         fun destinationId(destinationId: String) = destinationId(JsonField.of(destinationId))
 
-        /** the destinationId the integration is for */
+        /**
+         * Sets [Builder.destinationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun destinationId(destinationId: JsonField<String>) = apply {
             this.destinationId = destinationId
         }
@@ -304,14 +426,26 @@ private constructor(
         /** The DateTime when this item was created _(in ISO-8601 format)_. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /**
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
@@ -319,7 +453,13 @@ private constructor(
         /** The ID of the user who last modified this item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The ID of the user who last modified this item. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -327,7 +467,12 @@ private constructor(
         /** the name of the credentials */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** the name of the credentials */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -337,8 +482,10 @@ private constructor(
         fun secret(secret: String) = secret(JsonField.of(secret))
 
         /**
-         * The secret associated with the API key. This secret is used in conjunction with the API
-         * key to generate a signature for secure authentication.
+         * Sets [Builder.secret] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.secret] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun secret(secret: JsonField<String>) = apply { this.secret = secret }
 

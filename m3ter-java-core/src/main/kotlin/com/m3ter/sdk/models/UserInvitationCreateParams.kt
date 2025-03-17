@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -37,17 +38,36 @@ private constructor(
 
     fun orgId(): String = orgId
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun email(): String = body.email()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun firstName(): String = body.firstName()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun lastName(): String = body.lastName()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun contactNumber(): Optional<String> = body.contactNumber()
 
     /**
      * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
      * date, which gives the user permanent access.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dtEndAccess(): Optional<OffsetDateTime> = body.dtEndAccess()
 
@@ -55,48 +75,95 @@ private constructor(
      * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user can
      * no longer accept the invite. By default, any invite is valid for 30 days from the date the
      * invite is sent.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun dtExpiry(): Optional<OffsetDateTime> = body.dtExpiry()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun m3terUser(): Optional<Boolean> = body.m3terUser()
 
     /**
      * The IDs of the permission policies the invited user has been assigned. This controls the
      * access rights and privileges that this user will have when working in the m3ter Organization.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun permissionPolicyIds(): Optional<List<String>> = body.permissionPolicyIds()
 
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun version(): Optional<Long> = body.version()
 
+    /**
+     * Returns the raw JSON value of [email].
+     *
+     * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _email(): JsonField<String> = body._email()
 
+    /**
+     * Returns the raw JSON value of [firstName].
+     *
+     * Unlike [firstName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _firstName(): JsonField<String> = body._firstName()
 
+    /**
+     * Returns the raw JSON value of [lastName].
+     *
+     * Unlike [lastName], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _lastName(): JsonField<String> = body._lastName()
 
+    /**
+     * Returns the raw JSON value of [contactNumber].
+     *
+     * Unlike [contactNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _contactNumber(): JsonField<String> = body._contactNumber()
 
     /**
-     * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
-     * date, which gives the user permanent access.
+     * Returns the raw JSON value of [dtEndAccess].
+     *
+     * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dtEndAccess(): JsonField<OffsetDateTime> = body._dtEndAccess()
 
     /**
-     * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user can
-     * no longer accept the invite. By default, any invite is valid for 30 days from the date the
-     * invite is sent.
+     * Returns the raw JSON value of [dtExpiry].
+     *
+     * Unlike [dtExpiry], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dtExpiry(): JsonField<OffsetDateTime> = body._dtExpiry()
 
+    /**
+     * Returns the raw JSON value of [m3terUser].
+     *
+     * Unlike [m3terUser], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _m3terUser(): JsonField<Boolean> = body._m3terUser()
 
     /**
-     * The IDs of the permission policies the invited user has been assigned. This controls the
-     * access rights and privileges that this user will have when working in the m3ter Organization.
+     * Returns the raw JSON value of [permissionPolicyIds].
+     *
+     * Unlike [permissionPolicyIds], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _permissionPolicyIds(): JsonField<List<String>> = body._permissionPolicyIds()
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _version(): JsonField<Long> = body._version()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -153,18 +220,37 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun email(): String = email.getRequired("email")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun firstName(): String = firstName.getRequired("firstName")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun lastName(): String = lastName.getRequired("lastName")
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun contactNumber(): Optional<String> =
             Optional.ofNullable(contactNumber.getNullable("contactNumber"))
 
         /**
          * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
          * date, which gives the user permanent access.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun dtEndAccess(): Optional<OffsetDateTime> =
             Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
@@ -173,60 +259,107 @@ private constructor(
          * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun dtExpiry(): Optional<OffsetDateTime> =
             Optional.ofNullable(dtExpiry.getNullable("dtExpiry"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun m3terUser(): Optional<Boolean> = Optional.ofNullable(m3terUser.getNullable("m3terUser"))
 
         /**
          * The IDs of the permission policies the invited user has been assigned. This controls the
          * access rights and privileges that this user will have when working in the m3ter
          * Organization.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun permissionPolicyIds(): Optional<List<String>> =
             Optional.ofNullable(permissionPolicyIds.getNullable("permissionPolicyIds"))
 
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
+        /**
+         * Returns the raw JSON value of [email].
+         *
+         * Unlike [email], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("email") @ExcludeMissing fun _email(): JsonField<String> = email
 
+        /**
+         * Returns the raw JSON value of [firstName].
+         *
+         * Unlike [firstName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("firstName") @ExcludeMissing fun _firstName(): JsonField<String> = firstName
 
+        /**
+         * Returns the raw JSON value of [lastName].
+         *
+         * Unlike [lastName], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("lastName") @ExcludeMissing fun _lastName(): JsonField<String> = lastName
 
+        /**
+         * Returns the raw JSON value of [contactNumber].
+         *
+         * Unlike [contactNumber], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("contactNumber")
         @ExcludeMissing
         fun _contactNumber(): JsonField<String> = contactNumber
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
-         * date, which gives the user permanent access.
+         * Returns the raw JSON value of [dtEndAccess].
+         *
+         * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dtEndAccess")
         @ExcludeMissing
         fun _dtEndAccess(): JsonField<OffsetDateTime> = dtEndAccess
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
-         * can no longer accept the invite. By default, any invite is valid for 30 days from the
-         * date the invite is sent.
+         * Returns the raw JSON value of [dtExpiry].
+         *
+         * Unlike [dtExpiry], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("dtExpiry")
         @ExcludeMissing
         fun _dtExpiry(): JsonField<OffsetDateTime> = dtExpiry
 
+        /**
+         * Returns the raw JSON value of [m3terUser].
+         *
+         * Unlike [m3terUser], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("m3terUser") @ExcludeMissing fun _m3terUser(): JsonField<Boolean> = m3terUser
 
         /**
-         * The IDs of the permission policies the invited user has been assigned. This controls the
-         * access rights and privileges that this user will have when working in the m3ter
-         * Organization.
+         * Returns the raw JSON value of [permissionPolicyIds].
+         *
+         * Unlike [permissionPolicyIds], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("permissionPolicyIds")
         @ExcludeMissing
         fun _permissionPolicyIds(): JsonField<List<String>> = permissionPolicyIds
 
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         @JsonAnyGetter
@@ -299,18 +432,46 @@ private constructor(
 
             fun email(email: String) = email(JsonField.of(email))
 
+            /**
+             * Sets [Builder.email] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.email] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun email(email: JsonField<String>) = apply { this.email = email }
 
             fun firstName(firstName: String) = firstName(JsonField.of(firstName))
 
+            /**
+             * Sets [Builder.firstName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.firstName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
             fun lastName(lastName: String) = lastName(JsonField.of(lastName))
 
+            /**
+             * Sets [Builder.lastName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lastName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
             fun contactNumber(contactNumber: String) = contactNumber(JsonField.of(contactNumber))
 
+            /**
+             * Sets [Builder.contactNumber] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contactNumber] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun contactNumber(contactNumber: JsonField<String>) = apply {
                 this.contactNumber = contactNumber
             }
@@ -322,8 +483,11 @@ private constructor(
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
 
             /**
-             * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no
-             * end date, which gives the user permanent access.
+             * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
                 this.dtEndAccess = dtEndAccess
@@ -337,14 +501,23 @@ private constructor(
             fun dtExpiry(dtExpiry: OffsetDateTime) = dtExpiry(JsonField.of(dtExpiry))
 
             /**
-             * The date when the invite expires _(in ISO-8601 format)_. After this date the invited
-             * user can no longer accept the invite. By default, any invite is valid for 30 days
-             * from the date the invite is sent.
+             * Sets [Builder.dtExpiry] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dtExpiry] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun dtExpiry(dtExpiry: JsonField<OffsetDateTime>) = apply { this.dtExpiry = dtExpiry }
 
             fun m3terUser(m3terUser: Boolean) = m3terUser(JsonField.of(m3terUser))
 
+            /**
+             * Sets [Builder.m3terUser] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.m3terUser] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun m3terUser(m3terUser: JsonField<Boolean>) = apply { this.m3terUser = m3terUser }
 
             /**
@@ -356,18 +529,20 @@ private constructor(
                 permissionPolicyIds(JsonField.of(permissionPolicyIds))
 
             /**
-             * The IDs of the permission policies the invited user has been assigned. This controls
-             * the access rights and privileges that this user will have when working in the m3ter
-             * Organization.
+             * Sets [Builder.permissionPolicyIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.permissionPolicyIds] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
             fun permissionPolicyIds(permissionPolicyIds: JsonField<List<String>>) = apply {
                 this.permissionPolicyIds = permissionPolicyIds.map { it.toMutableList() }
             }
 
             /**
-             * The IDs of the permission policies the invited user has been assigned. This controls
-             * the access rights and privileges that this user will have when working in the m3ter
-             * Organization.
+             * Adds a single [String] to [permissionPolicyIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addPermissionPolicyId(permissionPolicyId: String) = apply {
                 permissionPolicyIds =
@@ -378,6 +553,13 @@ private constructor(
 
             fun version(version: Long) = version(JsonField.of(version))
 
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -471,18 +653,44 @@ private constructor(
 
         fun email(email: String) = apply { body.email(email) }
 
+        /**
+         * Sets [Builder.email] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.email] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun email(email: JsonField<String>) = apply { body.email(email) }
 
         fun firstName(firstName: String) = apply { body.firstName(firstName) }
 
+        /**
+         * Sets [Builder.firstName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.firstName] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun firstName(firstName: JsonField<String>) = apply { body.firstName(firstName) }
 
         fun lastName(lastName: String) = apply { body.lastName(lastName) }
 
+        /**
+         * Sets [Builder.lastName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastName] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun lastName(lastName: JsonField<String>) = apply { body.lastName(lastName) }
 
         fun contactNumber(contactNumber: String) = apply { body.contactNumber(contactNumber) }
 
+        /**
+         * Sets [Builder.contactNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contactNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun contactNumber(contactNumber: JsonField<String>) = apply {
             body.contactNumber(contactNumber)
         }
@@ -494,8 +702,11 @@ private constructor(
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
-         * date, which gives the user permanent access.
+         * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
             body.dtEndAccess(dtEndAccess)
@@ -509,14 +720,23 @@ private constructor(
         fun dtExpiry(dtExpiry: OffsetDateTime) = apply { body.dtExpiry(dtExpiry) }
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
-         * can no longer accept the invite. By default, any invite is valid for 30 days from the
-         * date the invite is sent.
+         * Sets [Builder.dtExpiry] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtExpiry] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtExpiry(dtExpiry: JsonField<OffsetDateTime>) = apply { body.dtExpiry(dtExpiry) }
 
         fun m3terUser(m3terUser: Boolean) = apply { body.m3terUser(m3terUser) }
 
+        /**
+         * Sets [Builder.m3terUser] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.m3terUser] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun m3terUser(m3terUser: JsonField<Boolean>) = apply { body.m3terUser(m3terUser) }
 
         /**
@@ -529,18 +749,20 @@ private constructor(
         }
 
         /**
-         * The IDs of the permission policies the invited user has been assigned. This controls the
-         * access rights and privileges that this user will have when working in the m3ter
-         * Organization.
+         * Sets [Builder.permissionPolicyIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.permissionPolicyIds] with a well-typed `List<String>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun permissionPolicyIds(permissionPolicyIds: JsonField<List<String>>) = apply {
             body.permissionPolicyIds(permissionPolicyIds)
         }
 
         /**
-         * The IDs of the permission policies the invited user has been assigned. This controls the
-         * access rights and privileges that this user will have when working in the m3ter
-         * Organization.
+         * Adds a single [String] to [permissionPolicyIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addPermissionPolicyId(permissionPolicyId: String) = apply {
             body.addPermissionPolicyId(permissionPolicyId)
@@ -548,6 +770,12 @@ private constructor(
 
         fun version(version: Long) = apply { body.version(version) }
 
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

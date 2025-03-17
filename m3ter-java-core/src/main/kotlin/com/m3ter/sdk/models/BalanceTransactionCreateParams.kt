@@ -17,6 +17,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -51,30 +52,61 @@ private constructor(
 
     fun balanceId(): String = balanceId
 
-    /** The financial value of the transaction. */
+    /**
+     * The financial value of the transaction.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): Double = body.amount()
 
-    /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+    /**
+     * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun appliedDate(): Optional<OffsetDateTime> = body.appliedDate()
 
     /**
      * The currency code of the payment if it differs from the Balance currency. For example: USD,
      * GBP or EUR.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun currencyPaid(): Optional<String> = body.currencyPaid()
 
-    /** A brief description explaining the purpose and context of the transaction. */
+    /**
+     * A brief description explaining the purpose and context of the transaction.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun description(): Optional<String> = body.description()
 
-    /** The payment amount if the payment currency differs from the Balance currency. */
+    /**
+     * The payment amount if the payment currency differs from the Balance currency.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun paid(): Optional<Double> = body.paid()
 
-    /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+    /**
+     * The date _(in ISO 8601 format)_ when the transaction occurred.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun transactionDate(): Optional<OffsetDateTime> = body.transactionDate()
 
     /**
      * The unique identifier (UUID) of the transaction type. This is obtained from the list of
      * created Transaction Types within the Organization Configuration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun transactionTypeId(): Optional<String> = body.transactionTypeId()
 
@@ -85,43 +117,66 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The financial value of the transaction. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _amount(): JsonField<Double> = body._amount()
 
-    /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+    /**
+     * Returns the raw JSON value of [appliedDate].
+     *
+     * Unlike [appliedDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _appliedDate(): JsonField<OffsetDateTime> = body._appliedDate()
 
     /**
-     * The currency code of the payment if it differs from the Balance currency. For example: USD,
-     * GBP or EUR.
+     * Returns the raw JSON value of [currencyPaid].
+     *
+     * Unlike [currencyPaid], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _currencyPaid(): JsonField<String> = body._currencyPaid()
 
-    /** A brief description explaining the purpose and context of the transaction. */
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _description(): JsonField<String> = body._description()
 
-    /** The payment amount if the payment currency differs from the Balance currency. */
+    /**
+     * Returns the raw JSON value of [paid].
+     *
+     * Unlike [paid], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _paid(): JsonField<Double> = body._paid()
 
-    /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+    /**
+     * Returns the raw JSON value of [transactionDate].
+     *
+     * Unlike [transactionDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _transactionDate(): JsonField<OffsetDateTime> = body._transactionDate()
 
     /**
-     * The unique identifier (UUID) of the transaction type. This is obtained from the list of
-     * created Transaction Types within the Organization Configuration.
+     * Returns the raw JSON value of [transactionTypeId].
+     *
+     * Unlike [transactionTypeId], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _transactionTypeId(): JsonField<String> = body._transactionTypeId()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -177,34 +232,65 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The financial value of the transaction. */
+        /**
+         * The financial value of the transaction.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun amount(): Double = amount.getRequired("amount")
 
-        /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+        /**
+         * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun appliedDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(appliedDate.getNullable("appliedDate"))
 
         /**
          * The currency code of the payment if it differs from the Balance currency. For example:
          * USD, GBP or EUR.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun currencyPaid(): Optional<String> =
             Optional.ofNullable(currencyPaid.getNullable("currencyPaid"))
 
-        /** A brief description explaining the purpose and context of the transaction. */
+        /**
+         * A brief description explaining the purpose and context of the transaction.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun description(): Optional<String> =
             Optional.ofNullable(description.getNullable("description"))
 
-        /** The payment amount if the payment currency differs from the Balance currency. */
+        /**
+         * The payment amount if the payment currency differs from the Balance currency.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun paid(): Optional<Double> = Optional.ofNullable(paid.getNullable("paid"))
 
-        /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+        /**
+         * The date _(in ISO 8601 format)_ when the transaction occurred.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun transactionDate(): Optional<OffsetDateTime> =
             Optional.ofNullable(transactionDate.getNullable("transactionDate"))
 
         /**
          * The unique identifier (UUID) of the transaction type. This is obtained from the list of
          * created Transaction Types within the Organization Configuration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun transactionTypeId(): Optional<String> =
             Optional.ofNullable(transactionTypeId.getNullable("transactionTypeId"))
@@ -216,53 +302,78 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The financial value of the transaction. */
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
-        /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+        /**
+         * Returns the raw JSON value of [appliedDate].
+         *
+         * Unlike [appliedDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("appliedDate")
         @ExcludeMissing
         fun _appliedDate(): JsonField<OffsetDateTime> = appliedDate
 
         /**
-         * The currency code of the payment if it differs from the Balance currency. For example:
-         * USD, GBP or EUR.
+         * Returns the raw JSON value of [currencyPaid].
+         *
+         * Unlike [currencyPaid], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("currencyPaid")
         @ExcludeMissing
         fun _currencyPaid(): JsonField<String> = currencyPaid
 
-        /** A brief description explaining the purpose and context of the transaction. */
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
 
-        /** The payment amount if the payment currency differs from the Balance currency. */
+        /**
+         * Returns the raw JSON value of [paid].
+         *
+         * Unlike [paid], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("paid") @ExcludeMissing fun _paid(): JsonField<Double> = paid
 
-        /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+        /**
+         * Returns the raw JSON value of [transactionDate].
+         *
+         * Unlike [transactionDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("transactionDate")
         @ExcludeMissing
         fun _transactionDate(): JsonField<OffsetDateTime> = transactionDate
 
         /**
-         * The unique identifier (UUID) of the transaction type. This is obtained from the list of
-         * created Transaction Types within the Organization Configuration.
+         * Returns the raw JSON value of [transactionTypeId].
+         *
+         * Unlike [transactionTypeId], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("transactionTypeId")
         @ExcludeMissing
         fun _transactionTypeId(): JsonField<String> = transactionTypeId
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -332,13 +443,25 @@ private constructor(
             /** The financial value of the transaction. */
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            /** The financial value of the transaction. */
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
             fun appliedDate(appliedDate: OffsetDateTime) = appliedDate(JsonField.of(appliedDate))
 
-            /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+            /**
+             * Sets [Builder.appliedDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliedDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun appliedDate(appliedDate: JsonField<OffsetDateTime>) = apply {
                 this.appliedDate = appliedDate
             }
@@ -350,8 +473,11 @@ private constructor(
             fun currencyPaid(currencyPaid: String) = currencyPaid(JsonField.of(currencyPaid))
 
             /**
-             * The currency code of the payment if it differs from the Balance currency. For
-             * example: USD, GBP or EUR.
+             * Sets [Builder.currencyPaid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currencyPaid] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun currencyPaid(currencyPaid: JsonField<String>) = apply {
                 this.currencyPaid = currencyPaid
@@ -360,7 +486,13 @@ private constructor(
             /** A brief description explaining the purpose and context of the transaction. */
             fun description(description: String) = description(JsonField.of(description))
 
-            /** A brief description explaining the purpose and context of the transaction. */
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
@@ -368,14 +500,26 @@ private constructor(
             /** The payment amount if the payment currency differs from the Balance currency. */
             fun paid(paid: Double) = paid(JsonField.of(paid))
 
-            /** The payment amount if the payment currency differs from the Balance currency. */
+            /**
+             * Sets [Builder.paid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paid] with a well-typed [Double] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun paid(paid: JsonField<Double>) = apply { this.paid = paid }
 
             /** The date _(in ISO 8601 format)_ when the transaction occurred. */
             fun transactionDate(transactionDate: OffsetDateTime) =
                 transactionDate(JsonField.of(transactionDate))
 
-            /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+            /**
+             * Sets [Builder.transactionDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun transactionDate(transactionDate: JsonField<OffsetDateTime>) = apply {
                 this.transactionDate = transactionDate
             }
@@ -388,8 +532,11 @@ private constructor(
                 transactionTypeId(JsonField.of(transactionTypeId))
 
             /**
-             * The unique identifier (UUID) of the transaction type. This is obtained from the list
-             * of created Transaction Types within the Organization Configuration.
+             * Sets [Builder.transactionTypeId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionTypeId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun transactionTypeId(transactionTypeId: JsonField<String>) = apply {
                 this.transactionTypeId = transactionTypeId
@@ -406,12 +553,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -510,13 +656,24 @@ private constructor(
         /** The financial value of the transaction. */
         fun amount(amount: Double) = apply { body.amount(amount) }
 
-        /** The financial value of the transaction. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Double>) = apply { body.amount(amount) }
 
         /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
         fun appliedDate(appliedDate: OffsetDateTime) = apply { body.appliedDate(appliedDate) }
 
-        /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+        /**
+         * Sets [Builder.appliedDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.appliedDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun appliedDate(appliedDate: JsonField<OffsetDateTime>) = apply {
             body.appliedDate(appliedDate)
         }
@@ -528,8 +685,11 @@ private constructor(
         fun currencyPaid(currencyPaid: String) = apply { body.currencyPaid(currencyPaid) }
 
         /**
-         * The currency code of the payment if it differs from the Balance currency. For example:
-         * USD, GBP or EUR.
+         * Sets [Builder.currencyPaid] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currencyPaid] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun currencyPaid(currencyPaid: JsonField<String>) = apply {
             body.currencyPaid(currencyPaid)
@@ -538,13 +698,24 @@ private constructor(
         /** A brief description explaining the purpose and context of the transaction. */
         fun description(description: String) = apply { body.description(description) }
 
-        /** A brief description explaining the purpose and context of the transaction. */
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** The payment amount if the payment currency differs from the Balance currency. */
         fun paid(paid: Double) = apply { body.paid(paid) }
 
-        /** The payment amount if the payment currency differs from the Balance currency. */
+        /**
+         * Sets [Builder.paid] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paid] with a well-typed [Double] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun paid(paid: JsonField<Double>) = apply { body.paid(paid) }
 
         /** The date _(in ISO 8601 format)_ when the transaction occurred. */
@@ -552,7 +723,13 @@ private constructor(
             body.transactionDate(transactionDate)
         }
 
-        /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+        /**
+         * Sets [Builder.transactionDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.transactionDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun transactionDate(transactionDate: JsonField<OffsetDateTime>) = apply {
             body.transactionDate(transactionDate)
         }
@@ -566,8 +743,11 @@ private constructor(
         }
 
         /**
-         * The unique identifier (UUID) of the transaction type. This is obtained from the list of
-         * created Transaction Types within the Organization Configuration.
+         * Sets [Builder.transactionTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.transactionTypeId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun transactionTypeId(transactionTypeId: JsonField<String>) = apply {
             body.transactionTypeId(transactionTypeId)
@@ -584,12 +764,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

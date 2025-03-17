@@ -18,6 +18,7 @@ import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
 import java.util.Optional
 
@@ -44,7 +45,12 @@ private constructor(
 
     fun orgId(): String = orgId
 
-    /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+    /**
+     * The array of unique identifiers (UUIDs) for the Bills which are to be recalculated.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun billIds(): List<String> = body.billIds()
 
     /**
@@ -54,19 +60,23 @@ private constructor(
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
 
-    /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+    /**
+     * Returns the raw JSON value of [billIds].
+     *
+     * Unlike [billIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _billIds(): JsonField<List<String>> = body._billIds()
 
     /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _version(): JsonField<Long> = body._version()
 
@@ -103,7 +113,12 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+        /**
+         * The array of unique identifiers (UUIDs) for the Bills which are to be recalculated.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun billIds(): List<String> = billIds.getRequired("billIds")
 
         /**
@@ -113,19 +128,23 @@ private constructor(
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-        /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+        /**
+         * Returns the raw JSON value of [billIds].
+         *
+         * Unlike [billIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("billIds") @ExcludeMissing fun _billIds(): JsonField<List<String>> = billIds
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
@@ -180,14 +199,20 @@ private constructor(
             fun billIds(billIds: List<String>) = billIds(JsonField.of(billIds))
 
             /**
-             * The array of unique identifiers (UUIDs) for the Bills which are to be recalculated.
+             * Sets [Builder.billIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun billIds(billIds: JsonField<List<String>>) = apply {
                 this.billIds = billIds.map { it.toMutableList() }
             }
 
             /**
-             * The array of unique identifiers (UUIDs) for the Bills which are to be recalculated.
+             * Adds a single [String] to [billIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
             fun addBillId(billId: String) = apply {
                 billIds =
@@ -207,12 +232,11 @@ private constructor(
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
@@ -299,10 +323,20 @@ private constructor(
         /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
         fun billIds(billIds: List<String>) = apply { body.billIds(billIds) }
 
-        /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+        /**
+         * Sets [Builder.billIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billIds] with a well-typed `List<String>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun billIds(billIds: JsonField<List<String>>) = apply { body.billIds(billIds) }
 
-        /** The array of unique identifiers (UUIDs) for the Bills which are to be recalculated. */
+        /**
+         * Adds a single [String] to [billIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addBillId(billId: String) = apply { body.addBillId(billId) }
 
         /**
@@ -316,12 +350,10 @@ private constructor(
         fun version(version: Long) = apply { body.version(version) }
 
         /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun version(version: JsonField<Long>) = apply { body.version(version) }
 

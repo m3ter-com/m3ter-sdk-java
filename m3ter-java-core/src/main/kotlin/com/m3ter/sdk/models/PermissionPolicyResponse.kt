@@ -14,6 +14,7 @@ import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 import java.util.Optional
@@ -48,73 +49,155 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** The unique identifier (UUID) for this Permission Policy. */
+    /**
+     * The unique identifier (UUID) for this Permission Policy.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
 
-    /** The unique identifier (UUID) of the user who created this Permission Policy. */
+    /**
+     * The unique identifier (UUID) of the user who created this Permission Policy.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Permission Policy was created. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Permission Policy was created.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtCreated(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtCreated.getNullable("dtCreated"))
 
-    /** The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified. */
+    /**
+     * The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun dtLastModified(): Optional<OffsetDateTime> =
         Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
 
-    /** The unique identifier (UUID) of the user who last modified this Permission Policy. */
+    /**
+     * The unique identifier (UUID) of the user who last modified this Permission Policy.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun lastModifiedBy(): Optional<String> =
         Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
 
-    /** Indicates whether this is a system generated Managed Permission Policy. */
+    /**
+     * Indicates whether this is a system generated Managed Permission Policy.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun managedPolicy(): Optional<Boolean> =
         Optional.ofNullable(managedPolicy.getNullable("managedPolicy"))
 
-    /** The name of the Permission Policy. */
+    /**
+     * The name of the Permission Policy.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
 
-    /** Array containing the Permission Policies information. */
+    /**
+     * Array containing the Permission Policies information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
         Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * The version number. Default value when newly created is one.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
 
-    /** The unique identifier (UUID) for this Permission Policy. */
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    /** The unique identifier (UUID) of the user who created this Permission Policy. */
+    /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
-    /** The date and time _(in ISO-8601 format)_ when the Permission Policy was created. */
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtCreated")
     @ExcludeMissing
     fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
 
-    /** The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified. */
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
-    /** The unique identifier (UUID) of the user who last modified this Permission Policy. */
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("lastModifiedBy")
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
-    /** Indicates whether this is a system generated Managed Permission Policy. */
+    /**
+     * Returns the raw JSON value of [managedPolicy].
+     *
+     * Unlike [managedPolicy], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("managedPolicy")
     @ExcludeMissing
     fun _managedPolicy(): JsonField<Boolean> = managedPolicy
 
-    /** The name of the Permission Policy. */
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    /** Array containing the Permission Policies information. */
+    /**
+     * Returns the raw JSON value of [permissionPolicy].
+     *
+     * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("permissionPolicy")
     @ExcludeMissing
     fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
 
-    /** The version number. Default value when newly created is one. */
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnyGetter
@@ -179,19 +262,36 @@ private constructor(
         /** The unique identifier (UUID) for this Permission Policy. */
         fun id(id: String) = id(JsonField.of(id))
 
-        /** The unique identifier (UUID) for this Permission Policy. */
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The unique identifier (UUID) of the user who created this Permission Policy. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
-        /** The unique identifier (UUID) of the user who created this Permission Policy. */
+        /**
+         * Sets [Builder.createdBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /** The date and time _(in ISO-8601 format)_ when the Permission Policy was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
-        /** The date and time _(in ISO-8601 format)_ when the Permission Policy was created. */
+        /**
+         * Sets [Builder.dtCreated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtCreated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
@@ -201,7 +301,11 @@ private constructor(
             dtLastModified(JsonField.of(dtLastModified))
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified.
+         * Sets [Builder.dtLastModified] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLastModified] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
@@ -210,7 +314,13 @@ private constructor(
         /** The unique identifier (UUID) of the user who last modified this Permission Policy. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
-        /** The unique identifier (UUID) of the user who last modified this Permission Policy. */
+        /**
+         * Sets [Builder.lastModifiedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lastModifiedBy] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
         }
@@ -218,7 +328,13 @@ private constructor(
         /** Indicates whether this is a system generated Managed Permission Policy. */
         fun managedPolicy(managedPolicy: Boolean) = managedPolicy(JsonField.of(managedPolicy))
 
-        /** Indicates whether this is a system generated Managed Permission Policy. */
+        /**
+         * Sets [Builder.managedPolicy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.managedPolicy] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun managedPolicy(managedPolicy: JsonField<Boolean>) = apply {
             this.managedPolicy = managedPolicy
         }
@@ -226,20 +342,35 @@ private constructor(
         /** The name of the Permission Policy. */
         fun name(name: String) = name(JsonField.of(name))
 
-        /** The name of the Permission Policy. */
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** Array containing the Permission Policies information. */
         fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
             permissionPolicy(JsonField.of(permissionPolicy))
 
-        /** Array containing the Permission Policies information. */
+        /**
+         * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.permissionPolicy] with a well-typed
+         * `List<PermissionStatementResponse>` value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
+         */
         fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
             apply {
                 this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
             }
 
-        /** Array containing the Permission Policies information. */
+        /**
+         * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
             this.permissionPolicy =
                 (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
@@ -250,7 +381,12 @@ private constructor(
         /** The version number. Default value when newly created is one. */
         fun version(version: Long) = version(JsonField.of(version))
 
-        /** The version number. Default value when newly created is one. */
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

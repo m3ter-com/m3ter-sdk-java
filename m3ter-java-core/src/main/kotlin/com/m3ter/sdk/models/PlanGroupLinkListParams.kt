@@ -111,37 +111,45 @@ private constructor(
         /** list of IDs to retrieve */
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
 
-        /** list of IDs to retrieve */
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
         fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
 
-        /** list of IDs to retrieve */
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
-        /** nextToken for multi page retrievals */
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of PlanGroupLinks to retrieve per page */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Number of PlanGroupLinks to retrieve per page */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Number of PlanGroupLinks to retrieve per page */
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
 
         /** UUID of the Plan to retrieve PlanGroupLinks for */
         fun plan(plan: String?) = apply { this.plan = plan }
 
-        /** UUID of the Plan to retrieve PlanGroupLinks for */
+        /** Alias for calling [Builder.plan] with `plan.orElse(null)`. */
         fun plan(plan: Optional<String>) = plan(plan.getOrNull())
 
         /** UUID of the PlanGroup to retrieve PlanGroupLinks for */
         fun planGroup(planGroup: String?) = apply { this.planGroup = planGroup }
 
-        /** UUID of the PlanGroup to retrieve PlanGroupLinks for */
+        /** Alias for calling [Builder.planGroup] with `planGroup.orElse(null)`. */
         fun planGroup(planGroup: Optional<String>) = planGroup(planGroup.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
