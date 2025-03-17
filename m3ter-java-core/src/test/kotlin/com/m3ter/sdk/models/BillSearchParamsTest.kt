@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillSearchParamsTest {
+internal class BillSearchParamsTest {
 
     @Test
     fun create() {

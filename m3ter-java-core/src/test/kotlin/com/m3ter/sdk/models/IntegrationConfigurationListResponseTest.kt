@@ -7,7 +7,7 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IntegrationConfigurationListResponseTest {
+internal class IntegrationConfigurationListResponseTest {
 
     @Test
     fun createIntegrationConfigurationListResponse() {

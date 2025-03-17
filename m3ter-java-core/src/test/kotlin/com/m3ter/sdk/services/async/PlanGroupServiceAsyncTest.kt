@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class PlanGroupServiceAsyncTest {
+internal class PlanGroupServiceAsyncTest {
 
     @Test
     fun create() {
