@@ -7,7 +7,7 @@ import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CompoundAggregationCreateParamsTest {
+internal class CompoundAggregationCreateParamsTest {
 
     @Test
     fun create() {

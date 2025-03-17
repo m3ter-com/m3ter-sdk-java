@@ -5,7 +5,7 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterAdjustmentDeleteParamsTest {
+internal class CounterAdjustmentDeleteParamsTest {
 
     @Test
     fun create() {

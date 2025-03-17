@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class FileUploadServiceTest {
+internal class FileUploadServiceTest {
 
     @Test
     fun generateUploadUrl() {
