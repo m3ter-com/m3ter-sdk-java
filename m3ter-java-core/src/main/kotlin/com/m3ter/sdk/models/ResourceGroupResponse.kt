@@ -314,6 +314,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ResourceGroupResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): ResourceGroupResponse =
             ResourceGroupResponse(
                 id,

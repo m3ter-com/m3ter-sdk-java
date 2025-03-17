@@ -176,6 +176,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UserMeResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): UserMeResponse =
             UserMeResponse(organization, serviceUser, user, additionalProperties.toImmutable())
     }
@@ -1137,6 +1142,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Organization].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * .version()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Organization =
                 Organization(
                     checkRequired("id", id),
@@ -1687,6 +1705,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ServiceUser].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): ServiceUser =
                 ServiceUser(
                     id,
@@ -2323,6 +2346,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [User].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): User =
                 User(
                     id,

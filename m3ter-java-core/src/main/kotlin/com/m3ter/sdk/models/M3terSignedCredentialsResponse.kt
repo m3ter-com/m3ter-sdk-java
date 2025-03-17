@@ -508,6 +508,21 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [M3terSignedCredentialsResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .destination()
+         * .type()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): M3terSignedCredentialsResponse =
             M3terSignedCredentialsResponse(
                 checkRequired("id", id),

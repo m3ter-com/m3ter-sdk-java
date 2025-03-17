@@ -443,6 +443,23 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ScheduledEventConfigurationResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .entity()
+         * .field()
+         * .name()
+         * .offset()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ScheduledEventConfigurationResponse =
             ScheduledEventConfigurationResponse(
                 checkRequired("id", id),

@@ -399,6 +399,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PermissionPolicyAddToUserGroupResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): PermissionPolicyAddToUserGroupResponse =
             PermissionPolicyAddToUserGroupResponse(
                 id,

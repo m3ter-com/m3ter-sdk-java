@@ -1311,6 +1311,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .pricingBands()
+             * .startDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Body =
                 Body(
                     checkRequired("pricingBands", pricingBands).map { it.toImmutable() },
@@ -1852,6 +1865,21 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PricingUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .pricingBands()
+         * .startDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PricingUpdateParams =
             PricingUpdateParams(
                 checkRequired("orgId", orgId),
@@ -1935,6 +1963,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Segment].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Segment = Segment(additionalProperties.toImmutable())
         }
 

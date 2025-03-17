@@ -215,6 +215,19 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PermissionPolicyRemoveFromSupportUserParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .permissionPolicyId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PermissionPolicyRemoveFromSupportUserParams =
             PermissionPolicyRemoveFromSupportUserParams(
                 checkRequired("orgId", orgId),
