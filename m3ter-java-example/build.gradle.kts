@@ -1,16 +1,20 @@
 plugins {
-    id("m3ter.kotlin")
     id("java")
     application
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
     implementation(project(":m3ter-java"))
 }
 
-tasks.withType<JavaCompile>().configureEach {
+java {
     // Allow using more modern APIs, like `List.of` and `Map.of`, in examples.
-    options.release.set(9)
+    sourceCompatibility = JavaVersion.VERSION_1_9
+    targetCompatibility = JavaVersion.VERSION_1_9
 }
 
 application {
