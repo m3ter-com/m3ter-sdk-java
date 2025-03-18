@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DataExportDestinationResponseTest {
 
     @Test
-    fun createDataExportDestinationResponse() {
+    fun create() {
         val dataExportDestinationResponse =
             DataExportDestinationResponse.builder()
                 .id("id")
@@ -21,7 +21,7 @@ internal class DataExportDestinationResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(dataExportDestinationResponse).isNotNull
+
         assertThat(dataExportDestinationResponse.id()).isEqualTo("id")
         assertThat(dataExportDestinationResponse.version()).isEqualTo(0L)
         assertThat(dataExportDestinationResponse.code()).contains("code")

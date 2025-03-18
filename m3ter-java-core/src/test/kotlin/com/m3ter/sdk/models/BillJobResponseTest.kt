@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class BillJobResponseTest {
 
     @Test
-    fun createBillJobResponse() {
+    fun create() {
         val billJobResponse =
             BillJobResponse.builder()
                 .id("id")
@@ -42,7 +42,7 @@ internal class BillJobResponseTest {
                 .weekEpoch(LocalDate.parse("2019-12-27"))
                 .yearEpoch(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(billJobResponse).isNotNull
+
         assertThat(billJobResponse.id()).isEqualTo("id")
         assertThat(billJobResponse.version()).isEqualTo(0L)
         assertThat(billJobResponse.accountIds().getOrNull()).containsExactly("string")

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class UserResponseTest {
 
     @Test
-    fun createUserResponse() {
+    fun create() {
         val userResponse =
             UserResponse.builder()
                 .id("id")
@@ -36,7 +36,7 @@ internal class UserResponseTest {
                 .supportUser(true)
                 .version(0L)
                 .build()
-        assertThat(userResponse).isNotNull
+
         assertThat(userResponse.id()).contains("id")
         assertThat(userResponse.contactNumber()).contains("contactNumber")
         assertThat(userResponse.createdBy()).contains("createdBy")

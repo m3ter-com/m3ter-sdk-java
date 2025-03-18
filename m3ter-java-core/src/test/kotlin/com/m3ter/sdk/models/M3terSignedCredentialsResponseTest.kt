@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class M3terSignedCredentialsResponseTest {
 
     @Test
-    fun createM3terSignedCredentialsResponse() {
+    fun create() {
         val m3terSignedCredentialsResponse =
             M3terSignedCredentialsResponse.builder()
                 .id("id")
@@ -25,7 +25,7 @@ internal class M3terSignedCredentialsResponseTest {
                 .name("name")
                 .secret("secret")
                 .build()
-        assertThat(m3terSignedCredentialsResponse).isNotNull
+
         assertThat(m3terSignedCredentialsResponse.id()).isEqualTo("id")
         assertThat(m3terSignedCredentialsResponse.destination()).isEqualTo("x")
         assertThat(m3terSignedCredentialsResponse.type()).isEqualTo("x")

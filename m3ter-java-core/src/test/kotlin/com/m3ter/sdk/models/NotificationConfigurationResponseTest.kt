@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class NotificationConfigurationResponseTest {
 
     @Test
-    fun createNotificationConfigurationResponse() {
+    fun create() {
         val notificationConfigurationResponse =
             NotificationConfigurationResponse.builder()
                 .id("id")
@@ -26,7 +26,7 @@ internal class NotificationConfigurationResponseTest {
                 .eventName("eventName")
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(notificationConfigurationResponse).isNotNull
+
         assertThat(notificationConfigurationResponse.id()).isEqualTo("id")
         assertThat(notificationConfigurationResponse.code()).isEqualTo("x")
         assertThat(notificationConfigurationResponse.description()).isEqualTo("x")

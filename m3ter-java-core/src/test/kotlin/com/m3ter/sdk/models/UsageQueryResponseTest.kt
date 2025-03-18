@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class UsageQueryResponseTest {
 
     @Test
-    fun createUsageQueryResponse() {
+    fun create() {
         val usageQueryResponse =
             UsageQueryResponse.builder()
                 .addData(
@@ -20,7 +20,7 @@ internal class UsageQueryResponseTest {
                 )
                 .hasMoreData(true)
                 .build()
-        assertThat(usageQueryResponse).isNotNull
+
         assertThat(usageQueryResponse.data().getOrNull())
             .containsExactly(
                 UsageQueryResponse.Data.builder()

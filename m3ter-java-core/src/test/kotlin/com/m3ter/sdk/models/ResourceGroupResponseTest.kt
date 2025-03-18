@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class ResourceGroupResponseTest {
 
     @Test
-    fun createResourceGroupResponse() {
+    fun create() {
         val resourceGroupResponse =
             ResourceGroupResponse.builder()
                 .id("id")
@@ -20,7 +20,7 @@ internal class ResourceGroupResponseTest {
                 .name("name")
                 .version(0L)
                 .build()
-        assertThat(resourceGroupResponse).isNotNull
+
         assertThat(resourceGroupResponse.id()).contains("id")
         assertThat(resourceGroupResponse.createdBy()).contains("createdBy")
         assertThat(resourceGroupResponse.dtCreated())

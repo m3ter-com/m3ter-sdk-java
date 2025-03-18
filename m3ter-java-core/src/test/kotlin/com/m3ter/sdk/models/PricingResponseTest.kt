@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class PricingResponseTest {
 
     @Test
-    fun createPricingResponse() {
+    fun create() {
         val pricingResponse =
             PricingResponse.builder()
                 .id("id")
@@ -61,7 +61,7 @@ internal class PricingResponseTest {
                 .tiersSpanPlan(true)
                 .type(PricingResponse.Type.DEBIT)
                 .build()
-        assertThat(pricingResponse).isNotNull
+
         assertThat(pricingResponse.id()).isEqualTo("id")
         assertThat(pricingResponse.version()).isEqualTo(0L)
         assertThat(pricingResponse.accountingProductId()).contains("accountingProductId")

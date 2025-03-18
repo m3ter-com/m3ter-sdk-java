@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DataExportJobResponseTest {
 
     @Test
-    fun createDataExportJobResponse() {
+    fun create() {
         val dataExportJobResponse =
             DataExportJobResponse.builder()
                 .id("id")
@@ -20,7 +20,7 @@ internal class DataExportJobResponseTest {
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(DataExportJobResponse.Status.PENDING)
                 .build()
-        assertThat(dataExportJobResponse).isNotNull
+
         assertThat(dataExportJobResponse.id()).isEqualTo("id")
         assertThat(dataExportJobResponse.version()).isEqualTo(0L)
         assertThat(dataExportJobResponse.dateCreated())

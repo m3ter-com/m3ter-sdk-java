@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class OperationalDataExportScheduleRequestTest {
 
     @Test
-    fun createOperationalDataExportScheduleRequest() {
+    fun create() {
         val operationalDataExportScheduleRequest =
             OperationalDataExportScheduleRequest.builder()
                 .addOperationalDataType(
@@ -17,7 +17,7 @@ internal class OperationalDataExportScheduleRequestTest {
                 .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                 .version(0L)
                 .build()
-        assertThat(operationalDataExportScheduleRequest).isNotNull
+
         assertThat(operationalDataExportScheduleRequest.operationalDataTypes())
             .containsExactly(OperationalDataExportScheduleRequest.OperationalDataType.BILLS)
         assertThat(operationalDataExportScheduleRequest.sourceType())

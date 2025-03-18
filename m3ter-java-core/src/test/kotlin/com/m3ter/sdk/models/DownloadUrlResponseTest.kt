@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class DownloadUrlResponseTest {
 
     @Test
-    fun createDownloadUrlResponse() {
+    fun create() {
         val downloadUrlResponse = DownloadUrlResponse.builder().url("url").build()
-        assertThat(downloadUrlResponse).isNotNull
+
         assertThat(downloadUrlResponse.url()).contains("url")
     }
 }

@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 internal class PrincipalPermissionRequestTest {
 
     @Test
-    fun createPrincipalPermissionRequest() {
+    fun create() {
         val principalPermissionRequest =
             PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
-        assertThat(principalPermissionRequest).isNotNull
+
         assertThat(principalPermissionRequest.principalId()).isEqualTo("x")
         assertThat(principalPermissionRequest.version()).contains(0L)
     }

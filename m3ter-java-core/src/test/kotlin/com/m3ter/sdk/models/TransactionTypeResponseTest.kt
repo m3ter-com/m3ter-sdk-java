@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class TransactionTypeResponseTest {
 
     @Test
-    fun createTransactionTypeResponse() {
+    fun create() {
         val transactionTypeResponse =
             TransactionTypeResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ internal class TransactionTypeResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(transactionTypeResponse).isNotNull
+
         assertThat(transactionTypeResponse.id()).isEqualTo("id")
         assertThat(transactionTypeResponse.version()).isEqualTo(0L)
         assertThat(transactionTypeResponse.archived()).contains(true)

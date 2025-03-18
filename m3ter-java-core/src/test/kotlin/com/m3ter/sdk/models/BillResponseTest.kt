@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 internal class BillResponseTest {
 
     @Test
-    fun createBillResponse() {
+    fun create() {
         val billResponse =
             BillResponse.builder()
                 .id("id")
@@ -110,7 +110,7 @@ internal class BillResponseTest {
                 .status(BillResponse.Status.PENDING)
                 .timezone("UTC")
                 .build()
-        assertThat(billResponse).isNotNull
+
         assertThat(billResponse.id()).isEqualTo("id")
         assertThat(billResponse.version()).isEqualTo(0L)
         assertThat(billResponse.accountCode()).contains("accountCode")

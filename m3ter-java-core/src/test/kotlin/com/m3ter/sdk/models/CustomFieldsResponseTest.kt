@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class CustomFieldsResponseTest {
 
     @Test
-    fun createCustomFieldsResponse() {
+    fun create() {
         val customFieldsResponse =
             CustomFieldsResponse.builder()
                 .id("id")
@@ -65,7 +65,7 @@ internal class CustomFieldsResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(customFieldsResponse).isNotNull
+
         assertThat(customFieldsResponse.id()).isEqualTo("id")
         assertThat(customFieldsResponse.version()).isEqualTo(0L)
         assertThat(customFieldsResponse.account())

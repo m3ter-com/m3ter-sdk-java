@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class WebhookTest {
 
     @Test
-    fun createWebhook() {
+    fun create() {
         val webhook =
             Webhook.builder()
                 .id("id")
@@ -40,7 +40,7 @@ internal class WebhookTest {
                 .name("name")
                 .url("url")
                 .build()
-        assertThat(webhook).isNotNull
+
         assertThat(webhook.id()).isEqualTo("id")
         assertThat(webhook.version()).isEqualTo(0L)
         assertThat(webhook.active()).contains(true)

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CreditLineItemResponseTest {
 
     @Test
-    fun createCreditLineItemResponse() {
+    fun create() {
         val creditLineItemResponse =
             CreditLineItemResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ internal class CreditLineItemResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(creditLineItemResponse).isNotNull
+
         assertThat(creditLineItemResponse.id()).isEqualTo("id")
         assertThat(creditLineItemResponse.amount()).isEqualTo(0.0)
         assertThat(creditLineItemResponse.description()).isEqualTo("description")

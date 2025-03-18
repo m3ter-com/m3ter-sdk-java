@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class BalanceTest {
 
     @Test
-    fun createBalance() {
+    fun create() {
         val balance =
             Balance.builder()
                 .id("id")
@@ -37,7 +37,7 @@ internal class BalanceTest {
                 .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(balance).isNotNull
+
         assertThat(balance.id()).isEqualTo("id")
         assertThat(balance.version()).isEqualTo(0L)
         assertThat(balance.accountId()).contains("accountId")

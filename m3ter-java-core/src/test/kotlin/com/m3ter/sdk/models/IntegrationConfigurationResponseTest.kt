@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class IntegrationConfigurationResponseTest {
 
     @Test
-    fun createIntegrationConfigurationResponse() {
+    fun create() {
         val integrationConfigurationResponse =
             IntegrationConfigurationResponse.builder()
                 .id("id")
@@ -28,7 +28,7 @@ internal class IntegrationConfigurationResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .url("url")
                 .build()
-        assertThat(integrationConfigurationResponse).isNotNull
+
         assertThat(integrationConfigurationResponse.id()).isEqualTo("id")
         assertThat(integrationConfigurationResponse.destination()).isEqualTo("destination")
         assertThat(integrationConfigurationResponse.entityId()).isEqualTo("x")

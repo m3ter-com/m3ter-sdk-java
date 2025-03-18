@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 internal class CurrencyConversionTest {
 
     @Test
-    fun createCurrencyConversion() {
+    fun create() {
         val currencyConversion =
             CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
-        assertThat(currencyConversion).isNotNull
+
         assertThat(currencyConversion.from()).isEqualTo("EUR")
         assertThat(currencyConversion.to()).isEqualTo("USD")
         assertThat(currencyConversion.multiplier()).contains(1.12)

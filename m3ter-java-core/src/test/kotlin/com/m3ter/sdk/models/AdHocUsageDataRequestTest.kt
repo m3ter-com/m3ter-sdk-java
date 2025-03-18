@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class AdHocUsageDataRequestTest {
 
     @Test
-    fun createAdHocUsageDataRequest() {
+    fun create() {
         val adHocUsageDataRequest =
             AdHocUsageDataRequest.builder()
                 .aggregationFrequency(AdHocUsageDataRequest.AggregationFrequency.ORIGINAL)
@@ -20,7 +20,7 @@ internal class AdHocUsageDataRequestTest {
                 .timePeriod(AdHocUsageDataRequest.TimePeriod.TODAY)
                 .version(0L)
                 .build()
-        assertThat(adHocUsageDataRequest).isNotNull
+
         assertThat(adHocUsageDataRequest.aggregationFrequency())
             .isEqualTo(AdHocUsageDataRequest.AggregationFrequency.ORIGINAL)
         assertThat(adHocUsageDataRequest.sourceType())

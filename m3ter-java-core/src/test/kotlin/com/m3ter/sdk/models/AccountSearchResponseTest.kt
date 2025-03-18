@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 internal class AccountSearchResponseTest {
 
     @Test
-    fun createAccountSearchResponse() {
+    fun create() {
         val accountSearchResponse =
             AccountSearchResponse.builder()
                 .addData(
@@ -62,7 +62,7 @@ internal class AccountSearchResponseTest {
                 )
                 .nextToken("nextToken")
                 .build()
-        assertThat(accountSearchResponse).isNotNull
+
         assertThat(accountSearchResponse.data().getOrNull())
             .containsExactly(
                 AccountResponse.builder()

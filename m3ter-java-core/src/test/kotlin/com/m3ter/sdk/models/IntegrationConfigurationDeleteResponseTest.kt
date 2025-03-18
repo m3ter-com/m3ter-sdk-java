@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class IntegrationConfigurationDeleteResponseTest {
 
     @Test
-    fun createIntegrationConfigurationDeleteResponse() {
+    fun create() {
         val integrationConfigurationDeleteResponse =
             IntegrationConfigurationDeleteResponse.builder()
                 .id("id")
@@ -34,7 +34,7 @@ internal class IntegrationConfigurationDeleteResponseTest {
                 .name("name")
                 .triggerType(IntegrationConfigurationDeleteResponse.TriggerType.EVENT)
                 .build()
-        assertThat(integrationConfigurationDeleteResponse).isNotNull
+
         assertThat(integrationConfigurationDeleteResponse.id()).isEqualTo("id")
         assertThat(integrationConfigurationDeleteResponse.destination()).isEqualTo("x")
         assertThat(integrationConfigurationDeleteResponse.entityType()).isEqualTo("x")
