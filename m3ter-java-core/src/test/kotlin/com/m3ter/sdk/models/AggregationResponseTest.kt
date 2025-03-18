@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class AggregationResponseTest {
 
     @Test
-    fun createAggregationResponse() {
+    fun create() {
         val aggregationResponse =
             AggregationResponse.builder()
                 .id("id")
@@ -43,7 +43,7 @@ internal class AggregationResponseTest {
                 .targetField("targetField")
                 .unit("unit")
                 .build()
-        assertThat(aggregationResponse).isNotNull
+
         assertThat(aggregationResponse.id()).isEqualTo("id")
         assertThat(aggregationResponse.version()).isEqualTo(0L)
         assertThat(aggregationResponse.accountingProductId()).contains("accountingProductId")

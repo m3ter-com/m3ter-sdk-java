@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class CommitmentResponseTest {
 
     @Test
-    fun createCommitmentResponse() {
+    fun create() {
         val commitmentResponse =
             CommitmentResponse.builder()
                 .id("id")
@@ -54,7 +54,7 @@ internal class CommitmentResponseTest {
                 .separateOverageUsage(true)
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(commitmentResponse).isNotNull
+
         assertThat(commitmentResponse.id()).isEqualTo("id")
         assertThat(commitmentResponse.version()).isEqualTo(0L)
         assertThat(commitmentResponse.accountId()).contains("accountId")

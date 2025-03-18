@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class M3terSignedCredentialsRequestTest {
 
     @Test
-    fun createM3terSignedCredentialsRequest() {
+    fun create() {
         val m3terSignedCredentialsRequest =
             M3terSignedCredentialsRequest.builder()
                 .apiKey("x")
@@ -17,7 +17,7 @@ internal class M3terSignedCredentialsRequestTest {
                 .empty(true)
                 .version(0L)
                 .build()
-        assertThat(m3terSignedCredentialsRequest).isNotNull
+
         assertThat(m3terSignedCredentialsRequest.apiKey()).isEqualTo("x")
         assertThat(m3terSignedCredentialsRequest.secret()).isEqualTo("x")
         assertThat(m3terSignedCredentialsRequest.type())

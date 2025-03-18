@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class PlanGroupResponseTest {
 
     @Test
-    fun createPlanGroupResponse() {
+    fun create() {
         val planGroupResponse =
             PlanGroupResponse.builder()
                 .id("id")
@@ -37,7 +37,7 @@ internal class PlanGroupResponseTest {
                 .standingChargeBillInAdvance(true)
                 .standingChargeDescription("standingChargeDescription")
                 .build()
-        assertThat(planGroupResponse).isNotNull
+
         assertThat(planGroupResponse.id()).isEqualTo("id")
         assertThat(planGroupResponse.version()).isEqualTo(0L)
         assertThat(planGroupResponse.accountId()).contains("accountId")

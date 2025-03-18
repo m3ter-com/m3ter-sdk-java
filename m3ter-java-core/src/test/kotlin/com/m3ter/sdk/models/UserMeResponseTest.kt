@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class UserMeResponseTest {
 
     @Test
-    fun createUserMeResponse() {
+    fun create() {
         val userMeResponse =
             UserMeResponse.builder()
                 .organization(
@@ -76,7 +76,7 @@ internal class UserMeResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(userMeResponse).isNotNull
+
         assertThat(userMeResponse.organization())
             .contains(
                 UserMeResponse.Organization.builder()

@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class BillApproveResponseTest {
 
     @Test
-    fun createBillApproveResponse() {
+    fun create() {
         val billApproveResponse = BillApproveResponse.builder().message("message").build()
-        assertThat(billApproveResponse).isNotNull
+
         assertThat(billApproveResponse.message()).contains("message")
     }
 }

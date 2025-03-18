@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class LineItemResponseTest {
 
     @Test
-    fun createLineItemResponse() {
+    fun create() {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
@@ -76,7 +76,7 @@ internal class LineItemResponseTest {
                 .unit("unit")
                 .units(0.0)
                 .build()
-        assertThat(lineItemResponse).isNotNull
+
         assertThat(lineItemResponse.id()).isEqualTo("id")
         assertThat(lineItemResponse.version()).isEqualTo(0L)
         assertThat(lineItemResponse.aggregationId()).contains("aggregationId")

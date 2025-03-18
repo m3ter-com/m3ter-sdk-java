@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class EventGetTypesResponseTest {
 
     @Test
-    fun createEventGetTypesResponse() {
+    fun create() {
         val eventGetTypesResponse =
             EventGetTypesResponse.builder()
                 .events(
@@ -102,7 +102,7 @@ internal class EventGetTypesResponseTest {
                     )
                 )
                 .build()
-        assertThat(eventGetTypesResponse).isNotNull
+
         assertThat(eventGetTypesResponse.events().getOrNull())
             .containsExactly(
                 "configuration.commitment.created",

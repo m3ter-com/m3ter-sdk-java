@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class AccountEndDateBillingEntitiesResponseTest {
 
     @Test
-    fun createAccountEndDateBillingEntitiesResponse() {
+    fun create() {
         val accountEndDateBillingEntitiesResponse =
             AccountEndDateBillingEntitiesResponse.builder()
                 .failedEntities(
@@ -31,7 +31,7 @@ internal class AccountEndDateBillingEntitiesResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(accountEndDateBillingEntitiesResponse).isNotNull
+
         assertThat(accountEndDateBillingEntitiesResponse.failedEntities())
             .contains(
                 AccountEndDateBillingEntitiesResponse.FailedEntities.builder()

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class MeterResponseTest {
 
     @Test
-    fun createMeterResponse() {
+    fun create() {
         val meterResponse =
             MeterResponse.builder()
                 .id("id")
@@ -47,7 +47,7 @@ internal class MeterResponseTest {
                 .name("name")
                 .productId("productId")
                 .build()
-        assertThat(meterResponse).isNotNull
+
         assertThat(meterResponse.id()).isEqualTo("id")
         assertThat(meterResponse.version()).isEqualTo(0L)
         assertThat(meterResponse.code()).contains("code")

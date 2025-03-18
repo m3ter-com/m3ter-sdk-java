@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 internal class SubmitMeasurementsResponseTest {
 
     @Test
-    fun createSubmitMeasurementsResponse() {
+    fun create() {
         val submitMeasurementsResponse =
             SubmitMeasurementsResponse.builder().result("accepted").build()
-        assertThat(submitMeasurementsResponse).isNotNull
+
         assertThat(submitMeasurementsResponse.result()).contains("accepted")
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class UsageFileUploadGenerateUploadUrlResponseTest {
 
     @Test
-    fun createUsageFileUploadGenerateUploadUrlResponse() {
+    fun create() {
         val usageFileUploadGenerateUploadUrlResponse =
             UsageFileUploadGenerateUploadUrlResponse.builder()
                 .headers(
@@ -20,7 +20,7 @@ internal class UsageFileUploadGenerateUploadUrlResponseTest {
                 .jobId("jobId")
                 .url("url")
                 .build()
-        assertThat(usageFileUploadGenerateUploadUrlResponse).isNotNull
+
         assertThat(usageFileUploadGenerateUploadUrlResponse.headers())
             .contains(
                 UsageFileUploadGenerateUploadUrlResponse.Headers.builder()

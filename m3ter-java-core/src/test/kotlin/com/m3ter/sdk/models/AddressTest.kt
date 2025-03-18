@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class AddressTest {
 
     @Test
-    fun createAddress() {
+    fun create() {
         val address =
             Address.builder()
                 .addressLine1("addressLine1")
@@ -20,7 +20,7 @@ internal class AddressTest {
                 .postCode("postCode")
                 .region("region")
                 .build()
-        assertThat(address).isNotNull
+
         assertThat(address.addressLine1()).contains("addressLine1")
         assertThat(address.addressLine2()).contains("addressLine2")
         assertThat(address.addressLine3()).contains("addressLine3")

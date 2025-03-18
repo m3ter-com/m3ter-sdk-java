@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class CounterResponseTest {
 
     @Test
-    fun createCounterResponse() {
+    fun create() {
         val counterResponse =
             CounterResponse.builder()
                 .id("id")
@@ -23,7 +23,7 @@ internal class CounterResponseTest {
                 .productId("productId")
                 .unit("unit")
                 .build()
-        assertThat(counterResponse).isNotNull
+
         assertThat(counterResponse.id()).isEqualTo("id")
         assertThat(counterResponse.version()).isEqualTo(0L)
         assertThat(counterResponse.code()).contains("code")

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class UsageDataExportScheduleResponseTest {
 
     @Test
-    fun createUsageDataExportScheduleResponse() {
+    fun create() {
         val usageDataExportScheduleResponse =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
@@ -20,7 +20,7 @@ internal class UsageDataExportScheduleResponseTest {
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                 .build()
-        assertThat(usageDataExportScheduleResponse).isNotNull
+
         assertThat(usageDataExportScheduleResponse.id()).isEqualTo("id")
         assertThat(usageDataExportScheduleResponse.version()).isEqualTo(0L)
         assertThat(usageDataExportScheduleResponse.accountIds().getOrNull())

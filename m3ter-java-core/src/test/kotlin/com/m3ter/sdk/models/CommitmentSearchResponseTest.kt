@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class CommitmentSearchResponseTest {
 
     @Test
-    fun createCommitmentSearchResponse() {
+    fun create() {
         val commitmentSearchResponse =
             CommitmentSearchResponse.builder()
                 .addData(
@@ -63,7 +63,7 @@ internal class CommitmentSearchResponseTest {
                 )
                 .nextToken("nextToken")
                 .build()
-        assertThat(commitmentSearchResponse).isNotNull
+
         assertThat(commitmentSearchResponse.data().getOrNull())
             .containsExactly(
                 CommitmentResponse.builder()

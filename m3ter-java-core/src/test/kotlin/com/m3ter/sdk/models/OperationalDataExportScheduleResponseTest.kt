@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class OperationalDataExportScheduleResponseTest {
 
     @Test
-    fun createOperationalDataExportScheduleResponse() {
+    fun create() {
         val operationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
@@ -18,7 +18,7 @@ internal class OperationalDataExportScheduleResponseTest {
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
                 .build()
-        assertThat(operationalDataExportScheduleResponse).isNotNull
+
         assertThat(operationalDataExportScheduleResponse.id()).isEqualTo("id")
         assertThat(operationalDataExportScheduleResponse.version()).isEqualTo(0L)
         assertThat(operationalDataExportScheduleResponse.operationalDataTypes().getOrNull())

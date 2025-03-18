@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class BillConfigResponseTest {
 
     @Test
-    fun createBillConfigResponse() {
+    fun create() {
         val billConfigResponse =
             BillConfigResponse.builder()
                 .id("id")
@@ -21,7 +21,7 @@ internal class BillConfigResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .version(0L)
                 .build()
-        assertThat(billConfigResponse).isNotNull
+
         assertThat(billConfigResponse.id()).contains("id")
         assertThat(billConfigResponse.billLockDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(billConfigResponse.createdBy()).contains("createdBy")
