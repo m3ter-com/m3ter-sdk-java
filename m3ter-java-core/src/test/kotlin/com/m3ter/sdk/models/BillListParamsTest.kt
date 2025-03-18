@@ -49,29 +49,37 @@ internal class BillListParamsTest {
                 .pageSize(1L)
                 .status(BillListParams.Status.PENDING)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "accountId")
-        expected.put("billDate", "billDate")
-        expected.put("billDateEnd", "billDateEnd")
-        expected.put("billDateStart", "billDateStart")
-        expected.put("billingFrequency", "billingFrequency")
-        expected.put("excludeLineItems", "true")
-        expected.put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
-        expected.put("externalInvoiceDateStart", "externalInvoiceDateStart")
-        expected.put("ids", "string")
-        expected.put("includeBillTotal", "true")
-        expected.put("locked", "true")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("status", BillListParams.Status.PENDING.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", "accountId")
+                    .put("billDate", "billDate")
+                    .put("billDateEnd", "billDateEnd")
+                    .put("billDateStart", "billDateStart")
+                    .put("billingFrequency", "billingFrequency")
+                    .put("excludeLineItems", "true")
+                    .put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
+                    .put("externalInvoiceDateStart", "externalInvoiceDateStart")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("includeBillTotal", "true")
+                    .put("locked", "true")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("status", "PENDING")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = BillListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

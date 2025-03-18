@@ -89,20 +89,21 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.accountId?.let { queryParams.put("accountId", listOf(it.toString())) }
-        this.contractId?.let { queryParams.put("contractId", listOf(it.toString())) }
-        this.date?.let { queryParams.put("date", listOf(it.toString())) }
-        this.endDateEnd?.let { queryParams.put("endDateEnd", listOf(it.toString())) }
-        this.endDateStart?.let { queryParams.put("endDateStart", listOf(it.toString())) }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.productId?.let { queryParams.put("productId", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountId?.let { put("accountId", it) }
+                contractId?.let { put("contractId", it) }
+                date?.let { put("date", it) }
+                endDateEnd?.let { put("endDateEnd", it) }
+                endDateStart?.let { put("endDateStart", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                productId?.let { put("productId", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

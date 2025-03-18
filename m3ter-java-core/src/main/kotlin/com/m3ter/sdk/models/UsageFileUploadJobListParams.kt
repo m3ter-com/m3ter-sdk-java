@@ -59,16 +59,17 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.dateCreatedEnd?.let { queryParams.put("dateCreatedEnd", listOf(it.toString())) }
-        this.dateCreatedStart?.let { queryParams.put("dateCreatedStart", listOf(it.toString())) }
-        this.fileKey?.let { queryParams.put("fileKey", listOf(it.toString())) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                dateCreatedEnd?.let { put("dateCreatedEnd", it) }
+                dateCreatedStart?.let { put("dateCreatedStart", it) }
+                fileKey?.let { put("fileKey", it) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

@@ -29,19 +29,27 @@ internal class BillJobListParamsTest {
                 .pageSize(1L)
                 .status("status")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("active", "active")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("status", "status")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("active", "active")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("status", "status")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = BillJobListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

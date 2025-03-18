@@ -97,20 +97,21 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.account?.let { queryParams.put("account", listOf(it.toString())) }
-        this.contract?.let { queryParams.put("contract", listOf(it.toString())) }
-        this.date?.let { queryParams.put("date", listOf(it.toString())) }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.includeall?.let { queryParams.put("includeall", listOf(it.toString())) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.plan?.let { queryParams.put("plan", listOf(it.toString())) }
-        this.product?.let { queryParams.put("product", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                account?.let { put("account", it) }
+                contract?.let { put("contract", it) }
+                date?.let { put("date", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                includeall?.let { put("includeall", it.toString()) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                plan?.let { put("plan", it) }
+                product?.let { put("product", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {
