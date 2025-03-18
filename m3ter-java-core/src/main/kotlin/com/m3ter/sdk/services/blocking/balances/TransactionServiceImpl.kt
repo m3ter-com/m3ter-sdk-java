@@ -70,9 +70,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -104,9 +104,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                     )
                     .build()
@@ -144,9 +144,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                         "summary",
                     )

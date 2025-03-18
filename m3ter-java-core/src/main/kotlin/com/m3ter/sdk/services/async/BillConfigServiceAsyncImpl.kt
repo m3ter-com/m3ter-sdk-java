@@ -58,7 +58,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "billconfig")
+                    .addPathSegments("organizations", params._pathParam(0), "billconfig")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -87,7 +87,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("organizations", params.getPathParam(0), "billconfig")
+                    .addPathSegments("organizations", params._pathParam(0), "billconfig")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)

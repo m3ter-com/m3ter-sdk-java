@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -81,7 +82,7 @@ internal class LineItemResponseTest {
         assertThat(lineItemResponse.aggregationId()).contains("aggregationId")
         assertThat(lineItemResponse.averageUnitPrice()).contains(0.0)
         assertThat(lineItemResponse.balanceId()).contains("balanceId")
-        assertThat(lineItemResponse.bandUsage().get())
+        assertThat(lineItemResponse.bandUsage().getOrNull())
             .containsExactly(
                 LineItemResponse.BandUsage.builder()
                     .bandQuantity(0.0)

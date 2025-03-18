@@ -83,12 +83,7 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "organizations",
-                        params.getPathParam(0),
-                        "picklists",
-                        "currency",
-                    )
+                    .addPathSegments("organizations", params._pathParam(0), "picklists", "currency")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -120,10 +115,10 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "currency",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -155,10 +150,10 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "currency",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -190,12 +185,7 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments(
-                        "organizations",
-                        params.getPathParam(0),
-                        "picklists",
-                        "currency",
-                    )
+                    .addPathSegments("organizations", params._pathParam(0), "picklists", "currency")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -233,10 +223,10 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "currency",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

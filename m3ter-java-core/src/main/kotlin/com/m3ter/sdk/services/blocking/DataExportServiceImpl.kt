@@ -85,12 +85,7 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "organizations",
-                        params.getPathParam(0),
-                        "dataexports",
-                        "adhoc",
-                    )
+                    .addPathSegments("organizations", params._pathParam(0), "dataexports", "adhoc")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

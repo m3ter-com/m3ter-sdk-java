@@ -35,6 +35,16 @@ internal class PlanGroupCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            PlanGroupCreateParams.builder().orgId("orgId").currency("xxx").name("x").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PlanGroupCreateParams.builder()
@@ -95,16 +105,5 @@ internal class PlanGroupCreateParamsTest {
         assertNotNull(body)
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            PlanGroupCreateParams.builder().orgId("orgId").currency("xxx").name("x").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

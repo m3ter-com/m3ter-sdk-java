@@ -33,6 +33,23 @@ internal class PlanTemplateCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            PlanTemplateCreateParams.builder()
+                .orgId("orgId")
+                .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
+                .currency("USD")
+                .name("string")
+                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .standingCharge(0.0)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PlanTemplateCreateParams.builder()
@@ -99,23 +116,5 @@ internal class PlanTemplateCreateParamsTest {
         assertThat(body.name()).isEqualTo("string")
         assertThat(body.productId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.standingCharge()).isEqualTo(0.0)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            PlanTemplateCreateParams.builder()
-                .orgId("orgId")
-                .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
-                .currency("USD")
-                .name("string")
-                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .standingCharge(0.0)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

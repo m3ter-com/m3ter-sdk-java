@@ -2,6 +2,7 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -24,10 +25,10 @@ internal class AdHocUsageDataRequestTest {
             .isEqualTo(AdHocUsageDataRequest.AggregationFrequency.ORIGINAL)
         assertThat(adHocUsageDataRequest.sourceType())
             .isEqualTo(AdHocUsageDataRequest.SourceType.USAGE)
-        assertThat(adHocUsageDataRequest.accountIds().get()).containsExactly("string")
+        assertThat(adHocUsageDataRequest.accountIds().getOrNull()).containsExactly("string")
         assertThat(adHocUsageDataRequest.aggregation())
             .contains(AdHocUsageDataRequest.Aggregation.SUM)
-        assertThat(adHocUsageDataRequest.meterIds().get()).containsExactly("string")
+        assertThat(adHocUsageDataRequest.meterIds().getOrNull()).containsExactly("string")
         assertThat(adHocUsageDataRequest.timePeriod())
             .contains(AdHocUsageDataRequest.TimePeriod.TODAY)
         assertThat(adHocUsageDataRequest.version()).contains(0L)

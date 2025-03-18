@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -82,7 +83,7 @@ internal class PricingResponseTest {
         assertThat(pricingResponse.minimumSpend()).contains(0.0)
         assertThat(pricingResponse.minimumSpendBillInAdvance()).contains(true)
         assertThat(pricingResponse.minimumSpendDescription()).contains("minimumSpendDescription")
-        assertThat(pricingResponse.overagePricingBands().get())
+        assertThat(pricingResponse.overagePricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)
@@ -94,7 +95,7 @@ internal class PricingResponseTest {
             )
         assertThat(pricingResponse.planId()).contains("planId")
         assertThat(pricingResponse.planTemplateId()).contains("planTemplateId")
-        assertThat(pricingResponse.pricingBands().get())
+        assertThat(pricingResponse.pricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)

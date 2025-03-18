@@ -5,6 +5,7 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -81,7 +82,7 @@ internal class AccountResponseTest {
                     .build()
             )
         assertThat(accountResponse.createdBy()).contains("createdBy")
-        assertThat(accountResponse.creditApplicationOrder().get())
+        assertThat(accountResponse.creditApplicationOrder().getOrNull())
             .containsExactly(AccountResponse.CreditApplicationOrder.PREPAYMENT)
         assertThat(accountResponse.currency()).contains("USD")
         assertThat(accountResponse.customFields())

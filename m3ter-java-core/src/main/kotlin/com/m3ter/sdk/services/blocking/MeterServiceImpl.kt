@@ -70,7 +70,7 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params.getPathParam(0), "meters")
+                    .addPathSegments("organizations", params._pathParam(0), "meters")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -99,9 +99,9 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "meters",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -130,9 +130,9 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "meters",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -161,7 +161,7 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "meters")
+                    .addPathSegments("organizations", params._pathParam(0), "meters")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -190,9 +190,9 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "meters",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

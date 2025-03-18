@@ -346,16 +346,15 @@ private constructor(
 
     @JvmSynthetic internal fun _body(): Body = body
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
+    fun _pathParam(index: Int): String =
+        when (index) {
             0 -> orgId
             else -> ""
         }
-    }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     /** Account request for operations such as Create or Update Account. */
     @NoAutoDetect

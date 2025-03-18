@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -38,7 +39,7 @@ internal class PermissionPolicyResponseTest {
         assertThat(permissionPolicyResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(permissionPolicyResponse.managedPolicy()).contains(true)
         assertThat(permissionPolicyResponse.name()).contains("name")
-        assertThat(permissionPolicyResponse.permissionPolicy().get())
+        assertThat(permissionPolicyResponse.permissionPolicy().getOrNull())
             .containsExactly(
                 PermissionStatementResponse.builder()
                     .addAction(PermissionStatementResponse.Action.ALL)

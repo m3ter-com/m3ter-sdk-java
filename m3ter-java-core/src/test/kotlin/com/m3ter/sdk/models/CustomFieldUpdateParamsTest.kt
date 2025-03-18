@@ -40,6 +40,15 @@ internal class CustomFieldUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CustomFieldUpdateParams.builder()
@@ -110,15 +119,5 @@ internal class CustomFieldUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

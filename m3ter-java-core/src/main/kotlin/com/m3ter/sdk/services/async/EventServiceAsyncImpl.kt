@@ -78,9 +78,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "events",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -111,7 +111,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "events")
+                    .addPathSegments("organizations", params._pathParam(0), "events")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -148,7 +148,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "events", "fields")
+                    .addPathSegments("organizations", params._pathParam(0), "events", "fields")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -178,7 +178,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "events", "types")
+                    .addPathSegments("organizations", params._pathParam(0), "events", "types")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))

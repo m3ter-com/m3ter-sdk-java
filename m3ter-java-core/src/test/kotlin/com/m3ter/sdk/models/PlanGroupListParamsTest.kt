@@ -20,6 +20,15 @@ internal class PlanGroupListParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = PlanGroupListParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             PlanGroupListParams.builder()
@@ -50,15 +59,5 @@ internal class PlanGroupListParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams).isEqualTo(QueryParams.builder().build())
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = PlanGroupListParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

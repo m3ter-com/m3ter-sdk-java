@@ -23,6 +23,23 @@ internal class ExternalMappingCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            ExternalMappingCreateParams.builder()
+                .orgId("orgId")
+                .externalId("JS!?Q0]r] ]\$]")
+                .externalSystem("JS!?Q0]r] ]\$]")
+                .externalTable("JS!?Q0]r] ]\$]")
+                .m3terEntity("JS!?Q0]r] ]\$]")
+                .m3terId("JS!?Q0]r] ]\$]")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             ExternalMappingCreateParams.builder()
@@ -68,23 +85,5 @@ internal class ExternalMappingCreateParamsTest {
         assertThat(body.externalTable()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.m3terEntity()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.m3terId()).isEqualTo("JS!?Q0]r] ]\$]")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ExternalMappingCreateParams.builder()
-                .orgId("orgId")
-                .externalId("JS!?Q0]r] ]\$]")
-                .externalSystem("JS!?Q0]r] ]\$]")
-                .externalTable("JS!?Q0]r] ]\$]")
-                .m3terEntity("JS!?Q0]r] ]\$]")
-                .m3terId("JS!?Q0]r] ]\$]")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

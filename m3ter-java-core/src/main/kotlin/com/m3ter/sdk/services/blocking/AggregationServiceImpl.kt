@@ -83,7 +83,7 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params.getPathParam(0), "aggregations")
+                    .addPathSegments("organizations", params._pathParam(0), "aggregations")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -113,9 +113,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "aggregations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -145,9 +145,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "aggregations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -176,7 +176,7 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "aggregations")
+                    .addPathSegments("organizations", params._pathParam(0), "aggregations")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -208,9 +208,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "aggregations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

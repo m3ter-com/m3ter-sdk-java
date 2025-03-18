@@ -32,6 +32,30 @@ internal class WebhookUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            WebhookUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .credentials(
+                    M3terSignedCredentialsRequest.builder()
+                        .apiKey("x")
+                        .secret("x")
+                        .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
+                        .build()
+                )
+                .description("x")
+                .name("x")
+                .url("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             WebhookUpdateParams.builder()
@@ -107,31 +131,5 @@ internal class WebhookUpdateParamsTest {
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.url()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            WebhookUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .credentials(
-                    M3terSignedCredentialsRequest.builder()
-                        .apiKey("x")
-                        .secret("x")
-                        .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
-                        .build()
-                )
-                .description("x")
-                .name("x")
-                .url("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

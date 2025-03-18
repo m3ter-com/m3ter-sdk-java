@@ -87,7 +87,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "scheduledevents",
                         "configurations",
                     )
@@ -120,10 +120,10 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "scheduledevents",
                         "configurations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -153,10 +153,10 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "scheduledevents",
                         "configurations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -187,7 +187,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "scheduledevents",
                         "configurations",
                     )
@@ -226,10 +226,10 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "scheduledevents",
                         "configurations",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

@@ -84,7 +84,7 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params.getPathParam(0), "plangrouplinks")
+                    .addPathSegments("organizations", params._pathParam(0), "plangrouplinks")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -117,9 +117,9 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "plangrouplinks",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -152,9 +152,9 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "plangrouplinks",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -186,7 +186,7 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "plangrouplinks")
+                    .addPathSegments("organizations", params._pathParam(0), "plangrouplinks")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -225,9 +225,9 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "plangrouplinks",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

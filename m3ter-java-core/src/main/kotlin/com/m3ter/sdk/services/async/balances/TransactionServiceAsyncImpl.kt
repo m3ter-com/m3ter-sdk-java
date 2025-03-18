@@ -71,9 +71,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -108,9 +108,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                     )
                     .build()
@@ -151,9 +151,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "balances",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "transactions",
                         "summary",
                     )

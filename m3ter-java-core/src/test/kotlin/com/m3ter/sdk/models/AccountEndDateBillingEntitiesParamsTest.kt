@@ -21,6 +21,22 @@ internal class AccountEndDateBillingEntitiesParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            AccountEndDateBillingEntitiesParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .addBillingEntity(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             AccountEndDateBillingEntitiesParams.builder()
@@ -35,7 +51,7 @@ internal class AccountEndDateBillingEntitiesParamsTest {
 
         assertNotNull(body)
         assertThat(body.billingEntities())
-            .isEqualTo(listOf(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT))
+            .containsExactly(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.applyToChildren()).contains(true)
     }
@@ -54,25 +70,7 @@ internal class AccountEndDateBillingEntitiesParamsTest {
 
         assertNotNull(body)
         assertThat(body.billingEntities())
-            .isEqualTo(listOf(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT))
+            .containsExactly(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AccountEndDateBillingEntitiesParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .addBillingEntity(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
-                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

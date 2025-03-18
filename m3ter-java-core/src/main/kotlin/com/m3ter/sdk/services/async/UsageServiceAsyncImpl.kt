@@ -87,7 +87,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "measurements",
                         "failedIngest",
                         "getDownloadUrl",
@@ -120,7 +120,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params.getPathParam(0), "usage", "query")
+                    .addPathSegments("organizations", params._pathParam(0), "usage", "query")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -151,7 +151,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params.getPathParam(0), "measurements")
+                    .addPathSegments("organizations", params._pathParam(0), "measurements")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)

@@ -21,6 +21,24 @@ internal class ExternalMappingListByExternalEntityParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            ExternalMappingListByExternalEntityParams.builder()
+                .orgId("orgId")
+                .system("system")
+                .externalTable("externalTable")
+                .externalId("externalId")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("system")
+        assertThat(params._pathParam(2)).isEqualTo("externalTable")
+        assertThat(params._pathParam(3)).isEqualTo("externalId")
+        // out-of-bound path param
+        assertThat(params._pathParam(4)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             ExternalMappingListByExternalEntityParams.builder()
@@ -53,27 +71,5 @@ internal class ExternalMappingListByExternalEntityParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams).isEqualTo(QueryParams.builder().build())
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ExternalMappingListByExternalEntityParams.builder()
-                .orgId("orgId")
-                .system("system")
-                .externalTable("externalTable")
-                .externalId("externalId")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "system"
-        assertThat(params.getPathParam(1)).isEqualTo("system")
-        // path param "externalTable"
-        assertThat(params.getPathParam(2)).isEqualTo("externalTable")
-        // path param "externalId"
-        assertThat(params.getPathParam(3)).isEqualTo("externalId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(4)).isEqualTo("")
     }
 }
