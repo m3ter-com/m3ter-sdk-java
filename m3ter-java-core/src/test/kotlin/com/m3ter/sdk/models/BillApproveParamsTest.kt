@@ -21,6 +21,15 @@ internal class BillApproveParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             BillApproveParams.builder()
@@ -66,7 +75,7 @@ internal class BillApproveParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
+        assertThat(body.billIds()).containsExactly("string")
     }
 
     @Test
@@ -76,16 +85,6 @@ internal class BillApproveParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(body.billIds()).containsExactly("string")
     }
 }

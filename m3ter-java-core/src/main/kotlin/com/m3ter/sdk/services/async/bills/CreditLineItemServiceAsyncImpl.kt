@@ -86,9 +86,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "creditlineitems",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -123,11 +123,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "creditlineitems",
-                        params.getPathParam(2),
+                        params._pathParam(2),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -160,11 +160,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "creditlineitems",
-                        params.getPathParam(2),
+                        params._pathParam(2),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -198,9 +198,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "creditlineitems",
                     )
                     .build()
@@ -241,11 +241,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "creditlineitems",
-                        params.getPathParam(2),
+                        params._pathParam(2),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

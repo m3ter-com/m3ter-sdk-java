@@ -61,6 +61,13 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams =
@@ -71,14 +78,6 @@ private constructor(
                 putAll(additionalQueryParams)
             }
             .build()
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-    }
 
     fun toBuilder() = Builder().from(this)
 

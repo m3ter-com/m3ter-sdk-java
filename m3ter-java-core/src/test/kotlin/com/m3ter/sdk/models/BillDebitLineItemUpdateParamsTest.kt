@@ -30,6 +30,29 @@ internal class BillDebitLineItemUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            BillDebitLineItemUpdateParams.builder()
+                .orgId("orgId")
+                .billId("billId")
+                .id("id")
+                .amount(1.0)
+                .description("x")
+                .productId("productId")
+                .referencedBillId("referencedBillId")
+                .referencedLineItemId("referencedLineItemId")
+                .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("billId")
+        assertThat(params._pathParam(2)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(3)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             BillDebitLineItemUpdateParams.builder()
@@ -96,31 +119,5 @@ internal class BillDebitLineItemUpdateParamsTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.servicePeriodStartDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            BillDebitLineItemUpdateParams.builder()
-                .orgId("orgId")
-                .billId("billId")
-                .id("id")
-                .amount(1.0)
-                .description("x")
-                .productId("productId")
-                .referencedBillId("referencedBillId")
-                .referencedLineItemId("referencedLineItemId")
-                .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "billId"
-        assertThat(params.getPathParam(1)).isEqualTo("billId")
-        // path param "id"
-        assertThat(params.getPathParam(2)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(3)).isEqualTo("")
     }
 }

@@ -60,11 +60,11 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "lineitems",
-                        params.getPathParam(2),
+                        params._pathParam(2),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -97,9 +97,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "bills",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "lineitems",
                     )
                     .build()

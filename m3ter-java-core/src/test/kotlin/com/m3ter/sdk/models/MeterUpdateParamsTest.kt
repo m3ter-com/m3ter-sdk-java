@@ -45,6 +45,37 @@ internal class MeterUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            MeterUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .code("JS!?Q0]r] ]\$]")
+                .addDataField(
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
+                        .code("{1{}}_")
+                        .name("x")
+                        .build()
+                )
+                .addDerivedField(
+                    MeterUpdateParams.DerivedField.builder()
+                        .category(DataFieldResponse.Category.WHO)
+                        .code("{1{}}_")
+                        .name("x")
+                        .calculation("x")
+                        .build()
+                )
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             MeterUpdateParams.builder()
@@ -84,27 +115,23 @@ internal class MeterUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
-            .isEqualTo(
-                listOf(
-                    DataFieldResponse.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .unit("x")
-                        .build()
-                )
+            .containsExactly(
+                DataFieldResponse.builder()
+                    .category(DataFieldResponse.Category.WHO)
+                    .code("{1{}}_")
+                    .name("x")
+                    .unit("x")
+                    .build()
             )
         assertThat(body.derivedFields())
-            .isEqualTo(
-                listOf(
-                    MeterUpdateParams.DerivedField.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .unit("x")
-                        .calculation("x")
-                        .build()
-                )
+            .containsExactly(
+                MeterUpdateParams.DerivedField.builder()
+                    .category(DataFieldResponse.Category.WHO)
+                    .code("{1{}}_")
+                    .name("x")
+                    .unit("x")
+                    .calculation("x")
+                    .build()
             )
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.customFields())
@@ -148,59 +175,22 @@ internal class MeterUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.dataFields())
-            .isEqualTo(
-                listOf(
-                    DataFieldResponse.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .build()
-                )
+            .containsExactly(
+                DataFieldResponse.builder()
+                    .category(DataFieldResponse.Category.WHO)
+                    .code("{1{}}_")
+                    .name("x")
+                    .build()
             )
         assertThat(body.derivedFields())
-            .isEqualTo(
-                listOf(
-                    MeterUpdateParams.DerivedField.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .calculation("x")
-                        .build()
-                )
+            .containsExactly(
+                MeterUpdateParams.DerivedField.builder()
+                    .category(DataFieldResponse.Category.WHO)
+                    .code("{1{}}_")
+                    .name("x")
+                    .calculation("x")
+                    .build()
             )
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            MeterUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .code("JS!?Q0]r] ]\$]")
-                .addDataField(
-                    DataFieldResponse.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .build()
-                )
-                .addDerivedField(
-                    MeterUpdateParams.DerivedField.builder()
-                        .category(DataFieldResponse.Category.WHO)
-                        .code("{1{}}_")
-                        .name("x")
-                        .calculation("x")
-                        .build()
-                )
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

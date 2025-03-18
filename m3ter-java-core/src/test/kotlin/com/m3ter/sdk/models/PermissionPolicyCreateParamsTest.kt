@@ -25,6 +25,26 @@ internal class PermissionPolicyCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            PermissionPolicyCreateParams.builder()
+                .orgId("orgId")
+                .name("x")
+                .addPermissionPolicy(
+                    PermissionStatementResponse.builder()
+                        .addAction(PermissionStatementResponse.Action.ALL)
+                        .effect(PermissionStatementResponse.Effect.ALLOW)
+                        .addResource("string")
+                        .build()
+                )
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PermissionPolicyCreateParams.builder()
@@ -45,14 +65,12 @@ internal class PermissionPolicyCreateParamsTest {
         assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.permissionPolicy())
-            .isEqualTo(
-                listOf(
-                    PermissionStatementResponse.builder()
-                        .addAction(PermissionStatementResponse.Action.ALL)
-                        .effect(PermissionStatementResponse.Effect.ALLOW)
-                        .addResource("string")
-                        .build()
-                )
+            .containsExactly(
+                PermissionStatementResponse.builder()
+                    .addAction(PermissionStatementResponse.Action.ALL)
+                    .effect(PermissionStatementResponse.Effect.ALLOW)
+                    .addResource("string")
+                    .build()
             )
         assertThat(body.version()).contains(0L)
     }
@@ -77,35 +95,12 @@ internal class PermissionPolicyCreateParamsTest {
         assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.permissionPolicy())
-            .isEqualTo(
-                listOf(
-                    PermissionStatementResponse.builder()
-                        .addAction(PermissionStatementResponse.Action.ALL)
-                        .effect(PermissionStatementResponse.Effect.ALLOW)
-                        .addResource("string")
-                        .build()
-                )
+            .containsExactly(
+                PermissionStatementResponse.builder()
+                    .addAction(PermissionStatementResponse.Action.ALL)
+                    .effect(PermissionStatementResponse.Effect.ALLOW)
+                    .addResource("string")
+                    .build()
             )
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            PermissionPolicyCreateParams.builder()
-                .orgId("orgId")
-                .name("x")
-                .addPermissionPolicy(
-                    PermissionStatementResponse.builder()
-                        .addAction(PermissionStatementResponse.Action.ALL)
-                        .effect(PermissionStatementResponse.Effect.ALLOW)
-                        .addResource("string")
-                        .build()
-                )
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

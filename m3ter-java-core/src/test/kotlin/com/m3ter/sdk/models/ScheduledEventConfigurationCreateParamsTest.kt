@@ -21,6 +21,22 @@ internal class ScheduledEventConfigurationCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            ScheduledEventConfigurationCreateParams.builder()
+                .orgId("orgId")
+                .entity("Bill")
+                .field("endDate")
+                .name("scheduled.bill.enddateEvent")
+                .offset(5L)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             ScheduledEventConfigurationCreateParams.builder()
@@ -60,22 +76,5 @@ internal class ScheduledEventConfigurationCreateParamsTest {
         assertThat(body.field()).isEqualTo("endDate")
         assertThat(body.name()).isEqualTo("scheduled.bill.enddateEvent")
         assertThat(body.offset()).isEqualTo(5L)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ScheduledEventConfigurationCreateParams.builder()
-                .orgId("orgId")
-                .entity("Bill")
-                .field("endDate")
-                .name("scheduled.bill.enddateEvent")
-                .offset(5L)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

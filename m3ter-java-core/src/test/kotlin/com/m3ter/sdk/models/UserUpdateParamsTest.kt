@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -27,6 +28,16 @@ internal class UserUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = UserUpdateParams.builder().orgId("orgId").id("id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             UserUpdateParams.builder()
@@ -47,15 +58,13 @@ internal class UserUpdateParamsTest {
 
         assertNotNull(body)
         assertThat(body.dtEndAccess()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.permissionPolicy())
-            .contains(
-                listOf(
-                    PermissionStatementResponse.builder()
-                        .addAction(PermissionStatementResponse.Action.ALL)
-                        .effect(PermissionStatementResponse.Effect.ALLOW)
-                        .addResource("string")
-                        .build()
-                )
+        assertThat(body.permissionPolicy().getOrNull())
+            .containsExactly(
+                PermissionStatementResponse.builder()
+                    .addAction(PermissionStatementResponse.Action.ALL)
+                    .effect(PermissionStatementResponse.Effect.ALLOW)
+                    .addResource("string")
+                    .build()
             )
         assertThat(body.version()).contains(0L)
     }
@@ -67,17 +76,5 @@ internal class UserUpdateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = UserUpdateParams.builder().orgId("orgId").id("id").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

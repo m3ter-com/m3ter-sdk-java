@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -54,12 +55,12 @@ internal class BalanceTest {
         assertThat(balance.endDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balance.feesAccountingProductId()).contains("feesAccountingProductId")
         assertThat(balance.lastModifiedBy()).contains("lastModifiedBy")
-        assertThat(balance.lineItemTypes().get())
+        assertThat(balance.lineItemTypes().getOrNull())
             .containsExactly(Balance.LineItemType.STANDING_CHARGE)
         assertThat(balance.name()).contains("name")
         assertThat(balance.overageDescription()).contains("overageDescription")
         assertThat(balance.overageSurchargePercent()).contains(0.0)
-        assertThat(balance.productIds().get()).containsExactly("string")
+        assertThat(balance.productIds().getOrNull()).containsExactly("string")
         assertThat(balance.rolloverAmount()).contains(0.0)
         assertThat(balance.rolloverEndDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

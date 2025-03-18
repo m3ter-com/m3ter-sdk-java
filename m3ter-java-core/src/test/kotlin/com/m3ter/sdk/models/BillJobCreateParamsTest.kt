@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.LocalDate
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -34,6 +35,15 @@ internal class BillJobCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = BillJobCreateParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             BillJobCreateParams.builder()
@@ -60,13 +70,13 @@ internal class BillJobCreateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.accountIds()).contains(listOf("string"))
+        assertThat(body.accountIds().getOrNull()).containsExactly("string")
         assertThat(body.billDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.billFrequencyInterval()).contains(0L)
         assertThat(body.billingFrequency()).contains(BillJobCreateParams.BillingFrequency.DAILY)
-        assertThat(body.currencyConversions())
-            .contains(
-                listOf(CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build())
+        assertThat(body.currencyConversions().getOrNull())
+            .containsExactly(
+                CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )
         assertThat(body.dayEpoch()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.dueDate()).contains(LocalDate.parse("2019-12-27"))
@@ -87,15 +97,5 @@ internal class BillJobCreateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = BillJobCreateParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -5,6 +5,7 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -124,7 +125,7 @@ internal class BillResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(billResponse.csvStatementGenerated()).contains(true)
         assertThat(billResponse.currency()).contains("currency")
-        assertThat(billResponse.currencyConversions().get())
+        assertThat(billResponse.currencyConversions().getOrNull())
             .containsExactly(
                 CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )
@@ -142,7 +143,7 @@ internal class BillResponseTest {
         assertThat(billResponse.lastCalculatedDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(billResponse.lastModifiedBy()).contains("lastModifiedBy")
-        assertThat(billResponse.lineItems().get())
+        assertThat(billResponse.lineItems().getOrNull())
             .containsExactly(
                 BillResponse.LineItem.builder()
                     .averageUnitPrice(0.0)

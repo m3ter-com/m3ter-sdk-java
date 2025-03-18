@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -49,6 +50,21 @@ internal class AccountCreateParamsTest {
             .statementDefinitionId("statementDefinitionId")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            AccountCreateParams.builder()
+                .orgId("orgId")
+                .code("JS!?Q0]r] ]\$]")
+                .emailAddress("dev@stainless.com")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -120,8 +136,8 @@ internal class AccountCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .build()
             )
-        assertThat(body.creditApplicationOrder())
-            .contains(listOf(AccountCreateParams.CreditApplicationOrder.PREPAYMENT))
+        assertThat(body.creditApplicationOrder().getOrNull())
+            .containsExactly(AccountCreateParams.CreditApplicationOrder.PREPAYMENT)
         assertThat(body.currency()).contains("USD")
         assertThat(body.customFields())
             .contains(
@@ -152,21 +168,5 @@ internal class AccountCreateParamsTest {
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AccountCreateParams.builder()
-                .orgId("orgId")
-                .code("JS!?Q0]r] ]\$]")
-                .emailAddress("dev@stainless.com")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

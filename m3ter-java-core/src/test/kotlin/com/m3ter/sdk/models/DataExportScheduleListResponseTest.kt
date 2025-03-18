@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -31,7 +32,8 @@ internal class DataExportScheduleListResponseTest {
         assertThat(dataExportScheduleListResponse.version()).isEqualTo(0L)
         assertThat(dataExportScheduleListResponse.code()).contains("code")
         assertThat(dataExportScheduleListResponse.createdBy()).contains("createdBy")
-        assertThat(dataExportScheduleListResponse.destinationIds().get()).containsExactly("string")
+        assertThat(dataExportScheduleListResponse.destinationIds().getOrNull())
+            .containsExactly("string")
         assertThat(dataExportScheduleListResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(dataExportScheduleListResponse.dtLastModified())

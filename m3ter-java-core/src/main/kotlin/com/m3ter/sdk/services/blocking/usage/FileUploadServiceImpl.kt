@@ -64,7 +64,7 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "fileuploads",
                         "measurements",
                         "generateUploadUrl",

@@ -32,6 +32,24 @@ internal class ContractUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            ContractUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .accountId("x")
+                .endDate(LocalDate.parse("2019-12-27"))
+                .name("x")
+                .startDate(LocalDate.parse("2019-12-27"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             ContractUpdateParams.builder()
@@ -90,25 +108,5 @@ internal class ContractUpdateParamsTest {
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ContractUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .accountId("x")
-                .endDate(LocalDate.parse("2019-12-27"))
-                .name("x")
-                .startDate(LocalDate.parse("2019-12-27"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

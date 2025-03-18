@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -64,7 +65,7 @@ internal class CompoundAggregationResponseTest {
         assertThat(compoundAggregationResponse.quantityPerUnit()).contains(0.0)
         assertThat(compoundAggregationResponse.rounding())
             .contains(CompoundAggregationResponse.Rounding.UP)
-        assertThat(compoundAggregationResponse.segments().get())
+        assertThat(compoundAggregationResponse.segments().getOrNull())
             .containsExactly(
                 CompoundAggregationResponse.Segment.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))

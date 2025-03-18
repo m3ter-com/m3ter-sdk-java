@@ -22,6 +22,26 @@ internal class DataExportCreateAdhocParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            DataExportCreateAdhocParams.builder()
+                .orgId("orgId")
+                .body(
+                    AdHocOperationalDataRequest.builder()
+                        .addOperationalDataType(
+                            AdHocOperationalDataRequest.OperationalDataType.BILLS
+                        )
+                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .build()
+                )
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             DataExportCreateAdhocParams.builder()
@@ -81,26 +101,5 @@ internal class DataExportCreateAdhocParamsTest {
                         .build()
                 )
             )
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            DataExportCreateAdhocParams.builder()
-                .orgId("orgId")
-                .body(
-                    AdHocOperationalDataRequest.builder()
-                        .addOperationalDataType(
-                            AdHocOperationalDataRequest.OperationalDataType.BILLS
-                        )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
-                        .build()
-                )
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

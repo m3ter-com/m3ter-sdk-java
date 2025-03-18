@@ -19,6 +19,16 @@ internal class UserGetUserGroupsParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = UserGetUserGroupsParams.builder().orgId("orgId").id("id").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             UserGetUserGroupsParams.builder()
@@ -43,17 +53,5 @@ internal class UserGetUserGroupsParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams).isEqualTo(QueryParams.builder().build())
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = UserGetUserGroupsParams.builder().orgId("orgId").id("id").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }
