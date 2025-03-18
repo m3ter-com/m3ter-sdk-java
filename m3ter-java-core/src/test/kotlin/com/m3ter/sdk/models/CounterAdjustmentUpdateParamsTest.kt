@@ -23,6 +23,24 @@ internal class CounterAdjustmentUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            CounterAdjustmentUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .accountId("x")
+                .counterId("x")
+                .date("2022-01-04")
+                .value(0L)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             CounterAdjustmentUpdateParams.builder()
@@ -66,25 +84,5 @@ internal class CounterAdjustmentUpdateParamsTest {
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
         assertThat(body.value()).isEqualTo(0L)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CounterAdjustmentUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .accountId("x")
-                .counterId("x")
-                .date("2022-01-04")
-                .value(0L)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

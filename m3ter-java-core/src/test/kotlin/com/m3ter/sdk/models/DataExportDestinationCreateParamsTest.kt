@@ -23,6 +23,22 @@ internal class DataExportDestinationCreateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            DataExportDestinationCreateParams.builder()
+                .orgId("orgId")
+                .bucketName("xxx")
+                .code("JS!?Q0]r] ]\$]")
+                .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             DataExportDestinationCreateParams.builder()
@@ -67,22 +83,5 @@ internal class DataExportDestinationCreateParamsTest {
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            DataExportDestinationCreateParams.builder()
-                .orgId("orgId")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

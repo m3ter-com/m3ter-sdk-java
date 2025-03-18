@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -66,8 +67,8 @@ internal class AggregationResponseTest {
         assertThat(aggregationResponse.name()).contains("name")
         assertThat(aggregationResponse.quantityPerUnit()).contains(0.0)
         assertThat(aggregationResponse.rounding()).contains(AggregationResponse.Rounding.UP)
-        assertThat(aggregationResponse.segmentedFields().get()).containsExactly("string")
-        assertThat(aggregationResponse.segments().get())
+        assertThat(aggregationResponse.segmentedFields().getOrNull()).containsExactly("string")
+        assertThat(aggregationResponse.segments().getOrNull())
             .containsExactly(
                 AggregationResponse.Segment.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))

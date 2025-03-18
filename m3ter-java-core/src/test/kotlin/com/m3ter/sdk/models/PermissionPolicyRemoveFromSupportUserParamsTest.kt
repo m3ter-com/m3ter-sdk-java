@@ -16,18 +16,16 @@ internal class PermissionPolicyRemoveFromSupportUserParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             PermissionPolicyRemoveFromSupportUserParams.builder()
                 .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
                 .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "permissionPolicyId"
-        assertThat(params.getPathParam(1)).isEqualTo("permissionPolicyId")
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("permissionPolicyId")
         // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 }

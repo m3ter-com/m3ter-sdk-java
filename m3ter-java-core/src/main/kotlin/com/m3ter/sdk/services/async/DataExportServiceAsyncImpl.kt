@@ -88,12 +88,7 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "organizations",
-                        params.getPathParam(0),
-                        "dataexports",
-                        "adhoc",
-                    )
+                    .addPathSegments("organizations", params._pathParam(0), "dataexports", "adhoc")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)

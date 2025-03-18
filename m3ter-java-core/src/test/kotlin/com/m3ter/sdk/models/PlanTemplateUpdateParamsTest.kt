@@ -34,6 +34,25 @@ internal class PlanTemplateUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            PlanTemplateUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .billFrequency(PlanTemplateUpdateParams.BillFrequency.DAILY)
+                .currency("USD")
+                .name("string")
+                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .standingCharge(0.0)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             PlanTemplateUpdateParams.builder()
@@ -102,26 +121,5 @@ internal class PlanTemplateUpdateParamsTest {
         assertThat(body.name()).isEqualTo("string")
         assertThat(body.productId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.standingCharge()).isEqualTo(0.0)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            PlanTemplateUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .billFrequency(PlanTemplateUpdateParams.BillFrequency.DAILY)
-                .currency("USD")
-                .name("string")
-                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .standingCharge(0.0)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

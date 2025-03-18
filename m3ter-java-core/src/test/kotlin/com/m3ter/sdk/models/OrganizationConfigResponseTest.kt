@@ -4,6 +4,7 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -64,10 +65,10 @@ internal class OrganizationConfigResponseTest {
         assertThat(organizationConfigResponse.commitmentFeeBillInAdvance()).contains(true)
         assertThat(organizationConfigResponse.consolidateBills()).contains(true)
         assertThat(organizationConfigResponse.createdBy()).contains("createdBy")
-        assertThat(organizationConfigResponse.creditApplicationOrder().get())
+        assertThat(organizationConfigResponse.creditApplicationOrder().getOrNull())
             .containsExactly(OrganizationConfigResponse.CreditApplicationOrder.PREPAYMENT)
         assertThat(organizationConfigResponse.currency()).contains("currency")
-        assertThat(organizationConfigResponse.currencyConversions().get())
+        assertThat(organizationConfigResponse.currencyConversions().getOrNull())
             .containsExactly(
                 CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )

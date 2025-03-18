@@ -35,6 +35,22 @@ internal class AccountPlanUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            AccountPlanUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             AccountPlanUpdateParams.builder()
@@ -94,23 +110,5 @@ internal class AccountPlanUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AccountPlanUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

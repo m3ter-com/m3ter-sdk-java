@@ -86,7 +86,7 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
                     )
@@ -122,10 +122,10 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -158,10 +158,10 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -195,7 +195,7 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
                     )
@@ -237,10 +237,10 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

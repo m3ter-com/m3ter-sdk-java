@@ -58,7 +58,7 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "customfields")
+                    .addPathSegments("organizations", params._pathParam(0), "customfields")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -85,7 +85,7 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("organizations", params.getPathParam(0), "customfields")
+                    .addPathSegments("organizations", params._pathParam(0), "customfields")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

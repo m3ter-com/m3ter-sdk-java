@@ -3,6 +3,7 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -59,7 +60,7 @@ internal class CounterPricingResponseTest {
         assertThat(counterPricingResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(counterPricingResponse.planId()).contains("planId")
         assertThat(counterPricingResponse.planTemplateId()).contains("planTemplateId")
-        assertThat(counterPricingResponse.pricingBands().get())
+        assertThat(counterPricingResponse.pricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)

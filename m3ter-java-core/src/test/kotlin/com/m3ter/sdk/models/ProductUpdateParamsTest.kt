@@ -26,6 +26,22 @@ internal class ProductUpdateParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            ProductUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .code("JS!?Q0]r] ]\$]")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun body() {
         val params =
             ProductUpdateParams.builder()
@@ -70,23 +86,5 @@ internal class ProductUpdateParamsTest {
         assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ProductUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .code("JS!?Q0]r] ]\$]")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

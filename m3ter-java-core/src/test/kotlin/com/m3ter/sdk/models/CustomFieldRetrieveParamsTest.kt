@@ -13,12 +13,11 @@ internal class CustomFieldRetrieveParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params = CustomFieldRetrieveParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
         // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 }

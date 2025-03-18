@@ -85,7 +85,7 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "transactiontypes",
                     )
@@ -118,10 +118,10 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "transactiontypes",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -151,10 +151,10 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "transactiontypes",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -185,7 +185,7 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "transactiontypes",
                     )
@@ -224,10 +224,10 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "transactiontypes",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
