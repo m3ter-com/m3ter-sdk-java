@@ -39,24 +39,32 @@ internal class AccountPlanListParamsTest {
                 .plan("plan")
                 .product("product")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("account", "account")
-        expected.put("contract", "contract")
-        expected.put("date", "date")
-        expected.put("ids", "string")
-        expected.put("includeall", "true")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("plan", "plan")
-        expected.put("product", "product")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("account", "account")
+                    .put("contract", "contract")
+                    .put("date", "date")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("includeall", "true")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("plan", "plan")
+                    .put("product", "product")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = AccountPlanListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

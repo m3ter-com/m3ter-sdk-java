@@ -31,20 +31,28 @@ internal class MeterListParamsTest {
                 .pageSize(1L)
                 .addProductId("string")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("codes", "string")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("productId", "string")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("codes", listOf("string").joinToString(","))
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("productId", listOf("string").joinToString(","))
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = MeterListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

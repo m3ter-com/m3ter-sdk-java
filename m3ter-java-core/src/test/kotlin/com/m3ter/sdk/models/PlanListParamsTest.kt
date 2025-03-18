@@ -31,20 +31,28 @@ internal class PlanListParamsTest {
                 .pageSize(1L)
                 .productId("productId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "string")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("productId", "productId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", listOf("string").joinToString(","))
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("productId", "productId")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = PlanListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

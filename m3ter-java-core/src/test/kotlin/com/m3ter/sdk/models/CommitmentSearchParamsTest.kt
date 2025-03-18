@@ -33,21 +33,29 @@ internal class CommitmentSearchParamsTest {
                 .sortBy("sortBy")
                 .sortOrder(CommitmentSearchParams.SortOrder.ASC)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("fromDocument", "0")
-        expected.put("operator", CommitmentSearchParams.Operator.AND.toString())
-        expected.put("pageSize", "1")
-        expected.put("searchQuery", "searchQuery")
-        expected.put("sortBy", "sortBy")
-        expected.put("sortOrder", CommitmentSearchParams.SortOrder.ASC.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("fromDocument", "0")
+                    .put("operator", "AND")
+                    .put("pageSize", "1")
+                    .put("searchQuery", "searchQuery")
+                    .put("sortBy", "sortBy")
+                    .put("sortOrder", "ASC")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = CommitmentSearchParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

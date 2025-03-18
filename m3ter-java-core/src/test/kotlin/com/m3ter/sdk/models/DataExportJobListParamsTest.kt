@@ -35,22 +35,30 @@ internal class DataExportJobListParamsTest {
                 .scheduleId("scheduleId")
                 .status(DataExportJobListParams.Status.PENDING)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("dateCreatedEnd", "dateCreatedEnd")
-        expected.put("dateCreatedStart", "dateCreatedStart")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("scheduleId", "scheduleId")
-        expected.put("status", DataExportJobListParams.Status.PENDING.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("dateCreatedEnd", "dateCreatedEnd")
+                    .put("dateCreatedStart", "dateCreatedStart")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("scheduleId", "scheduleId")
+                    .put("status", "PENDING")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = DataExportJobListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

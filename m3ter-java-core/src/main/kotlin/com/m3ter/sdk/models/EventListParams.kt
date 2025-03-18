@@ -105,21 +105,22 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.accountId?.let { queryParams.put("accountId", listOf(it.toString())) }
-        this.eventName?.let { queryParams.put("eventName", listOf(it.toString())) }
-        this.eventType?.let { queryParams.put("eventType", listOf(it.toString())) }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.includeActioned?.let { queryParams.put("includeActioned", listOf(it.toString())) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.notificationCode?.let { queryParams.put("notificationCode", listOf(it.toString())) }
-        this.notificationId?.let { queryParams.put("notificationId", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.resourceId?.let { queryParams.put("resourceId", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountId?.let { put("accountId", it) }
+                eventName?.let { put("eventName", it) }
+                eventType?.let { put("eventType", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                includeActioned?.let { put("includeActioned", it.toString()) }
+                nextToken?.let { put("nextToken", it) }
+                notificationCode?.let { put("notificationCode", it) }
+                notificationId?.let { put("notificationId", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                resourceId?.let { put("resourceId", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

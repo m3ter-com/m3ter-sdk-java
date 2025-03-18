@@ -29,19 +29,27 @@ internal class BalanceTransactionListParamsTest {
                 .pageSize(1L)
                 .transactionTypeId("transactionTypeId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("transactionTypeId", "transactionTypeId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("transactionTypeId", "transactionTypeId")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
             BalanceTransactionListParams.builder().orgId("orgId").balanceId("balanceId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

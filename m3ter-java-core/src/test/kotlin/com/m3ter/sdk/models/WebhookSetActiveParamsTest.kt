@@ -16,16 +16,19 @@ internal class WebhookSetActiveParamsTest {
     @Test
     fun queryParams() {
         val params = WebhookSetActiveParams.builder().orgId("orgId").id("id").active(true).build()
-        val expected = QueryParams.builder()
-        expected.put("active", "true")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().put("active", "true").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = WebhookSetActiveParams.builder().orgId("orgId").id("id").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test
