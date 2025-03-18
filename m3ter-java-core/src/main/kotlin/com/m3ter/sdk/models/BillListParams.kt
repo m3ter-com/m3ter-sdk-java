@@ -122,7 +122,7 @@ private constructor(
                 locked?.let { put("locked", it.toString()) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
-                status?.let { put("status", it.asString()) }
+                status?.let { put("status", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()

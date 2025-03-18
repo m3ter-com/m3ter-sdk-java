@@ -97,11 +97,11 @@ private constructor(
         QueryParams.builder()
             .apply {
                 fromDocument?.let { put("fromDocument", it.toString()) }
-                operator?.let { put("operator", it.asString()) }
+                operator?.let { put("operator", it.toString()) }
                 pageSize?.let { put("pageSize", it.toString()) }
                 searchQuery?.let { put("searchQuery", it) }
                 sortBy?.let { put("sortBy", it) }
-                sortOrder?.let { put("sortOrder", it.asString()) }
+                sortOrder?.let { put("sortOrder", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
