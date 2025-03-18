@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class InvitationResponseTest {
 
     @Test
-    fun createInvitationResponse() {
+    fun create() {
         val invitationResponse =
             InvitationResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ internal class InvitationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(invitationResponse).isNotNull
+
         assertThat(invitationResponse.id()).isEqualTo("id")
         assertThat(invitationResponse.accepted()).isEqualTo(true)
         assertThat(invitationResponse.dtEndAccess())

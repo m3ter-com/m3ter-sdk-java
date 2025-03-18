@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class TransactionResponseTest {
 
     @Test
-    fun createTransactionResponse() {
+    fun create() {
         val transactionResponse =
             TransactionResponse.builder()
                 .id("id")
@@ -28,7 +28,7 @@ internal class TransactionResponseTest {
                 .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .transactionTypeId("transactionTypeId")
                 .build()
-        assertThat(transactionResponse).isNotNull
+
         assertThat(transactionResponse.id()).isEqualTo("id")
         assertThat(transactionResponse.version()).isEqualTo(0L)
         assertThat(transactionResponse.amount()).contains(0.0)

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class UsageDataExportScheduleRequestTest {
 
     @Test
-    fun createUsageDataExportScheduleRequest() {
+    fun create() {
         val usageDataExportScheduleRequest =
             UsageDataExportScheduleRequest.builder()
                 .aggregationFrequency(UsageDataExportScheduleRequest.AggregationFrequency.ORIGINAL)
@@ -20,7 +20,7 @@ internal class UsageDataExportScheduleRequestTest {
                 .addMeterId("string")
                 .version(0L)
                 .build()
-        assertThat(usageDataExportScheduleRequest).isNotNull
+
         assertThat(usageDataExportScheduleRequest.aggregationFrequency())
             .isEqualTo(UsageDataExportScheduleRequest.AggregationFrequency.ORIGINAL)
         assertThat(usageDataExportScheduleRequest.sourceType())

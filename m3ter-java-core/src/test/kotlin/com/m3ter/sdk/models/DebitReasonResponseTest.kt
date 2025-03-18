@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class DebitReasonResponseTest {
 
     @Test
-    fun createDebitReasonResponse() {
+    fun create() {
         val debitReasonResponse =
             DebitReasonResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ internal class DebitReasonResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(debitReasonResponse).isNotNull
+
         assertThat(debitReasonResponse.id()).isEqualTo("id")
         assertThat(debitReasonResponse.version()).isEqualTo(0L)
         assertThat(debitReasonResponse.archived()).contains(true)

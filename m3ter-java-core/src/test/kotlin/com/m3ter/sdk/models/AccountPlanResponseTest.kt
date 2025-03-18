@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class AccountPlanResponseTest {
 
     @Test
-    fun createAccountPlanResponse() {
+    fun create() {
         val accountPlanResponse =
             AccountPlanResponse.builder()
                 .id("id")
@@ -36,7 +36,7 @@ internal class AccountPlanResponseTest {
                 .productId("productId")
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(accountPlanResponse).isNotNull
+
         assertThat(accountPlanResponse.id()).isEqualTo("id")
         assertThat(accountPlanResponse.version()).isEqualTo(0L)
         assertThat(accountPlanResponse.accountId()).contains("accountId")

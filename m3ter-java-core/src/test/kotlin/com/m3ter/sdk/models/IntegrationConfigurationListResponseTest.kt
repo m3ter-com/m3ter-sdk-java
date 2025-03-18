@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class IntegrationConfigurationListResponseTest {
 
     @Test
-    fun createIntegrationConfigurationListResponse() {
+    fun create() {
         val integrationConfigurationListResponse =
             IntegrationConfigurationListResponse.builder()
                 .id("id")
@@ -34,7 +34,7 @@ internal class IntegrationConfigurationListResponseTest {
                 .name("name")
                 .triggerType(IntegrationConfigurationListResponse.TriggerType.EVENT)
                 .build()
-        assertThat(integrationConfigurationListResponse).isNotNull
+
         assertThat(integrationConfigurationListResponse.id()).isEqualTo("id")
         assertThat(integrationConfigurationListResponse.destination()).isEqualTo("x")
         assertThat(integrationConfigurationListResponse.entityType()).isEqualTo("x")

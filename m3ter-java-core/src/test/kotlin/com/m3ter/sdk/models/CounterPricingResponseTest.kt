@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class CounterPricingResponseTest {
 
     @Test
-    fun createCounterPricingResponse() {
+    fun create() {
         val counterPricingResponse =
             CounterPricingResponse.builder()
                 .id("id")
@@ -42,7 +42,7 @@ internal class CounterPricingResponseTest {
                 .runningTotalBillInAdvance(true)
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(counterPricingResponse).isNotNull
+
         assertThat(counterPricingResponse.id()).isEqualTo("id")
         assertThat(counterPricingResponse.version()).isEqualTo(0L)
         assertThat(counterPricingResponse.accountingProductId()).contains("accountingProductId")

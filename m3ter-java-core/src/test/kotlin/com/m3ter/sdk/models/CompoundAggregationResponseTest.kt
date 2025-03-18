@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class CompoundAggregationResponseTest {
 
     @Test
-    fun createCompoundAggregationResponse() {
+    fun create() {
         val compoundAggregationResponse =
             CompoundAggregationResponse.builder()
                 .id("id")
@@ -40,7 +40,7 @@ internal class CompoundAggregationResponseTest {
                 )
                 .unit("unit")
                 .build()
-        assertThat(compoundAggregationResponse).isNotNull
+
         assertThat(compoundAggregationResponse.id()).isEqualTo("id")
         assertThat(compoundAggregationResponse.version()).isEqualTo(0L)
         assertThat(compoundAggregationResponse.accountingProductId())

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class PermissionPolicyAddToSupportUserResponseTest {
 
     @Test
-    fun createPermissionPolicyAddToSupportUserResponse() {
+    fun create() {
         val permissionPolicyAddToSupportUserResponse =
             PermissionPolicyAddToSupportUserResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ internal class PermissionPolicyAddToSupportUserResponseTest {
                 .principalType(PermissionPolicyAddToSupportUserResponse.PrincipalType.USER)
                 .version(0L)
                 .build()
-        assertThat(permissionPolicyAddToSupportUserResponse).isNotNull
+
         assertThat(permissionPolicyAddToSupportUserResponse.id()).contains("id")
         assertThat(permissionPolicyAddToSupportUserResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyAddToSupportUserResponse.dtCreated())

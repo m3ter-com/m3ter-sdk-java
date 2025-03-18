@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class PermissionPolicyResponseTest {
 
     @Test
-    fun createPermissionPolicyResponse() {
+    fun create() {
         val permissionPolicyResponse =
             PermissionPolicyResponse.builder()
                 .id("id")
@@ -29,7 +29,7 @@ internal class PermissionPolicyResponseTest {
                 )
                 .version(0L)
                 .build()
-        assertThat(permissionPolicyResponse).isNotNull
+
         assertThat(permissionPolicyResponse.id()).contains("id")
         assertThat(permissionPolicyResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyResponse.dtCreated())

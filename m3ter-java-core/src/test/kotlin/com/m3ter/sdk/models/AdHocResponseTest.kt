@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class AdHocResponseTest {
 
     @Test
-    fun createAdHocResponse() {
+    fun create() {
         val adHocResponse = AdHocResponse.builder().jobId("jobId").build()
-        assertThat(adHocResponse).isNotNull
+
         assertThat(adHocResponse.jobId()).contains("jobId")
     }
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class FileUploadJobResponseTest {
 
     @Test
-    fun createFileUploadJobResponse() {
+    fun create() {
         val fileUploadJobResponse =
             FileUploadJobResponse.builder()
                 .id("id")
@@ -21,7 +21,7 @@ internal class FileUploadJobResponseTest {
                 .uploadDate("uploadDate")
                 .version(0L)
                 .build()
-        assertThat(fileUploadJobResponse).isNotNull
+
         assertThat(fileUploadJobResponse.id()).contains("id")
         assertThat(fileUploadJobResponse.contentLength()).contains(0L)
         assertThat(fileUploadJobResponse.failedRows()).contains(0L)

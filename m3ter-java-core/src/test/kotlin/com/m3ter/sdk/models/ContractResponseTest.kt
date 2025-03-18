@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class ContractResponseTest {
 
     @Test
-    fun createContractResponse() {
+    fun create() {
         val contractResponse =
             ContractResponse.builder()
                 .id("id")
@@ -33,7 +33,7 @@ internal class ContractResponseTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(contractResponse).isNotNull
+
         assertThat(contractResponse.id()).isEqualTo("id")
         assertThat(contractResponse.version()).isEqualTo(0L)
         assertThat(contractResponse.accountId()).contains("accountId")

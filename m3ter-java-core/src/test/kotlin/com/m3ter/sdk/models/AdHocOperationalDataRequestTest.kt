@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test
 internal class AdHocOperationalDataRequestTest {
 
     @Test
-    fun createAdHocOperationalDataRequest() {
+    fun create() {
         val adHocOperationalDataRequest =
             AdHocOperationalDataRequest.builder()
                 .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
                 .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
                 .version(0L)
                 .build()
-        assertThat(adHocOperationalDataRequest).isNotNull
+
         assertThat(adHocOperationalDataRequest.operationalDataTypes())
             .containsExactly(AdHocOperationalDataRequest.OperationalDataType.BILLS)
         assertThat(adHocOperationalDataRequest.sourceType())

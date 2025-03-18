@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class PricingBandTest {
 
     @Test
-    fun createPricingBand() {
+    fun create() {
         val pricingBand =
             PricingBand.builder()
                 .fixedPrice(0.0)
@@ -17,7 +17,7 @@ internal class PricingBandTest {
                 .id("id")
                 .creditTypeId("creditTypeId")
                 .build()
-        assertThat(pricingBand).isNotNull
+
         assertThat(pricingBand.fixedPrice()).isEqualTo(0.0)
         assertThat(pricingBand.lowerLimit()).isEqualTo(0.0)
         assertThat(pricingBand.unitPrice()).isEqualTo(0.0)

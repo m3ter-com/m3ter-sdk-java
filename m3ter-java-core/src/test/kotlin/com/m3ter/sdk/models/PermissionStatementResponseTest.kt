@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test
 internal class PermissionStatementResponseTest {
 
     @Test
-    fun createPermissionStatementResponse() {
+    fun create() {
         val permissionStatementResponse =
             PermissionStatementResponse.builder()
                 .addAction(PermissionStatementResponse.Action.ALL)
                 .effect(PermissionStatementResponse.Effect.ALLOW)
                 .addResource("string")
                 .build()
-        assertThat(permissionStatementResponse).isNotNull
+
         assertThat(permissionStatementResponse.action())
             .containsExactly(PermissionStatementResponse.Action.ALL)
         assertThat(permissionStatementResponse.effect())

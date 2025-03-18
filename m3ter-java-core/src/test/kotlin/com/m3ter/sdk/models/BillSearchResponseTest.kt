@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 internal class BillSearchResponseTest {
 
     @Test
-    fun createBillSearchResponse() {
+    fun create() {
         val billSearchResponse =
             BillSearchResponse.builder()
                 .addData(
@@ -123,7 +123,7 @@ internal class BillSearchResponseTest {
                 )
                 .nextToken("nextToken")
                 .build()
-        assertThat(billSearchResponse).isNotNull
+
         assertThat(billSearchResponse.data().getOrNull())
             .containsExactly(
                 BillResponse.builder()

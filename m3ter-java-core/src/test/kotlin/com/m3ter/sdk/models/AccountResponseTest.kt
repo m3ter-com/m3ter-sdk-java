@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 internal class AccountResponseTest {
 
     @Test
-    fun createAccountResponse() {
+    fun create() {
         val accountResponse =
             AccountResponse.builder()
                 .id("id")
@@ -55,7 +55,7 @@ internal class AccountResponseTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .statementDefinitionId("statementDefinitionId")
                 .build()
-        assertThat(accountResponse).isNotNull
+
         assertThat(accountResponse.id()).isEqualTo("id")
         assertThat(accountResponse.version()).isEqualTo(0L)
         assertThat(accountResponse.address())

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class DataExportScheduleListResponseTest {
 
     @Test
-    fun createDataExportScheduleListResponse() {
+    fun create() {
         val dataExportScheduleListResponse =
             DataExportScheduleListResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ internal class DataExportScheduleListResponseTest {
                 .scheduleType(DataExportScheduleListResponse.ScheduleType.HOURLY)
                 .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
                 .build()
-        assertThat(dataExportScheduleListResponse).isNotNull
+
         assertThat(dataExportScheduleListResponse.id()).isEqualTo("id")
         assertThat(dataExportScheduleListResponse.version()).isEqualTo(0L)
         assertThat(dataExportScheduleListResponse.code()).contains("code")

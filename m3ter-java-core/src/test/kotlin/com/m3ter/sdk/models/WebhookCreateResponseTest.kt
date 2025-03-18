@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class WebhookCreateResponseTest {
 
     @Test
-    fun createWebhookCreateResponse() {
+    fun create() {
         val webhookCreateResponse =
             WebhookCreateResponse.builder()
                 .credentials(
@@ -27,7 +27,7 @@ internal class WebhookCreateResponseTest {
                 .code("code")
                 .version(0L)
                 .build()
-        assertThat(webhookCreateResponse).isNotNull
+
         assertThat(webhookCreateResponse.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()

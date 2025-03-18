@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class OrganizationConfigResponseTest {
 
     @Test
-    fun createOrganizationConfigResponse() {
+    fun create() {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
@@ -53,7 +53,7 @@ internal class OrganizationConfigResponseTest {
                 .weekEpoch(LocalDate.parse("2019-12-27"))
                 .yearEpoch(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(organizationConfigResponse).isNotNull
+
         assertThat(organizationConfigResponse.id()).isEqualTo("id")
         assertThat(organizationConfigResponse.version()).isEqualTo(0L)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriod()).contains(0L)

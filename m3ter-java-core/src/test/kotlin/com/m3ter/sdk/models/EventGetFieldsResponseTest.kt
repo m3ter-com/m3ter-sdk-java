@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class EventGetFieldsResponseTest {
 
     @Test
-    fun createEventGetFieldsResponse() {
+    fun create() {
         val eventGetFieldsResponse =
             EventGetFieldsResponse.builder()
                 .events(
@@ -48,7 +48,7 @@ internal class EventGetFieldsResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(eventGetFieldsResponse).isNotNull
+
         assertThat(eventGetFieldsResponse.events())
             .contains(
                 EventGetFieldsResponse.Events.builder()

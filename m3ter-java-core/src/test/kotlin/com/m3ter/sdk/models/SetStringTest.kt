@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 internal class SetStringTest {
 
     @Test
-    fun createSetString() {
+    fun create() {
         val setString = SetString.builder().empty(true).build()
-        assertThat(setString).isNotNull
+
         assertThat(setString.empty()).contains(true)
     }
 }
