@@ -50,13 +50,14 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

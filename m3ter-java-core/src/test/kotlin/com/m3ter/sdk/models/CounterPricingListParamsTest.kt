@@ -33,21 +33,29 @@ internal class CounterPricingListParamsTest {
                 .planId("planId")
                 .planTemplateId("planTemplateId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("date", "date")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("planId", "planId")
-        expected.put("planTemplateId", "planTemplateId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("date", "date")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("planId", "planId")
+                    .put("planTemplateId", "planTemplateId")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = CounterPricingListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

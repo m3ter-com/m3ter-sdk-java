@@ -31,20 +31,28 @@ internal class BalanceListParamsTest {
                 .nextToken("nextToken")
                 .pageSize(1L)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "accountId")
-        expected.put("endDateEnd", "endDateEnd")
-        expected.put("endDateStart", "endDateStart")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", "accountId")
+                    .put("endDateEnd", "endDateEnd")
+                    .put("endDateStart", "endDateStart")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = BalanceListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

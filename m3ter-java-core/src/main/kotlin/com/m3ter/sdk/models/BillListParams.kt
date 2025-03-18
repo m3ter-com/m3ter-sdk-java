@@ -100,29 +100,26 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.accountId?.let { queryParams.put("accountId", listOf(it.toString())) }
-        this.billDate?.let { queryParams.put("billDate", listOf(it.toString())) }
-        this.billDateEnd?.let { queryParams.put("billDateEnd", listOf(it.toString())) }
-        this.billDateStart?.let { queryParams.put("billDateStart", listOf(it.toString())) }
-        this.billingFrequency?.let { queryParams.put("billingFrequency", listOf(it.toString())) }
-        this.excludeLineItems?.let { queryParams.put("excludeLineItems", listOf(it.toString())) }
-        this.externalInvoiceDateEnd?.let {
-            queryParams.put("externalInvoiceDateEnd", listOf(it.toString()))
-        }
-        this.externalInvoiceDateStart?.let {
-            queryParams.put("externalInvoiceDateStart", listOf(it.toString()))
-        }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.includeBillTotal?.let { queryParams.put("includeBillTotal", listOf(it.toString())) }
-        this.locked?.let { queryParams.put("locked", listOf(it.toString())) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.status?.let { queryParams.put("status", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountId?.let { put("accountId", it) }
+                billDate?.let { put("billDate", it) }
+                billDateEnd?.let { put("billDateEnd", it) }
+                billDateStart?.let { put("billDateStart", it) }
+                billingFrequency?.let { put("billingFrequency", it) }
+                excludeLineItems?.let { put("excludeLineItems", it.toString()) }
+                externalInvoiceDateEnd?.let { put("externalInvoiceDateEnd", it) }
+                externalInvoiceDateStart?.let { put("externalInvoiceDateStart", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                includeBillTotal?.let { put("includeBillTotal", it.toString()) }
+                locked?.let { put("locked", it.toString()) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                status?.let { put("status", it.asString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

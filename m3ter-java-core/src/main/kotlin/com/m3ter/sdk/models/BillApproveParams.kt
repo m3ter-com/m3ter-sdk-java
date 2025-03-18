@@ -94,18 +94,15 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.accountIds?.let { queryParams.put("accountIds", listOf(it.toString())) }
-        this.externalInvoiceDateEnd?.let {
-            queryParams.put("externalInvoiceDateEnd", listOf(it.toString()))
-        }
-        this.externalInvoiceDateStart?.let {
-            queryParams.put("externalInvoiceDateStart", listOf(it.toString()))
-        }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountIds?.let { put("accountIds", it) }
+                externalInvoiceDateEnd?.let { put("externalInvoiceDateEnd", it) }
+                externalInvoiceDateStart?.let { put("externalInvoiceDateStart", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

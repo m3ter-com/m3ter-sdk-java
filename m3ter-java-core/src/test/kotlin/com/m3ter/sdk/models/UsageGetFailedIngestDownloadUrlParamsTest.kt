@@ -17,16 +17,19 @@ internal class UsageGetFailedIngestDownloadUrlParamsTest {
     fun queryParams() {
         val params =
             UsageGetFailedIngestDownloadUrlParams.builder().orgId("orgId").file("file").build()
-        val expected = QueryParams.builder()
-        expected.put("file", "file")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().put("file", "file").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = UsageGetFailedIngestDownloadUrlParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

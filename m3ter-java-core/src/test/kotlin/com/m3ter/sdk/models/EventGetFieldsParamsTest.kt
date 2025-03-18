@@ -16,16 +16,20 @@ internal class EventGetFieldsParamsTest {
     @Test
     fun queryParams() {
         val params = EventGetFieldsParams.builder().orgId("orgId").eventName("eventName").build()
-        val expected = QueryParams.builder()
-        expected.put("eventName", "eventName")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(QueryParams.builder().put("eventName", "eventName").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = EventGetFieldsParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

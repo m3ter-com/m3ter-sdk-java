@@ -48,16 +48,17 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.plan?.let { queryParams.put("plan", listOf(it.toString())) }
-        this.planGroup?.let { queryParams.put("planGroup", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                ids?.let { put("ids", it.joinToString(",")) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                plan?.let { put("plan", it) }
+                planGroup?.let { put("planGroup", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     fun getPathParam(index: Int): String {
         return when (index) {

@@ -41,25 +41,33 @@ internal class EventListParamsTest {
                 .pageSize(1L)
                 .resourceId("resourceId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "accountId")
-        expected.put("eventName", "eventName")
-        expected.put("eventType", "eventType")
-        expected.put("ids", "string")
-        expected.put("includeActioned", "true")
-        expected.put("nextToken", "nextToken")
-        expected.put("notificationCode", "notificationCode")
-        expected.put("notificationId", "notificationId")
-        expected.put("pageSize", "1")
-        expected.put("resourceId", "resourceId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", "accountId")
+                    .put("eventName", "eventName")
+                    .put("eventType", "eventType")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("includeActioned", "true")
+                    .put("nextToken", "nextToken")
+                    .put("notificationCode", "notificationCode")
+                    .put("notificationId", "notificationId")
+                    .put("pageSize", "1")
+                    .put("resourceId", "resourceId")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = EventListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

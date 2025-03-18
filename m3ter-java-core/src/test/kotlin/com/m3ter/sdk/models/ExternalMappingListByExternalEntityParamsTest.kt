@@ -31,10 +31,13 @@ internal class ExternalMappingListByExternalEntityParamsTest {
                 .nextToken("nextToken")
                 .pageSize(1L)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder().put("nextToken", "nextToken").put("pageSize", "1").build()
+            )
     }
 
     @Test
@@ -46,8 +49,10 @@ internal class ExternalMappingListByExternalEntityParamsTest {
                 .externalTable("externalTable")
                 .externalId("externalId")
                 .build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

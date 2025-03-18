@@ -39,24 +39,32 @@ internal class CommitmentListParamsTest {
                 .pageSize(1L)
                 .productId("productId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "accountId")
-        expected.put("contractId", "contractId")
-        expected.put("date", "date")
-        expected.put("endDateEnd", "endDateEnd")
-        expected.put("endDateStart", "endDateStart")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("productId", "productId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", "accountId")
+                    .put("contractId", "contractId")
+                    .put("date", "date")
+                    .put("endDateEnd", "endDateEnd")
+                    .put("endDateStart", "endDateStart")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("productId", "productId")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = CommitmentListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test

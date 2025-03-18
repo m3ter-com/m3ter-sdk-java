@@ -30,18 +30,26 @@ internal class BillApproveParamsTest {
                 .externalInvoiceDateStart("externalInvoiceDateStart")
                 .addBillId("string")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountIds", "accountIds")
-        expected.put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
-        expected.put("externalInvoiceDateStart", "externalInvoiceDateStart")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountIds", "accountIds")
+                    .put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
+                    .put("externalInvoiceDateStart", "externalInvoiceDateStart")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test
