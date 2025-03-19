@@ -5,7 +5,7 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class M3terSignedCredentialsRequestTest {
+internal class M3terSignedCredentialsRequestTest {
 
     @Test
     fun createM3terSignedCredentialsRequest() {

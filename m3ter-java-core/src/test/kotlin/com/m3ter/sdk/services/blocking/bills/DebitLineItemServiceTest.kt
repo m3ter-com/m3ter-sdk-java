@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class DebitLineItemServiceTest {
+internal class DebitLineItemServiceTest {
 
     @Test
     fun create() {

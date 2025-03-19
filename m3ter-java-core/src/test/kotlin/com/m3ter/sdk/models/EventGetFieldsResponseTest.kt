@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventGetFieldsResponseTest {
+internal class EventGetFieldsResponseTest {
 
     @Test
     fun createEventGetFieldsResponse() {

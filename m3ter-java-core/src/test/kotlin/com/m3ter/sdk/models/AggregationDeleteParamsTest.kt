@@ -5,7 +5,7 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationDeleteParamsTest {
+internal class AggregationDeleteParamsTest {
 
     @Test
     fun create() {
