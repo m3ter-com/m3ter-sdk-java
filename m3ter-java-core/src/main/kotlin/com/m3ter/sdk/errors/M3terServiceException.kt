@@ -1,23 +1,16 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.m3ter.sdk.errors
 
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.http.Headers
 
 abstract class M3terServiceException
-@JvmOverloads
-constructor(
-    private val statusCode: Int,
-    private val headers: Headers,
-    private val body: String,
-    private val error: M3terError,
-    message: String = "$statusCode: $error",
-    cause: Throwable? = null,
-) : M3terException(message, cause) {
+protected constructor(message: String, cause: Throwable? = null) : M3terException(message, cause) {
 
-    fun statusCode(): Int = statusCode
+    abstract fun statusCode(): Int
 
-    fun headers(): Headers = headers
+    abstract fun headers(): Headers
 
-    fun body(): String = body
-
-    fun error(): M3terError = error
+    abstract fun body(): JsonValue
 }

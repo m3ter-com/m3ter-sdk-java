@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking.bills
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -13,7 +14,6 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BillLineItemListPage
 import com.m3ter.sdk.models.BillLineItemListParams
 import com.m3ter.sdk.models.BillLineItemRetrieveParams
@@ -45,7 +45,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         LineItemService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val retrieveHandler: Handler<LineItemResponse> =
             jsonHandler<LineItemResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
