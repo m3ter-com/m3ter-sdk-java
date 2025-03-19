@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.ContractCreateParams
 import com.m3ter.sdk.models.ContractDeleteParams
 import com.m3ter.sdk.models.ContractEndDateBillingEntitiesParams
@@ -79,7 +79,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ContractService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<ContractResponse> =
             jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.Balance
 import com.m3ter.sdk.models.BalanceCreateParams
 import com.m3ter.sdk.models.BalanceDeleteParams
@@ -61,7 +61,7 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BalanceService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val transactions: TransactionService.WithRawResponse by lazy {
             TransactionServiceImpl.WithRawResponseImpl(clientOptions)

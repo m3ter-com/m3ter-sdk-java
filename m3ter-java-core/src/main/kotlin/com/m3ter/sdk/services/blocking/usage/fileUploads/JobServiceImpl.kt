@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking.usage.fileUploads
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -13,7 +14,6 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
@@ -53,7 +53,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         JobService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val retrieveHandler: Handler<FileUploadJobResponse> =
             jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)

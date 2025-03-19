@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.async.usage
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.UsageFileUploadGenerateUploadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadGenerateUploadUrlResponse
 import com.m3ter.sdk.services.async.usage.fileUploads.JobServiceAsync
@@ -44,7 +44,7 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         FileUploadServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val jobs: JobServiceAsync.WithRawResponse by lazy {
             JobServiceAsyncImpl.WithRawResponseImpl(clientOptions)

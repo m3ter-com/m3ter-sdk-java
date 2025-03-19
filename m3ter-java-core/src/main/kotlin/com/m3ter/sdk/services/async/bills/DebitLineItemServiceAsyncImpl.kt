@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.async.bills
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.BillDebitLineItemCreateParams
 import com.m3ter.sdk.models.BillDebitLineItemDeleteParams
 import com.m3ter.sdk.models.BillDebitLineItemListPageAsync
@@ -71,7 +71,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         DebitLineItemServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<DebitLineItemResponse> =
             jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)
