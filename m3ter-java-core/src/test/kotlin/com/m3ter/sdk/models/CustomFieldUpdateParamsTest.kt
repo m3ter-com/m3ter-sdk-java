@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -80,7 +79,6 @@ internal class CustomFieldUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.account()).contains(CustomFieldUpdateParams.Account.builder().build())
         assertThat(body.accountPlan())
             .contains(
@@ -117,7 +115,5 @@ internal class CustomFieldUpdateParamsTest {
         val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

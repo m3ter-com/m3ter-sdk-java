@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -55,7 +54,6 @@ internal class ExternalMappingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.externalId()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.externalSystem()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.externalTable()).isEqualTo("JS!?Q0]r] ]\$]")
@@ -79,7 +77,6 @@ internal class ExternalMappingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.externalId()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.externalSystem()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.externalTable()).isEqualTo("JS!?Q0]r] ]\$]")

@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -68,7 +67,6 @@ internal class ContractCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.name()).isEqualTo("x")
@@ -98,7 +96,6 @@ internal class ContractCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.name()).isEqualTo("x")

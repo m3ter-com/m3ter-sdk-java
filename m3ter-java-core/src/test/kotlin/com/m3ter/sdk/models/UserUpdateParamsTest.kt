@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -56,7 +55,6 @@ internal class UserUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.dtEndAccess()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.permissionPolicy().getOrNull())
             .containsExactly(
@@ -74,7 +72,5 @@ internal class UserUpdateParamsTest {
         val params = UserUpdateParams.builder().orgId("orgId").id("id").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -70,7 +69,6 @@ internal class BillDebitLineItemCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")
@@ -104,7 +102,6 @@ internal class BillDebitLineItemCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")

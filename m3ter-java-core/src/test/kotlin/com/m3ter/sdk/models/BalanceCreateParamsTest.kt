@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -76,7 +75,6 @@ internal class BalanceCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -112,7 +110,6 @@ internal class BalanceCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.http.QueryParams
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -74,7 +73,6 @@ internal class BillApproveParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billIds()).containsExactly("string")
     }
 
@@ -84,7 +82,6 @@ internal class BillApproveParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billIds()).containsExactly("string")
     }
 }

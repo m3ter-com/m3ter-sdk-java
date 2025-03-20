@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -92,7 +91,6 @@ internal class UsageQueryParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.accountIds().getOrNull()).containsExactly("string")
@@ -138,7 +136,6 @@ internal class UsageQueryParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }

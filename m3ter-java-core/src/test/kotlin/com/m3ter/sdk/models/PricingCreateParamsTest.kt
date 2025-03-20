@@ -5,7 +5,6 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -121,7 +120,6 @@ internal class PricingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.pricingBands())
             .containsExactly(
                 PricingBand.builder()
@@ -179,7 +177,6 @@ internal class PricingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.pricingBands())
             .containsExactly(
                 PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()

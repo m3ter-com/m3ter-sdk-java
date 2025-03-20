@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -76,7 +75,6 @@ internal class CompoundAggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
@@ -110,7 +108,6 @@ internal class CompoundAggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
