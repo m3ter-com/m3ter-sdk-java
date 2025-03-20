@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -49,7 +48,6 @@ internal class ContractEndDateBillingEntitiesParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billingEntities())
             .containsExactly(ContractEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -68,7 +66,6 @@ internal class ContractEndDateBillingEntitiesParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billingEntities())
             .containsExactly(ContractEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

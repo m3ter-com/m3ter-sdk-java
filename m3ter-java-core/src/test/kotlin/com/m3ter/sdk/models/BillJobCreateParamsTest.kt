@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -69,7 +68,6 @@ internal class BillJobCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountIds().getOrNull()).containsExactly("string")
         assertThat(body.billDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.billFrequencyInterval()).contains(0L)
@@ -95,7 +93,5 @@ internal class BillJobCreateParamsTest {
         val params = BillJobCreateParams.builder().orgId("orgId").build()
 
         val body = params._body()
-
-        assertNotNull(body)
     }
 }

@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -103,7 +102,6 @@ internal class IntegrationConfigurationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.configData())
             .isEqualTo(
                 IntegrationConfigurationUpdateParams.ConfigData.builder()
@@ -157,7 +155,6 @@ internal class IntegrationConfigurationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.configData())
             .isEqualTo(
                 IntegrationConfigurationUpdateParams.ConfigData.builder()

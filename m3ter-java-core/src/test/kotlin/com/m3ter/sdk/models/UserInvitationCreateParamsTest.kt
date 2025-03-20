@@ -4,7 +4,6 @@ package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -59,7 +58,6 @@ internal class UserInvitationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.firstName()).isEqualTo("x")
         assertThat(body.lastName()).isEqualTo("x")
@@ -83,7 +81,6 @@ internal class UserInvitationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.firstName()).isEqualTo("x")
         assertThat(body.lastName()).isEqualTo("x")
