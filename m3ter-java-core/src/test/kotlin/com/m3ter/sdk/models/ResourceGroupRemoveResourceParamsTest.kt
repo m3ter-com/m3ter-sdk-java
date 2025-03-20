@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -52,7 +51,6 @@ internal class ResourceGroupRemoveResourceParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.targetId()).isEqualTo("06f6b50c-a868-4ca6-XXXX-448e507d5248")
         assertThat(body.targetType()).isEqualTo(ResourceGroupRemoveResourceParams.TargetType.ITEM)
         assertThat(body.version()).contains(0L)
@@ -71,7 +69,6 @@ internal class ResourceGroupRemoveResourceParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.targetId()).isEqualTo("06f6b50c-a868-4ca6-XXXX-448e507d5248")
         assertThat(body.targetType()).isEqualTo(ResourceGroupRemoveResourceParams.TargetType.ITEM)
     }

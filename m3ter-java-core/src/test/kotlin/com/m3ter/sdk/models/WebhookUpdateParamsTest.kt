@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -80,7 +79,6 @@ internal class WebhookUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()
@@ -119,7 +117,6 @@ internal class WebhookUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()

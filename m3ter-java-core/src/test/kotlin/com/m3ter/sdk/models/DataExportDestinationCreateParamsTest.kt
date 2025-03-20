@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -54,7 +53,6 @@ internal class DataExportDestinationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
@@ -78,7 +76,6 @@ internal class DataExportDestinationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")

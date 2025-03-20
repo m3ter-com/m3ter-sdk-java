@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -71,7 +70,6 @@ internal class PlanGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -102,7 +100,6 @@ internal class PlanGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
     }

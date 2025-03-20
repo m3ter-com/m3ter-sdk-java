@@ -3,7 +3,6 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -51,7 +50,6 @@ internal class ProductCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.customFields())
@@ -70,7 +68,6 @@ internal class ProductCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.name()).isEqualTo("x")
     }

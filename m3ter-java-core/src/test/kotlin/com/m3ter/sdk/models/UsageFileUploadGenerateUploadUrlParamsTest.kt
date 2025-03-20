@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -44,7 +43,6 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.contentType()).isEqualTo("x")
         assertThat(body.fileName()).isEqualTo("x")
         assertThat(body.contentLength()).contains(1L)
@@ -61,7 +59,6 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.contentType()).isEqualTo("x")
         assertThat(body.fileName()).isEqualTo("x")
     }

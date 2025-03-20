@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -50,7 +49,6 @@ internal class ScheduledEventConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.entity()).isEqualTo("Bill")
         assertThat(body.field()).isEqualTo("endDate")
         assertThat(body.name()).isEqualTo("scheduled.bill.enddateEvent")
@@ -71,7 +69,6 @@ internal class ScheduledEventConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.entity()).isEqualTo("Bill")
         assertThat(body.field()).isEqualTo("endDate")
         assertThat(body.name()).isEqualTo("scheduled.bill.enddateEvent")

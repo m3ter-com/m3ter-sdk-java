@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -56,7 +55,6 @@ internal class NotificationConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")
@@ -80,7 +78,6 @@ internal class NotificationConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")

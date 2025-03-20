@@ -2,7 +2,6 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -44,7 +43,6 @@ internal class CreditReasonUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
         assertThat(body.code()).contains("code")
@@ -57,7 +55,6 @@ internal class CreditReasonUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
     }
 }
