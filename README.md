@@ -7,7 +7,7 @@
 
 <!-- x-release-please-end -->
 
-The M3ter Java SDK provides convenient access to the M3ter REST API from applications written in Java.
+The M3ter Java SDK provides convenient access to the [M3ter REST API](https://www.m3ter.com) from applications written in Java.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -31,9 +31,9 @@ implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.10")
 
 ```xml
 <dependency>
-    <groupId>com.m3ter.sdk</groupId>
-    <artifactId>m3ter-java</artifactId>
-    <version>0.1.0-alpha.10</version>
+  <groupId>com.m3ter.sdk</groupId>
+  <artifactId>m3ter-java</artifactId>
+  <version>0.1.0-alpha.10</version>
 </dependency>
 ```
 
