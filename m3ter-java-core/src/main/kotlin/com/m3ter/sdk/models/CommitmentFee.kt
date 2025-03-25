@@ -10,31 +10,33 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class CommitmentFee
-@JsonCreator
 private constructor(
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("date") @ExcludeMissing private val date: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("servicePeriodEndDate")
-    @ExcludeMissing
-    private val servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("servicePeriodStartDate")
-    @ExcludeMissing
-    private val servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val amount: JsonField<Double>,
+    private val date: JsonField<LocalDate>,
+    private val servicePeriodEndDate: JsonField<OffsetDateTime>,
+    private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("date") @ExcludeMissing date: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("servicePeriodEndDate")
+        @ExcludeMissing
+        servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("servicePeriodStartDate")
+        @ExcludeMissing
+        servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    ) : this(amount, date, servicePeriodEndDate, servicePeriodStartDate, mutableMapOf())
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -96,23 +98,15 @@ private constructor(
     @ExcludeMissing
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CommitmentFee = apply {
-        if (validated) {
-            return@apply
-        }
-
-        amount()
-        date()
-        servicePeriodEndDate()
-        servicePeriodStartDate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -238,8 +232,22 @@ private constructor(
                 checkRequired("date", date),
                 checkRequired("servicePeriodEndDate", servicePeriodEndDate),
                 checkRequired("servicePeriodStartDate", servicePeriodStartDate),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CommitmentFee = apply {
+        if (validated) {
+            return@apply
+        }
+
+        amount()
+        date()
+        servicePeriodEndDate()
+        servicePeriodStartDate()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

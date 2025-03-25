@@ -10,25 +10,26 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Response containing the upload job URL details */
-@NoAutoDetect
 class UsageFileUploadGenerateUploadUrlResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("headers")
-    @ExcludeMissing
-    private val headers: JsonField<Headers> = JsonMissing.of(),
-    @JsonProperty("jobId") @ExcludeMissing private val jobId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("url") @ExcludeMissing private val url: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val headers: JsonField<Headers>,
+    private val jobId: JsonField<String>,
+    private val url: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("headers") @ExcludeMissing headers: JsonField<Headers> = JsonMissing.of(),
+        @JsonProperty("jobId") @ExcludeMissing jobId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+    ) : this(headers, jobId, url, mutableMapOf())
 
     /**
      * The headers
@@ -75,22 +76,15 @@ private constructor(
      */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): UsageFileUploadGenerateUploadUrlResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        headers().ifPresent { it.validate() }
-        jobId()
-        url()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -184,32 +178,38 @@ private constructor(
                 headers,
                 jobId,
                 url,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
+    private var validated: Boolean = false
+
+    fun validate(): UsageFileUploadGenerateUploadUrlResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        headers().ifPresent { it.validate() }
+        jobId()
+        url()
+        validated = true
+    }
+
     /** The headers */
-    @NoAutoDetect
     class Headers
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Headers = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -253,7 +253,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Headers = Headers(additionalProperties.toImmutable())
+            fun build(): Headers = Headers(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Headers = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

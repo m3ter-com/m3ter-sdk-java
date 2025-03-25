@@ -10,24 +10,24 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Response containing list of Event Types that can have Notification rules configured. */
-@NoAutoDetect
 class EventGetTypesResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("events")
-    @ExcludeMissing
-    private val events: JsonField<List<String>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val events: JsonField<List<String>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("events") @ExcludeMissing events: JsonField<List<String>> = JsonMissing.of()
+    ) : this(events, mutableMapOf())
 
     /**
      * An array containing a list of all Event Types for which Notification rules can be configured.
@@ -45,20 +45,15 @@ private constructor(
      */
     @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<List<String>> = events
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventGetTypesResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        events()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -136,8 +131,19 @@ private constructor(
         fun build(): EventGetTypesResponse =
             EventGetTypesResponse(
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventGetTypesResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        events()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

@@ -11,38 +11,48 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class ResourceGroupListContentsResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("targetId")
-    @ExcludeMissing
-    private val targetId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("targetType")
-    @ExcludeMissing
-    private val targetType: JsonField<TargetType> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val targetId: JsonField<String>,
+    private val targetType: JsonField<TargetType>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("targetId") @ExcludeMissing targetId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("targetType")
+        @ExcludeMissing
+        targetType: JsonField<TargetType> = JsonMissing.of(),
+    ) : this(
+        createdBy,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        targetId,
+        targetType,
+        mutableMapOf(),
+    )
 
     /**
      * The id of the user who created this item for the resource group.
@@ -144,25 +154,15 @@ private constructor(
     @ExcludeMissing
     fun _targetType(): JsonField<TargetType> = targetType
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): ResourceGroupListContentsResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        createdBy()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        targetId()
-        targetType()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -306,8 +306,24 @@ private constructor(
                 lastModifiedBy,
                 targetId,
                 targetType,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): ResourceGroupListContentsResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        createdBy()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        targetId()
+        targetType()
+        validated = true
     }
 
     class TargetType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

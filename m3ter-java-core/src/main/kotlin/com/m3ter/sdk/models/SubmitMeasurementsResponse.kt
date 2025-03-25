@@ -10,22 +10,21 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class SubmitMeasurementsResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("result")
-    @ExcludeMissing
-    private val result: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val result: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("result") @ExcludeMissing result: JsonField<String> = JsonMissing.of()
+    ) : this(result, mutableMapOf())
 
     /**
      * `accepted` is returned when successful.
@@ -42,20 +41,15 @@ private constructor(
      */
     @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<String> = result
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): SubmitMeasurementsResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        result()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -115,7 +109,18 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): SubmitMeasurementsResponse =
-            SubmitMeasurementsResponse(result, additionalProperties.toImmutable())
+            SubmitMeasurementsResponse(result, additionalProperties.toMutableMap())
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): SubmitMeasurementsResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        result()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

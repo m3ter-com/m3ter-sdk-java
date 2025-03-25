@@ -10,26 +10,27 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class UsageQueryResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("data")
-    @ExcludeMissing
-    private val data: JsonField<List<Data>> = JsonMissing.of(),
-    @JsonProperty("hasMoreData")
-    @ExcludeMissing
-    private val hasMoreData: JsonField<Boolean> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val data: JsonField<List<Data>>,
+    private val hasMoreData: JsonField<Boolean>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("data") @ExcludeMissing data: JsonField<List<Data>> = JsonMissing.of(),
+        @JsonProperty("hasMoreData")
+        @ExcludeMissing
+        hasMoreData: JsonField<Boolean> = JsonMissing.of(),
+    ) : this(data, hasMoreData, mutableMapOf())
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -62,21 +63,15 @@ private constructor(
     @ExcludeMissing
     fun _hasMoreData(): JsonField<Boolean> = hasMoreData
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): UsageQueryResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        data().ifPresent { it.forEach { it.validate() } }
-        hasMoreData()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -164,31 +159,36 @@ private constructor(
             UsageQueryResponse(
                 (data ?: JsonMissing.of()).map { it.toImmutable() },
                 hasMoreData,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): UsageQueryResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        data().ifPresent { it.forEach { it.validate() } }
+        hasMoreData()
+        validated = true
+    }
+
     class Data
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Data = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -232,7 +232,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Data = Data(additionalProperties.toImmutable())
+            fun build(): Data = Data(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Data = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

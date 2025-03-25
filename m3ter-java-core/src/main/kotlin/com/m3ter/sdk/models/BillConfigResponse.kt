@@ -10,40 +10,52 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class BillConfigResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("billLockDate")
-    @ExcludeMissing
-    private val billLockDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val billLockDate: JsonField<LocalDate>,
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("billLockDate")
+        @ExcludeMissing
+        billLockDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        billLockDate,
+        createdBy,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        version,
+        mutableMapOf(),
+    )
 
     /**
      * The Organization UUID. The Organization represents your company as a direct customer of the
@@ -167,26 +179,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): BillConfigResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        billLockDate()
-        createdBy()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -353,8 +354,25 @@ private constructor(
                 dtLastModified,
                 lastModifiedBy,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): BillConfigResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        billLockDate()
+        createdBy()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        version()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

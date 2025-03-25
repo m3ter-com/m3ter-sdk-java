@@ -10,78 +10,113 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CounterPricingResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountingProductId")
-    @ExcludeMissing
-    private val accountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("counterId")
-    @ExcludeMissing
-    private val counterId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("cumulative")
-    @ExcludeMissing
-    private val cumulative: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("endDate")
-    @ExcludeMissing
-    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("planId")
-    @ExcludeMissing
-    private val planId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("planTemplateId")
-    @ExcludeMissing
-    private val planTemplateId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("pricingBands")
-    @ExcludeMissing
-    private val pricingBands: JsonField<List<PricingBand>> = JsonMissing.of(),
-    @JsonProperty("proRateAdjustmentCredit")
-    @ExcludeMissing
-    private val proRateAdjustmentCredit: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("proRateAdjustmentDebit")
-    @ExcludeMissing
-    private val proRateAdjustmentDebit: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("proRateRunningTotal")
-    @ExcludeMissing
-    private val proRateRunningTotal: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("runningTotalBillInAdvance")
-    @ExcludeMissing
-    private val runningTotalBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("startDate")
-    @ExcludeMissing
-    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountingProductId: JsonField<String>,
+    private val code: JsonField<String>,
+    private val counterId: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val cumulative: JsonField<Boolean>,
+    private val description: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val endDate: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val planId: JsonField<String>,
+    private val planTemplateId: JsonField<String>,
+    private val pricingBands: JsonField<List<PricingBand>>,
+    private val proRateAdjustmentCredit: JsonField<Boolean>,
+    private val proRateAdjustmentDebit: JsonField<Boolean>,
+    private val proRateRunningTotal: JsonField<Boolean>,
+    private val runningTotalBillInAdvance: JsonField<Boolean>,
+    private val startDate: JsonField<OffsetDateTime>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        accountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("counterId") @ExcludeMissing counterId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("cumulative")
+        @ExcludeMissing
+        cumulative: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("endDate")
+        @ExcludeMissing
+        endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("planId") @ExcludeMissing planId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("planTemplateId")
+        @ExcludeMissing
+        planTemplateId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("pricingBands")
+        @ExcludeMissing
+        pricingBands: JsonField<List<PricingBand>> = JsonMissing.of(),
+        @JsonProperty("proRateAdjustmentCredit")
+        @ExcludeMissing
+        proRateAdjustmentCredit: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("proRateAdjustmentDebit")
+        @ExcludeMissing
+        proRateAdjustmentDebit: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("proRateRunningTotal")
+        @ExcludeMissing
+        proRateRunningTotal: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("runningTotalBillInAdvance")
+        @ExcludeMissing
+        runningTotalBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("startDate")
+        @ExcludeMissing
+        startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountingProductId,
+        code,
+        counterId,
+        createdBy,
+        cumulative,
+        description,
+        dtCreated,
+        dtLastModified,
+        endDate,
+        lastModifiedBy,
+        planId,
+        planTemplateId,
+        pricingBands,
+        proRateAdjustmentCredit,
+        proRateAdjustmentDebit,
+        proRateRunningTotal,
+        runningTotalBillInAdvance,
+        startDate,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -444,39 +479,15 @@ private constructor(
     @ExcludeMissing
     fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CounterPricingResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountingProductId()
-        code()
-        counterId()
-        createdBy()
-        cumulative()
-        description()
-        dtCreated()
-        dtLastModified()
-        endDate()
-        lastModifiedBy()
-        planId()
-        planTemplateId()
-        pricingBands().ifPresent { it.forEach { it.validate() } }
-        proRateAdjustmentCredit()
-        proRateAdjustmentDebit()
-        proRateRunningTotal()
-        runningTotalBillInAdvance()
-        startDate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -910,8 +921,38 @@ private constructor(
                 proRateRunningTotal,
                 runningTotalBillInAdvance,
                 startDate,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CounterPricingResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountingProductId()
+        code()
+        counterId()
+        createdBy()
+        cumulative()
+        description()
+        dtCreated()
+        dtLastModified()
+        endDate()
+        lastModifiedBy()
+        planId()
+        planTemplateId()
+        pricingBands().ifPresent { it.forEach { it.validate() } }
+        proRateAdjustmentCredit()
+        proRateAdjustmentDebit()
+        proRateRunningTotal()
+        runningTotalBillInAdvance()
+        startDate()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

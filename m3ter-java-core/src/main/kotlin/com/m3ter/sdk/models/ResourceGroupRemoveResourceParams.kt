@@ -11,14 +11,12 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -99,253 +97,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            1 -> type
-            2 -> resourceGroupId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("targetId")
-        @ExcludeMissing
-        private val targetId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("targetType")
-        @ExcludeMissing
-        private val targetType: JsonField<TargetType> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun targetId(): String = targetId.getRequired("targetId")
-
-        /**
-         * When adding to or removing from a Resource Group, specify whether a single item or group:
-         * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
-         * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
-         *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun targetType(): TargetType = targetType.getRequired("targetType")
-
-        /**
-         * The version number of the group.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [targetId].
-         *
-         * Unlike [targetId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("targetId") @ExcludeMissing fun _targetId(): JsonField<String> = targetId
-
-        /**
-         * Returns the raw JSON value of [targetType].
-         *
-         * Unlike [targetType], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("targetType")
-        @ExcludeMissing
-        fun _targetType(): JsonField<TargetType> = targetType
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            targetId()
-            targetType()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .targetId()
-             * .targetType()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var targetId: JsonField<String>? = null
-            private var targetType: JsonField<TargetType>? = null
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                targetId = body.targetId
-                targetType = body.targetType
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The id of the item or group you want to:
-             * - _Add Item_ call: add to a Resource Group.
-             * - _Remove Item_ call: remove from the Resource Group.
-             */
-            fun targetId(targetId: String) = targetId(JsonField.of(targetId))
-
-            /**
-             * Sets [Builder.targetId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.targetId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun targetId(targetId: JsonField<String>) = apply { this.targetId = targetId }
-
-            /**
-             * When adding to or removing from a Resource Group, specify whether a single item or
-             * group:
-             * - `item`
-             *     - _Add Item_ call: use to add a single meter to a Resource Group
-             *     - _Remove Item_ call: use to remove a single from a Resource Group.
-             * - `group`
-             *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form
-             *       a nested Resource Group
-             *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
-             */
-            fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
-
-            /**
-             * Sets [Builder.targetType] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.targetType] with a well-typed [TargetType] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun targetType(targetType: JsonField<TargetType>) = apply {
-                this.targetType = targetType
-            }
-
-            /** The version number of the group. */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .targetId()
-             * .targetType()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("targetId", targetId),
-                    checkRequired("targetType", targetType),
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && targetId == other.targetId && targetType == other.targetType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(targetId, targetType, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{targetId=$targetId, targetType=$targetType, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -367,7 +118,6 @@ private constructor(
     }
 
     /** A builder for [ResourceGroupRemoveResourceParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -586,6 +336,261 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> type
+            2 -> resourceGroupId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val targetId: JsonField<String>,
+        private val targetType: JsonField<TargetType>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("targetId")
+            @ExcludeMissing
+            targetId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("targetType")
+            @ExcludeMissing
+            targetType: JsonField<TargetType> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(targetId, targetType, version, mutableMapOf())
+
+        /**
+         * The id of the item or group you want to:
+         * - _Add Item_ call: add to a Resource Group.
+         * - _Remove Item_ call: remove from the Resource Group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun targetId(): String = targetId.getRequired("targetId")
+
+        /**
+         * When adding to or removing from a Resource Group, specify whether a single item or group:
+         * - `item`
+         *     - _Add Item_ call: use to add a single meter to a Resource Group
+         *     - _Remove Item_ call: use to remove a single from a Resource Group.
+         * - `group`
+         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+         *       nested Resource Group
+         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun targetType(): TargetType = targetType.getRequired("targetType")
+
+        /**
+         * The version number of the group.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [targetId].
+         *
+         * Unlike [targetId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("targetId") @ExcludeMissing fun _targetId(): JsonField<String> = targetId
+
+        /**
+         * Returns the raw JSON value of [targetType].
+         *
+         * Unlike [targetType], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("targetType")
+        @ExcludeMissing
+        fun _targetType(): JsonField<TargetType> = targetType
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .targetId()
+             * .targetType()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var targetId: JsonField<String>? = null
+            private var targetType: JsonField<TargetType>? = null
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                targetId = body.targetId
+                targetType = body.targetType
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The id of the item or group you want to:
+             * - _Add Item_ call: add to a Resource Group.
+             * - _Remove Item_ call: remove from the Resource Group.
+             */
+            fun targetId(targetId: String) = targetId(JsonField.of(targetId))
+
+            /**
+             * Sets [Builder.targetId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun targetId(targetId: JsonField<String>) = apply { this.targetId = targetId }
+
+            /**
+             * When adding to or removing from a Resource Group, specify whether a single item or
+             * group:
+             * - `item`
+             *     - _Add Item_ call: use to add a single meter to a Resource Group
+             *     - _Remove Item_ call: use to remove a single from a Resource Group.
+             * - `group`
+             *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form
+             *       a nested Resource Group
+             *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+             */
+            fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
+
+            /**
+             * Sets [Builder.targetType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.targetType] with a well-typed [TargetType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun targetType(targetType: JsonField<TargetType>) = apply {
+                this.targetType = targetType
+            }
+
+            /** The version number of the group. */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .targetId()
+             * .targetType()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("targetId", targetId),
+                    checkRequired("targetType", targetType),
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            targetId()
+            targetType()
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && targetId == other.targetId && targetType == other.targetType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(targetId, targetType, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{targetId=$targetId, targetType=$targetType, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -11,92 +11,129 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class BillJobResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountIds")
-    @ExcludeMissing
-    private val accountIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("billDate")
-    @ExcludeMissing
-    private val billDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("billFrequencyInterval")
-    @ExcludeMissing
-    private val billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("billIds")
-    @ExcludeMissing
-    private val billIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("billingFrequency")
-    @ExcludeMissing
-    private val billingFrequency: JsonField<BillingFrequency> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currencyConversions")
-    @ExcludeMissing
-    private val currencyConversions: JsonField<List<CurrencyConversion>> = JsonMissing.of(),
-    @JsonProperty("dayEpoch")
-    @ExcludeMissing
-    private val dayEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dueDate")
-    @ExcludeMissing
-    private val dueDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("externalInvoiceDate")
-    @ExcludeMissing
-    private val externalInvoiceDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("lastDateInBillingPeriod")
-    @ExcludeMissing
-    private val lastDateInBillingPeriod: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("monthEpoch")
-    @ExcludeMissing
-    private val monthEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("pending")
-    @ExcludeMissing
-    private val pending: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("targetCurrency")
-    @ExcludeMissing
-    private val targetCurrency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("timezone")
-    @ExcludeMissing
-    private val timezone: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("total") @ExcludeMissing private val total: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-    @JsonProperty("weekEpoch")
-    @ExcludeMissing
-    private val weekEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("yearEpoch")
-    @ExcludeMissing
-    private val yearEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountIds: JsonField<List<String>>,
+    private val billDate: JsonField<LocalDate>,
+    private val billFrequencyInterval: JsonField<Long>,
+    private val billIds: JsonField<List<String>>,
+    private val billingFrequency: JsonField<BillingFrequency>,
+    private val createdBy: JsonField<String>,
+    private val currencyConversions: JsonField<List<CurrencyConversion>>,
+    private val dayEpoch: JsonField<LocalDate>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val dueDate: JsonField<LocalDate>,
+    private val externalInvoiceDate: JsonField<LocalDate>,
+    private val lastDateInBillingPeriod: JsonField<LocalDate>,
+    private val lastModifiedBy: JsonField<String>,
+    private val monthEpoch: JsonField<LocalDate>,
+    private val pending: JsonField<Long>,
+    private val status: JsonField<Status>,
+    private val targetCurrency: JsonField<String>,
+    private val timezone: JsonField<String>,
+    private val total: JsonField<Long>,
+    private val type: JsonField<Type>,
+    private val weekEpoch: JsonField<LocalDate>,
+    private val yearEpoch: JsonField<LocalDate>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountIds")
+        @ExcludeMissing
+        accountIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("billDate") @ExcludeMissing billDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("billFrequencyInterval")
+        @ExcludeMissing
+        billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("billIds")
+        @ExcludeMissing
+        billIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("billingFrequency")
+        @ExcludeMissing
+        billingFrequency: JsonField<BillingFrequency> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currencyConversions")
+        @ExcludeMissing
+        currencyConversions: JsonField<List<CurrencyConversion>> = JsonMissing.of(),
+        @JsonProperty("dayEpoch") @ExcludeMissing dayEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dueDate") @ExcludeMissing dueDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("externalInvoiceDate")
+        @ExcludeMissing
+        externalInvoiceDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("lastDateInBillingPeriod")
+        @ExcludeMissing
+        lastDateInBillingPeriod: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("monthEpoch")
+        @ExcludeMissing
+        monthEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("pending") @ExcludeMissing pending: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("targetCurrency")
+        @ExcludeMissing
+        targetCurrency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("total") @ExcludeMissing total: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("weekEpoch")
+        @ExcludeMissing
+        weekEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("yearEpoch")
+        @ExcludeMissing
+        yearEpoch: JsonField<LocalDate> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountIds,
+        billDate,
+        billFrequencyInterval,
+        billIds,
+        billingFrequency,
+        createdBy,
+        currencyConversions,
+        dayEpoch,
+        dtCreated,
+        dtLastModified,
+        dueDate,
+        externalInvoiceDate,
+        lastDateInBillingPeriod,
+        lastModifiedBy,
+        monthEpoch,
+        pending,
+        status,
+        targetCurrency,
+        timezone,
+        total,
+        type,
+        weekEpoch,
+        yearEpoch,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -550,44 +587,15 @@ private constructor(
      */
     @JsonProperty("yearEpoch") @ExcludeMissing fun _yearEpoch(): JsonField<LocalDate> = yearEpoch
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): BillJobResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountIds()
-        billDate()
-        billFrequencyInterval()
-        billIds()
-        billingFrequency()
-        createdBy()
-        currencyConversions().ifPresent { it.forEach { it.validate() } }
-        dayEpoch()
-        dtCreated()
-        dtLastModified()
-        dueDate()
-        externalInvoiceDate()
-        lastDateInBillingPeriod()
-        lastModifiedBy()
-        monthEpoch()
-        pending()
-        status()
-        targetCurrency()
-        timezone()
-        total()
-        type()
-        weekEpoch()
-        yearEpoch()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1152,8 +1160,43 @@ private constructor(
                 type,
                 weekEpoch,
                 yearEpoch,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): BillJobResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountIds()
+        billDate()
+        billFrequencyInterval()
+        billIds()
+        billingFrequency()
+        createdBy()
+        currencyConversions().ifPresent { it.forEach { it.validate() } }
+        dayEpoch()
+        dtCreated()
+        dtLastModified()
+        dueDate()
+        externalInvoiceDate()
+        lastDateInBillingPeriod()
+        lastModifiedBy()
+        monthEpoch()
+        pending()
+        status()
+        targetCurrency()
+        timezone()
+        total()
+        type()
+        weekEpoch()
+        yearEpoch()
+        validated = true
     }
 
     /**

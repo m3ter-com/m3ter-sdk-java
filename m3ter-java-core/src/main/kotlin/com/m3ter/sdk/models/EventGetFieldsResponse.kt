@@ -10,23 +10,22 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Response containing the list of Fields for an Event Type. */
-@NoAutoDetect
 class EventGetFieldsResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("events")
-    @ExcludeMissing
-    private val events: JsonField<Events> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val events: JsonField<Events>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("events") @ExcludeMissing events: JsonField<Events> = JsonMissing.of()
+    ) : this(events, mutableMapOf())
 
     /**
      * An object containing the list of Fields for the queried Event Type.
@@ -48,20 +47,15 @@ private constructor(
      */
     @JsonProperty("events") @ExcludeMissing fun _events(): JsonField<Events> = events
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventGetFieldsResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        events().ifPresent { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -126,7 +120,18 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): EventGetFieldsResponse =
-            EventGetFieldsResponse(events, additionalProperties.toImmutable())
+            EventGetFieldsResponse(events, additionalProperties.toMutableMap())
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventGetFieldsResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        events().ifPresent { it.validate() }
+        validated = true
     }
 
     /**
@@ -137,27 +142,20 @@ private constructor(
      *
      * **Note:** `new` represents the attributes the newly created object has.
      */
-    @NoAutoDetect
     class Events
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Events = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -201,7 +199,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Events = Events(additionalProperties.toImmutable())
+            fun build(): Events = Events(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Events = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

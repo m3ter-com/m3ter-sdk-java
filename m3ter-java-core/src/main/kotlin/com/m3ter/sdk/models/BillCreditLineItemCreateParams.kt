@@ -11,15 +11,13 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -220,562 +218,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            1 -> billId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("productId")
-        @ExcludeMissing
-        private val productId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("referencedBillId")
-        @ExcludeMissing
-        private val referencedBillId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("referencedLineItemId")
-        @ExcludeMissing
-        private val referencedLineItemId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("servicePeriodEndDate")
-        @ExcludeMissing
-        private val servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("servicePeriodStartDate")
-        @ExcludeMissing
-        private val servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("creditReasonId")
-        @ExcludeMissing
-        private val creditReasonId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("lineItemType")
-        @ExcludeMissing
-        private val lineItemType: JsonField<LineItemType> = JsonMissing.of(),
-        @JsonProperty("reasonId")
-        @ExcludeMissing
-        private val reasonId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The amount for the line item.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun amount(): Double = amount.getRequired("amount")
-
-        /**
-         * The description for the line item.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun description(): String = description.getRequired("description")
-
-        /**
-         * The UUID of the Product.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun productId(): String = productId.getRequired("productId")
-
-        /**
-         * The UUID of the bill for the line item.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun referencedBillId(): String = referencedBillId.getRequired("referencedBillId")
-
-        /**
-         * The UUID of the line item.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun referencedLineItemId(): String =
-            referencedLineItemId.getRequired("referencedLineItemId")
-
-        /**
-         * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun servicePeriodEndDate(): OffsetDateTime =
-            servicePeriodEndDate.getRequired("servicePeriodEndDate")
-
-        /**
-         * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun servicePeriodStartDate(): OffsetDateTime =
-            servicePeriodStartDate.getRequired("servicePeriodStartDate")
-
-        /**
-         * The UUID of the credit reason.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun creditReasonId(): Optional<String> =
-            Optional.ofNullable(creditReasonId.getNullable("creditReasonId"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun lineItemType(): Optional<LineItemType> =
-            Optional.ofNullable(lineItemType.getNullable("lineItemType"))
-
-        /**
-         * The UUID of the line item reason.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun reasonId(): Optional<String> = Optional.ofNullable(reasonId.getNullable("reasonId"))
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [amount].
-         *
-         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
-
-        /**
-         * Returns the raw JSON value of [description].
-         *
-         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("description")
-        @ExcludeMissing
-        fun _description(): JsonField<String> = description
-
-        /**
-         * Returns the raw JSON value of [productId].
-         *
-         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
-
-        /**
-         * Returns the raw JSON value of [referencedBillId].
-         *
-         * Unlike [referencedBillId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("referencedBillId")
-        @ExcludeMissing
-        fun _referencedBillId(): JsonField<String> = referencedBillId
-
-        /**
-         * Returns the raw JSON value of [referencedLineItemId].
-         *
-         * Unlike [referencedLineItemId], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("referencedLineItemId")
-        @ExcludeMissing
-        fun _referencedLineItemId(): JsonField<String> = referencedLineItemId
-
-        /**
-         * Returns the raw JSON value of [servicePeriodEndDate].
-         *
-         * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("servicePeriodEndDate")
-        @ExcludeMissing
-        fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
-
-        /**
-         * Returns the raw JSON value of [servicePeriodStartDate].
-         *
-         * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("servicePeriodStartDate")
-        @ExcludeMissing
-        fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
-
-        /**
-         * Returns the raw JSON value of [creditReasonId].
-         *
-         * Unlike [creditReasonId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("creditReasonId")
-        @ExcludeMissing
-        fun _creditReasonId(): JsonField<String> = creditReasonId
-
-        /**
-         * Returns the raw JSON value of [lineItemType].
-         *
-         * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("lineItemType")
-        @ExcludeMissing
-        fun _lineItemType(): JsonField<LineItemType> = lineItemType
-
-        /**
-         * Returns the raw JSON value of [reasonId].
-         *
-         * Unlike [reasonId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("reasonId") @ExcludeMissing fun _reasonId(): JsonField<String> = reasonId
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            amount()
-            description()
-            productId()
-            referencedBillId()
-            referencedLineItemId()
-            servicePeriodEndDate()
-            servicePeriodStartDate()
-            creditReasonId()
-            lineItemType()
-            reasonId()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .amount()
-             * .description()
-             * .productId()
-             * .referencedBillId()
-             * .referencedLineItemId()
-             * .servicePeriodEndDate()
-             * .servicePeriodStartDate()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var amount: JsonField<Double>? = null
-            private var description: JsonField<String>? = null
-            private var productId: JsonField<String>? = null
-            private var referencedBillId: JsonField<String>? = null
-            private var referencedLineItemId: JsonField<String>? = null
-            private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
-            private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
-            private var creditReasonId: JsonField<String> = JsonMissing.of()
-            private var lineItemType: JsonField<LineItemType> = JsonMissing.of()
-            private var reasonId: JsonField<String> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                amount = body.amount
-                description = body.description
-                productId = body.productId
-                referencedBillId = body.referencedBillId
-                referencedLineItemId = body.referencedLineItemId
-                servicePeriodEndDate = body.servicePeriodEndDate
-                servicePeriodStartDate = body.servicePeriodStartDate
-                creditReasonId = body.creditReasonId
-                lineItemType = body.lineItemType
-                reasonId = body.reasonId
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The amount for the line item. */
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            /**
-             * Sets [Builder.amount] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            /** The description for the line item. */
-            fun description(description: String) = description(JsonField.of(description))
-
-            /**
-             * Sets [Builder.description] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.description] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            /** The UUID of the Product. */
-            fun productId(productId: String) = productId(JsonField.of(productId))
-
-            /**
-             * Sets [Builder.productId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.productId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
-
-            /** The UUID of the bill for the line item. */
-            fun referencedBillId(referencedBillId: String) =
-                referencedBillId(JsonField.of(referencedBillId))
-
-            /**
-             * Sets [Builder.referencedBillId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.referencedBillId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun referencedBillId(referencedBillId: JsonField<String>) = apply {
-                this.referencedBillId = referencedBillId
-            }
-
-            /** The UUID of the line item. */
-            fun referencedLineItemId(referencedLineItemId: String) =
-                referencedLineItemId(JsonField.of(referencedLineItemId))
-
-            /**
-             * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.referencedLineItemId] with a well-typed [String]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
-                this.referencedLineItemId = referencedLineItemId
-            }
-
-            /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
-            fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
-                servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
-
-            /**
-             * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.servicePeriodEndDate] with a well-typed
-             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
-             */
-            fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
-                this.servicePeriodEndDate = servicePeriodEndDate
-            }
-
-            /**
-             * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
-             */
-            fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
-                servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
-
-            /**
-             * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.servicePeriodStartDate] with a well-typed
-             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
-             */
-            fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
-                this.servicePeriodStartDate = servicePeriodStartDate
-            }
-
-            /** The UUID of the credit reason. */
-            fun creditReasonId(creditReasonId: String) =
-                creditReasonId(JsonField.of(creditReasonId))
-
-            /**
-             * Sets [Builder.creditReasonId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.creditReasonId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun creditReasonId(creditReasonId: JsonField<String>) = apply {
-                this.creditReasonId = creditReasonId
-            }
-
-            fun lineItemType(lineItemType: LineItemType) = lineItemType(JsonField.of(lineItemType))
-
-            /**
-             * Sets [Builder.lineItemType] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
-                this.lineItemType = lineItemType
-            }
-
-            /** The UUID of the line item reason. */
-            fun reasonId(reasonId: String) = reasonId(JsonField.of(reasonId))
-
-            /**
-             * Sets [Builder.reasonId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.reasonId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun reasonId(reasonId: JsonField<String>) = apply { this.reasonId = reasonId }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .amount()
-             * .description()
-             * .productId()
-             * .referencedBillId()
-             * .referencedLineItemId()
-             * .servicePeriodEndDate()
-             * .servicePeriodStartDate()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("amount", amount),
-                    checkRequired("description", description),
-                    checkRequired("productId", productId),
-                    checkRequired("referencedBillId", referencedBillId),
-                    checkRequired("referencedLineItemId", referencedLineItemId),
-                    checkRequired("servicePeriodEndDate", servicePeriodEndDate),
-                    checkRequired("servicePeriodStartDate", servicePeriodStartDate),
-                    creditReasonId,
-                    lineItemType,
-                    reasonId,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && creditReasonId == other.creditReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, creditReasonId, lineItemType, reasonId, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -801,7 +243,6 @@ private constructor(
     }
 
     /** A builder for [BillCreditLineItemCreateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -1123,6 +564,589 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> billId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val amount: JsonField<Double>,
+        private val description: JsonField<String>,
+        private val productId: JsonField<String>,
+        private val referencedBillId: JsonField<String>,
+        private val referencedLineItemId: JsonField<String>,
+        private val servicePeriodEndDate: JsonField<OffsetDateTime>,
+        private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+        private val creditReasonId: JsonField<String>,
+        private val lineItemType: JsonField<LineItemType>,
+        private val reasonId: JsonField<String>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("productId")
+            @ExcludeMissing
+            productId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("referencedBillId")
+            @ExcludeMissing
+            referencedBillId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("referencedLineItemId")
+            @ExcludeMissing
+            referencedLineItemId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("servicePeriodEndDate")
+            @ExcludeMissing
+            servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("servicePeriodStartDate")
+            @ExcludeMissing
+            servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("creditReasonId")
+            @ExcludeMissing
+            creditReasonId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("lineItemType")
+            @ExcludeMissing
+            lineItemType: JsonField<LineItemType> = JsonMissing.of(),
+            @JsonProperty("reasonId")
+            @ExcludeMissing
+            reasonId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            amount,
+            description,
+            productId,
+            referencedBillId,
+            referencedLineItemId,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            creditReasonId,
+            lineItemType,
+            reasonId,
+            version,
+            mutableMapOf(),
+        )
+
+        /**
+         * The amount for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun amount(): Double = amount.getRequired("amount")
+
+        /**
+         * The description for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun description(): String = description.getRequired("description")
+
+        /**
+         * The UUID of the Product.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun productId(): String = productId.getRequired("productId")
+
+        /**
+         * The UUID of the bill for the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun referencedBillId(): String = referencedBillId.getRequired("referencedBillId")
+
+        /**
+         * The UUID of the line item.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun referencedLineItemId(): String =
+            referencedLineItemId.getRequired("referencedLineItemId")
+
+        /**
+         * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun servicePeriodEndDate(): OffsetDateTime =
+            servicePeriodEndDate.getRequired("servicePeriodEndDate")
+
+        /**
+         * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun servicePeriodStartDate(): OffsetDateTime =
+            servicePeriodStartDate.getRequired("servicePeriodStartDate")
+
+        /**
+         * The UUID of the credit reason.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun creditReasonId(): Optional<String> =
+            Optional.ofNullable(creditReasonId.getNullable("creditReasonId"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun lineItemType(): Optional<LineItemType> =
+            Optional.ofNullable(lineItemType.getNullable("lineItemType"))
+
+        /**
+         * The UUID of the line item reason.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun reasonId(): Optional<String> = Optional.ofNullable(reasonId.getNullable("reasonId"))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
+
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
+
+        /**
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
+
+        /**
+         * Returns the raw JSON value of [referencedBillId].
+         *
+         * Unlike [referencedBillId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("referencedBillId")
+        @ExcludeMissing
+        fun _referencedBillId(): JsonField<String> = referencedBillId
+
+        /**
+         * Returns the raw JSON value of [referencedLineItemId].
+         *
+         * Unlike [referencedLineItemId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("referencedLineItemId")
+        @ExcludeMissing
+        fun _referencedLineItemId(): JsonField<String> = referencedLineItemId
+
+        /**
+         * Returns the raw JSON value of [servicePeriodEndDate].
+         *
+         * Unlike [servicePeriodEndDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("servicePeriodEndDate")
+        @ExcludeMissing
+        fun _servicePeriodEndDate(): JsonField<OffsetDateTime> = servicePeriodEndDate
+
+        /**
+         * Returns the raw JSON value of [servicePeriodStartDate].
+         *
+         * Unlike [servicePeriodStartDate], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("servicePeriodStartDate")
+        @ExcludeMissing
+        fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
+
+        /**
+         * Returns the raw JSON value of [creditReasonId].
+         *
+         * Unlike [creditReasonId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("creditReasonId")
+        @ExcludeMissing
+        fun _creditReasonId(): JsonField<String> = creditReasonId
+
+        /**
+         * Returns the raw JSON value of [lineItemType].
+         *
+         * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("lineItemType")
+        @ExcludeMissing
+        fun _lineItemType(): JsonField<LineItemType> = lineItemType
+
+        /**
+         * Returns the raw JSON value of [reasonId].
+         *
+         * Unlike [reasonId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("reasonId") @ExcludeMissing fun _reasonId(): JsonField<String> = reasonId
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .description()
+             * .productId()
+             * .referencedBillId()
+             * .referencedLineItemId()
+             * .servicePeriodEndDate()
+             * .servicePeriodStartDate()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var amount: JsonField<Double>? = null
+            private var description: JsonField<String>? = null
+            private var productId: JsonField<String>? = null
+            private var referencedBillId: JsonField<String>? = null
+            private var referencedLineItemId: JsonField<String>? = null
+            private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
+            private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
+            private var creditReasonId: JsonField<String> = JsonMissing.of()
+            private var lineItemType: JsonField<LineItemType> = JsonMissing.of()
+            private var reasonId: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                description = body.description
+                productId = body.productId
+                referencedBillId = body.referencedBillId
+                referencedLineItemId = body.referencedLineItemId
+                servicePeriodEndDate = body.servicePeriodEndDate
+                servicePeriodStartDate = body.servicePeriodStartDate
+                creditReasonId = body.creditReasonId
+                lineItemType = body.lineItemType
+                reasonId = body.reasonId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The amount for the line item. */
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            /** The description for the line item. */
+            fun description(description: String) = description(JsonField.of(description))
+
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            /** The UUID of the Product. */
+            fun productId(productId: String) = productId(JsonField.of(productId))
+
+            /**
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
+
+            /** The UUID of the bill for the line item. */
+            fun referencedBillId(referencedBillId: String) =
+                referencedBillId(JsonField.of(referencedBillId))
+
+            /**
+             * Sets [Builder.referencedBillId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.referencedBillId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun referencedBillId(referencedBillId: JsonField<String>) = apply {
+                this.referencedBillId = referencedBillId
+            }
+
+            /** The UUID of the line item. */
+            fun referencedLineItemId(referencedLineItemId: String) =
+                referencedLineItemId(JsonField.of(referencedLineItemId))
+
+            /**
+             * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.referencedLineItemId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
+                this.referencedLineItemId = referencedLineItemId
+            }
+
+            /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+            fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
+                servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
+
+            /**
+             * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodEndDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
+                this.servicePeriodEndDate = servicePeriodEndDate
+            }
+
+            /**
+             * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+             */
+            fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
+                servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
+
+            /**
+             * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
+                this.servicePeriodStartDate = servicePeriodStartDate
+            }
+
+            /** The UUID of the credit reason. */
+            fun creditReasonId(creditReasonId: String) =
+                creditReasonId(JsonField.of(creditReasonId))
+
+            /**
+             * Sets [Builder.creditReasonId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditReasonId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun creditReasonId(creditReasonId: JsonField<String>) = apply {
+                this.creditReasonId = creditReasonId
+            }
+
+            fun lineItemType(lineItemType: LineItemType) = lineItemType(JsonField.of(lineItemType))
+
+            /**
+             * Sets [Builder.lineItemType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
+                this.lineItemType = lineItemType
+            }
+
+            /** The UUID of the line item reason. */
+            fun reasonId(reasonId: String) = reasonId(JsonField.of(reasonId))
+
+            /**
+             * Sets [Builder.reasonId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.reasonId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun reasonId(reasonId: JsonField<String>) = apply { this.reasonId = reasonId }
+
+            /**
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * .description()
+             * .productId()
+             * .referencedBillId()
+             * .referencedLineItemId()
+             * .servicePeriodEndDate()
+             * .servicePeriodStartDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("amount", amount),
+                    checkRequired("description", description),
+                    checkRequired("productId", productId),
+                    checkRequired("referencedBillId", referencedBillId),
+                    checkRequired("referencedLineItemId", referencedLineItemId),
+                    checkRequired("servicePeriodEndDate", servicePeriodEndDate),
+                    checkRequired("servicePeriodStartDate", servicePeriodStartDate),
+                    creditReasonId,
+                    lineItemType,
+                    reasonId,
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            amount()
+            description()
+            productId()
+            referencedBillId()
+            referencedLineItemId()
+            servicePeriodEndDate()
+            servicePeriodStartDate()
+            creditReasonId()
+            lineItemType()
+            reasonId()
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && creditReasonId == other.creditReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, creditReasonId, lineItemType, reasonId, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :

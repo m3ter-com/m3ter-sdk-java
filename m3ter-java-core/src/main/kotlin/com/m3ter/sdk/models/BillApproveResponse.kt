@@ -10,22 +10,21 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class BillApproveResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("message")
-    @ExcludeMissing
-    private val message: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val message: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("message") @ExcludeMissing message: JsonField<String> = JsonMissing.of()
+    ) : this(message, mutableMapOf())
 
     /**
      * A message indicating the success or failure of the Bills' approval, along with relevant
@@ -43,20 +42,15 @@ private constructor(
      */
     @JsonProperty("message") @ExcludeMissing fun _message(): JsonField<String> = message
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): BillApproveResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        message()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -117,7 +111,18 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): BillApproveResponse =
-            BillApproveResponse(message, additionalProperties.toImmutable())
+            BillApproveResponse(message, additionalProperties.toMutableMap())
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): BillApproveResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        message()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

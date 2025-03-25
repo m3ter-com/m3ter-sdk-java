@@ -10,35 +10,38 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class WebhookUpdateResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("credentials")
-    @ExcludeMissing
-    private val credentials: JsonField<M3terSignedCredentialsRequest> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("url") @ExcludeMissing private val url: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("active")
-    @ExcludeMissing
-    private val active: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val credentials: JsonField<M3terSignedCredentialsRequest>,
+    private val description: JsonField<String>,
+    private val name: JsonField<String>,
+    private val url: JsonField<String>,
+    private val active: JsonField<Boolean>,
+    private val code: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("credentials")
+        @ExcludeMissing
+        credentials: JsonField<M3terSignedCredentialsRequest> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("active") @ExcludeMissing active: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(credentials, description, name, url, active, code, version, mutableMapOf())
 
     /**
      * This schema defines the credentials required for m3ter request signing.
@@ -144,26 +147,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): WebhookUpdateResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        credentials().validate()
-        description()
-        name()
-        url()
-        active()
-        code()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -335,8 +327,25 @@ private constructor(
                 active,
                 code,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): WebhookUpdateResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        credentials().validate()
+        description()
+        name()
+        url()
+        active()
+        code()
+        version()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

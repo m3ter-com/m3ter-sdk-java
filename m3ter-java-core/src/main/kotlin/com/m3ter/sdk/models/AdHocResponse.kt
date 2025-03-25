@@ -10,21 +10,22 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Response containing data export ad-hoc jobId */
-@NoAutoDetect
 class AdHocResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("jobId") @ExcludeMissing private val jobId: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val jobId: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("jobId") @ExcludeMissing jobId: JsonField<String> = JsonMissing.of()
+    ) : this(jobId, mutableMapOf())
 
     /**
      * The id of the job
@@ -41,20 +42,15 @@ private constructor(
      */
     @JsonProperty("jobId") @ExcludeMissing fun _jobId(): JsonField<String> = jobId
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AdHocResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        jobId()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -111,7 +107,18 @@ private constructor(
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): AdHocResponse = AdHocResponse(jobId, additionalProperties.toImmutable())
+        fun build(): AdHocResponse = AdHocResponse(jobId, additionalProperties.toMutableMap())
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AdHocResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        jobId()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

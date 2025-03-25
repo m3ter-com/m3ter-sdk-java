@@ -11,16 +11,15 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -104,265 +103,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("billingEntities")
-        @ExcludeMissing
-        private val billingEntities: JsonField<List<BillingEntity>> = JsonMissing.of(),
-        @JsonProperty("endDate")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("applyToChildren")
-        @ExcludeMissing
-        private val applyToChildren: JsonField<Boolean> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Defines which billing entities associated with the Account will have the specified
-         * end-date applied. For example, if you want the specified end-date to be applied to all
-         * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun billingEntities(): List<BillingEntity> = billingEntities.getRequired("billingEntities")
-
-        /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
-
-        /**
-         * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-         * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun applyToChildren(): Optional<Boolean> =
-            Optional.ofNullable(applyToChildren.getNullable("applyToChildren"))
-
-        /**
-         * Returns the raw JSON value of [billingEntities].
-         *
-         * Unlike [billingEntities], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("billingEntities")
-        @ExcludeMissing
-        fun _billingEntities(): JsonField<List<BillingEntity>> = billingEntities
-
-        /**
-         * Returns the raw JSON value of [endDate].
-         *
-         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
-
-        /**
-         * Returns the raw JSON value of [applyToChildren].
-         *
-         * Unlike [applyToChildren], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("applyToChildren")
-        @ExcludeMissing
-        fun _applyToChildren(): JsonField<Boolean> = applyToChildren
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            billingEntities()
-            endDate()
-            applyToChildren()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .billingEntities()
-             * .endDate()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var billingEntities: JsonField<MutableList<BillingEntity>>? = null
-            private var endDate: JsonField<OffsetDateTime>? = null
-            private var applyToChildren: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                billingEntities = body.billingEntities.map { it.toMutableList() }
-                endDate = body.endDate
-                applyToChildren = body.applyToChildren
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * Defines which billing entities associated with the Account will have the specified
-             * end-date applied. For example, if you want the specified end-date to be applied to
-             * all Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
-             */
-            fun billingEntities(billingEntities: List<BillingEntity>) =
-                billingEntities(JsonField.of(billingEntities))
-
-            /**
-             * Sets [Builder.billingEntities] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.billingEntities] with a well-typed
-             * `List<BillingEntity>` value instead. This method is primarily for setting the field
-             * to an undocumented or not yet supported value.
-             */
-            fun billingEntities(billingEntities: JsonField<List<BillingEntity>>) = apply {
-                this.billingEntities = billingEntities.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [BillingEntity] to [billingEntities].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addBillingEntity(billingEntity: BillingEntity) = apply {
-                billingEntities =
-                    (billingEntities ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("billingEntities", it).add(billingEntity)
-                    }
-            }
-
-            /**
-             * The end date and time applied to the specified billing entities _(in ISO 8601
-             * format)_.
-             */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /**
-             * Sets [Builder.endDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
-            /**
-             * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-             * end-date to be applied to any billing entities associated with Child Accounts.
-             * _(Optional)_
-             */
-            fun applyToChildren(applyToChildren: Boolean) =
-                applyToChildren(JsonField.of(applyToChildren))
-
-            /**
-             * Sets [Builder.applyToChildren] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.applyToChildren] with a well-typed [Boolean] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun applyToChildren(applyToChildren: JsonField<Boolean>) = apply {
-                this.applyToChildren = applyToChildren
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .billingEntities()
-             * .endDate()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("billingEntities", billingEntities).map { it.toImmutable() },
-                    checkRequired("endDate", endDate),
-                    applyToChildren,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && billingEntities == other.billingEntities && endDate == other.endDate && applyToChildren == other.applyToChildren && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billingEntities, endDate, applyToChildren, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{billingEntities=$billingEntities, endDate=$endDate, applyToChildren=$applyToChildren, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -383,7 +123,6 @@ private constructor(
     }
 
     /** A builder for [ContractEndDateBillingEntitiesParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -611,6 +350,275 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val billingEntities: JsonField<List<BillingEntity>>,
+        private val endDate: JsonField<OffsetDateTime>,
+        private val applyToChildren: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("billingEntities")
+            @ExcludeMissing
+            billingEntities: JsonField<List<BillingEntity>> = JsonMissing.of(),
+            @JsonProperty("endDate")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("applyToChildren")
+            @ExcludeMissing
+            applyToChildren: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(billingEntities, endDate, applyToChildren, mutableMapOf())
+
+        /**
+         * Defines which billing entities associated with the Account will have the specified
+         * end-date applied. For example, if you want the specified end-date to be applied to all
+         * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingEntities(): List<BillingEntity> = billingEntities.getRequired("billingEntities")
+
+        /**
+         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
+
+        /**
+         * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
+         * end-date to be applied to any billing entities associated with Child Accounts.
+         * _(Optional)_
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun applyToChildren(): Optional<Boolean> =
+            Optional.ofNullable(applyToChildren.getNullable("applyToChildren"))
+
+        /**
+         * Returns the raw JSON value of [billingEntities].
+         *
+         * Unlike [billingEntities], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billingEntities")
+        @ExcludeMissing
+        fun _billingEntities(): JsonField<List<BillingEntity>> = billingEntities
+
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+        /**
+         * Returns the raw JSON value of [applyToChildren].
+         *
+         * Unlike [applyToChildren], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("applyToChildren")
+        @ExcludeMissing
+        fun _applyToChildren(): JsonField<Boolean> = applyToChildren
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .billingEntities()
+             * .endDate()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var billingEntities: JsonField<MutableList<BillingEntity>>? = null
+            private var endDate: JsonField<OffsetDateTime>? = null
+            private var applyToChildren: JsonField<Boolean> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                billingEntities = body.billingEntities.map { it.toMutableList() }
+                endDate = body.endDate
+                applyToChildren = body.applyToChildren
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * Defines which billing entities associated with the Account will have the specified
+             * end-date applied. For example, if you want the specified end-date to be applied to
+             * all Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
+             */
+            fun billingEntities(billingEntities: List<BillingEntity>) =
+                billingEntities(JsonField.of(billingEntities))
+
+            /**
+             * Sets [Builder.billingEntities] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntities] with a well-typed
+             * `List<BillingEntity>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun billingEntities(billingEntities: JsonField<List<BillingEntity>>) = apply {
+                this.billingEntities = billingEntities.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [BillingEntity] to [billingEntities].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addBillingEntity(billingEntity: BillingEntity) = apply {
+                billingEntities =
+                    (billingEntities ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("billingEntities", it).add(billingEntity)
+                    }
+            }
+
+            /**
+             * The end date and time applied to the specified billing entities _(in ISO 8601
+             * format)_.
+             */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /**
+             * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
+             * end-date to be applied to any billing entities associated with Child Accounts.
+             * _(Optional)_
+             */
+            fun applyToChildren(applyToChildren: Boolean) =
+                applyToChildren(JsonField.of(applyToChildren))
+
+            /**
+             * Sets [Builder.applyToChildren] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.applyToChildren] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun applyToChildren(applyToChildren: JsonField<Boolean>) = apply {
+                this.applyToChildren = applyToChildren
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .billingEntities()
+             * .endDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("billingEntities", billingEntities).map { it.toImmutable() },
+                    checkRequired("endDate", endDate),
+                    applyToChildren,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            billingEntities()
+            endDate()
+            applyToChildren()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && billingEntities == other.billingEntities && endDate == other.endDate && applyToChildren == other.applyToChildren && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(billingEntities, endDate, applyToChildren, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{billingEntities=$billingEntities, endDate=$endDate, applyToChildren=$applyToChildren, additionalProperties=$additionalProperties}"
     }
 
     class BillingEntity @JsonCreator private constructor(private val value: JsonField<String>) :
