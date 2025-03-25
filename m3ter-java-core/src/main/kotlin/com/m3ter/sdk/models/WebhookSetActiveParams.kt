@@ -2,13 +2,15 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.toImmutable
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -26,7 +28,7 @@ private constructor(
     private val active: Boolean?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+    private val additionalBodyProperties: MutableMap<String, JsonValue>,
 ) : Params {
 
     fun orgId(): String = orgId
@@ -40,28 +42,15 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    @JsonAnySetter
+    private fun putAdditionalBodyProperty(key: String, value: JsonValue) {
+        additionalBodyProperties.put(key, value)
+    }
 
-    @JvmSynthetic
-    internal fun _body(): Optional<Map<String, JsonValue>> =
-        Optional.ofNullable(additionalBodyProperties.ifEmpty { null })
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                active?.let { put("active", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
+    @JsonAnyGetter
+    @ExcludeMissing
+    fun _additionalBodyProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalBodyProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -80,7 +69,6 @@ private constructor(
     }
 
     /** A builder for [WebhookSetActiveParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -258,9 +246,30 @@ private constructor(
                 active,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
+                additionalBodyProperties.toMutableMap(),
             )
     }
+
+    @JvmSynthetic
+    internal fun _body(): Optional<Map<String, JsonValue>> =
+        Optional.ofNullable(additionalBodyProperties.ifEmpty { null })
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                active?.let { put("active", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

@@ -11,77 +11,112 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class AccountResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("address")
-    @ExcludeMissing
-    private val address: JsonField<Address> = JsonMissing.of(),
-    @JsonProperty("autoGenerateStatementMode")
-    @ExcludeMissing
-    private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode> = JsonMissing.of(),
-    @JsonProperty("billEpoch")
-    @ExcludeMissing
-    private val billEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("configData")
-    @ExcludeMissing
-    private val configData: JsonField<ConfigData> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("creditApplicationOrder")
-    @ExcludeMissing
-    private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customFields")
-    @ExcludeMissing
-    private val customFields: JsonField<CustomFields> = JsonMissing.of(),
-    @JsonProperty("daysBeforeBillDue")
-    @ExcludeMissing
-    private val daysBeforeBillDue: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("emailAddress")
-    @ExcludeMissing
-    private val emailAddress: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("parentAccountId")
-    @ExcludeMissing
-    private val parentAccountId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("purchaseOrderNumber")
-    @ExcludeMissing
-    private val purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("statementDefinitionId")
-    @ExcludeMissing
-    private val statementDefinitionId: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val address: JsonField<Address>,
+    private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
+    private val billEpoch: JsonField<LocalDate>,
+    private val code: JsonField<String>,
+    private val configData: JsonField<ConfigData>,
+    private val createdBy: JsonField<String>,
+    private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
+    private val currency: JsonField<String>,
+    private val customFields: JsonField<CustomFields>,
+    private val daysBeforeBillDue: JsonField<Long>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val emailAddress: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val name: JsonField<String>,
+    private val parentAccountId: JsonField<String>,
+    private val purchaseOrderNumber: JsonField<String>,
+    private val statementDefinitionId: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("address") @ExcludeMissing address: JsonField<Address> = JsonMissing.of(),
+        @JsonProperty("autoGenerateStatementMode")
+        @ExcludeMissing
+        autoGenerateStatementMode: JsonField<AutoGenerateStatementMode> = JsonMissing.of(),
+        @JsonProperty("billEpoch")
+        @ExcludeMissing
+        billEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("configData")
+        @ExcludeMissing
+        configData: JsonField<ConfigData> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("creditApplicationOrder")
+        @ExcludeMissing
+        creditApplicationOrder: JsonField<List<CreditApplicationOrder>> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        customFields: JsonField<CustomFields> = JsonMissing.of(),
+        @JsonProperty("daysBeforeBillDue")
+        @ExcludeMissing
+        daysBeforeBillDue: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("emailAddress")
+        @ExcludeMissing
+        emailAddress: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("parentAccountId")
+        @ExcludeMissing
+        parentAccountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("purchaseOrderNumber")
+        @ExcludeMissing
+        purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("statementDefinitionId")
+        @ExcludeMissing
+        statementDefinitionId: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        address,
+        autoGenerateStatementMode,
+        billEpoch,
+        code,
+        configData,
+        createdBy,
+        creditApplicationOrder,
+        currency,
+        customFields,
+        daysBeforeBillDue,
+        dtCreated,
+        dtLastModified,
+        emailAddress,
+        lastModifiedBy,
+        name,
+        parentAccountId,
+        purchaseOrderNumber,
+        statementDefinitionId,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -474,39 +509,15 @@ private constructor(
     @ExcludeMissing
     fun _statementDefinitionId(): JsonField<String> = statementDefinitionId
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AccountResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        address().ifPresent { it.validate() }
-        autoGenerateStatementMode()
-        billEpoch()
-        code()
-        configData().ifPresent { it.validate() }
-        createdBy()
-        creditApplicationOrder()
-        currency()
-        customFields().ifPresent { it.validate() }
-        daysBeforeBillDue()
-        dtCreated()
-        dtLastModified()
-        emailAddress()
-        lastModifiedBy()
-        name()
-        parentAccountId()
-        purchaseOrderNumber()
-        statementDefinitionId()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -970,8 +981,38 @@ private constructor(
                 parentAccountId,
                 purchaseOrderNumber,
                 statementDefinitionId,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AccountResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        address().ifPresent { it.validate() }
+        autoGenerateStatementMode()
+        billEpoch()
+        code()
+        configData().ifPresent { it.validate() }
+        createdBy()
+        creditApplicationOrder()
+        currency()
+        customFields().ifPresent { it.validate() }
+        daysBeforeBillDue()
+        dtCreated()
+        dtLastModified()
+        emailAddress()
+        lastModifiedBy()
+        name()
+        parentAccountId()
+        purchaseOrderNumber()
+        statementDefinitionId()
+        validated = true
     }
 
     /**
@@ -1091,27 +1132,20 @@ private constructor(
     }
 
     /** Configuration data for the Account */
-    @NoAutoDetect
     class ConfigData
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): ConfigData = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1155,7 +1189,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): ConfigData = ConfigData(additionalProperties.toImmutable())
+            fun build(): ConfigData = ConfigData(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): ConfigData = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1291,27 +1335,20 @@ private constructor(
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
      */
-    @NoAutoDetect
     class CustomFields
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CustomFields = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1355,7 +1392,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+            fun build(): CustomFields = CustomFields(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

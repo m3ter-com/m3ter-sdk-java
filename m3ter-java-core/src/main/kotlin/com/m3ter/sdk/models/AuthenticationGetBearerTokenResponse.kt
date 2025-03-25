@@ -10,30 +10,30 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class AuthenticationGetBearerTokenResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("access_token")
-    @ExcludeMissing
-    private val accessToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("expires_in")
-    @ExcludeMissing
-    private val expiresIn: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("scope") @ExcludeMissing private val scope: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("token_type")
-    @ExcludeMissing
-    private val tokenType: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val accessToken: JsonField<String>,
+    private val expiresIn: JsonField<Long>,
+    private val scope: JsonField<String>,
+    private val tokenType: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("access_token")
+        @ExcludeMissing
+        accessToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("expires_in") @ExcludeMissing expiresIn: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("scope") @ExcludeMissing scope: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("token_type") @ExcludeMissing tokenType: JsonField<String> = JsonMissing.of(),
+    ) : this(accessToken, expiresIn, scope, tokenType, mutableMapOf())
 
     /**
      * The access token.
@@ -97,23 +97,15 @@ private constructor(
      */
     @JsonProperty("token_type") @ExcludeMissing fun _tokenType(): JsonField<String> = tokenType
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AuthenticationGetBearerTokenResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        accessToken()
-        expiresIn()
-        scope()
-        tokenType()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -237,8 +229,22 @@ private constructor(
                 checkRequired("expiresIn", expiresIn),
                 scope,
                 tokenType,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AuthenticationGetBearerTokenResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        accessToken()
+        expiresIn()
+        scope()
+        tokenType()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

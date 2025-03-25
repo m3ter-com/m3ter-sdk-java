@@ -10,28 +10,31 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class AccountEndDateBillingEntitiesResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("failedEntities")
-    @ExcludeMissing
-    private val failedEntities: JsonField<FailedEntities> = JsonMissing.of(),
-    @JsonProperty("statusMessage")
-    @ExcludeMissing
-    private val statusMessage: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("updatedEntities")
-    @ExcludeMissing
-    private val updatedEntities: JsonField<UpdatedEntities> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val failedEntities: JsonField<FailedEntities>,
+    private val statusMessage: JsonField<String>,
+    private val updatedEntities: JsonField<UpdatedEntities>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("failedEntities")
+        @ExcludeMissing
+        failedEntities: JsonField<FailedEntities> = JsonMissing.of(),
+        @JsonProperty("statusMessage")
+        @ExcludeMissing
+        statusMessage: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("updatedEntities")
+        @ExcludeMissing
+        updatedEntities: JsonField<UpdatedEntities> = JsonMissing.of(),
+    ) : this(failedEntities, statusMessage, updatedEntities, mutableMapOf())
 
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
@@ -89,22 +92,15 @@ private constructor(
     @ExcludeMissing
     fun _updatedEntities(): JsonField<UpdatedEntities> = updatedEntities
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AccountEndDateBillingEntitiesResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        failedEntities().ifPresent { it.validate() }
-        statusMessage()
-        updatedEntities().ifPresent { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -215,36 +211,55 @@ private constructor(
                 failedEntities,
                 statusMessage,
                 updatedEntities,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AccountEndDateBillingEntitiesResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        failedEntities().ifPresent { it.validate() }
+        statusMessage()
+        updatedEntities().ifPresent { it.validate() }
+        validated = true
     }
 
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
      * details of the entities for which the update failed.
      */
-    @NoAutoDetect
     class FailedEntities
-    @JsonCreator
     private constructor(
-        @JsonProperty("ACCOUNTPLAN")
-        @ExcludeMissing
-        private val accountplan: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("CONTRACT")
-        @ExcludeMissing
-        private val contract: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("COUNTER_PRICINGS")
-        @ExcludeMissing
-        private val counterPricings: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("PREPAYMENT")
-        @ExcludeMissing
-        private val prepayment: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("PRICINGS")
-        @ExcludeMissing
-        private val pricings: JsonField<SetString> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val accountplan: JsonField<SetString>,
+        private val contract: JsonField<SetString>,
+        private val counterPricings: JsonField<SetString>,
+        private val prepayment: JsonField<SetString>,
+        private val pricings: JsonField<SetString>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("ACCOUNTPLAN")
+            @ExcludeMissing
+            accountplan: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("CONTRACT")
+            @ExcludeMissing
+            contract: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("COUNTER_PRICINGS")
+            @ExcludeMissing
+            counterPricings: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("PREPAYMENT")
+            @ExcludeMissing
+            prepayment: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("PRICINGS")
+            @ExcludeMissing
+            pricings: JsonField<SetString> = JsonMissing.of(),
+        ) : this(accountplan, contract, counterPricings, prepayment, pricings, mutableMapOf())
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -321,24 +336,15 @@ private constructor(
          */
         @JsonProperty("PRICINGS") @ExcludeMissing fun _pricings(): JsonField<SetString> = pricings
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): FailedEntities = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accountplan().ifPresent { it.validate() }
-            contract().ifPresent { it.validate() }
-            counterPricings().ifPresent { it.validate() }
-            prepayment().ifPresent { it.validate() }
-            pricings().ifPresent { it.validate() }
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -461,8 +467,23 @@ private constructor(
                     counterPricings,
                     prepayment,
                     pricings,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): FailedEntities = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountplan().ifPresent { it.validate() }
+            contract().ifPresent { it.validate() }
+            counterPricings().ifPresent { it.validate() }
+            prepayment().ifPresent { it.validate() }
+            pricings().ifPresent { it.validate() }
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -487,28 +508,34 @@ private constructor(
      * A dictionary with keys as identifiers of billing entities and values as lists containing
      * details of the updated entities.
      */
-    @NoAutoDetect
     class UpdatedEntities
-    @JsonCreator
     private constructor(
-        @JsonProperty("ACCOUNTPLAN")
-        @ExcludeMissing
-        private val accountplan: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("CONTRACT")
-        @ExcludeMissing
-        private val contract: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("COUNTER_PRICINGS")
-        @ExcludeMissing
-        private val counterPricings: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("PREPAYMENT")
-        @ExcludeMissing
-        private val prepayment: JsonField<SetString> = JsonMissing.of(),
-        @JsonProperty("PRICINGS")
-        @ExcludeMissing
-        private val pricings: JsonField<SetString> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val accountplan: JsonField<SetString>,
+        private val contract: JsonField<SetString>,
+        private val counterPricings: JsonField<SetString>,
+        private val prepayment: JsonField<SetString>,
+        private val pricings: JsonField<SetString>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("ACCOUNTPLAN")
+            @ExcludeMissing
+            accountplan: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("CONTRACT")
+            @ExcludeMissing
+            contract: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("COUNTER_PRICINGS")
+            @ExcludeMissing
+            counterPricings: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("PREPAYMENT")
+            @ExcludeMissing
+            prepayment: JsonField<SetString> = JsonMissing.of(),
+            @JsonProperty("PRICINGS")
+            @ExcludeMissing
+            pricings: JsonField<SetString> = JsonMissing.of(),
+        ) : this(accountplan, contract, counterPricings, prepayment, pricings, mutableMapOf())
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -585,24 +612,15 @@ private constructor(
          */
         @JsonProperty("PRICINGS") @ExcludeMissing fun _pricings(): JsonField<SetString> = pricings
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): UpdatedEntities = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accountplan().ifPresent { it.validate() }
-            contract().ifPresent { it.validate() }
-            counterPricings().ifPresent { it.validate() }
-            prepayment().ifPresent { it.validate() }
-            pricings().ifPresent { it.validate() }
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -725,8 +743,23 @@ private constructor(
                     counterPricings,
                     prepayment,
                     pricings,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): UpdatedEntities = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accountplan().ifPresent { it.validate() }
+            contract().ifPresent { it.validate() }
+            counterPricings().ifPresent { it.validate() }
+            prepayment().ifPresent { it.validate() }
+            pricings().ifPresent { it.validate() }
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

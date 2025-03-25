@@ -11,14 +11,12 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -185,452 +183,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("bucketName")
-        @ExcludeMissing
-        private val bucketName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("code")
-        @ExcludeMissing
-        private val code: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("iamRoleArn")
-        @ExcludeMissing
-        private val iamRoleArn: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("partitionOrder")
-        @ExcludeMissing
-        private val partitionOrder: JsonField<PartitionOrder> = JsonMissing.of(),
-        @JsonProperty("prefix")
-        @ExcludeMissing
-        private val prefix: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Name of the S3 bucket for the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun bucketName(): String = bucketName.getRequired("bucketName")
-
-        /**
-         * The code of the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun code(): String = code.getRequired("code")
-
-        /**
-         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
-         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
-         * role in your AWS account and enter ARN:
-         *
-         * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-         *   returned.
-         *
-         * **More Details:** For more details and examples of the Permission and Trust Policies you
-         * can use to create the required IAM Role ARN, see
-         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-         * in our main User documentation.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun iamRoleArn(): String = iamRoleArn.getRequired("iamRoleArn")
-
-        /**
-         * The name of the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun name(): String = name.getRequired("name")
-
-        /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
-         *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun partitionOrder(): Optional<PartitionOrder> =
-            Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
-
-        /**
-         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
-         * the root of the bucket will be used.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [bucketName].
-         *
-         * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("bucketName")
-        @ExcludeMissing
-        fun _bucketName(): JsonField<String> = bucketName
-
-        /**
-         * Returns the raw JSON value of [code].
-         *
-         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
-
-        /**
-         * Returns the raw JSON value of [iamRoleArn].
-         *
-         * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("iamRoleArn")
-        @ExcludeMissing
-        fun _iamRoleArn(): JsonField<String> = iamRoleArn
-
-        /**
-         * Returns the raw JSON value of [name].
-         *
-         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-        /**
-         * Returns the raw JSON value of [partitionOrder].
-         *
-         * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("partitionOrder")
-        @ExcludeMissing
-        fun _partitionOrder(): JsonField<PartitionOrder> = partitionOrder
-
-        /**
-         * Returns the raw JSON value of [prefix].
-         *
-         * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            bucketName()
-            code()
-            iamRoleArn()
-            name()
-            partitionOrder()
-            prefix()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .bucketName()
-             * .code()
-             * .iamRoleArn()
-             * .name()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var bucketName: JsonField<String>? = null
-            private var code: JsonField<String>? = null
-            private var iamRoleArn: JsonField<String>? = null
-            private var name: JsonField<String>? = null
-            private var partitionOrder: JsonField<PartitionOrder> = JsonMissing.of()
-            private var prefix: JsonField<String> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                bucketName = body.bucketName
-                code = body.code
-                iamRoleArn = body.iamRoleArn
-                name = body.name
-                partitionOrder = body.partitionOrder
-                prefix = body.prefix
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** Name of the S3 bucket for the Export Destination. */
-            fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
-
-            /**
-             * Sets [Builder.bucketName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.bucketName] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun bucketName(bucketName: JsonField<String>) = apply { this.bucketName = bucketName }
-
-            /** The code of the Export Destination. */
-            fun code(code: String) = code(JsonField.of(code))
-
-            /**
-             * Sets [Builder.code] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.code] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun code(code: JsonField<String>) = apply { this.code = code }
-
-            /**
-             * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume
-             * an IAM role with PutObject permission for the specified `bucketName`. Create a
-             * suitable IAM role in your AWS account and enter ARN:
-             *
-             * **Formatting Constraints:**
-             * - The IAM role ARN must begin with "arn:aws:iam".
-             * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>".
-             *   For example: "arn:aws:iam::922609978421:role/IAMRole636".
-             * - If the `iamRoleArn` used doesn't comply with this format, then an error message
-             *   will be returned.
-             *
-             * **More Details:** For more details and examples of the Permission and Trust Policies
-             * you can use to create the required IAM Role ARN, see
-             * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-             * in our main User documentation.
-             */
-            fun iamRoleArn(iamRoleArn: String) = iamRoleArn(JsonField.of(iamRoleArn))
-
-            /**
-             * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.iamRoleArn] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { this.iamRoleArn = iamRoleArn }
-
-            /** The name of the Export Destination. */
-            fun name(name: String) = name(JsonField.of(name))
-
-            /**
-             * Sets [Builder.name] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.name] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            /**
-             * Specify how you want the file path to be structured in your bucket destination - by
-             * Time first (Default) or Type first.
-             *
-             * Type is dependent on whether the Export is for Usage data or Operational data:
-             * - **Usage.** Type is `measurements`.
-             * - **Operational.** Type is one of the entities for which operational data exports are
-             *   available, such as `account`, `commitment`, `meter`, and so on.
-             *
-             * Example for Usage Data Export using .CSV format:
-             * - Time first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             * - Type first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             */
-            fun partitionOrder(partitionOrder: PartitionOrder?) =
-                partitionOrder(JsonField.ofNullable(partitionOrder))
-
-            /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
-            fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
-                partitionOrder(partitionOrder.getOrNull())
-
-            /**
-             * Sets [Builder.partitionOrder] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
-                this.partitionOrder = partitionOrder
-            }
-
-            /**
-             * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`,
-             * then the root of the bucket will be used.
-             */
-            fun prefix(prefix: String) = prefix(JsonField.of(prefix))
-
-            /**
-             * Sets [Builder.prefix] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.prefix] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .bucketName()
-             * .code()
-             * .iamRoleArn()
-             * .name()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("bucketName", bucketName),
-                    checkRequired("code", code),
-                    checkRequired("iamRoleArn", iamRoleArn),
-                    checkRequired("name", name),
-                    partitionOrder,
-                    prefix,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && bucketName == other.bucketName && code == other.code && iamRoleArn == other.iamRoleArn && name == other.name && partitionOrder == other.partitionOrder && prefix == other.prefix && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(bucketName, code, iamRoleArn, name, partitionOrder, prefix, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{bucketName=$bucketName, code=$code, iamRoleArn=$iamRoleArn, name=$name, partitionOrder=$partitionOrder, prefix=$prefix, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -653,7 +205,6 @@ private constructor(
     }
 
     /** A builder for [DataExportDestinationUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -947,6 +498,467 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val bucketName: JsonField<String>,
+        private val code: JsonField<String>,
+        private val iamRoleArn: JsonField<String>,
+        private val name: JsonField<String>,
+        private val partitionOrder: JsonField<PartitionOrder>,
+        private val prefix: JsonField<String>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("bucketName")
+            @ExcludeMissing
+            bucketName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("iamRoleArn")
+            @ExcludeMissing
+            iamRoleArn: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("partitionOrder")
+            @ExcludeMissing
+            partitionOrder: JsonField<PartitionOrder> = JsonMissing.of(),
+            @JsonProperty("prefix") @ExcludeMissing prefix: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            bucketName,
+            code,
+            iamRoleArn,
+            name,
+            partitionOrder,
+            prefix,
+            version,
+            mutableMapOf(),
+        )
+
+        /**
+         * Name of the S3 bucket for the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun bucketName(): String = bucketName.getRequired("bucketName")
+
+        /**
+         * The code of the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun code(): String = code.getRequired("code")
+
+        /**
+         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
+         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
+         * role in your AWS account and enter ARN:
+         *
+         * **Formatting Constraints:**
+         * - The IAM role ARN must begin with "arn:aws:iam".
+         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
+         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
+         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
+         *   returned.
+         *
+         * **More Details:** For more details and examples of the Permission and Trust Policies you
+         * can use to create the required IAM Role ARN, see
+         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
+         * in our main User documentation.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun iamRoleArn(): String = iamRoleArn.getRequired("iamRoleArn")
+
+        /**
+         * The name of the Export Destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun name(): String = name.getRequired("name")
+
+        /**
+         * Specify how you want the file path to be structured in your bucket destination - by Time
+         * first (Default) or Type first.
+         *
+         * Type is dependent on whether the Export is for Usage data or Operational data:
+         * - **Usage.** Type is `measurements`.
+         * - **Operational.** Type is one of the entities for which operational data exports are
+         *   available, such as `account`, `commitment`, `meter`, and so on.
+         *
+         * Example for Usage Data Export using .CSV format:
+         * - Time first:
+         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         * - Type first:
+         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun partitionOrder(): Optional<PartitionOrder> =
+            Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
+
+        /**
+         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
+         * the root of the bucket will be used.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [bucketName].
+         *
+         * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("bucketName")
+        @ExcludeMissing
+        fun _bucketName(): JsonField<String> = bucketName
+
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
+
+        /**
+         * Returns the raw JSON value of [iamRoleArn].
+         *
+         * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("iamRoleArn")
+        @ExcludeMissing
+        fun _iamRoleArn(): JsonField<String> = iamRoleArn
+
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * Returns the raw JSON value of [partitionOrder].
+         *
+         * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("partitionOrder")
+        @ExcludeMissing
+        fun _partitionOrder(): JsonField<PartitionOrder> = partitionOrder
+
+        /**
+         * Returns the raw JSON value of [prefix].
+         *
+         * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .bucketName()
+             * .code()
+             * .iamRoleArn()
+             * .name()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var bucketName: JsonField<String>? = null
+            private var code: JsonField<String>? = null
+            private var iamRoleArn: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var partitionOrder: JsonField<PartitionOrder> = JsonMissing.of()
+            private var prefix: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                bucketName = body.bucketName
+                code = body.code
+                iamRoleArn = body.iamRoleArn
+                name = body.name
+                partitionOrder = body.partitionOrder
+                prefix = body.prefix
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** Name of the S3 bucket for the Export Destination. */
+            fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
+
+            /**
+             * Sets [Builder.bucketName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.bucketName] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun bucketName(bucketName: JsonField<String>) = apply { this.bucketName = bucketName }
+
+            /** The code of the Export Destination. */
+            fun code(code: String) = code(JsonField.of(code))
+
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun code(code: JsonField<String>) = apply { this.code = code }
+
+            /**
+             * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume
+             * an IAM role with PutObject permission for the specified `bucketName`. Create a
+             * suitable IAM role in your AWS account and enter ARN:
+             *
+             * **Formatting Constraints:**
+             * - The IAM role ARN must begin with "arn:aws:iam".
+             * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>".
+             *   For example: "arn:aws:iam::922609978421:role/IAMRole636".
+             * - If the `iamRoleArn` used doesn't comply with this format, then an error message
+             *   will be returned.
+             *
+             * **More Details:** For more details and examples of the Permission and Trust Policies
+             * you can use to create the required IAM Role ARN, see
+             * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
+             * in our main User documentation.
+             */
+            fun iamRoleArn(iamRoleArn: String) = iamRoleArn(JsonField.of(iamRoleArn))
+
+            /**
+             * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.iamRoleArn] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { this.iamRoleArn = iamRoleArn }
+
+            /** The name of the Export Destination. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * Specify how you want the file path to be structured in your bucket destination - by
+             * Time first (Default) or Type first.
+             *
+             * Type is dependent on whether the Export is for Usage data or Operational data:
+             * - **Usage.** Type is `measurements`.
+             * - **Operational.** Type is one of the entities for which operational data exports are
+             *   available, such as `account`, `commitment`, `meter`, and so on.
+             *
+             * Example for Usage Data Export using .CSV format:
+             * - Time first:
+             *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+             * - Type first:
+             *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
+             */
+            fun partitionOrder(partitionOrder: PartitionOrder?) =
+                partitionOrder(JsonField.ofNullable(partitionOrder))
+
+            /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
+            fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
+                partitionOrder(partitionOrder.getOrNull())
+
+            /**
+             * Sets [Builder.partitionOrder] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
+                this.partitionOrder = partitionOrder
+            }
+
+            /**
+             * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`,
+             * then the root of the bucket will be used.
+             */
+            fun prefix(prefix: String) = prefix(JsonField.of(prefix))
+
+            /**
+             * Sets [Builder.prefix] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prefix] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
+
+            /**
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .bucketName()
+             * .code()
+             * .iamRoleArn()
+             * .name()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("bucketName", bucketName),
+                    checkRequired("code", code),
+                    checkRequired("iamRoleArn", iamRoleArn),
+                    checkRequired("name", name),
+                    partitionOrder,
+                    prefix,
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            bucketName()
+            code()
+            iamRoleArn()
+            name()
+            partitionOrder()
+            prefix()
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && bucketName == other.bucketName && code == other.code && iamRoleArn == other.iamRoleArn && name == other.name && partitionOrder == other.partitionOrder && prefix == other.prefix && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(bucketName, code, iamRoleArn, name, partitionOrder, prefix, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{bucketName=$bucketName, code=$code, iamRoleArn=$iamRoleArn, name=$name, partitionOrder=$partitionOrder, prefix=$prefix, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /**

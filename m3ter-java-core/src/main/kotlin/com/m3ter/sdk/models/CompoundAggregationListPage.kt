@@ -10,10 +10,8 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.services.blocking.CompoundAggregationService
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.stream.Stream
@@ -91,16 +89,18 @@ private constructor(
         ) = CompoundAggregationListPage(compoundAggregationsService, params, response)
     }
 
-    @NoAutoDetect
-    class Response
-    @JsonCreator
-    constructor(
-        @JsonProperty("data")
-        private val data: JsonField<List<CompoundAggregationResponse>> = JsonMissing.of(),
-        @JsonProperty("nextToken") private val nextToken: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    class Response(
+        private val data: JsonField<List<CompoundAggregationResponse>>,
+        private val nextToken: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("data")
+            data: JsonField<List<CompoundAggregationResponse>> = JsonMissing.of(),
+            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
+        ) : this(data, nextToken, mutableMapOf())
 
         fun data(): List<CompoundAggregationResponse> = data.getNullable("data") ?: listOf()
 
@@ -113,9 +113,15 @@ private constructor(
         @JsonProperty("nextToken")
         fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         private var validated: Boolean = false
 
@@ -185,7 +191,7 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toImmutable())
+            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
         }
     }
 

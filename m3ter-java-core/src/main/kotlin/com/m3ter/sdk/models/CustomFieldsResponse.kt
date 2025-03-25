@@ -10,60 +10,84 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CustomFieldsResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("account")
-    @ExcludeMissing
-    private val account: JsonField<Account> = JsonMissing.of(),
-    @JsonProperty("accountPlan")
-    @ExcludeMissing
-    private val accountPlan: JsonField<AccountPlan> = JsonMissing.of(),
-    @JsonProperty("aggregation")
-    @ExcludeMissing
-    private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
-    @JsonProperty("compoundAggregation")
-    @ExcludeMissing
-    private val compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("meter") @ExcludeMissing private val meter: JsonField<Meter> = JsonMissing.of(),
-    @JsonProperty("organization")
-    @ExcludeMissing
-    private val organization: JsonField<Organization> = JsonMissing.of(),
-    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
-    @JsonProperty("planTemplate")
-    @ExcludeMissing
-    private val planTemplate: JsonField<PlanTemplate> = JsonMissing.of(),
-    @JsonProperty("product")
-    @ExcludeMissing
-    private val product: JsonField<Product> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val account: JsonField<Account>,
+    private val accountPlan: JsonField<AccountPlan>,
+    private val aggregation: JsonField<Aggregation>,
+    private val compoundAggregation: JsonField<CompoundAggregation>,
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val meter: JsonField<Meter>,
+    private val organization: JsonField<Organization>,
+    private val plan: JsonField<Plan>,
+    private val planTemplate: JsonField<PlanTemplate>,
+    private val product: JsonField<Product>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("account") @ExcludeMissing account: JsonField<Account> = JsonMissing.of(),
+        @JsonProperty("accountPlan")
+        @ExcludeMissing
+        accountPlan: JsonField<AccountPlan> = JsonMissing.of(),
+        @JsonProperty("aggregation")
+        @ExcludeMissing
+        aggregation: JsonField<Aggregation> = JsonMissing.of(),
+        @JsonProperty("compoundAggregation")
+        @ExcludeMissing
+        compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("meter") @ExcludeMissing meter: JsonField<Meter> = JsonMissing.of(),
+        @JsonProperty("organization")
+        @ExcludeMissing
+        organization: JsonField<Organization> = JsonMissing.of(),
+        @JsonProperty("plan") @ExcludeMissing plan: JsonField<Plan> = JsonMissing.of(),
+        @JsonProperty("planTemplate")
+        @ExcludeMissing
+        planTemplate: JsonField<PlanTemplate> = JsonMissing.of(),
+        @JsonProperty("product") @ExcludeMissing product: JsonField<Product> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        account,
+        accountPlan,
+        aggregation,
+        compoundAggregation,
+        createdBy,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        meter,
+        organization,
+        plan,
+        planTemplate,
+        product,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -319,34 +343,15 @@ private constructor(
      */
     @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CustomFieldsResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        account().ifPresent { it.validate() }
-        accountPlan().ifPresent { it.validate() }
-        aggregation().ifPresent { it.validate() }
-        compoundAggregation().ifPresent { it.validate() }
-        createdBy()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        meter().ifPresent { it.validate() }
-        organization().ifPresent { it.validate() }
-        plan().ifPresent { it.validate() }
-        planTemplate().ifPresent { it.validate() }
-        product().ifPresent { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -651,32 +656,50 @@ private constructor(
                 plan,
                 planTemplate,
                 product,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
+    private var validated: Boolean = false
+
+    fun validate(): CustomFieldsResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        account().ifPresent { it.validate() }
+        accountPlan().ifPresent { it.validate() }
+        aggregation().ifPresent { it.validate() }
+        compoundAggregation().ifPresent { it.validate() }
+        createdBy()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        meter().ifPresent { it.validate() }
+        organization().ifPresent { it.validate() }
+        plan().ifPresent { it.validate() }
+        planTemplate().ifPresent { it.validate() }
+        product().ifPresent { it.validate() }
+        validated = true
+    }
+
     /** CustomFields added to Account entities. */
-    @NoAutoDetect
     class Account
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Account = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -720,7 +743,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Account = Account(additionalProperties.toImmutable())
+            fun build(): Account = Account(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Account = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -741,27 +774,20 @@ private constructor(
     }
 
     /** CustomFields added to accountPlan entities. */
-    @NoAutoDetect
     class AccountPlan
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): AccountPlan = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -805,7 +831,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): AccountPlan = AccountPlan(additionalProperties.toImmutable())
+            fun build(): AccountPlan = AccountPlan(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountPlan = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -826,27 +862,20 @@ private constructor(
     }
 
     /** CustomFields added to simple Aggregation entities. */
-    @NoAutoDetect
     class Aggregation
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Aggregation = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -890,7 +919,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Aggregation = Aggregation(additionalProperties.toImmutable())
+            fun build(): Aggregation = Aggregation(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Aggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -911,27 +950,20 @@ private constructor(
     }
 
     /** CustomFields added to Compound Aggregation entities. */
-    @NoAutoDetect
     class CompoundAggregation
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CompoundAggregation = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -976,7 +1008,17 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): CompoundAggregation =
-                CompoundAggregation(additionalProperties.toImmutable())
+                CompoundAggregation(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CompoundAggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -997,27 +1039,20 @@ private constructor(
     }
 
     /** CustomFields added to Meter entities. */
-    @NoAutoDetect
     class Meter
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Meter = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1061,7 +1096,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Meter = Meter(additionalProperties.toImmutable())
+            fun build(): Meter = Meter(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Meter = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1082,27 +1127,20 @@ private constructor(
     }
 
     /** CustomFields added to the Organization. */
-    @NoAutoDetect
     class Organization
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Organization = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1146,7 +1184,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Organization = Organization(additionalProperties.toImmutable())
+            fun build(): Organization = Organization(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Organization = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1167,27 +1215,20 @@ private constructor(
     }
 
     /** CustomFields added to Plan entities. */
-    @NoAutoDetect
     class Plan
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Plan = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1231,7 +1272,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Plan = Plan(additionalProperties.toImmutable())
+            fun build(): Plan = Plan(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Plan = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1252,27 +1303,20 @@ private constructor(
     }
 
     /** CustomFields added to planTemplate entities. */
-    @NoAutoDetect
     class PlanTemplate
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): PlanTemplate = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1316,7 +1360,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): PlanTemplate = PlanTemplate(additionalProperties.toImmutable())
+            fun build(): PlanTemplate = PlanTemplate(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): PlanTemplate = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1337,27 +1391,20 @@ private constructor(
     }
 
     /** CustomFields added to Product entities. */
-    @NoAutoDetect
     class Product
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Product = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1401,7 +1448,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Product = Product(additionalProperties.toImmutable())
+            fun build(): Product = Product(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Product = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

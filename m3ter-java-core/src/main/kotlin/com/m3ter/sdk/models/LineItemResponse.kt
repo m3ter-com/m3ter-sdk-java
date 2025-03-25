@@ -11,137 +11,194 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class LineItemResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("aggregationId")
-    @ExcludeMissing
-    private val aggregationId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("averageUnitPrice")
-    @ExcludeMissing
-    private val averageUnitPrice: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("balanceId")
-    @ExcludeMissing
-    private val balanceId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("bandUsage")
-    @ExcludeMissing
-    private val bandUsage: JsonField<List<BandUsage>> = JsonMissing.of(),
-    @JsonProperty("billId")
-    @ExcludeMissing
-    private val billId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("commitmentId")
-    @ExcludeMissing
-    private val commitmentId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("compoundAggregationId")
-    @ExcludeMissing
-    private val compoundAggregationId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("contractId")
-    @ExcludeMissing
-    private val contractId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("conversionRate")
-    @ExcludeMissing
-    private val conversionRate: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("convertedSubtotal")
-    @ExcludeMissing
-    private val convertedSubtotal: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("counterId")
-    @ExcludeMissing
-    private val counterId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("creditTypeId")
-    @ExcludeMissing
-    private val creditTypeId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("group") @ExcludeMissing private val group: JsonField<Group> = JsonMissing.of(),
-    @JsonProperty("jsonUsageGenerated")
-    @ExcludeMissing
-    private val jsonUsageGenerated: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lineItemType")
-    @ExcludeMissing
-    private val lineItemType: JsonField<LineItemType> = JsonMissing.of(),
-    @JsonProperty("meterId")
-    @ExcludeMissing
-    private val meterId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("planGroupId")
-    @ExcludeMissing
-    private val planGroupId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("planId")
-    @ExcludeMissing
-    private val planId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("pricingId")
-    @ExcludeMissing
-    private val pricingId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productCode")
-    @ExcludeMissing
-    private val productCode: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productId")
-    @ExcludeMissing
-    private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productName")
-    @ExcludeMissing
-    private val productName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("quantity")
-    @ExcludeMissing
-    private val quantity: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("reasonId")
-    @ExcludeMissing
-    private val reasonId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("referencedBillId")
-    @ExcludeMissing
-    private val referencedBillId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("referencedLineItemId")
-    @ExcludeMissing
-    private val referencedLineItemId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("segment")
-    @ExcludeMissing
-    private val segment: JsonField<Segment> = JsonMissing.of(),
-    @JsonProperty("sequenceNumber")
-    @ExcludeMissing
-    private val sequenceNumber: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("servicePeriodEndDate")
-    @ExcludeMissing
-    private val servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("servicePeriodStartDate")
-    @ExcludeMissing
-    private val servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("subtotal")
-    @ExcludeMissing
-    private val subtotal: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("unit") @ExcludeMissing private val unit: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("units") @ExcludeMissing private val units: JsonField<Double> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val aggregationId: JsonField<String>,
+    private val averageUnitPrice: JsonField<Double>,
+    private val balanceId: JsonField<String>,
+    private val bandUsage: JsonField<List<BandUsage>>,
+    private val billId: JsonField<String>,
+    private val commitmentId: JsonField<String>,
+    private val compoundAggregationId: JsonField<String>,
+    private val contractId: JsonField<String>,
+    private val conversionRate: JsonField<Double>,
+    private val convertedSubtotal: JsonField<Double>,
+    private val counterId: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val creditTypeId: JsonField<String>,
+    private val currency: JsonField<String>,
+    private val description: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val group: JsonField<Group>,
+    private val jsonUsageGenerated: JsonField<Boolean>,
+    private val lastModifiedBy: JsonField<String>,
+    private val lineItemType: JsonField<LineItemType>,
+    private val meterId: JsonField<String>,
+    private val planGroupId: JsonField<String>,
+    private val planId: JsonField<String>,
+    private val pricingId: JsonField<String>,
+    private val productCode: JsonField<String>,
+    private val productId: JsonField<String>,
+    private val productName: JsonField<String>,
+    private val quantity: JsonField<Double>,
+    private val reasonId: JsonField<String>,
+    private val referencedBillId: JsonField<String>,
+    private val referencedLineItemId: JsonField<String>,
+    private val segment: JsonField<Segment>,
+    private val sequenceNumber: JsonField<Long>,
+    private val servicePeriodEndDate: JsonField<OffsetDateTime>,
+    private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+    private val subtotal: JsonField<Double>,
+    private val unit: JsonField<String>,
+    private val units: JsonField<Double>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("aggregationId")
+        @ExcludeMissing
+        aggregationId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("averageUnitPrice")
+        @ExcludeMissing
+        averageUnitPrice: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("balanceId") @ExcludeMissing balanceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("bandUsage")
+        @ExcludeMissing
+        bandUsage: JsonField<List<BandUsage>> = JsonMissing.of(),
+        @JsonProperty("billId") @ExcludeMissing billId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("commitmentId")
+        @ExcludeMissing
+        commitmentId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("compoundAggregationId")
+        @ExcludeMissing
+        compoundAggregationId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("contractId")
+        @ExcludeMissing
+        contractId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversionRate")
+        @ExcludeMissing
+        conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("convertedSubtotal")
+        @ExcludeMissing
+        convertedSubtotal: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("counterId") @ExcludeMissing counterId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("creditTypeId")
+        @ExcludeMissing
+        creditTypeId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("group") @ExcludeMissing group: JsonField<Group> = JsonMissing.of(),
+        @JsonProperty("jsonUsageGenerated")
+        @ExcludeMissing
+        jsonUsageGenerated: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lineItemType")
+        @ExcludeMissing
+        lineItemType: JsonField<LineItemType> = JsonMissing.of(),
+        @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("planGroupId")
+        @ExcludeMissing
+        planGroupId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("planId") @ExcludeMissing planId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("pricingId") @ExcludeMissing pricingId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productCode")
+        @ExcludeMissing
+        productCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productName")
+        @ExcludeMissing
+        productName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("reasonId") @ExcludeMissing reasonId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("referencedBillId")
+        @ExcludeMissing
+        referencedBillId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("referencedLineItemId")
+        @ExcludeMissing
+        referencedLineItemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("segment") @ExcludeMissing segment: JsonField<Segment> = JsonMissing.of(),
+        @JsonProperty("sequenceNumber")
+        @ExcludeMissing
+        sequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("servicePeriodEndDate")
+        @ExcludeMissing
+        servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("servicePeriodStartDate")
+        @ExcludeMissing
+        servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("subtotal") @ExcludeMissing subtotal: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("units") @ExcludeMissing units: JsonField<Double> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        aggregationId,
+        averageUnitPrice,
+        balanceId,
+        bandUsage,
+        billId,
+        commitmentId,
+        compoundAggregationId,
+        contractId,
+        conversionRate,
+        convertedSubtotal,
+        counterId,
+        createdBy,
+        creditTypeId,
+        currency,
+        description,
+        dtCreated,
+        dtLastModified,
+        group,
+        jsonUsageGenerated,
+        lastModifiedBy,
+        lineItemType,
+        meterId,
+        planGroupId,
+        planId,
+        pricingId,
+        productCode,
+        productId,
+        productName,
+        quantity,
+        reasonId,
+        referencedBillId,
+        referencedLineItemId,
+        segment,
+        sequenceNumber,
+        servicePeriodEndDate,
+        servicePeriodStartDate,
+        subtotal,
+        unit,
+        units,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -836,60 +893,15 @@ private constructor(
      */
     @JsonProperty("units") @ExcludeMissing fun _units(): JsonField<Double> = units
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): LineItemResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        aggregationId()
-        averageUnitPrice()
-        balanceId()
-        bandUsage().ifPresent { it.forEach { it.validate() } }
-        billId()
-        commitmentId()
-        compoundAggregationId()
-        contractId()
-        conversionRate()
-        convertedSubtotal()
-        counterId()
-        createdBy()
-        creditTypeId()
-        currency()
-        description()
-        dtCreated()
-        dtLastModified()
-        group().ifPresent { it.validate() }
-        jsonUsageGenerated()
-        lastModifiedBy()
-        lineItemType()
-        meterId()
-        planGroupId()
-        planId()
-        pricingId()
-        productCode()
-        productId()
-        productName()
-        quantity()
-        reasonId()
-        referencedBillId()
-        referencedLineItemId()
-        segment().ifPresent { it.validate() }
-        sequenceNumber()
-        servicePeriodEndDate()
-        servicePeriodStartDate()
-        subtotal()
-        unit()
-        units()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1653,48 +1665,120 @@ private constructor(
                 subtotal,
                 unit,
                 units,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): LineItemResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        aggregationId()
+        averageUnitPrice()
+        balanceId()
+        bandUsage().ifPresent { it.forEach { it.validate() } }
+        billId()
+        commitmentId()
+        compoundAggregationId()
+        contractId()
+        conversionRate()
+        convertedSubtotal()
+        counterId()
+        createdBy()
+        creditTypeId()
+        currency()
+        description()
+        dtCreated()
+        dtLastModified()
+        group().ifPresent { it.validate() }
+        jsonUsageGenerated()
+        lastModifiedBy()
+        lineItemType()
+        meterId()
+        planGroupId()
+        planId()
+        pricingId()
+        productCode()
+        productId()
+        productName()
+        quantity()
+        reasonId()
+        referencedBillId()
+        referencedLineItemId()
+        segment().ifPresent { it.validate() }
+        sequenceNumber()
+        servicePeriodEndDate()
+        servicePeriodStartDate()
+        subtotal()
+        unit()
+        units()
+        validated = true
     }
 
     /**
      * Array containing the pricing band information, which shows the details for each pricing band
      * or tier.
      */
-    @NoAutoDetect
     class BandUsage
-    @JsonCreator
     private constructor(
-        @JsonProperty("bandQuantity")
-        @ExcludeMissing
-        private val bandQuantity: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("bandSubtotal")
-        @ExcludeMissing
-        private val bandSubtotal: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("bandUnits")
-        @ExcludeMissing
-        private val bandUnits: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("creditTypeId")
-        @ExcludeMissing
-        private val creditTypeId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("fixedPrice")
-        @ExcludeMissing
-        private val fixedPrice: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("lowerLimit")
-        @ExcludeMissing
-        private val lowerLimit: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("pricingBandId")
-        @ExcludeMissing
-        private val pricingBandId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("unitPrice")
-        @ExcludeMissing
-        private val unitPrice: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("unitSubtotal")
-        @ExcludeMissing
-        private val unitSubtotal: JsonField<Double> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val bandQuantity: JsonField<Double>,
+        private val bandSubtotal: JsonField<Double>,
+        private val bandUnits: JsonField<Double>,
+        private val creditTypeId: JsonField<String>,
+        private val fixedPrice: JsonField<Double>,
+        private val lowerLimit: JsonField<Double>,
+        private val pricingBandId: JsonField<String>,
+        private val unitPrice: JsonField<Double>,
+        private val unitSubtotal: JsonField<Double>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("bandQuantity")
+            @ExcludeMissing
+            bandQuantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("bandSubtotal")
+            @ExcludeMissing
+            bandSubtotal: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("bandUnits")
+            @ExcludeMissing
+            bandUnits: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("creditTypeId")
+            @ExcludeMissing
+            creditTypeId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fixedPrice")
+            @ExcludeMissing
+            fixedPrice: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("lowerLimit")
+            @ExcludeMissing
+            lowerLimit: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("pricingBandId")
+            @ExcludeMissing
+            pricingBandId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unitPrice")
+            @ExcludeMissing
+            unitPrice: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("unitSubtotal")
+            @ExcludeMissing
+            unitSubtotal: JsonField<Double> = JsonMissing.of(),
+        ) : this(
+            bandQuantity,
+            bandSubtotal,
+            bandUnits,
+            creditTypeId,
+            fixedPrice,
+            lowerLimit,
+            pricingBandId,
+            unitPrice,
+            unitSubtotal,
+            mutableMapOf(),
+        )
 
         /**
          * Usage amount within the band.
@@ -1858,28 +1942,15 @@ private constructor(
         @ExcludeMissing
         fun _unitSubtotal(): JsonField<Double> = unitSubtotal
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): BandUsage = apply {
-            if (validated) {
-                return@apply
-            }
-
-            bandQuantity()
-            bandSubtotal()
-            bandUnits()
-            creditTypeId()
-            fixedPrice()
-            lowerLimit()
-            pricingBandId()
-            unitPrice()
-            unitSubtotal()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2073,8 +2144,27 @@ private constructor(
                     pricingBandId,
                     unitPrice,
                     unitSubtotal,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): BandUsage = apply {
+            if (validated) {
+                return@apply
+            }
+
+            bandQuantity()
+            bandSubtotal()
+            bandUnits()
+            creditTypeId()
+            fixedPrice()
+            lowerLimit()
+            pricingBandId()
+            unitPrice()
+            unitSubtotal()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2095,27 +2185,20 @@ private constructor(
             "BandUsage{bandQuantity=$bandQuantity, bandSubtotal=$bandSubtotal, bandUnits=$bandUnits, creditTypeId=$creditTypeId, fixedPrice=$fixedPrice, lowerLimit=$lowerLimit, pricingBandId=$pricingBandId, unitPrice=$unitPrice, unitSubtotal=$unitSubtotal, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class Group
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Group = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2159,7 +2242,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Group = Group(additionalProperties.toImmutable())
+            fun build(): Group = Group(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Group = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2379,27 +2472,20 @@ private constructor(
      * Specifies the segment name or identifier when segmented Aggregation is used. This is relevant
      * for more complex billing structures.
      */
-    @NoAutoDetect
     class Segment
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Segment = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2443,7 +2529,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Segment = Segment(additionalProperties.toImmutable())
+            fun build(): Segment = Segment(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Segment = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

@@ -10,26 +10,26 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class PrincipalPermissionRequest
-@JsonCreator
 private constructor(
-    @JsonProperty("principalId")
-    @ExcludeMissing
-    private val principalId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val principalId: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("principalId")
+        @ExcludeMissing
+        principalId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(principalId, version, mutableMapOf())
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -64,21 +64,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): PrincipalPermissionRequest = apply {
-        if (validated) {
-            return@apply
-        }
-
-        principalId()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -173,8 +167,20 @@ private constructor(
             PrincipalPermissionRequest(
                 checkRequired("principalId", principalId),
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): PrincipalPermissionRequest = apply {
+        if (validated) {
+            return@apply
+        }
+
+        principalId()
+        version()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {
