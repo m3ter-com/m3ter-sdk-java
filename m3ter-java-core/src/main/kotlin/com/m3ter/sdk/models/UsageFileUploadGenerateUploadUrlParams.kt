@@ -10,14 +10,12 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -102,251 +100,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    /** Request containing the file details when generating an upload URL. */
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("contentType")
-        @ExcludeMissing
-        private val contentType: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("fileName")
-        @ExcludeMissing
-        private val fileName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("contentLength")
-        @ExcludeMissing
-        private val contentLength: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The media type of the entity body sent, for example: `"contentType":"text/json"`.
-         *
-         * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
-         * Service.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun contentType(): String = contentType.getRequired("contentType")
-
-        /**
-         * The name of the measurements file to be uploaded.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun fileName(): String = fileName.getRequired("fileName")
-
-        /**
-         * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size
-         * in bytes of the file to upload.
-         *
-         * **NOTE:** Required.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun contentLength(): Optional<Long> =
-            Optional.ofNullable(contentLength.getNullable("contentLength"))
-
-        /**
-         * Returns the raw JSON value of [contentType].
-         *
-         * Unlike [contentType], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("contentType")
-        @ExcludeMissing
-        fun _contentType(): JsonField<String> = contentType
-
-        /**
-         * Returns the raw JSON value of [fileName].
-         *
-         * Unlike [fileName], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("fileName") @ExcludeMissing fun _fileName(): JsonField<String> = fileName
-
-        /**
-         * Returns the raw JSON value of [contentLength].
-         *
-         * Unlike [contentLength], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("contentLength")
-        @ExcludeMissing
-        fun _contentLength(): JsonField<Long> = contentLength
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            contentType()
-            fileName()
-            contentLength()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .contentType()
-             * .fileName()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var contentType: JsonField<String>? = null
-            private var fileName: JsonField<String>? = null
-            private var contentLength: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                contentType = body.contentType
-                fileName = body.fileName
-                contentLength = body.contentLength
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The media type of the entity body sent, for example: `"contentType":"text/json"`.
-             *
-             * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
-             * Service.
-             */
-            fun contentType(contentType: String) = contentType(JsonField.of(contentType))
-
-            /**
-             * Sets [Builder.contentType] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.contentType] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun contentType(contentType: JsonField<String>) = apply {
-                this.contentType = contentType
-            }
-
-            /** The name of the measurements file to be uploaded. */
-            fun fileName(fileName: String) = fileName(JsonField.of(fileName))
-
-            /**
-             * Sets [Builder.fileName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.fileName] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun fileName(fileName: JsonField<String>) = apply { this.fileName = fileName }
-
-            /**
-             * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the
-             * size in bytes of the file to upload.
-             *
-             * **NOTE:** Required.
-             */
-            fun contentLength(contentLength: Long) = contentLength(JsonField.of(contentLength))
-
-            /**
-             * Sets [Builder.contentLength] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.contentLength] with a well-typed [Long] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun contentLength(contentLength: JsonField<Long>) = apply {
-                this.contentLength = contentLength
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .contentType()
-             * .fileName()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("contentType", contentType),
-                    checkRequired("fileName", fileName),
-                    contentLength,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && contentType == other.contentType && fileName == other.fileName && contentLength == other.contentLength && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(contentType, fileName, contentLength, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{contentType=$contentType, fileName=$fileName, contentLength=$contentLength, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -366,7 +119,6 @@ private constructor(
     }
 
     /** A builder for [UsageFileUploadGenerateUploadUrlParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -572,6 +324,261 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    /** Request containing the file details when generating an upload URL. */
+    class Body
+    private constructor(
+        private val contentType: JsonField<String>,
+        private val fileName: JsonField<String>,
+        private val contentLength: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("contentType")
+            @ExcludeMissing
+            contentType: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fileName")
+            @ExcludeMissing
+            fileName: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("contentLength")
+            @ExcludeMissing
+            contentLength: JsonField<Long> = JsonMissing.of(),
+        ) : this(contentType, fileName, contentLength, mutableMapOf())
+
+        /**
+         * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+         *
+         * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
+         * Service.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun contentType(): String = contentType.getRequired("contentType")
+
+        /**
+         * The name of the measurements file to be uploaded.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun fileName(): String = fileName.getRequired("fileName")
+
+        /**
+         * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size
+         * in bytes of the file to upload.
+         *
+         * **NOTE:** Required.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun contentLength(): Optional<Long> =
+            Optional.ofNullable(contentLength.getNullable("contentLength"))
+
+        /**
+         * Returns the raw JSON value of [contentType].
+         *
+         * Unlike [contentType], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("contentType")
+        @ExcludeMissing
+        fun _contentType(): JsonField<String> = contentType
+
+        /**
+         * Returns the raw JSON value of [fileName].
+         *
+         * Unlike [fileName], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("fileName") @ExcludeMissing fun _fileName(): JsonField<String> = fileName
+
+        /**
+         * Returns the raw JSON value of [contentLength].
+         *
+         * Unlike [contentLength], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("contentLength")
+        @ExcludeMissing
+        fun _contentLength(): JsonField<Long> = contentLength
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .contentType()
+             * .fileName()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var contentType: JsonField<String>? = null
+            private var fileName: JsonField<String>? = null
+            private var contentLength: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                contentType = body.contentType
+                fileName = body.fileName
+                contentLength = body.contentLength
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The media type of the entity body sent, for example: `"contentType":"text/json"`.
+             *
+             * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
+             * Service.
+             */
+            fun contentType(contentType: String) = contentType(JsonField.of(contentType))
+
+            /**
+             * Sets [Builder.contentType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contentType] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun contentType(contentType: JsonField<String>) = apply {
+                this.contentType = contentType
+            }
+
+            /** The name of the measurements file to be uploaded. */
+            fun fileName(fileName: String) = fileName(JsonField.of(fileName))
+
+            /**
+             * Sets [Builder.fileName] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.fileName] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun fileName(fileName: JsonField<String>) = apply { this.fileName = fileName }
+
+            /**
+             * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the
+             * size in bytes of the file to upload.
+             *
+             * **NOTE:** Required.
+             */
+            fun contentLength(contentLength: Long) = contentLength(JsonField.of(contentLength))
+
+            /**
+             * Sets [Builder.contentLength] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contentLength] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun contentLength(contentLength: JsonField<Long>) = apply {
+                this.contentLength = contentLength
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .contentType()
+             * .fileName()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("contentType", contentType),
+                    checkRequired("fileName", fileName),
+                    contentLength,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            contentType()
+            fileName()
+            contentLength()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && contentType == other.contentType && fileName == other.fileName && contentLength == other.contentLength && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(contentType, fileName, contentLength, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{contentType=$contentType, fileName=$fileName, contentLength=$contentLength, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

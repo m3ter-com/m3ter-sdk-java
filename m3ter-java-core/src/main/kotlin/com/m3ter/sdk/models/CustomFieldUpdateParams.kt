@@ -10,14 +10,12 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -194,485 +192,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    fun _pathParam(index: Int): String =
-        when (index) {
-            0 -> orgId
-            else -> ""
-        }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("account")
-        @ExcludeMissing
-        private val account: JsonField<Account> = JsonMissing.of(),
-        @JsonProperty("accountPlan")
-        @ExcludeMissing
-        private val accountPlan: JsonField<AccountPlan> = JsonMissing.of(),
-        @JsonProperty("aggregation")
-        @ExcludeMissing
-        private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
-        @JsonProperty("compoundAggregation")
-        @ExcludeMissing
-        private val compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of(),
-        @JsonProperty("meter")
-        @ExcludeMissing
-        private val meter: JsonField<Meter> = JsonMissing.of(),
-        @JsonProperty("organization")
-        @ExcludeMissing
-        private val organization: JsonField<Organization> = JsonMissing.of(),
-        @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
-        @JsonProperty("planTemplate")
-        @ExcludeMissing
-        private val planTemplate: JsonField<PlanTemplate> = JsonMissing.of(),
-        @JsonProperty("product")
-        @ExcludeMissing
-        private val product: JsonField<Product> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Updates to Account entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
-
-        /**
-         * Updates to accountPlan entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun accountPlan(): Optional<AccountPlan> =
-            Optional.ofNullable(accountPlan.getNullable("accountPlan"))
-
-        /**
-         * Updates to simple Aggregation entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun aggregation(): Optional<Aggregation> =
-            Optional.ofNullable(aggregation.getNullable("aggregation"))
-
-        /**
-         * Updates to Compound Aggregation entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun compoundAggregation(): Optional<CompoundAggregation> =
-            Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
-
-        /**
-         * Updates to Meter entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
-
-        /**
-         * Updates to Organization CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun organization(): Optional<Organization> =
-            Optional.ofNullable(organization.getNullable("organization"))
-
-        /**
-         * Updates to Plan entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
-
-        /**
-         * Updates to planTemplate entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun planTemplate(): Optional<PlanTemplate> =
-            Optional.ofNullable(planTemplate.getNullable("planTemplate"))
-
-        /**
-         * Updates to Product entity CustomFields.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [account].
-         *
-         * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("account") @ExcludeMissing fun _account(): JsonField<Account> = account
-
-        /**
-         * Returns the raw JSON value of [accountPlan].
-         *
-         * Unlike [accountPlan], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("accountPlan")
-        @ExcludeMissing
-        fun _accountPlan(): JsonField<AccountPlan> = accountPlan
-
-        /**
-         * Returns the raw JSON value of [aggregation].
-         *
-         * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("aggregation")
-        @ExcludeMissing
-        fun _aggregation(): JsonField<Aggregation> = aggregation
-
-        /**
-         * Returns the raw JSON value of [compoundAggregation].
-         *
-         * Unlike [compoundAggregation], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("compoundAggregation")
-        @ExcludeMissing
-        fun _compoundAggregation(): JsonField<CompoundAggregation> = compoundAggregation
-
-        /**
-         * Returns the raw JSON value of [meter].
-         *
-         * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("meter") @ExcludeMissing fun _meter(): JsonField<Meter> = meter
-
-        /**
-         * Returns the raw JSON value of [organization].
-         *
-         * Unlike [organization], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("organization")
-        @ExcludeMissing
-        fun _organization(): JsonField<Organization> = organization
-
-        /**
-         * Returns the raw JSON value of [plan].
-         *
-         * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
-
-        /**
-         * Returns the raw JSON value of [planTemplate].
-         *
-         * Unlike [planTemplate], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("planTemplate")
-        @ExcludeMissing
-        fun _planTemplate(): JsonField<PlanTemplate> = planTemplate
-
-        /**
-         * Returns the raw JSON value of [product].
-         *
-         * Unlike [product], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            account().ifPresent { it.validate() }
-            accountPlan().ifPresent { it.validate() }
-            aggregation().ifPresent { it.validate() }
-            compoundAggregation().ifPresent { it.validate() }
-            meter().ifPresent { it.validate() }
-            organization().ifPresent { it.validate() }
-            plan().ifPresent { it.validate() }
-            planTemplate().ifPresent { it.validate() }
-            product().ifPresent { it.validate() }
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [Body]. */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var account: JsonField<Account> = JsonMissing.of()
-            private var accountPlan: JsonField<AccountPlan> = JsonMissing.of()
-            private var aggregation: JsonField<Aggregation> = JsonMissing.of()
-            private var compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of()
-            private var meter: JsonField<Meter> = JsonMissing.of()
-            private var organization: JsonField<Organization> = JsonMissing.of()
-            private var plan: JsonField<Plan> = JsonMissing.of()
-            private var planTemplate: JsonField<PlanTemplate> = JsonMissing.of()
-            private var product: JsonField<Product> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                account = body.account
-                accountPlan = body.accountPlan
-                aggregation = body.aggregation
-                compoundAggregation = body.compoundAggregation
-                meter = body.meter
-                organization = body.organization
-                plan = body.plan
-                planTemplate = body.planTemplate
-                product = body.product
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** Updates to Account entity CustomFields. */
-            fun account(account: Account) = account(JsonField.of(account))
-
-            /**
-             * Sets [Builder.account] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.account] with a well-typed [Account] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun account(account: JsonField<Account>) = apply { this.account = account }
-
-            /** Updates to accountPlan entity CustomFields. */
-            fun accountPlan(accountPlan: AccountPlan) = accountPlan(JsonField.of(accountPlan))
-
-            /**
-             * Sets [Builder.accountPlan] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.accountPlan] with a well-typed [AccountPlan] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun accountPlan(accountPlan: JsonField<AccountPlan>) = apply {
-                this.accountPlan = accountPlan
-            }
-
-            /** Updates to simple Aggregation entity CustomFields. */
-            fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
-
-            /**
-             * Sets [Builder.aggregation] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun aggregation(aggregation: JsonField<Aggregation>) = apply {
-                this.aggregation = aggregation
-            }
-
-            /** Updates to Compound Aggregation entity CustomFields. */
-            fun compoundAggregation(compoundAggregation: CompoundAggregation) =
-                compoundAggregation(JsonField.of(compoundAggregation))
-
-            /**
-             * Sets [Builder.compoundAggregation] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.compoundAggregation] with a well-typed
-             * [CompoundAggregation] value instead. This method is primarily for setting the field
-             * to an undocumented or not yet supported value.
-             */
-            fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
-                this.compoundAggregation = compoundAggregation
-            }
-
-            /** Updates to Meter entity CustomFields. */
-            fun meter(meter: Meter) = meter(JsonField.of(meter))
-
-            /**
-             * Sets [Builder.meter] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.meter] with a well-typed [Meter] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun meter(meter: JsonField<Meter>) = apply { this.meter = meter }
-
-            /** Updates to Organization CustomFields. */
-            fun organization(organization: Organization) = organization(JsonField.of(organization))
-
-            /**
-             * Sets [Builder.organization] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.organization] with a well-typed [Organization] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun organization(organization: JsonField<Organization>) = apply {
-                this.organization = organization
-            }
-
-            /** Updates to Plan entity CustomFields. */
-            fun plan(plan: Plan) = plan(JsonField.of(plan))
-
-            /**
-             * Sets [Builder.plan] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
-
-            /** Updates to planTemplate entity CustomFields. */
-            fun planTemplate(planTemplate: PlanTemplate) = planTemplate(JsonField.of(planTemplate))
-
-            /**
-             * Sets [Builder.planTemplate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.planTemplate] with a well-typed [PlanTemplate] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun planTemplate(planTemplate: JsonField<PlanTemplate>) = apply {
-                this.planTemplate = planTemplate
-            }
-
-            /** Updates to Product entity CustomFields. */
-            fun product(product: Product) = product(JsonField.of(product))
-
-            /**
-             * Sets [Builder.product] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.product] with a well-typed [Product] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun product(product: JsonField<Product>) = apply { this.product = product }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Body =
-                Body(
-                    account,
-                    accountPlan,
-                    aggregation,
-                    compoundAggregation,
-                    meter,
-                    organization,
-                    plan,
-                    planTemplate,
-                    product,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(account, accountPlan, aggregation, compoundAggregation, meter, organization, plan, planTemplate, product, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -689,7 +208,6 @@ private constructor(
     }
 
     /** A builder for [CustomFieldUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -979,28 +497,521 @@ private constructor(
             )
     }
 
-    /** Updates to Account entity CustomFields. */
-    @NoAutoDetect
-    class Account
-    @JsonCreator
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+        private val account: JsonField<Account>,
+        private val accountPlan: JsonField<AccountPlan>,
+        private val aggregation: JsonField<Aggregation>,
+        private val compoundAggregation: JsonField<CompoundAggregation>,
+        private val meter: JsonField<Meter>,
+        private val organization: JsonField<Organization>,
+        private val plan: JsonField<Plan>,
+        private val planTemplate: JsonField<PlanTemplate>,
+        private val product: JsonField<Product>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("account") @ExcludeMissing account: JsonField<Account> = JsonMissing.of(),
+            @JsonProperty("accountPlan")
+            @ExcludeMissing
+            accountPlan: JsonField<AccountPlan> = JsonMissing.of(),
+            @JsonProperty("aggregation")
+            @ExcludeMissing
+            aggregation: JsonField<Aggregation> = JsonMissing.of(),
+            @JsonProperty("compoundAggregation")
+            @ExcludeMissing
+            compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of(),
+            @JsonProperty("meter") @ExcludeMissing meter: JsonField<Meter> = JsonMissing.of(),
+            @JsonProperty("organization")
+            @ExcludeMissing
+            organization: JsonField<Organization> = JsonMissing.of(),
+            @JsonProperty("plan") @ExcludeMissing plan: JsonField<Plan> = JsonMissing.of(),
+            @JsonProperty("planTemplate")
+            @ExcludeMissing
+            planTemplate: JsonField<PlanTemplate> = JsonMissing.of(),
+            @JsonProperty("product") @ExcludeMissing product: JsonField<Product> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            account,
+            accountPlan,
+            aggregation,
+            compoundAggregation,
+            meter,
+            organization,
+            plan,
+            planTemplate,
+            product,
+            version,
+            mutableMapOf(),
+        )
+
+        /**
+         * Updates to Account entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
+
+        /**
+         * Updates to accountPlan entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun accountPlan(): Optional<AccountPlan> =
+            Optional.ofNullable(accountPlan.getNullable("accountPlan"))
+
+        /**
+         * Updates to simple Aggregation entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun aggregation(): Optional<Aggregation> =
+            Optional.ofNullable(aggregation.getNullable("aggregation"))
+
+        /**
+         * Updates to Compound Aggregation entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun compoundAggregation(): Optional<CompoundAggregation> =
+            Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
+
+        /**
+         * Updates to Meter entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
+
+        /**
+         * Updates to Organization CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun organization(): Optional<Organization> =
+            Optional.ofNullable(organization.getNullable("organization"))
+
+        /**
+         * Updates to Plan entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
+
+        /**
+         * Updates to planTemplate entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun planTemplate(): Optional<PlanTemplate> =
+            Optional.ofNullable(planTemplate.getNullable("planTemplate"))
+
+        /**
+         * Updates to Product entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [account].
+         *
+         * Unlike [account], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("account") @ExcludeMissing fun _account(): JsonField<Account> = account
+
+        /**
+         * Returns the raw JSON value of [accountPlan].
+         *
+         * Unlike [accountPlan], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("accountPlan")
+        @ExcludeMissing
+        fun _accountPlan(): JsonField<AccountPlan> = accountPlan
+
+        /**
+         * Returns the raw JSON value of [aggregation].
+         *
+         * Unlike [aggregation], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("aggregation")
+        @ExcludeMissing
+        fun _aggregation(): JsonField<Aggregation> = aggregation
+
+        /**
+         * Returns the raw JSON value of [compoundAggregation].
+         *
+         * Unlike [compoundAggregation], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("compoundAggregation")
+        @ExcludeMissing
+        fun _compoundAggregation(): JsonField<CompoundAggregation> = compoundAggregation
+
+        /**
+         * Returns the raw JSON value of [meter].
+         *
+         * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("meter") @ExcludeMissing fun _meter(): JsonField<Meter> = meter
+
+        /**
+         * Returns the raw JSON value of [organization].
+         *
+         * Unlike [organization], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("organization")
+        @ExcludeMissing
+        fun _organization(): JsonField<Organization> = organization
+
+        /**
+         * Returns the raw JSON value of [plan].
+         *
+         * Unlike [plan], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
+
+        /**
+         * Returns the raw JSON value of [planTemplate].
+         *
+         * Unlike [planTemplate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("planTemplate")
+        @ExcludeMissing
+        fun _planTemplate(): JsonField<PlanTemplate> = planTemplate
+
+        /**
+         * Returns the raw JSON value of [product].
+         *
+         * Unlike [product], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Body]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var account: JsonField<Account> = JsonMissing.of()
+            private var accountPlan: JsonField<AccountPlan> = JsonMissing.of()
+            private var aggregation: JsonField<Aggregation> = JsonMissing.of()
+            private var compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of()
+            private var meter: JsonField<Meter> = JsonMissing.of()
+            private var organization: JsonField<Organization> = JsonMissing.of()
+            private var plan: JsonField<Plan> = JsonMissing.of()
+            private var planTemplate: JsonField<PlanTemplate> = JsonMissing.of()
+            private var product: JsonField<Product> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                account = body.account
+                accountPlan = body.accountPlan
+                aggregation = body.aggregation
+                compoundAggregation = body.compoundAggregation
+                meter = body.meter
+                organization = body.organization
+                plan = body.plan
+                planTemplate = body.planTemplate
+                product = body.product
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** Updates to Account entity CustomFields. */
+            fun account(account: Account) = account(JsonField.of(account))
+
+            /**
+             * Sets [Builder.account] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.account] with a well-typed [Account] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun account(account: JsonField<Account>) = apply { this.account = account }
+
+            /** Updates to accountPlan entity CustomFields. */
+            fun accountPlan(accountPlan: AccountPlan) = accountPlan(JsonField.of(accountPlan))
+
+            /**
+             * Sets [Builder.accountPlan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountPlan] with a well-typed [AccountPlan] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun accountPlan(accountPlan: JsonField<AccountPlan>) = apply {
+                this.accountPlan = accountPlan
+            }
+
+            /** Updates to simple Aggregation entity CustomFields. */
+            fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
+
+            /**
+             * Sets [Builder.aggregation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.aggregation] with a well-typed [Aggregation] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun aggregation(aggregation: JsonField<Aggregation>) = apply {
+                this.aggregation = aggregation
+            }
+
+            /** Updates to Compound Aggregation entity CustomFields. */
+            fun compoundAggregation(compoundAggregation: CompoundAggregation) =
+                compoundAggregation(JsonField.of(compoundAggregation))
+
+            /**
+             * Sets [Builder.compoundAggregation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.compoundAggregation] with a well-typed
+             * [CompoundAggregation] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
+                this.compoundAggregation = compoundAggregation
+            }
+
+            /** Updates to Meter entity CustomFields. */
+            fun meter(meter: Meter) = meter(JsonField.of(meter))
+
+            /**
+             * Sets [Builder.meter] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meter] with a well-typed [Meter] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun meter(meter: JsonField<Meter>) = apply { this.meter = meter }
+
+            /** Updates to Organization CustomFields. */
+            fun organization(organization: Organization) = organization(JsonField.of(organization))
+
+            /**
+             * Sets [Builder.organization] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.organization] with a well-typed [Organization] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun organization(organization: JsonField<Organization>) = apply {
+                this.organization = organization
+            }
+
+            /** Updates to Plan entity CustomFields. */
+            fun plan(plan: Plan) = plan(JsonField.of(plan))
+
+            /**
+             * Sets [Builder.plan] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.plan] with a well-typed [Plan] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
+
+            /** Updates to planTemplate entity CustomFields. */
+            fun planTemplate(planTemplate: PlanTemplate) = planTemplate(JsonField.of(planTemplate))
+
+            /**
+             * Sets [Builder.planTemplate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planTemplate] with a well-typed [PlanTemplate] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun planTemplate(planTemplate: JsonField<PlanTemplate>) = apply {
+                this.planTemplate = planTemplate
+            }
+
+            /** Updates to Product entity CustomFields. */
+            fun product(product: Product) = product(JsonField.of(product))
+
+            /**
+             * Sets [Builder.product] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.product] with a well-typed [Product] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun product(product: JsonField<Product>) = apply { this.product = product }
+
+            /**
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Body =
+                Body(
+                    account,
+                    accountPlan,
+                    aggregation,
+                    compoundAggregation,
+                    meter,
+                    organization,
+                    plan,
+                    planTemplate,
+                    product,
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
 
         private var validated: Boolean = false
 
-        fun validate(): Account = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
 
+            account().ifPresent { it.validate() }
+            accountPlan().ifPresent { it.validate() }
+            aggregation().ifPresent { it.validate() }
+            compoundAggregation().ifPresent { it.validate() }
+            meter().ifPresent { it.validate() }
+            organization().ifPresent { it.validate() }
+            plan().ifPresent { it.validate() }
+            planTemplate().ifPresent { it.validate() }
+            product().ifPresent { it.validate() }
+            version()
             validated = true
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(account, accountPlan, aggregation, compoundAggregation, meter, organization, plan, planTemplate, product, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, version=$version, additionalProperties=$additionalProperties}"
+    }
+
+    /** Updates to Account entity CustomFields. */
+    class Account
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1044,7 +1055,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Account = Account(additionalProperties.toImmutable())
+            fun build(): Account = Account(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Account = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1065,27 +1086,20 @@ private constructor(
     }
 
     /** Updates to accountPlan entity CustomFields. */
-    @NoAutoDetect
     class AccountPlan
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): AccountPlan = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1129,7 +1143,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): AccountPlan = AccountPlan(additionalProperties.toImmutable())
+            fun build(): AccountPlan = AccountPlan(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountPlan = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1150,27 +1174,20 @@ private constructor(
     }
 
     /** Updates to simple Aggregation entity CustomFields. */
-    @NoAutoDetect
     class Aggregation
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Aggregation = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1214,7 +1231,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Aggregation = Aggregation(additionalProperties.toImmutable())
+            fun build(): Aggregation = Aggregation(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Aggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1235,27 +1262,20 @@ private constructor(
     }
 
     /** Updates to Compound Aggregation entity CustomFields. */
-    @NoAutoDetect
     class CompoundAggregation
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CompoundAggregation = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1300,7 +1320,17 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): CompoundAggregation =
-                CompoundAggregation(additionalProperties.toImmutable())
+                CompoundAggregation(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CompoundAggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1321,27 +1351,20 @@ private constructor(
     }
 
     /** Updates to Meter entity CustomFields. */
-    @NoAutoDetect
     class Meter
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Meter = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1385,7 +1408,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Meter = Meter(additionalProperties.toImmutable())
+            fun build(): Meter = Meter(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Meter = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1406,27 +1439,20 @@ private constructor(
     }
 
     /** Updates to Organization CustomFields. */
-    @NoAutoDetect
     class Organization
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Organization = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1470,7 +1496,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Organization = Organization(additionalProperties.toImmutable())
+            fun build(): Organization = Organization(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Organization = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1491,27 +1527,20 @@ private constructor(
     }
 
     /** Updates to Plan entity CustomFields. */
-    @NoAutoDetect
     class Plan
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Plan = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1555,7 +1584,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Plan = Plan(additionalProperties.toImmutable())
+            fun build(): Plan = Plan(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Plan = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1576,27 +1615,20 @@ private constructor(
     }
 
     /** Updates to planTemplate entity CustomFields. */
-    @NoAutoDetect
     class PlanTemplate
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): PlanTemplate = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1640,7 +1672,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): PlanTemplate = PlanTemplate(additionalProperties.toImmutable())
+            fun build(): PlanTemplate = PlanTemplate(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): PlanTemplate = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1661,27 +1703,20 @@ private constructor(
     }
 
     /** Updates to Product entity CustomFields. */
-    @NoAutoDetect
     class Product
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Product = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1725,7 +1760,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Product = Product(additionalProperties.toImmutable())
+            fun build(): Product = Product(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Product = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

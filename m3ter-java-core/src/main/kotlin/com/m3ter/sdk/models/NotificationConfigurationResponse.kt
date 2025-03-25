@@ -10,54 +10,74 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class NotificationConfigurationResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("active")
-    @ExcludeMissing
-    private val active: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("alwaysFireEvent")
-    @ExcludeMissing
-    private val alwaysFireEvent: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("calculation")
-    @ExcludeMissing
-    private val calculation: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("eventName")
-    @ExcludeMissing
-    private val eventName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val code: JsonField<String>,
+    private val description: JsonField<String>,
+    private val name: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val active: JsonField<Boolean>,
+    private val alwaysFireEvent: JsonField<Boolean>,
+    private val calculation: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val eventName: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("active") @ExcludeMissing active: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("alwaysFireEvent")
+        @ExcludeMissing
+        alwaysFireEvent: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        calculation: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("eventName") @ExcludeMissing eventName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        code,
+        description,
+        name,
+        version,
+        active,
+        alwaysFireEvent,
+        calculation,
+        createdBy,
+        dtCreated,
+        dtLastModified,
+        eventName,
+        lastModifiedBy,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -291,32 +311,15 @@ private constructor(
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): NotificationConfigurationResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        code()
-        description()
-        name()
-        version()
-        active()
-        alwaysFireEvent()
-        calculation()
-        createdBy()
-        dtCreated()
-        dtLastModified()
-        eventName()
-        lastModifiedBy()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -622,8 +625,31 @@ private constructor(
                 dtLastModified,
                 eventName,
                 lastModifiedBy,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): NotificationConfigurationResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        code()
+        description()
+        name()
+        version()
+        active()
+        alwaysFireEvent()
+        calculation()
+        createdBy()
+        dtCreated()
+        dtLastModified()
+        eventName()
+        lastModifiedBy()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

@@ -11,81 +11,117 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class PlanTemplateResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("billFrequency")
-    @ExcludeMissing
-    private val billFrequency: JsonField<BillFrequency> = JsonMissing.of(),
-    @JsonProperty("billFrequencyInterval")
-    @ExcludeMissing
-    private val billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customFields")
-    @ExcludeMissing
-    private val customFields: JsonField<CustomFields> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("minimumSpend")
-    @ExcludeMissing
-    private val minimumSpend: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("minimumSpendBillInAdvance")
-    @ExcludeMissing
-    private val minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("minimumSpendDescription")
-    @ExcludeMissing
-    private val minimumSpendDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("ordinal")
-    @ExcludeMissing
-    private val ordinal: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("productId")
-    @ExcludeMissing
-    private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("standingCharge")
-    @ExcludeMissing
-    private val standingCharge: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("standingChargeBillInAdvance")
-    @ExcludeMissing
-    private val standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("standingChargeDescription")
-    @ExcludeMissing
-    private val standingChargeDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("standingChargeInterval")
-    @ExcludeMissing
-    private val standingChargeInterval: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("standingChargeOffset")
-    @ExcludeMissing
-    private val standingChargeOffset: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val billFrequency: JsonField<BillFrequency>,
+    private val billFrequencyInterval: JsonField<Long>,
+    private val code: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val currency: JsonField<String>,
+    private val customFields: JsonField<CustomFields>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val minimumSpend: JsonField<Double>,
+    private val minimumSpendBillInAdvance: JsonField<Boolean>,
+    private val minimumSpendDescription: JsonField<String>,
+    private val name: JsonField<String>,
+    private val ordinal: JsonField<Long>,
+    private val productId: JsonField<String>,
+    private val standingCharge: JsonField<Double>,
+    private val standingChargeBillInAdvance: JsonField<Boolean>,
+    private val standingChargeDescription: JsonField<String>,
+    private val standingChargeInterval: JsonField<Long>,
+    private val standingChargeOffset: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("billFrequency")
+        @ExcludeMissing
+        billFrequency: JsonField<BillFrequency> = JsonMissing.of(),
+        @JsonProperty("billFrequencyInterval")
+        @ExcludeMissing
+        billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        customFields: JsonField<CustomFields> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("minimumSpend")
+        @ExcludeMissing
+        minimumSpend: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("minimumSpendBillInAdvance")
+        @ExcludeMissing
+        minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("minimumSpendDescription")
+        @ExcludeMissing
+        minimumSpendDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ordinal") @ExcludeMissing ordinal: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("standingCharge")
+        @ExcludeMissing
+        standingCharge: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("standingChargeBillInAdvance")
+        @ExcludeMissing
+        standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("standingChargeDescription")
+        @ExcludeMissing
+        standingChargeDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("standingChargeInterval")
+        @ExcludeMissing
+        standingChargeInterval: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("standingChargeOffset")
+        @ExcludeMissing
+        standingChargeOffset: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        billFrequency,
+        billFrequencyInterval,
+        code,
+        createdBy,
+        currency,
+        customFields,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        minimumSpend,
+        minimumSpendBillInAdvance,
+        minimumSpendDescription,
+        name,
+        ordinal,
+        productId,
+        standingCharge,
+        standingChargeBillInAdvance,
+        standingChargeDescription,
+        standingChargeInterval,
+        standingChargeOffset,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -507,41 +543,15 @@ private constructor(
     @ExcludeMissing
     fun _standingChargeOffset(): JsonField<Long> = standingChargeOffset
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): PlanTemplateResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        billFrequency()
-        billFrequencyInterval()
-        code()
-        createdBy()
-        currency()
-        customFields().ifPresent { it.validate() }
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        minimumSpend()
-        minimumSpendBillInAdvance()
-        minimumSpendDescription()
-        name()
-        ordinal()
-        productId()
-        standingCharge()
-        standingChargeBillInAdvance()
-        standingChargeDescription()
-        standingChargeInterval()
-        standingChargeOffset()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1030,8 +1040,40 @@ private constructor(
                 standingChargeDescription,
                 standingChargeInterval,
                 standingChargeOffset,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): PlanTemplateResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        billFrequency()
+        billFrequencyInterval()
+        code()
+        createdBy()
+        currency()
+        customFields().ifPresent { it.validate() }
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        minimumSpend()
+        minimumSpendBillInAdvance()
+        minimumSpendDescription()
+        name()
+        ordinal()
+        productId()
+        standingCharge()
+        standingChargeBillInAdvance()
+        standingChargeDescription()
+        standingChargeInterval()
+        standingChargeOffset()
+        validated = true
     }
 
     /**
@@ -1180,27 +1222,20 @@ private constructor(
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
      */
-    @NoAutoDetect
     class CustomFields
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CustomFields = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1244,7 +1279,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+            fun build(): CustomFields = CustomFields(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

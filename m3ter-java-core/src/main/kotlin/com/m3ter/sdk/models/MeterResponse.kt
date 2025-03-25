@@ -10,55 +10,76 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class MeterResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customFields")
-    @ExcludeMissing
-    private val customFields: JsonField<CustomFields> = JsonMissing.of(),
-    @JsonProperty("dataFields")
-    @ExcludeMissing
-    private val dataFields: JsonField<List<DataFieldResponse>> = JsonMissing.of(),
-    @JsonProperty("derivedFields")
-    @ExcludeMissing
-    private val derivedFields: JsonField<List<DerivedField>> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("groupId")
-    @ExcludeMissing
-    private val groupId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productId")
-    @ExcludeMissing
-    private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val code: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val customFields: JsonField<CustomFields>,
+    private val dataFields: JsonField<List<DataFieldResponse>>,
+    private val derivedFields: JsonField<List<DerivedField>>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val groupId: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val name: JsonField<String>,
+    private val productId: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        customFields: JsonField<CustomFields> = JsonMissing.of(),
+        @JsonProperty("dataFields")
+        @ExcludeMissing
+        dataFields: JsonField<List<DataFieldResponse>> = JsonMissing.of(),
+        @JsonProperty("derivedFields")
+        @ExcludeMissing
+        derivedFields: JsonField<List<DerivedField>> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("groupId") @ExcludeMissing groupId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        code,
+        createdBy,
+        customFields,
+        dataFields,
+        derivedFields,
+        dtCreated,
+        dtLastModified,
+        groupId,
+        lastModifiedBy,
+        name,
+        productId,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -289,32 +310,15 @@ private constructor(
      */
     @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): MeterResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        code()
-        createdBy()
-        customFields().ifPresent { it.validate() }
-        dataFields().ifPresent { it.forEach { it.validate() } }
-        derivedFields().ifPresent { it.forEach { it.validate() } }
-        dtCreated()
-        dtLastModified()
-        groupId()
-        lastModifiedBy()
-        name()
-        productId()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -628,8 +632,31 @@ private constructor(
                 lastModifiedBy,
                 name,
                 productId,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): MeterResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        code()
+        createdBy()
+        customFields().ifPresent { it.validate() }
+        dataFields().ifPresent { it.forEach { it.validate() } }
+        derivedFields().ifPresent { it.forEach { it.validate() } }
+        dtCreated()
+        dtLastModified()
+        groupId()
+        lastModifiedBy()
+        name()
+        productId()
+        validated = true
     }
 
     /**
@@ -644,27 +671,20 @@ private constructor(
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
      */
-    @NoAutoDetect
     class CustomFields
-    @JsonCreator
-    private constructor(
+    private constructor(private val additionalProperties: MutableMap<String, JsonValue>) {
+
+        @JsonCreator private constructor() : this(mutableMapOf())
+
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
-    ) {
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CustomFields = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -708,7 +728,17 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+            fun build(): CustomFields = CustomFields(additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -728,28 +758,31 @@ private constructor(
         override fun toString() = "CustomFields{additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class DerivedField
-    @JsonCreator
     private constructor(
-        @JsonProperty("category")
-        @ExcludeMissing
-        private val category: JsonField<DataFieldResponse.Category> = JsonMissing.of(),
-        @JsonProperty("code")
-        @ExcludeMissing
-        private val code: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("unit")
-        @ExcludeMissing
-        private val unit: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("calculation")
-        @ExcludeMissing
-        private val calculation: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val category: JsonField<DataFieldResponse.Category>,
+        private val code: JsonField<String>,
+        private val name: JsonField<String>,
+        private val unit: JsonField<String>,
+        private val calculation: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("category")
+            @ExcludeMissing
+            category: JsonField<DataFieldResponse.Category> = JsonMissing.of(),
+            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("calculation")
+            @ExcludeMissing
+            calculation: JsonField<String> = JsonMissing.of(),
+        ) : this(category, code, name, unit, calculation, mutableMapOf())
+
+        fun toDataFieldResponse(): DataFieldResponse =
+            DataFieldResponse.builder().category(category).code(code).name(name).unit(unit).build()
 
         /**
          * The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER).
@@ -836,27 +869,15 @@ private constructor(
         @ExcludeMissing
         fun _calculation(): JsonField<String> = calculation
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toDataFieldResponse(): DataFieldResponse =
-            DataFieldResponse.builder().category(category).code(code).name(name).unit(unit).build()
-
-        private var validated: Boolean = false
-
-        fun validate(): DerivedField = apply {
-            if (validated) {
-                return@apply
-            }
-
-            category()
-            code()
-            name()
-            unit()
-            calculation()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1013,8 +1034,23 @@ private constructor(
                     checkRequired("name", name),
                     unit,
                     checkRequired("calculation", calculation),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): DerivedField = apply {
+            if (validated) {
+                return@apply
+            }
+
+            category()
+            code()
+            name()
+            unit()
+            calculation()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

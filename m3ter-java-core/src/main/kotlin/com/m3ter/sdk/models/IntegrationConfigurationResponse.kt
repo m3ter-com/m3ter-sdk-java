@@ -11,60 +11,84 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class IntegrationConfigurationResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("destination")
-    @ExcludeMissing
-    private val destination: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("entityId")
-    @ExcludeMissing
-    private val entityId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("entityType")
-    @ExcludeMissing
-    private val entityType: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCompleted")
-    @ExcludeMissing
-    private val dtCompleted: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtStarted")
-    @ExcludeMissing
-    private val dtStarted: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("error") @ExcludeMissing private val error: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("externalId")
-    @ExcludeMissing
-    private val externalId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("url") @ExcludeMissing private val url: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val destination: JsonField<String>,
+    private val entityId: JsonField<String>,
+    private val entityType: JsonField<String>,
+    private val status: JsonField<Status>,
+    private val version: JsonField<Long>,
+    private val createdBy: JsonField<String>,
+    private val dtCompleted: JsonField<OffsetDateTime>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val dtStarted: JsonField<OffsetDateTime>,
+    private val error: JsonField<String>,
+    private val externalId: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val url: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("destination")
+        @ExcludeMissing
+        destination: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("entityId") @ExcludeMissing entityId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("entityType")
+        @ExcludeMissing
+        entityType: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCompleted")
+        @ExcludeMissing
+        dtCompleted: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtStarted")
+        @ExcludeMissing
+        dtStarted: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("error") @ExcludeMissing error: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("externalId")
+        @ExcludeMissing
+        externalId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        destination,
+        entityId,
+        entityType,
+        status,
+        version,
+        createdBy,
+        dtCompleted,
+        dtCreated,
+        dtLastModified,
+        dtStarted,
+        error,
+        externalId,
+        lastModifiedBy,
+        url,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -307,34 +331,15 @@ private constructor(
      */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): IntegrationConfigurationResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        destination()
-        entityId()
-        entityType()
-        status()
-        version()
-        createdBy()
-        dtCompleted()
-        dtCreated()
-        dtLastModified()
-        dtStarted()
-        error()
-        externalId()
-        lastModifiedBy()
-        url()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -637,8 +642,33 @@ private constructor(
                 externalId,
                 lastModifiedBy,
                 url,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): IntegrationConfigurationResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        destination()
+        entityId()
+        entityType()
+        status()
+        version()
+        createdBy()
+        dtCompleted()
+        dtCreated()
+        dtLastModified()
+        dtStarted()
+        error()
+        externalId()
+        lastModifiedBy()
+        url()
+        validated = true
     }
 
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
