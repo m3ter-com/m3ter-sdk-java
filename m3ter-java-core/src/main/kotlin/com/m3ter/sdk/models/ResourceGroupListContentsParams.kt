@@ -2,15 +2,12 @@
 
 package com.m3ter.sdk.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import java.util.Collections
+import com.m3ter.sdk.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -25,7 +22,7 @@ private constructor(
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: MutableMap<String, JsonValue>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
     fun orgId(): String = orgId
@@ -40,19 +37,11 @@ private constructor(
     /** Number of ResourceGroupItems to retrieve per page */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
 
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    @JsonAnySetter
-    private fun putAdditionalBodyProperty(key: String, value: JsonValue) {
-        additionalBodyProperties.put(key, value)
-    }
-
-    @JsonAnyGetter
-    @ExcludeMissing
-    fun _additionalBodyProperties(): Map<String, JsonValue> =
-        Collections.unmodifiableMap(additionalBodyProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -269,7 +258,7 @@ private constructor(
                 pageSize,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toMutableMap(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
