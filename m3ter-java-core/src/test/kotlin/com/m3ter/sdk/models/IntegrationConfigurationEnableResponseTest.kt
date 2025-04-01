@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -61,5 +63,42 @@ internal class IntegrationConfigurationEnableResponseTest {
         assertThat(integrationConfigurationEnableResponse.name()).contains("name")
         assertThat(integrationConfigurationEnableResponse.triggerType())
             .contains(IntegrationConfigurationEnableResponse.TriggerType.EVENT)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val integrationConfigurationEnableResponse =
+            IntegrationConfigurationEnableResponse.builder()
+                .id("id")
+                .destination("x")
+                .entityType("x")
+                .version(0L)
+                .authorized(true)
+                .configData(
+                    IntegrationConfigurationEnableResponse.ConfigData.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
+                .createdBy("createdBy")
+                .destinationId("destinationId")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .enabled(true)
+                .entityId("entityId")
+                .integrationCredentialsId("integrationCredentialsId")
+                .lastModifiedBy("lastModifiedBy")
+                .name("name")
+                .triggerType(IntegrationConfigurationEnableResponse.TriggerType.EVENT)
+                .build()
+
+        val roundtrippedIntegrationConfigurationEnableResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(integrationConfigurationEnableResponse),
+                jacksonTypeRef<IntegrationConfigurationEnableResponse>(),
+            )
+
+        assertThat(roundtrippedIntegrationConfigurationEnableResponse)
+            .isEqualTo(integrationConfigurationEnableResponse)
     }
 }

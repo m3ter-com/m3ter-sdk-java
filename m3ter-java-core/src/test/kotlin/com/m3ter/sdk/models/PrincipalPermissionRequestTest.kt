@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,5 +16,20 @@ internal class PrincipalPermissionRequestTest {
 
         assertThat(principalPermissionRequest.principalId()).isEqualTo("x")
         assertThat(principalPermissionRequest.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val principalPermissionRequest =
+            PrincipalPermissionRequest.builder().principalId("x").version(0L).build()
+
+        val roundtrippedPrincipalPermissionRequest =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(principalPermissionRequest),
+                jacksonTypeRef<PrincipalPermissionRequest>(),
+            )
+
+        assertThat(roundtrippedPrincipalPermissionRequest).isEqualTo(principalPermissionRequest)
     }
 }

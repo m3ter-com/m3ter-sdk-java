@@ -18,6 +18,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationCreateResponse
 private constructor(
@@ -740,9 +741,41 @@ private constructor(
         integrationCredentialsId()
         lastModifiedBy()
         name()
-        triggerType()
+        triggerType().ifPresent { it.validate() }
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (destination.asKnown().isPresent) 1 else 0) +
+            (if (entityType.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (if (authorized.asKnown().isPresent) 1 else 0) +
+            (configData.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (destinationId.asKnown().isPresent) 1 else 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (enabled.asKnown().isPresent) 1 else 0) +
+            (if (entityId.asKnown().isPresent) 1 else 0) +
+            (if (integrationCredentialsId.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (name.asKnown().isPresent) 1 else 0) +
+            (triggerType.asKnown().getOrNull()?.validity() ?: 0)
 
     /** Configuration data for the integration */
     class ConfigData
@@ -810,6 +843,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -916,6 +967,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): TriggerType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

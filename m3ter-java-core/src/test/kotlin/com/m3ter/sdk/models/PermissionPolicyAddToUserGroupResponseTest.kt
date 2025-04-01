@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -37,5 +39,31 @@ internal class PermissionPolicyAddToUserGroupResponseTest {
         assertThat(permissionPolicyAddToUserGroupResponse.principalType())
             .contains(PermissionPolicyAddToUserGroupResponse.PrincipalType.USER)
         assertThat(permissionPolicyAddToUserGroupResponse.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val permissionPolicyAddToUserGroupResponse =
+            PermissionPolicyAddToUserGroupResponse.builder()
+                .id("id")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .permissionPolicyId("permissionPolicyId")
+                .principalId("principalId")
+                .principalType(PermissionPolicyAddToUserGroupResponse.PrincipalType.USER)
+                .version(0L)
+                .build()
+
+        val roundtrippedPermissionPolicyAddToUserGroupResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(permissionPolicyAddToUserGroupResponse),
+                jacksonTypeRef<PermissionPolicyAddToUserGroupResponse>(),
+            )
+
+        assertThat(roundtrippedPermissionPolicyAddToUserGroupResponse)
+            .isEqualTo(permissionPolicyAddToUserGroupResponse)
     }
 }

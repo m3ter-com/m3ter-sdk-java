@@ -22,6 +22,7 @@ import java.time.LocalDate
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -1617,7 +1618,7 @@ private constructor(
             accountIds()
             billDate()
             billFrequencyInterval()
-            billingFrequency()
+            billingFrequency().ifPresent { it.validate() }
             currencyConversions().ifPresent { it.forEach { it.validate() } }
             dayEpoch()
             dueDate()
@@ -1631,6 +1632,38 @@ private constructor(
             yearEpoch()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (accountIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (billDate.asKnown().isPresent) 1 else 0) +
+                (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
+                (billingFrequency.asKnown().getOrNull()?.validity() ?: 0) +
+                (currencyConversions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (dayEpoch.asKnown().isPresent) 1 else 0) +
+                (if (dueDate.asKnown().isPresent) 1 else 0) +
+                (if (externalInvoiceDate.asKnown().isPresent) 1 else 0) +
+                (if (lastDateInBillingPeriod.asKnown().isPresent) 1 else 0) +
+                (if (monthEpoch.asKnown().isPresent) 1 else 0) +
+                (if (targetCurrency.asKnown().isPresent) 1 else 0) +
+                (if (timezone.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0) +
+                (if (weekEpoch.asKnown().isPresent) 1 else 0) +
+                (if (yearEpoch.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1767,6 +1800,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): BillingFrequency = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,5 +23,24 @@ internal class PermissionStatementResponseTest {
         assertThat(permissionStatementResponse.effect())
             .isEqualTo(PermissionStatementResponse.Effect.ALLOW)
         assertThat(permissionStatementResponse.resource()).containsExactly("string")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val permissionStatementResponse =
+            PermissionStatementResponse.builder()
+                .addAction(PermissionStatementResponse.Action.ALL)
+                .effect(PermissionStatementResponse.Effect.ALLOW)
+                .addResource("string")
+                .build()
+
+        val roundtrippedPermissionStatementResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(permissionStatementResponse),
+                jacksonTypeRef<PermissionStatementResponse>(),
+            )
+
+        assertThat(roundtrippedPermissionStatementResponse).isEqualTo(permissionStatementResponse)
     }
 }

@@ -18,6 +18,7 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class UsageDataExportScheduleResponse
 private constructor(
@@ -502,12 +503,35 @@ private constructor(
         id()
         version()
         accountIds()
-        aggregation()
-        aggregationFrequency()
+        aggregation().ifPresent { it.validate() }
+        aggregationFrequency().ifPresent { it.validate() }
         meterIds()
-        timePeriod()
+        timePeriod().ifPresent { it.validate() }
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (accountIds.asKnown().getOrNull()?.size ?: 0) +
+            (aggregation.asKnown().getOrNull()?.validity() ?: 0) +
+            (aggregationFrequency.asKnown().getOrNull()?.validity() ?: 0) +
+            (meterIds.asKnown().getOrNull()?.size ?: 0) +
+            (timePeriod.asKnown().getOrNull()?.validity() ?: 0)
 
     /**
      * Specifies the aggregation method applied to usage data collected in the numeric Data Fields
@@ -631,6 +655,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): Aggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -772,6 +823,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): AggregationFrequency = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -927,6 +1005,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): TimePeriod = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

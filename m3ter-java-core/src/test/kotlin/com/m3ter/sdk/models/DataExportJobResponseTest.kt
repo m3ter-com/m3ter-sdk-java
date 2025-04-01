@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,5 +33,28 @@ internal class DataExportJobResponseTest {
         assertThat(dataExportJobResponse.startedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(dataExportJobResponse.status()).contains(DataExportJobResponse.Status.PENDING)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val dataExportJobResponse =
+            DataExportJobResponse.builder()
+                .id("id")
+                .version(0L)
+                .dateCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .scheduleId("scheduleId")
+                .sourceType(DataExportJobResponse.SourceType.USAGE)
+                .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .status(DataExportJobResponse.Status.PENDING)
+                .build()
+
+        val roundtrippedDataExportJobResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(dataExportJobResponse),
+                jacksonTypeRef<DataExportJobResponse>(),
+            )
+
+        assertThat(roundtrippedDataExportJobResponse).isEqualTo(dataExportJobResponse)
     }
 }

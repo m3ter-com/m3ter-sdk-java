@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -32,5 +34,30 @@ internal class FileUploadJobResponseTest {
         assertThat(fileUploadJobResponse.totalRows()).contains(0L)
         assertThat(fileUploadJobResponse.uploadDate()).contains("uploadDate")
         assertThat(fileUploadJobResponse.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val fileUploadJobResponse =
+            FileUploadJobResponse.builder()
+                .id("id")
+                .contentLength(0L)
+                .failedRows(0L)
+                .fileName("fileName")
+                .processedRows(0L)
+                .status(FileUploadJobResponse.Status.NOT_UPLOADED)
+                .totalRows(0L)
+                .uploadDate("uploadDate")
+                .version(0L)
+                .build()
+
+        val roundtrippedFileUploadJobResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(fileUploadJobResponse),
+                jacksonTypeRef<FileUploadJobResponse>(),
+            )
+
+        assertThat(roundtrippedFileUploadJobResponse).isEqualTo(fileUploadJobResponse)
     }
 }

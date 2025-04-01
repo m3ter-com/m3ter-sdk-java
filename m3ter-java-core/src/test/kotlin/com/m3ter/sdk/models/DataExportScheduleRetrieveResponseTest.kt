@@ -2,15 +2,28 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 
 internal class DataExportScheduleRetrieveResponseTest {
 
     @Test
     fun ofOperationalDataExportSchedule() {
         val operationalDataExportSchedule =
-            OperationalDataExportScheduleResponse.builder().id("id").version(0L).build()
+            OperationalDataExportScheduleResponse.builder()
+                .id("id")
+                .version(0L)
+                .addOperationalDataType(
+                    OperationalDataExportScheduleResponse.OperationalDataType.BILLS
+                )
+                .build()
 
         val dataExportScheduleRetrieveResponse =
             DataExportScheduleRetrieveResponse.ofOperationalDataExportSchedule(
@@ -23,9 +36,41 @@ internal class DataExportScheduleRetrieveResponseTest {
     }
 
     @Test
+    fun ofOperationalDataExportScheduleRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val dataExportScheduleRetrieveResponse =
+            DataExportScheduleRetrieveResponse.ofOperationalDataExportSchedule(
+                OperationalDataExportScheduleResponse.builder()
+                    .id("id")
+                    .version(0L)
+                    .addOperationalDataType(
+                        OperationalDataExportScheduleResponse.OperationalDataType.BILLS
+                    )
+                    .build()
+            )
+
+        val roundtrippedDataExportScheduleRetrieveResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(dataExportScheduleRetrieveResponse),
+                jacksonTypeRef<DataExportScheduleRetrieveResponse>(),
+            )
+
+        assertThat(roundtrippedDataExportScheduleRetrieveResponse)
+            .isEqualTo(dataExportScheduleRetrieveResponse)
+    }
+
+    @Test
     fun ofUsageDataExportSchedule() {
         val usageDataExportSchedule =
-            UsageDataExportScheduleResponse.builder().id("id").version(0L).build()
+            UsageDataExportScheduleResponse.builder()
+                .id("id")
+                .version(0L)
+                .addAccountId("string")
+                .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
+                .aggregationFrequency(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
+                .addMeterId("string")
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .build()
 
         val dataExportScheduleRetrieveResponse =
             DataExportScheduleRetrieveResponse.ofUsageDataExportSchedule(usageDataExportSchedule)
@@ -33,5 +78,55 @@ internal class DataExportScheduleRetrieveResponseTest {
         assertThat(dataExportScheduleRetrieveResponse.operationalDataExportSchedule()).isEmpty
         assertThat(dataExportScheduleRetrieveResponse.usageDataExportSchedule())
             .contains(usageDataExportSchedule)
+    }
+
+    @Test
+    fun ofUsageDataExportScheduleRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val dataExportScheduleRetrieveResponse =
+            DataExportScheduleRetrieveResponse.ofUsageDataExportSchedule(
+                UsageDataExportScheduleResponse.builder()
+                    .id("id")
+                    .version(0L)
+                    .addAccountId("string")
+                    .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
+                    .aggregationFrequency(
+                        UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL
+                    )
+                    .addMeterId("string")
+                    .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                    .build()
+            )
+
+        val roundtrippedDataExportScheduleRetrieveResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(dataExportScheduleRetrieveResponse),
+                jacksonTypeRef<DataExportScheduleRetrieveResponse>(),
+            )
+
+        assertThat(roundtrippedDataExportScheduleRetrieveResponse)
+            .isEqualTo(dataExportScheduleRetrieveResponse)
+    }
+
+    enum class IncompatibleJsonShapeTestCase(val value: JsonValue) {
+        BOOLEAN(JsonValue.from(false)),
+        STRING(JsonValue.from("invalid")),
+        INTEGER(JsonValue.from(-1)),
+        FLOAT(JsonValue.from(3.14)),
+        ARRAY(JsonValue.from(listOf("invalid", "array"))),
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    fun incompatibleJsonShapeDeserializesToUnknown(testCase: IncompatibleJsonShapeTestCase) {
+        val dataExportScheduleRetrieveResponse =
+            jsonMapper()
+                .convertValue(testCase.value, jacksonTypeRef<DataExportScheduleRetrieveResponse>())
+
+        val e =
+            assertThrows<M3terInvalidDataException> {
+                dataExportScheduleRetrieveResponse.validate()
+            }
+        assertThat(e).hasMessageStartingWith("Unknown ")
     }
 }

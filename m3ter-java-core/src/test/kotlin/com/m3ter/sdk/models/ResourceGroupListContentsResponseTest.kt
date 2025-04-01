@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -29,5 +31,28 @@ internal class ResourceGroupListContentsResponseTest {
         assertThat(resourceGroupListContentsResponse.targetId()).contains("targetId")
         assertThat(resourceGroupListContentsResponse.targetType())
             .contains(ResourceGroupListContentsResponse.TargetType.ITEM)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val resourceGroupListContentsResponse =
+            ResourceGroupListContentsResponse.builder()
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .targetId("targetId")
+                .targetType(ResourceGroupListContentsResponse.TargetType.ITEM)
+                .build()
+
+        val roundtrippedResourceGroupListContentsResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(resourceGroupListContentsResponse),
+                jacksonTypeRef<ResourceGroupListContentsResponse>(),
+            )
+
+        assertThat(roundtrippedResourceGroupListContentsResponse)
+            .isEqualTo(resourceGroupListContentsResponse)
     }
 }

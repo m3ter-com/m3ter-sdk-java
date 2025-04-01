@@ -17,6 +17,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationResponse
 private constructor(
@@ -657,7 +658,7 @@ private constructor(
         destination()
         entityId()
         entityType()
-        status()
+        status().validate()
         version()
         createdBy()
         dtCompleted()
@@ -670,6 +671,37 @@ private constructor(
         url()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (destination.asKnown().isPresent) 1 else 0) +
+            (if (entityId.asKnown().isPresent) 1 else 0) +
+            (if (entityType.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (dtCompleted.asKnown().isPresent) 1 else 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (dtStarted.asKnown().isPresent) 1 else 0) +
+            (if (error.asKnown().isPresent) 1 else 0) +
+            (if (externalId.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (url.asKnown().isPresent) 1 else 0)
 
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -796,6 +828,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

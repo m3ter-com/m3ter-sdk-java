@@ -921,6 +921,31 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (appliedDate.asKnown().isPresent) 1 else 0) +
+                (if (currencyPaid.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (paid.asKnown().isPresent) 1 else 0) +
+                (if (transactionDate.asKnown().isPresent) 1 else 0) +
+                (if (transactionTypeId.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true

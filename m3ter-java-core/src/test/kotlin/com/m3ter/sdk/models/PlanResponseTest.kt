@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -72,5 +74,47 @@ internal class PlanResponseTest {
             .contains("standingChargeAccountingProductId")
         assertThat(planResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(planResponse.standingChargeDescription()).contains("standingChargeDescription")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val planResponse =
+            PlanResponse.builder()
+                .id("id")
+                .version(0L)
+                .accountId("accountId")
+                .bespoke(true)
+                .code("code")
+                .createdBy("createdBy")
+                .customFields(
+                    PlanResponse.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .minimumSpend(0.0)
+                .minimumSpendAccountingProductId("minimumSpendAccountingProductId")
+                .minimumSpendBillInAdvance(true)
+                .minimumSpendDescription("minimumSpendDescription")
+                .name("name")
+                .ordinal(0L)
+                .planTemplateId("planTemplateId")
+                .productId("productId")
+                .standingCharge(0.0)
+                .standingChargeAccountingProductId("standingChargeAccountingProductId")
+                .standingChargeBillInAdvance(true)
+                .standingChargeDescription("standingChargeDescription")
+                .build()
+
+        val roundtrippedPlanResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(planResponse),
+                jacksonTypeRef<PlanResponse>(),
+            )
+
+        assertThat(roundtrippedPlanResponse).isEqualTo(planResponse)
     }
 }

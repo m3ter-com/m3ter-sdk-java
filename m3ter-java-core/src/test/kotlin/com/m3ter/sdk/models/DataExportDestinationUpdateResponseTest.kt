@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -41,5 +43,34 @@ internal class DataExportDestinationUpdateResponseTest {
         assertThat(dataExportDestinationUpdateResponse.partitionOrder())
             .contains(DataExportDestinationUpdateResponse.PartitionOrder.TYPE_FIRST)
         assertThat(dataExportDestinationUpdateResponse.prefix()).contains("prefix")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val dataExportDestinationUpdateResponse =
+            DataExportDestinationUpdateResponse.builder()
+                .id("id")
+                .version(0L)
+                .code("code")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .name("name")
+                .bucketName("bucketName")
+                .iamRoleArn("iamRoleArn")
+                .partitionOrder(DataExportDestinationUpdateResponse.PartitionOrder.TYPE_FIRST)
+                .prefix("prefix")
+                .build()
+
+        val roundtrippedDataExportDestinationUpdateResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(dataExportDestinationUpdateResponse),
+                jacksonTypeRef<DataExportDestinationUpdateResponse>(),
+            )
+
+        assertThat(roundtrippedDataExportDestinationUpdateResponse)
+            .isEqualTo(dataExportDestinationUpdateResponse)
     }
 }
