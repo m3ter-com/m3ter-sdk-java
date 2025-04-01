@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -48,5 +50,36 @@ internal class PermissionPolicyResponseTest {
                     .build()
             )
         assertThat(permissionPolicyResponse.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val permissionPolicyResponse =
+            PermissionPolicyResponse.builder()
+                .id("id")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .managedPolicy(true)
+                .name("name")
+                .addPermissionPolicy(
+                    PermissionStatementResponse.builder()
+                        .addAction(PermissionStatementResponse.Action.ALL)
+                        .effect(PermissionStatementResponse.Effect.ALLOW)
+                        .addResource("string")
+                        .build()
+                )
+                .version(0L)
+                .build()
+
+        val roundtrippedPermissionPolicyResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(permissionPolicyResponse),
+                jacksonTypeRef<PermissionPolicyResponse>(),
+            )
+
+        assertThat(roundtrippedPermissionPolicyResponse).isEqualTo(permissionPolicyResponse)
     }
 }

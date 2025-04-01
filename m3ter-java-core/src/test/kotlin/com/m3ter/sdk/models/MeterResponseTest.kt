@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -85,5 +87,53 @@ internal class MeterResponseTest {
         assertThat(meterResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(meterResponse.name()).contains("name")
         assertThat(meterResponse.productId()).contains("productId")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val meterResponse =
+            MeterResponse.builder()
+                .id("id")
+                .version(0L)
+                .code("code")
+                .createdBy("createdBy")
+                .customFields(
+                    MeterResponse.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .addDataField(
+                    DataFieldResponse.builder()
+                        .category(DataFieldResponse.Category.WHO)
+                        .code("{1{}}_")
+                        .name("x")
+                        .unit("x")
+                        .build()
+                )
+                .addDerivedField(
+                    MeterResponse.DerivedField.builder()
+                        .category(DataFieldResponse.Category.WHO)
+                        .code("{1{}}_")
+                        .name("x")
+                        .unit("x")
+                        .calculation("x")
+                        .build()
+                )
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .groupId("groupId")
+                .lastModifiedBy("lastModifiedBy")
+                .name("name")
+                .productId("productId")
+                .build()
+
+        val roundtrippedMeterResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(meterResponse),
+                jacksonTypeRef<MeterResponse>(),
+            )
+
+        assertThat(roundtrippedMeterResponse).isEqualTo(meterResponse)
     }
 }

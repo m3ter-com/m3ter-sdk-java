@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -38,5 +40,32 @@ internal class CurrencyResponseTest {
         assertThat(currencyResponse.maxDecimalPlaces()).contains(0L)
         assertThat(currencyResponse.name()).contains("name")
         assertThat(currencyResponse.roundingMode()).contains(CurrencyResponse.RoundingMode.UP)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val currencyResponse =
+            CurrencyResponse.builder()
+                .id("id")
+                .version(0L)
+                .archived(true)
+                .code("code")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .maxDecimalPlaces(0L)
+                .name("name")
+                .roundingMode(CurrencyResponse.RoundingMode.UP)
+                .build()
+
+        val roundtrippedCurrencyResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(currencyResponse),
+                jacksonTypeRef<CurrencyResponse>(),
+            )
+
+        assertThat(roundtrippedCurrencyResponse).isEqualTo(currencyResponse)
     }
 }

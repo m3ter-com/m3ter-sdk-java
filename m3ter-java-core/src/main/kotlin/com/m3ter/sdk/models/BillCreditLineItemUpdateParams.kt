@@ -20,6 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Update the Credit line item with the given UUID. */
 class BillCreditLineItemUpdateParams
@@ -1131,11 +1132,39 @@ private constructor(
             servicePeriodEndDate()
             servicePeriodStartDate()
             creditReasonId()
-            lineItemType()
+            lineItemType().ifPresent { it.validate() }
             reasonId()
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (productId.asKnown().isPresent) 1 else 0) +
+                (if (referencedBillId.asKnown().isPresent) 1 else 0) +
+                (if (referencedLineItemId.asKnown().isPresent) 1 else 0) +
+                (if (servicePeriodEndDate.asKnown().isPresent) 1 else 0) +
+                (if (servicePeriodStartDate.asKnown().isPresent) 1 else 0) +
+                (if (creditReasonId.asKnown().isPresent) 1 else 0) +
+                (lineItemType.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (reasonId.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1337,6 +1366,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItemType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

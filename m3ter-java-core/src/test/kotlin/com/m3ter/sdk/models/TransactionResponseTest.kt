@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -48,5 +50,36 @@ internal class TransactionResponseTest {
         assertThat(transactionResponse.transactionDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transactionResponse.transactionTypeId()).contains("transactionTypeId")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val transactionResponse =
+            TransactionResponse.builder()
+                .id("id")
+                .version(0L)
+                .amount(0.0)
+                .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .createdBy("createdBy")
+                .currencyPaid("currencyPaid")
+                .description("description")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .entityId("entityId")
+                .entityType(TransactionResponse.EntityType.BILL)
+                .lastModifiedBy("lastModifiedBy")
+                .paid(0.0)
+                .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .transactionTypeId("transactionTypeId")
+                .build()
+
+        val roundtrippedTransactionResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(transactionResponse),
+                jacksonTypeRef<TransactionResponse>(),
+            )
+
+        assertThat(roundtrippedTransactionResponse).isEqualTo(transactionResponse)
     }
 }

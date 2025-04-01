@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -76,5 +78,49 @@ internal class AggregationResponseTest {
             )
         assertThat(aggregationResponse.targetField()).contains("targetField")
         assertThat(aggregationResponse.unit()).contains("unit")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val aggregationResponse =
+            AggregationResponse.builder()
+                .id("id")
+                .version(0L)
+                .accountingProductId("accountingProductId")
+                .aggregation(AggregationResponse.Aggregation.SUM)
+                .code("code")
+                .createdBy("createdBy")
+                .customFields(
+                    AggregationResponse.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .customSql("customSql")
+                .defaultValue(0.0)
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .meterId("meterId")
+                .name("name")
+                .quantityPerUnit(0.0)
+                .rounding(AggregationResponse.Rounding.UP)
+                .addSegmentedField("string")
+                .addSegment(
+                    AggregationResponse.Segment.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .targetField("targetField")
+                .unit("unit")
+                .build()
+
+        val roundtrippedAggregationResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(aggregationResponse),
+                jacksonTypeRef<AggregationResponse>(),
+            )
+
+        assertThat(roundtrippedAggregationResponse).isEqualTo(aggregationResponse)
     }
 }

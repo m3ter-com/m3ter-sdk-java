@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -70,5 +72,45 @@ internal class WebhookTest {
         assertThat(webhook.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(webhook.name()).contains("name")
         assertThat(webhook.url()).contains("url")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val webhook =
+            Webhook.builder()
+                .id("id")
+                .version(0L)
+                .active(true)
+                .code("code")
+                .createdBy("createdBy")
+                .credentials(
+                    M3terSignedCredentialsResponse.builder()
+                        .id("id")
+                        .destination("x")
+                        .type("x")
+                        .version(0L)
+                        .apiKey("apiKey")
+                        .createdBy("createdBy")
+                        .destinationId("destinationId")
+                        .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .lastModifiedBy("lastModifiedBy")
+                        .name("name")
+                        .secret("secret")
+                        .build()
+                )
+                .description("description")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .name("name")
+                .url("url")
+                .build()
+
+        val roundtrippedWebhook =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(webhook), jacksonTypeRef<Webhook>())
+
+        assertThat(roundtrippedWebhook).isEqualTo(webhook)
     }
 }

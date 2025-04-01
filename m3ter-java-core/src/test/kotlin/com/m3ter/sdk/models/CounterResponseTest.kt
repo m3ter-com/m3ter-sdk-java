@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -36,5 +38,31 @@ internal class CounterResponseTest {
         assertThat(counterResponse.name()).contains("name")
         assertThat(counterResponse.productId()).contains("productId")
         assertThat(counterResponse.unit()).contains("unit")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val counterResponse =
+            CounterResponse.builder()
+                .id("id")
+                .version(0L)
+                .code("code")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .name("name")
+                .productId("productId")
+                .unit("unit")
+                .build()
+
+        val roundtrippedCounterResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(counterResponse),
+                jacksonTypeRef<CounterResponse>(),
+            )
+
+        assertThat(roundtrippedCounterResponse).isEqualTo(counterResponse)
     }
 }

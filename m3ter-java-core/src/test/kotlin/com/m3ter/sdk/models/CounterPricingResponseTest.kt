@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -76,5 +78,49 @@ internal class CounterPricingResponseTest {
         assertThat(counterPricingResponse.runningTotalBillInAdvance()).contains(true)
         assertThat(counterPricingResponse.startDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val counterPricingResponse =
+            CounterPricingResponse.builder()
+                .id("id")
+                .version(0L)
+                .accountingProductId("accountingProductId")
+                .code("code")
+                .counterId("counterId")
+                .createdBy("createdBy")
+                .cumulative(true)
+                .description("description")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .planId("planId")
+                .planTemplateId("planTemplateId")
+                .addPricingBand(
+                    PricingBand.builder()
+                        .fixedPrice(0.0)
+                        .lowerLimit(0.0)
+                        .unitPrice(0.0)
+                        .id("id")
+                        .creditTypeId("creditTypeId")
+                        .build()
+                )
+                .proRateAdjustmentCredit(true)
+                .proRateAdjustmentDebit(true)
+                .proRateRunningTotal(true)
+                .runningTotalBillInAdvance(true)
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        val roundtrippedCounterPricingResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(counterPricingResponse),
+                jacksonTypeRef<CounterPricingResponse>(),
+            )
+
+        assertThat(roundtrippedCounterPricingResponse).isEqualTo(counterPricingResponse)
     }
 }

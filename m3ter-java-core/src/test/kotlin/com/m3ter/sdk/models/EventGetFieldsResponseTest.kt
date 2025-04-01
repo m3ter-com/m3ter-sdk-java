@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -85,5 +87,56 @@ internal class EventGetFieldsResponseTest {
                     )
                     .build()
             )
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val eventGetFieldsResponse =
+            EventGetFieldsResponse.builder()
+                .events(
+                    EventGetFieldsResponse.Events.builder()
+                        .putAdditionalProperty(
+                            "configuration.commitment.created",
+                            JsonValue.from(
+                                mapOf(
+                                    "new.accountCode" to "string",
+                                    "new.accountId" to "string",
+                                    "new.accountingProductId" to "string",
+                                    "new.amount" to "double",
+                                    "new.amountFirstBill" to "double",
+                                    "new.amountPrePaid" to "double",
+                                    "new.amountSpent" to "double",
+                                    "new.billEpoch" to "string",
+                                    "new.billingInterval" to "int",
+                                    "new.billingOffset" to "int",
+                                    "new.billingPlanId" to "string",
+                                    "new.commitmentFeeBillInAdvance" to "boolean",
+                                    "new.commitmentFeeDescription" to "string",
+                                    "new.commitmentUsageDescription" to "string",
+                                    "new.contractId" to "string",
+                                    "new.currency" to "string",
+                                    "new.customFields" to "map",
+                                    "new.endDate" to "string",
+                                    "new.feeDates" to "array",
+                                    "new.id" to "string",
+                                    "new.overageDescription" to "string",
+                                    "new.overageSurchargePercent" to "double",
+                                    "new.productIds" to "array",
+                                    "new.startDate" to "string",
+                                )
+                            ),
+                        )
+                        .build()
+                )
+                .build()
+
+        val roundtrippedEventGetFieldsResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(eventGetFieldsResponse),
+                jacksonTypeRef<EventGetFieldsResponse>(),
+            )
+
+        assertThat(roundtrippedEventGetFieldsResponse).isEqualTo(eventGetFieldsResponse)
     }
 }
