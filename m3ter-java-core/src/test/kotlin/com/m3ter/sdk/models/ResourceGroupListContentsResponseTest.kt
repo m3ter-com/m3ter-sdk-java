@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResourceGroupListContentsResponseTest {
+internal class ResourceGroupListContentsResponseTest {
 
     @Test
-    fun createResourceGroupListContentsResponse() {
+    fun create() {
         val resourceGroupListContentsResponse =
             ResourceGroupListContentsResponse.builder()
                 .createdBy("createdBy")
@@ -19,7 +19,7 @@ class ResourceGroupListContentsResponseTest {
                 .targetId("targetId")
                 .targetType(ResourceGroupListContentsResponse.TargetType.ITEM)
                 .build()
-        assertThat(resourceGroupListContentsResponse).isNotNull
+
         assertThat(resourceGroupListContentsResponse.createdBy()).contains("createdBy")
         assertThat(resourceGroupListContentsResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

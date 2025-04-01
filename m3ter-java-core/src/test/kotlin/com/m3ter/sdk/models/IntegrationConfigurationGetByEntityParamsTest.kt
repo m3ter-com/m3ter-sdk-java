@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IntegrationConfigurationGetByEntityParamsTest {
+internal class IntegrationConfigurationGetByEntityParamsTest {
 
     @Test
     fun create() {
@@ -18,6 +18,20 @@ class IntegrationConfigurationGetByEntityParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params =
+            IntegrationConfigurationGetByEntityParams.builder()
+                .orgId("orgId")
+                .entityType("entityType")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("entityType")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             IntegrationConfigurationGetByEntityParams.builder()
@@ -25,9 +39,10 @@ class IntegrationConfigurationGetByEntityParamsTest {
                 .entityType("entityType")
                 .entityId("entityId")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("entityId", "entityId")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().put("entityId", "entityId").build())
     }
 
     @Test
@@ -37,23 +52,9 @@ class IntegrationConfigurationGetByEntityParamsTest {
                 .orgId("orgId")
                 .entityType("entityType")
                 .build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
-    }
 
-    @Test
-    fun getPathParam() {
-        val params =
-            IntegrationConfigurationGetByEntityParams.builder()
-                .orgId("orgId")
-                .entityType("entityType")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "entityType"
-        assertThat(params.getPathParam(1)).isEqualTo("entityType")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

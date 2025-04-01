@@ -1,5 +1,57 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2025-03-31)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** refactor exception structure and methods ([#119](https://github.com/m3ter-com/m3ter-sdk-java/issues/119))
+
+### Features
+
+* **client:** support a lower jackson version ([#125](https://github.com/m3ter-com/m3ter-sdk-java/issues/125)) ([15865b0](https://github.com/m3ter-com/m3ter-sdk-java/commit/15865b05e13383b95a475e9cac6e719d72ebd4dc))
+* **client:** throw on incompatible jackson version ([15865b0](https://github.com/m3ter-com/m3ter-sdk-java/commit/15865b05e13383b95a475e9cac6e719d72ebd4dc))
+
+
+### Bug Fixes
+
+* **client:** don't call `validate()` during deserialization if we don't have to ([#127](https://github.com/m3ter-com/m3ter-sdk-java/issues/127)) ([ff799dc](https://github.com/m3ter-com/m3ter-sdk-java/commit/ff799dc9cee568b6739e2090d500057975c20769))
+* **client:** limit json deserialization coercion ([#128](https://github.com/m3ter-com/m3ter-sdk-java/issues/128)) ([f5a49a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/f5a49a6e4fe2df7b7196d0e882b85fb94926ae81))
+* **client:** map deserialization bug ([1b192f2](https://github.com/m3ter-com/m3ter-sdk-java/commit/1b192f2a346cbf72688df9d20c38180e8281a4a9))
+* **client:** support kotlin 1.8 runtime ([#116](https://github.com/m3ter-com/m3ter-sdk-java/issues/116)) ([79b4d09](https://github.com/m3ter-com/m3ter-sdk-java/commit/79b4d090e85f31800e1ff9bc512348e1bfe967a3))
+
+
+### Chores
+
+* **client:** refactor exception structure and methods ([#119](https://github.com/m3ter-com/m3ter-sdk-java/issues/119)) ([ad77354](https://github.com/m3ter-com/m3ter-sdk-java/commit/ad77354524f638cdbeec5f6c634fbde71753ff42))
+* **internal:** add generated comment ([#110](https://github.com/m3ter-com/m3ter-sdk-java/issues/110)) ([2bc3528](https://github.com/m3ter-com/m3ter-sdk-java/commit/2bc352821401360226529750ff8d34bcab8a12cd))
+* **internal:** add missing release please block ([#118](https://github.com/m3ter-com/m3ter-sdk-java/issues/118)) ([d819742](https://github.com/m3ter-com/m3ter-sdk-java/commit/d8197425e24f10b0f21aba1c0d15d376e5915c21))
+* **internal:** add some tests for union classes ([#115](https://github.com/m3ter-com/m3ter-sdk-java/issues/115)) ([529ddb3](https://github.com/m3ter-com/m3ter-sdk-java/commit/529ddb3f81f7d36147332b56cd3e1e9d380bea05))
+* **internal:** delete duplicate tests ([80077a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/80077a6a8ff712a9731d946b74d63ad6bb2f78f7))
+* **internal:** delete unused methods and annotations ([#126](https://github.com/m3ter-com/m3ter-sdk-java/issues/126)) ([1b192f2](https://github.com/m3ter-com/m3ter-sdk-java/commit/1b192f2a346cbf72688df9d20c38180e8281a4a9))
+* **internal:** fix example formatting ([#121](https://github.com/m3ter-com/m3ter-sdk-java/issues/121)) ([59c445f](https://github.com/m3ter-com/m3ter-sdk-java/commit/59c445fb2f11b1e5450218b12687148d5f427a3d))
+* **internal:** generate more tests ([7af2f85](https://github.com/m3ter-com/m3ter-sdk-java/commit/7af2f85223a889a1bf7a5b0c4785ab55257e758a))
+* **internal:** make multipart assertions more robust ([2f128a8](https://github.com/m3ter-com/m3ter-sdk-java/commit/2f128a864ee56e41486aa133ee7e5288e957e37a))
+* **internal:** make test classes internal ([#108](https://github.com/m3ter-com/m3ter-sdk-java/issues/108)) ([1aeaedc](https://github.com/m3ter-com/m3ter-sdk-java/commit/1aeaedc142061e8cec2738535d14659c12fc32a3))
+* **internal:** refactor enum query param serialization ([#117](https://github.com/m3ter-com/m3ter-sdk-java/issues/117)) ([fcd97b4](https://github.com/m3ter-com/m3ter-sdk-java/commit/fcd97b406102d50e0ebb40352872d9bb41de98f6))
+* **internal:** refactor query param serialization impl and tests ([#112](https://github.com/m3ter-com/m3ter-sdk-java/issues/112)) ([987a6be](https://github.com/m3ter-com/m3ter-sdk-java/commit/987a6bed429cf26df5852980bdd1a0d1f7ab42b8))
+* **internal:** refactor some test assertions ([80077a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/80077a6a8ff712a9731d946b74d63ad6bb2f78f7))
+* **internal:** reformat some tests ([#114](https://github.com/m3ter-com/m3ter-sdk-java/issues/114)) ([7af2f85](https://github.com/m3ter-com/m3ter-sdk-java/commit/7af2f85223a889a1bf7a5b0c4785ab55257e758a))
+* **internal:** remove unnecessary `assertNotNull` calls ([2f128a8](https://github.com/m3ter-com/m3ter-sdk-java/commit/2f128a864ee56e41486aa133ee7e5288e957e37a))
+* **internal:** remove unnecessary import ([#122](https://github.com/m3ter-com/m3ter-sdk-java/issues/122)) ([0fa0605](https://github.com/m3ter-com/m3ter-sdk-java/commit/0fa0605c41ce0e0db5fb29ecbba97efafd73f1f9))
+* **internal:** rename `getPathParam` ([#113](https://github.com/m3ter-com/m3ter-sdk-java/issues/113)) ([80077a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/80077a6a8ff712a9731d946b74d63ad6bb2f78f7))
+* **internal:** reorder some params methodsc ([80077a6](https://github.com/m3ter-com/m3ter-sdk-java/commit/80077a6a8ff712a9731d946b74d63ad6bb2f78f7))
+* **internal:** version bump ([#106](https://github.com/m3ter-com/m3ter-sdk-java/issues/106)) ([c664205](https://github.com/m3ter-com/m3ter-sdk-java/commit/c664205941452dc48d3f480096a33d9e88400095))
+
+
+### Documentation
+
+* add `build` method comments ([#111](https://github.com/m3ter-com/m3ter-sdk-java/issues/111)) ([84ee9db](https://github.com/m3ter-com/m3ter-sdk-java/commit/84ee9dbdd0f850aecd70333ed1276ea95aa369e9))
+* minor readme tweak ([#124](https://github.com/m3ter-com/m3ter-sdk-java/issues/124)) ([11f7cd3](https://github.com/m3ter-com/m3ter-sdk-java/commit/11f7cd3e6e433726f3a7500f1d7dfc578cee09e8))
+* refine comments on multipart params ([#120](https://github.com/m3ter-com/m3ter-sdk-java/issues/120)) ([2f128a8](https://github.com/m3ter-com/m3ter-sdk-java/commit/2f128a864ee56e41486aa133ee7e5288e957e37a))
+* update readme exception docs ([#123](https://github.com/m3ter-com/m3ter-sdk-java/issues/123)) ([75917d0](https://github.com/m3ter-com/m3ter-sdk-java/commit/75917d0d4ad64efd07abe37b45cc18674b26742b))
+
 ## 0.1.0-alpha.10 (2025-03-15)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)

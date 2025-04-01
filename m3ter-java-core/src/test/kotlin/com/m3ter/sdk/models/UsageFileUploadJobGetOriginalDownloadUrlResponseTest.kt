@@ -6,10 +6,10 @@ import com.m3ter.sdk.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UsageFileUploadJobGetOriginalDownloadUrlResponseTest {
+internal class UsageFileUploadJobGetOriginalDownloadUrlResponseTest {
 
     @Test
-    fun createUsageFileUploadJobGetOriginalDownloadUrlResponse() {
+    fun create() {
         val usageFileUploadJobGetOriginalDownloadUrlResponse =
             UsageFileUploadJobGetOriginalDownloadUrlResponse.builder()
                 .headers(
@@ -20,7 +20,7 @@ class UsageFileUploadJobGetOriginalDownloadUrlResponseTest {
                 .jobId("jobId")
                 .url("url")
                 .build()
-        assertThat(usageFileUploadJobGetOriginalDownloadUrlResponse).isNotNull
+
         assertThat(usageFileUploadJobGetOriginalDownloadUrlResponse.headers())
             .contains(
                 UsageFileUploadJobGetOriginalDownloadUrlResponse.Headers.builder()

@@ -2,11 +2,11 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class OrganizationConfigUpdateParamsTest {
+internal class OrganizationConfigUpdateParamsTest {
 
     @Test
     fun create() {
@@ -42,6 +42,25 @@ class OrganizationConfigUpdateParamsTest {
             .suppressedEmptyBills(true)
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            OrganizationConfigUpdateParams.builder()
+                .orgId("orgId")
+                .currency("USD")
+                .dayEpoch("2022-01-01")
+                .daysBeforeBillDue(1L)
+                .monthEpoch("2022-01-01")
+                .timezone("UTC")
+                .weekEpoch("2022-01-04")
+                .yearEpoch("2022-01-01")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -82,7 +101,6 @@ class OrganizationConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")
         assertThat(body.daysBeforeBillDue()).isEqualTo(1L)
@@ -97,11 +115,11 @@ class OrganizationConfigUpdateParamsTest {
         assertThat(body.billPrefix()).contains("Bill-")
         assertThat(body.commitmentFeeBillInAdvance()).contains(true)
         assertThat(body.consolidateBills()).contains(true)
-        assertThat(body.creditApplicationOrder())
-            .contains(listOf(OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT))
-        assertThat(body.currencyConversions())
-            .contains(
-                listOf(CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build())
+        assertThat(body.creditApplicationOrder().getOrNull())
+            .containsExactly(OrganizationConfigUpdateParams.CreditApplicationOrder.PREPAYMENT)
+        assertThat(body.currencyConversions().getOrNull())
+            .containsExactly(
+                CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )
         assertThat(body.defaultStatementDefinitionId()).contains("defaultStatementDefinitionId")
         assertThat(body.externalInvoiceDate()).contains("LAST_DAY_OF_ARREARS")
@@ -129,7 +147,6 @@ class OrganizationConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.dayEpoch()).isEqualTo("2022-01-01")
         assertThat(body.daysBeforeBillDue()).isEqualTo(1L)
@@ -137,25 +154,5 @@ class OrganizationConfigUpdateParamsTest {
         assertThat(body.timezone()).isEqualTo("UTC")
         assertThat(body.weekEpoch()).isEqualTo("2022-01-04")
         assertThat(body.yearEpoch()).isEqualTo("2022-01-01")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            OrganizationConfigUpdateParams.builder()
-                .orgId("orgId")
-                .currency("USD")
-                .dayEpoch("2022-01-01")
-                .daysBeforeBillDue(1L)
-                .monthEpoch("2022-01-01")
-                .timezone("UTC")
-                .weekEpoch("2022-01-04")
-                .yearEpoch("2022-01-01")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -11,14 +11,12 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -66,172 +64,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("grant_type")
-        @ExcludeMissing
-        private val grantType: JsonField<GrantType> = JsonMissing.of(),
-        @JsonProperty("scope")
-        @ExcludeMissing
-        private val scope: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The grant type.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun grantType(): GrantType = grantType.getRequired("grant_type")
-
-        /**
-         * Not used. The JWT scope.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
-
-        /**
-         * Returns the raw JSON value of [grantType].
-         *
-         * Unlike [grantType], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("grant_type")
-        @ExcludeMissing
-        fun _grantType(): JsonField<GrantType> = grantType
-
-        /**
-         * Returns the raw JSON value of [scope].
-         *
-         * Unlike [scope], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("scope") @ExcludeMissing fun _scope(): JsonField<String> = scope
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            grantType()
-            scope()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .grantType()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var grantType: JsonField<GrantType>? = null
-            private var scope: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                grantType = body.grantType
-                scope = body.scope
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The grant type. */
-            fun grantType(grantType: GrantType) = grantType(JsonField.of(grantType))
-
-            /**
-             * Sets [Builder.grantType] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.grantType] with a well-typed [GrantType] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun grantType(grantType: JsonField<GrantType>) = apply { this.grantType = grantType }
-
-            /** Not used. The JWT scope. */
-            fun scope(scope: String) = scope(JsonField.of(scope))
-
-            /**
-             * Sets [Builder.scope] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.scope] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun scope(scope: JsonField<String>) = apply { this.scope = scope }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("grantType", grantType),
-                    scope,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && grantType == other.grantType && scope == other.scope && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(grantType, scope, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{grantType=$grantType, scope=$scope, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -249,7 +81,6 @@ private constructor(
     }
 
     /** A builder for [AuthenticationGetBearerTokenParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
@@ -405,12 +236,209 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AuthenticationGetBearerTokenParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .grantType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AuthenticationGetBearerTokenParams =
             AuthenticationGetBearerTokenParams(
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val grantType: JsonField<GrantType>,
+        private val scope: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("grant_type")
+            @ExcludeMissing
+            grantType: JsonField<GrantType> = JsonMissing.of(),
+            @JsonProperty("scope") @ExcludeMissing scope: JsonField<String> = JsonMissing.of(),
+        ) : this(grantType, scope, mutableMapOf())
+
+        /**
+         * The grant type.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun grantType(): GrantType = grantType.getRequired("grant_type")
+
+        /**
+         * Not used. The JWT scope.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
+
+        /**
+         * Returns the raw JSON value of [grantType].
+         *
+         * Unlike [grantType], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("grant_type")
+        @ExcludeMissing
+        fun _grantType(): JsonField<GrantType> = grantType
+
+        /**
+         * Returns the raw JSON value of [scope].
+         *
+         * Unlike [scope], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("scope") @ExcludeMissing fun _scope(): JsonField<String> = scope
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .grantType()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var grantType: JsonField<GrantType>? = null
+            private var scope: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                grantType = body.grantType
+                scope = body.scope
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The grant type. */
+            fun grantType(grantType: GrantType) = grantType(JsonField.of(grantType))
+
+            /**
+             * Sets [Builder.grantType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.grantType] with a well-typed [GrantType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun grantType(grantType: JsonField<GrantType>) = apply { this.grantType = grantType }
+
+            /** Not used. The JWT scope. */
+            fun scope(scope: String) = scope(JsonField.of(scope))
+
+            /**
+             * Sets [Builder.scope] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.scope] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun scope(scope: JsonField<String>) = apply { this.scope = scope }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .grantType()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("grantType", grantType),
+                    scope,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            grantType()
+            scope()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && grantType == other.grantType && scope == other.scope && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(grantType, scope, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{grantType=$grantType, scope=$scope, additionalProperties=$additionalProperties}"
     }
 
     /** The grant type. */

@@ -3,11 +3,11 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UserInvitationCreateParamsTest {
+internal class UserInvitationCreateParamsTest {
 
     @Test
     fun create() {
@@ -23,6 +23,21 @@ class UserInvitationCreateParamsTest {
             .addPermissionPolicyId("string")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            UserInvitationCreateParams.builder()
+                .orgId("orgId")
+                .email("dev@stainless.com")
+                .firstName("x")
+                .lastName("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -43,7 +58,6 @@ class UserInvitationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.firstName()).isEqualTo("x")
         assertThat(body.lastName()).isEqualTo("x")
@@ -51,7 +65,7 @@ class UserInvitationCreateParamsTest {
         assertThat(body.dtEndAccess()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.dtExpiry()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.m3terUser()).contains(true)
-        assertThat(body.permissionPolicyIds()).contains(listOf("string"))
+        assertThat(body.permissionPolicyIds().getOrNull()).containsExactly("string")
         assertThat(body.version()).contains(0L)
     }
 
@@ -67,25 +81,8 @@ class UserInvitationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.firstName()).isEqualTo("x")
         assertThat(body.lastName()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            UserInvitationCreateParams.builder()
-                .orgId("orgId")
-                .email("dev@stainless.com")
-                .firstName("x")
-                .lastName("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterCreateParamsTest {
+internal class CounterCreateParamsTest {
 
     @Test
     fun create() {
@@ -18,6 +17,15 @@ class CounterCreateParamsTest {
             .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = CounterCreateParams.builder().orgId("orgId").name("x").unit("x").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -34,7 +42,6 @@ class CounterCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
         assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
@@ -48,18 +55,7 @@ class CounterCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = CounterCreateParams.builder().orgId("orgId").name("x").unit("x").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

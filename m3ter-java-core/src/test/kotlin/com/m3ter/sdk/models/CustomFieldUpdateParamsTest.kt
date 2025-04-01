@@ -3,11 +3,10 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CustomFieldUpdateParamsTest {
+internal class CustomFieldUpdateParamsTest {
 
     @Test
     fun create() {
@@ -37,6 +36,15 @@ class CustomFieldUpdateParamsTest {
             )
             .version(6L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -71,7 +79,6 @@ class CustomFieldUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.account()).contains(CustomFieldUpdateParams.Account.builder().build())
         assertThat(body.accountPlan())
             .contains(
@@ -108,17 +115,5 @@ class CustomFieldUpdateParamsTest {
         val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
 
         val body = params._body()
-
-        assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = CustomFieldUpdateParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

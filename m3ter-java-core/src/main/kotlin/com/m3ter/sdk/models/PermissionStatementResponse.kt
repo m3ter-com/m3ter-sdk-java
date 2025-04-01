@@ -11,29 +11,29 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class PermissionStatementResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("action")
-    @ExcludeMissing
-    private val action: JsonField<List<Action>> = JsonMissing.of(),
-    @JsonProperty("effect")
-    @ExcludeMissing
-    private val effect: JsonField<Effect> = JsonMissing.of(),
-    @JsonProperty("resource")
-    @ExcludeMissing
-    private val resource: JsonField<List<String>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val action: JsonField<List<Action>>,
+    private val effect: JsonField<Effect>,
+    private val resource: JsonField<List<String>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("action") @ExcludeMissing action: JsonField<List<Action>> = JsonMissing.of(),
+        @JsonProperty("effect") @ExcludeMissing effect: JsonField<Effect> = JsonMissing.of(),
+        @JsonProperty("resource")
+        @ExcludeMissing
+        resource: JsonField<List<String>> = JsonMissing.of(),
+    ) : this(action, effect, resource, mutableMapOf())
 
     /**
      * The actions available to users who are assigned the Permission Policy - what they can do or
@@ -95,22 +95,15 @@ private constructor(
      */
     @JsonProperty("resource") @ExcludeMissing fun _resource(): JsonField<List<String>> = resource
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): PermissionStatementResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        action()
-        effect()
-        resource()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -248,13 +241,40 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PermissionStatementResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .action()
+         * .effect()
+         * .resource()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PermissionStatementResponse =
             PermissionStatementResponse(
                 checkRequired("action", action).map { it.toImmutable() },
                 checkRequired("effect", effect),
                 checkRequired("resource", resource).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): PermissionStatementResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        action()
+        effect()
+        resource()
+        validated = true
     }
 
     class Action @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

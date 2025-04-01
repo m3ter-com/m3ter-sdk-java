@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class InvitationResponseTest {
+internal class InvitationResponseTest {
 
     @Test
-    fun createInvitationResponse() {
+    fun create() {
         val invitationResponse =
             InvitationResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ class InvitationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(invitationResponse).isNotNull
+
         assertThat(invitationResponse.id()).isEqualTo("id")
         assertThat(invitationResponse.accepted()).isEqualTo(true)
         assertThat(invitationResponse.dtEndAccess())

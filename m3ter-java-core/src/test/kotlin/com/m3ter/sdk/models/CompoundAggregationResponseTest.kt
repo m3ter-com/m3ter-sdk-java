@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CompoundAggregationResponseTest {
+internal class CompoundAggregationResponseTest {
 
     @Test
-    fun createCompoundAggregationResponse() {
+    fun create() {
         val compoundAggregationResponse =
             CompoundAggregationResponse.builder()
                 .id("id")
@@ -39,7 +40,7 @@ class CompoundAggregationResponseTest {
                 )
                 .unit("unit")
                 .build()
-        assertThat(compoundAggregationResponse).isNotNull
+
         assertThat(compoundAggregationResponse.id()).isEqualTo("id")
         assertThat(compoundAggregationResponse.version()).isEqualTo(0L)
         assertThat(compoundAggregationResponse.accountingProductId())
@@ -64,7 +65,7 @@ class CompoundAggregationResponseTest {
         assertThat(compoundAggregationResponse.quantityPerUnit()).contains(0.0)
         assertThat(compoundAggregationResponse.rounding())
             .contains(CompoundAggregationResponse.Rounding.UP)
-        assertThat(compoundAggregationResponse.segments().get())
+        assertThat(compoundAggregationResponse.segments().getOrNull())
             .containsExactly(
                 CompoundAggregationResponse.Segment.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))

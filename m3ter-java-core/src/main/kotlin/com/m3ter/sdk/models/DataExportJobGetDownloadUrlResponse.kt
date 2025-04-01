@@ -10,25 +10,27 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** It contains details for downloading an export file */
-@NoAutoDetect
 class DataExportJobGetDownloadUrlResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("expirationTime")
-    @ExcludeMissing
-    private val expirationTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("url") @ExcludeMissing private val url: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val expirationTime: JsonField<OffsetDateTime>,
+    private val url: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("expirationTime")
+        @ExcludeMissing
+        expirationTime: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+    ) : this(expirationTime, url, mutableMapOf())
 
     /**
      * The expiration time of the URL
@@ -63,21 +65,15 @@ private constructor(
      */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): DataExportJobGetDownloadUrlResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        expirationTime()
-        url()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -152,12 +148,29 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [DataExportJobGetDownloadUrlResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): DataExportJobGetDownloadUrlResponse =
             DataExportJobGetDownloadUrlResponse(
                 expirationTime,
                 url,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): DataExportJobGetDownloadUrlResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        expirationTime()
+        url()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

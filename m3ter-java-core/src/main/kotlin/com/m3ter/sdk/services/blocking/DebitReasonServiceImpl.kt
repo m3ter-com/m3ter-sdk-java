@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.DebitReasonCreateParams
 import com.m3ter.sdk.models.DebitReasonDeleteParams
 import com.m3ter.sdk.models.DebitReasonListPage
@@ -70,7 +70,7 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         DebitReasonService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<DebitReasonResponse> =
             jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)
@@ -85,7 +85,7 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
                     )
@@ -118,10 +118,10 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -151,10 +151,10 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -185,7 +185,7 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
                     )
@@ -220,10 +220,10 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "picklists",
                         "debitreasons",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

@@ -20,17 +20,16 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.getOrThrow
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -160,471 +159,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            else -> ""
-        }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("endDate")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("startDate")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("accountIds")
-        @ExcludeMissing
-        private val accountIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("aggregations")
-        @ExcludeMissing
-        private val aggregations: JsonField<List<Aggregation>> = JsonMissing.of(),
-        @JsonProperty("dimensionFilters")
-        @ExcludeMissing
-        private val dimensionFilters: JsonField<List<DimensionFilter>> = JsonMissing.of(),
-        @JsonProperty("groups")
-        @ExcludeMissing
-        private val groups: JsonField<List<Group>> = JsonMissing.of(),
-        @JsonProperty("limit")
-        @ExcludeMissing
-        private val limit: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("meterIds")
-        @ExcludeMissing
-        private val meterIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * ISO 8601 formatted end date to filter by.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
-
-        /**
-         * ISO 8601 formatted start date to filter by.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun accountIds(): Optional<List<String>> =
-            Optional.ofNullable(accountIds.getNullable("accountIds"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun aggregations(): Optional<List<Aggregation>> =
-            Optional.ofNullable(aggregations.getNullable("aggregations"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun dimensionFilters(): Optional<List<DimensionFilter>> =
-            Optional.ofNullable(dimensionFilters.getNullable("dimensionFilters"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun groups(): Optional<List<Group>> = Optional.ofNullable(groups.getNullable("groups"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun limit(): Optional<Long> = Optional.ofNullable(limit.getNullable("limit"))
-
-        /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun meterIds(): Optional<List<String>> =
-            Optional.ofNullable(meterIds.getNullable("meterIds"))
-
-        /**
-         * Returns the raw JSON value of [endDate].
-         *
-         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
-
-        /**
-         * Returns the raw JSON value of [startDate].
-         *
-         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("startDate")
-        @ExcludeMissing
-        fun _startDate(): JsonField<OffsetDateTime> = startDate
-
-        /**
-         * Returns the raw JSON value of [accountIds].
-         *
-         * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("accountIds")
-        @ExcludeMissing
-        fun _accountIds(): JsonField<List<String>> = accountIds
-
-        /**
-         * Returns the raw JSON value of [aggregations].
-         *
-         * Unlike [aggregations], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("aggregations")
-        @ExcludeMissing
-        fun _aggregations(): JsonField<List<Aggregation>> = aggregations
-
-        /**
-         * Returns the raw JSON value of [dimensionFilters].
-         *
-         * Unlike [dimensionFilters], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("dimensionFilters")
-        @ExcludeMissing
-        fun _dimensionFilters(): JsonField<List<DimensionFilter>> = dimensionFilters
-
-        /**
-         * Returns the raw JSON value of [groups].
-         *
-         * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("groups") @ExcludeMissing fun _groups(): JsonField<List<Group>> = groups
-
-        /**
-         * Returns the raw JSON value of [limit].
-         *
-         * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("limit") @ExcludeMissing fun _limit(): JsonField<Long> = limit
-
-        /**
-         * Returns the raw JSON value of [meterIds].
-         *
-         * Unlike [meterIds], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("meterIds")
-        @ExcludeMissing
-        fun _meterIds(): JsonField<List<String>> = meterIds
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            endDate()
-            startDate()
-            accountIds()
-            aggregations().ifPresent { it.forEach { it.validate() } }
-            dimensionFilters().ifPresent { it.forEach { it.validate() } }
-            groups().ifPresent { it.forEach { it.validate() } }
-            limit()
-            meterIds()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .endDate()
-             * .startDate()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var endDate: JsonField<OffsetDateTime>? = null
-            private var startDate: JsonField<OffsetDateTime>? = null
-            private var accountIds: JsonField<MutableList<String>>? = null
-            private var aggregations: JsonField<MutableList<Aggregation>>? = null
-            private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
-            private var groups: JsonField<MutableList<Group>>? = null
-            private var limit: JsonField<Long> = JsonMissing.of()
-            private var meterIds: JsonField<MutableList<String>>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                endDate = body.endDate
-                startDate = body.startDate
-                accountIds = body.accountIds.map { it.toMutableList() }
-                aggregations = body.aggregations.map { it.toMutableList() }
-                dimensionFilters = body.dimensionFilters.map { it.toMutableList() }
-                groups = body.groups.map { it.toMutableList() }
-                limit = body.limit
-                meterIds = body.meterIds.map { it.toMutableList() }
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** ISO 8601 formatted end date to filter by. */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /**
-             * Sets [Builder.endDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
-            /** ISO 8601 formatted start date to filter by. */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            /**
-             * Sets [Builder.startDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
-
-            fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
-
-            /**
-             * Sets [Builder.accountIds] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun accountIds(accountIds: JsonField<List<String>>) = apply {
-                this.accountIds = accountIds.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [String] to [accountIds].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addAccountId(accountId: String) = apply {
-                accountIds =
-                    (accountIds ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("accountIds", it).add(accountId)
-                    }
-            }
-
-            fun aggregations(aggregations: List<Aggregation>) =
-                aggregations(JsonField.of(aggregations))
-
-            /**
-             * Sets [Builder.aggregations] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.aggregations] with a well-typed `List<Aggregation>`
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun aggregations(aggregations: JsonField<List<Aggregation>>) = apply {
-                this.aggregations = aggregations.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [Aggregation] to [aggregations].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addAggregation(aggregation: Aggregation) = apply {
-                aggregations =
-                    (aggregations ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("aggregations", it).add(aggregation)
-                    }
-            }
-
-            fun dimensionFilters(dimensionFilters: List<DimensionFilter>) =
-                dimensionFilters(JsonField.of(dimensionFilters))
-
-            /**
-             * Sets [Builder.dimensionFilters] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.dimensionFilters] with a well-typed
-             * `List<DimensionFilter>` value instead. This method is primarily for setting the field
-             * to an undocumented or not yet supported value.
-             */
-            fun dimensionFilters(dimensionFilters: JsonField<List<DimensionFilter>>) = apply {
-                this.dimensionFilters = dimensionFilters.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [DimensionFilter] to [dimensionFilters].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addDimensionFilter(dimensionFilter: DimensionFilter) = apply {
-                dimensionFilters =
-                    (dimensionFilters ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("dimensionFilters", it).add(dimensionFilter)
-                    }
-            }
-
-            fun groups(groups: List<Group>) = groups(JsonField.of(groups))
-
-            /**
-             * Sets [Builder.groups] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.groups] with a well-typed `List<Group>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun groups(groups: JsonField<List<Group>>) = apply {
-                this.groups = groups.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [Group] to [groups].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addGroup(group: Group) = apply {
-                groups =
-                    (groups ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("groups", it).add(group)
-                    }
-            }
-
-            /**
-             * Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`.
-             */
-            fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) =
-                addGroup(Group.ofDataExplorerAccount(dataExplorerAccount))
-
-            /**
-             * Alias for calling [addGroup] with
-             * `Group.ofDataExplorerDimension(dataExplorerDimension)`.
-             */
-            fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) =
-                addGroup(Group.ofDataExplorerDimension(dataExplorerDimension))
-
-            /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
-            fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) =
-                addGroup(Group.ofDataExplorerTime(dataExplorerTime))
-
-            fun limit(limit: Long) = limit(JsonField.of(limit))
-
-            /**
-             * Sets [Builder.limit] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
-
-            fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
-
-            /**
-             * Sets [Builder.meterIds] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.meterIds] with a well-typed `List<String>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun meterIds(meterIds: JsonField<List<String>>) = apply {
-                this.meterIds = meterIds.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [String] to [meterIds].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addMeterId(meterId: String) = apply {
-                meterIds =
-                    (meterIds ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("meterIds", it).add(meterId)
-                    }
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("endDate", endDate),
-                    checkRequired("startDate", startDate),
-                    (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
-                    (aggregations ?: JsonMissing.of()).map { it.toImmutable() },
-                    (dimensionFilters ?: JsonMissing.of()).map { it.toImmutable() },
-                    (groups ?: JsonMissing.of()).map { it.toImmutable() },
-                    limit,
-                    (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && endDate == other.endDate && startDate == other.startDate && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && limit == other.limit && meterIds == other.meterIds && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(endDate, startDate, accountIds, aggregations, dimensionFilters, groups, limit, meterIds, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{endDate=$endDate, startDate=$startDate, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, limit=$limit, meterIds=$meterIds, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -643,7 +177,6 @@ private constructor(
     }
 
     /** A builder for [UsageQueryParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -929,6 +462,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [UsageQueryParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .endDate()
+         * .startDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UsageQueryParams =
             UsageQueryParams(
                 checkRequired("orgId", orgId),
@@ -938,25 +485,528 @@ private constructor(
             )
     }
 
-    @NoAutoDetect
-    class Aggregation
-    @JsonCreator
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("fieldCode")
-        @ExcludeMissing
-        private val fieldCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("fieldType")
-        @ExcludeMissing
-        private val fieldType: JsonField<FieldType> = JsonMissing.of(),
-        @JsonProperty("function")
-        @ExcludeMissing
-        private val function: JsonField<Function> = JsonMissing.of(),
-        @JsonProperty("meterId")
-        @ExcludeMissing
-        private val meterId: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val endDate: JsonField<OffsetDateTime>,
+        private val startDate: JsonField<OffsetDateTime>,
+        private val accountIds: JsonField<List<String>>,
+        private val aggregations: JsonField<List<Aggregation>>,
+        private val dimensionFilters: JsonField<List<DimensionFilter>>,
+        private val groups: JsonField<List<Group>>,
+        private val limit: JsonField<Long>,
+        private val meterIds: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("endDate")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("startDate")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("accountIds")
+            @ExcludeMissing
+            accountIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("aggregations")
+            @ExcludeMissing
+            aggregations: JsonField<List<Aggregation>> = JsonMissing.of(),
+            @JsonProperty("dimensionFilters")
+            @ExcludeMissing
+            dimensionFilters: JsonField<List<DimensionFilter>> = JsonMissing.of(),
+            @JsonProperty("groups")
+            @ExcludeMissing
+            groups: JsonField<List<Group>> = JsonMissing.of(),
+            @JsonProperty("limit") @ExcludeMissing limit: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("meterIds")
+            @ExcludeMissing
+            meterIds: JsonField<List<String>> = JsonMissing.of(),
+        ) : this(
+            endDate,
+            startDate,
+            accountIds,
+            aggregations,
+            dimensionFilters,
+            groups,
+            limit,
+            meterIds,
+            mutableMapOf(),
+        )
+
+        /**
+         * ISO 8601 formatted end date to filter by.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
+
+        /**
+         * ISO 8601 formatted start date to filter by.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun accountIds(): Optional<List<String>> =
+            Optional.ofNullable(accountIds.getNullable("accountIds"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun aggregations(): Optional<List<Aggregation>> =
+            Optional.ofNullable(aggregations.getNullable("aggregations"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun dimensionFilters(): Optional<List<DimensionFilter>> =
+            Optional.ofNullable(dimensionFilters.getNullable("dimensionFilters"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun groups(): Optional<List<Group>> = Optional.ofNullable(groups.getNullable("groups"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun limit(): Optional<Long> = Optional.ofNullable(limit.getNullable("limit"))
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun meterIds(): Optional<List<String>> =
+            Optional.ofNullable(meterIds.getNullable("meterIds"))
+
+        /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("startDate")
+        @ExcludeMissing
+        fun _startDate(): JsonField<OffsetDateTime> = startDate
+
+        /**
+         * Returns the raw JSON value of [accountIds].
+         *
+         * Unlike [accountIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("accountIds")
+        @ExcludeMissing
+        fun _accountIds(): JsonField<List<String>> = accountIds
+
+        /**
+         * Returns the raw JSON value of [aggregations].
+         *
+         * Unlike [aggregations], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("aggregations")
+        @ExcludeMissing
+        fun _aggregations(): JsonField<List<Aggregation>> = aggregations
+
+        /**
+         * Returns the raw JSON value of [dimensionFilters].
+         *
+         * Unlike [dimensionFilters], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("dimensionFilters")
+        @ExcludeMissing
+        fun _dimensionFilters(): JsonField<List<DimensionFilter>> = dimensionFilters
+
+        /**
+         * Returns the raw JSON value of [groups].
+         *
+         * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("groups") @ExcludeMissing fun _groups(): JsonField<List<Group>> = groups
+
+        /**
+         * Returns the raw JSON value of [limit].
+         *
+         * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("limit") @ExcludeMissing fun _limit(): JsonField<Long> = limit
+
+        /**
+         * Returns the raw JSON value of [meterIds].
+         *
+         * Unlike [meterIds], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("meterIds")
+        @ExcludeMissing
+        fun _meterIds(): JsonField<List<String>> = meterIds
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .endDate()
+             * .startDate()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var endDate: JsonField<OffsetDateTime>? = null
+            private var startDate: JsonField<OffsetDateTime>? = null
+            private var accountIds: JsonField<MutableList<String>>? = null
+            private var aggregations: JsonField<MutableList<Aggregation>>? = null
+            private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
+            private var groups: JsonField<MutableList<Group>>? = null
+            private var limit: JsonField<Long> = JsonMissing.of()
+            private var meterIds: JsonField<MutableList<String>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                endDate = body.endDate
+                startDate = body.startDate
+                accountIds = body.accountIds.map { it.toMutableList() }
+                aggregations = body.aggregations.map { it.toMutableList() }
+                dimensionFilters = body.dimensionFilters.map { it.toMutableList() }
+                groups = body.groups.map { it.toMutableList() }
+                limit = body.limit
+                meterIds = body.meterIds.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** ISO 8601 formatted end date to filter by. */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /** ISO 8601 formatted start date to filter by. */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
+            }
+
+            fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
+
+            /**
+             * Sets [Builder.accountIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun accountIds(accountIds: JsonField<List<String>>) = apply {
+                this.accountIds = accountIds.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [accountIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addAccountId(accountId: String) = apply {
+                accountIds =
+                    (accountIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("accountIds", it).add(accountId)
+                    }
+            }
+
+            fun aggregations(aggregations: List<Aggregation>) =
+                aggregations(JsonField.of(aggregations))
+
+            /**
+             * Sets [Builder.aggregations] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.aggregations] with a well-typed `List<Aggregation>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun aggregations(aggregations: JsonField<List<Aggregation>>) = apply {
+                this.aggregations = aggregations.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Aggregation] to [aggregations].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addAggregation(aggregation: Aggregation) = apply {
+                aggregations =
+                    (aggregations ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("aggregations", it).add(aggregation)
+                    }
+            }
+
+            fun dimensionFilters(dimensionFilters: List<DimensionFilter>) =
+                dimensionFilters(JsonField.of(dimensionFilters))
+
+            /**
+             * Sets [Builder.dimensionFilters] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dimensionFilters] with a well-typed
+             * `List<DimensionFilter>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun dimensionFilters(dimensionFilters: JsonField<List<DimensionFilter>>) = apply {
+                this.dimensionFilters = dimensionFilters.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [DimensionFilter] to [dimensionFilters].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addDimensionFilter(dimensionFilter: DimensionFilter) = apply {
+                dimensionFilters =
+                    (dimensionFilters ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dimensionFilters", it).add(dimensionFilter)
+                    }
+            }
+
+            fun groups(groups: List<Group>) = groups(JsonField.of(groups))
+
+            /**
+             * Sets [Builder.groups] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groups] with a well-typed `List<Group>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groups(groups: JsonField<List<Group>>) = apply {
+                this.groups = groups.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Group] to [groups].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addGroup(group: Group) = apply {
+                groups =
+                    (groups ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("groups", it).add(group)
+                    }
+            }
+
+            /**
+             * Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`.
+             */
+            fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) =
+                addGroup(Group.ofDataExplorerAccount(dataExplorerAccount))
+
+            /**
+             * Alias for calling [addGroup] with
+             * `Group.ofDataExplorerDimension(dataExplorerDimension)`.
+             */
+            fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) =
+                addGroup(Group.ofDataExplorerDimension(dataExplorerDimension))
+
+            /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
+            fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) =
+                addGroup(Group.ofDataExplorerTime(dataExplorerTime))
+
+            fun limit(limit: Long) = limit(JsonField.of(limit))
+
+            /**
+             * Sets [Builder.limit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
+
+            fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
+
+            /**
+             * Sets [Builder.meterIds] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meterIds] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun meterIds(meterIds: JsonField<List<String>>) = apply {
+                this.meterIds = meterIds.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [meterIds].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addMeterId(meterId: String) = apply {
+                meterIds =
+                    (meterIds ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("meterIds", it).add(meterId)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .endDate()
+             * .startDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("endDate", endDate),
+                    checkRequired("startDate", startDate),
+                    (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
+                    (aggregations ?: JsonMissing.of()).map { it.toImmutable() },
+                    (dimensionFilters ?: JsonMissing.of()).map { it.toImmutable() },
+                    (groups ?: JsonMissing.of()).map { it.toImmutable() },
+                    limit,
+                    (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            endDate()
+            startDate()
+            accountIds()
+            aggregations().ifPresent { it.forEach { it.validate() } }
+            dimensionFilters().ifPresent { it.forEach { it.validate() } }
+            groups().ifPresent { it.forEach { it.validate() } }
+            limit()
+            meterIds()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && endDate == other.endDate && startDate == other.startDate && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && limit == other.limit && meterIds == other.meterIds && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(endDate, startDate, accountIds, aggregations, dimensionFilters, groups, limit, meterIds, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{endDate=$endDate, startDate=$startDate, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, limit=$limit, meterIds=$meterIds, additionalProperties=$additionalProperties}"
+    }
+
+    class Aggregation
+    private constructor(
+        private val fieldCode: JsonField<String>,
+        private val fieldType: JsonField<FieldType>,
+        private val function: JsonField<Function>,
+        private val meterId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("fieldCode")
+            @ExcludeMissing
+            fieldCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fieldType")
+            @ExcludeMissing
+            fieldType: JsonField<FieldType> = JsonMissing.of(),
+            @JsonProperty("function")
+            @ExcludeMissing
+            function: JsonField<Function> = JsonMissing.of(),
+            @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
+        ) : this(fieldCode, fieldType, function, meterId, mutableMapOf())
 
         /**
          * Field code
@@ -1020,23 +1070,15 @@ private constructor(
          */
         @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Aggregation = apply {
-            if (validated) {
-                return@apply
-            }
-
-            fieldCode()
-            fieldType()
-            function()
-            meterId()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1141,14 +1183,43 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Aggregation].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .fieldCode()
+             * .fieldType()
+             * .function()
+             * .meterId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Aggregation =
                 Aggregation(
                     checkRequired("fieldCode", fieldCode),
                     checkRequired("fieldType", fieldType),
                     checkRequired("function", function),
                     checkRequired("meterId", meterId),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Aggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            fieldCode()
+            fieldType()
+            function()
+            meterId()
+            validated = true
         }
 
         /** Type of field */
@@ -1408,22 +1479,24 @@ private constructor(
             "Aggregation{fieldCode=$fieldCode, fieldType=$fieldType, function=$function, meterId=$meterId, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class DimensionFilter
-    @JsonCreator
     private constructor(
-        @JsonProperty("fieldCode")
-        @ExcludeMissing
-        private val fieldCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("meterId")
-        @ExcludeMissing
-        private val meterId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("values")
-        @ExcludeMissing
-        private val values: JsonField<List<String>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val fieldCode: JsonField<String>,
+        private val meterId: JsonField<String>,
+        private val values: JsonField<List<String>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("fieldCode")
+            @ExcludeMissing
+            fieldCode: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("values")
+            @ExcludeMissing
+            values: JsonField<List<String>> = JsonMissing.of(),
+        ) : this(fieldCode, meterId, values, mutableMapOf())
 
         /**
          * Field code
@@ -1470,22 +1543,15 @@ private constructor(
          */
         @JsonProperty("values") @ExcludeMissing fun _values(): JsonField<List<String>> = values
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): DimensionFilter = apply {
-            if (validated) {
-                return@apply
-            }
-
-            fieldCode()
-            meterId()
-            values()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1589,13 +1655,40 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [DimensionFilter].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .fieldCode()
+             * .meterId()
+             * .values()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): DimensionFilter =
                 DimensionFilter(
                     checkRequired("fieldCode", fieldCode),
                     checkRequired("meterId", meterId),
                     checkRequired("values", values).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): DimensionFilter = apply {
+            if (validated) {
+                return@apply
+            }
+
+            fieldCode()
+            meterId()
+            values()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1805,16 +1898,18 @@ private constructor(
         }
 
         /** Group by account */
-        @NoAutoDetect
         class DataExplorerAccountGroup
-        @JsonCreator
         private constructor(
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            private val groupType: JsonField<GroupType> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val groupType: JsonField<GroupType>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("groupType")
+                @ExcludeMissing
+                groupType: JsonField<GroupType> = JsonMissing.of()
+            ) : this(groupType, mutableMapOf())
 
             /**
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -1833,20 +1928,15 @@ private constructor(
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExplorerAccountGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                groupType()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1907,8 +1997,24 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [DataExplorerAccountGroup].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): DataExplorerAccountGroup =
-                    DataExplorerAccountGroup(groupType, additionalProperties.toImmutable())
+                    DataExplorerAccountGroup(groupType, additionalProperties.toMutableMap())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): DataExplorerAccountGroup = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                groupType()
+                validated = true
             }
 
             class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2040,22 +2146,26 @@ private constructor(
         }
 
         /** Group by dimension */
-        @NoAutoDetect
         class DataExplorerDimensionGroup
-        @JsonCreator
         private constructor(
-            @JsonProperty("fieldCode")
-            @ExcludeMissing
-            private val fieldCode: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("meterId")
-            @ExcludeMissing
-            private val meterId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            private val groupType: JsonField<GroupType> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val fieldCode: JsonField<String>,
+            private val meterId: JsonField<String>,
+            private val groupType: JsonField<GroupType>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("fieldCode")
+                @ExcludeMissing
+                fieldCode: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("meterId")
+                @ExcludeMissing
+                meterId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("groupType")
+                @ExcludeMissing
+                groupType: JsonField<GroupType> = JsonMissing.of(),
+            ) : this(fieldCode, meterId, groupType, mutableMapOf())
 
             /**
              * Field code to group by
@@ -2109,22 +2219,15 @@ private constructor(
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExplorerDimensionGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                fieldCode()
-                meterId()
-                groupType()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -2219,13 +2322,39 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [DataExplorerDimensionGroup].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .fieldCode()
+                 * .meterId()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): DataExplorerDimensionGroup =
                     DataExplorerDimensionGroup(
                         checkRequired("fieldCode", fieldCode),
                         checkRequired("meterId", meterId),
                         groupType,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): DataExplorerDimensionGroup = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                fieldCode()
+                meterId()
+                groupType()
+                validated = true
             }
 
             class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2357,19 +2486,22 @@ private constructor(
         }
 
         /** Group by time */
-        @NoAutoDetect
         class DataExplorerTimeGroup
-        @JsonCreator
         private constructor(
-            @JsonProperty("frequency")
-            @ExcludeMissing
-            private val frequency: JsonField<Frequency> = JsonMissing.of(),
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            private val groupType: JsonField<GroupType> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val frequency: JsonField<Frequency>,
+            private val groupType: JsonField<GroupType>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("frequency")
+                @ExcludeMissing
+                frequency: JsonField<Frequency> = JsonMissing.of(),
+                @JsonProperty("groupType")
+                @ExcludeMissing
+                groupType: JsonField<GroupType> = JsonMissing.of(),
+            ) : this(frequency, groupType, mutableMapOf())
 
             /**
              * Frequency of usage data
@@ -2407,21 +2539,15 @@ private constructor(
             @ExcludeMissing
             fun _groupType(): JsonField<GroupType> = groupType
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExplorerTimeGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                frequency()
-                groupType()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -2502,12 +2628,36 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [DataExplorerTimeGroup].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```java
+                 * .frequency()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): DataExplorerTimeGroup =
                     DataExplorerTimeGroup(
                         checkRequired("frequency", frequency),
                         groupType,
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): DataExplorerTimeGroup = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                frequency()
+                groupType()
+                validated = true
             }
 
             /** Frequency of usage data */

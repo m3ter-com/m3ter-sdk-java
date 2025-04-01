@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class WebhookCreateParamsTest {
+internal class WebhookCreateParamsTest {
 
     @Test
     fun create() {
@@ -28,6 +27,28 @@ class WebhookCreateParamsTest {
             .code("code")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            WebhookCreateParams.builder()
+                .orgId("orgId")
+                .credentials(
+                    M3terSignedCredentialsRequest.builder()
+                        .apiKey("x")
+                        .secret("x")
+                        .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
+                        .build()
+                )
+                .description("x")
+                .name("x")
+                .url("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -54,7 +75,6 @@ class WebhookCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()
@@ -92,7 +112,6 @@ class WebhookCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()
@@ -104,28 +123,5 @@ class WebhookCreateParamsTest {
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.url()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            WebhookCreateParams.builder()
-                .orgId("orgId")
-                .credentials(
-                    M3terSignedCredentialsRequest.builder()
-                        .apiKey("x")
-                        .secret("x")
-                        .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
-                        .build()
-                )
-                .description("x")
-                .name("x")
-                .url("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

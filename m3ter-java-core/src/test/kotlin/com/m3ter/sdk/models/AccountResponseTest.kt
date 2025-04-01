@@ -5,13 +5,14 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AccountResponseTest {
+internal class AccountResponseTest {
 
     @Test
-    fun createAccountResponse() {
+    fun create() {
         val accountResponse =
             AccountResponse.builder()
                 .id("id")
@@ -54,7 +55,7 @@ class AccountResponseTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .statementDefinitionId("statementDefinitionId")
                 .build()
-        assertThat(accountResponse).isNotNull
+
         assertThat(accountResponse.id()).isEqualTo("id")
         assertThat(accountResponse.version()).isEqualTo(0L)
         assertThat(accountResponse.address())
@@ -81,7 +82,7 @@ class AccountResponseTest {
                     .build()
             )
         assertThat(accountResponse.createdBy()).contains("createdBy")
-        assertThat(accountResponse.creditApplicationOrder().get())
+        assertThat(accountResponse.creditApplicationOrder().getOrNull())
             .containsExactly(AccountResponse.CreditApplicationOrder.PREPAYMENT)
         assertThat(accountResponse.currency()).contains("USD")
         assertThat(accountResponse.customFields())

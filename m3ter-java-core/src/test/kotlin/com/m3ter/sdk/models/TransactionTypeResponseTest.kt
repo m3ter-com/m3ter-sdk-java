@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class TransactionTypeResponseTest {
+internal class TransactionTypeResponseTest {
 
     @Test
-    fun createTransactionTypeResponse() {
+    fun create() {
         val transactionTypeResponse =
             TransactionTypeResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ class TransactionTypeResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(transactionTypeResponse).isNotNull
+
         assertThat(transactionTypeResponse.id()).isEqualTo("id")
         assertThat(transactionTypeResponse.version()).isEqualTo(0L)
         assertThat(transactionTypeResponse.archived()).contains(true)

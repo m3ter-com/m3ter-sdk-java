@@ -11,62 +11,86 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class TransactionResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("appliedDate")
-    @ExcludeMissing
-    private val appliedDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currencyPaid")
-    @ExcludeMissing
-    private val currencyPaid: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("entityId")
-    @ExcludeMissing
-    private val entityId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("entityType")
-    @ExcludeMissing
-    private val entityType: JsonField<EntityType> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("paid") @ExcludeMissing private val paid: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("transactionDate")
-    @ExcludeMissing
-    private val transactionDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("transactionTypeId")
-    @ExcludeMissing
-    private val transactionTypeId: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val amount: JsonField<Double>,
+    private val appliedDate: JsonField<OffsetDateTime>,
+    private val createdBy: JsonField<String>,
+    private val currencyPaid: JsonField<String>,
+    private val description: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val entityId: JsonField<String>,
+    private val entityType: JsonField<EntityType>,
+    private val lastModifiedBy: JsonField<String>,
+    private val paid: JsonField<Double>,
+    private val transactionDate: JsonField<OffsetDateTime>,
+    private val transactionTypeId: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("appliedDate")
+        @ExcludeMissing
+        appliedDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currencyPaid")
+        @ExcludeMissing
+        currencyPaid: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("entityId") @ExcludeMissing entityId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("entityType")
+        @ExcludeMissing
+        entityType: JsonField<EntityType> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("paid") @ExcludeMissing paid: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("transactionDate")
+        @ExcludeMissing
+        transactionDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("transactionTypeId")
+        @ExcludeMissing
+        transactionTypeId: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        amount,
+        appliedDate,
+        createdBy,
+        currencyPaid,
+        description,
+        dtCreated,
+        dtLastModified,
+        entityId,
+        entityType,
+        lastModifiedBy,
+        paid,
+        transactionDate,
+        transactionTypeId,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -328,34 +352,15 @@ private constructor(
     @ExcludeMissing
     fun _transactionTypeId(): JsonField<String> = transactionTypeId
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): TransactionResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        amount()
-        appliedDate()
-        createdBy()
-        currencyPaid()
-        description()
-        dtCreated()
-        dtLastModified()
-        entityId()
-        entityType()
-        lastModifiedBy()
-        paid()
-        transactionDate()
-        transactionTypeId()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -647,6 +652,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [TransactionResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): TransactionResponse =
             TransactionResponse(
                 checkRequired("id", id),
@@ -664,8 +682,33 @@ private constructor(
                 paid,
                 transactionDate,
                 transactionTypeId,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): TransactionResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        amount()
+        appliedDate()
+        createdBy()
+        currencyPaid()
+        description()
+        dtCreated()
+        dtLastModified()
+        entityId()
+        entityType()
+        lastModifiedBy()
+        paid()
+        transactionDate()
+        transactionTypeId()
+        validated = true
     }
 
     /**

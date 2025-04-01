@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CommitmentSearchResponseTest {
+internal class CommitmentSearchResponseTest {
 
     @Test
-    fun createCommitmentSearchResponse() {
+    fun create() {
         val commitmentSearchResponse =
             CommitmentSearchResponse.builder()
                 .addData(
@@ -62,8 +63,8 @@ class CommitmentSearchResponseTest {
                 )
                 .nextToken("nextToken")
                 .build()
-        assertThat(commitmentSearchResponse).isNotNull
-        assertThat(commitmentSearchResponse.data().get())
+
+        assertThat(commitmentSearchResponse.data().getOrNull())
             .containsExactly(
                 CommitmentResponse.builder()
                     .id("id")

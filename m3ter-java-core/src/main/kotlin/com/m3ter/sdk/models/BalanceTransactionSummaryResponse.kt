@@ -10,28 +10,31 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class BalanceTransactionSummaryResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("initialCreditAmount")
-    @ExcludeMissing
-    private val initialCreditAmount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("totalCreditAmount")
-    @ExcludeMissing
-    private val totalCreditAmount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("totalDebitAmount")
-    @ExcludeMissing
-    private val totalDebitAmount: JsonField<Double> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val initialCreditAmount: JsonField<Double>,
+    private val totalCreditAmount: JsonField<Double>,
+    private val totalDebitAmount: JsonField<Double>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("initialCreditAmount")
+        @ExcludeMissing
+        initialCreditAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("totalCreditAmount")
+        @ExcludeMissing
+        totalCreditAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("totalDebitAmount")
+        @ExcludeMissing
+        totalDebitAmount: JsonField<Double> = JsonMissing.of(),
+    ) : this(initialCreditAmount, totalCreditAmount, totalDebitAmount, mutableMapOf())
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -84,22 +87,15 @@ private constructor(
     @ExcludeMissing
     fun _totalDebitAmount(): JsonField<Double> = totalDebitAmount
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): BalanceTransactionSummaryResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        initialCreditAmount()
-        totalCreditAmount()
-        totalDebitAmount()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -191,13 +187,31 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [BalanceTransactionSummaryResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): BalanceTransactionSummaryResponse =
             BalanceTransactionSummaryResponse(
                 initialCreditAmount,
                 totalCreditAmount,
                 totalDebitAmount,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): BalanceTransactionSummaryResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        initialCreditAmount()
+        totalCreditAmount()
+        totalDebitAmount()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

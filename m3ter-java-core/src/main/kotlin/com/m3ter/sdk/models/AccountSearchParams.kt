@@ -5,7 +5,6 @@ package com.m3ter.sdk.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.m3ter.sdk.core.Enum
 import com.m3ter.sdk.core.JsonField
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
@@ -85,27 +84,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.fromDocument?.let { queryParams.put("fromDocument", listOf(it.toString())) }
-        this.operator?.let { queryParams.put("operator", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.searchQuery?.let { queryParams.put("searchQuery", listOf(it.toString())) }
-        this.sortBy?.let { queryParams.put("sortBy", listOf(it.toString())) }
-        this.sortOrder?.let { queryParams.put("sortOrder", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            else -> ""
-        }
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -122,7 +100,6 @@ private constructor(
     }
 
     /** A builder for [AccountSearchParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -324,6 +301,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountSearchParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountSearchParams =
             AccountSearchParams(
                 checkRequired("orgId", orgId),
@@ -337,6 +326,27 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                fromDocument?.let { put("fromDocument", it.toString()) }
+                operator?.let { put("operator", it.toString()) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                searchQuery?.let { put("searchQuery", it) }
+                sortBy?.let { put("sortBy", it) }
+                sortOrder?.let { put("sortOrder", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** Search Operator to be used while querying search. */
     class Operator @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UsageQueryResponseTest {
+internal class UsageQueryResponseTest {
 
     @Test
-    fun createUsageQueryResponse() {
+    fun create() {
         val usageQueryResponse =
             UsageQueryResponse.builder()
                 .addData(
@@ -19,8 +20,8 @@ class UsageQueryResponseTest {
                 )
                 .hasMoreData(true)
                 .build()
-        assertThat(usageQueryResponse).isNotNull
-        assertThat(usageQueryResponse.data().get())
+
+        assertThat(usageQueryResponse.data().getOrNull())
             .containsExactly(
                 UsageQueryResponse.Data.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))

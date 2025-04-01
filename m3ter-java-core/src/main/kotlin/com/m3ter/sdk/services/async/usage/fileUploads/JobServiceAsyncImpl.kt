@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.async.usage.fileUploads
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -13,7 +14,6 @@ import com.m3ter.sdk.core.http.HttpResponse.Handler
 import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.FileUploadJobResponse
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.sdk.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
@@ -55,7 +55,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         JobServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val retrieveHandler: Handler<FileUploadJobResponse> =
             jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)
@@ -70,11 +70,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "fileuploads",
                         "measurements",
                         "jobs",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -107,7 +107,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "fileuploads",
                         "measurements",
                         "jobs",
@@ -151,11 +151,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "fileuploads",
                         "measurements",
                         "jobs",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "original",
                     )
                     .build()

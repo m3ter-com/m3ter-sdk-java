@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CommitmentResponseTest {
+internal class CommitmentResponseTest {
 
     @Test
-    fun createCommitmentResponse() {
+    fun create() {
         val commitmentResponse =
             CommitmentResponse.builder()
                 .id("id")
@@ -53,7 +54,7 @@ class CommitmentResponseTest {
                 .separateOverageUsage(true)
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(commitmentResponse).isNotNull
+
         assertThat(commitmentResponse.id()).isEqualTo("id")
         assertThat(commitmentResponse.version()).isEqualTo(0L)
         assertThat(commitmentResponse.accountId()).contains("accountId")
@@ -83,7 +84,7 @@ class CommitmentResponseTest {
         assertThat(commitmentResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(commitmentResponse.endDate()).contains(LocalDate.parse("2019-12-27"))
-        assertThat(commitmentResponse.feeDates().get())
+        assertThat(commitmentResponse.feeDates().getOrNull())
             .containsExactly(
                 CommitmentFee.builder()
                     .amount(1.0)
@@ -94,11 +95,11 @@ class CommitmentResponseTest {
             )
         assertThat(commitmentResponse.feesAccountingProductId()).contains("feesAccountingProductId")
         assertThat(commitmentResponse.lastModifiedBy()).contains("lastModifiedBy")
-        assertThat(commitmentResponse.lineItemTypes().get())
+        assertThat(commitmentResponse.lineItemTypes().getOrNull())
             .containsExactly(CommitmentResponse.LineItemType.STANDING_CHARGE)
         assertThat(commitmentResponse.overageDescription()).contains("overageDescription")
         assertThat(commitmentResponse.overageSurchargePercent()).contains(0.0)
-        assertThat(commitmentResponse.productIds().get()).containsExactly("string")
+        assertThat(commitmentResponse.productIds().getOrNull()).containsExactly("string")
         assertThat(commitmentResponse.separateOverageUsage()).contains(true)
         assertThat(commitmentResponse.startDate()).contains(LocalDate.parse("2019-12-27"))
     }

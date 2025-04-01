@@ -2,15 +2,23 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillJobRecalculateParamsTest {
+internal class BillJobRecalculateParamsTest {
 
     @Test
     fun create() {
         BillJobRecalculateParams.builder().orgId("orgId").addBillId("string").version(0L).build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = BillJobRecalculateParams.builder().orgId("orgId").addBillId("string").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -24,8 +32,7 @@ class BillJobRecalculateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
+        assertThat(body.billIds()).containsExactly("string")
         assertThat(body.version()).contains(0L)
     }
 
@@ -35,17 +42,6 @@ class BillJobRecalculateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = BillJobRecalculateParams.builder().orgId("orgId").addBillId("string").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(body.billIds()).containsExactly("string")
     }
 }

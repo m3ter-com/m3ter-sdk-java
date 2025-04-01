@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterAdjustmentResponseTest {
+internal class CounterAdjustmentResponseTest {
 
     @Test
-    fun createCounterAdjustmentResponse() {
+    fun create() {
         val counterAdjustmentResponse =
             CounterAdjustmentResponse.builder()
                 .id("id")
@@ -25,7 +25,7 @@ class CounterAdjustmentResponseTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .value(0L)
                 .build()
-        assertThat(counterAdjustmentResponse).isNotNull
+
         assertThat(counterAdjustmentResponse.id()).isEqualTo("id")
         assertThat(counterAdjustmentResponse.version()).isEqualTo(0L)
         assertThat(counterAdjustmentResponse.accountId()).contains("accountId")

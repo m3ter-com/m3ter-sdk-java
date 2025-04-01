@@ -5,17 +5,17 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PermissionStatementResponseTest {
+internal class PermissionStatementResponseTest {
 
     @Test
-    fun createPermissionStatementResponse() {
+    fun create() {
         val permissionStatementResponse =
             PermissionStatementResponse.builder()
                 .addAction(PermissionStatementResponse.Action.ALL)
                 .effect(PermissionStatementResponse.Effect.ALLOW)
                 .addResource("string")
                 .build()
-        assertThat(permissionStatementResponse).isNotNull
+
         assertThat(permissionStatementResponse.action())
             .containsExactly(PermissionStatementResponse.Action.ALL)
         assertThat(permissionStatementResponse.effect())

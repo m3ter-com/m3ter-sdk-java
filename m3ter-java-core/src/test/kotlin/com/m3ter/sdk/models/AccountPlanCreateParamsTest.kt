@@ -5,11 +5,10 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AccountPlanCreateParamsTest {
+internal class AccountPlanCreateParamsTest {
 
     @Test
     fun create() {
@@ -31,6 +30,20 @@ class AccountPlanCreateParamsTest {
             .planId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            AccountPlanCreateParams.builder()
+                .orgId("orgId")
+                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -57,7 +70,6 @@ class AccountPlanCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.billEpoch()).contains(LocalDate.parse("2019-12-27"))
@@ -88,23 +100,7 @@ class AccountPlanCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AccountPlanCreateParams.builder()
-                .orgId("orgId")
-                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

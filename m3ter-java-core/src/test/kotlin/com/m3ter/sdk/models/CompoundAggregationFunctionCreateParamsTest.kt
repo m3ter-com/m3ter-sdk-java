@@ -3,11 +3,10 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CompoundAggregationFunctionCreateParamsTest {
+internal class CompoundAggregationFunctionCreateParamsTest {
 
     @Test
     fun create() {
@@ -29,6 +28,23 @@ class CompoundAggregationFunctionCreateParamsTest {
             .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            CompoundAggregationCreateParams.builder()
+                .orgId("orgId")
+                .calculation("x")
+                .name("x")
+                .quantityPerUnit(1.0)
+                .rounding(CompoundAggregationCreateParams.Rounding.UP)
+                .unit("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -55,7 +71,6 @@ class CompoundAggregationFunctionCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
@@ -88,29 +103,10 @@ class CompoundAggregationFunctionCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.calculation()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.quantityPerUnit()).isEqualTo(1.0)
         assertThat(body.rounding()).isEqualTo(CompoundAggregationCreateParams.Rounding.UP)
         assertThat(body.unit()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CompoundAggregationCreateParams.builder()
-                .orgId("orgId")
-                .calculation("x")
-                .name("x")
-                .quantityPerUnit(1.0)
-                .rounding(CompoundAggregationCreateParams.Rounding.UP)
-                .unit("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

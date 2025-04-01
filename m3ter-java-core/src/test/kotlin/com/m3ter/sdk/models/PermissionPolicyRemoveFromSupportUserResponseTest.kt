@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PermissionPolicyRemoveFromSupportUserResponseTest {
+internal class PermissionPolicyRemoveFromSupportUserResponseTest {
 
     @Test
-    fun createPermissionPolicyRemoveFromSupportUserResponse() {
+    fun create() {
         val permissionPolicyRemoveFromSupportUserResponse =
             PermissionPolicyRemoveFromSupportUserResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ class PermissionPolicyRemoveFromSupportUserResponseTest {
                 .principalType(PermissionPolicyRemoveFromSupportUserResponse.PrincipalType.USER)
                 .version(0L)
                 .build()
-        assertThat(permissionPolicyRemoveFromSupportUserResponse).isNotNull
+
         assertThat(permissionPolicyRemoveFromSupportUserResponse.id()).contains("id")
         assertThat(permissionPolicyRemoveFromSupportUserResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyRemoveFromSupportUserResponse.dtCreated())

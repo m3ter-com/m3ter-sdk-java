@@ -5,10 +5,10 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DataFieldResponseTest {
+internal class DataFieldResponseTest {
 
     @Test
-    fun createDataFieldResponse() {
+    fun create() {
         val dataFieldResponse =
             DataFieldResponse.builder()
                 .category(DataFieldResponse.Category.WHO)
@@ -16,7 +16,7 @@ class DataFieldResponseTest {
                 .name("x")
                 .unit("x")
                 .build()
-        assertThat(dataFieldResponse).isNotNull
+
         assertThat(dataFieldResponse.category()).isEqualTo(DataFieldResponse.Category.WHO)
         assertThat(dataFieldResponse.code()).isEqualTo("{1{}}_")
         assertThat(dataFieldResponse.name()).isEqualTo("x")

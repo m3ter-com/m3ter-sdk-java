@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class WebhookTest {
+internal class WebhookTest {
 
     @Test
-    fun createWebhook() {
+    fun create() {
         val webhook =
             Webhook.builder()
                 .id("id")
@@ -40,7 +40,7 @@ class WebhookTest {
                 .name("name")
                 .url("url")
                 .build()
-        assertThat(webhook).isNotNull
+
         assertThat(webhook.id()).isEqualTo("id")
         assertThat(webhook.version()).isEqualTo(0L)
         assertThat(webhook.active()).contains(true)

@@ -5,10 +5,10 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AddressTest {
+internal class AddressTest {
 
     @Test
-    fun createAddress() {
+    fun create() {
         val address =
             Address.builder()
                 .addressLine1("addressLine1")
@@ -20,7 +20,7 @@ class AddressTest {
                 .postCode("postCode")
                 .region("region")
                 .build()
-        assertThat(address).isNotNull
+
         assertThat(address.addressLine1()).contains("addressLine1")
         assertThat(address.addressLine2()).contains("addressLine2")
         assertThat(address.addressLine3()).contains("addressLine3")

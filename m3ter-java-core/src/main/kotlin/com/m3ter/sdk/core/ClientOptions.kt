@@ -16,6 +16,7 @@ class ClientOptions
 private constructor(
     private val originalHttpClient: HttpClient,
     @get:JvmName("httpClient") val httpClient: HttpClient,
+    @get:JvmName("checkJacksonVersionCompatibility") val checkJacksonVersionCompatibility: Boolean,
     @get:JvmName("jsonMapper") val jsonMapper: JsonMapper,
     @get:JvmName("clock") val clock: Clock,
     @get:JvmName("baseUrl") val baseUrl: String,
@@ -29,6 +30,12 @@ private constructor(
     private val token: String?,
     @get:JvmName("orgId") val orgId: String,
 ) {
+
+    init {
+        if (checkJacksonVersionCompatibility) {
+            checkJacksonVersionCompatibility()
+        }
+    }
 
     fun token(): Optional<String> = Optional.ofNullable(token)
 
@@ -58,6 +65,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var httpClient: HttpClient? = null
+        private var checkJacksonVersionCompatibility: Boolean = true
         private var jsonMapper: JsonMapper = jsonMapper()
         private var clock: Clock = Clock.systemUTC()
         private var baseUrl: String = PRODUCTION_URL
@@ -74,6 +82,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(clientOptions: ClientOptions) = apply {
             httpClient = clientOptions.originalHttpClient
+            checkJacksonVersionCompatibility = clientOptions.checkJacksonVersionCompatibility
             jsonMapper = clientOptions.jsonMapper
             clock = clientOptions.clock
             baseUrl = clientOptions.baseUrl
@@ -89,6 +98,10 @@ private constructor(
         }
 
         fun httpClient(httpClient: HttpClient) = apply { this.httpClient = httpClient }
+
+        fun checkJacksonVersionCompatibility(checkJacksonVersionCompatibility: Boolean) = apply {
+            this.checkJacksonVersionCompatibility = checkJacksonVersionCompatibility
+        }
 
         fun jsonMapper(jsonMapper: JsonMapper) = apply { this.jsonMapper = jsonMapper }
 
@@ -202,6 +215,21 @@ private constructor(
             System.getenv("M3TER_ORG_ID")?.let { orgId(it) }
         }
 
+        /**
+         * Returns an immutable instance of [ClientOptions].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .httpClient()
+         * .apiKey()
+         * .apiSecret()
+         * .orgId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ClientOptions {
             val httpClient = checkRequired("httpClient", httpClient)
             val apiKey = checkRequired("apiKey", apiKey)
@@ -234,6 +262,7 @@ private constructor(
                         .maxRetries(maxRetries)
                         .build()
                 ),
+                checkJacksonVersionCompatibility,
                 jsonMapper,
                 clock,
                 baseUrl,

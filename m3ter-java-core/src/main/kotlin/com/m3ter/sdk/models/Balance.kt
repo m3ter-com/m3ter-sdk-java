@@ -11,85 +11,124 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class Balance
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountId")
-    @ExcludeMissing
-    private val accountId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("balanceDrawDownDescription")
-    @ExcludeMissing
-    private val balanceDrawDownDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("consumptionsAccountingProductId")
-    @ExcludeMissing
-    private val consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("endDate")
-    @ExcludeMissing
-    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("feesAccountingProductId")
-    @ExcludeMissing
-    private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lineItemTypes")
-    @ExcludeMissing
-    private val lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("overageDescription")
-    @ExcludeMissing
-    private val overageDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("overageSurchargePercent")
-    @ExcludeMissing
-    private val overageSurchargePercent: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("productIds")
-    @ExcludeMissing
-    private val productIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("rolloverAmount")
-    @ExcludeMissing
-    private val rolloverAmount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("rolloverEndDate")
-    @ExcludeMissing
-    private val rolloverEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("startDate")
-    @ExcludeMissing
-    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountId: JsonField<String>,
+    private val amount: JsonField<Double>,
+    private val balanceDrawDownDescription: JsonField<String>,
+    private val code: JsonField<String>,
+    private val consumptionsAccountingProductId: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val currency: JsonField<String>,
+    private val description: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val endDate: JsonField<OffsetDateTime>,
+    private val feesAccountingProductId: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val lineItemTypes: JsonField<List<LineItemType>>,
+    private val name: JsonField<String>,
+    private val overageDescription: JsonField<String>,
+    private val overageSurchargePercent: JsonField<Double>,
+    private val productIds: JsonField<List<String>>,
+    private val rolloverAmount: JsonField<Double>,
+    private val rolloverEndDate: JsonField<OffsetDateTime>,
+    private val startDate: JsonField<OffsetDateTime>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("balanceDrawDownDescription")
+        @ExcludeMissing
+        balanceDrawDownDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("consumptionsAccountingProductId")
+        @ExcludeMissing
+        consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("endDate")
+        @ExcludeMissing
+        endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        feesAccountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lineItemTypes")
+        @ExcludeMissing
+        lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("overageDescription")
+        @ExcludeMissing
+        overageDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("overageSurchargePercent")
+        @ExcludeMissing
+        overageSurchargePercent: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("productIds")
+        @ExcludeMissing
+        productIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("rolloverAmount")
+        @ExcludeMissing
+        rolloverAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("rolloverEndDate")
+        @ExcludeMissing
+        rolloverEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("startDate")
+        @ExcludeMissing
+        startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountId,
+        amount,
+        balanceDrawDownDescription,
+        code,
+        consumptionsAccountingProductId,
+        createdBy,
+        currency,
+        description,
+        dtCreated,
+        dtLastModified,
+        endDate,
+        feesAccountingProductId,
+        lastModifiedBy,
+        lineItemTypes,
+        name,
+        overageDescription,
+        overageSurchargePercent,
+        productIds,
+        rolloverAmount,
+        rolloverEndDate,
+        startDate,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -487,42 +526,15 @@ private constructor(
     @ExcludeMissing
     fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Balance = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountId()
-        amount()
-        balanceDrawDownDescription()
-        code()
-        consumptionsAccountingProductId()
-        createdBy()
-        currency()
-        description()
-        dtCreated()
-        dtLastModified()
-        endDate()
-        feesAccountingProductId()
-        lastModifiedBy()
-        lineItemTypes()
-        name()
-        overageDescription()
-        overageSurchargePercent()
-        productIds()
-        rolloverAmount()
-        rolloverEndDate()
-        startDate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -957,6 +969,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Balance].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Balance =
             Balance(
                 checkRequired("id", id),
@@ -982,8 +1007,41 @@ private constructor(
                 rolloverAmount,
                 rolloverEndDate,
                 startDate,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): Balance = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountId()
+        amount()
+        balanceDrawDownDescription()
+        code()
+        consumptionsAccountingProductId()
+        createdBy()
+        currency()
+        description()
+        dtCreated()
+        dtLastModified()
+        endDate()
+        feesAccountingProductId()
+        lastModifiedBy()
+        lineItemTypes()
+        name()
+        overageDescription()
+        overageSurchargePercent()
+        productIds()
+        rolloverAmount()
+        rolloverEndDate()
+        startDate()
+        validated = true
     }
 
     /** Available line item types for Balances */

@@ -10,16 +10,15 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -106,260 +105,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("dtEndAccess")
-        @ExcludeMissing
-        private val dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("permissionPolicy")
-        @ExcludeMissing
-        private val permissionPolicy: JsonField<List<PermissionStatementResponse>> =
-            JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
-         * or update the expiration of the user's access.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun dtEndAccess(): Optional<OffsetDateTime> =
-            Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
-
-        /**
-         * An array of permission statements for the user. Each permission statement defines a
-         * specific permission for the user.
-         *
-         * See
-         * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-         * for more information.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
-            Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
-
-        /**
-         * The version number of the entity:
-         * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-         *   response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [dtEndAccess].
-         *
-         * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("dtEndAccess")
-        @ExcludeMissing
-        fun _dtEndAccess(): JsonField<OffsetDateTime> = dtEndAccess
-
-        /**
-         * Returns the raw JSON value of [permissionPolicy].
-         *
-         * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("permissionPolicy")
-        @ExcludeMissing
-        fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            dtEndAccess()
-            permissionPolicy().ifPresent { it.forEach { it.validate() } }
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [Body]. */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var permissionPolicy: JsonField<MutableList<PermissionStatementResponse>>? =
-                null
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                dtEndAccess = body.dtEndAccess
-                permissionPolicy = body.permissionPolicy.map { it.toMutableList() }
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to
-             * set or update the expiration of the user's access.
-             */
-            fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
-
-            /**
-             * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
-                this.dtEndAccess = dtEndAccess
-            }
-
-            /**
-             * An array of permission statements for the user. Each permission statement defines a
-             * specific permission for the user.
-             *
-             * See
-             * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
-             * for more information.
-             */
-            fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
-                permissionPolicy(JsonField.of(permissionPolicy))
-
-            /**
-             * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.permissionPolicy] with a well-typed
-             * `List<PermissionStatementResponse>` value instead. This method is primarily for
-             * setting the field to an undocumented or not yet supported value.
-             */
-            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
-                apply {
-                    this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
-                }
-
-            /**
-             * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
-                this.permissionPolicy =
-                    (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("permissionPolicy", it).add(permissionPolicy)
-                    }
-            }
-
-            /**
-             * The version number of the entity:
-             * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
-             *   response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    dtEndAccess,
-                    (permissionPolicy ?: JsonMissing.of()).map { it.toImmutable() },
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && dtEndAccess == other.dtEndAccess && permissionPolicy == other.permissionPolicy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(dtEndAccess, permissionPolicy, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{dtEndAccess=$dtEndAccess, permissionPolicy=$permissionPolicy, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -377,7 +122,6 @@ private constructor(
     }
 
     /** A builder for [UserUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -584,6 +328,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [UserUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UserUpdateParams =
             UserUpdateParams(
                 checkRequired("orgId", orgId),
@@ -592,6 +349,271 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val dtEndAccess: JsonField<OffsetDateTime>,
+        private val permissionPolicy: JsonField<List<PermissionStatementResponse>>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("dtEndAccess")
+            @ExcludeMissing
+            dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("permissionPolicy")
+            @ExcludeMissing
+            permissionPolicy: JsonField<List<PermissionStatementResponse>> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(dtEndAccess, permissionPolicy, version, mutableMapOf())
+
+        /**
+         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
+         * or update the expiration of the user's access.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun dtEndAccess(): Optional<OffsetDateTime> =
+            Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
+
+        /**
+         * An array of permission statements for the user. Each permission statement defines a
+         * specific permission for the user.
+         *
+         * See
+         * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
+         * for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
+            Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
+
+        /**
+         * The version number of the entity:
+         * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
+         *   response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [dtEndAccess].
+         *
+         * Unlike [dtEndAccess], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("dtEndAccess")
+        @ExcludeMissing
+        fun _dtEndAccess(): JsonField<OffsetDateTime> = dtEndAccess
+
+        /**
+         * Returns the raw JSON value of [permissionPolicy].
+         *
+         * Unlike [permissionPolicy], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("permissionPolicy")
+        @ExcludeMissing
+        fun _permissionPolicy(): JsonField<List<PermissionStatementResponse>> = permissionPolicy
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Body]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var permissionPolicy: JsonField<MutableList<PermissionStatementResponse>>? =
+                null
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                dtEndAccess = body.dtEndAccess
+                permissionPolicy = body.permissionPolicy.map { it.toMutableList() }
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to
+             * set or update the expiration of the user's access.
+             */
+            fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
+
+            /**
+             * Sets [Builder.dtEndAccess] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dtEndAccess] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun dtEndAccess(dtEndAccess: JsonField<OffsetDateTime>) = apply {
+                this.dtEndAccess = dtEndAccess
+            }
+
+            /**
+             * An array of permission statements for the user. Each permission statement defines a
+             * specific permission for the user.
+             *
+             * See
+             * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions)
+             * for more information.
+             */
+            fun permissionPolicy(permissionPolicy: List<PermissionStatementResponse>) =
+                permissionPolicy(JsonField.of(permissionPolicy))
+
+            /**
+             * Sets [Builder.permissionPolicy] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.permissionPolicy] with a well-typed
+             * `List<PermissionStatementResponse>` value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
+             */
+            fun permissionPolicy(permissionPolicy: JsonField<List<PermissionStatementResponse>>) =
+                apply {
+                    this.permissionPolicy = permissionPolicy.map { it.toMutableList() }
+                }
+
+            /**
+             * Adds a single [PermissionStatementResponse] to [Builder.permissionPolicy].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addPermissionPolicy(permissionPolicy: PermissionStatementResponse) = apply {
+                this.permissionPolicy =
+                    (this.permissionPolicy ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("permissionPolicy", it).add(permissionPolicy)
+                    }
+            }
+
+            /**
+             * The version number of the entity:
+             * - **Newly created entity:** On initial Create, version is set at 1 and listed in the
+             *   response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Body =
+                Body(
+                    dtEndAccess,
+                    (permissionPolicy ?: JsonMissing.of()).map { it.toImmutable() },
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            dtEndAccess()
+            permissionPolicy().ifPresent { it.forEach { it.validate() } }
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && dtEndAccess == other.dtEndAccess && permissionPolicy == other.permissionPolicy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(dtEndAccess, permissionPolicy, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{dtEndAccess=$dtEndAccess, permissionPolicy=$permissionPolicy, version=$version, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

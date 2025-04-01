@@ -10,26 +10,27 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class BillSearchResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("data")
-    @ExcludeMissing
-    private val data: JsonField<List<BillResponse>> = JsonMissing.of(),
-    @JsonProperty("nextToken")
-    @ExcludeMissing
-    private val nextToken: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val data: JsonField<List<BillResponse>>,
+    private val nextToken: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("data")
+        @ExcludeMissing
+        data: JsonField<List<BillResponse>> = JsonMissing.of(),
+        @JsonProperty("nextToken") @ExcludeMissing nextToken: JsonField<String> = JsonMissing.of(),
+    ) : this(data, nextToken, mutableMapOf())
 
     /**
      * An array containing the list of requested Bills.
@@ -62,21 +63,15 @@ private constructor(
      */
     @JsonProperty("nextToken") @ExcludeMissing fun _nextToken(): JsonField<String> = nextToken
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): BillSearchResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        data().ifPresent { it.forEach { it.validate() } }
-        nextToken()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -160,12 +155,29 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [BillSearchResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): BillSearchResponse =
             BillSearchResponse(
                 (data ?: JsonMissing.of()).map { it.toImmutable() },
                 nextToken,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): BillSearchResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        data().ifPresent { it.forEach { it.validate() } }
+        nextToken()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

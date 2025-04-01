@@ -11,117 +11,172 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CommitmentResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountId")
-    @ExcludeMissing
-    private val accountId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("accountingProductId")
-    @ExcludeMissing
-    private val accountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("amountFirstBill")
-    @ExcludeMissing
-    private val amountFirstBill: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("amountPrePaid")
-    @ExcludeMissing
-    private val amountPrePaid: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("amountSpent")
-    @ExcludeMissing
-    private val amountSpent: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("billEpoch")
-    @ExcludeMissing
-    private val billEpoch: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("billingInterval")
-    @ExcludeMissing
-    private val billingInterval: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("billingOffset")
-    @ExcludeMissing
-    private val billingOffset: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("billingPlanId")
-    @ExcludeMissing
-    private val billingPlanId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("childBillingMode")
-    @ExcludeMissing
-    private val childBillingMode: JsonField<ChildBillingMode> = JsonMissing.of(),
-    @JsonProperty("commitmentFeeBillInAdvance")
-    @ExcludeMissing
-    private val commitmentFeeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("commitmentFeeDescription")
-    @ExcludeMissing
-    private val commitmentFeeDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("commitmentUsageDescription")
-    @ExcludeMissing
-    private val commitmentUsageDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("contractId")
-    @ExcludeMissing
-    private val contractId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("drawdownsAccountingProductId")
-    @ExcludeMissing
-    private val drawdownsAccountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("endDate")
-    @ExcludeMissing
-    private val endDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("feeDates")
-    @ExcludeMissing
-    private val feeDates: JsonField<List<CommitmentFee>> = JsonMissing.of(),
-    @JsonProperty("feesAccountingProductId")
-    @ExcludeMissing
-    private val feesAccountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lineItemTypes")
-    @ExcludeMissing
-    private val lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
-    @JsonProperty("overageDescription")
-    @ExcludeMissing
-    private val overageDescription: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("overageSurchargePercent")
-    @ExcludeMissing
-    private val overageSurchargePercent: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("productIds")
-    @ExcludeMissing
-    private val productIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("separateOverageUsage")
-    @ExcludeMissing
-    private val separateOverageUsage: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("startDate")
-    @ExcludeMissing
-    private val startDate: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountId: JsonField<String>,
+    private val accountingProductId: JsonField<String>,
+    private val amount: JsonField<Double>,
+    private val amountFirstBill: JsonField<Double>,
+    private val amountPrePaid: JsonField<Double>,
+    private val amountSpent: JsonField<Double>,
+    private val billEpoch: JsonField<LocalDate>,
+    private val billingInterval: JsonField<Long>,
+    private val billingOffset: JsonField<Long>,
+    private val billingPlanId: JsonField<String>,
+    private val childBillingMode: JsonField<ChildBillingMode>,
+    private val commitmentFeeBillInAdvance: JsonField<Boolean>,
+    private val commitmentFeeDescription: JsonField<String>,
+    private val commitmentUsageDescription: JsonField<String>,
+    private val contractId: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val currency: JsonField<String>,
+    private val drawdownsAccountingProductId: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val endDate: JsonField<LocalDate>,
+    private val feeDates: JsonField<List<CommitmentFee>>,
+    private val feesAccountingProductId: JsonField<String>,
+    private val lastModifiedBy: JsonField<String>,
+    private val lineItemTypes: JsonField<List<LineItemType>>,
+    private val overageDescription: JsonField<String>,
+    private val overageSurchargePercent: JsonField<Double>,
+    private val productIds: JsonField<List<String>>,
+    private val separateOverageUsage: JsonField<Boolean>,
+    private val startDate: JsonField<LocalDate>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        accountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amountFirstBill")
+        @ExcludeMissing
+        amountFirstBill: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amountPrePaid")
+        @ExcludeMissing
+        amountPrePaid: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amountSpent")
+        @ExcludeMissing
+        amountSpent: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("billEpoch")
+        @ExcludeMissing
+        billEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("billingInterval")
+        @ExcludeMissing
+        billingInterval: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("billingOffset")
+        @ExcludeMissing
+        billingOffset: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("billingPlanId")
+        @ExcludeMissing
+        billingPlanId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("childBillingMode")
+        @ExcludeMissing
+        childBillingMode: JsonField<ChildBillingMode> = JsonMissing.of(),
+        @JsonProperty("commitmentFeeBillInAdvance")
+        @ExcludeMissing
+        commitmentFeeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("commitmentFeeDescription")
+        @ExcludeMissing
+        commitmentFeeDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("commitmentUsageDescription")
+        @ExcludeMissing
+        commitmentUsageDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("contractId")
+        @ExcludeMissing
+        contractId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("drawdownsAccountingProductId")
+        @ExcludeMissing
+        drawdownsAccountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("endDate") @ExcludeMissing endDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("feeDates")
+        @ExcludeMissing
+        feeDates: JsonField<List<CommitmentFee>> = JsonMissing.of(),
+        @JsonProperty("feesAccountingProductId")
+        @ExcludeMissing
+        feesAccountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lineItemTypes")
+        @ExcludeMissing
+        lineItemTypes: JsonField<List<LineItemType>> = JsonMissing.of(),
+        @JsonProperty("overageDescription")
+        @ExcludeMissing
+        overageDescription: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("overageSurchargePercent")
+        @ExcludeMissing
+        overageSurchargePercent: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("productIds")
+        @ExcludeMissing
+        productIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("separateOverageUsage")
+        @ExcludeMissing
+        separateOverageUsage: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("startDate")
+        @ExcludeMissing
+        startDate: JsonField<LocalDate> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountId,
+        accountingProductId,
+        amount,
+        amountFirstBill,
+        amountPrePaid,
+        amountSpent,
+        billEpoch,
+        billingInterval,
+        billingOffset,
+        billingPlanId,
+        childBillingMode,
+        commitmentFeeBillInAdvance,
+        commitmentFeeDescription,
+        commitmentUsageDescription,
+        contractId,
+        createdBy,
+        currency,
+        drawdownsAccountingProductId,
+        dtCreated,
+        dtLastModified,
+        endDate,
+        feeDates,
+        feesAccountingProductId,
+        lastModifiedBy,
+        lineItemTypes,
+        overageDescription,
+        overageSurchargePercent,
+        productIds,
+        separateOverageUsage,
+        startDate,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -715,51 +770,15 @@ private constructor(
      */
     @JsonProperty("startDate") @ExcludeMissing fun _startDate(): JsonField<LocalDate> = startDate
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CommitmentResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountId()
-        accountingProductId()
-        amount()
-        amountFirstBill()
-        amountPrePaid()
-        amountSpent()
-        billEpoch()
-        billingInterval()
-        billingOffset()
-        billingPlanId()
-        childBillingMode()
-        commitmentFeeBillInAdvance()
-        commitmentFeeDescription()
-        commitmentUsageDescription()
-        contractId()
-        createdBy()
-        currency()
-        drawdownsAccountingProductId()
-        dtCreated()
-        dtLastModified()
-        endDate()
-        feeDates().ifPresent { it.forEach { it.validate() } }
-        feesAccountingProductId()
-        lastModifiedBy()
-        lineItemTypes()
-        overageDescription()
-        overageSurchargePercent()
-        productIds()
-        separateOverageUsage()
-        startDate()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1408,6 +1427,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CommitmentResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CommitmentResponse =
             CommitmentResponse(
                 checkRequired("id", id),
@@ -1442,8 +1474,50 @@ private constructor(
                 (productIds ?: JsonMissing.of()).map { it.toImmutable() },
                 separateOverageUsage,
                 startDate,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CommitmentResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountId()
+        accountingProductId()
+        amount()
+        amountFirstBill()
+        amountPrePaid()
+        amountSpent()
+        billEpoch()
+        billingInterval()
+        billingOffset()
+        billingPlanId()
+        childBillingMode()
+        commitmentFeeBillInAdvance()
+        commitmentFeeDescription()
+        commitmentUsageDescription()
+        contractId()
+        createdBy()
+        currency()
+        drawdownsAccountingProductId()
+        dtCreated()
+        dtLastModified()
+        endDate()
+        feeDates().ifPresent { it.forEach { it.validate() } }
+        feesAccountingProductId()
+        lastModifiedBy()
+        lineItemTypes()
+        overageDescription()
+        overageSurchargePercent()
+        productIds()
+        separateOverageUsage()
+        startDate()
+        validated = true
     }
 
     /**

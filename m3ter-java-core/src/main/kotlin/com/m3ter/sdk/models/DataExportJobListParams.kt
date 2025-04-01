@@ -5,7 +5,6 @@ package com.m3ter.sdk.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.m3ter.sdk.core.Enum
 import com.m3ter.sdk.core.JsonField
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
@@ -58,28 +57,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.dateCreatedEnd?.let { queryParams.put("dateCreatedEnd", listOf(it.toString())) }
-        this.dateCreatedStart?.let { queryParams.put("dateCreatedStart", listOf(it.toString())) }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.scheduleId?.let { queryParams.put("scheduleId", listOf(it.toString())) }
-        this.status?.let { queryParams.put("status", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            else -> ""
-        }
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -96,7 +73,6 @@ private constructor(
     }
 
     /** A builder for [DataExportJobListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -286,6 +262,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [DataExportJobListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): DataExportJobListParams =
             DataExportJobListParams(
                 checkRequired("orgId", orgId),
@@ -300,6 +288,28 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                dateCreatedEnd?.let { put("dateCreatedEnd", it) }
+                dateCreatedStart?.let { put("dateCreatedStart", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                scheduleId?.let { put("scheduleId", it) }
+                status?.let { put("status", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** List Job entities for the status */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

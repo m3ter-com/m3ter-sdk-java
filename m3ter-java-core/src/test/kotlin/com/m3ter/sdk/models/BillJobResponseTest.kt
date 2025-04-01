@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillJobResponseTest {
+internal class BillJobResponseTest {
 
     @Test
-    fun createBillJobResponse() {
+    fun create() {
         val billJobResponse =
             BillJobResponse.builder()
                 .id("id")
@@ -41,17 +42,17 @@ class BillJobResponseTest {
                 .weekEpoch(LocalDate.parse("2019-12-27"))
                 .yearEpoch(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(billJobResponse).isNotNull
+
         assertThat(billJobResponse.id()).isEqualTo("id")
         assertThat(billJobResponse.version()).isEqualTo(0L)
-        assertThat(billJobResponse.accountIds().get()).containsExactly("string")
+        assertThat(billJobResponse.accountIds().getOrNull()).containsExactly("string")
         assertThat(billJobResponse.billDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(billJobResponse.billFrequencyInterval()).contains(0L)
-        assertThat(billJobResponse.billIds().get()).containsExactly("string")
+        assertThat(billJobResponse.billIds().getOrNull()).containsExactly("string")
         assertThat(billJobResponse.billingFrequency())
             .contains(BillJobResponse.BillingFrequency.DAILY)
         assertThat(billJobResponse.createdBy()).contains("createdBy")
-        assertThat(billJobResponse.currencyConversions().get())
+        assertThat(billJobResponse.currencyConversions().getOrNull())
             .containsExactly(
                 CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )

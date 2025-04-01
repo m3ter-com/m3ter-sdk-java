@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class NotificationConfigurationResponseTest {
+internal class NotificationConfigurationResponseTest {
 
     @Test
-    fun createNotificationConfigurationResponse() {
+    fun create() {
         val notificationConfigurationResponse =
             NotificationConfigurationResponse.builder()
                 .id("id")
@@ -26,7 +26,7 @@ class NotificationConfigurationResponseTest {
                 .eventName("eventName")
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(notificationConfigurationResponse).isNotNull
+
         assertThat(notificationConfigurationResponse.id()).isEqualTo("id")
         assertThat(notificationConfigurationResponse.code()).isEqualTo("x")
         assertThat(notificationConfigurationResponse.description()).isEqualTo("x")

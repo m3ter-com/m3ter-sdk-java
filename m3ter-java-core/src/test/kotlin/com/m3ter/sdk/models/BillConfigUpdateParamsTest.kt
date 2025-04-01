@@ -3,11 +3,10 @@
 package com.m3ter.sdk.models
 
 import java.time.LocalDate
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillConfigUpdateParamsTest {
+internal class BillConfigUpdateParamsTest {
 
     @Test
     fun create() {
@@ -16,6 +15,15 @@ class BillConfigUpdateParamsTest {
             .billLockDate(LocalDate.parse("2019-12-27"))
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = BillConfigUpdateParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -29,7 +37,6 @@ class BillConfigUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billLockDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.version()).contains(0L)
     }
@@ -39,17 +46,5 @@ class BillConfigUpdateParamsTest {
         val params = BillConfigUpdateParams.builder().orgId("orgId").build()
 
         val body = params._body()
-
-        assertNotNull(body)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = BillConfigUpdateParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

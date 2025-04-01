@@ -5,13 +5,14 @@ package com.m3ter.sdk.models
 import com.m3ter.sdk.core.JsonValue
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillSearchResponseTest {
+internal class BillSearchResponseTest {
 
     @Test
-    fun createBillSearchResponse() {
+    fun create() {
         val billSearchResponse =
             BillSearchResponse.builder()
                 .addData(
@@ -122,8 +123,8 @@ class BillSearchResponseTest {
                 )
                 .nextToken("nextToken")
                 .build()
-        assertThat(billSearchResponse).isNotNull
-        assertThat(billSearchResponse.data().get())
+
+        assertThat(billSearchResponse.data().getOrNull())
             .containsExactly(
                 BillResponse.builder()
                     .id("id")

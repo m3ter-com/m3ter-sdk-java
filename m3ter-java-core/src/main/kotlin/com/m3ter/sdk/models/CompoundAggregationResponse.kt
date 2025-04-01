@@ -11,65 +11,94 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CompoundAggregationResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountingProductId")
-    @ExcludeMissing
-    private val accountingProductId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("calculation")
-    @ExcludeMissing
-    private val calculation: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customFields")
-    @ExcludeMissing
-    private val customFields: JsonField<CustomFields> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("evaluateNullAggregations")
-    @ExcludeMissing
-    private val evaluateNullAggregations: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productId")
-    @ExcludeMissing
-    private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("quantityPerUnit")
-    @ExcludeMissing
-    private val quantityPerUnit: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("rounding")
-    @ExcludeMissing
-    private val rounding: JsonField<Rounding> = JsonMissing.of(),
-    @JsonProperty("segments")
-    @ExcludeMissing
-    private val segments: JsonField<List<Segment>> = JsonMissing.of(),
-    @JsonProperty("unit") @ExcludeMissing private val unit: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountingProductId: JsonField<String>,
+    private val calculation: JsonField<String>,
+    private val code: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val customFields: JsonField<CustomFields>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val evaluateNullAggregations: JsonField<Boolean>,
+    private val lastModifiedBy: JsonField<String>,
+    private val name: JsonField<String>,
+    private val productId: JsonField<String>,
+    private val quantityPerUnit: JsonField<Double>,
+    private val rounding: JsonField<Rounding>,
+    private val segments: JsonField<List<Segment>>,
+    private val unit: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        accountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("calculation")
+        @ExcludeMissing
+        calculation: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        customFields: JsonField<CustomFields> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("evaluateNullAggregations")
+        @ExcludeMissing
+        evaluateNullAggregations: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("quantityPerUnit")
+        @ExcludeMissing
+        quantityPerUnit: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("rounding") @ExcludeMissing rounding: JsonField<Rounding> = JsonMissing.of(),
+        @JsonProperty("segments")
+        @ExcludeMissing
+        segments: JsonField<List<Segment>> = JsonMissing.of(),
+        @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountingProductId,
+        calculation,
+        code,
+        createdBy,
+        customFields,
+        dtCreated,
+        dtLastModified,
+        evaluateNullAggregations,
+        lastModifiedBy,
+        name,
+        productId,
+        quantityPerUnit,
+        rounding,
+        segments,
+        unit,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -375,36 +404,15 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CompoundAggregationResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountingProductId()
-        calculation()
-        code()
-        createdBy()
-        customFields().ifPresent { it.validate() }
-        dtCreated()
-        dtLastModified()
-        evaluateNullAggregations()
-        lastModifiedBy()
-        name()
-        productId()
-        quantityPerUnit()
-        rounding()
-        segments().ifPresent { it.forEach { it.validate() } }
-        unit()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -760,6 +768,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CompoundAggregationResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CompoundAggregationResponse =
             CompoundAggregationResponse(
                 checkRequired("id", id),
@@ -779,31 +800,47 @@ private constructor(
                 rounding,
                 (segments ?: JsonMissing.of()).map { it.toImmutable() },
                 unit,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): CompoundAggregationResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountingProductId()
+        calculation()
+        code()
+        createdBy()
+        customFields().ifPresent { it.validate() }
+        dtCreated()
+        dtLastModified()
+        evaluateNullAggregations()
+        lastModifiedBy()
+        name()
+        productId()
+        quantityPerUnit()
+        rounding()
+        segments().ifPresent { it.forEach { it.validate() } }
+        unit()
+        validated = true
+    }
+
     class CustomFields
     @JsonCreator
     private constructor(
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
     ) {
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CustomFields = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -842,7 +879,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -985,27 +1037,16 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @NoAutoDetect
     class Segment
     @JsonCreator
     private constructor(
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
     ) {
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Segment = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -1044,7 +1085,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Segment].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Segment = Segment(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Segment = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

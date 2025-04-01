@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterAdjustmentListParamsTest {
+internal class CounterAdjustmentListParamsTest {
 
     @Test
     fun create() {
@@ -25,6 +25,15 @@ class CounterAdjustmentListParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = CounterAdjustmentListParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             CounterAdjustmentListParams.builder()
@@ -39,33 +48,31 @@ class CounterAdjustmentListParamsTest {
                 .nextToken("nextToken")
                 .pageSize(1L)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountId", "accountId")
-        expected.put("counterId", "counterId")
-        expected.put("date", "date")
-        expected.put("dateEnd", "dateEnd")
-        expected.put("dateStart", "dateStart")
-        expected.put("endDateEnd", "endDateEnd")
-        expected.put("endDateStart", "endDateStart")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountId", "accountId")
+                    .put("counterId", "counterId")
+                    .put("date", "date")
+                    .put("dateEnd", "dateEnd")
+                    .put("dateStart", "dateStart")
+                    .put("endDateEnd", "endDateEnd")
+                    .put("endDateStart", "endDateStart")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = CounterAdjustmentListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
-    }
 
-    @Test
-    fun getPathParam() {
-        val params = CounterAdjustmentListParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

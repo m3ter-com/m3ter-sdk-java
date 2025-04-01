@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ProductResponseTest {
+internal class ProductResponseTest {
 
     @Test
-    fun createProductResponse() {
+    fun create() {
         val productResponse =
             ProductResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ class ProductResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(productResponse).isNotNull
+
         assertThat(productResponse.id()).isEqualTo("id")
         assertThat(productResponse.version()).isEqualTo(0L)
         assertThat(productResponse.code()).contains("code")

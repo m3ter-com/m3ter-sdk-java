@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IntegrationConfigurationCreateResponseTest {
+internal class IntegrationConfigurationCreateResponseTest {
 
     @Test
-    fun createIntegrationConfigurationCreateResponse() {
+    fun create() {
         val integrationConfigurationCreateResponse =
             IntegrationConfigurationCreateResponse.builder()
                 .id("id")
@@ -34,7 +34,7 @@ class IntegrationConfigurationCreateResponseTest {
                 .name("name")
                 .triggerType(IntegrationConfigurationCreateResponse.TriggerType.EVENT)
                 .build()
-        assertThat(integrationConfigurationCreateResponse).isNotNull
+
         assertThat(integrationConfigurationCreateResponse.id()).isEqualTo("id")
         assertThat(integrationConfigurationCreateResponse.destination()).isEqualTo("x")
         assertThat(integrationConfigurationCreateResponse.entityType()).isEqualTo("x")

@@ -5,10 +5,10 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class OperationalDataExportScheduleRequestTest {
+internal class OperationalDataExportScheduleRequestTest {
 
     @Test
-    fun createOperationalDataExportScheduleRequest() {
+    fun create() {
         val operationalDataExportScheduleRequest =
             OperationalDataExportScheduleRequest.builder()
                 .addOperationalDataType(
@@ -17,7 +17,7 @@ class OperationalDataExportScheduleRequestTest {
                 .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
                 .version(0L)
                 .build()
-        assertThat(operationalDataExportScheduleRequest).isNotNull
+
         assertThat(operationalDataExportScheduleRequest.operationalDataTypes())
             .containsExactly(OperationalDataExportScheduleRequest.OperationalDataType.BILLS)
         assertThat(operationalDataExportScheduleRequest.sourceType())

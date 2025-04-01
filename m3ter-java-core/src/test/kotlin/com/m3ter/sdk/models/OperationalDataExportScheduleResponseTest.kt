@@ -2,13 +2,14 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class OperationalDataExportScheduleResponseTest {
+internal class OperationalDataExportScheduleResponseTest {
 
     @Test
-    fun createOperationalDataExportScheduleResponse() {
+    fun create() {
         val operationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
@@ -17,10 +18,10 @@ class OperationalDataExportScheduleResponseTest {
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
                 .build()
-        assertThat(operationalDataExportScheduleResponse).isNotNull
+
         assertThat(operationalDataExportScheduleResponse.id()).isEqualTo("id")
         assertThat(operationalDataExportScheduleResponse.version()).isEqualTo(0L)
-        assertThat(operationalDataExportScheduleResponse.operationalDataTypes().get())
+        assertThat(operationalDataExportScheduleResponse.operationalDataTypes().getOrNull())
             .containsExactly(OperationalDataExportScheduleResponse.OperationalDataType.BILLS)
     }
 }

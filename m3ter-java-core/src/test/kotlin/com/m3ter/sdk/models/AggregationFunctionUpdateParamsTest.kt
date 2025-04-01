@@ -3,11 +3,11 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
-import kotlin.test.assertNotNull
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AggregationFunctionUpdateParamsTest {
+internal class AggregationFunctionUpdateParamsTest {
 
     @Test
     fun create() {
@@ -38,6 +38,27 @@ class AggregationFunctionUpdateParamsTest {
             )
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            AggregationUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .aggregation(AggregationUpdateParams.Aggregation.SUM)
+                .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .name("x")
+                .quantityPerUnit(1.0)
+                .rounding(AggregationUpdateParams.Rounding.UP)
+                .targetField("x")
+                .unit("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 
     @Test
@@ -73,7 +94,6 @@ class AggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
@@ -91,14 +111,12 @@ class AggregationFunctionUpdateParamsTest {
             )
         assertThat(body.customSql()).contains("customSql")
         assertThat(body.defaultValue()).contains(0.0)
-        assertThat(body.segmentedFields()).contains(listOf("string"))
-        assertThat(body.segments())
-            .contains(
-                listOf(
-                    AggregationUpdateParams.Segment.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
+        assertThat(body.segmentedFields().getOrNull()).containsExactly("string")
+        assertThat(body.segments().getOrNull())
+            .containsExactly(
+                AggregationUpdateParams.Segment.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
             )
         assertThat(body.version()).contains(0L)
     }
@@ -120,7 +138,6 @@ class AggregationFunctionUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.aggregation()).isEqualTo(AggregationUpdateParams.Aggregation.SUM)
         assertThat(body.meterId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.name()).isEqualTo("x")
@@ -128,28 +145,5 @@ class AggregationFunctionUpdateParamsTest {
         assertThat(body.rounding()).isEqualTo(AggregationUpdateParams.Rounding.UP)
         assertThat(body.targetField()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            AggregationUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .aggregation(AggregationUpdateParams.Aggregation.SUM)
-                .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .name("x")
-                .quantityPerUnit(1.0)
-                .rounding(AggregationUpdateParams.Rounding.UP)
-                .targetField("x")
-                .unit("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

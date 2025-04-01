@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterAdjustmentCreateParamsTest {
+internal class CounterAdjustmentCreateParamsTest {
 
     @Test
     fun create() {
@@ -19,6 +18,22 @@ class CounterAdjustmentCreateParamsTest {
             .purchaseOrderNumber("purchaseOrderNumber")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            CounterAdjustmentCreateParams.builder()
+                .orgId("orgId")
+                .accountId("x")
+                .counterId("x")
+                .date("2022-01-04")
+                .value(0L)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -36,7 +51,6 @@ class CounterAdjustmentCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
@@ -58,27 +72,9 @@ class CounterAdjustmentCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
         assertThat(body.value()).isEqualTo(0L)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CounterAdjustmentCreateParams.builder()
-                .orgId("orgId")
-                .accountId("x")
-                .counterId("x")
-                .date("2022-01-04")
-                .value(0L)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

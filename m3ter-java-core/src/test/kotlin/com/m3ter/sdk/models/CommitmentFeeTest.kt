@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CommitmentFeeTest {
+internal class CommitmentFeeTest {
 
     @Test
-    fun createCommitmentFee() {
+    fun create() {
         val commitmentFee =
             CommitmentFee.builder()
                 .amount(1.0)
@@ -18,7 +18,7 @@ class CommitmentFeeTest {
                 .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(commitmentFee).isNotNull
+
         assertThat(commitmentFee.amount()).isEqualTo(1.0)
         assertThat(commitmentFee.date()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(commitmentFee.servicePeriodEndDate())

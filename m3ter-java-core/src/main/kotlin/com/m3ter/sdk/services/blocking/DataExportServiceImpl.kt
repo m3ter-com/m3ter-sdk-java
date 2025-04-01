@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.AdHocResponse
 import com.m3ter.sdk.models.DataExportCreateAdhocParams
 import com.m3ter.sdk.services.blocking.dataExports.DestinationService
@@ -55,7 +55,7 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         DataExportService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val destinations: DestinationService.WithRawResponse by lazy {
             DestinationServiceImpl.WithRawResponseImpl(clientOptions)
@@ -85,12 +85,7 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "organizations",
-                        params.getPathParam(0),
-                        "dataexports",
-                        "adhoc",
-                    )
+                    .addPathSegments("organizations", params._pathParam(0), "dataexports", "adhoc")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

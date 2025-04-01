@@ -10,61 +10,83 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CreditLineItemResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("description")
-    @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("productId")
-    @ExcludeMissing
-    private val productId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("referencedBillId")
-    @ExcludeMissing
-    private val referencedBillId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("referencedLineItemId")
-    @ExcludeMissing
-    private val referencedLineItemId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("servicePeriodEndDate")
-    @ExcludeMissing
-    private val servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("servicePeriodStartDate")
-    @ExcludeMissing
-    private val servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("creditReasonId")
-    @ExcludeMissing
-    private val creditReasonId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val amount: JsonField<Double>,
+    private val description: JsonField<String>,
+    private val productId: JsonField<String>,
+    private val referencedBillId: JsonField<String>,
+    private val referencedLineItemId: JsonField<String>,
+    private val servicePeriodEndDate: JsonField<OffsetDateTime>,
+    private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+    private val version: JsonField<Long>,
+    private val createdBy: JsonField<String>,
+    private val creditReasonId: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("referencedBillId")
+        @ExcludeMissing
+        referencedBillId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("referencedLineItemId")
+        @ExcludeMissing
+        referencedLineItemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("servicePeriodEndDate")
+        @ExcludeMissing
+        servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("servicePeriodStartDate")
+        @ExcludeMissing
+        servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("creditReasonId")
+        @ExcludeMissing
+        creditReasonId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        id,
+        amount,
+        description,
+        productId,
+        referencedBillId,
+        referencedLineItemId,
+        servicePeriodEndDate,
+        servicePeriodStartDate,
+        version,
+        createdBy,
+        creditReasonId,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -305,33 +327,15 @@ private constructor(
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CreditLineItemResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        amount()
-        description()
-        productId()
-        referencedBillId()
-        referencedLineItemId()
-        servicePeriodEndDate()
-        servicePeriodStartDate()
-        version()
-        createdBy()
-        creditReasonId()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -602,6 +606,26 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CreditLineItemResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .amount()
+         * .description()
+         * .productId()
+         * .referencedBillId()
+         * .referencedLineItemId()
+         * .servicePeriodEndDate()
+         * .servicePeriodStartDate()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CreditLineItemResponse =
             CreditLineItemResponse(
                 checkRequired("id", id),
@@ -618,8 +642,32 @@ private constructor(
                 dtCreated,
                 dtLastModified,
                 lastModifiedBy,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CreditLineItemResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        amount()
+        description()
+        productId()
+        referencedBillId()
+        referencedLineItemId()
+        servicePeriodEndDate()
+        servicePeriodStartDate()
+        version()
+        createdBy()
+        creditReasonId()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

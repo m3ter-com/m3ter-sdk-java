@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DataExportJobListParamsTest {
+internal class DataExportJobListParamsTest {
 
     @Test
     fun create() {
@@ -23,6 +23,15 @@ class DataExportJobListParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = DataExportJobListParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             DataExportJobListParams.builder()
@@ -35,31 +44,29 @@ class DataExportJobListParamsTest {
                 .scheduleId("scheduleId")
                 .status(DataExportJobListParams.Status.PENDING)
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("dateCreatedEnd", "dateCreatedEnd")
-        expected.put("dateCreatedStart", "dateCreatedStart")
-        expected.put("ids", "string")
-        expected.put("nextToken", "nextToken")
-        expected.put("pageSize", "1")
-        expected.put("scheduleId", "scheduleId")
-        expected.put("status", DataExportJobListParams.Status.PENDING.toString())
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("dateCreatedEnd", "dateCreatedEnd")
+                    .put("dateCreatedStart", "dateCreatedStart")
+                    .put("ids", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .put("scheduleId", "scheduleId")
+                    .put("status", "PENDING")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = DataExportJobListParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
-    }
 
-    @Test
-    fun getPathParam() {
-        val params = DataExportJobListParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

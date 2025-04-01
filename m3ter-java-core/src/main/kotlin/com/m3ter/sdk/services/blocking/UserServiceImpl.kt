@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.emptyHandler
 import com.m3ter.sdk.core.handlers.errorHandler
@@ -16,7 +17,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.PermissionPolicyResponse
 import com.m3ter.sdk.models.ResourceGroupResponse
 import com.m3ter.sdk.models.UserGetPermissionsParams
@@ -85,7 +85,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         UserService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val invitations: InvitationService.WithRawResponse by lazy {
             InvitationServiceImpl.WithRawResponseImpl(clientOptions)
@@ -105,9 +105,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "users",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -136,9 +136,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "users",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -167,7 +167,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "users")
+                    .addPathSegments("organizations", params._pathParam(0), "users")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -197,9 +197,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "users",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "permissions",
                     )
                     .build()
@@ -230,9 +230,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "users",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "usergroups",
                     )
                     .build()
@@ -260,7 +260,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "users", "me")
+                    .addPathSegments("organizations", params._pathParam(0), "users", "me")
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -288,9 +288,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "users",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                         "password",
                         "resend",
                     )

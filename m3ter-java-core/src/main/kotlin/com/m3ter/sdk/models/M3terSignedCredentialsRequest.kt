@@ -11,31 +11,30 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class M3terSignedCredentialsRequest
-@JsonCreator
 private constructor(
-    @JsonProperty("apiKey")
-    @ExcludeMissing
-    private val apiKey: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("secret")
-    @ExcludeMissing
-    private val secret: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-    @JsonProperty("empty") @ExcludeMissing private val empty: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val apiKey: JsonField<String>,
+    private val secret: JsonField<String>,
+    private val type: JsonField<Type>,
+    private val empty: JsonField<Boolean>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("apiKey") @ExcludeMissing apiKey: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("secret") @ExcludeMissing secret: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("empty") @ExcludeMissing empty: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(apiKey, secret, type, empty, version, mutableMapOf())
 
     /**
      * The API key provided by m3ter. This key is part of the credential set required for signing
@@ -122,24 +121,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): M3terSignedCredentialsRequest = apply {
-        if (validated) {
-            return@apply
-        }
-
-        apiKey()
-        secret()
-        type()
-        empty()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -273,6 +263,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [M3terSignedCredentialsRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .apiKey()
+         * .secret()
+         * .type()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): M3terSignedCredentialsRequest =
             M3terSignedCredentialsRequest(
                 checkRequired("apiKey", apiKey),
@@ -280,8 +284,23 @@ private constructor(
                 checkRequired("type", type),
                 empty,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): M3terSignedCredentialsRequest = apply {
+        if (validated) {
+            return@apply
+        }
+
+        apiKey()
+        secret()
+        type()
+        empty()
+        version()
+        validated = true
     }
 
     /**

@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class NotificationConfigurationUpdateParamsTest {
+internal class NotificationConfigurationUpdateParamsTest {
 
     @Test
     fun create() {
@@ -22,6 +21,24 @@ class NotificationConfigurationUpdateParamsTest {
             .calculation("calculation")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            NotificationConfigurationUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .code("x")
+                .description("x")
+                .eventName("x")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 
     @Test
@@ -42,7 +59,6 @@ class NotificationConfigurationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")
@@ -67,30 +83,9 @@ class NotificationConfigurationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            NotificationConfigurationUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .code("x")
-                .description("x")
-                .eventName("x")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

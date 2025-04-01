@@ -6,10 +6,10 @@ import com.m3ter.sdk.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventGetFieldsResponseTest {
+internal class EventGetFieldsResponseTest {
 
     @Test
-    fun createEventGetFieldsResponse() {
+    fun create() {
         val eventGetFieldsResponse =
             EventGetFieldsResponse.builder()
                 .events(
@@ -48,7 +48,7 @@ class EventGetFieldsResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(eventGetFieldsResponse).isNotNull
+
         assertThat(eventGetFieldsResponse.events())
             .contains(
                 EventGetFieldsResponse.Events.builder()

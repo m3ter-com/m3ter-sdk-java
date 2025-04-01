@@ -10,15 +10,13 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -186,432 +184,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            1 -> balanceId
-            else -> ""
-        }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("appliedDate")
-        @ExcludeMissing
-        private val appliedDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("currencyPaid")
-        @ExcludeMissing
-        private val currencyPaid: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("paid")
-        @ExcludeMissing
-        private val paid: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("transactionDate")
-        @ExcludeMissing
-        private val transactionDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("transactionTypeId")
-        @ExcludeMissing
-        private val transactionTypeId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * The financial value of the transaction.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun amount(): Double = amount.getRequired("amount")
-
-        /**
-         * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun appliedDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(appliedDate.getNullable("appliedDate"))
-
-        /**
-         * The currency code of the payment if it differs from the Balance currency. For example:
-         * USD, GBP or EUR.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun currencyPaid(): Optional<String> =
-            Optional.ofNullable(currencyPaid.getNullable("currencyPaid"))
-
-        /**
-         * A brief description explaining the purpose and context of the transaction.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
-
-        /**
-         * The payment amount if the payment currency differs from the Balance currency.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun paid(): Optional<Double> = Optional.ofNullable(paid.getNullable("paid"))
-
-        /**
-         * The date _(in ISO 8601 format)_ when the transaction occurred.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun transactionDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(transactionDate.getNullable("transactionDate"))
-
-        /**
-         * The unique identifier (UUID) of the transaction type. This is obtained from the list of
-         * created Transaction Types within the Organization Configuration.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun transactionTypeId(): Optional<String> =
-            Optional.ofNullable(transactionTypeId.getNullable("transactionTypeId"))
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [amount].
-         *
-         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
-
-        /**
-         * Returns the raw JSON value of [appliedDate].
-         *
-         * Unlike [appliedDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("appliedDate")
-        @ExcludeMissing
-        fun _appliedDate(): JsonField<OffsetDateTime> = appliedDate
-
-        /**
-         * Returns the raw JSON value of [currencyPaid].
-         *
-         * Unlike [currencyPaid], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("currencyPaid")
-        @ExcludeMissing
-        fun _currencyPaid(): JsonField<String> = currencyPaid
-
-        /**
-         * Returns the raw JSON value of [description].
-         *
-         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("description")
-        @ExcludeMissing
-        fun _description(): JsonField<String> = description
-
-        /**
-         * Returns the raw JSON value of [paid].
-         *
-         * Unlike [paid], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("paid") @ExcludeMissing fun _paid(): JsonField<Double> = paid
-
-        /**
-         * Returns the raw JSON value of [transactionDate].
-         *
-         * Unlike [transactionDate], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("transactionDate")
-        @ExcludeMissing
-        fun _transactionDate(): JsonField<OffsetDateTime> = transactionDate
-
-        /**
-         * Returns the raw JSON value of [transactionTypeId].
-         *
-         * Unlike [transactionTypeId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("transactionTypeId")
-        @ExcludeMissing
-        fun _transactionTypeId(): JsonField<String> = transactionTypeId
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            amount()
-            appliedDate()
-            currencyPaid()
-            description()
-            paid()
-            transactionDate()
-            transactionTypeId()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .amount()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var amount: JsonField<Double>? = null
-            private var appliedDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var currencyPaid: JsonField<String> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
-            private var paid: JsonField<Double> = JsonMissing.of()
-            private var transactionDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var transactionTypeId: JsonField<String> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                amount = body.amount
-                appliedDate = body.appliedDate
-                currencyPaid = body.currencyPaid
-                description = body.description
-                paid = body.paid
-                transactionDate = body.transactionDate
-                transactionTypeId = body.transactionTypeId
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** The financial value of the transaction. */
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            /**
-             * Sets [Builder.amount] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
-            fun appliedDate(appliedDate: OffsetDateTime) = appliedDate(JsonField.of(appliedDate))
-
-            /**
-             * Sets [Builder.appliedDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.appliedDate] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun appliedDate(appliedDate: JsonField<OffsetDateTime>) = apply {
-                this.appliedDate = appliedDate
-            }
-
-            /**
-             * The currency code of the payment if it differs from the Balance currency. For
-             * example: USD, GBP or EUR.
-             */
-            fun currencyPaid(currencyPaid: String) = currencyPaid(JsonField.of(currencyPaid))
-
-            /**
-             * Sets [Builder.currencyPaid] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.currencyPaid] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun currencyPaid(currencyPaid: JsonField<String>) = apply {
-                this.currencyPaid = currencyPaid
-            }
-
-            /** A brief description explaining the purpose and context of the transaction. */
-            fun description(description: String) = description(JsonField.of(description))
-
-            /**
-             * Sets [Builder.description] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.description] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            /** The payment amount if the payment currency differs from the Balance currency. */
-            fun paid(paid: Double) = paid(JsonField.of(paid))
-
-            /**
-             * Sets [Builder.paid] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.paid] with a well-typed [Double] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun paid(paid: JsonField<Double>) = apply { this.paid = paid }
-
-            /** The date _(in ISO 8601 format)_ when the transaction occurred. */
-            fun transactionDate(transactionDate: OffsetDateTime) =
-                transactionDate(JsonField.of(transactionDate))
-
-            /**
-             * Sets [Builder.transactionDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.transactionDate] with a well-typed [OffsetDateTime]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun transactionDate(transactionDate: JsonField<OffsetDateTime>) = apply {
-                this.transactionDate = transactionDate
-            }
-
-            /**
-             * The unique identifier (UUID) of the transaction type. This is obtained from the list
-             * of created Transaction Types within the Organization Configuration.
-             */
-            fun transactionTypeId(transactionTypeId: String) =
-                transactionTypeId(JsonField.of(transactionTypeId))
-
-            /**
-             * Sets [Builder.transactionTypeId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.transactionTypeId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun transactionTypeId(transactionTypeId: JsonField<String>) = apply {
-                this.transactionTypeId = transactionTypeId
-            }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("amount", amount),
-                    appliedDate,
-                    currencyPaid,
-                    description,
-                    paid,
-                    transactionDate,
-                    transactionTypeId,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && amount == other.amount && appliedDate == other.appliedDate && currencyPaid == other.currencyPaid && description == other.description && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, appliedDate, currencyPaid, description, paid, transactionDate, transactionTypeId, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{amount=$amount, appliedDate=$appliedDate, currencyPaid=$currencyPaid, description=$description, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -631,7 +203,6 @@ private constructor(
     }
 
     /** A builder for [BalanceTransactionCreateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -888,6 +459,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [BalanceTransactionCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .balanceId()
+         * .amount()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): BalanceTransactionCreateParams =
             BalanceTransactionCreateParams(
                 checkRequired("orgId", orgId),
@@ -896,6 +481,462 @@ private constructor(
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
+    }
+
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> balanceId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
+    private constructor(
+        private val amount: JsonField<Double>,
+        private val appliedDate: JsonField<OffsetDateTime>,
+        private val currencyPaid: JsonField<String>,
+        private val description: JsonField<String>,
+        private val paid: JsonField<Double>,
+        private val transactionDate: JsonField<OffsetDateTime>,
+        private val transactionTypeId: JsonField<String>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("appliedDate")
+            @ExcludeMissing
+            appliedDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("currencyPaid")
+            @ExcludeMissing
+            currencyPaid: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("paid") @ExcludeMissing paid: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("transactionDate")
+            @ExcludeMissing
+            transactionDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("transactionTypeId")
+            @ExcludeMissing
+            transactionTypeId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            amount,
+            appliedDate,
+            currencyPaid,
+            description,
+            paid,
+            transactionDate,
+            transactionTypeId,
+            version,
+            mutableMapOf(),
+        )
+
+        /**
+         * The financial value of the transaction.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun amount(): Double = amount.getRequired("amount")
+
+        /**
+         * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun appliedDate(): Optional<OffsetDateTime> =
+            Optional.ofNullable(appliedDate.getNullable("appliedDate"))
+
+        /**
+         * The currency code of the payment if it differs from the Balance currency. For example:
+         * USD, GBP or EUR.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun currencyPaid(): Optional<String> =
+            Optional.ofNullable(currencyPaid.getNullable("currencyPaid"))
+
+        /**
+         * A brief description explaining the purpose and context of the transaction.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun description(): Optional<String> =
+            Optional.ofNullable(description.getNullable("description"))
+
+        /**
+         * The payment amount if the payment currency differs from the Balance currency.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun paid(): Optional<Double> = Optional.ofNullable(paid.getNullable("paid"))
+
+        /**
+         * The date _(in ISO 8601 format)_ when the transaction occurred.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionDate(): Optional<OffsetDateTime> =
+            Optional.ofNullable(transactionDate.getNullable("transactionDate"))
+
+        /**
+         * The unique identifier (UUID) of the transaction type. This is obtained from the list of
+         * created Transaction Types within the Organization Configuration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionTypeId(): Optional<String> =
+            Optional.ofNullable(transactionTypeId.getNullable("transactionTypeId"))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [amount].
+         *
+         * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
+
+        /**
+         * Returns the raw JSON value of [appliedDate].
+         *
+         * Unlike [appliedDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("appliedDate")
+        @ExcludeMissing
+        fun _appliedDate(): JsonField<OffsetDateTime> = appliedDate
+
+        /**
+         * Returns the raw JSON value of [currencyPaid].
+         *
+         * Unlike [currencyPaid], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("currencyPaid")
+        @ExcludeMissing
+        fun _currencyPaid(): JsonField<String> = currencyPaid
+
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
+
+        /**
+         * Returns the raw JSON value of [paid].
+         *
+         * Unlike [paid], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("paid") @ExcludeMissing fun _paid(): JsonField<Double> = paid
+
+        /**
+         * Returns the raw JSON value of [transactionDate].
+         *
+         * Unlike [transactionDate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transactionDate")
+        @ExcludeMissing
+        fun _transactionDate(): JsonField<OffsetDateTime> = transactionDate
+
+        /**
+         * Returns the raw JSON value of [transactionTypeId].
+         *
+         * Unlike [transactionTypeId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transactionTypeId")
+        @ExcludeMissing
+        fun _transactionTypeId(): JsonField<String> = transactionTypeId
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var amount: JsonField<Double>? = null
+            private var appliedDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var currencyPaid: JsonField<String> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var paid: JsonField<Double> = JsonMissing.of()
+            private var transactionDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var transactionTypeId: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                appliedDate = body.appliedDate
+                currencyPaid = body.currencyPaid
+                description = body.description
+                paid = body.paid
+                transactionDate = body.transactionDate
+                transactionTypeId = body.transactionTypeId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The financial value of the transaction. */
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            /**
+             * Sets [Builder.amount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amount] with a well-typed [Double] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+            fun appliedDate(appliedDate: OffsetDateTime) = appliedDate(JsonField.of(appliedDate))
+
+            /**
+             * Sets [Builder.appliedDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.appliedDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun appliedDate(appliedDate: JsonField<OffsetDateTime>) = apply {
+                this.appliedDate = appliedDate
+            }
+
+            /**
+             * The currency code of the payment if it differs from the Balance currency. For
+             * example: USD, GBP or EUR.
+             */
+            fun currencyPaid(currencyPaid: String) = currencyPaid(JsonField.of(currencyPaid))
+
+            /**
+             * Sets [Builder.currencyPaid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.currencyPaid] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun currencyPaid(currencyPaid: JsonField<String>) = apply {
+                this.currencyPaid = currencyPaid
+            }
+
+            /** A brief description explaining the purpose and context of the transaction. */
+            fun description(description: String) = description(JsonField.of(description))
+
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            /** The payment amount if the payment currency differs from the Balance currency. */
+            fun paid(paid: Double) = paid(JsonField.of(paid))
+
+            /**
+             * Sets [Builder.paid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paid] with a well-typed [Double] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun paid(paid: JsonField<Double>) = apply { this.paid = paid }
+
+            /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+            fun transactionDate(transactionDate: OffsetDateTime) =
+                transactionDate(JsonField.of(transactionDate))
+
+            /**
+             * Sets [Builder.transactionDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionDate] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun transactionDate(transactionDate: JsonField<OffsetDateTime>) = apply {
+                this.transactionDate = transactionDate
+            }
+
+            /**
+             * The unique identifier (UUID) of the transaction type. This is obtained from the list
+             * of created Transaction Types within the Organization Configuration.
+             */
+            fun transactionTypeId(transactionTypeId: String) =
+                transactionTypeId(JsonField.of(transactionTypeId))
+
+            /**
+             * Sets [Builder.transactionTypeId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionTypeId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionTypeId(transactionTypeId: JsonField<String>) = apply {
+                this.transactionTypeId = transactionTypeId
+            }
+
+            /**
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .amount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("amount", amount),
+                    appliedDate,
+                    currencyPaid,
+                    description,
+                    paid,
+                    transactionDate,
+                    transactionTypeId,
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            amount()
+            appliedDate()
+            currencyPaid()
+            description()
+            paid()
+            transactionDate()
+            transactionTypeId()
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && amount == other.amount && appliedDate == other.appliedDate && currencyPaid == other.currencyPaid && description == other.description && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(amount, appliedDate, currencyPaid, description, paid, transactionDate, transactionTypeId, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{amount=$amount, appliedDate=$appliedDate, currencyPaid=$currencyPaid, description=$description, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

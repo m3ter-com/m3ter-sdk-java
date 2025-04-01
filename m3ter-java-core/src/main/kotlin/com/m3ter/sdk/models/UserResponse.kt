@@ -10,65 +10,92 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class UserResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("contactNumber")
-    @ExcludeMissing
-    private val contactNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtEndAccess")
-    @ExcludeMissing
-    private val dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("firstAcceptedTermsAndConditions")
-    @ExcludeMissing
-    private val firstAcceptedTermsAndConditions: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("firstName")
-    @ExcludeMissing
-    private val firstName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastAcceptedTermsAndConditions")
-    @ExcludeMissing
-    private val lastAcceptedTermsAndConditions: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("lastName")
-    @ExcludeMissing
-    private val lastName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("organizations")
-    @ExcludeMissing
-    private val organizations: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("permissionPolicy")
-    @ExcludeMissing
-    private val permissionPolicy: JsonField<List<PermissionStatementResponse>> = JsonMissing.of(),
-    @JsonProperty("supportUser")
-    @ExcludeMissing
-    private val supportUser: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val contactNumber: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtEndAccess: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val email: JsonField<String>,
+    private val firstAcceptedTermsAndConditions: JsonField<OffsetDateTime>,
+    private val firstName: JsonField<String>,
+    private val lastAcceptedTermsAndConditions: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val lastName: JsonField<String>,
+    private val organizations: JsonField<List<String>>,
+    private val permissionPolicy: JsonField<List<PermissionStatementResponse>>,
+    private val supportUser: JsonField<Boolean>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("contactNumber")
+        @ExcludeMissing
+        contactNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtEndAccess")
+        @ExcludeMissing
+        dtEndAccess: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("email") @ExcludeMissing email: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("firstAcceptedTermsAndConditions")
+        @ExcludeMissing
+        firstAcceptedTermsAndConditions: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("firstName") @ExcludeMissing firstName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastAcceptedTermsAndConditions")
+        @ExcludeMissing
+        lastAcceptedTermsAndConditions: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lastName") @ExcludeMissing lastName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("organizations")
+        @ExcludeMissing
+        organizations: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("permissionPolicy")
+        @ExcludeMissing
+        permissionPolicy: JsonField<List<PermissionStatementResponse>> = JsonMissing.of(),
+        @JsonProperty("supportUser")
+        @ExcludeMissing
+        supportUser: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        contactNumber,
+        createdBy,
+        dtCreated,
+        dtEndAccess,
+        dtLastModified,
+        email,
+        firstAcceptedTermsAndConditions,
+        firstName,
+        lastAcceptedTermsAndConditions,
+        lastModifiedBy,
+        lastName,
+        organizations,
+        permissionPolicy,
+        supportUser,
+        version,
+        mutableMapOf(),
+    )
 
     /**
      * The unique identifier (UUID) of this user.
@@ -356,35 +383,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): UserResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        contactNumber()
-        createdBy()
-        dtCreated()
-        dtEndAccess()
-        dtLastModified()
-        email()
-        firstAcceptedTermsAndConditions()
-        firstName()
-        lastAcceptedTermsAndConditions()
-        lastModifiedBy()
-        lastName()
-        organizations()
-        permissionPolicy().ifPresent { it.forEach { it.validate() } }
-        supportUser()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -705,6 +712,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UserResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): UserResponse =
             UserResponse(
                 id,
@@ -723,8 +735,34 @@ private constructor(
                 (permissionPolicy ?: JsonMissing.of()).map { it.toImmutable() },
                 supportUser,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): UserResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        contactNumber()
+        createdBy()
+        dtCreated()
+        dtEndAccess()
+        dtLastModified()
+        email()
+        firstAcceptedTermsAndConditions()
+        firstName()
+        lastAcceptedTermsAndConditions()
+        lastModifiedBy()
+        lastName()
+        organizations()
+        permissionPolicy().ifPresent { it.forEach { it.validate() } }
+        supportUser()
+        version()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

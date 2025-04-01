@@ -2,13 +2,14 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UsageDataExportScheduleResponseTest {
+internal class UsageDataExportScheduleResponseTest {
 
     @Test
-    fun createUsageDataExportScheduleResponse() {
+    fun create() {
         val usageDataExportScheduleResponse =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
@@ -19,15 +20,16 @@ class UsageDataExportScheduleResponseTest {
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                 .build()
-        assertThat(usageDataExportScheduleResponse).isNotNull
+
         assertThat(usageDataExportScheduleResponse.id()).isEqualTo("id")
         assertThat(usageDataExportScheduleResponse.version()).isEqualTo(0L)
-        assertThat(usageDataExportScheduleResponse.accountIds().get()).containsExactly("string")
+        assertThat(usageDataExportScheduleResponse.accountIds().getOrNull())
+            .containsExactly("string")
         assertThat(usageDataExportScheduleResponse.aggregation())
             .contains(UsageDataExportScheduleResponse.Aggregation.SUM)
         assertThat(usageDataExportScheduleResponse.aggregationFrequency())
             .contains(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
-        assertThat(usageDataExportScheduleResponse.meterIds().get()).containsExactly("string")
+        assertThat(usageDataExportScheduleResponse.meterIds().getOrNull()).containsExactly("string")
         assertThat(usageDataExportScheduleResponse.timePeriod())
             .contains(UsageDataExportScheduleResponse.TimePeriod.TODAY)
     }

@@ -5,7 +5,7 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BalanceTransactionSummaryParamsTest {
+internal class BalanceTransactionSummaryParamsTest {
 
     @Test
     fun create() {
@@ -13,15 +13,13 @@ class BalanceTransactionSummaryParamsTest {
     }
 
     @Test
-    fun getPathParam() {
+    fun pathParams() {
         val params =
             BalanceTransactionSummaryParams.builder().orgId("orgId").balanceId("balanceId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "balanceId"
-        assertThat(params.getPathParam(1)).isEqualTo("balanceId")
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("balanceId")
         // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 }

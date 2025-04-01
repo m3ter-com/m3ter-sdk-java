@@ -10,20 +10,21 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class SetString
-@JsonCreator
 private constructor(
-    @JsonProperty("empty") @ExcludeMissing private val empty: JsonField<Boolean> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val empty: JsonField<Boolean>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("empty") @ExcludeMissing empty: JsonField<Boolean> = JsonMissing.of()
+    ) : this(empty, mutableMapOf())
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -38,20 +39,15 @@ private constructor(
      */
     @JsonProperty("empty") @ExcludeMissing fun _empty(): JsonField<Boolean> = empty
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): SetString = apply {
-        if (validated) {
-            return@apply
-        }
-
-        empty()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -102,7 +98,23 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
-        fun build(): SetString = SetString(empty, additionalProperties.toImmutable())
+        /**
+         * Returns an immutable instance of [SetString].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
+        fun build(): SetString = SetString(empty, additionalProperties.toMutableMap())
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): SetString = apply {
+        if (validated) {
+            return@apply
+        }
+
+        empty()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

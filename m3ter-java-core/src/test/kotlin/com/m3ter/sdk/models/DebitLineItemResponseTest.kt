@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DebitLineItemResponseTest {
+internal class DebitLineItemResponseTest {
 
     @Test
-    fun createDebitLineItemResponse() {
+    fun create() {
         val debitLineItemResponse =
             DebitLineItemResponse.builder()
                 .id("id")
@@ -27,7 +27,7 @@ class DebitLineItemResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(debitLineItemResponse).isNotNull
+
         assertThat(debitLineItemResponse.id()).isEqualTo("id")
         assertThat(debitLineItemResponse.amount()).isEqualTo(0.0)
         assertThat(debitLineItemResponse.description()).isEqualTo("description")

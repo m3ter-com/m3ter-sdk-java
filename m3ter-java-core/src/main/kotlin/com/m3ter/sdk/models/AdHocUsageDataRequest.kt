@@ -11,42 +11,57 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class AdHocUsageDataRequest
-@JsonCreator
 private constructor(
-    @JsonProperty("aggregationFrequency")
-    @ExcludeMissing
-    private val aggregationFrequency: JsonField<AggregationFrequency> = JsonMissing.of(),
-    @JsonProperty("sourceType")
-    @ExcludeMissing
-    private val sourceType: JsonField<SourceType> = JsonMissing.of(),
-    @JsonProperty("accountIds")
-    @ExcludeMissing
-    private val accountIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("aggregation")
-    @ExcludeMissing
-    private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
-    @JsonProperty("meterIds")
-    @ExcludeMissing
-    private val meterIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("timePeriod")
-    @ExcludeMissing
-    private val timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val aggregationFrequency: JsonField<AggregationFrequency>,
+    private val sourceType: JsonField<SourceType>,
+    private val accountIds: JsonField<List<String>>,
+    private val aggregation: JsonField<Aggregation>,
+    private val meterIds: JsonField<List<String>>,
+    private val timePeriod: JsonField<TimePeriod>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("aggregationFrequency")
+        @ExcludeMissing
+        aggregationFrequency: JsonField<AggregationFrequency> = JsonMissing.of(),
+        @JsonProperty("sourceType")
+        @ExcludeMissing
+        sourceType: JsonField<SourceType> = JsonMissing.of(),
+        @JsonProperty("accountIds")
+        @ExcludeMissing
+        accountIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("aggregation")
+        @ExcludeMissing
+        aggregation: JsonField<Aggregation> = JsonMissing.of(),
+        @JsonProperty("meterIds")
+        @ExcludeMissing
+        meterIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("timePeriod")
+        @ExcludeMissing
+        timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        aggregationFrequency,
+        sourceType,
+        accountIds,
+        aggregation,
+        meterIds,
+        timePeriod,
+        version,
+        mutableMapOf(),
+    )
 
     /**
      * Specifies the time period for the aggregation of usage data included each time the Data
@@ -214,26 +229,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): AdHocUsageDataRequest = apply {
-        if (validated) {
-            return@apply
-        }
-
-        aggregationFrequency()
-        sourceType()
-        accountIds()
-        aggregation()
-        meterIds()
-        timePeriod()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -465,6 +469,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AdHocUsageDataRequest].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .aggregationFrequency()
+         * .sourceType()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AdHocUsageDataRequest =
             AdHocUsageDataRequest(
                 checkRequired("aggregationFrequency", aggregationFrequency),
@@ -474,8 +491,25 @@ private constructor(
                 (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
                 timePeriod,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): AdHocUsageDataRequest = apply {
+        if (validated) {
+            return@apply
+        }
+
+        aggregationFrequency()
+        sourceType()
+        accountIds()
+        aggregation()
+        meterIds()
+        timePeriod()
+        version()
+        validated = true
     }
 
     /**

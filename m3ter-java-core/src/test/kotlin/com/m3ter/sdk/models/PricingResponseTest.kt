@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PricingResponseTest {
+internal class PricingResponseTest {
 
     @Test
-    fun createPricingResponse() {
+    fun create() {
         val pricingResponse =
             PricingResponse.builder()
                 .id("id")
@@ -60,7 +61,7 @@ class PricingResponseTest {
                 .tiersSpanPlan(true)
                 .type(PricingResponse.Type.DEBIT)
                 .build()
-        assertThat(pricingResponse).isNotNull
+
         assertThat(pricingResponse.id()).isEqualTo("id")
         assertThat(pricingResponse.version()).isEqualTo(0L)
         assertThat(pricingResponse.accountingProductId()).contains("accountingProductId")
@@ -82,7 +83,7 @@ class PricingResponseTest {
         assertThat(pricingResponse.minimumSpend()).contains(0.0)
         assertThat(pricingResponse.minimumSpendBillInAdvance()).contains(true)
         assertThat(pricingResponse.minimumSpendDescription()).contains("minimumSpendDescription")
-        assertThat(pricingResponse.overagePricingBands().get())
+        assertThat(pricingResponse.overagePricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)
@@ -94,7 +95,7 @@ class PricingResponseTest {
             )
         assertThat(pricingResponse.planId()).contains("planId")
         assertThat(pricingResponse.planTemplateId()).contains("planTemplateId")
-        assertThat(pricingResponse.pricingBands().get())
+        assertThat(pricingResponse.pricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)

@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.async
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepareAsync
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.OrganizationConfigResponse
 import com.m3ter.sdk.models.OrganizationConfigRetrieveParams
 import com.m3ter.sdk.models.OrganizationConfigUpdateParams
@@ -46,7 +46,7 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         OrganizationConfigServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val retrieveHandler: Handler<OrganizationConfigResponse> =
             jsonHandler<OrganizationConfigResponse>(clientOptions.jsonMapper)
@@ -59,7 +59,7 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params.getPathParam(0), "organizationconfig")
+                    .addPathSegments("organizations", params._pathParam(0), "organizationconfig")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -89,7 +89,7 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("organizations", params.getPathParam(0), "organizationconfig")
+                    .addPathSegments("organizations", params._pathParam(0), "organizationconfig")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)

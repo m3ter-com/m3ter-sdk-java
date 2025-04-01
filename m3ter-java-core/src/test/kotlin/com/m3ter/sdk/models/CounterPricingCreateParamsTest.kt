@@ -3,11 +3,10 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterPricingCreateParamsTest {
+internal class CounterPricingCreateParamsTest {
 
     @Test
     fun create() {
@@ -37,6 +36,23 @@ class CounterPricingCreateParamsTest {
             .runningTotalBillInAdvance(true)
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            CounterPricingCreateParams.builder()
+                .orgId("orgId")
+                .counterId("x")
+                .addPricingBand(
+                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
+                )
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -71,19 +87,16 @@ class CounterPricingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.pricingBands())
-            .isEqualTo(
-                listOf(
-                    PricingBand.builder()
-                        .fixedPrice(0.0)
-                        .lowerLimit(0.0)
-                        .unitPrice(0.0)
-                        .id("id")
-                        .creditTypeId("creditTypeId")
-                        .build()
-                )
+            .containsExactly(
+                PricingBand.builder()
+                    .fixedPrice(0.0)
+                    .lowerLimit(0.0)
+                    .unitPrice(0.0)
+                    .id("id")
+                    .creditTypeId("creditTypeId")
+                    .build()
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.accountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -114,30 +127,11 @@ class CounterPricingCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.pricingBands())
-            .isEqualTo(
-                listOf(PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build())
+            .containsExactly(
+                PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CounterPricingCreateParams.builder()
-                .orgId("orgId")
-                .counterId("x")
-                .addPricingBand(
-                    PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
-                )
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

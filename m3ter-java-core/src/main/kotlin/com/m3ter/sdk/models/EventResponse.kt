@@ -10,34 +10,35 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
 /** Response containing an Event entity. */
-@NoAutoDetect
 class EventResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtActioned")
-    @ExcludeMissing
-    private val dtActioned: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("eventName")
-    @ExcludeMissing
-    private val eventName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("eventTime")
-    @ExcludeMissing
-    private val eventTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("m3terEvent")
-    @ExcludeMissing
-    private val m3terEvent: JsonValue = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val dtActioned: JsonField<OffsetDateTime>,
+    private val eventName: JsonField<String>,
+    private val eventTime: JsonField<OffsetDateTime>,
+    private val m3terEvent: JsonValue,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtActioned")
+        @ExcludeMissing
+        dtActioned: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("eventName") @ExcludeMissing eventName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("eventTime")
+        @ExcludeMissing
+        eventTime: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("m3terEvent") @ExcludeMissing m3terEvent: JsonValue = JsonMissing.of(),
+    ) : this(id, dtActioned, eventName, eventTime, m3terEvent, mutableMapOf())
 
     /**
      * The uniqie identifier (UUID) of the Event.
@@ -110,23 +111,15 @@ private constructor(
     @ExcludeMissing
     fun _eventTime(): JsonField<OffsetDateTime> = eventTime
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): EventResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        dtActioned()
-        eventName()
-        eventTime()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -246,6 +239,22 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [EventResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .dtActioned()
+         * .eventName()
+         * .eventTime()
+         * .m3terEvent()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): EventResponse =
             EventResponse(
                 checkRequired("id", id),
@@ -253,8 +262,22 @@ private constructor(
                 checkRequired("eventName", eventName),
                 checkRequired("eventTime", eventTime),
                 checkRequired("m3terEvent", m3terEvent),
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): EventResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        dtActioned()
+        eventName()
+        eventTime()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

@@ -3,11 +3,11 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BalanceUpdateParamsTest {
+internal class BalanceUpdateParamsTest {
 
     @Test
     fun create() {
@@ -32,6 +32,24 @@ class BalanceUpdateParamsTest {
             .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            BalanceUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .accountId("x")
+                .currency("x")
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 
     @Test
@@ -61,7 +79,6 @@ class BalanceUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -72,12 +89,12 @@ class BalanceUpdateParamsTest {
             .contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.description()).contains("description")
         assertThat(body.feesAccountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        assertThat(body.lineItemTypes())
-            .contains(listOf(BalanceUpdateParams.LineItemType.STANDING_CHARGE))
+        assertThat(body.lineItemTypes().getOrNull())
+            .containsExactly(BalanceUpdateParams.LineItemType.STANDING_CHARGE)
         assertThat(body.name()).contains("name")
         assertThat(body.overageDescription()).contains("overageDescription")
         assertThat(body.overageSurchargePercent()).contains(0.0)
-        assertThat(body.productIds()).contains(listOf("string"))
+        assertThat(body.productIds().getOrNull()).containsExactly("string")
         assertThat(body.rolloverAmount()).contains(0.0)
         assertThat(body.rolloverEndDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -98,30 +115,9 @@ class BalanceUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.currency()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            BalanceUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .accountId("x")
-                .currency("x")
-                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

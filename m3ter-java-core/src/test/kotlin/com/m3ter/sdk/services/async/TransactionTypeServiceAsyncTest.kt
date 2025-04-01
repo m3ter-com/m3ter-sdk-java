@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class TransactionTypeServiceAsyncTest {
+internal class TransactionTypeServiceAsyncTest {
 
     @Test
     fun create() {

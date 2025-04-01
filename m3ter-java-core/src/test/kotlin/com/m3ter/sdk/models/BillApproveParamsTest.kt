@@ -3,11 +3,10 @@
 package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.http.QueryParams
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BillApproveParamsTest {
+internal class BillApproveParamsTest {
 
     @Test
     fun create() {
@@ -21,6 +20,15 @@ class BillApproveParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params =
             BillApproveParams.builder()
@@ -30,18 +38,26 @@ class BillApproveParamsTest {
                 .externalInvoiceDateStart("externalInvoiceDateStart")
                 .addBillId("string")
                 .build()
-        val expected = QueryParams.builder()
-        expected.put("accountIds", "accountIds")
-        expected.put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
-        expected.put("externalInvoiceDateStart", "externalInvoiceDateStart")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("accountIds", "accountIds")
+                    .put("externalInvoiceDateEnd", "externalInvoiceDateEnd")
+                    .put("externalInvoiceDateStart", "externalInvoiceDateStart")
+                    .build()
+            )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 
     @Test
@@ -57,8 +73,7 @@ class BillApproveParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
+        assertThat(body.billIds()).containsExactly("string")
     }
 
     @Test
@@ -67,17 +82,6 @@ class BillApproveParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
-        assertThat(body.billIds()).isEqualTo(listOf("string"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = BillApproveParams.builder().orgId("orgId").addBillId("string").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        assertThat(body.billIds()).containsExactly("string")
     }
 }

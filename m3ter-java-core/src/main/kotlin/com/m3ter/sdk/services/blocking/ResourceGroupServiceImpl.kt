@@ -3,6 +3,7 @@
 package com.m3ter.sdk.services.blocking
 
 import com.m3ter.sdk.core.ClientOptions
+import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.RequestOptions
 import com.m3ter.sdk.core.handlers.errorHandler
 import com.m3ter.sdk.core.handlers.jsonHandler
@@ -14,7 +15,6 @@ import com.m3ter.sdk.core.http.HttpResponseFor
 import com.m3ter.sdk.core.http.json
 import com.m3ter.sdk.core.http.parseable
 import com.m3ter.sdk.core.prepare
-import com.m3ter.sdk.errors.M3terError
 import com.m3ter.sdk.models.ResourceGroupAddResourceParams
 import com.m3ter.sdk.models.ResourceGroupCreateParams
 import com.m3ter.sdk.models.ResourceGroupDeleteParams
@@ -104,7 +104,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ResourceGroupService.WithRawResponse {
 
-        private val errorHandler: Handler<M3terError> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
         private val createHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
@@ -119,9 +119,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -152,10 +152,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -185,10 +185,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -219,9 +219,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepare(clientOptions, params)
@@ -258,10 +258,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -292,10 +292,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                         "addresource",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -327,10 +327,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                         "contents",
                     )
                     .apply { params._body().ifPresent { body(json(clientOptions.jsonMapper, it)) } }
@@ -369,10 +369,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                         "permissions",
                     )
                     .build()
@@ -410,10 +410,10 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resourcegroups",
-                        params.getPathParam(1),
-                        params.getPathParam(2),
+                        params._pathParam(1),
+                        params._pathParam(2),
                         "removeresource",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))

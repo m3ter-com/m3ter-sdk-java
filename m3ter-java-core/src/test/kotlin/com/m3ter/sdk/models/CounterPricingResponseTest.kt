@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CounterPricingResponseTest {
+internal class CounterPricingResponseTest {
 
     @Test
-    fun createCounterPricingResponse() {
+    fun create() {
         val counterPricingResponse =
             CounterPricingResponse.builder()
                 .id("id")
@@ -41,7 +42,7 @@ class CounterPricingResponseTest {
                 .runningTotalBillInAdvance(true)
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(counterPricingResponse).isNotNull
+
         assertThat(counterPricingResponse.id()).isEqualTo("id")
         assertThat(counterPricingResponse.version()).isEqualTo(0L)
         assertThat(counterPricingResponse.accountingProductId()).contains("accountingProductId")
@@ -59,7 +60,7 @@ class CounterPricingResponseTest {
         assertThat(counterPricingResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(counterPricingResponse.planId()).contains("planId")
         assertThat(counterPricingResponse.planTemplateId()).contains("planTemplateId")
-        assertThat(counterPricingResponse.pricingBands().get())
+        assertThat(counterPricingResponse.pricingBands().getOrNull())
             .containsExactly(
                 PricingBand.builder()
                     .fixedPrice(0.0)

@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LineItemResponseTest {
+internal class LineItemResponseTest {
 
     @Test
-    fun createLineItemResponse() {
+    fun create() {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
@@ -75,13 +76,13 @@ class LineItemResponseTest {
                 .unit("unit")
                 .units(0.0)
                 .build()
-        assertThat(lineItemResponse).isNotNull
+
         assertThat(lineItemResponse.id()).isEqualTo("id")
         assertThat(lineItemResponse.version()).isEqualTo(0L)
         assertThat(lineItemResponse.aggregationId()).contains("aggregationId")
         assertThat(lineItemResponse.averageUnitPrice()).contains(0.0)
         assertThat(lineItemResponse.balanceId()).contains("balanceId")
-        assertThat(lineItemResponse.bandUsage().get())
+        assertThat(lineItemResponse.bandUsage().getOrNull())
             .containsExactly(
                 LineItemResponse.BandUsage.builder()
                     .bandQuantity(0.0)

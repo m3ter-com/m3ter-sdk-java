@@ -10,15 +10,14 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -192,490 +191,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            1 -> id
-            else -> ""
-        }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("code")
-        @ExcludeMissing
-        private val code: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("dataFields")
-        @ExcludeMissing
-        private val dataFields: JsonField<List<DataFieldResponse>> = JsonMissing.of(),
-        @JsonProperty("derivedFields")
-        @ExcludeMissing
-        private val derivedFields: JsonField<List<DerivedField>> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("customFields")
-        @ExcludeMissing
-        private val customFields: JsonField<CustomFields> = JsonMissing.of(),
-        @JsonProperty("groupId")
-        @ExcludeMissing
-        private val groupId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("productId")
-        @ExcludeMissing
-        private val productId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version")
-        @ExcludeMissing
-        private val version: JsonField<Long> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Code of the Meter - unique short code used to identify the Meter.
-         *
-         * **NOTE:** Code has a maximum length of 80 characters and must not contain non-printable
-         * or whitespace characters (except space), and cannot start/end with whitespace.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun code(): String = code.getRequired("code")
-
-        /**
-         * Used to submit categorized raw usage data values for ingest into the platform - either
-         * numeric quantitative values or non-numeric data values. At least one required per Meter;
-         * maximum 15 per Meter.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun dataFields(): List<DataFieldResponse> = dataFields.getRequired("dataFields")
-
-        /**
-         * Used to submit usage data values for ingest into the platform that are the result of a
-         * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
-         *
-         * **Note:** Required parameter. If you want to create a Meter without Derived Fields, use
-         * an empty array `[]`. If you use a `null`, you'll receive an error.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun derivedFields(): List<DerivedField> = derivedFields.getRequired("derivedFields")
-
-        /**
-         * Descriptive name for the Meter.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun name(): String = name.getRequired("name")
-
-        /**
-         * User defined fields enabling you to attach custom data. The value for a custom field can
-         * be either a string or a number.
-         *
-         * If `customFields` can also be defined for this entity at the Organizational level,
-         * `customField` values defined at individual level override values of `customFields` with
-         * the same name defined at Organization level.
-         *
-         * See
-         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-         * in the m3ter documentation for more information.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
-
-        /**
-         * UUID of the group the Meter belongs to. _(Optional)_.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun groupId(): Optional<String> = Optional.ofNullable(groupId.getNullable("groupId"))
-
-        /**
-         * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
-         * global.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
-
-        /**
-         * Returns the raw JSON value of [code].
-         *
-         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
-
-        /**
-         * Returns the raw JSON value of [dataFields].
-         *
-         * Unlike [dataFields], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("dataFields")
-        @ExcludeMissing
-        fun _dataFields(): JsonField<List<DataFieldResponse>> = dataFields
-
-        /**
-         * Returns the raw JSON value of [derivedFields].
-         *
-         * Unlike [derivedFields], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("derivedFields")
-        @ExcludeMissing
-        fun _derivedFields(): JsonField<List<DerivedField>> = derivedFields
-
-        /**
-         * Returns the raw JSON value of [name].
-         *
-         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-        /**
-         * Returns the raw JSON value of [customFields].
-         *
-         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("customFields")
-        @ExcludeMissing
-        fun _customFields(): JsonField<CustomFields> = customFields
-
-        /**
-         * Returns the raw JSON value of [groupId].
-         *
-         * Unlike [groupId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("groupId") @ExcludeMissing fun _groupId(): JsonField<String> = groupId
-
-        /**
-         * Returns the raw JSON value of [productId].
-         *
-         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            code()
-            dataFields().forEach { it.validate() }
-            derivedFields().forEach { it.validate() }
-            name()
-            customFields().ifPresent { it.validate() }
-            groupId()
-            productId()
-            version()
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .code()
-             * .dataFields()
-             * .derivedFields()
-             * .name()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var code: JsonField<String>? = null
-            private var dataFields: JsonField<MutableList<DataFieldResponse>>? = null
-            private var derivedFields: JsonField<MutableList<DerivedField>>? = null
-            private var name: JsonField<String>? = null
-            private var customFields: JsonField<CustomFields> = JsonMissing.of()
-            private var groupId: JsonField<String> = JsonMissing.of()
-            private var productId: JsonField<String> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                code = body.code
-                dataFields = body.dataFields.map { it.toMutableList() }
-                derivedFields = body.derivedFields.map { it.toMutableList() }
-                name = body.name
-                customFields = body.customFields
-                groupId = body.groupId
-                productId = body.productId
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * Code of the Meter - unique short code used to identify the Meter.
-             *
-             * **NOTE:** Code has a maximum length of 80 characters and must not contain
-             * non-printable or whitespace characters (except space), and cannot start/end with
-             * whitespace.
-             */
-            fun code(code: String) = code(JsonField.of(code))
-
-            /**
-             * Sets [Builder.code] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.code] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun code(code: JsonField<String>) = apply { this.code = code }
-
-            /**
-             * Used to submit categorized raw usage data values for ingest into the platform -
-             * either numeric quantitative values or non-numeric data values. At least one required
-             * per Meter; maximum 15 per Meter.
-             */
-            fun dataFields(dataFields: List<DataFieldResponse>) =
-                dataFields(JsonField.of(dataFields))
-
-            /**
-             * Sets [Builder.dataFields] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.dataFields] with a well-typed
-             * `List<DataFieldResponse>` value instead. This method is primarily for setting the
-             * field to an undocumented or not yet supported value.
-             */
-            fun dataFields(dataFields: JsonField<List<DataFieldResponse>>) = apply {
-                this.dataFields = dataFields.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [DataFieldResponse] to [dataFields].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addDataField(dataField: DataFieldResponse) = apply {
-                dataFields =
-                    (dataFields ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("dataFields", it).add(dataField)
-                    }
-            }
-
-            /**
-             * Used to submit usage data values for ingest into the platform that are the result of
-             * a calculation performed on `dataFields`, `customFields`, or system `Timestamp`
-             * fields. Raw usage data is not submitted using `derivedFields`. Maximum 15 per Meter.
-             * _(Optional)_.
-             *
-             * **Note:** Required parameter. If you want to create a Meter without Derived Fields,
-             * use an empty array `[]`. If you use a `null`, you'll receive an error.
-             */
-            fun derivedFields(derivedFields: List<DerivedField>) =
-                derivedFields(JsonField.of(derivedFields))
-
-            /**
-             * Sets [Builder.derivedFields] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.derivedFields] with a well-typed
-             * `List<DerivedField>` value instead. This method is primarily for setting the field to
-             * an undocumented or not yet supported value.
-             */
-            fun derivedFields(derivedFields: JsonField<List<DerivedField>>) = apply {
-                this.derivedFields = derivedFields.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [DerivedField] to [derivedFields].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addDerivedField(derivedField: DerivedField) = apply {
-                derivedFields =
-                    (derivedFields ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("derivedFields", it).add(derivedField)
-                    }
-            }
-
-            /** Descriptive name for the Meter. */
-            fun name(name: String) = name(JsonField.of(name))
-
-            /**
-             * Sets [Builder.name] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.name] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            /**
-             * User defined fields enabling you to attach custom data. The value for a custom field
-             * can be either a string or a number.
-             *
-             * If `customFields` can also be defined for this entity at the Organizational level,
-             * `customField` values defined at individual level override values of `customFields`
-             * with the same name defined at Organization level.
-             *
-             * See
-             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
-             * in the m3ter documentation for more information.
-             */
-            fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
-
-            /**
-             * Sets [Builder.customFields] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun customFields(customFields: JsonField<CustomFields>) = apply {
-                this.customFields = customFields
-            }
-
-            /** UUID of the group the Meter belongs to. _(Optional)_. */
-            fun groupId(groupId: String) = groupId(JsonField.of(groupId))
-
-            /**
-             * Sets [Builder.groupId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.groupId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun groupId(groupId: JsonField<String>) = apply { this.groupId = groupId }
-
-            /**
-             * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
-             * global.
-             */
-            fun productId(productId: String) = productId(JsonField.of(productId))
-
-            /**
-             * Sets [Builder.productId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.productId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("code", code),
-                    checkRequired("dataFields", dataFields).map { it.toImmutable() },
-                    checkRequired("derivedFields", derivedFields).map { it.toImmutable() },
-                    checkRequired("name", name),
-                    customFields,
-                    groupId,
-                    productId,
-                    version,
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && code == other.code && dataFields == other.dataFields && derivedFields == other.derivedFields && name == other.name && customFields == other.customFields && groupId == other.groupId && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(code, dataFields, derivedFields, name, customFields, groupId, productId, version, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{code=$code, dataFields=$dataFields, derivedFields=$derivedFields, name=$name, customFields=$customFields, groupId=$groupId, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -697,7 +212,6 @@ private constructor(
     }
 
     /** A builder for [MeterUpdateParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -989,6 +503,23 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [MeterUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .id()
+         * .code()
+         * .dataFields()
+         * .derivedFields()
+         * .name()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): MeterUpdateParams =
             MeterUpdateParams(
                 checkRequired("orgId", orgId),
@@ -999,28 +530,546 @@ private constructor(
             )
     }
 
-    @NoAutoDetect
-    class DerivedField
-    @JsonCreator
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            1 -> id
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("category")
-        @ExcludeMissing
-        private val category: JsonField<DataFieldResponse.Category> = JsonMissing.of(),
-        @JsonProperty("code")
-        @ExcludeMissing
-        private val code: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("unit")
-        @ExcludeMissing
-        private val unit: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("calculation")
-        @ExcludeMissing
-        private val calculation: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val code: JsonField<String>,
+        private val dataFields: JsonField<List<DataFieldResponse>>,
+        private val derivedFields: JsonField<List<DerivedField>>,
+        private val name: JsonField<String>,
+        private val customFields: JsonField<CustomFields>,
+        private val groupId: JsonField<String>,
+        private val productId: JsonField<String>,
+        private val version: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("dataFields")
+            @ExcludeMissing
+            dataFields: JsonField<List<DataFieldResponse>> = JsonMissing.of(),
+            @JsonProperty("derivedFields")
+            @ExcludeMissing
+            derivedFields: JsonField<List<DerivedField>> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("customFields")
+            @ExcludeMissing
+            customFields: JsonField<CustomFields> = JsonMissing.of(),
+            @JsonProperty("groupId") @ExcludeMissing groupId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("productId")
+            @ExcludeMissing
+            productId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        ) : this(
+            code,
+            dataFields,
+            derivedFields,
+            name,
+            customFields,
+            groupId,
+            productId,
+            version,
+            mutableMapOf(),
+        )
+
+        /**
+         * Code of the Meter - unique short code used to identify the Meter.
+         *
+         * **NOTE:** Code has a maximum length of 80 characters and must not contain non-printable
+         * or whitespace characters (except space), and cannot start/end with whitespace.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun code(): String = code.getRequired("code")
+
+        /**
+         * Used to submit categorized raw usage data values for ingest into the platform - either
+         * numeric quantitative values or non-numeric data values. At least one required per Meter;
+         * maximum 15 per Meter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun dataFields(): List<DataFieldResponse> = dataFields.getRequired("dataFields")
+
+        /**
+         * Used to submit usage data values for ingest into the platform that are the result of a
+         * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
+         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         *
+         * **Note:** Required parameter. If you want to create a Meter without Derived Fields, use
+         * an empty array `[]`. If you use a `null`, you'll receive an error.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun derivedFields(): List<DerivedField> = derivedFields.getRequired("derivedFields")
+
+        /**
+         * Descriptive name for the Meter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun name(): String = name.getRequired("name")
+
+        /**
+         * User defined fields enabling you to attach custom data. The value for a custom field can
+         * be either a string or a number.
+         *
+         * If `customFields` can also be defined for this entity at the Organizational level,
+         * `customField` values defined at individual level override values of `customFields` with
+         * the same name defined at Organization level.
+         *
+         * See
+         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+         * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customFields(): Optional<CustomFields> =
+            Optional.ofNullable(customFields.getNullable("customFields"))
+
+        /**
+         * UUID of the group the Meter belongs to. _(Optional)_.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun groupId(): Optional<String> = Optional.ofNullable(groupId.getNullable("groupId"))
+
+        /**
+         * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
+         * global.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+
+        /**
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
+         *   incremented by 1 and listed in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+
+        /**
+         * Returns the raw JSON value of [code].
+         *
+         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
+
+        /**
+         * Returns the raw JSON value of [dataFields].
+         *
+         * Unlike [dataFields], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("dataFields")
+        @ExcludeMissing
+        fun _dataFields(): JsonField<List<DataFieldResponse>> = dataFields
+
+        /**
+         * Returns the raw JSON value of [derivedFields].
+         *
+         * Unlike [derivedFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("derivedFields")
+        @ExcludeMissing
+        fun _derivedFields(): JsonField<List<DerivedField>> = derivedFields
+
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * Returns the raw JSON value of [customFields].
+         *
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        fun _customFields(): JsonField<CustomFields> = customFields
+
+        /**
+         * Returns the raw JSON value of [groupId].
+         *
+         * Unlike [groupId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("groupId") @ExcludeMissing fun _groupId(): JsonField<String> = groupId
+
+        /**
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("productId") @ExcludeMissing fun _productId(): JsonField<String> = productId
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .code()
+             * .dataFields()
+             * .derivedFields()
+             * .name()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var code: JsonField<String>? = null
+            private var dataFields: JsonField<MutableList<DataFieldResponse>>? = null
+            private var derivedFields: JsonField<MutableList<DerivedField>>? = null
+            private var name: JsonField<String>? = null
+            private var customFields: JsonField<CustomFields> = JsonMissing.of()
+            private var groupId: JsonField<String> = JsonMissing.of()
+            private var productId: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                code = body.code
+                dataFields = body.dataFields.map { it.toMutableList() }
+                derivedFields = body.derivedFields.map { it.toMutableList() }
+                name = body.name
+                customFields = body.customFields
+                groupId = body.groupId
+                productId = body.productId
+                version = body.version
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * Code of the Meter - unique short code used to identify the Meter.
+             *
+             * **NOTE:** Code has a maximum length of 80 characters and must not contain
+             * non-printable or whitespace characters (except space), and cannot start/end with
+             * whitespace.
+             */
+            fun code(code: String) = code(JsonField.of(code))
+
+            /**
+             * Sets [Builder.code] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.code] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun code(code: JsonField<String>) = apply { this.code = code }
+
+            /**
+             * Used to submit categorized raw usage data values for ingest into the platform -
+             * either numeric quantitative values or non-numeric data values. At least one required
+             * per Meter; maximum 15 per Meter.
+             */
+            fun dataFields(dataFields: List<DataFieldResponse>) =
+                dataFields(JsonField.of(dataFields))
+
+            /**
+             * Sets [Builder.dataFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dataFields] with a well-typed
+             * `List<DataFieldResponse>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun dataFields(dataFields: JsonField<List<DataFieldResponse>>) = apply {
+                this.dataFields = dataFields.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [DataFieldResponse] to [dataFields].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addDataField(dataField: DataFieldResponse) = apply {
+                dataFields =
+                    (dataFields ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dataFields", it).add(dataField)
+                    }
+            }
+
+            /**
+             * Used to submit usage data values for ingest into the platform that are the result of
+             * a calculation performed on `dataFields`, `customFields`, or system `Timestamp`
+             * fields. Raw usage data is not submitted using `derivedFields`. Maximum 15 per Meter.
+             * _(Optional)_.
+             *
+             * **Note:** Required parameter. If you want to create a Meter without Derived Fields,
+             * use an empty array `[]`. If you use a `null`, you'll receive an error.
+             */
+            fun derivedFields(derivedFields: List<DerivedField>) =
+                derivedFields(JsonField.of(derivedFields))
+
+            /**
+             * Sets [Builder.derivedFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.derivedFields] with a well-typed
+             * `List<DerivedField>` value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun derivedFields(derivedFields: JsonField<List<DerivedField>>) = apply {
+                this.derivedFields = derivedFields.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [DerivedField] to [derivedFields].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addDerivedField(derivedField: DerivedField) = apply {
+                derivedFields =
+                    (derivedFields ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("derivedFields", it).add(derivedField)
+                    }
+            }
+
+            /** Descriptive name for the Meter. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * User defined fields enabling you to attach custom data. The value for a custom field
+             * can be either a string or a number.
+             *
+             * If `customFields` can also be defined for this entity at the Organizational level,
+             * `customField` values defined at individual level override values of `customFields`
+             * with the same name defined at Organization level.
+             *
+             * See
+             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+             * in the m3ter documentation for more information.
+             */
+            fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
+
+            /**
+             * Sets [Builder.customFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customFields(customFields: JsonField<CustomFields>) = apply {
+                this.customFields = customFields
+            }
+
+            /** UUID of the group the Meter belongs to. _(Optional)_. */
+            fun groupId(groupId: String) = groupId(JsonField.of(groupId))
+
+            /**
+             * Sets [Builder.groupId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupId(groupId: JsonField<String>) = apply { this.groupId = groupId }
+
+            /**
+             * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
+             * global.
+             */
+            fun productId(productId: String) = productId(JsonField.of(productId))
+
+            /**
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
+
+            /**
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .code()
+             * .dataFields()
+             * .derivedFields()
+             * .name()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("code", code),
+                    checkRequired("dataFields", dataFields).map { it.toImmutable() },
+                    checkRequired("derivedFields", derivedFields).map { it.toImmutable() },
+                    checkRequired("name", name),
+                    customFields,
+                    groupId,
+                    productId,
+                    version,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            code()
+            dataFields().forEach { it.validate() }
+            derivedFields().forEach { it.validate() }
+            name()
+            customFields().ifPresent { it.validate() }
+            groupId()
+            productId()
+            version()
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && code == other.code && dataFields == other.dataFields && derivedFields == other.derivedFields && name == other.name && customFields == other.customFields && groupId == other.groupId && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(code, dataFields, derivedFields, name, customFields, groupId, productId, version, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{code=$code, dataFields=$dataFields, derivedFields=$derivedFields, name=$name, customFields=$customFields, groupId=$groupId, productId=$productId, version=$version, additionalProperties=$additionalProperties}"
+    }
+
+    class DerivedField
+    private constructor(
+        private val category: JsonField<DataFieldResponse.Category>,
+        private val code: JsonField<String>,
+        private val name: JsonField<String>,
+        private val unit: JsonField<String>,
+        private val calculation: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("category")
+            @ExcludeMissing
+            category: JsonField<DataFieldResponse.Category> = JsonMissing.of(),
+            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("calculation")
+            @ExcludeMissing
+            calculation: JsonField<String> = JsonMissing.of(),
+        ) : this(category, code, name, unit, calculation, mutableMapOf())
+
+        fun toDataFieldResponse(): DataFieldResponse =
+            DataFieldResponse.builder().category(category).code(code).name(name).unit(unit).build()
 
         /**
          * The type of field (WHO, WHAT, WHERE, MEASURE, METADATA, INCOME, COST, OTHER).
@@ -1107,27 +1156,15 @@ private constructor(
         @ExcludeMissing
         fun _calculation(): JsonField<String> = calculation
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toDataFieldResponse(): DataFieldResponse =
-            DataFieldResponse.builder().category(category).code(code).name(name).unit(unit).build()
-
-        private var validated: Boolean = false
-
-        fun validate(): DerivedField = apply {
-            if (validated) {
-                return@apply
-            }
-
-            category()
-            code()
-            name()
-            unit()
-            calculation()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1262,6 +1299,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [DerivedField].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .category()
+             * .code()
+             * .name()
+             * .calculation()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): DerivedField =
                 DerivedField(
                     checkRequired("category", category),
@@ -1269,8 +1321,23 @@ private constructor(
                     checkRequired("name", name),
                     unit,
                     checkRequired("calculation", calculation),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): DerivedField = apply {
+            if (validated) {
+                return@apply
+            }
+
+            category()
+            code()
+            name()
+            unit()
+            calculation()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1303,27 +1370,16 @@ private constructor(
      * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
      * in the m3ter documentation for more information.
      */
-    @NoAutoDetect
     class CustomFields
     @JsonCreator
     private constructor(
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
     ) {
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CustomFields = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -1362,7 +1418,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

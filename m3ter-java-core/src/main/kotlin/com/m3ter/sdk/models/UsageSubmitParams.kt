@@ -10,16 +10,15 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
 import com.m3ter.sdk.core.http.QueryParams
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -88,161 +87,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    @JvmSynthetic internal fun _body(): Body = body
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams = additionalQueryParams
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            else -> ""
-        }
-    }
-
-    @NoAutoDetect
-    class Body
-    @JsonCreator
-    private constructor(
-        @JsonProperty("measurements")
-        @ExcludeMissing
-        private val measurements: JsonField<List<Measurement>> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
-    ) {
-
-        /**
-         * Request containing the usage data measurements for submission.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun measurements(): List<Measurement> = measurements.getRequired("measurements")
-
-        /**
-         * Returns the raw JSON value of [measurements].
-         *
-         * Unlike [measurements], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("measurements")
-        @ExcludeMissing
-        fun _measurements(): JsonField<List<Measurement>> = measurements
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Body = apply {
-            if (validated) {
-                return@apply
-            }
-
-            measurements().forEach { it.validate() }
-            validated = true
-        }
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .measurements()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var measurements: JsonField<MutableList<Measurement>>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                measurements = body.measurements.map { it.toMutableList() }
-                additionalProperties = body.additionalProperties.toMutableMap()
-            }
-
-            /** Request containing the usage data measurements for submission. */
-            fun measurements(measurements: List<Measurement>) =
-                measurements(JsonField.of(measurements))
-
-            /**
-             * Sets [Builder.measurements] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.measurements] with a well-typed `List<Measurement>`
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun measurements(measurements: JsonField<List<Measurement>>) = apply {
-                this.measurements = measurements.map { it.toMutableList() }
-            }
-
-            /**
-             * Adds a single [Measurement] to [measurements].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addMeasurement(measurement: Measurement) = apply {
-                measurements =
-                    (measurements ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("measurements", it).add(measurement)
-                    }
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            fun build(): Body =
-                Body(
-                    checkRequired("measurements", measurements).map { it.toImmutable() },
-                    additionalProperties.toImmutable(),
-                )
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Body && measurements == other.measurements && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(measurements, additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{measurements=$measurements, additionalProperties=$additionalProperties}"
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -260,7 +104,6 @@ private constructor(
     }
 
     /** A builder for [UsageSubmitParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -418,6 +261,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [UsageSubmitParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * .measurements()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UsageSubmitParams =
             UsageSubmitParams(
                 checkRequired("orgId", orgId),
@@ -427,44 +283,231 @@ private constructor(
             )
     }
 
-    @NoAutoDetect
-    class Measurement
-    @JsonCreator
+    @JvmSynthetic internal fun _body(): Body = body
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams = additionalQueryParams
+
+    class Body
     private constructor(
-        @JsonProperty("account")
-        @ExcludeMissing
-        private val account: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("meter")
-        @ExcludeMissing
-        private val meter: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ts")
-        @ExcludeMissing
-        private val ts: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("cost") @ExcludeMissing private val cost: JsonField<Cost> = JsonMissing.of(),
-        @JsonProperty("ets")
-        @ExcludeMissing
-        private val ets: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("income")
-        @ExcludeMissing
-        private val income: JsonField<Income> = JsonMissing.of(),
-        @JsonProperty("measure")
-        @ExcludeMissing
-        private val measure: JsonField<Measure> = JsonMissing.of(),
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
-        @JsonProperty("other")
-        @ExcludeMissing
-        private val other: JsonField<Other> = JsonMissing.of(),
-        @JsonProperty("uid") @ExcludeMissing private val uid: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("what") @ExcludeMissing private val what: JsonField<What> = JsonMissing.of(),
-        @JsonProperty("where")
-        @ExcludeMissing
-        private val where: JsonField<Where> = JsonMissing.of(),
-        @JsonProperty("who") @ExcludeMissing private val who: JsonField<Who> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val measurements: JsonField<List<Measurement>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("measurements")
+            @ExcludeMissing
+            measurements: JsonField<List<Measurement>> = JsonMissing.of()
+        ) : this(measurements, mutableMapOf())
+
+        /**
+         * Request containing the usage data measurements for submission.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun measurements(): List<Measurement> = measurements.getRequired("measurements")
+
+        /**
+         * Returns the raw JSON value of [measurements].
+         *
+         * Unlike [measurements], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("measurements")
+        @ExcludeMissing
+        fun _measurements(): JsonField<List<Measurement>> = measurements
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```java
+             * .measurements()
+             * ```
+             */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var measurements: JsonField<MutableList<Measurement>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(body: Body) = apply {
+                measurements = body.measurements.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** Request containing the usage data measurements for submission. */
+            fun measurements(measurements: List<Measurement>) =
+                measurements(JsonField.of(measurements))
+
+            /**
+             * Sets [Builder.measurements] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.measurements] with a well-typed `List<Measurement>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun measurements(measurements: JsonField<List<Measurement>>) = apply {
+                this.measurements = measurements.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Measurement] to [measurements].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addMeasurement(measurement: Measurement) = apply {
+                measurements =
+                    (measurements ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("measurements", it).add(measurement)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .measurements()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("measurements", measurements).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            measurements().forEach { it.validate() }
+            validated = true
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Body && measurements == other.measurements && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(measurements, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{measurements=$measurements, additionalProperties=$additionalProperties}"
+    }
+
+    class Measurement
+    private constructor(
+        private val account: JsonField<String>,
+        private val meter: JsonField<String>,
+        private val ts: JsonField<OffsetDateTime>,
+        private val cost: JsonField<Cost>,
+        private val ets: JsonField<OffsetDateTime>,
+        private val income: JsonField<Income>,
+        private val measure: JsonField<Measure>,
+        private val metadata: JsonField<Metadata>,
+        private val other: JsonField<Other>,
+        private val uid: JsonField<String>,
+        private val what: JsonField<What>,
+        private val where: JsonField<Where>,
+        private val who: JsonField<Who>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("account") @ExcludeMissing account: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("meter") @ExcludeMissing meter: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("ts") @ExcludeMissing ts: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("cost") @ExcludeMissing cost: JsonField<Cost> = JsonMissing.of(),
+            @JsonProperty("ets") @ExcludeMissing ets: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("income") @ExcludeMissing income: JsonField<Income> = JsonMissing.of(),
+            @JsonProperty("measure") @ExcludeMissing measure: JsonField<Measure> = JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("other") @ExcludeMissing other: JsonField<Other> = JsonMissing.of(),
+            @JsonProperty("uid") @ExcludeMissing uid: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("what") @ExcludeMissing what: JsonField<What> = JsonMissing.of(),
+            @JsonProperty("where") @ExcludeMissing where: JsonField<Where> = JsonMissing.of(),
+            @JsonProperty("who") @ExcludeMissing who: JsonField<Who> = JsonMissing.of(),
+        ) : this(
+            account,
+            meter,
+            ts,
+            cost,
+            ets,
+            income,
+            measure,
+            metadata,
+            other,
+            uid,
+            what,
+            where,
+            who,
+            mutableMapOf(),
+        )
 
         /**
          * Code of the Account the measurement is for.
@@ -664,32 +707,15 @@ private constructor(
          */
         @JsonProperty("who") @ExcludeMissing fun _who(): JsonField<Who> = who
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Measurement = apply {
-            if (validated) {
-                return@apply
-            }
-
-            account()
-            meter()
-            ts()
-            cost().ifPresent { it.validate() }
-            ets()
-            income().ifPresent { it.validate() }
-            measure().ifPresent { it.validate() }
-            metadata().ifPresent { it.validate() }
-            other().ifPresent { it.validate() }
-            uid()
-            what().ifPresent { it.validate() }
-            where().ifPresent { it.validate() }
-            who().ifPresent { it.validate() }
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -924,6 +950,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Measurement].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .account()
+             * .meter()
+             * .ts()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Measurement =
                 Measurement(
                     checkRequired("account", account),
@@ -939,32 +979,44 @@ private constructor(
                     what,
                     where,
                     who,
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
+        private var validated: Boolean = false
+
+        fun validate(): Measurement = apply {
+            if (validated) {
+                return@apply
+            }
+
+            account()
+            meter()
+            ts()
+            cost().ifPresent { it.validate() }
+            ets()
+            income().ifPresent { it.validate() }
+            measure().ifPresent { it.validate() }
+            metadata().ifPresent { it.validate() }
+            other().ifPresent { it.validate() }
+            uid()
+            what().ifPresent { it.validate() }
+            where().ifPresent { it.validate() }
+            who().ifPresent { it.validate() }
+            validated = true
+        }
+
         /** 'cost' values */
-        @NoAutoDetect
         class Cost
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Cost = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1006,7 +1058,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Cost].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Cost = Cost(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Cost = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1027,27 +1094,16 @@ private constructor(
         }
 
         /** 'income' values */
-        @NoAutoDetect
         class Income
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Income = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1089,7 +1145,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Income].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Income = Income(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Income = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1110,27 +1181,16 @@ private constructor(
         }
 
         /** 'measure' values */
-        @NoAutoDetect
         class Measure
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Measure = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1172,7 +1232,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Measure].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Measure = Measure(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Measure = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1193,27 +1268,16 @@ private constructor(
         }
 
         /** 'metadata' values */
-        @NoAutoDetect
         class Metadata
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Metadata = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1255,7 +1319,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Metadata].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Metadata = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1276,27 +1355,16 @@ private constructor(
         }
 
         /** 'other' values */
-        @NoAutoDetect
         class Other
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Other = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1338,7 +1406,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Other].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Other = Other(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Other = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1359,27 +1442,16 @@ private constructor(
         }
 
         /** 'what' values */
-        @NoAutoDetect
         class What
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): What = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1421,7 +1493,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [What].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): What = What(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): What = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1442,27 +1529,16 @@ private constructor(
         }
 
         /** 'where' values */
-        @NoAutoDetect
         class Where
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Where = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1504,7 +1580,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Where].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Where = Where(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Where = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1525,27 +1616,16 @@ private constructor(
         }
 
         /** 'who' values */
-        @NoAutoDetect
         class Who
         @JsonCreator
         private constructor(
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
         ) {
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Who = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                validated = true
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1587,7 +1667,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Who].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): Who = Who(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Who = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {

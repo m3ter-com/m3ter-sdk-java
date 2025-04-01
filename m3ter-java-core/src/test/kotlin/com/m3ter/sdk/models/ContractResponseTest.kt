@@ -8,10 +8,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ContractResponseTest {
+internal class ContractResponseTest {
 
     @Test
-    fun createContractResponse() {
+    fun create() {
         val contractResponse =
             ContractResponse.builder()
                 .id("id")
@@ -33,7 +33,7 @@ class ContractResponseTest {
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
-        assertThat(contractResponse).isNotNull
+
         assertThat(contractResponse.id()).isEqualTo("id")
         assertThat(contractResponse.version()).isEqualTo(0L)
         assertThat(contractResponse.accountId()).contains("accountId")

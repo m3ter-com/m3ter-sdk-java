@@ -4,13 +4,14 @@ package com.m3ter.sdk.models
 
 import com.m3ter.sdk.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class MeterResponseTest {
+internal class MeterResponseTest {
 
     @Test
-    fun createMeterResponse() {
+    fun create() {
         val meterResponse =
             MeterResponse.builder()
                 .id("id")
@@ -46,7 +47,7 @@ class MeterResponseTest {
                 .name("name")
                 .productId("productId")
                 .build()
-        assertThat(meterResponse).isNotNull
+
         assertThat(meterResponse.id()).isEqualTo("id")
         assertThat(meterResponse.version()).isEqualTo(0L)
         assertThat(meterResponse.code()).contains("code")
@@ -57,7 +58,7 @@ class MeterResponseTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
-        assertThat(meterResponse.dataFields().get())
+        assertThat(meterResponse.dataFields().getOrNull())
             .containsExactly(
                 DataFieldResponse.builder()
                     .category(DataFieldResponse.Category.WHO)
@@ -66,7 +67,7 @@ class MeterResponseTest {
                     .unit("x")
                     .build()
             )
-        assertThat(meterResponse.derivedFields().get())
+        assertThat(meterResponse.derivedFields().getOrNull())
             .containsExactly(
                 MeterResponse.DerivedField.builder()
                     .category(DataFieldResponse.Category.WHO)

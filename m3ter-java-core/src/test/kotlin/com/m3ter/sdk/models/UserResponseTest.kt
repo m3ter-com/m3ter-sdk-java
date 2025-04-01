@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UserResponseTest {
+internal class UserResponseTest {
 
     @Test
-    fun createUserResponse() {
+    fun create() {
         val userResponse =
             UserResponse.builder()
                 .id("id")
@@ -35,7 +36,7 @@ class UserResponseTest {
                 .supportUser(true)
                 .version(0L)
                 .build()
-        assertThat(userResponse).isNotNull
+
         assertThat(userResponse.id()).contains("id")
         assertThat(userResponse.contactNumber()).contains("contactNumber")
         assertThat(userResponse.createdBy()).contains("createdBy")
@@ -53,8 +54,8 @@ class UserResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(userResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(userResponse.lastName()).contains("lastName")
-        assertThat(userResponse.organizations().get()).containsExactly("string")
-        assertThat(userResponse.permissionPolicy().get())
+        assertThat(userResponse.organizations().getOrNull()).containsExactly("string")
+        assertThat(userResponse.permissionPolicy().getOrNull())
             .containsExactly(
                 PermissionStatementResponse.builder()
                     .addAction(PermissionStatementResponse.Action.ALL)

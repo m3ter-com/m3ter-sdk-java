@@ -2,16 +2,20 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.10)
-[![javadoc](https://javadoc.io/badge2/com.m3ter.sdk/m3ter-java/0.1.0-alpha.10/javadoc.svg)](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.10)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter.sdk/m3ter-java)](https://central.sonatype.com/artifact/com.m3ter.sdk/m3ter-java/0.1.0-alpha.11)
+[![javadoc](https://javadoc.io/badge2/com.m3ter.sdk/m3ter-java/0.1.0-alpha.11/javadoc.svg)](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.11)
 
 <!-- x-release-please-end -->
 
-The M3ter Java SDK provides convenient access to the M3ter REST API from applications written in Java.
+The M3ter Java SDK provides convenient access to the [M3ter REST API](https://www.m3ter.com) from applications written in Java.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.9).
+<!-- x-release-please-start-version -->
+
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter.sdk/m3ter-java/0.1.0-alpha.11).
+
+<!-- x-release-please-end -->
 
 ## Installation
 
@@ -20,16 +24,16 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.10")
+implementation("com.m3ter.sdk:m3ter-java:0.1.0-alpha.11")
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-    <groupId>com.m3ter.sdk</groupId>
-    <artifactId>m3ter-java</artifactId>
-    <version>0.1.0-alpha.10</version>
+  <groupId>com.m3ter.sdk</groupId>
+  <artifactId>m3ter-java</artifactId>
+  <version>0.1.0-alpha.11</version>
 </dependency>
 ```
 
@@ -197,16 +201,16 @@ The SDK throws custom unchecked exception types:
 
 - [`M3terServiceException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-  | Status | Exception                       |
-  | ------ | ------------------------------- |
-  | 400    | `BadRequestException`           |
-  | 401    | `AuthenticationException`       |
-  | 403    | `PermissionDeniedException`     |
-  | 404    | `NotFoundException`             |
-  | 422    | `UnprocessableEntityException`  |
-  | 429    | `RateLimitException`            |
-  | 5xx    | `InternalServerException`       |
-  | others | `UnexpectedStatusCodeException` |
+  | Status | Exception                                                                                                                |
+  | ------ | ------------------------------------------------------------------------------------------------------------------------ |
+  | 400    | [`BadRequestException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/BadRequestException.kt)                     |
+  | 401    | [`UnauthorizedException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/UnauthorizedException.kt)                 |
+  | 403    | [`PermissionDeniedException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/PermissionDeniedException.kt)         |
+  | 404    | [`NotFoundException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/NotFoundException.kt)                         |
+  | 422    | [`UnprocessableEntityException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/UnprocessableEntityException.kt)   |
+  | 429    | [`RateLimitException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/RateLimitException.kt)                       |
+  | 5xx    | [`InternalServerException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/InternalServerException.kt)             |
+  | others | [`UnexpectedStatusCodeException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/UnexpectedStatusCodeException.kt) |
 
 - [`M3terIoException`](m3ter-java-core/src/main/kotlin/com/m3ter/sdk/errors/M3terIoException.kt): I/O networking errors.
 

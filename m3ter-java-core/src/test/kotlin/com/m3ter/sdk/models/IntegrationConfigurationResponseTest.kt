@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IntegrationConfigurationResponseTest {
+internal class IntegrationConfigurationResponseTest {
 
     @Test
-    fun createIntegrationConfigurationResponse() {
+    fun create() {
         val integrationConfigurationResponse =
             IntegrationConfigurationResponse.builder()
                 .id("id")
@@ -28,7 +28,7 @@ class IntegrationConfigurationResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .url("url")
                 .build()
-        assertThat(integrationConfigurationResponse).isNotNull
+
         assertThat(integrationConfigurationResponse.id()).isEqualTo("id")
         assertThat(integrationConfigurationResponse.destination()).isEqualTo("destination")
         assertThat(integrationConfigurationResponse.entityId()).isEqualTo("x")

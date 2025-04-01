@@ -5,10 +5,10 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class WebhookSetActiveResponseTest {
+internal class WebhookSetActiveResponseTest {
 
     @Test
-    fun createWebhookSetActiveResponse() {
+    fun create() {
         val webhookSetActiveResponse =
             WebhookSetActiveResponse.builder()
                 .credentials(
@@ -27,7 +27,7 @@ class WebhookSetActiveResponseTest {
                 .code("code")
                 .version(0L)
                 .build()
-        assertThat(webhookSetActiveResponse).isNotNull
+
         assertThat(webhookSetActiveResponse.credentials())
             .isEqualTo(
                 M3terSignedCredentialsRequest.builder()

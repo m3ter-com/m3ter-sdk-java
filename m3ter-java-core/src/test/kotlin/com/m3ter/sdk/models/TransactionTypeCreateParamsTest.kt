@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class TransactionTypeCreateParamsTest {
+internal class TransactionTypeCreateParamsTest {
 
     @Test
     fun create() {
@@ -17,6 +16,15 @@ class TransactionTypeCreateParamsTest {
             .code("code")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params = TransactionTypeCreateParams.builder().orgId("orgId").name("x").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -32,7 +40,6 @@ class TransactionTypeCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.archived()).contains(true)
         assertThat(body.code()).contains("code")
@@ -45,17 +52,6 @@ class TransactionTypeCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params = TransactionTypeCreateParams.builder().orgId("orgId").name("x").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CreditReasonResponseTest {
+internal class CreditReasonResponseTest {
 
     @Test
-    fun createCreditReasonResponse() {
+    fun create() {
         val creditReasonResponse =
             CreditReasonResponse.builder()
                 .id("id")
@@ -22,7 +22,7 @@ class CreditReasonResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .build()
-        assertThat(creditReasonResponse).isNotNull
+
         assertThat(creditReasonResponse.id()).isEqualTo("id")
         assertThat(creditReasonResponse.version()).isEqualTo(0L)
         assertThat(creditReasonResponse.archived()).contains(true)

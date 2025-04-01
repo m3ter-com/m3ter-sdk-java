@@ -4,11 +4,11 @@ package com.m3ter.sdk.models
 
 import java.time.LocalDate
 import java.time.OffsetDateTime
-import kotlin.test.assertNotNull
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CommitmentCreateParamsTest {
+internal class CommitmentCreateParamsTest {
 
     @Test
     fun create() {
@@ -48,6 +48,23 @@ class CommitmentCreateParamsTest {
             .separateOverageUsage(true)
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            CommitmentCreateParams.builder()
+                .orgId("orgId")
+                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .amount(1.0)
+                .currency("x")
+                .endDate(LocalDate.parse("2019-12-27"))
+                .startDate(LocalDate.parse("2019-12-27"))
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -92,7 +109,6 @@ class CommitmentCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.currency()).isEqualTo("x")
@@ -113,23 +129,21 @@ class CommitmentCreateParamsTest {
         assertThat(body.contractId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.drawdownsAccountingProductId())
             .contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        assertThat(body.feeDates())
-            .contains(
-                listOf(
-                    CommitmentFee.builder()
-                        .amount(1.0)
-                        .date(LocalDate.parse("2019-12-27"))
-                        .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .build()
-                )
+        assertThat(body.feeDates().getOrNull())
+            .containsExactly(
+                CommitmentFee.builder()
+                    .amount(1.0)
+                    .date(LocalDate.parse("2019-12-27"))
+                    .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .build()
             )
         assertThat(body.feesAccountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        assertThat(body.lineItemTypes())
-            .contains(listOf(CommitmentCreateParams.LineItemType.STANDING_CHARGE))
+        assertThat(body.lineItemTypes().getOrNull())
+            .containsExactly(CommitmentCreateParams.LineItemType.STANDING_CHARGE)
         assertThat(body.overageDescription()).contains("overageDescription")
         assertThat(body.overageSurchargePercent()).contains(0.0)
-        assertThat(body.productIds()).contains(listOf("string"))
+        assertThat(body.productIds().getOrNull()).containsExactly("string")
         assertThat(body.separateOverageUsage()).contains(true)
         assertThat(body.version()).contains(0L)
     }
@@ -148,29 +162,10 @@ class CommitmentCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.accountId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.currency()).isEqualTo("x")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            CommitmentCreateParams.builder()
-                .orgId("orgId")
-                .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .amount(1.0)
-                .currency("x")
-                .endDate(LocalDate.parse("2019-12-27"))
-                .startDate(LocalDate.parse("2019-12-27"))
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

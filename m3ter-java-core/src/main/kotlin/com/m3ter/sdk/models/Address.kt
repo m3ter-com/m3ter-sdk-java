@@ -10,44 +10,54 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Contact address. */
-@NoAutoDetect
 class Address
-@JsonCreator
 private constructor(
-    @JsonProperty("addressLine1")
-    @ExcludeMissing
-    private val addressLine1: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("addressLine2")
-    @ExcludeMissing
-    private val addressLine2: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("addressLine3")
-    @ExcludeMissing
-    private val addressLine3: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("addressLine4")
-    @ExcludeMissing
-    private val addressLine4: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("country")
-    @ExcludeMissing
-    private val country: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("locality")
-    @ExcludeMissing
-    private val locality: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("postCode")
-    @ExcludeMissing
-    private val postCode: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("region")
-    @ExcludeMissing
-    private val region: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val addressLine1: JsonField<String>,
+    private val addressLine2: JsonField<String>,
+    private val addressLine3: JsonField<String>,
+    private val addressLine4: JsonField<String>,
+    private val country: JsonField<String>,
+    private val locality: JsonField<String>,
+    private val postCode: JsonField<String>,
+    private val region: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("addressLine1")
+        @ExcludeMissing
+        addressLine1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("addressLine2")
+        @ExcludeMissing
+        addressLine2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("addressLine3")
+        @ExcludeMissing
+        addressLine3: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("addressLine4")
+        @ExcludeMissing
+        addressLine4: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("locality") @ExcludeMissing locality: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postCode") @ExcludeMissing postCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("region") @ExcludeMissing region: JsonField<String> = JsonMissing.of(),
+    ) : this(
+        addressLine1,
+        addressLine2,
+        addressLine3,
+        addressLine4,
+        country,
+        locality,
+        postCode,
+        region,
+        mutableMapOf(),
+    )
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -165,27 +175,15 @@ private constructor(
      */
     @JsonProperty("region") @ExcludeMissing fun _region(): JsonField<String> = region
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Address = apply {
-        if (validated) {
-            return@apply
-        }
-
-        addressLine1()
-        addressLine2()
-        addressLine3()
-        addressLine4()
-        country()
-        locality()
-        postCode()
-        region()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -332,6 +330,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Address].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): Address =
             Address(
                 addressLine1,
@@ -342,8 +345,26 @@ private constructor(
                 locality,
                 postCode,
                 region,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): Address = apply {
+        if (validated) {
+            return@apply
+        }
+
+        addressLine1()
+        addressLine2()
+        addressLine3()
+        addressLine4()
+        country()
+        locality()
+        postCode()
+        region()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

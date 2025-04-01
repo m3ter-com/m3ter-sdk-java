@@ -11,28 +11,30 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class OperationalDataExportScheduleResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("operationalDataTypes")
-    @ExcludeMissing
-    private val operationalDataTypes: JsonField<List<OperationalDataType>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val operationalDataTypes: JsonField<List<OperationalDataType>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("operationalDataTypes")
+        @ExcludeMissing
+        operationalDataTypes: JsonField<List<OperationalDataType>> = JsonMissing.of(),
+    ) : this(id, version, operationalDataTypes, mutableMapOf())
 
     /**
      * The id of the schedule.
@@ -86,22 +88,15 @@ private constructor(
     @ExcludeMissing
     fun _operationalDataTypes(): JsonField<List<OperationalDataType>> = operationalDataTypes
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): OperationalDataExportScheduleResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        operationalDataTypes()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -216,13 +211,39 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [OperationalDataExportScheduleResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): OperationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse(
                 checkRequired("id", id),
                 checkRequired("version", version),
                 (operationalDataTypes ?: JsonMissing.of()).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): OperationalDataExportScheduleResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        operationalDataTypes()
+        validated = true
     }
 
     class OperationalDataType

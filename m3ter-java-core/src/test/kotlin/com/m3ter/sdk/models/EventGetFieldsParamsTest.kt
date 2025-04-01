@@ -6,7 +6,7 @@ import com.m3ter.sdk.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventGetFieldsParamsTest {
+internal class EventGetFieldsParamsTest {
 
     @Test
     fun create() {
@@ -14,27 +14,30 @@ class EventGetFieldsParamsTest {
     }
 
     @Test
+    fun pathParams() {
+        val params = EventGetFieldsParams.builder().orgId("orgId").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
+    }
+
+    @Test
     fun queryParams() {
         val params = EventGetFieldsParams.builder().orgId("orgId").eventName("eventName").build()
-        val expected = QueryParams.builder()
-        expected.put("eventName", "eventName")
-        assertThat(params._queryParams()).isEqualTo(expected.build())
+
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams)
+            .isEqualTo(QueryParams.builder().put("eventName", "eventName").build())
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params = EventGetFieldsParams.builder().orgId("orgId").build()
-        val expected = QueryParams.builder()
-        assertThat(params._queryParams()).isEqualTo(expected.build())
-    }
 
-    @Test
-    fun getPathParam() {
-        val params = EventGetFieldsParams.builder().orgId("orgId").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
+        val queryParams = params._queryParams()
+
+        assertThat(queryParams).isEqualTo(QueryParams.builder().build())
     }
 }

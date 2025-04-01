@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class NotificationConfigurationCreateParamsTest {
+internal class NotificationConfigurationCreateParamsTest {
 
     @Test
     fun create() {
@@ -21,6 +20,22 @@ class NotificationConfigurationCreateParamsTest {
             .calculation("calculation")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            NotificationConfigurationCreateParams.builder()
+                .orgId("orgId")
+                .code("x")
+                .description("x")
+                .eventName("x")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -40,7 +55,6 @@ class NotificationConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")
@@ -64,27 +78,9 @@ class NotificationConfigurationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.code()).isEqualTo("x")
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.eventName()).isEqualTo("x")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            NotificationConfigurationCreateParams.builder()
-                .orgId("orgId")
-                .code("x")
-                .description("x")
-                .eventName("x")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

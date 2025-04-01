@@ -3,13 +3,14 @@
 package com.m3ter.sdk.models
 
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PermissionPolicyResponseTest {
+internal class PermissionPolicyResponseTest {
 
     @Test
-    fun createPermissionPolicyResponse() {
+    fun create() {
         val permissionPolicyResponse =
             PermissionPolicyResponse.builder()
                 .id("id")
@@ -28,7 +29,7 @@ class PermissionPolicyResponseTest {
                 )
                 .version(0L)
                 .build()
-        assertThat(permissionPolicyResponse).isNotNull
+
         assertThat(permissionPolicyResponse.id()).contains("id")
         assertThat(permissionPolicyResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyResponse.dtCreated())
@@ -38,7 +39,7 @@ class PermissionPolicyResponseTest {
         assertThat(permissionPolicyResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(permissionPolicyResponse.managedPolicy()).contains(true)
         assertThat(permissionPolicyResponse.name()).contains("name")
-        assertThat(permissionPolicyResponse.permissionPolicy().get())
+        assertThat(permissionPolicyResponse.permissionPolicy().getOrNull())
             .containsExactly(
                 PermissionStatementResponse.builder()
                     .addAction(PermissionStatementResponse.Action.ALL)

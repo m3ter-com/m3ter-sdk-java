@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlanGroupLinkResponseTest {
+internal class PlanGroupLinkResponseTest {
 
     @Test
-    fun createPlanGroupLinkResponse() {
+    fun create() {
         val planGroupLinkResponse =
             PlanGroupLinkResponse.builder()
                 .id("id")
@@ -21,7 +21,7 @@ class PlanGroupLinkResponseTest {
                 .planGroupId("planGroupId")
                 .planId("planId")
                 .build()
-        assertThat(planGroupLinkResponse).isNotNull
+
         assertThat(planGroupLinkResponse.id()).isEqualTo("id")
         assertThat(planGroupLinkResponse.version()).isEqualTo(0L)
         assertThat(planGroupLinkResponse.createdBy()).contains("createdBy")

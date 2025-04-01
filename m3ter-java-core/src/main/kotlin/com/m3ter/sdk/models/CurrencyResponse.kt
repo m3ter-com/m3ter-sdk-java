@@ -11,48 +11,66 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CurrencyResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("archived")
-    @ExcludeMissing
-    private val archived: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("code") @ExcludeMissing private val code: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("maxDecimalPlaces")
-    @ExcludeMissing
-    private val maxDecimalPlaces: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("roundingMode")
-    @ExcludeMissing
-    private val roundingMode: JsonField<RoundingMode> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val archived: JsonField<Boolean>,
+    private val code: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val maxDecimalPlaces: JsonField<Long>,
+    private val name: JsonField<String>,
+    private val roundingMode: JsonField<RoundingMode>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("archived") @ExcludeMissing archived: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maxDecimalPlaces")
+        @ExcludeMissing
+        maxDecimalPlaces: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("roundingMode")
+        @ExcludeMissing
+        roundingMode: JsonField<RoundingMode> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        archived,
+        code,
+        createdBy,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        maxDecimalPlaces,
+        name,
+        roundingMode,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -237,30 +255,15 @@ private constructor(
     @ExcludeMissing
     fun _roundingMode(): JsonField<RoundingMode> = roundingMode
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CurrencyResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        archived()
-        code()
-        createdBy()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        maxDecimalPlaces()
-        name()
-        roundingMode()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -474,6 +477,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CurrencyResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CurrencyResponse =
             CurrencyResponse(
                 checkRequired("id", id),
@@ -487,8 +503,29 @@ private constructor(
                 maxDecimalPlaces,
                 name,
                 roundingMode,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CurrencyResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        archived()
+        code()
+        createdBy()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        maxDecimalPlaces()
+        name()
+        roundingMode()
+        validated = true
     }
 
     class RoundingMode @JsonCreator private constructor(private val value: JsonField<String>) :

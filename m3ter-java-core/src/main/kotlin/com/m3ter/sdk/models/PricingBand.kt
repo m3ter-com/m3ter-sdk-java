@@ -10,33 +10,36 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class PricingBand
-@JsonCreator
 private constructor(
-    @JsonProperty("fixedPrice")
-    @ExcludeMissing
-    private val fixedPrice: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("lowerLimit")
-    @ExcludeMissing
-    private val lowerLimit: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("unitPrice")
-    @ExcludeMissing
-    private val unitPrice: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("creditTypeId")
-    @ExcludeMissing
-    private val creditTypeId: JsonField<String> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val fixedPrice: JsonField<Double>,
+    private val lowerLimit: JsonField<Double>,
+    private val unitPrice: JsonField<Double>,
+    private val id: JsonField<String>,
+    private val creditTypeId: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("fixedPrice")
+        @ExcludeMissing
+        fixedPrice: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("lowerLimit")
+        @ExcludeMissing
+        lowerLimit: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("unitPrice") @ExcludeMissing unitPrice: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("creditTypeId")
+        @ExcludeMissing
+        creditTypeId: JsonField<String> = JsonMissing.of(),
+    ) : this(fixedPrice, lowerLimit, unitPrice, id, creditTypeId, mutableMapOf())
 
     /**
      * Fixed price charged for the Pricing band.
@@ -116,24 +119,15 @@ private constructor(
     @ExcludeMissing
     fun _creditTypeId(): JsonField<String> = creditTypeId
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): PricingBand = apply {
-        if (validated) {
-            return@apply
-        }
-
-        fixedPrice()
-        lowerLimit()
-        unitPrice()
-        id()
-        creditTypeId()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -252,6 +246,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [PricingBand].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .fixedPrice()
+         * .lowerLimit()
+         * .unitPrice()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PricingBand =
             PricingBand(
                 checkRequired("fixedPrice", fixedPrice),
@@ -259,8 +267,23 @@ private constructor(
                 checkRequired("unitPrice", unitPrice),
                 id,
                 creditTypeId,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): PricingBand = apply {
+        if (validated) {
+            return@apply
+        }
+
+        fixedPrice()
+        lowerLimit()
+        unitPrice()
+        id()
+        creditTypeId()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

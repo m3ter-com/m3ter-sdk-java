@@ -11,40 +11,55 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
 import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class UsageDataExportScheduleResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountIds")
-    @ExcludeMissing
-    private val accountIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("aggregation")
-    @ExcludeMissing
-    private val aggregation: JsonField<Aggregation> = JsonMissing.of(),
-    @JsonProperty("aggregationFrequency")
-    @ExcludeMissing
-    private val aggregationFrequency: JsonField<AggregationFrequency> = JsonMissing.of(),
-    @JsonProperty("meterIds")
-    @ExcludeMissing
-    private val meterIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("timePeriod")
-    @ExcludeMissing
-    private val timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountIds: JsonField<List<String>>,
+    private val aggregation: JsonField<Aggregation>,
+    private val aggregationFrequency: JsonField<AggregationFrequency>,
+    private val meterIds: JsonField<List<String>>,
+    private val timePeriod: JsonField<TimePeriod>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountIds")
+        @ExcludeMissing
+        accountIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("aggregation")
+        @ExcludeMissing
+        aggregation: JsonField<Aggregation> = JsonMissing.of(),
+        @JsonProperty("aggregationFrequency")
+        @ExcludeMissing
+        aggregationFrequency: JsonField<AggregationFrequency> = JsonMissing.of(),
+        @JsonProperty("meterIds")
+        @ExcludeMissing
+        meterIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("timePeriod")
+        @ExcludeMissing
+        timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountIds,
+        aggregation,
+        aggregationFrequency,
+        meterIds,
+        timePeriod,
+        mutableMapOf(),
+    )
 
     /**
      * The id of the schedule
@@ -210,26 +225,15 @@ private constructor(
     @ExcludeMissing
     fun _timePeriod(): JsonField<TimePeriod> = timePeriod
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): UsageDataExportScheduleResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountIds()
-        aggregation()
-        aggregationFrequency()
-        meterIds()
-        timePeriod()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -462,6 +466,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [UsageDataExportScheduleResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): UsageDataExportScheduleResponse =
             UsageDataExportScheduleResponse(
                 checkRequired("id", id),
@@ -471,8 +488,25 @@ private constructor(
                 aggregationFrequency,
                 (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
                 timePeriod,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): UsageDataExportScheduleResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountIds()
+        aggregation()
+        aggregationFrequency()
+        meterIds()
+        timePeriod()
+        validated = true
     }
 
     /**

@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DataExportDestinationCreateParamsTest {
+internal class DataExportDestinationCreateParamsTest {
 
     @Test
     fun create() {
@@ -20,6 +19,22 @@ class DataExportDestinationCreateParamsTest {
             .prefix("prefix")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            DataExportDestinationCreateParams.builder()
+                .orgId("orgId")
+                .bucketName("xxx")
+                .code("JS!?Q0]r] ]\$]")
+                .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -38,7 +53,6 @@ class DataExportDestinationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
@@ -62,27 +76,9 @@ class DataExportDestinationCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            DataExportDestinationCreateParams.builder()
-                .orgId("orgId")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

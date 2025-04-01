@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ExternalMappingResponseTest {
+internal class ExternalMappingResponseTest {
 
     @Test
-    fun createExternalMappingResponse() {
+    fun create() {
         val externalMappingResponse =
             ExternalMappingResponse.builder()
                 .id("id")
@@ -25,7 +25,7 @@ class ExternalMappingResponseTest {
                 .integrationConfigId("integrationConfigId")
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(externalMappingResponse).isNotNull
+
         assertThat(externalMappingResponse.id()).isEqualTo("id")
         assertThat(externalMappingResponse.externalId()).isEqualTo("x")
         assertThat(externalMappingResponse.externalSystem()).isEqualTo("x")

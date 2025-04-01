@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DataExportDestinationUpdateParamsTest {
+internal class DataExportDestinationUpdateParamsTest {
 
     @Test
     fun create() {
@@ -21,6 +20,24 @@ class DataExportDestinationUpdateParamsTest {
             .prefix("prefix")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            DataExportDestinationUpdateParams.builder()
+                .orgId("orgId")
+                .id("id")
+                .bucketName("xxx")
+                .code("JS!?Q0]r] ]\$]")
+                .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                .name("x")
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("id")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 
     @Test
@@ -40,7 +57,6 @@ class DataExportDestinationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
@@ -65,30 +81,9 @@ class DataExportDestinationUpdateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.bucketName()).isEqualTo("xxx")
         assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
         assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            DataExportDestinationUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "id"
-        assertThat(params.getPathParam(1)).isEqualTo("id")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResourceGroupResponseTest {
+internal class ResourceGroupResponseTest {
 
     @Test
-    fun createResourceGroupResponse() {
+    fun create() {
         val resourceGroupResponse =
             ResourceGroupResponse.builder()
                 .id("id")
@@ -20,7 +20,7 @@ class ResourceGroupResponseTest {
                 .name("name")
                 .version(0L)
                 .build()
-        assertThat(resourceGroupResponse).isNotNull
+
         assertThat(resourceGroupResponse.id()).contains("id")
         assertThat(resourceGroupResponse.createdBy()).contains("createdBy")
         assertThat(resourceGroupResponse.dtCreated())

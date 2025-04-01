@@ -5,10 +5,10 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AccountEndDateBillingEntitiesResponseTest {
+internal class AccountEndDateBillingEntitiesResponseTest {
 
     @Test
-    fun createAccountEndDateBillingEntitiesResponse() {
+    fun create() {
         val accountEndDateBillingEntitiesResponse =
             AccountEndDateBillingEntitiesResponse.builder()
                 .failedEntities(
@@ -31,7 +31,7 @@ class AccountEndDateBillingEntitiesResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(accountEndDateBillingEntitiesResponse).isNotNull
+
         assertThat(accountEndDateBillingEntitiesResponse.failedEntities())
             .contains(
                 AccountEndDateBillingEntitiesResponse.FailedEntities.builder()

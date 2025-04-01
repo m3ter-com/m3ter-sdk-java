@@ -2,13 +2,14 @@
 
 package com.m3ter.sdk.models
 
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventGetTypesResponseTest {
+internal class EventGetTypesResponseTest {
 
     @Test
-    fun createEventGetTypesResponse() {
+    fun create() {
         val eventGetTypesResponse =
             EventGetTypesResponse.builder()
                 .events(
@@ -101,8 +102,8 @@ class EventGetTypesResponseTest {
                     )
                 )
                 .build()
-        assertThat(eventGetTypesResponse).isNotNull
-        assertThat(eventGetTypesResponse.events().get())
+
+        assertThat(eventGetTypesResponse.events().getOrNull())
             .containsExactly(
                 "configuration.commitment.created",
                 "configuration.commitment.deleted",

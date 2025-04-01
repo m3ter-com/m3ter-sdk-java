@@ -11,45 +11,55 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
 /** Response containing the upload job details. */
-@NoAutoDetect
 class FileUploadJobResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("contentLength")
-    @ExcludeMissing
-    private val contentLength: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("failedRows")
-    @ExcludeMissing
-    private val failedRows: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("fileName")
-    @ExcludeMissing
-    private val fileName: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("processedRows")
-    @ExcludeMissing
-    private val processedRows: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("totalRows")
-    @ExcludeMissing
-    private val totalRows: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("uploadDate")
-    @ExcludeMissing
-    private val uploadDate: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val contentLength: JsonField<Long>,
+    private val failedRows: JsonField<Long>,
+    private val fileName: JsonField<String>,
+    private val processedRows: JsonField<Long>,
+    private val status: JsonField<Status>,
+    private val totalRows: JsonField<Long>,
+    private val uploadDate: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("contentLength")
+        @ExcludeMissing
+        contentLength: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("failedRows") @ExcludeMissing failedRows: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("fileName") @ExcludeMissing fileName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("processedRows")
+        @ExcludeMissing
+        processedRows: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("totalRows") @ExcludeMissing totalRows: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("uploadDate")
+        @ExcludeMissing
+        uploadDate: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        contentLength,
+        failedRows,
+        fileName,
+        processedRows,
+        status,
+        totalRows,
+        uploadDate,
+        version,
+        mutableMapOf(),
+    )
 
     /**
      * UUID of the file upload job.
@@ -193,28 +203,15 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): FileUploadJobResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        contentLength()
-        failedRows()
-        fileName()
-        processedRows()
-        status()
-        totalRows()
-        uploadDate()
-        version()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -380,6 +377,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [FileUploadJobResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): FileUploadJobResponse =
             FileUploadJobResponse(
                 id,
@@ -391,8 +393,27 @@ private constructor(
                 totalRows,
                 uploadDate,
                 version,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): FileUploadJobResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        contentLength()
+        failedRows()
+        fileName()
+        processedRows()
+        status()
+        totalRows()
+        uploadDate()
+        version()
+        validated = true
     }
 
     /** The status of the file upload job. */

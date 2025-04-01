@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CurrencyResponseTest {
+internal class CurrencyResponseTest {
 
     @Test
-    fun createCurrencyResponse() {
+    fun create() {
         val currencyResponse =
             CurrencyResponse.builder()
                 .id("id")
@@ -24,7 +24,7 @@ class CurrencyResponseTest {
                 .name("name")
                 .roundingMode(CurrencyResponse.RoundingMode.UP)
                 .build()
-        assertThat(currencyResponse).isNotNull
+
         assertThat(currencyResponse.id()).isEqualTo("id")
         assertThat(currencyResponse.version()).isEqualTo(0L)
         assertThat(currencyResponse.archived()).contains(true)

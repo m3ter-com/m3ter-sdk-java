@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResourceGroupCreateParamsTest {
+internal class ResourceGroupCreateParamsTest {
 
     @Test
     fun create() {
@@ -16,6 +15,17 @@ class ResourceGroupCreateParamsTest {
             .name("x")
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            ResourceGroupCreateParams.builder().orgId("orgId").type("type").name("x").build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(1)).isEqualTo("type")
+        // out-of-bound path param
+        assertThat(params._pathParam(2)).isEqualTo("")
     }
 
     @Test
@@ -30,7 +40,6 @@ class ResourceGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.version()).contains(0L)
     }
@@ -42,20 +51,6 @@ class ResourceGroupCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.name()).isEqualTo("x")
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            ResourceGroupCreateParams.builder().orgId("orgId").type("type").name("x").build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // path param "type"
-        assertThat(params.getPathParam(1)).isEqualTo("type")
-        // out-of-bound path param
-        assertThat(params.getPathParam(2)).isEqualTo("")
     }
 }

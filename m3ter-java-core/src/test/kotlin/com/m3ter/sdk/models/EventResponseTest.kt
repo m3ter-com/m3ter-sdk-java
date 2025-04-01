@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class EventResponseTest {
+internal class EventResponseTest {
 
     @Test
-    fun createEventResponse() {
+    fun create() {
         val eventResponse =
             EventResponse.builder()
                 .id("9cb46d85-7cb6-4637-80a1-d4ec38e4ab30")
@@ -58,7 +58,7 @@ class EventResponseTest {
                     )
                 )
                 .build()
-        assertThat(eventResponse).isNotNull
+
         assertThat(eventResponse.id()).isEqualTo("9cb46d85-7cb6-4637-80a1-d4ec38e4ab30")
         assertThat(eventResponse.dtActioned())
             .isEqualTo(OffsetDateTime.parse("2022-10-28T13:56:49.557Z"))

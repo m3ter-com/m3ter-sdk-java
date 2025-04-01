@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ScheduledEventConfigurationResponseTest {
+internal class ScheduledEventConfigurationResponseTest {
 
     @Test
-    fun createScheduledEventConfigurationResponse() {
+    fun create() {
         val scheduledEventConfigurationResponse =
             ScheduledEventConfigurationResponse.builder()
                 .id("id")
@@ -23,7 +23,7 @@ class ScheduledEventConfigurationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .build()
-        assertThat(scheduledEventConfigurationResponse).isNotNull
+
         assertThat(scheduledEventConfigurationResponse.id()).isEqualTo("id")
         assertThat(scheduledEventConfigurationResponse.entity()).isEqualTo("x")
         assertThat(scheduledEventConfigurationResponse.field()).isEqualTo("x")

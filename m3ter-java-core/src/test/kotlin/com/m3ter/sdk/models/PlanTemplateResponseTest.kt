@@ -7,10 +7,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlanTemplateResponseTest {
+internal class PlanTemplateResponseTest {
 
     @Test
-    fun createPlanTemplateResponse() {
+    fun create() {
         val planTemplateResponse =
             PlanTemplateResponse.builder()
                 .id("id")
@@ -40,7 +40,7 @@ class PlanTemplateResponseTest {
                 .standingChargeInterval(0L)
                 .standingChargeOffset(0L)
                 .build()
-        assertThat(planTemplateResponse).isNotNull
+
         assertThat(planTemplateResponse.id()).isEqualTo("id")
         assertThat(planTemplateResponse.version()).isEqualTo(0L)
         assertThat(planTemplateResponse.billFrequency())

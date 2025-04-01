@@ -10,11 +10,9 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
@@ -23,17 +21,20 @@ import java.util.Optional
  * if Account is billed in GBP and Organization is set to USD, Bill line items are calculated in GBP
  * and then converted to USD using the defined rate.
  */
-@NoAutoDetect
 class CurrencyConversion
-@JsonCreator
 private constructor(
-    @JsonProperty("from") @ExcludeMissing private val from: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("to") @ExcludeMissing private val to: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("multiplier")
-    @ExcludeMissing
-    private val multiplier: JsonField<Double> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val from: JsonField<String>,
+    private val to: JsonField<String>,
+    private val multiplier: JsonField<Double>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("from") @ExcludeMissing from: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("to") @ExcludeMissing to: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("multiplier") @ExcludeMissing multiplier: JsonField<Double> = JsonMissing.of(),
+    ) : this(from, to, multiplier, mutableMapOf())
 
     /**
      * Currency to convert from. For example: GBP.
@@ -80,22 +81,15 @@ private constructor(
      */
     @JsonProperty("multiplier") @ExcludeMissing fun _multiplier(): JsonField<Double> = multiplier
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CurrencyConversion = apply {
-        if (validated) {
-            return@apply
-        }
-
-        from()
-        to()
-        multiplier()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -182,13 +176,39 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CurrencyConversion].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .from()
+         * .to()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CurrencyConversion =
             CurrencyConversion(
                 checkRequired("from", from),
                 checkRequired("to", to),
                 multiplier,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CurrencyConversion = apply {
+        if (validated) {
+            return@apply
+        }
+
+        from()
+        to()
+        multiplier()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

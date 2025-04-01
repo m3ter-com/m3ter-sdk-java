@@ -5,17 +5,17 @@ package com.m3ter.sdk.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class AdHocOperationalDataRequestTest {
+internal class AdHocOperationalDataRequestTest {
 
     @Test
-    fun createAdHocOperationalDataRequest() {
+    fun create() {
         val adHocOperationalDataRequest =
             AdHocOperationalDataRequest.builder()
                 .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
                 .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
                 .version(0L)
                 .build()
-        assertThat(adHocOperationalDataRequest).isNotNull
+
         assertThat(adHocOperationalDataRequest.operationalDataTypes())
             .containsExactly(AdHocOperationalDataRequest.OperationalDataType.BILLS)
         assertThat(adHocOperationalDataRequest.sourceType())

@@ -2,11 +2,10 @@
 
 package com.m3ter.sdk.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlanTemplateCreateParamsTest {
+internal class PlanTemplateCreateParamsTest {
 
     @Test
     fun create() {
@@ -30,6 +29,23 @@ class PlanTemplateCreateParamsTest {
             .standingChargeOffset(364L)
             .version(0L)
             .build()
+    }
+
+    @Test
+    fun pathParams() {
+        val params =
+            PlanTemplateCreateParams.builder()
+                .orgId("orgId")
+                .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
+                .currency("USD")
+                .name("string")
+                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                .standingCharge(0.0)
+                .build()
+
+        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        // out-of-bound path param
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
@@ -58,7 +74,6 @@ class PlanTemplateCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billFrequency()).isEqualTo(PlanTemplateCreateParams.BillFrequency.DAILY)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.name()).isEqualTo("string")
@@ -93,29 +108,10 @@ class PlanTemplateCreateParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.billFrequency()).isEqualTo(PlanTemplateCreateParams.BillFrequency.DAILY)
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.name()).isEqualTo("string")
         assertThat(body.productId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.standingCharge()).isEqualTo(0.0)
-    }
-
-    @Test
-    fun getPathParam() {
-        val params =
-            PlanTemplateCreateParams.builder()
-                .orgId("orgId")
-                .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
-                .currency("USD")
-                .name("string")
-                .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .standingCharge(0.0)
-                .build()
-        assertThat(params).isNotNull
-        // path param "orgId"
-        assertThat(params.getPathParam(0)).isEqualTo("orgId")
-        // out-of-bound path param
-        assertThat(params.getPathParam(1)).isEqualTo("")
     }
 }

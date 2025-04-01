@@ -10,49 +10,65 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.checkRequired
-import com.m3ter.sdk.core.immutableEmptyMap
-import com.m3ter.sdk.core.toImmutable
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 
-@NoAutoDetect
 class CounterAdjustmentResponse
-@JsonCreator
 private constructor(
-    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("version")
-    @ExcludeMissing
-    private val version: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("accountId")
-    @ExcludeMissing
-    private val accountId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("counterId")
-    @ExcludeMissing
-    private val counterId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("createdBy")
-    @ExcludeMissing
-    private val createdBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("date") @ExcludeMissing private val date: JsonField<LocalDate> = JsonMissing.of(),
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    private val dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    private val dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    private val lastModifiedBy: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("purchaseOrderNumber")
-    @ExcludeMissing
-    private val purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("value") @ExcludeMissing private val value: JsonField<Long> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val id: JsonField<String>,
+    private val version: JsonField<Long>,
+    private val accountId: JsonField<String>,
+    private val counterId: JsonField<String>,
+    private val createdBy: JsonField<String>,
+    private val date: JsonField<LocalDate>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val purchaseOrderNumber: JsonField<String>,
+    private val value: JsonField<Long>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("counterId") @ExcludeMissing counterId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("date") @ExcludeMissing date: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("purchaseOrderNumber")
+        @ExcludeMissing
+        purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("value") @ExcludeMissing value: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        version,
+        accountId,
+        counterId,
+        createdBy,
+        date,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        purchaseOrderNumber,
+        value,
+        mutableMapOf(),
+    )
 
     /**
      * The UUID of the entity.
@@ -235,30 +251,15 @@ private constructor(
      */
     @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Long> = value
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): CounterAdjustmentResponse = apply {
-        if (validated) {
-            return@apply
-        }
-
-        id()
-        version()
-        accountId()
-        counterId()
-        createdBy()
-        date()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
-        purchaseOrderNumber()
-        value()
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -470,6 +471,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [CounterAdjustmentResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * .version()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CounterAdjustmentResponse =
             CounterAdjustmentResponse(
                 checkRequired("id", id),
@@ -483,8 +497,29 @@ private constructor(
                 lastModifiedBy,
                 purchaseOrderNumber,
                 value,
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): CounterAdjustmentResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        version()
+        accountId()
+        counterId()
+        createdBy()
+        date()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        purchaseOrderNumber()
+        value()
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

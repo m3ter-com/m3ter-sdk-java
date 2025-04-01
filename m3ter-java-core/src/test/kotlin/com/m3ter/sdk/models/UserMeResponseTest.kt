@@ -6,10 +6,10 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class UserMeResponseTest {
+internal class UserMeResponseTest {
 
     @Test
-    fun createUserMeResponse() {
+    fun create() {
         val userMeResponse =
             UserMeResponse.builder()
                 .organization(
@@ -76,7 +76,7 @@ class UserMeResponseTest {
                         .build()
                 )
                 .build()
-        assertThat(userMeResponse).isNotNull
+
         assertThat(userMeResponse.organization())
             .contains(
                 UserMeResponse.Organization.builder()

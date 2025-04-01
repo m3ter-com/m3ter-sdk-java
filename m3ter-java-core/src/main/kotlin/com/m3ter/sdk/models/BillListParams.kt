@@ -5,7 +5,6 @@ package com.m3ter.sdk.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.m3ter.sdk.core.Enum
 import com.m3ter.sdk.core.JsonField
-import com.m3ter.sdk.core.NoAutoDetect
 import com.m3ter.sdk.core.Params
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.http.Headers
@@ -98,39 +97,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams {
-        val queryParams = QueryParams.builder()
-        this.accountId?.let { queryParams.put("accountId", listOf(it.toString())) }
-        this.billDate?.let { queryParams.put("billDate", listOf(it.toString())) }
-        this.billDateEnd?.let { queryParams.put("billDateEnd", listOf(it.toString())) }
-        this.billDateStart?.let { queryParams.put("billDateStart", listOf(it.toString())) }
-        this.billingFrequency?.let { queryParams.put("billingFrequency", listOf(it.toString())) }
-        this.excludeLineItems?.let { queryParams.put("excludeLineItems", listOf(it.toString())) }
-        this.externalInvoiceDateEnd?.let {
-            queryParams.put("externalInvoiceDateEnd", listOf(it.toString()))
-        }
-        this.externalInvoiceDateStart?.let {
-            queryParams.put("externalInvoiceDateStart", listOf(it.toString()))
-        }
-        this.ids?.let { queryParams.put("ids", listOf(it.joinToString(separator = ","))) }
-        this.includeBillTotal?.let { queryParams.put("includeBillTotal", listOf(it.toString())) }
-        this.locked?.let { queryParams.put("locked", listOf(it.toString())) }
-        this.nextToken?.let { queryParams.put("nextToken", listOf(it.toString())) }
-        this.pageSize?.let { queryParams.put("pageSize", listOf(it.toString())) }
-        this.status?.let { queryParams.put("status", listOf(it.toString())) }
-        queryParams.putAll(additionalQueryParams)
-        return queryParams.build()
-    }
-
-    fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> orgId
-            else -> ""
-        }
-    }
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -147,7 +113,6 @@ private constructor(
     }
 
     /** A builder for [BillListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var orgId: String? = null
@@ -438,6 +403,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [BillListParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .orgId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): BillListParams =
             BillListParams(
                 checkRequired("orgId", orgId),
@@ -459,6 +436,35 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> orgId
+            else -> ""
+        }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountId?.let { put("accountId", it) }
+                billDate?.let { put("billDate", it) }
+                billDateEnd?.let { put("billDateEnd", it) }
+                billDateStart?.let { put("billDateStart", it) }
+                billingFrequency?.let { put("billingFrequency", it) }
+                excludeLineItems?.let { put("excludeLineItems", it.toString()) }
+                externalInvoiceDateEnd?.let { put("externalInvoiceDateEnd", it) }
+                externalInvoiceDateStart?.let { put("externalInvoiceDateStart", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
+                includeBillTotal?.let { put("includeBillTotal", it.toString()) }
+                locked?.let { put("locked", it.toString()) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
+                status?.let { put("status", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** Only include Bills having the given status */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
