@@ -19,6 +19,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class UserMeResponse
 private constructor(
@@ -194,6 +195,25 @@ private constructor(
         user().ifPresent { it.validate() }
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (organization.asKnown().getOrNull()?.validity() ?: 0) +
+            (serviceUser.asKnown().getOrNull()?.validity() ?: 0) +
+            (user.asKnown().getOrNull()?.validity() ?: 0)
 
     class Organization
     private constructor(
@@ -1240,11 +1260,54 @@ private constructor(
             purchaseOrderNumber()
             region()
             shortName()
-            status()
+            status().ifPresent { it.validate() }
             taxId()
-            type()
+            type().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (id.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0) +
+                (if (addressLine1.asKnown().isPresent) 1 else 0) +
+                (if (addressLine2.asKnown().isPresent) 1 else 0) +
+                (if (addressLine3.asKnown().isPresent) 1 else 0) +
+                (if (addressLine4.asKnown().isPresent) 1 else 0) +
+                (if (billingContactUserId1.asKnown().isPresent) 1 else 0) +
+                (if (billingContactUserId2.asKnown().isPresent) 1 else 0) +
+                (if (billingContactUserId3.asKnown().isPresent) 1 else 0) +
+                (if (country.asKnown().isPresent) 1 else 0) +
+                (if (createdBy.asKnown().isPresent) 1 else 0) +
+                (if (customerId.asKnown().isPresent) 1 else 0) +
+                (if (dtCreated.asKnown().isPresent) 1 else 0) +
+                (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+                (if (invoiceGeneralReference.asKnown().isPresent) 1 else 0) +
+                (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+                (if (locality.asKnown().isPresent) 1 else 0) +
+                (if (organizationName.asKnown().isPresent) 1 else 0) +
+                (if (orgId.asKnown().isPresent) 1 else 0) +
+                (if (postCode.asKnown().isPresent) 1 else 0) +
+                (if (purchaseOrderNumber.asKnown().isPresent) 1 else 0) +
+                (if (region.asKnown().isPresent) 1 else 0) +
+                (if (shortName.asKnown().isPresent) 1 else 0) +
+                (status.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (taxId.asKnown().isPresent) 1 else 0) +
+                (type.asKnown().getOrNull()?.validity() ?: 0)
 
         class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1334,6 +1397,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     M3terInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): Status = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1434,6 +1524,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     M3terInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): Type = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1800,6 +1917,30 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (id.asKnown().isPresent) 1 else 0) +
+                (if (createdBy.asKnown().isPresent) 1 else 0) +
+                (if (dtCreated.asKnown().isPresent) 1 else 0) +
+                (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+                (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2481,6 +2622,37 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (id.asKnown().isPresent) 1 else 0) +
+                (if (contactNumber.asKnown().isPresent) 1 else 0) +
+                (if (createdBy.asKnown().isPresent) 1 else 0) +
+                (if (dtCreated.asKnown().isPresent) 1 else 0) +
+                (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+                (if (email.asKnown().isPresent) 1 else 0) +
+                (if (firstAcceptedTermsAndConditions.asKnown().isPresent) 1 else 0) +
+                (if (firstName.asKnown().isPresent) 1 else 0) +
+                (if (lastAcceptedTermsAndConditions.asKnown().isPresent) 1 else 0) +
+                (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+                (if (lastName.asKnown().isPresent) 1 else 0) +
+                (organizations.asKnown().getOrNull()?.size ?: 0) +
+                (if (supportUser.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

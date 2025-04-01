@@ -21,6 +21,7 @@ import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
 import com.m3ter.sdk.core.Params
+import com.m3ter.sdk.core.allMaxBy
 import com.m3ter.sdk.core.checkKnown
 import com.m3ter.sdk.core.checkRequired
 import com.m3ter.sdk.core.getOrThrow
@@ -32,6 +33,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Query and filter usage data */
 class UsageQueryParams
@@ -967,6 +969,31 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (endDate.asKnown().isPresent) 1 else 0) +
+                (if (startDate.asKnown().isPresent) 1 else 0) +
+                (accountIds.asKnown().getOrNull()?.size ?: 0) +
+                (aggregations.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (dimensionFilters.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (groups.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (limit.asKnown().isPresent) 1 else 0) +
+                (meterIds.asKnown().getOrNull()?.size ?: 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1216,11 +1243,32 @@ private constructor(
             }
 
             fieldCode()
-            fieldType()
-            function()
+            fieldType().validate()
+            function().validate()
             meterId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (fieldCode.asKnown().isPresent) 1 else 0) +
+                (fieldType.asKnown().getOrNull()?.validity() ?: 0) +
+                (function.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (meterId.asKnown().isPresent) 1 else 0)
 
         /** Type of field */
         class FieldType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1313,6 +1361,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     M3terInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): FieldType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1447,6 +1522,33 @@ private constructor(
                 _value().asString().orElseThrow {
                     M3terInvalidDataException("Value is not a String")
                 }
+
+            private var validated: Boolean = false
+
+            fun validate(): Function = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1691,6 +1793,26 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (fieldCode.asKnown().isPresent) 1 else 0) +
+                (if (meterId.asKnown().isPresent) 1 else 0) +
+                (values.asKnown().getOrNull()?.size ?: 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1752,15 +1874,14 @@ private constructor(
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 dataExplorerAccount != null -> visitor.visitDataExplorerAccount(dataExplorerAccount)
                 dataExplorerDimension != null ->
                     visitor.visitDataExplorerDimension(dataExplorerDimension)
                 dataExplorerTime != null -> visitor.visitDataExplorerTime(dataExplorerTime)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -1790,6 +1911,39 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitDataExplorerAccount(
+                        dataExplorerAccount: DataExplorerAccountGroup
+                    ) = dataExplorerAccount.validity()
+
+                    override fun visitDataExplorerDimension(
+                        dataExplorerDimension: DataExplorerDimensionGroup
+                    ) = dataExplorerDimension.validity()
+
+                    override fun visitDataExplorerTime(dataExplorerTime: DataExplorerTimeGroup) =
+                        dataExplorerTime.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1861,20 +2015,30 @@ private constructor(
             override fun ObjectCodec.deserialize(node: JsonNode): Group {
                 val json = JsonValue.fromJsonNode(node)
 
-                tryDeserialize(node, jacksonTypeRef<DataExplorerAccountGroup>()) { it.validate() }
-                    ?.let {
-                        return Group(dataExplorerAccount = it, _json = json)
-                    }
-                tryDeserialize(node, jacksonTypeRef<DataExplorerDimensionGroup>()) { it.validate() }
-                    ?.let {
-                        return Group(dataExplorerDimension = it, _json = json)
-                    }
-                tryDeserialize(node, jacksonTypeRef<DataExplorerTimeGroup>()) { it.validate() }
-                    ?.let {
-                        return Group(dataExplorerTime = it, _json = json)
-                    }
-
-                return Group(_json = json)
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<DataExplorerAccountGroup>())?.let {
+                                Group(dataExplorerAccount = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<DataExplorerDimensionGroup>())
+                                ?.let { Group(dataExplorerDimension = it, _json = json) },
+                            tryDeserialize(node, jacksonTypeRef<DataExplorerTimeGroup>())?.let {
+                                Group(dataExplorerTime = it, _json = json)
+                            },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from boolean).
+                    0 -> Group(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                }
             }
         }
 
@@ -2013,9 +2177,26 @@ private constructor(
                     return@apply
                 }
 
-                groupType()
+                groupType().ifPresent { it.validate() }
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int = (groupType.asKnown().getOrNull()?.validity() ?: 0)
 
             class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
                 Enum {
@@ -2113,6 +2294,33 @@ private constructor(
                     _value().asString().orElseThrow {
                         M3terInvalidDataException("Value is not a String")
                     }
+
+                private var validated: Boolean = false
+
+                fun validate(): GroupType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: M3terInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -2353,9 +2561,29 @@ private constructor(
 
                 fieldCode()
                 meterId()
-                groupType()
+                groupType().ifPresent { it.validate() }
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (if (fieldCode.asKnown().isPresent) 1 else 0) +
+                    (if (meterId.asKnown().isPresent) 1 else 0) +
+                    (groupType.asKnown().getOrNull()?.validity() ?: 0)
 
             class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
                 Enum {
@@ -2453,6 +2681,33 @@ private constructor(
                     _value().asString().orElseThrow {
                         M3terInvalidDataException("Value is not a String")
                     }
+
+                private var validated: Boolean = false
+
+                fun validate(): GroupType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: M3terInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -2655,10 +2910,29 @@ private constructor(
                     return@apply
                 }
 
-                frequency()
-                groupType()
+                frequency().validate()
+                groupType().ifPresent { it.validate() }
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                (frequency.asKnown().getOrNull()?.validity() ?: 0) +
+                    (groupType.asKnown().getOrNull()?.validity() ?: 0)
 
             /** Frequency of usage data */
             class Frequency @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2770,6 +3044,33 @@ private constructor(
                         M3terInvalidDataException("Value is not a String")
                     }
 
+                private var validated: Boolean = false
+
+                fun validate(): Frequency = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: M3terInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -2879,6 +3180,33 @@ private constructor(
                     _value().asString().orElseThrow {
                         M3terInvalidDataException("Value is not a String")
                     }
+
+                private var validated: Boolean = false
+
+                fun validate(): GroupType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: M3terInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {

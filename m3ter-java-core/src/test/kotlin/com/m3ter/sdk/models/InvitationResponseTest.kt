@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -46,5 +48,35 @@ internal class InvitationResponseTest {
         assertThat(invitationResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invitationResponse.lastModifiedBy()).contains("lastModifiedBy")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val invitationResponse =
+            InvitationResponse.builder()
+                .id("id")
+                .accepted(true)
+                .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtExpiry(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .email("email")
+                .firstName("firstName")
+                .invitingPrincipalId("invitingPrincipalId")
+                .lastName("lastName")
+                .addPermissionPolicyId("string")
+                .version(0L)
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .build()
+
+        val roundtrippedInvitationResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(invitationResponse),
+                jacksonTypeRef<InvitationResponse>(),
+            )
+
+        assertThat(roundtrippedInvitationResponse).isEqualTo(invitationResponse)
     }
 }

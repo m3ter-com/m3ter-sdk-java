@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,5 +17,20 @@ internal class CurrencyConversionTest {
         assertThat(currencyConversion.from()).isEqualTo("EUR")
         assertThat(currencyConversion.to()).isEqualTo("USD")
         assertThat(currencyConversion.multiplier()).contains(1.12)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val currencyConversion =
+            CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
+
+        val roundtrippedCurrencyConversion =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(currencyConversion),
+                jacksonTypeRef<CurrencyConversion>(),
+            )
+
+        assertThat(roundtrippedCurrencyConversion).isEqualTo(currencyConversion)
     }
 }

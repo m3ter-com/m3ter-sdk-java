@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -65,5 +67,41 @@ internal class BalanceTest {
         assertThat(balance.rolloverEndDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balance.startDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val balance =
+            Balance.builder()
+                .id("id")
+                .version(0L)
+                .accountId("accountId")
+                .amount(0.0)
+                .balanceDrawDownDescription("balanceDrawDownDescription")
+                .code("code")
+                .consumptionsAccountingProductId("consumptionsAccountingProductId")
+                .createdBy("createdBy")
+                .currency("currency")
+                .description("description")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .feesAccountingProductId("feesAccountingProductId")
+                .lastModifiedBy("lastModifiedBy")
+                .addLineItemType(Balance.LineItemType.STANDING_CHARGE)
+                .name("name")
+                .overageDescription("overageDescription")
+                .overageSurchargePercent(0.0)
+                .addProductId("string")
+                .rolloverAmount(0.0)
+                .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .build()
+
+        val roundtrippedBalance =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(balance), jacksonTypeRef<Balance>())
+
+        assertThat(roundtrippedBalance).isEqualTo(balance)
     }
 }

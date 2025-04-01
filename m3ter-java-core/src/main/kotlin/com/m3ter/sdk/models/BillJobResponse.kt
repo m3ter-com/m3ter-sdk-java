@@ -20,6 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class BillJobResponse
 private constructor(
@@ -1177,7 +1178,7 @@ private constructor(
         billDate()
         billFrequencyInterval()
         billIds()
-        billingFrequency()
+        billingFrequency().ifPresent { it.validate() }
         createdBy()
         currencyConversions().ifPresent { it.forEach { it.validate() } }
         dayEpoch()
@@ -1189,15 +1190,56 @@ private constructor(
         lastModifiedBy()
         monthEpoch()
         pending()
-        status()
+        status().ifPresent { it.validate() }
         targetCurrency()
         timezone()
         total()
-        type()
+        type().ifPresent { it.validate() }
         weekEpoch()
         yearEpoch()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (accountIds.asKnown().getOrNull()?.size ?: 0) +
+            (if (billDate.asKnown().isPresent) 1 else 0) +
+            (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
+            (billIds.asKnown().getOrNull()?.size ?: 0) +
+            (billingFrequency.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (currencyConversions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (dayEpoch.asKnown().isPresent) 1 else 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (dueDate.asKnown().isPresent) 1 else 0) +
+            (if (externalInvoiceDate.asKnown().isPresent) 1 else 0) +
+            (if (lastDateInBillingPeriod.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (monthEpoch.asKnown().isPresent) 1 else 0) +
+            (if (pending.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (targetCurrency.asKnown().isPresent) 1 else 0) +
+            (if (timezone.asKnown().isPresent) 1 else 0) +
+            (if (total.asKnown().isPresent) 1 else 0) +
+            (type.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (weekEpoch.asKnown().isPresent) 1 else 0) +
+            (if (yearEpoch.asKnown().isPresent) 1 else 0)
 
     /**
      * Defines how often Bills are generated.
@@ -1317,6 +1359,33 @@ private constructor(
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
+        private var validated: Boolean = false
+
+        fun validate(): BillingFrequency = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1433,6 +1502,33 @@ private constructor(
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1534,6 +1630,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

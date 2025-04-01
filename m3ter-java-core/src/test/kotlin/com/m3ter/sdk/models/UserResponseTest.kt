@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -65,5 +67,43 @@ internal class UserResponseTest {
             )
         assertThat(userResponse.supportUser()).contains(true)
         assertThat(userResponse.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val userResponse =
+            UserResponse.builder()
+                .id("id")
+                .contactNumber("contactNumber")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtEndAccess(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .email("email")
+                .firstAcceptedTermsAndConditions(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .firstName("firstName")
+                .lastAcceptedTermsAndConditions(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .lastName("lastName")
+                .addOrganization("string")
+                .addPermissionPolicy(
+                    PermissionStatementResponse.builder()
+                        .addAction(PermissionStatementResponse.Action.ALL)
+                        .effect(PermissionStatementResponse.Effect.ALLOW)
+                        .addResource("string")
+                        .build()
+                )
+                .supportUser(true)
+                .version(0L)
+                .build()
+
+        val roundtrippedUserResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(userResponse),
+                jacksonTypeRef<UserResponse>(),
+            )
+
+        assertThat(roundtrippedUserResponse).isEqualTo(userResponse)
     }
 }

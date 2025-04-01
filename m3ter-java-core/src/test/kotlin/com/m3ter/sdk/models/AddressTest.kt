@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -29,5 +31,26 @@ internal class AddressTest {
         assertThat(address.locality()).contains("locality")
         assertThat(address.postCode()).contains("postCode")
         assertThat(address.region()).contains("region")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val address =
+            Address.builder()
+                .addressLine1("addressLine1")
+                .addressLine2("addressLine2")
+                .addressLine3("addressLine3")
+                .addressLine4("addressLine4")
+                .country("country")
+                .locality("locality")
+                .postCode("postCode")
+                .region("region")
+                .build()
+
+        val roundtrippedAddress =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(address), jacksonTypeRef<Address>())
+
+        assertThat(roundtrippedAddress).isEqualTo(address)
     }
 }

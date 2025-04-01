@@ -14,6 +14,7 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class ContractEndDateBillingEntitiesResponse
 private constructor(
@@ -227,6 +228,25 @@ private constructor(
         updatedEntities().ifPresent { it.validate() }
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (failedEntities.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (statusMessage.asKnown().isPresent) 1 else 0) +
+            (updatedEntities.asKnown().getOrNull()?.validity() ?: 0)
 
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
@@ -485,6 +505,28 @@ private constructor(
             pricings().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (accountplan.asKnown().getOrNull()?.validity() ?: 0) +
+                (contract.asKnown().getOrNull()?.validity() ?: 0) +
+                (counterPricings.asKnown().getOrNull()?.validity() ?: 0) +
+                (prepayment.asKnown().getOrNull()?.validity() ?: 0) +
+                (pricings.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -761,6 +803,28 @@ private constructor(
             pricings().ifPresent { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (accountplan.asKnown().getOrNull()?.validity() ?: 0) +
+                (contract.asKnown().getOrNull()?.validity() ?: 0) +
+                (counterPricings.asKnown().getOrNull()?.validity() ?: 0) +
+                (prepayment.asKnown().getOrNull()?.validity() ?: 0) +
+                (pricings.asKnown().getOrNull()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

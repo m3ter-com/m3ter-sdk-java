@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -42,5 +44,35 @@ internal class NotificationConfigurationResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(notificationConfigurationResponse.eventName()).contains("eventName")
         assertThat(notificationConfigurationResponse.lastModifiedBy()).contains("lastModifiedBy")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val notificationConfigurationResponse =
+            NotificationConfigurationResponse.builder()
+                .id("id")
+                .code("x")
+                .description("x")
+                .name("x")
+                .version(0L)
+                .active(true)
+                .alwaysFireEvent(true)
+                .calculation("calculation")
+                .createdBy("createdBy")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .eventName("eventName")
+                .lastModifiedBy("lastModifiedBy")
+                .build()
+
+        val roundtrippedNotificationConfigurationResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(notificationConfigurationResponse),
+                jacksonTypeRef<NotificationConfigurationResponse>(),
+            )
+
+        assertThat(roundtrippedNotificationConfigurationResponse)
+            .isEqualTo(notificationConfigurationResponse)
     }
 }

@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,5 +34,28 @@ internal class AdHocUsageDataRequestTest {
         assertThat(adHocUsageDataRequest.timePeriod())
             .contains(AdHocUsageDataRequest.TimePeriod.TODAY)
         assertThat(adHocUsageDataRequest.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val adHocUsageDataRequest =
+            AdHocUsageDataRequest.builder()
+                .aggregationFrequency(AdHocUsageDataRequest.AggregationFrequency.ORIGINAL)
+                .sourceType(AdHocUsageDataRequest.SourceType.USAGE)
+                .addAccountId("string")
+                .aggregation(AdHocUsageDataRequest.Aggregation.SUM)
+                .addMeterId("string")
+                .timePeriod(AdHocUsageDataRequest.TimePeriod.TODAY)
+                .version(0L)
+                .build()
+
+        val roundtrippedAdHocUsageDataRequest =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(adHocUsageDataRequest),
+                jacksonTypeRef<AdHocUsageDataRequest>(),
+            )
+
+        assertThat(roundtrippedAdHocUsageDataRequest).isEqualTo(adHocUsageDataRequest)
     }
 }

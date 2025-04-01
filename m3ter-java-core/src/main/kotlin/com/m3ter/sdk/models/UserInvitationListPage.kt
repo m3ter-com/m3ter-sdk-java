@@ -10,6 +10,7 @@ import com.m3ter.sdk.core.ExcludeMissing
 import com.m3ter.sdk.core.JsonField
 import com.m3ter.sdk.core.JsonMissing
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.errors.M3terInvalidDataException
 import com.m3ter.sdk.services.blocking.users.InvitationService
 import java.util.Collections
 import java.util.Objects
@@ -125,6 +126,14 @@ private constructor(
             nextToken()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
 
         fun toBuilder() = Builder().from(this)
 
