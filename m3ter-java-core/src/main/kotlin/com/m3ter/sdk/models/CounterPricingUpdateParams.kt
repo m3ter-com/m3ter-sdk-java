@@ -356,6 +356,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [counterId]
+         * - [pricingBands]
+         * - [startDate]
+         * - [accountingProductId]
+         * - [code]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** UUID of the Counter used to create the pricing. */
         fun counterId(counterId: String) = apply { body.counterId(counterId) }
 
@@ -763,7 +777,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

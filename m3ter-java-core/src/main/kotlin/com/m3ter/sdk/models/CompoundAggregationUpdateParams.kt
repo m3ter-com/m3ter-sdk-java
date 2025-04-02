@@ -304,6 +304,20 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [calculation]
+         * - [name]
+         * - [quantityPerUnit]
+         * - [rounding]
+         * - [unit]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * String that represents the formula for the calculation. This formula determines how the
          * CompoundAggregation value is calculated. The calculation can reference simple
          * Aggregations or Custom Fields. This field is required when creating or updating a
@@ -645,7 +659,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

@@ -104,6 +104,16 @@ private constructor(
 
         fun type(type: String) = apply { this.type = type }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [name]
+         * - [version]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         fun name(name: String) = apply { body.name(name) }
 
         /**
@@ -265,7 +275,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
