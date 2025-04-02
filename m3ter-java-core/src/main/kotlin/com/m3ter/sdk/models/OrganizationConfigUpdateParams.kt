@@ -574,6 +574,20 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [currency]
+         * - [dayEpoch]
+         * - [daysBeforeBillDue]
+         * - [monthEpoch]
+         * - [timezone]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * The currency code for the Organization. For example: USD, GBP, or EUR:
          * - This defines the _billing currency_ for the Organization. You can override this by
          *   selecting a different billing currency at individual Account level.
@@ -1243,7 +1257,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

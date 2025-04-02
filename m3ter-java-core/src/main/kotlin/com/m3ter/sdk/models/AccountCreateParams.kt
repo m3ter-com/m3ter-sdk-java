@@ -380,6 +380,20 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [code]
+         * - [emailAddress]
+         * - [name]
+         * - [address]
+         * - [autoGenerateStatementMode]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Code of the Account. This is a unique short code used for the Account. */
         fun code(code: String) = apply { body.code(code) }
 
@@ -823,7 +837,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

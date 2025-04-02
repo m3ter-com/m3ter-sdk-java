@@ -184,6 +184,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [credentials]
+         * - [description]
+         * - [name]
+         * - [url]
+         * - [active]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** This schema defines the credentials required for m3ter request signing. */
         fun credentials(credentials: M3terSignedCredentialsRequest) = apply {
             body.credentials(credentials)
@@ -414,7 +428,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

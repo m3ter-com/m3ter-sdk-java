@@ -166,6 +166,18 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [code]
+         * - [name]
+         * - [customFields]
+         * - [version]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * A unique short code to identify the Product. It should not contain control chracters or
          * spaces.
          */
@@ -375,7 +387,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
