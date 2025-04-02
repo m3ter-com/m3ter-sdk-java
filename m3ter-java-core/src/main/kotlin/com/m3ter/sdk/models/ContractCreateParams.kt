@@ -233,6 +233,20 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountId]
+         * - [endDate]
+         * - [name]
+         * - [startDate]
+         * - [code]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The unique identifier (UUID) of the Account associated with this Contract. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
@@ -510,7 +524,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

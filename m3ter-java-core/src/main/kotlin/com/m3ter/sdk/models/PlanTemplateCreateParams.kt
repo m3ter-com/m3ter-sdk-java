@@ -401,6 +401,20 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billFrequency]
+         * - [currency]
+         * - [name]
+         * - [productId]
+         * - [standingCharge]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Determines the frequency at which bills are generated.
          * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
          *   following.
@@ -865,7 +879,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

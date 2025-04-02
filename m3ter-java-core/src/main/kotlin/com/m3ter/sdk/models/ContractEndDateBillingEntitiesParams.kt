@@ -149,6 +149,17 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billingEntities]
+         * - [endDate]
+         * - [applyToChildren]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Defines which billing entities associated with the Account will have the specified
          * end-date applied. For example, if you want the specified end-date to be applied to all
          * Prepayments/Commitments created for the Account use `"PREPAYMENT"`.
@@ -353,7 +364,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

@@ -201,6 +201,20 @@ private constructor(
         fun id(id: String) = apply { this.id = id }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [externalId]
+         * - [externalSystem]
+         * - [externalTable]
+         * - [m3terEntity]
+         * - [m3terId]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * The unique identifier (UUID) of the entity in the external system. This UUID should
          * already exist in the external system.
          */
@@ -448,7 +462,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

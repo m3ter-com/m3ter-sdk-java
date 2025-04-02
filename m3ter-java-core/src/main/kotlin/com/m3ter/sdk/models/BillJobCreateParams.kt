@@ -371,6 +371,20 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountIds]
+         * - [billDate]
+         * - [billFrequencyInterval]
+         * - [billingFrequency]
+         * - [currencyConversions]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
         fun accountIds(accountIds: List<String>) = apply { body.accountIds(accountIds) }
 
@@ -798,7 +812,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
