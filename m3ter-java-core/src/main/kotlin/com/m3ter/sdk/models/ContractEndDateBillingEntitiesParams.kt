@@ -22,6 +22,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Apply the specified end-date to billing entities associated with Accounts the Contract has been
@@ -146,6 +147,17 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billingEntities]
+         * - [endDate]
+         * - [applyToChildren]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
          * Defines which billing entities associated with the Account will have the specified
@@ -352,7 +364,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -597,11 +609,31 @@ private constructor(
                 return@apply
             }
 
-            billingEntities()
+            billingEntities().forEach { it.validate() }
             endDate()
             applyToChildren()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (billingEntities.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (endDate.asKnown().isPresent) 1 else 0) +
+                (if (applyToChildren.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -726,6 +758,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): BillingEntity = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -17,6 +17,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class ProductResponse
 private constructor(
@@ -474,6 +475,31 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (if (code.asKnown().isPresent) 1 else 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (customFields.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (name.asKnown().isPresent) 1 else 0)
+
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
      * either a string or a number.
@@ -551,6 +577,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -22,6 +22,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Update a specific Balance.
@@ -392,6 +393,20 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountId]
+         * - [currency]
+         * - [endDate]
+         * - [startDate]
+         * - [balanceDrawDownDescription]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** The unique identifier (UUID) for the end customer Account. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
@@ -848,7 +863,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -1766,7 +1781,7 @@ private constructor(
             consumptionsAccountingProductId()
             description()
             feesAccountingProductId()
-            lineItemTypes()
+            lineItemTypes().ifPresent { it.forEach { it.validate() } }
             name()
             overageDescription()
             overageSurchargePercent()
@@ -1776,6 +1791,40 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountId.asKnown().isPresent) 1 else 0) +
+                (if (currency.asKnown().isPresent) 1 else 0) +
+                (if (endDate.asKnown().isPresent) 1 else 0) +
+                (if (startDate.asKnown().isPresent) 1 else 0) +
+                (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
+                (if (code.asKnown().isPresent) 1 else 0) +
+                (if (consumptionsAccountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (feesAccountingProductId.asKnown().isPresent) 1 else 0) +
+                (lineItemTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (overageDescription.asKnown().isPresent) 1 else 0) +
+                (if (overageSurchargePercent.asKnown().isPresent) 1 else 0) +
+                (productIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (rolloverAmount.asKnown().isPresent) 1 else 0) +
+                (if (rolloverEndDate.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1900,6 +1949,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItemType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

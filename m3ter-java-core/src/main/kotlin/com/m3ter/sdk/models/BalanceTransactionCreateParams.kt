@@ -224,6 +224,20 @@ private constructor(
 
         fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [appliedDate]
+         * - [currencyPaid]
+         * - [description]
+         * - [paid]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The financial value of the transaction. */
         fun amount(amount: Double) = apply { body.amount(amount) }
 
@@ -483,7 +497,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -920,6 +934,31 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (amount.asKnown().isPresent) 1 else 0) +
+                (if (appliedDate.asKnown().isPresent) 1 else 0) +
+                (if (currencyPaid.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (paid.asKnown().isPresent) 1 else 0) +
+                (if (transactionDate.asKnown().isPresent) 1 else 0) +
+                (if (transactionTypeId.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

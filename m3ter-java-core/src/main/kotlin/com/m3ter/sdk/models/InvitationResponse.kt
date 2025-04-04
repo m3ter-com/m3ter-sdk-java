@@ -18,6 +18,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class InvitationResponse
 private constructor(
@@ -678,6 +679,36 @@ private constructor(
         lastModifiedBy()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (accepted.asKnown().isPresent) 1 else 0) +
+            (if (dtEndAccess.asKnown().isPresent) 1 else 0) +
+            (if (dtExpiry.asKnown().isPresent) 1 else 0) +
+            (if (email.asKnown().isPresent) 1 else 0) +
+            (if (firstName.asKnown().isPresent) 1 else 0) +
+            (if (invitingPrincipalId.asKnown().isPresent) 1 else 0) +
+            (if (lastName.asKnown().isPresent) 1 else 0) +
+            (permissionPolicyIds.asKnown().getOrNull()?.size ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

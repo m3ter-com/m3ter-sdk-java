@@ -206,7 +206,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): PrincipalPermissionRequest = principalPermissionRequest
+    fun _body(): PrincipalPermissionRequest = principalPermissionRequest
 
     fun _pathParam(index: Int): String =
         when (index) {

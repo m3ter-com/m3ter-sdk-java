@@ -15,6 +15,7 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the upload job details. */
 class FileUploadJobResponse
@@ -409,12 +410,37 @@ private constructor(
         failedRows()
         fileName()
         processedRows()
-        status()
+        status().ifPresent { it.validate() }
         totalRows()
         uploadDate()
         version()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (contentLength.asKnown().isPresent) 1 else 0) +
+            (if (failedRows.asKnown().isPresent) 1 else 0) +
+            (if (fileName.asKnown().isPresent) 1 else 0) +
+            (if (processedRows.asKnown().isPresent) 1 else 0) +
+            (status.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (totalRows.asKnown().isPresent) 1 else 0) +
+            (if (uploadDate.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /** The status of the file upload job. */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -512,6 +538,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

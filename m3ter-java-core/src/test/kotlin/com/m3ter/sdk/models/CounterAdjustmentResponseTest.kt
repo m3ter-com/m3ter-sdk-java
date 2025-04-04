@@ -2,6 +2,8 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.sdk.core.jsonMapper
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -39,5 +41,32 @@ internal class CounterAdjustmentResponseTest {
         assertThat(counterAdjustmentResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(counterAdjustmentResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(counterAdjustmentResponse.value()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val counterAdjustmentResponse =
+            CounterAdjustmentResponse.builder()
+                .id("id")
+                .version(0L)
+                .accountId("accountId")
+                .counterId("counterId")
+                .createdBy("createdBy")
+                .date(LocalDate.parse("2019-12-27"))
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .lastModifiedBy("lastModifiedBy")
+                .purchaseOrderNumber("purchaseOrderNumber")
+                .value(0L)
+                .build()
+
+        val roundtrippedCounterAdjustmentResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(counterAdjustmentResponse),
+                jacksonTypeRef<CounterAdjustmentResponse>(),
+            )
+
+        assertThat(roundtrippedCounterAdjustmentResponse).isEqualTo(counterAdjustmentResponse)
     }
 }

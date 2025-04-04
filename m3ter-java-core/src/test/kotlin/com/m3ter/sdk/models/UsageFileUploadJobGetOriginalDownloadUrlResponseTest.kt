@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -29,5 +31,29 @@ internal class UsageFileUploadJobGetOriginalDownloadUrlResponseTest {
             )
         assertThat(usageFileUploadJobGetOriginalDownloadUrlResponse.jobId()).contains("jobId")
         assertThat(usageFileUploadJobGetOriginalDownloadUrlResponse.url()).contains("url")
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val usageFileUploadJobGetOriginalDownloadUrlResponse =
+            UsageFileUploadJobGetOriginalDownloadUrlResponse.builder()
+                .headers(
+                    UsageFileUploadJobGetOriginalDownloadUrlResponse.Headers.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .jobId("jobId")
+                .url("url")
+                .build()
+
+        val roundtrippedUsageFileUploadJobGetOriginalDownloadUrlResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(usageFileUploadJobGetOriginalDownloadUrlResponse),
+                jacksonTypeRef<UsageFileUploadJobGetOriginalDownloadUrlResponse>(),
+            )
+
+        assertThat(roundtrippedUsageFileUploadJobGetOriginalDownloadUrlResponse)
+            .isEqualTo(usageFileUploadJobGetOriginalDownloadUrlResponse)
     }
 }

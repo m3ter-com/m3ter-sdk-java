@@ -230,6 +230,20 @@ private constructor(
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [code]
+         * - [description]
+         * - [eventName]
+         * - [name]
+         * - [active]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The short code for the Notification. */
         fun code(code: String) = apply { body.code(code) }
 
@@ -509,7 +523,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -987,6 +1001,31 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (code.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (eventName.asKnown().isPresent) 1 else 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (active.asKnown().isPresent) 1 else 0) +
+                (if (alwaysFireEvent.asKnown().isPresent) 1 else 0) +
+                (if (calculation.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

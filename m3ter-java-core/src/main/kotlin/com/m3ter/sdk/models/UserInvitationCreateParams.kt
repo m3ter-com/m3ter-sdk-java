@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Invite a new user to your Organization.
@@ -206,6 +207,20 @@ private constructor(
         }
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [email]
+         * - [firstName]
+         * - [lastName]
+         * - [contactNumber]
+         * - [dtEndAccess]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         fun email(email: String) = apply { body.email(email) }
 
@@ -475,7 +490,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -934,6 +949,32 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (email.asKnown().isPresent) 1 else 0) +
+                (if (firstName.asKnown().isPresent) 1 else 0) +
+                (if (lastName.asKnown().isPresent) 1 else 0) +
+                (if (contactNumber.asKnown().isPresent) 1 else 0) +
+                (if (dtEndAccess.asKnown().isPresent) 1 else 0) +
+                (if (dtExpiry.asKnown().isPresent) 1 else 0) +
+                (if (m3terUser.asKnown().isPresent) 1 else 0) +
+                (permissionPolicyIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

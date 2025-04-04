@@ -22,6 +22,7 @@ import java.time.LocalDate
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -369,6 +370,20 @@ private constructor(
         }
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountIds]
+         * - [billDate]
+         * - [billFrequencyInterval]
+         * - [billingFrequency]
+         * - [currencyConversions]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
         fun accountIds(accountIds: List<String>) = apply { body.accountIds(accountIds) }
@@ -797,7 +812,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -1617,7 +1632,7 @@ private constructor(
             accountIds()
             billDate()
             billFrequencyInterval()
-            billingFrequency()
+            billingFrequency().ifPresent { it.validate() }
             currencyConversions().ifPresent { it.forEach { it.validate() } }
             dayEpoch()
             dueDate()
@@ -1631,6 +1646,38 @@ private constructor(
             yearEpoch()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (accountIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (billDate.asKnown().isPresent) 1 else 0) +
+                (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
+                (billingFrequency.asKnown().getOrNull()?.validity() ?: 0) +
+                (currencyConversions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (dayEpoch.asKnown().isPresent) 1 else 0) +
+                (if (dueDate.asKnown().isPresent) 1 else 0) +
+                (if (externalInvoiceDate.asKnown().isPresent) 1 else 0) +
+                (if (lastDateInBillingPeriod.asKnown().isPresent) 1 else 0) +
+                (if (monthEpoch.asKnown().isPresent) 1 else 0) +
+                (if (targetCurrency.asKnown().isPresent) 1 else 0) +
+                (if (timezone.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0) +
+                (if (weekEpoch.asKnown().isPresent) 1 else 0) +
+                (if (yearEpoch.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1767,6 +1814,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): BillingFrequency = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

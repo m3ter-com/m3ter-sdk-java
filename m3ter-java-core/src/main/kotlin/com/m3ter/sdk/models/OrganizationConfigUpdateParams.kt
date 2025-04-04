@@ -21,6 +21,7 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Update the Organization-wide configuration details. */
 class OrganizationConfigUpdateParams
@@ -571,6 +572,20 @@ private constructor(
         }
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [currency]
+         * - [dayEpoch]
+         * - [daysBeforeBillDue]
+         * - [monthEpoch]
+         * - [timezone]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
          * The currency code for the Organization. For example: USD, GBP, or EUR:
@@ -1242,7 +1257,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -2626,11 +2641,11 @@ private constructor(
             yearEpoch()
             autoApproveBillsGracePeriod()
             autoApproveBillsGracePeriodUnit()
-            autoGenerateStatementMode()
+            autoGenerateStatementMode().ifPresent { it.validate() }
             billPrefix()
             commitmentFeeBillInAdvance()
             consolidateBills()
-            creditApplicationOrder()
+            creditApplicationOrder().ifPresent { it.forEach { it.validate() } }
             currencyConversions().ifPresent { it.forEach { it.validate() } }
             defaultStatementDefinitionId()
             externalInvoiceDate()
@@ -2642,6 +2657,47 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (currency.asKnown().isPresent) 1 else 0) +
+                (if (dayEpoch.asKnown().isPresent) 1 else 0) +
+                (if (daysBeforeBillDue.asKnown().isPresent) 1 else 0) +
+                (if (monthEpoch.asKnown().isPresent) 1 else 0) +
+                (if (timezone.asKnown().isPresent) 1 else 0) +
+                (if (weekEpoch.asKnown().isPresent) 1 else 0) +
+                (if (yearEpoch.asKnown().isPresent) 1 else 0) +
+                (if (autoApproveBillsGracePeriod.asKnown().isPresent) 1 else 0) +
+                (if (autoApproveBillsGracePeriodUnit.asKnown().isPresent) 1 else 0) +
+                (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (billPrefix.asKnown().isPresent) 1 else 0) +
+                (if (commitmentFeeBillInAdvance.asKnown().isPresent) 1 else 0) +
+                (if (consolidateBills.asKnown().isPresent) 1 else 0) +
+                (creditApplicationOrder.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
+                    ?: 0) +
+                (currencyConversions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (defaultStatementDefinitionId.asKnown().isPresent) 1 else 0) +
+                (if (externalInvoiceDate.asKnown().isPresent) 1 else 0) +
+                (if (minimumSpendBillInAdvance.asKnown().isPresent) 1 else 0) +
+                (if (scheduledBillInterval.asKnown().isPresent) 1 else 0) +
+                (if (sequenceStartNumber.asKnown().isPresent) 1 else 0) +
+                (if (standingChargeBillInAdvance.asKnown().isPresent) 1 else 0) +
+                (if (suppressedEmptyBills.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2767,6 +2823,33 @@ private constructor(
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
+        private var validated: Boolean = false
+
+        fun validate(): AutoGenerateStatementMode = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -2870,6 +2953,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): CreditApplicationOrder = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

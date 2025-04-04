@@ -168,6 +168,15 @@ private constructor(
         fun externalInvoiceDateStart(externalInvoiceDateStart: Optional<String>) =
             externalInvoiceDateStart(externalInvoiceDateStart.getOrNull())
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billIds]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Use to specify a collection of Bills by their IDs for batch approval */
         fun billIds(billIds: List<String>) = apply { body.billIds(billIds) }
 
@@ -329,7 +338,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -488,6 +497,22 @@ private constructor(
             billIds()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = (billIds.asKnown().getOrNull()?.size ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

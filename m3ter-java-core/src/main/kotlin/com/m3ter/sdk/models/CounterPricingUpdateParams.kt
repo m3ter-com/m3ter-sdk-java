@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Update CounterPricing for the given UUID.
@@ -354,6 +355,20 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         fun id(id: String) = apply { this.id = id }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [counterId]
+         * - [pricingBands]
+         * - [startDate]
+         * - [accountingProductId]
+         * - [code]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** UUID of the Counter used to create the pricing. */
         fun counterId(counterId: String) = apply { body.counterId(counterId) }
@@ -762,7 +777,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -1570,6 +1585,38 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (counterId.asKnown().isPresent) 1 else 0) +
+                (pricingBands.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (startDate.asKnown().isPresent) 1 else 0) +
+                (if (accountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (code.asKnown().isPresent) 1 else 0) +
+                (if (cumulative.asKnown().isPresent) 1 else 0) +
+                (if (description.asKnown().isPresent) 1 else 0) +
+                (if (endDate.asKnown().isPresent) 1 else 0) +
+                (if (planId.asKnown().isPresent) 1 else 0) +
+                (if (planTemplateId.asKnown().isPresent) 1 else 0) +
+                (if (proRateAdjustmentCredit.asKnown().isPresent) 1 else 0) +
+                (if (proRateAdjustmentDebit.asKnown().isPresent) 1 else 0) +
+                (if (proRateRunningTotal.asKnown().isPresent) 1 else 0) +
+                (if (runningTotalBillInAdvance.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -186,6 +186,20 @@ private constructor(
 
         fun id(id: String) = apply { this.id = id }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountId]
+         * - [counterId]
+         * - [date]
+         * - [value]
+         * - [purchaseOrderNumber]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The Account ID the CounterAdjustment is created for. */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
 
@@ -422,7 +436,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -776,6 +790,29 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (accountId.asKnown().isPresent) 1 else 0) +
+                (if (counterId.asKnown().isPresent) 1 else 0) +
+                (if (date.asKnown().isPresent) 1 else 0) +
+                (if (value.asKnown().isPresent) 1 else 0) +
+                (if (purchaseOrderNumber.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

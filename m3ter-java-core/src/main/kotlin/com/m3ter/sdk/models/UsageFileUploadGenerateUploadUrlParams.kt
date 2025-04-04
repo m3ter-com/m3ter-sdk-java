@@ -140,6 +140,17 @@ private constructor(
         fun orgId(orgId: String) = apply { this.orgId = orgId }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [contentType]
+         * - [fileName]
+         * - [contentLength]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * The media type of the entity body sent, for example: `"contentType":"text/json"`.
          *
          * **NOTE:** Currently only a JSON formatted file type is supported by the File Upload
@@ -326,7 +337,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -562,6 +573,26 @@ private constructor(
             contentLength()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (if (contentType.asKnown().isPresent) 1 else 0) +
+                (if (fileName.asKnown().isPresent) 1 else 0) +
+                (if (contentLength.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

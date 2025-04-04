@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2025-04-03)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* **client:** expose request body setter and getter ([#133](https://github.com/m3ter-com/m3ter-sdk-java/issues/133)) ([f854d60](https://github.com/m3ter-com/m3ter-sdk-java/commit/f854d601b9023bbc183943cfc85a436efdc589d1))
+* **java:** roundtrip tests and robust union deserialization ([b909da6](https://github.com/m3ter-com/m3ter-sdk-java/commit/b909da6a452d5b7a7b2492043a25e562813195e8))
+* **java:** somewhat lenient date time deserialization ([41d5d58](https://github.com/m3ter-com/m3ter-sdk-java/commit/41d5d581bbf69a23078e406246854e4dd85119df))
+
+
+### Performance Improvements
+
+* **client:** cached parsed type in `HttpResponseFor` ([#134](https://github.com/m3ter-com/m3ter-sdk-java/issues/134)) ([7fafa58](https://github.com/m3ter-com/m3ter-sdk-java/commit/7fafa586eb9ac7e86adb706c3b56dda71991f478))
+
 ## 0.1.0-alpha.11 (2025-03-31)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)

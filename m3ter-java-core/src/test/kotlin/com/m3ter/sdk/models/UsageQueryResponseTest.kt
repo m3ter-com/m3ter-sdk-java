@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -28,5 +30,27 @@ internal class UsageQueryResponseTest {
                     .build()
             )
         assertThat(usageQueryResponse.hasMoreData()).contains(true)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val usageQueryResponse =
+            UsageQueryResponse.builder()
+                .addData(
+                    UsageQueryResponse.Data.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
+                .hasMoreData(true)
+                .build()
+
+        val roundtrippedUsageQueryResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(usageQueryResponse),
+                jacksonTypeRef<UsageQueryResponse>(),
+            )
+
+        assertThat(roundtrippedUsageQueryResponse).isEqualTo(usageQueryResponse)
     }
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.BaseDeserializer
 import com.m3ter.sdk.core.BaseSerializer
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.allMaxBy
 import com.m3ter.sdk.core.getOrThrow
 import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Objects
@@ -50,15 +51,14 @@ private constructor(
 
     fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
-    fun <T> accept(visitor: Visitor<T>): T {
-        return when {
+    fun <T> accept(visitor: Visitor<T>): T =
+        when {
             operationalDataExportSchedule != null ->
                 visitor.visitOperationalDataExportSchedule(operationalDataExportSchedule)
             usageDataExportSchedule != null ->
                 visitor.visitUsageDataExportSchedule(usageDataExportSchedule)
             else -> visitor.unknown(_json)
         }
-    }
 
     private var validated: Boolean = false
 
@@ -84,6 +84,35 @@ private constructor(
         )
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        accept(
+            object : Visitor<Int> {
+                override fun visitOperationalDataExportSchedule(
+                    operationalDataExportSchedule: OperationalDataExportScheduleResponse
+                ) = operationalDataExportSchedule.validity()
+
+                override fun visitUsageDataExportSchedule(
+                    usageDataExportSchedule: UsageDataExportScheduleResponse
+                ) = usageDataExportSchedule.validity()
+
+                override fun unknown(json: JsonValue?) = 0
+            }
+        )
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -164,26 +193,38 @@ private constructor(
 
             when (sourceType) {}
 
-            tryDeserialize(node, jacksonTypeRef<OperationalDataExportScheduleResponse>()) {
-                    it.validate()
-                }
-                ?.let {
-                    return DataExportScheduleDeleteResponse(
-                        operationalDataExportSchedule = it,
-                        _json = json,
+            val bestMatches =
+                sequenceOf(
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<OperationalDataExportScheduleResponse>(),
+                            )
+                            ?.let {
+                                DataExportScheduleDeleteResponse(
+                                    operationalDataExportSchedule = it,
+                                    _json = json,
+                                )
+                            },
+                        tryDeserialize(node, jacksonTypeRef<UsageDataExportScheduleResponse>())
+                            ?.let {
+                                DataExportScheduleDeleteResponse(
+                                    usageDataExportSchedule = it,
+                                    _json = json,
+                                )
+                            },
                     )
-                }
-            tryDeserialize(node, jacksonTypeRef<UsageDataExportScheduleResponse>()) {
-                    it.validate()
-                }
-                ?.let {
-                    return DataExportScheduleDeleteResponse(
-                        usageDataExportSchedule = it,
-                        _json = json,
-                    )
-                }
-
-            return DataExportScheduleDeleteResponse(_json = json)
+                    .filterNotNull()
+                    .allMaxBy { it.validity() }
+                    .toList()
+            return when (bestMatches.size) {
+                // This can happen if what we're deserializing is completely incompatible with all
+                // the possible variants (e.g. deserializing from boolean).
+                0 -> DataExportScheduleDeleteResponse(_json = json)
+                1 -> bestMatches.single()
+                // If there's more than one match with the highest validity, then use the first
+                // completely valid match, or simply the first match if none are completely valid.
+                else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+            }
         }
     }
 

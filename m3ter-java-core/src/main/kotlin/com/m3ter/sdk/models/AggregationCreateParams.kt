@@ -21,6 +21,7 @@ import com.m3ter.sdk.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a new Aggregation. */
 class AggregationCreateParams
@@ -363,6 +364,20 @@ private constructor(
         }
 
         fun orgId(orgId: String) = apply { this.orgId = orgId }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [aggregation]
+         * - [meterId]
+         * - [name]
+         * - [quantityPerUnit]
+         * - [rounding]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
@@ -801,7 +816,7 @@ private constructor(
             )
     }
 
-    @JvmSynthetic internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -1649,11 +1664,11 @@ private constructor(
                 return@apply
             }
 
-            aggregation()
+            aggregation().validate()
             meterId()
             name()
             quantityPerUnit()
-            rounding()
+            rounding().validate()
             targetField()
             unit()
             accountingProductId()
@@ -1666,6 +1681,38 @@ private constructor(
             version()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            (aggregation.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (meterId.asKnown().isPresent) 1 else 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (if (quantityPerUnit.asKnown().isPresent) 1 else 0) +
+                (rounding.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (targetField.asKnown().isPresent) 1 else 0) +
+                (if (unit.asKnown().isPresent) 1 else 0) +
+                (if (accountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (code.asKnown().isPresent) 1 else 0) +
+                (customFields.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (customSql.asKnown().isPresent) 1 else 0) +
+                (if (defaultValue.asKnown().isPresent) 1 else 0) +
+                (segmentedFields.asKnown().getOrNull()?.size ?: 0) +
+                (segments.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1830,6 +1877,33 @@ private constructor(
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
+        private var validated: Boolean = false
+
+        fun validate(): Aggregation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1953,6 +2027,33 @@ private constructor(
         fun asString(): String =
             _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
 
+        private var validated: Boolean = false
+
+        fun validate(): Rounding = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -2031,6 +2132,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2114,6 +2233,24 @@ private constructor(
 
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -2,7 +2,9 @@
 
 package com.m3ter.sdk.models
 
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.sdk.core.JsonValue
+import com.m3ter.sdk.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -146,5 +148,82 @@ internal class LineItemResponseTest {
         assertThat(lineItemResponse.subtotal()).contains(0.0)
         assertThat(lineItemResponse.unit()).contains("unit")
         assertThat(lineItemResponse.units()).contains(0.0)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val lineItemResponse =
+            LineItemResponse.builder()
+                .id("id")
+                .version(0L)
+                .aggregationId("aggregationId")
+                .averageUnitPrice(0.0)
+                .balanceId("balanceId")
+                .addBandUsage(
+                    LineItemResponse.BandUsage.builder()
+                        .bandQuantity(0.0)
+                        .bandSubtotal(0.0)
+                        .bandUnits(0.0)
+                        .creditTypeId("creditTypeId")
+                        .fixedPrice(0.0)
+                        .lowerLimit(0.0)
+                        .pricingBandId("pricingBandId")
+                        .unitPrice(0.0)
+                        .unitSubtotal(0.0)
+                        .build()
+                )
+                .billId("billId")
+                .commitmentId("commitmentId")
+                .compoundAggregationId("compoundAggregationId")
+                .contractId("contractId")
+                .conversionRate(0.0)
+                .convertedSubtotal(0.0)
+                .counterId("counterId")
+                .createdBy("createdBy")
+                .creditTypeId("creditTypeId")
+                .currency("currency")
+                .description("description")
+                .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .group(
+                    LineItemResponse.Group.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .jsonUsageGenerated(true)
+                .lastModifiedBy("lastModifiedBy")
+                .lineItemType(LineItemResponse.LineItemType.STANDING_CHARGE)
+                .meterId("meterId")
+                .planGroupId("planGroupId")
+                .planId("planId")
+                .pricingId("pricingId")
+                .productCode("productCode")
+                .productId("productId")
+                .productName("productName")
+                .quantity(0.0)
+                .reasonId("reasonId")
+                .referencedBillId("referencedBillId")
+                .referencedLineItemId("referencedLineItemId")
+                .segment(
+                    LineItemResponse.Segment.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .sequenceNumber(0L)
+                .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .subtotal(0.0)
+                .unit("unit")
+                .units(0.0)
+                .build()
+
+        val roundtrippedLineItemResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(lineItemResponse),
+                jacksonTypeRef<LineItemResponse>(),
+            )
+
+        assertThat(roundtrippedLineItemResponse).isEqualTo(lineItemResponse)
     }
 }
