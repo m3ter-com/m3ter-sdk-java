@@ -87,8 +87,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountIds(): Optional<List<String>> =
-        Optional.ofNullable(accountIds.getNullable("accountIds"))
+    fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
     /**
      * Specifies the aggregation method applied to usage data collected in the numeric Data Fields
@@ -105,8 +104,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun aggregation(): Optional<Aggregation> =
-        Optional.ofNullable(aggregation.getNullable("aggregation"))
+    fun aggregation(): Optional<Aggregation> = aggregation.getOptional("aggregation")
 
     /**
      * Specifies the time period for the aggregation of usage data included each time the Data
@@ -132,7 +130,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun aggregationFrequency(): Optional<AggregationFrequency> =
-        Optional.ofNullable(aggregationFrequency.getNullable("aggregationFrequency"))
+        aggregationFrequency.getOptional("aggregationFrequency")
 
     /**
      * List of meter IDs for which the usage data will be exported.
@@ -140,7 +138,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun meterIds(): Optional<List<String>> = Optional.ofNullable(meterIds.getNullable("meterIds"))
+    fun meterIds(): Optional<List<String>> = meterIds.getOptional("meterIds")
 
     /**
      * Define a time period to control the range of usage data you want the data export to contain
@@ -165,8 +163,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun timePeriod(): Optional<TimePeriod> =
-        Optional.ofNullable(timePeriod.getNullable("timePeriod"))
+    fun timePeriod(): Optional<TimePeriod> = timePeriod.getOptional("timePeriod")
 
     /**
      * Returns the raw JSON value of [id].

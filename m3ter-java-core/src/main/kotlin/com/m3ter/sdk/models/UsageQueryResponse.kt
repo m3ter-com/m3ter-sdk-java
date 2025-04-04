@@ -37,7 +37,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun data(): Optional<List<Data>> = Optional.ofNullable(data.getNullable("data"))
+    fun data(): Optional<List<Data>> = data.getOptional("data")
 
     /**
      * Flag to know if there are more data available than the one returned
@@ -45,8 +45,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun hasMoreData(): Optional<Boolean> =
-        Optional.ofNullable(hasMoreData.getNullable("hasMoreData"))
+    fun hasMoreData(): Optional<Boolean> = hasMoreData.getOptional("hasMoreData")
 
     /**
      * Returns the raw JSON value of [data].

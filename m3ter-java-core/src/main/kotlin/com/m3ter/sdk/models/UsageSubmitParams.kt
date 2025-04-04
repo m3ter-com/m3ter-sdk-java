@@ -567,7 +567,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun cost(): Optional<Cost> = Optional.ofNullable(cost.getNullable("cost"))
+        fun cost(): Optional<Cost> = cost.getOptional("cost")
 
         /**
          * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
@@ -578,7 +578,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun ets(): Optional<OffsetDateTime> = Optional.ofNullable(ets.getNullable("ets"))
+        fun ets(): Optional<OffsetDateTime> = ets.getOptional("ets")
 
         /**
          * 'income' values
@@ -586,7 +586,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun income(): Optional<Income> = Optional.ofNullable(income.getNullable("income"))
+        fun income(): Optional<Income> = income.getOptional("income")
 
         /**
          * 'measure' values
@@ -594,7 +594,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun measure(): Optional<Measure> = Optional.ofNullable(measure.getNullable("measure"))
+        fun measure(): Optional<Measure> = measure.getOptional("measure")
 
         /**
          * 'metadata' values
@@ -602,7 +602,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun metadata(): Optional<Metadata> = Optional.ofNullable(metadata.getNullable("metadata"))
+        fun metadata(): Optional<Metadata> = metadata.getOptional("metadata")
 
         /**
          * 'other' values
@@ -610,7 +610,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun other(): Optional<Other> = Optional.ofNullable(other.getNullable("other"))
+        fun other(): Optional<Other> = other.getOptional("other")
 
         /**
          * Unique ID for this measurement.
@@ -618,7 +618,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun uid(): Optional<String> = Optional.ofNullable(uid.getNullable("uid"))
+        fun uid(): Optional<String> = uid.getOptional("uid")
 
         /**
          * 'what' values
@@ -626,7 +626,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun what(): Optional<What> = Optional.ofNullable(what.getNullable("what"))
+        fun what(): Optional<What> = what.getOptional("what")
 
         /**
          * 'where' values
@@ -634,7 +634,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun where(): Optional<Where> = Optional.ofNullable(where.getNullable("where"))
+        fun where(): Optional<Where> = where.getOptional("where")
 
         /**
          * 'who' values
@@ -642,7 +642,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun who(): Optional<Who> = Optional.ofNullable(who.getNullable("who"))
+        fun who(): Optional<Who> = who.getOptional("who")
 
         /**
          * Returns the raw JSON value of [account].

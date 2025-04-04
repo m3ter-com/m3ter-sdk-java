@@ -828,7 +828,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
+        fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
         /**
          * The short code representing the PlanGroup.
@@ -836,7 +836,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * User defined fields enabling you to attach custom data. The value for a custom field can
@@ -853,8 +853,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * The minimum spend amount for the PlanGroup.
@@ -862,8 +861,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun minimumSpend(): Optional<Double> =
-            Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
+        fun minimumSpend(): Optional<Double> = minimumSpend.getOptional("minimumSpend")
 
         /**
          * Optional. Product ID to attribute the PlanGroup's minimum spend for accounting purposes.
@@ -872,9 +870,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun minimumSpendAccountingProductId(): Optional<String> =
-            Optional.ofNullable(
-                minimumSpendAccountingProductId.getNullable("minimumSpendAccountingProductId")
-            )
+            minimumSpendAccountingProductId.getOptional("minimumSpendAccountingProductId")
 
         /**
          * A boolean flag that determines when the minimum spend is billed. This flag overrides the
@@ -886,7 +882,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
+            minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
         /**
          * Description of the minimum spend, displayed on the bill line item.
@@ -895,7 +891,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun minimumSpendDescription(): Optional<String> =
-            Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
+            minimumSpendDescription.getOptional("minimumSpendDescription")
 
         /**
          * Standing charge amount for the PlanGroup.
@@ -903,8 +899,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun standingCharge(): Optional<Double> =
-            Optional.ofNullable(standingCharge.getNullable("standingCharge"))
+        fun standingCharge(): Optional<Double> = standingCharge.getOptional("standingCharge")
 
         /**
          * Optional. Product ID to attribute the PlanGroup's standing charge for accounting
@@ -914,9 +909,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeAccountingProductId(): Optional<String> =
-            Optional.ofNullable(
-                standingChargeAccountingProductId.getNullable("standingChargeAccountingProductId")
-            )
+            standingChargeAccountingProductId.getOptional("standingChargeAccountingProductId")
 
         /**
          * A boolean flag that determines when the standing charge is billed. This flag overrides
@@ -928,9 +921,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(
-                standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance")
-            )
+            standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
         /**
          * Description of the standing charge, displayed on the bill line item.
@@ -939,7 +930,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeDescription(): Optional<String> =
-            Optional.ofNullable(standingChargeDescription.getNullable("standingChargeDescription"))
+            standingChargeDescription.getOptional("standingChargeDescription")
 
         /**
          * The version number of the entity:
@@ -952,7 +943,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [currency].

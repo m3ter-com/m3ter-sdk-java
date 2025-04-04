@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Lists all the line items for a specific Bill.
@@ -103,9 +104,9 @@ private constructor(
             @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
         ) : this(data, nextToken, mutableMapOf())
 
-        fun data(): List<LineItemResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<LineItemResponse> = data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<LineItemResponse>>> = Optional.ofNullable(data)

@@ -115,7 +115,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The id of the user who created the Export Destination.
@@ -123,7 +123,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The DateTime when the Export Destination was created.
@@ -131,8 +131,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when the Export Destination was last modified.
@@ -140,8 +139,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The id of the user who last modified the Export Destination.
@@ -149,8 +147,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The name of the data Export Destination.
@@ -158,7 +155,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * Name of the S3 bucket for the Export Destination.
@@ -166,7 +163,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun bucketName(): Optional<String> = Optional.ofNullable(bucketName.getNullable("bucketName"))
+    fun bucketName(): Optional<String> = bucketName.getOptional("bucketName")
 
     /**
      * The specified IAM role ARN with PutObject permission for the specified `bucketName`, which
@@ -175,7 +172,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun iamRoleArn(): Optional<String> = Optional.ofNullable(iamRoleArn.getNullable("iamRoleArn"))
+    fun iamRoleArn(): Optional<String> = iamRoleArn.getOptional("iamRoleArn")
 
     /**
      * Specify how you want the file path to be structured in your bucket destination - by Time
@@ -195,8 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun partitionOrder(): Optional<PartitionOrder> =
-        Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
+    fun partitionOrder(): Optional<PartitionOrder> = partitionOrder.getOptional("partitionOrder")
 
     /**
      * Location in specified S3 bucket for the Export Destination. If no `prefix` is specified, then
@@ -205,7 +201,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
+    fun prefix(): Optional<String> = prefix.getOptional("prefix")
 
     /**
      * Returns the raw JSON value of [id].

@@ -757,8 +757,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billEpoch(): Optional<LocalDate> =
-            Optional.ofNullable(billEpoch.getNullable("billEpoch"))
+        fun billEpoch(): Optional<LocalDate> = billEpoch.getOptional("billEpoch")
 
         /**
          * If the Account is either a Parent or a Child Account, this specifies the Account
@@ -772,7 +771,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun childBillingMode(): Optional<ChildBillingMode> =
-            Optional.ofNullable(childBillingMode.getNullable("childBillingMode"))
+            childBillingMode.getOptional("childBillingMode")
 
         /**
          * A unique short code for the AccountPlan or AccountPlanGroup.
@@ -780,7 +779,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * The unique identifier (UUID) for a Contract to which you want to add the Plan or Plan
@@ -789,8 +788,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contractId(): Optional<String> =
-            Optional.ofNullable(contractId.getNullable("contractId"))
+        fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
          * User defined fields enabling you to attach custom data. The value for a custom field can
@@ -807,8 +805,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
@@ -818,8 +815,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun endDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(endDate.getNullable("endDate"))
+        fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
         /**
          * The unique identifier (UUID) of the PlanGroup to be attached to the Account to create an
@@ -831,8 +827,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planGroupId(): Optional<String> =
-            Optional.ofNullable(planGroupId.getNullable("planGroupId"))
+        fun planGroupId(): Optional<String> = planGroupId.getOptional("planGroupId")
 
         /**
          * The unique identifier (UUID) of the Plan to be attached to the Account to create an
@@ -844,7 +839,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
+        fun planId(): Optional<String> = planId.getOptional("planId")
 
         /**
          * The version number of the entity:
@@ -857,7 +852,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [accountId].

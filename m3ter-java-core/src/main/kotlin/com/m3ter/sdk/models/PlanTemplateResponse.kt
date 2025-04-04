@@ -156,8 +156,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billFrequency(): Optional<BillFrequency> =
-        Optional.ofNullable(billFrequency.getNullable("billFrequency"))
+    fun billFrequency(): Optional<BillFrequency> = billFrequency.getOptional("billFrequency")
 
     /**
      * How often bills are issued. For example, if `billFrequency` is Monthly and
@@ -167,7 +166,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun billFrequencyInterval(): Optional<Long> =
-        Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
+        billFrequencyInterval.getOptional("billFrequencyInterval")
 
     /**
      * A unique, short code reference for the PlanTemplate. This code should not contain control
@@ -176,7 +175,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The unique identifier (UUID) of the user who created this PlanTemplate.
@@ -184,7 +183,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The ISO currency code for the pricing currency used by Plans based on the Plan Template to
@@ -193,7 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
@@ -210,8 +209,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun customFields(): Optional<CustomFields> =
-        Optional.ofNullable(customFields.getNullable("customFields"))
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the PlanTemplate was created.
@@ -219,8 +217,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the PlanTemplate was last modified.
@@ -228,8 +225,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The unique identifier (UUID) of the user who last modified this PlanTemplate.
@@ -237,8 +233,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
@@ -247,8 +242,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun minimumSpend(): Optional<Double> =
-        Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
+    fun minimumSpend(): Optional<Double> = minimumSpend.getOptional("minimumSpend")
 
     /**
      * A boolean that determines when the minimum spend is billed.
@@ -262,7 +256,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> =
-        Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
+        minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
     /**
      * Minimum spend description _(displayed on the bill line item)_.
@@ -271,7 +265,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun minimumSpendDescription(): Optional<String> =
-        Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
+        minimumSpendDescription.getOptional("minimumSpendDescription")
 
     /**
      * Descriptive name for the PlanTemplate.
@@ -279,7 +273,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent more basic
@@ -290,7 +284,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun ordinal(): Optional<Long> = Optional.ofNullable(ordinal.getNullable("ordinal"))
+    fun ordinal(): Optional<Long> = ordinal.getOptional("ordinal")
 
     /**
      * The unique identifier (UUID) of the Product associated with this PlanTemplate.
@@ -298,7 +292,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+    fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
      * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated and
@@ -307,8 +301,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun standingCharge(): Optional<Double> =
-        Optional.ofNullable(standingCharge.getNullable("standingCharge"))
+    fun standingCharge(): Optional<Double> = standingCharge.getOptional("standingCharge")
 
     /**
      * A boolean that determines when the standing charge is billed.
@@ -322,7 +315,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun standingChargeBillInAdvance(): Optional<Boolean> =
-        Optional.ofNullable(standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance"))
+        standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
     /**
      * Standing charge description _(displayed on the bill line item)_.
@@ -331,7 +324,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun standingChargeDescription(): Optional<String> =
-        Optional.ofNullable(standingChargeDescription.getNullable("standingChargeDescription"))
+        standingChargeDescription.getOptional("standingChargeDescription")
 
     /**
      * How often the standing charge is applied. For example, if the bill is issued every three
@@ -342,7 +335,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun standingChargeInterval(): Optional<Long> =
-        Optional.ofNullable(standingChargeInterval.getNullable("standingChargeInterval"))
+        standingChargeInterval.getOptional("standingChargeInterval")
 
     /**
      * Defines an offset for when the standing charge is first applied. For example, if the bill is
@@ -354,7 +347,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun standingChargeOffset(): Optional<Long> =
-        Optional.ofNullable(standingChargeOffset.getNullable("standingChargeOffset"))
+        standingChargeOffset.getOptional("standingChargeOffset")
 
     /**
      * Returns the raw JSON value of [id].

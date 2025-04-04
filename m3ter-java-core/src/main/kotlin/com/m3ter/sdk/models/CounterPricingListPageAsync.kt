@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
@@ -100,9 +101,9 @@ private constructor(
             @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
         ) : this(data, nextToken, mutableMapOf())
 
-        fun data(): List<CounterPricingResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<CounterPricingResponse> = data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<CounterPricingResponse>>> = Optional.ofNullable(data)

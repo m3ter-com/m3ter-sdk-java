@@ -39,7 +39,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun data(): Optional<List<BillResponse>> = Optional.ofNullable(data.getNullable("data"))
+    fun data(): Optional<List<BillResponse>> = data.getOptional("data")
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in a
@@ -48,7 +48,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+    fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
     /**
      * Returns the raw JSON value of [data].

@@ -302,7 +302,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
+        fun scope(): Optional<String> = scope.getOptional("scope")
 
         /**
          * Returns the raw JSON value of [grantType].

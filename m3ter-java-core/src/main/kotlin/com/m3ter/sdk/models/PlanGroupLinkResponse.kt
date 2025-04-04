@@ -85,7 +85,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The DateTime _(in ISO-8601 format)_ when the plan group link was created.
@@ -93,8 +93,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime _(in ISO-8601 format)_ when the plan group link was last modified.
@@ -102,8 +101,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The id of the user who last modified this plan group link.
@@ -111,8 +109,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * ID of the linked PlanGroup
@@ -120,8 +117,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun planGroupId(): Optional<String> =
-        Optional.ofNullable(planGroupId.getNullable("planGroupId"))
+    fun planGroupId(): Optional<String> = planGroupId.getOptional("planGroupId")
 
     /**
      * ID of the linked Plan
@@ -129,7 +125,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
+    fun planId(): Optional<String> = planId.getOptional("planId")
 
     /**
      * Returns the raw JSON value of [id].

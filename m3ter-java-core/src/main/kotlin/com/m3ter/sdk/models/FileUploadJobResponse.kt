@@ -68,7 +68,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): Optional<String> = id.getOptional("id")
 
     /**
      * The size of the body in bytes. For example: `"contentLength": 485`, where 485 is the size in
@@ -77,8 +77,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun contentLength(): Optional<Long> =
-        Optional.ofNullable(contentLength.getNullable("contentLength"))
+    fun contentLength(): Optional<Long> = contentLength.getOptional("contentLength")
 
     /**
      * The number of rows that failed processing during ingest.
@@ -86,7 +85,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun failedRows(): Optional<Long> = Optional.ofNullable(failedRows.getNullable("failedRows"))
+    fun failedRows(): Optional<Long> = failedRows.getOptional("failedRows")
 
     /**
      * The name of the measurements file for the upload job.
@@ -94,7 +93,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun fileName(): Optional<String> = Optional.ofNullable(fileName.getNullable("fileName"))
+    fun fileName(): Optional<String> = fileName.getOptional("fileName")
 
     /**
      * The number of rows that were processed during ingest.
@@ -102,8 +101,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun processedRows(): Optional<Long> =
-        Optional.ofNullable(processedRows.getNullable("processedRows"))
+    fun processedRows(): Optional<Long> = processedRows.getOptional("processedRows")
 
     /**
      * The status of the file upload job.
@@ -111,7 +109,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * The total number of rows in the file.
@@ -119,7 +117,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun totalRows(): Optional<Long> = Optional.ofNullable(totalRows.getNullable("totalRows"))
+    fun totalRows(): Optional<Long> = totalRows.getOptional("totalRows")
 
     /**
      * The upload date for the upload job _(in ISO-8601 format)_.
@@ -127,7 +125,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun uploadDate(): Optional<String> = Optional.ofNullable(uploadDate.getNullable("uploadDate"))
+    fun uploadDate(): Optional<String> = uploadDate.getOptional("uploadDate")
 
     /**
      * The version number. Default value when newly created is one.
@@ -135,7 +133,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+    fun version(): Optional<Long> = version.getOptional("version")
 
     /**
      * Returns the raw JSON value of [id].

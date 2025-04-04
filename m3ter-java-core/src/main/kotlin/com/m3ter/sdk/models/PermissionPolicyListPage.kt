@@ -96,9 +96,10 @@ private constructor(
             @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
         ) : this(data, nextToken, mutableMapOf())
 
-        fun data(): List<PermissionPolicyResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<PermissionPolicyResponse> =
+            data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<PermissionPolicyResponse>>> = Optional.ofNullable(data)

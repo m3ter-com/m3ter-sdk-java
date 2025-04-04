@@ -69,7 +69,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+    fun unit(): Optional<String> = unit.getOptional("unit")
 
     /**
      * Returns the raw JSON value of [category].

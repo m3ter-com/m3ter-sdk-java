@@ -110,7 +110,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The id of the user who created this Schedule.
@@ -118,7 +118,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The Export Destination ids.
@@ -126,8 +126,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun destinationIds(): Optional<List<String>> =
-        Optional.ofNullable(destinationIds.getNullable("destinationIds"))
+    fun destinationIds(): Optional<List<String>> = destinationIds.getOptional("destinationIds")
 
     /**
      * The DateTime when the Data Export Schedule was created.
@@ -135,8 +134,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when the Schedule was last modified.
@@ -144,15 +142,14 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun exportFileFormat(): Optional<ExportFileFormat> =
-        Optional.ofNullable(exportFileFormat.getNullable("exportFileFormat"))
+        exportFileFormat.getOptional("exportFileFormat")
 
     /**
      * The id of the user who last modified this Data Export Schedule.
@@ -160,8 +157,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The name of the Data Export Schedule.
@@ -169,7 +165,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
@@ -178,21 +174,19 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun period(): Optional<Long> = Optional.ofNullable(period.getNullable("period"))
+    fun period(): Optional<Long> = period.getOptional("period")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun scheduleType(): Optional<ScheduleType> =
-        Optional.ofNullable(scheduleType.getNullable("scheduleType"))
+    fun scheduleType(): Optional<ScheduleType> = scheduleType.getOptional("scheduleType")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun sourceType(): Optional<SourceType> =
-        Optional.ofNullable(sourceType.getNullable("sourceType"))
+    fun sourceType(): Optional<SourceType> = sourceType.getOptional("sourceType")
 
     /**
      * Returns the raw JSON value of [id].

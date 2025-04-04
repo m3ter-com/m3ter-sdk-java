@@ -630,7 +630,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun partitionOrder(): Optional<PartitionOrder> =
-            Optional.ofNullable(partitionOrder.getNullable("partitionOrder"))
+            partitionOrder.getOptional("partitionOrder")
 
         /**
          * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
@@ -639,7 +639,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun prefix(): Optional<String> = Optional.ofNullable(prefix.getNullable("prefix"))
+        fun prefix(): Optional<String> = prefix.getOptional("prefix")
 
         /**
          * The version number of the entity:
@@ -652,7 +652,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [bucketName].

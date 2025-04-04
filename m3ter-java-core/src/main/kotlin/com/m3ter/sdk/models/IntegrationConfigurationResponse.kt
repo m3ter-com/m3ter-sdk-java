@@ -146,7 +146,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The date and time the integration was completed _(in ISO-8601 format)_.
@@ -154,8 +154,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCompleted(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCompleted.getNullable("dtCompleted"))
+    fun dtCompleted(): Optional<OffsetDateTime> = dtCompleted.getOptional("dtCompleted")
 
     /**
      * The DateTime when this item was created _(in ISO-8601 format)_.
@@ -163,8 +162,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when this item was last modified _(in ISO-8601 format)_.
@@ -172,8 +170,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The date and time the integration was started _(in ISO-8601 format)_.
@@ -181,8 +178,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtStarted(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtStarted.getNullable("dtStarted"))
+    fun dtStarted(): Optional<OffsetDateTime> = dtStarted.getOptional("dtStarted")
 
     /**
      * Describes any errors encountered during the integration run.
@@ -190,7 +186,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun error(): Optional<String> = Optional.ofNullable(error.getNullable("error"))
+    fun error(): Optional<String> = error.getOptional("error")
 
     /**
      * The external ID in the destination system if available.
@@ -198,7 +194,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun externalId(): Optional<String> = Optional.ofNullable(externalId.getNullable("externalId"))
+    fun externalId(): Optional<String> = externalId.getOptional("externalId")
 
     /**
      * The ID of the user who last modified this item.
@@ -206,8 +202,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The URL of the entity in the destination system if available.
@@ -215,7 +210,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
+    fun url(): Optional<String> = url.getOptional("url")
 
     /**
      * Returns the raw JSON value of [id].

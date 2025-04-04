@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various query
@@ -100,9 +101,9 @@ private constructor(
             @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
         ) : this(data, nextToken, mutableMapOf())
 
-        fun data(): List<ContractResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<ContractResponse> = data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<ContractResponse>>> = Optional.ofNullable(data)

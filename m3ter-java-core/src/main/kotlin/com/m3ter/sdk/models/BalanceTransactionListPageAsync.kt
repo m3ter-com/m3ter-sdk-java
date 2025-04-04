@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve all Transactions for a specific Balance.
@@ -102,9 +103,9 @@ private constructor(
             @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
         ) : this(data, nextToken, mutableMapOf())
 
-        fun data(): List<TransactionResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<TransactionResponse> = data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<TransactionResponse>>> = Optional.ofNullable(data)

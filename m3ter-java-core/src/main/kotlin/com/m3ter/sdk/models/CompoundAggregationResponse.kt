@@ -125,7 +125,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun accountingProductId(): Optional<String> =
-        Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+        accountingProductId.getOptional("accountingProductId")
 
     /**
      * This field is a string that represents the formula for the calculation. This formula
@@ -134,8 +134,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun calculation(): Optional<String> =
-        Optional.ofNullable(calculation.getNullable("calculation"))
+    fun calculation(): Optional<String> = calculation.getOptional("calculation")
 
     /**
      * Code of the Aggregation. A unique short code to identify the Aggregation.
@@ -143,7 +142,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The unique identifier (UUID) of the user who created this CompoundAggregation.
@@ -151,14 +150,13 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun customFields(): Optional<CustomFields> =
-        Optional.ofNullable(customFields.getNullable("customFields"))
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the CompoundAggregation was created.
@@ -166,8 +164,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the CompoundAggregation was last modified.
@@ -175,8 +172,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * This is a boolean True / False flag.
@@ -188,7 +184,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun evaluateNullAggregations(): Optional<Boolean> =
-        Optional.ofNullable(evaluateNullAggregations.getNullable("evaluateNullAggregations"))
+        evaluateNullAggregations.getOptional("evaluateNullAggregations")
 
     /**
      * The unique identifier (UUID) of the user who last modified this CompoundAggregation.
@@ -196,8 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * Descriptive name for the Aggregation.
@@ -205,7 +200,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * This field represents the unique identifier (UUID) of the Product that is associated with the
@@ -214,7 +209,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+    fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
      * Defines how much of a quantity equates to 1 unit. Used when setting the price per unit for
@@ -226,8 +221,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun quantityPerUnit(): Optional<Double> =
-        Optional.ofNullable(quantityPerUnit.getNullable("quantityPerUnit"))
+    fun quantityPerUnit(): Optional<Double> = quantityPerUnit.getOptional("quantityPerUnit")
 
     /**
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
@@ -246,7 +240,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun rounding(): Optional<Rounding> = Optional.ofNullable(rounding.getNullable("rounding"))
+    fun rounding(): Optional<Rounding> = rounding.getOptional("rounding")
 
     /**
      * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
@@ -258,7 +252,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun segments(): Optional<List<Segment>> = Optional.ofNullable(segments.getNullable("segments"))
+    fun segments(): Optional<List<Segment>> = segments.getOptional("segments")
 
     /**
      * User defined or following the _Unified Code for Units of Measure_ (UCUM).
@@ -268,7 +262,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+    fun unit(): Optional<String> = unit.getOptional("unit")
 
     /**
      * Returns the raw JSON value of [id].

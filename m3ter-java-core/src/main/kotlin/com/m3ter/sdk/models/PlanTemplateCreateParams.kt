@@ -1050,7 +1050,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun billFrequencyInterval(): Optional<Long> =
-            Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
+            billFrequencyInterval.getOptional("billFrequencyInterval")
 
         /**
          * A unique, short code reference for the PlanTemplate. This code should not contain control
@@ -1059,7 +1059,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * User defined fields enabling you to attach custom data. The value for a custom field can
@@ -1076,8 +1076,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * The Product minimum spend amount per billing cycle for end customer Accounts on a pricing
@@ -1086,8 +1085,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun minimumSpend(): Optional<Double> =
-            Optional.ofNullable(minimumSpend.getNullable("minimumSpend"))
+        fun minimumSpend(): Optional<Double> = minimumSpend.getOptional("minimumSpend")
 
         /**
          * A boolean that determines when the minimum spend is billed.
@@ -1101,7 +1099,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun minimumSpendBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
+            minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
         /**
          * Minimum spend description _(displayed on the bill line item)_.
@@ -1110,7 +1108,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun minimumSpendDescription(): Optional<String> =
-            Optional.ofNullable(minimumSpendDescription.getNullable("minimumSpendDescription"))
+            minimumSpendDescription.getOptional("minimumSpendDescription")
 
         /**
          * The ranking of the PlanTemplate among your pricing plans. Lower numbers represent more
@@ -1122,7 +1120,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun ordinal(): Optional<Long> = Optional.ofNullable(ordinal.getNullable("ordinal"))
+        fun ordinal(): Optional<Long> = ordinal.getOptional("ordinal")
 
         /**
          * A boolean that determines when the standing charge is billed.
@@ -1136,9 +1134,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(
-                standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance")
-            )
+            standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
         /**
          * Standing charge description _(displayed on the bill line item)_.
@@ -1147,7 +1143,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeDescription(): Optional<String> =
-            Optional.ofNullable(standingChargeDescription.getNullable("standingChargeDescription"))
+            standingChargeDescription.getOptional("standingChargeDescription")
 
         /**
          * How often the standing charge is applied. For example, if the bill is issued every three
@@ -1158,7 +1154,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeInterval(): Optional<Long> =
-            Optional.ofNullable(standingChargeInterval.getNullable("standingChargeInterval"))
+            standingChargeInterval.getOptional("standingChargeInterval")
 
         /**
          * Defines an offset for when the standing charge is first applied. For example, if the bill
@@ -1170,7 +1166,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun standingChargeOffset(): Optional<Long> =
-            Optional.ofNullable(standingChargeOffset.getNullable("standingChargeOffset"))
+            standingChargeOffset.getOptional("standingChargeOffset")
 
         /**
          * The version number of the entity:
@@ -1183,7 +1179,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [billFrequency].
