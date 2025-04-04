@@ -58,7 +58,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun multiplier(): Optional<Double> = Optional.ofNullable(multiplier.getNullable("multiplier"))
+    fun multiplier(): Optional<Double> = multiplier.getOptional("multiplier")
 
     /**
      * Returns the raw JSON value of [from].

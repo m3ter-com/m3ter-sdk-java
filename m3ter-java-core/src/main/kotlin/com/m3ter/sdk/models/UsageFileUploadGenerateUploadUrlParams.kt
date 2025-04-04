@@ -399,8 +399,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contentLength(): Optional<Long> =
-            Optional.ofNullable(contentLength.getNullable("contentLength"))
+        fun contentLength(): Optional<Long> = contentLength.getOptional("contentLength")
 
         /**
          * Returns the raw JSON value of [contentType].

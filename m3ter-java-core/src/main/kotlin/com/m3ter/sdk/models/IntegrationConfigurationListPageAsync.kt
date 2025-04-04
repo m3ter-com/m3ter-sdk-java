@@ -18,6 +18,7 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.function.Predicate
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * List all integration configurations.
@@ -109,9 +110,9 @@ private constructor(
         ) : this(data, nextToken, mutableMapOf())
 
         fun data(): List<IntegrationConfigurationListResponse> =
-            data.getNullable("data") ?: listOf()
+            data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<IntegrationConfigurationListResponse>>> =

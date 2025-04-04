@@ -638,7 +638,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun active(): Optional<Boolean> = Optional.ofNullable(active.getNullable("active"))
+        fun active(): Optional<Boolean> = active.getOptional("active")
 
         /**
          * A Boolean flag indicating whether the Notification is always triggered, regardless of
@@ -654,8 +654,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun alwaysFireEvent(): Optional<Boolean> =
-            Optional.ofNullable(alwaysFireEvent.getNullable("alwaysFireEvent"))
+        fun alwaysFireEvent(): Optional<Boolean> = alwaysFireEvent.getOptional("alwaysFireEvent")
 
         /**
          * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`, a
@@ -669,8 +668,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun calculation(): Optional<String> =
-            Optional.ofNullable(calculation.getNullable("calculation"))
+        fun calculation(): Optional<String> = calculation.getOptional("calculation")
 
         /**
          * The version number for the Notification:
@@ -683,7 +681,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [code].

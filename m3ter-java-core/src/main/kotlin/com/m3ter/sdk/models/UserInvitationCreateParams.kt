@@ -576,8 +576,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contactNumber(): Optional<String> =
-            Optional.ofNullable(contactNumber.getNullable("contactNumber"))
+        fun contactNumber(): Optional<String> = contactNumber.getOptional("contactNumber")
 
         /**
          * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
@@ -586,8 +585,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun dtEndAccess(): Optional<OffsetDateTime> =
-            Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
+        fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
         /**
          * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
@@ -597,14 +595,13 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun dtExpiry(): Optional<OffsetDateTime> =
-            Optional.ofNullable(dtExpiry.getNullable("dtExpiry"))
+        fun dtExpiry(): Optional<OffsetDateTime> = dtExpiry.getOptional("dtExpiry")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun m3terUser(): Optional<Boolean> = Optional.ofNullable(m3terUser.getNullable("m3terUser"))
+        fun m3terUser(): Optional<Boolean> = m3terUser.getOptional("m3terUser")
 
         /**
          * The IDs of the permission policies the invited user has been assigned. This controls the
@@ -615,13 +612,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun permissionPolicyIds(): Optional<List<String>> =
-            Optional.ofNullable(permissionPolicyIds.getNullable("permissionPolicyIds"))
+            permissionPolicyIds.getOptional("permissionPolicyIds")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [email].

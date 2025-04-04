@@ -582,7 +582,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
+        fun account(): Optional<Account> = account.getOptional("account")
 
         /**
          * Updates to accountPlan entity CustomFields.
@@ -590,8 +590,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountPlan(): Optional<AccountPlan> =
-            Optional.ofNullable(accountPlan.getNullable("accountPlan"))
+        fun accountPlan(): Optional<AccountPlan> = accountPlan.getOptional("accountPlan")
 
         /**
          * Updates to simple Aggregation entity CustomFields.
@@ -599,8 +598,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun aggregation(): Optional<Aggregation> =
-            Optional.ofNullable(aggregation.getNullable("aggregation"))
+        fun aggregation(): Optional<Aggregation> = aggregation.getOptional("aggregation")
 
         /**
          * Updates to Compound Aggregation entity CustomFields.
@@ -609,7 +607,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun compoundAggregation(): Optional<CompoundAggregation> =
-            Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
+            compoundAggregation.getOptional("compoundAggregation")
 
         /**
          * Updates to Meter entity CustomFields.
@@ -617,7 +615,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
+        fun meter(): Optional<Meter> = meter.getOptional("meter")
 
         /**
          * Updates to Organization CustomFields.
@@ -625,8 +623,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun organization(): Optional<Organization> =
-            Optional.ofNullable(organization.getNullable("organization"))
+        fun organization(): Optional<Organization> = organization.getOptional("organization")
 
         /**
          * Updates to Plan entity CustomFields.
@@ -634,7 +631,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
+        fun plan(): Optional<Plan> = plan.getOptional("plan")
 
         /**
          * Updates to planTemplate entity CustomFields.
@@ -642,8 +639,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planTemplate(): Optional<PlanTemplate> =
-            Optional.ofNullable(planTemplate.getNullable("planTemplate"))
+        fun planTemplate(): Optional<PlanTemplate> = planTemplate.getOptional("planTemplate")
 
         /**
          * Updates to Product entity CustomFields.
@@ -651,7 +647,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
+        fun product(): Optional<Product> = product.getOptional("product")
 
         /**
          * The version number of the entity:
@@ -664,7 +660,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [account].

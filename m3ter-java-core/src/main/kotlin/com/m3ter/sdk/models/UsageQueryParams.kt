@@ -582,41 +582,38 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountIds(): Optional<List<String>> =
-            Optional.ofNullable(accountIds.getNullable("accountIds"))
+        fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun aggregations(): Optional<List<Aggregation>> =
-            Optional.ofNullable(aggregations.getNullable("aggregations"))
+        fun aggregations(): Optional<List<Aggregation>> = aggregations.getOptional("aggregations")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun dimensionFilters(): Optional<List<DimensionFilter>> =
-            Optional.ofNullable(dimensionFilters.getNullable("dimensionFilters"))
+            dimensionFilters.getOptional("dimensionFilters")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun groups(): Optional<List<Group>> = Optional.ofNullable(groups.getNullable("groups"))
+        fun groups(): Optional<List<Group>> = groups.getOptional("groups")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun limit(): Optional<Long> = Optional.ofNullable(limit.getNullable("limit"))
+        fun limit(): Optional<Long> = limit.getOptional("limit")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun meterIds(): Optional<List<String>> =
-            Optional.ofNullable(meterIds.getNullable("meterIds"))
+        fun meterIds(): Optional<List<String>> = meterIds.getOptional("meterIds")
 
         /**
          * Returns the raw JSON value of [endDate].
@@ -2093,8 +2090,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> =
-                Optional.ofNullable(groupType.getNullable("groupType"))
+            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [groupType].
@@ -2411,8 +2407,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> =
-                Optional.ofNullable(groupType.getNullable("groupType"))
+            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [fieldCode].
@@ -2785,8 +2780,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> =
-                Optional.ofNullable(groupType.getNullable("groupType"))
+            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [frequency].

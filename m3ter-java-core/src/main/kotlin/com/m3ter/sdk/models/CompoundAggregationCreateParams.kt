@@ -787,7 +787,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun accountingProductId(): Optional<String> =
-            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+            accountingProductId.getOptional("accountingProductId")
 
         /**
          * Code of the new Aggregation. A unique short code to identify the Aggregation.
@@ -795,14 +795,13 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * Boolean True / False flag:
@@ -820,7 +819,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun evaluateNullAggregations(): Optional<Boolean> =
-            Optional.ofNullable(evaluateNullAggregations.getNullable("evaluateNullAggregations"))
+            evaluateNullAggregations.getOptional("evaluateNullAggregations")
 
         /**
          * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
@@ -830,7 +829,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+        fun productId(): Optional<String> = productId.getOptional("productId")
 
         /**
          * The version number of the entity:
@@ -843,7 +842,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [calculation].

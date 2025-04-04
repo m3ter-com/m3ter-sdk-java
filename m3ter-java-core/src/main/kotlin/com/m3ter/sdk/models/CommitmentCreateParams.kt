@@ -1431,7 +1431,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun accountingProductId(): Optional<String> =
-            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+            accountingProductId.getOptional("accountingProductId")
 
         /**
          * The amount to be billed in the first invoice.
@@ -1439,8 +1439,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun amountFirstBill(): Optional<Double> =
-            Optional.ofNullable(amountFirstBill.getNullable("amountFirstBill"))
+        fun amountFirstBill(): Optional<Double> = amountFirstBill.getOptional("amountFirstBill")
 
         /**
          * The amount that the customer has already paid upfront at the start of the Commitment
@@ -1449,8 +1448,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun amountPrePaid(): Optional<Double> =
-            Optional.ofNullable(amountPrePaid.getNullable("amountPrePaid"))
+        fun amountPrePaid(): Optional<Double> = amountPrePaid.getOptional("amountPrePaid")
 
         /**
          * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
@@ -1459,8 +1457,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billEpoch(): Optional<LocalDate> =
-            Optional.ofNullable(billEpoch.getNullable("billEpoch"))
+        fun billEpoch(): Optional<LocalDate> = billEpoch.getOptional("billEpoch")
 
         /**
          * How often the Commitment fees are applied to bills. For example, if the plan being used
@@ -1470,8 +1467,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billingInterval(): Optional<Long> =
-            Optional.ofNullable(billingInterval.getNullable("billingInterval"))
+        fun billingInterval(): Optional<Long> = billingInterval.getOptional("billingInterval")
 
         /**
          * Defines an offset for when the Commitment fees are first applied to bills on the Account.
@@ -1482,8 +1478,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billingOffset(): Optional<Long> =
-            Optional.ofNullable(billingOffset.getNullable("billingOffset"))
+        fun billingOffset(): Optional<Long> = billingOffset.getOptional("billingOffset")
 
         /**
          * The unique identifier (UUID) for the Product Plan used for billing Commitment fees due.
@@ -1491,8 +1486,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billingPlanId(): Optional<String> =
-            Optional.ofNullable(billingPlanId.getNullable("billingPlanId"))
+        fun billingPlanId(): Optional<String> = billingPlanId.getOptional("billingPlanId")
 
         /**
          * If the Account is either a Parent or a Child Account, this specifies the Account
@@ -1506,7 +1500,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun childBillingMode(): Optional<ChildBillingMode> =
-            Optional.ofNullable(childBillingMode.getNullable("childBillingMode"))
+            childBillingMode.getOptional("childBillingMode")
 
         /**
          * A boolean value indicating whether the Commitment fee is billed in advance _(start of
@@ -1520,9 +1514,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun commitmentFeeBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(
-                commitmentFeeBillInAdvance.getNullable("commitmentFeeBillInAdvance")
-            )
+            commitmentFeeBillInAdvance.getOptional("commitmentFeeBillInAdvance")
 
         /**
          * A textual description of the Commitment fee.
@@ -1531,7 +1523,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun commitmentFeeDescription(): Optional<String> =
-            Optional.ofNullable(commitmentFeeDescription.getNullable("commitmentFeeDescription"))
+            commitmentFeeDescription.getOptional("commitmentFeeDescription")
 
         /**
          * A textual description of the Commitment usage.
@@ -1540,9 +1532,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun commitmentUsageDescription(): Optional<String> =
-            Optional.ofNullable(
-                commitmentUsageDescription.getNullable("commitmentUsageDescription")
-            )
+            commitmentUsageDescription.getOptional("commitmentUsageDescription")
 
         /**
          * The unique identifier (UUID) for a Contract you've created for the Account - used to add
@@ -1556,8 +1546,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contractId(): Optional<String> =
-            Optional.ofNullable(contractId.getNullable("contractId"))
+        fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
          * Optional Product ID this Commitment consumptions should be attributed to for accounting
@@ -1567,9 +1556,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun drawdownsAccountingProductId(): Optional<String> =
-            Optional.ofNullable(
-                drawdownsAccountingProductId.getNullable("drawdownsAccountingProductId")
-            )
+            drawdownsAccountingProductId.getOptional("drawdownsAccountingProductId")
 
         /**
          * Used for billing any outstanding Commitment fees _on a schedule_.
@@ -1591,8 +1578,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun feeDates(): Optional<List<CommitmentFee>> =
-            Optional.ofNullable(feeDates.getNullable("feeDates"))
+        fun feeDates(): Optional<List<CommitmentFee>> = feeDates.getOptional("feeDates")
 
         /**
          * Optional Product ID this Commitment fees should be attributed to for accounting purposes
@@ -1601,7 +1587,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun feesAccountingProductId(): Optional<String> =
-            Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
+            feesAccountingProductId.getOptional("feesAccountingProductId")
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Commitment
@@ -1619,7 +1605,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun lineItemTypes(): Optional<List<LineItemType>> =
-            Optional.ofNullable(lineItemTypes.getNullable("lineItemTypes"))
+            lineItemTypes.getOptional("lineItemTypes")
 
         /**
          * A textual description of the overage charges.
@@ -1628,7 +1614,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun overageDescription(): Optional<String> =
-            Optional.ofNullable(overageDescription.getNullable("overageDescription"))
+            overageDescription.getOptional("overageDescription")
 
         /**
          * The percentage surcharge applied to usage charges that exceed the Commitment amount.
@@ -1640,7 +1626,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun overageSurchargePercent(): Optional<Double> =
-            Optional.ofNullable(overageSurchargePercent.getNullable("overageSurchargePercent"))
+            overageSurchargePercent.getOptional("overageSurchargePercent")
 
         /**
          * A list of unique identifiers (UUIDs) for Products the Account consumes. Charges due for
@@ -1652,8 +1638,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productIds(): Optional<List<String>> =
-            Optional.ofNullable(productIds.getNullable("productIds"))
+        fun productIds(): Optional<List<String>> = productIds.getOptional("productIds")
 
         /**
          * A boolean value indicating whether the overage usage is billed separately or together. If
@@ -1676,7 +1661,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun separateOverageUsage(): Optional<Boolean> =
-            Optional.ofNullable(separateOverageUsage.getNullable("separateOverageUsage"))
+            separateOverageUsage.getOptional("separateOverageUsage")
 
         /**
          * The version number of the entity:
@@ -1689,7 +1674,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [accountId].

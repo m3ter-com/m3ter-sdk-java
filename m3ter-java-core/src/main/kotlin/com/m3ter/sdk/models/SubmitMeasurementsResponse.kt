@@ -32,7 +32,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun result(): Optional<String> = Optional.ofNullable(result.getNullable("result"))
+    fun result(): Optional<String> = result.getOptional("result")
 
     /**
      * Returns the raw JSON value of [result].

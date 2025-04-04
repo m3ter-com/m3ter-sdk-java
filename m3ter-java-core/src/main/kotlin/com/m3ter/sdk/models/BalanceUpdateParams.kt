@@ -1011,9 +1011,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun balanceDrawDownDescription(): Optional<String> =
-            Optional.ofNullable(
-                balanceDrawDownDescription.getNullable("balanceDrawDownDescription")
-            )
+            balanceDrawDownDescription.getOptional("balanceDrawDownDescription")
 
         /**
          * Unique short code for the Balance.
@@ -1021,7 +1019,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * Optional Product ID this Balance Consumptions should be attributed to for accounting
@@ -1031,9 +1029,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun consumptionsAccountingProductId(): Optional<String> =
-            Optional.ofNullable(
-                consumptionsAccountingProductId.getNullable("consumptionsAccountingProductId")
-            )
+            consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
 
         /**
          * A description of the Balance.
@@ -1041,8 +1037,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * Optional Product ID this Balance Fees should be attributed to for accounting purposes
@@ -1051,7 +1046,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun feesAccountingProductId(): Optional<String> =
-            Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
+            feesAccountingProductId.getOptional("feesAccountingProductId")
 
         /**
          * Specify the line item charge types that can draw-down at billing against the Balance
@@ -1069,7 +1064,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun lineItemTypes(): Optional<List<LineItemType>> =
-            Optional.ofNullable(lineItemTypes.getNullable("lineItemTypes"))
+            lineItemTypes.getOptional("lineItemTypes")
 
         /**
          * The official name for the Balance.
@@ -1077,7 +1072,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * A description for Bill line items overage charges.
@@ -1086,7 +1081,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun overageDescription(): Optional<String> =
-            Optional.ofNullable(overageDescription.getNullable("overageDescription"))
+            overageDescription.getOptional("overageDescription")
 
         /**
          * Define a surcharge level, as a percentage of regular usage rating, applied to overages
@@ -1098,7 +1093,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun overageSurchargePercent(): Optional<Double> =
-            Optional.ofNullable(overageSurchargePercent.getNullable("overageSurchargePercent"))
+            overageSurchargePercent.getOptional("overageSurchargePercent")
 
         /**
          * Specify the Products whose consumption charges due at billing can be drawn-down against
@@ -1111,8 +1106,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productIds(): Optional<List<String>> =
-            Optional.ofNullable(productIds.getNullable("productIds"))
+        fun productIds(): Optional<List<String>> = productIds.getOptional("productIds")
 
         /**
          * The maximum amount that can be carried over past the Balance end date for draw-down at
@@ -1133,8 +1127,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun rolloverAmount(): Optional<Double> =
-            Optional.ofNullable(rolloverAmount.getNullable("rolloverAmount"))
+        fun rolloverAmount(): Optional<Double> = rolloverAmount.getOptional("rolloverAmount")
 
         /**
          * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
@@ -1147,7 +1140,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun rolloverEndDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(rolloverEndDate.getNullable("rolloverEndDate"))
+            rolloverEndDate.getOptional("rolloverEndDate")
 
         /**
          * The version number of the entity:
@@ -1160,7 +1153,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [accountId].

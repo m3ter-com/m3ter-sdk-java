@@ -33,7 +33,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
+    fun url(): Optional<String> = url.getOptional("url")
 
     /**
      * Returns the raw JSON value of [url].

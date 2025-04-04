@@ -116,7 +116,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun account(): Optional<Account> = Optional.ofNullable(account.getNullable("account"))
+    fun account(): Optional<Account> = account.getOptional("account")
 
     /**
      * CustomFields added to accountPlan entities.
@@ -124,8 +124,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountPlan(): Optional<AccountPlan> =
-        Optional.ofNullable(accountPlan.getNullable("accountPlan"))
+    fun accountPlan(): Optional<AccountPlan> = accountPlan.getOptional("accountPlan")
 
     /**
      * CustomFields added to simple Aggregation entities.
@@ -133,8 +132,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun aggregation(): Optional<Aggregation> =
-        Optional.ofNullable(aggregation.getNullable("aggregation"))
+    fun aggregation(): Optional<Aggregation> = aggregation.getOptional("aggregation")
 
     /**
      * CustomFields added to Compound Aggregation entities.
@@ -143,7 +141,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun compoundAggregation(): Optional<CompoundAggregation> =
-        Optional.ofNullable(compoundAggregation.getNullable("compoundAggregation"))
+        compoundAggregation.getOptional("compoundAggregation")
 
     /**
      * The id of the user who created this custom field.
@@ -151,7 +149,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The DateTime when the Organization was created _(in ISO-8601 format)_.
@@ -159,8 +157,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when a custom field was last modified - created, modified, or deleted - for the
@@ -169,8 +166,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The id of the user who last modified this custom field.
@@ -178,8 +174,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * CustomFields added to Meter entities.
@@ -187,7 +182,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun meter(): Optional<Meter> = Optional.ofNullable(meter.getNullable("meter"))
+    fun meter(): Optional<Meter> = meter.getOptional("meter")
 
     /**
      * CustomFields added to the Organization.
@@ -195,8 +190,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun organization(): Optional<Organization> =
-        Optional.ofNullable(organization.getNullable("organization"))
+    fun organization(): Optional<Organization> = organization.getOptional("organization")
 
     /**
      * CustomFields added to Plan entities.
@@ -204,7 +198,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun plan(): Optional<Plan> = Optional.ofNullable(plan.getNullable("plan"))
+    fun plan(): Optional<Plan> = plan.getOptional("plan")
 
     /**
      * CustomFields added to planTemplate entities.
@@ -212,8 +206,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun planTemplate(): Optional<PlanTemplate> =
-        Optional.ofNullable(planTemplate.getNullable("planTemplate"))
+    fun planTemplate(): Optional<PlanTemplate> = planTemplate.getOptional("planTemplate")
 
     /**
      * CustomFields added to Product entities.
@@ -221,7 +214,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun product(): Optional<Product> = Optional.ofNullable(product.getNullable("product"))
+    fun product(): Optional<Product> = product.getOptional("product")
 
     /**
      * Returns the raw JSON value of [id].

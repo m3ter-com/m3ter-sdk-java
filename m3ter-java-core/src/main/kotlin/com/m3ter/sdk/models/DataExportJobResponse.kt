@@ -75,8 +75,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dateCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dateCreated.getNullable("dateCreated"))
+    fun dateCreated(): Optional<OffsetDateTime> = dateCreated.getOptional("dateCreated")
 
     /**
      * The id of the data Export Schedule.
@@ -84,14 +83,13 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun scheduleId(): Optional<String> = Optional.ofNullable(scheduleId.getNullable("scheduleId"))
+    fun scheduleId(): Optional<String> = scheduleId.getOptional("scheduleId")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun sourceType(): Optional<SourceType> =
-        Optional.ofNullable(sourceType.getNullable("sourceType"))
+    fun sourceType(): Optional<SourceType> = sourceType.getOptional("sourceType")
 
     /**
      * When the data Export Job started running
@@ -99,14 +97,13 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun startedAt(): Optional<OffsetDateTime> =
-        Optional.ofNullable(startedAt.getNullable("startedAt"))
+    fun startedAt(): Optional<OffsetDateTime> = startedAt.getOptional("startedAt")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * Returns the raw JSON value of [id].

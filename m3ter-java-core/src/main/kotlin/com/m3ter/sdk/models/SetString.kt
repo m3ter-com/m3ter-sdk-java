@@ -30,7 +30,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun empty(): Optional<Boolean> = Optional.ofNullable(empty.getNullable("empty"))
+    fun empty(): Optional<Boolean> = empty.getOptional("empty")
 
     /**
      * Returns the raw JSON value of [empty].

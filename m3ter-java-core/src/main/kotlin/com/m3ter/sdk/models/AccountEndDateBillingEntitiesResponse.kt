@@ -44,8 +44,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun failedEntities(): Optional<FailedEntities> =
-        Optional.ofNullable(failedEntities.getNullable("failedEntities"))
+    fun failedEntities(): Optional<FailedEntities> = failedEntities.getOptional("failedEntities")
 
     /**
      * A message indicating the status of the operation.
@@ -53,8 +52,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun statusMessage(): Optional<String> =
-        Optional.ofNullable(statusMessage.getNullable("statusMessage"))
+    fun statusMessage(): Optional<String> = statusMessage.getOptional("statusMessage")
 
     /**
      * A dictionary with keys as identifiers of billing entities and values as lists containing
@@ -64,7 +62,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun updatedEntities(): Optional<UpdatedEntities> =
-        Optional.ofNullable(updatedEntities.getNullable("updatedEntities"))
+        updatedEntities.getOptional("updatedEntities")
 
     /**
      * Returns the raw JSON value of [failedEntities].
@@ -285,34 +283,31 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountplan(): Optional<SetString> =
-            Optional.ofNullable(accountplan.getNullable("ACCOUNTPLAN"))
+        fun accountplan(): Optional<SetString> = accountplan.getOptional("ACCOUNTPLAN")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contract(): Optional<SetString> = Optional.ofNullable(contract.getNullable("CONTRACT"))
+        fun contract(): Optional<SetString> = contract.getOptional("CONTRACT")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun counterPricings(): Optional<SetString> =
-            Optional.ofNullable(counterPricings.getNullable("COUNTER_PRICINGS"))
+        fun counterPricings(): Optional<SetString> = counterPricings.getOptional("COUNTER_PRICINGS")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun prepayment(): Optional<SetString> =
-            Optional.ofNullable(prepayment.getNullable("PREPAYMENT"))
+        fun prepayment(): Optional<SetString> = prepayment.getOptional("PREPAYMENT")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun pricings(): Optional<SetString> = Optional.ofNullable(pricings.getNullable("PRICINGS"))
+        fun pricings(): Optional<SetString> = pricings.getOptional("PRICINGS")
 
         /**
          * Returns the raw JSON value of [accountplan].
@@ -583,34 +578,31 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountplan(): Optional<SetString> =
-            Optional.ofNullable(accountplan.getNullable("ACCOUNTPLAN"))
+        fun accountplan(): Optional<SetString> = accountplan.getOptional("ACCOUNTPLAN")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contract(): Optional<SetString> = Optional.ofNullable(contract.getNullable("CONTRACT"))
+        fun contract(): Optional<SetString> = contract.getOptional("CONTRACT")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun counterPricings(): Optional<SetString> =
-            Optional.ofNullable(counterPricings.getNullable("COUNTER_PRICINGS"))
+        fun counterPricings(): Optional<SetString> = counterPricings.getOptional("COUNTER_PRICINGS")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun prepayment(): Optional<SetString> =
-            Optional.ofNullable(prepayment.getNullable("PREPAYMENT"))
+        fun prepayment(): Optional<SetString> = prepayment.getOptional("PREPAYMENT")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun pricings(): Optional<SetString> = Optional.ofNullable(pricings.getNullable("PRICINGS"))
+        fun pricings(): Optional<SetString> = pricings.getOptional("PRICINGS")
 
         /**
          * Returns the raw JSON value of [accountplan].

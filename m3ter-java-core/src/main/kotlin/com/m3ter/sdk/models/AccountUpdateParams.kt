@@ -975,7 +975,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun address(): Optional<Address> = Optional.ofNullable(address.getNullable("address"))
+        fun address(): Optional<Address> = address.getOptional("address")
 
         /**
          * Specify whether to auto-generate statements once Bills are approved or locked.
@@ -987,7 +987,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
-            Optional.ofNullable(autoGenerateStatementMode.getNullable("autoGenerateStatementMode"))
+            autoGenerateStatementMode.getOptional("autoGenerateStatementMode")
 
         /**
          * Optional setting to define a _billing cycle date_, which sets the date of the first Bill
@@ -1006,8 +1006,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billEpoch(): Optional<LocalDate> =
-            Optional.ofNullable(billEpoch.getNullable("billEpoch"))
+        fun billEpoch(): Optional<LocalDate> = billEpoch.getOptional("billEpoch")
 
         /**
          * Configuration data for the Account Supported settings:
@@ -1016,8 +1015,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun configData(): Optional<ConfigData> =
-            Optional.ofNullable(configData.getNullable("configData"))
+        fun configData(): Optional<ConfigData> = configData.getOptional("configData")
 
         /**
          * Define the order in which any Prepayment or Balance amounts on the Account are to be
@@ -1038,7 +1036,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
-            Optional.ofNullable(creditApplicationOrder.getNullable("creditApplicationOrder"))
+            creditApplicationOrder.getOptional("creditApplicationOrder")
 
         /**
          * Account level billing currency, such as USD or GBP. Optional attribute:
@@ -1055,7 +1053,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+        fun currency(): Optional<String> = currency.getOptional("currency")
 
         /**
          * User defined fields enabling you to attach custom data. The value for a custom field can
@@ -1072,8 +1070,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * Enter the number of days after the Bill generation date that you want to show on Bills as
@@ -1085,8 +1082,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun daysBeforeBillDue(): Optional<Long> =
-            Optional.ofNullable(daysBeforeBillDue.getNullable("daysBeforeBillDue"))
+        fun daysBeforeBillDue(): Optional<Long> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
         /**
          * Parent Account ID, or null if this Account does not have a parent.
@@ -1094,8 +1090,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun parentAccountId(): Optional<String> =
-            Optional.ofNullable(parentAccountId.getNullable("parentAccountId"))
+        fun parentAccountId(): Optional<String> = parentAccountId.getOptional("parentAccountId")
 
         /**
          * Purchase Order Number of the Account.
@@ -1108,7 +1103,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun purchaseOrderNumber(): Optional<String> =
-            Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
+            purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
         /**
          * The UUID of the statement definition used when Bill statements are generated for the
@@ -1128,7 +1123,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun statementDefinitionId(): Optional<String> =
-            Optional.ofNullable(statementDefinitionId.getNullable("statementDefinitionId"))
+            statementDefinitionId.getOptional("statementDefinitionId")
 
         /**
          * The version number of the entity:
@@ -1141,7 +1136,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [code].

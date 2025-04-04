@@ -189,16 +189,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun autoApproveBillsGracePeriod(): Optional<Long> =
-        Optional.ofNullable(autoApproveBillsGracePeriod.getNullable("autoApproveBillsGracePeriod"))
+        autoApproveBillsGracePeriod.getOptional("autoApproveBillsGracePeriod")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun autoApproveBillsGracePeriodUnit(): Optional<AutoApproveBillsGracePeriodUnit> =
-        Optional.ofNullable(
-            autoApproveBillsGracePeriodUnit.getNullable("autoApproveBillsGracePeriodUnit")
-        )
+        autoApproveBillsGracePeriodUnit.getOptional("autoApproveBillsGracePeriodUnit")
 
     /**
      * Specifies whether to auto-generate statements once Bills are _approved_ or _locked_. It will
@@ -213,7 +211,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun autoGenerateStatementMode(): Optional<AutoGenerateStatementMode> =
-        Optional.ofNullable(autoGenerateStatementMode.getNullable("autoGenerateStatementMode"))
+        autoGenerateStatementMode.getOptional("autoGenerateStatementMode")
 
     /**
      * Prefix to be used for sequential invoice numbers. This will be combined with the
@@ -222,7 +220,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billPrefix(): Optional<String> = Optional.ofNullable(billPrefix.getNullable("billPrefix"))
+    fun billPrefix(): Optional<String> = billPrefix.getOptional("billPrefix")
 
     /**
      * Specifies whether commitments _(prepayments)_ are billed in advance at the start of each
@@ -234,7 +232,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun commitmentFeeBillInAdvance(): Optional<Boolean> =
-        Optional.ofNullable(commitmentFeeBillInAdvance.getNullable("commitmentFeeBillInAdvance"))
+        commitmentFeeBillInAdvance.getOptional("commitmentFeeBillInAdvance")
 
     /**
      * Specifies whether to consolidate different billing frequencies onto the same bill.
@@ -244,8 +242,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun consolidateBills(): Optional<Boolean> =
-        Optional.ofNullable(consolidateBills.getNullable("consolidateBills"))
+    fun consolidateBills(): Optional<Boolean> = consolidateBills.getOptional("consolidateBills")
 
     /**
      * The id of the user who created this organization config.
@@ -253,7 +250,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The order in which any Prepayment or Balance credit amounts on Accounts are to be drawn-down
@@ -267,7 +264,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun creditApplicationOrder(): Optional<List<CreditApplicationOrder>> =
-        Optional.ofNullable(creditApplicationOrder.getNullable("creditApplicationOrder"))
+        creditApplicationOrder.getOptional("creditApplicationOrder")
 
     /**
      * The currency code for the currency used in this Organization. For example: USD, GBP, or EUR.
@@ -275,7 +272,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
      * Currency conversion rates from Bill currency to Organization currency.
@@ -287,7 +284,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun currencyConversions(): Optional<List<CurrencyConversion>> =
-        Optional.ofNullable(currencyConversions.getNullable("currencyConversions"))
+        currencyConversions.getOptional("currencyConversions")
 
     /**
      * The first bill date _(in ISO-8601 format)_ for daily billing periods.
@@ -295,7 +292,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dayEpoch(): Optional<LocalDate> = Optional.ofNullable(dayEpoch.getNullable("dayEpoch"))
+    fun dayEpoch(): Optional<LocalDate> = dayEpoch.getOptional("dayEpoch")
 
     /**
      * The number of days after the Bill generation date shown on Bills as the due date.
@@ -303,8 +300,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun daysBeforeBillDue(): Optional<Long> =
-        Optional.ofNullable(daysBeforeBillDue.getNullable("daysBeforeBillDue"))
+    fun daysBeforeBillDue(): Optional<Long> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
     /**
      * Organization level default `statementDefinitionId` to be used when there is no statement
@@ -317,9 +313,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun defaultStatementDefinitionId(): Optional<String> =
-        Optional.ofNullable(
-            defaultStatementDefinitionId.getNullable("defaultStatementDefinitionId")
-        )
+        defaultStatementDefinitionId.getOptional("defaultStatementDefinitionId")
 
     /**
      * The DateTime when the organization config was created _(in ISO-8601 format)_.
@@ -327,8 +321,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when the organization config was last modified _(in ISO-8601 format)_.
@@ -336,15 +329,14 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun externalInvoiceDate(): Optional<ExternalInvoiceDate> =
-        Optional.ofNullable(externalInvoiceDate.getNullable("externalInvoiceDate"))
+        externalInvoiceDate.getOptional("externalInvoiceDate")
 
     /**
      * The id of the user who last modified this organization config.
@@ -352,8 +344,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * Specifies whether minimum spend amounts are billed in advance at the start of each billing
@@ -365,7 +356,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun minimumSpendBillInAdvance(): Optional<Boolean> =
-        Optional.ofNullable(minimumSpendBillInAdvance.getNullable("minimumSpendBillInAdvance"))
+        minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
     /**
      * The first bill date _(in ISO-8601 format)_ for monthly billing periods.
@@ -373,8 +364,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun monthEpoch(): Optional<LocalDate> =
-        Optional.ofNullable(monthEpoch.getNullable("monthEpoch"))
+    fun monthEpoch(): Optional<LocalDate> = monthEpoch.getOptional("monthEpoch")
 
     /**
      * Specifies the required interval for updating bills.
@@ -388,7 +378,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun scheduledBillInterval(): Optional<Double> =
-        Optional.ofNullable(scheduledBillInterval.getNullable("scheduledBillInterval"))
+        scheduledBillInterval.getOptional("scheduledBillInterval")
 
     /**
      * The starting number to be used for sequential invoice numbers. This will be combined with the
@@ -398,7 +388,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun sequenceStartNumber(): Optional<Long> =
-        Optional.ofNullable(sequenceStartNumber.getNullable("sequenceStartNumber"))
+        sequenceStartNumber.getOptional("sequenceStartNumber")
 
     /**
      * Specifies whether the standing charge is billed in advance at the start of each billing
@@ -410,7 +400,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun standingChargeBillInAdvance(): Optional<Boolean> =
-        Optional.ofNullable(standingChargeBillInAdvance.getNullable("standingChargeBillInAdvance"))
+        standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
     /**
      * Specifies whether to supress generating bills that have no line items.
@@ -421,7 +411,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun suppressedEmptyBills(): Optional<Boolean> =
-        Optional.ofNullable(suppressedEmptyBills.getNullable("suppressedEmptyBills"))
+        suppressedEmptyBills.getOptional("suppressedEmptyBills")
 
     /**
      * The timezone for the Organization.
@@ -429,7 +419,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun timezone(): Optional<String> = Optional.ofNullable(timezone.getNullable("timezone"))
+    fun timezone(): Optional<String> = timezone.getOptional("timezone")
 
     /**
      * The first bill date _(in ISO-8601 format)_ for weekly billing periods.
@@ -437,7 +427,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun weekEpoch(): Optional<LocalDate> = Optional.ofNullable(weekEpoch.getNullable("weekEpoch"))
+    fun weekEpoch(): Optional<LocalDate> = weekEpoch.getOptional("weekEpoch")
 
     /**
      * The first bill date _(in ISO-8601 format)_ for yearly billing periods.
@@ -445,7 +435,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun yearEpoch(): Optional<LocalDate> = Optional.ofNullable(yearEpoch.getNullable("yearEpoch"))
+    fun yearEpoch(): Optional<LocalDate> = yearEpoch.getOptional("yearEpoch")
 
     /**
      * Returns the raw JSON value of [id].

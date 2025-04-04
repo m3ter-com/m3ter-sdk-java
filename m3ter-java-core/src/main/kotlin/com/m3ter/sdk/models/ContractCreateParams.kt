@@ -626,7 +626,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * User defined fields enabling you to attach custom data. The value for a custom field can
@@ -643,8 +643,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * The description of the Contract, which provides context and information.
@@ -652,8 +651,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The Purchase Order Number associated with the Contract.
@@ -662,7 +660,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun purchaseOrderNumber(): Optional<String> =
-            Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
+            purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
         /**
          * The version number of the entity:
@@ -675,7 +673,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [accountId].

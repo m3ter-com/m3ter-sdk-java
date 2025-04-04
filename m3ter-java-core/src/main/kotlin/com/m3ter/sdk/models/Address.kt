@@ -63,53 +63,49 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun addressLine1(): Optional<String> =
-        Optional.ofNullable(addressLine1.getNullable("addressLine1"))
+    fun addressLine1(): Optional<String> = addressLine1.getOptional("addressLine1")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun addressLine2(): Optional<String> =
-        Optional.ofNullable(addressLine2.getNullable("addressLine2"))
+    fun addressLine2(): Optional<String> = addressLine2.getOptional("addressLine2")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun addressLine3(): Optional<String> =
-        Optional.ofNullable(addressLine3.getNullable("addressLine3"))
+    fun addressLine3(): Optional<String> = addressLine3.getOptional("addressLine3")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun addressLine4(): Optional<String> =
-        Optional.ofNullable(addressLine4.getNullable("addressLine4"))
+    fun addressLine4(): Optional<String> = addressLine4.getOptional("addressLine4")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun country(): Optional<String> = Optional.ofNullable(country.getNullable("country"))
+    fun country(): Optional<String> = country.getOptional("country")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun locality(): Optional<String> = Optional.ofNullable(locality.getNullable("locality"))
+    fun locality(): Optional<String> = locality.getOptional("locality")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun postCode(): Optional<String> = Optional.ofNullable(postCode.getNullable("postCode"))
+    fun postCode(): Optional<String> = postCode.getOptional("postCode")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun region(): Optional<String> = Optional.ofNullable(region.getNullable("region"))
+    fun region(): Optional<String> = region.getOptional("region")
 
     /**
      * Returns the raw JSON value of [addressLine1].

@@ -104,7 +104,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): Optional<String> = id.getOptional("id")
 
     /**
      * The user's contact telephone number.
@@ -112,8 +112,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun contactNumber(): Optional<String> =
-        Optional.ofNullable(contactNumber.getNullable("contactNumber"))
+    fun contactNumber(): Optional<String> = contactNumber.getOptional("contactNumber")
 
     /**
      * The user who created this user.
@@ -121,7 +120,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the user was created.
@@ -129,8 +128,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
@@ -139,8 +137,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtEndAccess(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtEndAccess.getNullable("dtEndAccess"))
+    fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the user was last modified.
@@ -148,8 +145,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The email address for this user.
@@ -157,7 +153,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun email(): Optional<String> = Optional.ofNullable(email.getNullable("email"))
+    fun email(): Optional<String> = email.getOptional("email")
 
     /**
      * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter terms
@@ -167,9 +163,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun firstAcceptedTermsAndConditions(): Optional<OffsetDateTime> =
-        Optional.ofNullable(
-            firstAcceptedTermsAndConditions.getNullable("firstAcceptedTermsAndConditions")
-        )
+        firstAcceptedTermsAndConditions.getOptional("firstAcceptedTermsAndConditions")
 
     /**
      * The first name of the user.
@@ -177,7 +171,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun firstName(): Optional<String> = Optional.ofNullable(firstName.getNullable("firstName"))
+    fun firstName(): Optional<String> = firstName.getOptional("firstName")
 
     /**
      * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms and
@@ -187,9 +181,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun lastAcceptedTermsAndConditions(): Optional<OffsetDateTime> =
-        Optional.ofNullable(
-            lastAcceptedTermsAndConditions.getNullable("lastAcceptedTermsAndConditions")
-        )
+        lastAcceptedTermsAndConditions.getOptional("lastAcceptedTermsAndConditions")
 
     /**
      * The unique identifier (UUID) of the user who last modified this user record.
@@ -197,8 +189,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The surname of the user.
@@ -206,7 +197,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastName(): Optional<String> = Optional.ofNullable(lastName.getNullable("lastName"))
+    fun lastName(): Optional<String> = lastName.getOptional("lastName")
 
     /**
      * An array listing the Organizations where this user has access.
@@ -214,8 +205,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun organizations(): Optional<List<String>> =
-        Optional.ofNullable(organizations.getNullable("organizations"))
+    fun organizations(): Optional<List<String>> = organizations.getOptional("organizations")
 
     /**
      * An array of permission statements for the user. Each permission statement defines a specific
@@ -225,7 +215,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun permissionPolicy(): Optional<List<PermissionStatementResponse>> =
-        Optional.ofNullable(permissionPolicy.getNullable("permissionPolicy"))
+        permissionPolicy.getOptional("permissionPolicy")
 
     /**
      * Indicates whether this is a m3ter Support user.
@@ -233,8 +223,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun supportUser(): Optional<Boolean> =
-        Optional.ofNullable(supportUser.getNullable("supportUser"))
+    fun supportUser(): Optional<Boolean> = supportUser.getOptional("supportUser")
 
     /**
      * The version number:
@@ -245,7 +234,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+    fun version(): Optional<Long> = version.getOptional("version")
 
     /**
      * Returns the raw JSON value of [id].

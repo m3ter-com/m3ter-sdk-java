@@ -156,7 +156,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
+    fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
      * The financial value that the Balance holds.
@@ -164,7 +164,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun amount(): Optional<Double> = Optional.ofNullable(amount.getNullable("amount"))
+    fun amount(): Optional<Double> = amount.getOptional("amount")
 
     /**
      * A description for the bill line items for charges drawn-down against the Balance.
@@ -173,7 +173,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun balanceDrawDownDescription(): Optional<String> =
-        Optional.ofNullable(balanceDrawDownDescription.getNullable("balanceDrawDownDescription"))
+        balanceDrawDownDescription.getOptional("balanceDrawDownDescription")
 
     /**
      * A unique short code assigned to the Balance.
@@ -181,16 +181,14 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun consumptionsAccountingProductId(): Optional<String> =
-        Optional.ofNullable(
-            consumptionsAccountingProductId.getNullable("consumptionsAccountingProductId")
-        )
+        consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
 
     /**
      * The unique identifier (UUID) for the user who created the Balance.
@@ -198,7 +196,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The currency code used for the Balance amount. For example: USD, GBP or EUR.
@@ -206,7 +204,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
      * A description of the Balance.
@@ -214,8 +212,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the Balance was first created.
@@ -223,8 +220,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the Balance was last modified.
@@ -232,8 +228,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The date _(in ISO 8601 format)_ after which the Balance will no longer be active.
@@ -241,14 +236,14 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun endDate(): Optional<OffsetDateTime> = Optional.ofNullable(endDate.getNullable("endDate"))
+    fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun feesAccountingProductId(): Optional<String> =
-        Optional.ofNullable(feesAccountingProductId.getNullable("feesAccountingProductId"))
+        feesAccountingProductId.getOptional("feesAccountingProductId")
 
     /**
      * The unique identifier (UUID) for the user who last modified the Balance.
@@ -256,8 +251,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * A list of line item charge types that can draw-down against the Balance amount at billing.
@@ -265,8 +259,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lineItemTypes(): Optional<List<LineItemType>> =
-        Optional.ofNullable(lineItemTypes.getNullable("lineItemTypes"))
+    fun lineItemTypes(): Optional<List<LineItemType>> = lineItemTypes.getOptional("lineItemTypes")
 
     /**
      * The official name of the Balance.
@@ -274,7 +267,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * A description for overage charges.
@@ -283,7 +276,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun overageDescription(): Optional<String> =
-        Optional.ofNullable(overageDescription.getNullable("overageDescription"))
+        overageDescription.getOptional("overageDescription")
 
     /**
      * The percentage surcharge applied to overage charges _(usage above the Balance)_.
@@ -292,7 +285,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun overageSurchargePercent(): Optional<Double> =
-        Optional.ofNullable(overageSurchargePercent.getNullable("overageSurchargePercent"))
+        overageSurchargePercent.getOptional("overageSurchargePercent")
 
     /**
      * A list of Product IDs whose consumption charges due at billing can be drawn-down against the
@@ -301,8 +294,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun productIds(): Optional<List<String>> =
-        Optional.ofNullable(productIds.getNullable("productIds"))
+    fun productIds(): Optional<List<String>> = productIds.getOptional("productIds")
 
     /**
      * The maximum amount that can be carried over past the Balance end date and draw-down against
@@ -312,8 +304,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun rolloverAmount(): Optional<Double> =
-        Optional.ofNullable(rolloverAmount.getNullable("rolloverAmount"))
+    fun rolloverAmount(): Optional<Double> = rolloverAmount.getOptional("rolloverAmount")
 
     /**
      * The end date _(in ISO 8601 format)_ for the rollover grace period, which is the period that
@@ -323,8 +314,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun rolloverEndDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(rolloverEndDate.getNullable("rolloverEndDate"))
+    fun rolloverEndDate(): Optional<OffsetDateTime> = rolloverEndDate.getOptional("rolloverEndDate")
 
     /**
      * The date _(in ISO 8601 format)_ when the Balance becomes active.
@@ -332,8 +322,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun startDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(startDate.getNullable("startDate"))
+    fun startDate(): Optional<OffsetDateTime> = startDate.getOptional("startDate")
 
     /**
      * Returns the raw JSON value of [id].

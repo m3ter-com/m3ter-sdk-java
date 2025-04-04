@@ -118,7 +118,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun amount(): Optional<Double> = Optional.ofNullable(amount.getNullable("amount"))
+    fun amount(): Optional<Double> = amount.getOptional("amount")
 
     /**
      * The date _(in ISO 8601 format)_ when the balance transaction was applied, i.e., when the
@@ -127,8 +127,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun appliedDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(appliedDate.getNullable("appliedDate"))
+    fun appliedDate(): Optional<OffsetDateTime> = appliedDate.getOptional("appliedDate")
 
     /**
      * The unique identifier (UUID) for the user who created the balance transaction.
@@ -136,7 +135,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The currency code such as USD, GBP, EUR of the payment, if it differs from the balance
@@ -145,8 +144,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun currencyPaid(): Optional<String> =
-        Optional.ofNullable(currencyPaid.getNullable("currencyPaid"))
+    fun currencyPaid(): Optional<String> = currencyPaid.getOptional("currencyPaid")
 
     /**
      * A brief description explaining the purpose or context of the transaction.
@@ -154,8 +152,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the balance transaction was first created.
@@ -163,8 +160,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the balance transaction was last modified.
@@ -172,8 +168,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The unique identifier (UUID) for the entity associated with the Transaction, as specified by
@@ -182,7 +177,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun entityId(): Optional<String> = Optional.ofNullable(entityId.getNullable("entityId"))
+    fun entityId(): Optional<String> = entityId.getOptional("entityId")
 
     /**
      * The type of entity associated with the Transaction - identifies who or what was responsible
@@ -192,8 +187,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun entityType(): Optional<EntityType> =
-        Optional.ofNullable(entityType.getNullable("entityType"))
+    fun entityType(): Optional<EntityType> = entityType.getOptional("entityType")
 
     /**
      * The unique identifier (UUID) for the user who last modified the balance transaction.
@@ -201,8 +195,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The actual payment amount if the payment currency differs from the Balance currency.
@@ -210,7 +203,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun paid(): Optional<Double> = Optional.ofNullable(paid.getNullable("paid"))
+    fun paid(): Optional<Double> = paid.getOptional("paid")
 
     /**
      * The date _(in ISO 8601 format)_ when the transaction was recorded in the system.
@@ -218,8 +211,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun transactionDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(transactionDate.getNullable("transactionDate"))
+    fun transactionDate(): Optional<OffsetDateTime> = transactionDate.getOptional("transactionDate")
 
     /**
      * The unique identifier (UUID) for the Transaction type. This is obtained from the list of
@@ -228,8 +220,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun transactionTypeId(): Optional<String> =
-        Optional.ofNullable(transactionTypeId.getNullable("transactionTypeId"))
+    fun transactionTypeId(): Optional<String> = transactionTypeId.getOptional("transactionTypeId")
 
     /**
      * Returns the raw JSON value of [id].

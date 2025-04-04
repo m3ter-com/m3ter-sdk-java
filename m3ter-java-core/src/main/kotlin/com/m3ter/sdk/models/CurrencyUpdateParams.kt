@@ -479,7 +479,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun archived(): Optional<Boolean> = Optional.ofNullable(archived.getNullable("archived"))
+        fun archived(): Optional<Boolean> = archived.getOptional("archived")
 
         /**
          * The short code for the entity.
@@ -487,7 +487,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * Indicates the maximum number of decimal places to use for this Currency.
@@ -495,15 +495,13 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun maxDecimalPlaces(): Optional<Long> =
-            Optional.ofNullable(maxDecimalPlaces.getNullable("maxDecimalPlaces"))
+        fun maxDecimalPlaces(): Optional<Long> = maxDecimalPlaces.getOptional("maxDecimalPlaces")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun roundingMode(): Optional<RoundingMode> =
-            Optional.ofNullable(roundingMode.getNullable("roundingMode"))
+        fun roundingMode(): Optional<RoundingMode> = roundingMode.getOptional("roundingMode")
 
         /**
          * The version number of the entity:
@@ -516,7 +514,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [name].

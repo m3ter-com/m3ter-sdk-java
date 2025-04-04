@@ -190,40 +190,39 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountCode(): Optional<String> =
-        Optional.ofNullable(accountCode.getNullable("accountCode"))
+    fun accountCode(): Optional<String> = accountCode.getOptional("accountCode")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
+    fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billDate(): Optional<LocalDate> = Optional.ofNullable(billDate.getNullable("billDate"))
+    fun billDate(): Optional<LocalDate> = billDate.getOptional("billDate")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun billFrequencyInterval(): Optional<Long> =
-        Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
+        billFrequencyInterval.getOptional("billFrequencyInterval")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun billingFrequency(): Optional<BillingFrequency> =
-        Optional.ofNullable(billingFrequency.getNullable("billingFrequency"))
+        billingFrequency.getOptional("billingFrequency")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billJobId(): Optional<String> = Optional.ofNullable(billJobId.getNullable("billJobId"))
+    fun billJobId(): Optional<String> = billJobId.getOptional("billJobId")
 
     /**
      * The sum total for the Bill.
@@ -231,7 +230,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billTotal(): Optional<Double> = Optional.ofNullable(billTotal.getNullable("billTotal"))
+    fun billTotal(): Optional<Double> = billTotal.getOptional("billTotal")
 
     /**
      * The unique identifier (UUID) for the user who created the Bill.
@@ -239,14 +238,13 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(createdDate.getNullable("createdDate"))
+    fun createdDate(): Optional<OffsetDateTime> = createdDate.getOptional("createdDate")
 
     /**
      * Flag to indicate that the statement in CSV format has been generated for the Bill.
@@ -257,20 +255,20 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun csvStatementGenerated(): Optional<Boolean> =
-        Optional.ofNullable(csvStatementGenerated.getNullable("csvStatementGenerated"))
+        csvStatementGenerated.getOptional("csvStatementGenerated")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun currency(): Optional<String> = Optional.ofNullable(currency.getNullable("currency"))
+    fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun currencyConversions(): Optional<List<CurrencyConversion>> =
-        Optional.ofNullable(currencyConversions.getNullable("currencyConversions"))
+        currencyConversions.getOptional("currencyConversions")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the Bill was first created.
@@ -278,8 +276,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the Bill was last modified.
@@ -287,27 +284,25 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("dueDate"))
+    fun dueDate(): Optional<LocalDate> = dueDate.getOptional("dueDate")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun endDate(): Optional<LocalDate> = Optional.ofNullable(endDate.getNullable("endDate"))
+    fun endDate(): Optional<LocalDate> = endDate.getOptional("endDate")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun endDateTimeUtc(): Optional<OffsetDateTime> =
-        Optional.ofNullable(endDateTimeUtc.getNullable("endDateTimeUTC"))
+    fun endDateTimeUtc(): Optional<OffsetDateTime> = endDateTimeUtc.getOptional("endDateTimeUTC")
 
     /**
      * For accounting purposes, the date set at Organization level to use for external invoicing
@@ -327,7 +322,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun externalInvoiceDate(): Optional<LocalDate> =
-        Optional.ofNullable(externalInvoiceDate.getNullable("externalInvoiceDate"))
+        externalInvoiceDate.getOptional("externalInvoiceDate")
 
     /**
      * The reference ID to use for external invoice.
@@ -336,7 +331,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun externalInvoiceReference(): Optional<String> =
-        Optional.ofNullable(externalInvoiceReference.getNullable("externalInvoiceReference"))
+        externalInvoiceReference.getOptional("externalInvoiceReference")
 
     /**
      * Flag to indicate that the statement in JSON format has been generated for the Bill.
@@ -347,14 +342,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun jsonStatementGenerated(): Optional<Boolean> =
-        Optional.ofNullable(jsonStatementGenerated.getNullable("jsonStatementGenerated"))
+        jsonStatementGenerated.getOptional("jsonStatementGenerated")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun lastCalculatedDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(lastCalculatedDate.getNullable("lastCalculatedDate"))
+        lastCalculatedDate.getOptional("lastCalculatedDate")
 
     /**
      * The unique identifier (UUID) for the user who last modified this Bill.
@@ -362,8 +357,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * An array of the Bill line items.
@@ -371,14 +365,13 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lineItems(): Optional<List<LineItem>> =
-        Optional.ofNullable(lineItems.getNullable("lineItems"))
+    fun lineItems(): Optional<List<LineItem>> = lineItems.getOptional("lineItems")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun locked(): Optional<Boolean> = Optional.ofNullable(locked.getNullable("locked"))
+    fun locked(): Optional<Boolean> = locked.getOptional("locked")
 
     /**
      * Purchase Order number linked to the Account the Bill is for.
@@ -387,7 +380,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun purchaseOrderNumber(): Optional<String> =
-        Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
+        purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
     /**
      * The sequential invoice number of the Bill.
@@ -400,32 +393,32 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun sequentialInvoiceNumber(): Optional<String> =
-        Optional.ofNullable(sequentialInvoiceNumber.getNullable("sequentialInvoiceNumber"))
+        sequentialInvoiceNumber.getOptional("sequentialInvoiceNumber")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun startDate(): Optional<LocalDate> = Optional.ofNullable(startDate.getNullable("startDate"))
+    fun startDate(): Optional<LocalDate> = startDate.getOptional("startDate")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun startDateTimeUtc(): Optional<OffsetDateTime> =
-        Optional.ofNullable(startDateTimeUtc.getNullable("startDateTimeUTC"))
+        startDateTimeUtc.getOptional("startDateTimeUTC")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun timezone(): Optional<String> = Optional.ofNullable(timezone.getNullable("timezone"))
+    fun timezone(): Optional<String> = timezone.getOptional("timezone")
 
     /**
      * Returns the raw JSON value of [id].
@@ -1836,7 +1829,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+        fun id(): Optional<String> = id.getOptional("id")
 
         /**
          * The Aggregation ID used for the line item.
@@ -1844,20 +1837,19 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun aggregationId(): Optional<String> =
-            Optional.ofNullable(aggregationId.getNullable("aggregationId"))
+        fun aggregationId(): Optional<String> = aggregationId.getOptional("aggregationId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun balanceId(): Optional<String> = Optional.ofNullable(balanceId.getNullable("balanceId"))
+        fun balanceId(): Optional<String> = balanceId.getOptional("balanceId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun chargeId(): Optional<String> = Optional.ofNullable(chargeId.getNullable("chargeId"))
+        fun chargeId(): Optional<String> = chargeId.getOptional("chargeId")
 
         /**
          * If part of a Parent/Child account billing hierarchy, this is the code for the child
@@ -1866,8 +1858,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun childAccountCode(): Optional<String> =
-            Optional.ofNullable(childAccountCode.getNullable("childAccountCode"))
+        fun childAccountCode(): Optional<String> = childAccountCode.getOptional("childAccountCode")
 
         /**
          * If part of a Parent/Child account billing hierarchy, this is the child Account UUID.
@@ -1875,8 +1866,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun childAccountId(): Optional<String> =
-            Optional.ofNullable(childAccountId.getNullable("childAccountId"))
+        fun childAccountId(): Optional<String> = childAccountId.getOptional("childAccountId")
 
         /**
          * If Commitments _(prepayments)_ are used in the line item, this shows the Commitment UUID.
@@ -1884,8 +1874,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun commitmentId(): Optional<String> =
-            Optional.ofNullable(commitmentId.getNullable("commitmentId"))
+        fun commitmentId(): Optional<String> = commitmentId.getOptional("commitmentId")
 
         /**
          * The Compound Aggregation ID for the line item if a Compound Aggregation has been used.
@@ -1894,7 +1883,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun compoundAggregationId(): Optional<String> =
-            Optional.ofNullable(compoundAggregationId.getNullable("compoundAggregationId"))
+            compoundAggregationId.getOptional("compoundAggregationId")
 
         /**
          * The UUID for the Contract used in the line item.
@@ -1902,27 +1891,25 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun contractId(): Optional<String> =
-            Optional.ofNullable(contractId.getNullable("contractId"))
+        fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun counterId(): Optional<String> = Optional.ofNullable(counterId.getNullable("counterId"))
+        fun counterId(): Optional<String> = counterId.getOptional("counterId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun creditTypeId(): Optional<String> =
-            Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
+        fun creditTypeId(): Optional<String> = creditTypeId.getOptional("creditTypeId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun group(): Optional<Group> = Optional.ofNullable(group.getNullable("group"))
+        fun group(): Optional<Group> = group.getOptional("group")
 
         /**
          * The UUID of the Meter used in the line item.
@@ -1930,7 +1917,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun meterId(): Optional<String> = Optional.ofNullable(meterId.getNullable("meterId"))
+        fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
         /**
          * The UUID of the PlanGroup, provided the line item used a PlanGroup.
@@ -1938,8 +1925,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planGroupId(): Optional<String> =
-            Optional.ofNullable(planGroupId.getNullable("planGroupId"))
+        fun planGroupId(): Optional<String> = planGroupId.getOptional("planGroupId")
 
         /**
          * The ID of the Plan used for the line item.
@@ -1947,7 +1933,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
+        fun planId(): Optional<String> = planId.getOptional("planId")
 
         /**
          * The UUID of the Pricing used on the line item.
@@ -1955,14 +1941,13 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun pricingId(): Optional<String> = Optional.ofNullable(pricingId.getNullable("pricingId"))
+        fun pricingId(): Optional<String> = pricingId.getOptional("pricingId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productCode(): Optional<String> =
-            Optional.ofNullable(productCode.getNullable("productCode"))
+        fun productCode(): Optional<String> = productCode.getOptional("productCode")
 
         /**
          * The UUID of the Product for the line item.
@@ -1970,7 +1955,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+        fun productId(): Optional<String> = productId.getOptional("productId")
 
         /**
          * The name of the Product for the line item.
@@ -1978,28 +1963,26 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productName(): Optional<String> =
-            Optional.ofNullable(productName.getNullable("productName"))
+        fun productName(): Optional<String> = productName.getOptional("productName")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun reasonId(): Optional<String> = Optional.ofNullable(reasonId.getNullable("reasonId"))
+        fun reasonId(): Optional<String> = reasonId.getOptional("reasonId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun referencedBillId(): Optional<String> =
-            Optional.ofNullable(referencedBillId.getNullable("referencedBillId"))
+        fun referencedBillId(): Optional<String> = referencedBillId.getOptional("referencedBillId")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun referencedLineItemId(): Optional<String> =
-            Optional.ofNullable(referencedLineItemId.getNullable("referencedLineItemId"))
+            referencedLineItemId.getOptional("referencedLineItemId")
 
         /**
          * Applies only when segmented Aggregations have been used. The Segment to which the usage
@@ -2008,7 +1991,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun segment(): Optional<Segment> = Optional.ofNullable(segment.getNullable("segment"))
+        fun segment(): Optional<Segment> = segment.getOptional("segment")
 
         /**
          * The number used for sequential invoices.
@@ -2016,8 +1999,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun sequenceNumber(): Optional<Long> =
-            Optional.ofNullable(sequenceNumber.getNullable("sequenceNumber"))
+        fun sequenceNumber(): Optional<Long> = sequenceNumber.getOptional("sequenceNumber")
 
         /**
          * The ending date _(exclusive)_ for the service period _(in ISO 8601 format)_.
@@ -2026,7 +2008,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun servicePeriodEndDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(servicePeriodEndDate.getNullable("servicePeriodEndDate"))
+            servicePeriodEndDate.getOptional("servicePeriodEndDate")
 
         /**
          * The starting date _(inclusive)_ for the service period _(in ISO 8601 format)_.
@@ -2035,7 +2017,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun servicePeriodStartDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(servicePeriodStartDate.getNullable("servicePeriodStartDate"))
+            servicePeriodStartDate.getOptional("servicePeriodStartDate")
 
         /**
          * Shows the usage by pricing band for tiered pricing structures.
@@ -2044,7 +2026,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun usagePerPricingBand(): Optional<List<UsagePerPricingBand>> =
-            Optional.ofNullable(usagePerPricingBand.getNullable("usagePerPricingBand"))
+            usagePerPricingBand.getOptional("usagePerPricingBand")
 
         /**
          * Returns the raw JSON value of [averageUnitPrice].
@@ -3690,8 +3672,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun bandQuantity(): Optional<Double> =
-                Optional.ofNullable(bandQuantity.getNullable("bandQuantity"))
+            fun bandQuantity(): Optional<Double> = bandQuantity.getOptional("bandQuantity")
 
             /**
              * Subtotal amount for the band.
@@ -3699,8 +3680,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun bandSubtotal(): Optional<Double> =
-                Optional.ofNullable(bandSubtotal.getNullable("bandSubtotal"))
+            fun bandSubtotal(): Optional<Double> = bandSubtotal.getOptional("bandSubtotal")
 
             /**
              * The number of units used within the band.
@@ -3708,8 +3688,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun bandUnits(): Optional<Double> =
-                Optional.ofNullable(bandUnits.getNullable("bandUnits"))
+            fun bandUnits(): Optional<Double> = bandUnits.getOptional("bandUnits")
 
             /**
              * The UUID of the credit type.
@@ -3717,8 +3696,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun creditTypeId(): Optional<String> =
-                Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
+            fun creditTypeId(): Optional<String> = creditTypeId.getOptional("creditTypeId")
 
             /**
              * Fixed price is a charge entered for certain pricing types such as Stairstep, Custom
@@ -3727,8 +3705,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun fixedPrice(): Optional<Double> =
-                Optional.ofNullable(fixedPrice.getNullable("fixedPrice"))
+            fun fixedPrice(): Optional<Double> = fixedPrice.getOptional("fixedPrice")
 
             /**
              * The lower limit _(start)_ of the pricing band.
@@ -3736,8 +3713,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun lowerLimit(): Optional<Double> =
-                Optional.ofNullable(lowerLimit.getNullable("lowerLimit"))
+            fun lowerLimit(): Optional<Double> = lowerLimit.getOptional("lowerLimit")
 
             /**
              * The UUID for the pricing band.
@@ -3745,8 +3721,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun pricingBandId(): Optional<String> =
-                Optional.ofNullable(pricingBandId.getNullable("pricingBandId"))
+            fun pricingBandId(): Optional<String> = pricingBandId.getOptional("pricingBandId")
 
             /**
              * The price per unit in the band.
@@ -3754,8 +3729,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun unitPrice(): Optional<Double> =
-                Optional.ofNullable(unitPrice.getNullable("unitPrice"))
+            fun unitPrice(): Optional<Double> = unitPrice.getOptional("unitPrice")
 
             /**
              * The subtotal of the unit usage.
@@ -3763,8 +3737,7 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun unitSubtotal(): Optional<Double> =
-                Optional.ofNullable(unitSubtotal.getNullable("unitSubtotal"))
+            fun unitSubtotal(): Optional<Double> = unitSubtotal.getOptional("unitSubtotal")
 
             /**
              * Returns the raw JSON value of [bandQuantity].

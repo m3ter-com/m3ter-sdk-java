@@ -71,7 +71,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun id(): Optional<String> = Optional.ofNullable(id.getNullable("id"))
+    fun id(): Optional<String> = id.getOptional("id")
 
     /**
      * **OBSOLETE - this is deprecated and no longer used.**
@@ -79,8 +79,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun creditTypeId(): Optional<String> =
-        Optional.ofNullable(creditTypeId.getNullable("creditTypeId"))
+    fun creditTypeId(): Optional<String> = creditTypeId.getOptional("creditTypeId")
 
     /**
      * Returns the raw JSON value of [fixedPrice].
