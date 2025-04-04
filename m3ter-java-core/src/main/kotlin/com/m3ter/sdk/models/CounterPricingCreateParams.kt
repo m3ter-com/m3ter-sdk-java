@@ -889,7 +889,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun accountingProductId(): Optional<String> =
-            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+            accountingProductId.getOptional("accountingProductId")
 
         /**
          * Unique short code for the Pricing.
@@ -897,7 +897,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * Controls whether or not charge rates under a set of pricing bands configured for a
@@ -913,8 +913,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun cumulative(): Optional<Boolean> =
-            Optional.ofNullable(cumulative.getNullable("cumulative"))
+        fun cumulative(): Optional<Boolean> = cumulative.getOptional("cumulative")
 
         /**
          * Displayed on Bill line items.
@@ -922,8 +921,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun description(): Optional<String> =
-            Optional.ofNullable(description.getNullable("description"))
+        fun description(): Optional<String> = description.getOptional("description")
 
         /**
          * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
@@ -934,8 +932,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun endDate(): Optional<OffsetDateTime> =
-            Optional.ofNullable(endDate.getNullable("endDate"))
+        fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
         /**
          * UUID of the Plan the Pricing is created for.
@@ -943,7 +940,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
+        fun planId(): Optional<String> = planId.getOptional("planId")
 
         /**
          * UUID of the Plan Template the Pricing is created for.
@@ -951,8 +948,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun planTemplateId(): Optional<String> =
-            Optional.ofNullable(planTemplateId.getNullable("planTemplateId"))
+        fun planTemplateId(): Optional<String> = planTemplateId.getOptional("planTemplateId")
 
         /**
          * The default value is **TRUE**.
@@ -967,7 +963,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun proRateAdjustmentCredit(): Optional<Boolean> =
-            Optional.ofNullable(proRateAdjustmentCredit.getNullable("proRateAdjustmentCredit"))
+            proRateAdjustmentCredit.getOptional("proRateAdjustmentCredit")
 
         /**
          * The default value is **TRUE**.
@@ -982,7 +978,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun proRateAdjustmentDebit(): Optional<Boolean> =
-            Optional.ofNullable(proRateAdjustmentDebit.getNullable("proRateAdjustmentDebit"))
+            proRateAdjustmentDebit.getOptional("proRateAdjustmentDebit")
 
         /**
          * The default value is **TRUE**.
@@ -997,7 +993,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun proRateRunningTotal(): Optional<Boolean> =
-            Optional.ofNullable(proRateRunningTotal.getNullable("proRateRunningTotal"))
+            proRateRunningTotal.getOptional("proRateRunningTotal")
 
         /**
          * The default value is **TRUE**.
@@ -1010,7 +1006,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun runningTotalBillInAdvance(): Optional<Boolean> =
-            Optional.ofNullable(runningTotalBillInAdvance.getNullable("runningTotalBillInAdvance"))
+            runningTotalBillInAdvance.getOptional("runningTotalBillInAdvance")
 
         /**
          * The version number of the entity:
@@ -1023,7 +1019,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [counterId].

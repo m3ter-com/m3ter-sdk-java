@@ -161,8 +161,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountIds(): Optional<List<String>> =
-        Optional.ofNullable(accountIds.getNullable("accountIds"))
+    fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
     /**
      * The specific billing date _(in ISO 8601 format)_, determining when the Bill was generated.
@@ -172,7 +171,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billDate(): Optional<LocalDate> = Optional.ofNullable(billDate.getNullable("billDate"))
+    fun billDate(): Optional<LocalDate> = billDate.getOptional("billDate")
 
     /**
      * How often Bills are issued - used in conjunction with `billingFrequency`.
@@ -184,7 +183,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun billFrequencyInterval(): Optional<Long> =
-        Optional.ofNullable(billFrequencyInterval.getNullable("billFrequencyInterval"))
+        billFrequencyInterval.getOptional("billFrequencyInterval")
 
     /**
      * An array of Bill IDs related to the BillJob, providing references to the specific Bills
@@ -193,7 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billIds(): Optional<List<String>> = Optional.ofNullable(billIds.getNullable("billIds"))
+    fun billIds(): Optional<List<String>> = billIds.getOptional("billIds")
 
     /**
      * Defines how often Bills are generated.
@@ -211,7 +210,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun billingFrequency(): Optional<BillingFrequency> =
-        Optional.ofNullable(billingFrequency.getNullable("billingFrequency"))
+        billingFrequency.getOptional("billingFrequency")
 
     /**
      * The unique identifier (UUID) for the user who created the BillJob.
@@ -219,7 +218,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * An array of currency conversion rates from Bill currency to Organization currency. For
@@ -230,7 +229,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun currencyConversions(): Optional<List<CurrencyConversion>> =
-        Optional.ofNullable(currencyConversions.getNullable("currencyConversions"))
+        currencyConversions.getOptional("currencyConversions")
 
     /**
      * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_, determining
@@ -239,7 +238,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dayEpoch(): Optional<LocalDate> = Optional.ofNullable(dayEpoch.getNullable("dayEpoch"))
+    fun dayEpoch(): Optional<LocalDate> = dayEpoch.getOptional("dayEpoch")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the BillJob was first created.
@@ -247,8 +246,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the BillJob was last modified.
@@ -256,8 +254,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The due date _(in ISO 8601 format)_ for payment of the Bill.
@@ -267,7 +264,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dueDate(): Optional<LocalDate> = Optional.ofNullable(dueDate.getNullable("dueDate"))
+    fun dueDate(): Optional<LocalDate> = dueDate.getOptional("dueDate")
 
     /**
      * For accounting purposes, the date set at Organization level to use for external invoicing
@@ -285,7 +282,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun externalInvoiceDate(): Optional<LocalDate> =
-        Optional.ofNullable(externalInvoiceDate.getNullable("externalInvoiceDate"))
+        externalInvoiceDate.getOptional("externalInvoiceDate")
 
     /**
      * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining the
@@ -297,7 +294,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun lastDateInBillingPeriod(): Optional<LocalDate> =
-        Optional.ofNullable(lastDateInBillingPeriod.getNullable("lastDateInBillingPeriod"))
+        lastDateInBillingPeriod.getOptional("lastDateInBillingPeriod")
 
     /**
      * The unique identifier (UUID) for the user who last modified this BillJob.
@@ -305,8 +302,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_, determining
@@ -315,8 +311,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun monthEpoch(): Optional<LocalDate> =
-        Optional.ofNullable(monthEpoch.getNullable("monthEpoch"))
+    fun monthEpoch(): Optional<LocalDate> = monthEpoch.getOptional("monthEpoch")
 
     /**
      * The number of pending actions or calculations within the BillJob.
@@ -324,7 +319,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun pending(): Optional<Long> = Optional.ofNullable(pending.getNullable("pending"))
+    fun pending(): Optional<Long> = pending.getOptional("pending")
 
     /**
      * The current status of the BillJob, indicating its progress or completion state.
@@ -332,7 +327,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun status(): Optional<Status> = Optional.ofNullable(status.getNullable("status"))
+    fun status(): Optional<Status> = status.getOptional("status")
 
     /**
      * The currency code used for the Bill, such as USD, GBP, or EUR.
@@ -340,8 +335,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun targetCurrency(): Optional<String> =
-        Optional.ofNullable(targetCurrency.getNullable("targetCurrency"))
+    fun targetCurrency(): Optional<String> = targetCurrency.getOptional("targetCurrency")
 
     /**
      * Specifies the time zone used for the generated Bills, ensuring alignment with the local time
@@ -350,7 +344,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun timezone(): Optional<String> = Optional.ofNullable(timezone.getNullable("timezone"))
+    fun timezone(): Optional<String> = timezone.getOptional("timezone")
 
     /**
      * The total number of Bills or calculations related to the BillJob.
@@ -358,7 +352,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun total(): Optional<Long> = Optional.ofNullable(total.getNullable("total"))
+    fun total(): Optional<Long> = total.getOptional("total")
 
     /**
      * Specifies the type of BillJob.
@@ -368,7 +362,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun type(): Optional<Type> = Optional.ofNullable(type.getNullable("type"))
+    fun type(): Optional<Type> = type.getOptional("type")
 
     /**
      * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_, determining
@@ -377,7 +371,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun weekEpoch(): Optional<LocalDate> = Optional.ofNullable(weekEpoch.getNullable("weekEpoch"))
+    fun weekEpoch(): Optional<LocalDate> = weekEpoch.getOptional("weekEpoch")
 
     /**
      * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_, determining
@@ -386,7 +380,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun yearEpoch(): Optional<LocalDate> = Optional.ofNullable(yearEpoch.getNullable("yearEpoch"))
+    fun yearEpoch(): Optional<LocalDate> = yearEpoch.getOptional("yearEpoch")
 
     /**
      * Returns the raw JSON value of [id].

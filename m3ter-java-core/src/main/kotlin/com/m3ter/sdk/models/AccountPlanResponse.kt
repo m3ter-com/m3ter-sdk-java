@@ -129,7 +129,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
+    fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
      * The initial date for creating the first bill against the Account for charges due under the
@@ -140,7 +140,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billEpoch(): Optional<LocalDate> = Optional.ofNullable(billEpoch.getNullable("billEpoch"))
+    fun billEpoch(): Optional<LocalDate> = billEpoch.getOptional("billEpoch")
 
     /**
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
@@ -154,7 +154,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun childBillingMode(): Optional<ChildBillingMode> =
-        Optional.ofNullable(childBillingMode.getNullable("childBillingMode"))
+        childBillingMode.getOptional("childBillingMode")
 
     /**
      * The unique short code of the AccountPlan or AccountPlanGroup.
@@ -162,7 +162,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The unique identifier (UUID) for the Contract to which the Plan or Plan Group attached to the
@@ -171,7 +171,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun contractId(): Optional<String> = Optional.ofNullable(contractId.getNullable("contractId"))
+    fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
     /**
      * The unique identifier (UUID) for the user who created the AccountPlan or AccountPlanGroup.
@@ -179,7 +179,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
@@ -196,8 +196,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun customFields(): Optional<CustomFields> =
-        Optional.ofNullable(customFields.getNullable("customFields"))
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was first
@@ -206,8 +205,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was last
@@ -216,8 +214,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases to be
@@ -227,7 +224,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun endDate(): Optional<OffsetDateTime> = Optional.ofNullable(endDate.getNullable("endDate"))
+    fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
     /**
      * The unique identifier (UUID) for the user who last modified the AccountPlan or
@@ -236,8 +233,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The unique identifier (UUID) of the Plan Group that has been attached to the Account to
@@ -246,8 +242,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun planGroupId(): Optional<String> =
-        Optional.ofNullable(planGroupId.getNullable("planGroupId"))
+    fun planGroupId(): Optional<String> = planGroupId.getOptional("planGroupId")
 
     /**
      * The unique identifier (UUID) of the Plan that has been attached to the Account to create the
@@ -256,7 +251,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun planId(): Optional<String> = Optional.ofNullable(planId.getNullable("planId"))
+    fun planId(): Optional<String> = planId.getOptional("planId")
 
     /**
      * The unique identifier (UUID) for the Product associated with the AccountPlan.
@@ -267,7 +262,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+    fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
      * The start date _(in ISO-8601 format)_ for the when the AccountPlan or AccountPlanGroup starts
@@ -276,8 +271,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun startDate(): Optional<OffsetDateTime> =
-        Optional.ofNullable(startDate.getNullable("startDate"))
+    fun startDate(): Optional<OffsetDateTime> = startDate.getOptional("startDate")
 
     /**
      * Returns the raw JSON value of [id].

@@ -112,7 +112,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountId(): Optional<String> = Optional.ofNullable(accountId.getNullable("accountId"))
+    fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
      * The short code of the Contract.
@@ -120,7 +120,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The unique identifier (UUID) of the user who created this Contract.
@@ -128,7 +128,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
@@ -145,8 +145,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun customFields(): Optional<CustomFields> =
-        Optional.ofNullable(customFields.getNullable("customFields"))
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * The description of the Contract, which provides context and information.
@@ -154,8 +153,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun description(): Optional<String> =
-        Optional.ofNullable(description.getNullable("description"))
+    fun description(): Optional<String> = description.getOptional("description")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the Contract was created.
@@ -163,8 +161,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The date and time _(in ISO-8601 format)_ when the Contract was last modified.
@@ -172,8 +169,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
@@ -182,7 +178,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun endDate(): Optional<LocalDate> = Optional.ofNullable(endDate.getNullable("endDate"))
+    fun endDate(): Optional<LocalDate> = endDate.getOptional("endDate")
 
     /**
      * The unique identifier (UUID) of the user who last modified this Contract.
@@ -190,8 +186,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The name of the Contract.
@@ -199,7 +194,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * The Purchase Order Number associated with the Contract.
@@ -208,7 +203,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun purchaseOrderNumber(): Optional<String> =
-        Optional.ofNullable(purchaseOrderNumber.getNullable("purchaseOrderNumber"))
+        purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
     /**
      * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning the
@@ -217,7 +212,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun startDate(): Optional<LocalDate> = Optional.ofNullable(startDate.getNullable("startDate"))
+    fun startDate(): Optional<LocalDate> = startDate.getOptional("startDate")
 
     /**
      * Returns the raw JSON value of [id].

@@ -57,7 +57,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun scope(): Optional<String> = Optional.ofNullable(scope.getNullable("scope"))
+    fun scope(): Optional<String> = scope.getOptional("scope")
 
     /**
      * The token type, which in this case is "bearer".
@@ -65,7 +65,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun tokenType(): Optional<String> = Optional.ofNullable(tokenType.getNullable("token_type"))
+    fun tokenType(): Optional<String> = tokenType.getOptional("token_type")
 
     /**
      * Returns the raw JSON value of [accessToken].

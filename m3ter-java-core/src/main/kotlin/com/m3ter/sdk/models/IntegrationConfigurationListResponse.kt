@@ -142,7 +142,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun authorized(): Optional<Boolean> = Optional.ofNullable(authorized.getNullable("authorized"))
+    fun authorized(): Optional<Boolean> = authorized.getOptional("authorized")
 
     /**
      * Configuration data for the integration
@@ -150,8 +150,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun configData(): Optional<ConfigData> =
-        Optional.ofNullable(configData.getNullable("configData"))
+    fun configData(): Optional<ConfigData> = configData.getOptional("configData")
 
     /**
      * The ID of the user who created this item.
@@ -159,7 +158,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The unique identifier (UUID) of the entity the integration is for.
@@ -167,8 +166,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun destinationId(): Optional<String> =
-        Optional.ofNullable(destinationId.getNullable("destinationId"))
+    fun destinationId(): Optional<String> = destinationId.getOptional("destinationId")
 
     /**
      * The DateTime when this item was created _(in ISO-8601 format)_.
@@ -176,8 +174,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when this item was last modified _(in ISO-8601 format)_.
@@ -185,8 +182,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * A flag indicating whether the integration configuration is currently enabled or disabled.
@@ -196,7 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun enabled(): Optional<Boolean> = Optional.ofNullable(enabled.getNullable("enabled"))
+    fun enabled(): Optional<Boolean> = enabled.getOptional("enabled")
 
     /**
      * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
@@ -205,7 +201,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun entityId(): Optional<String> = Optional.ofNullable(entityId.getNullable("entityId"))
+    fun entityId(): Optional<String> = entityId.getOptional("entityId")
 
     /**
      * UUID of the credentials to use for this integration
@@ -214,7 +210,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun integrationCredentialsId(): Optional<String> =
-        Optional.ofNullable(integrationCredentialsId.getNullable("integrationCredentialsId"))
+        integrationCredentialsId.getOptional("integrationCredentialsId")
 
     /**
      * The ID of the user who last modified this item.
@@ -222,8 +218,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * The name of the configuration
@@ -231,7 +226,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * Specifies the type of trigger for the integration.
@@ -240,8 +235,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     @Deprecated("deprecated")
-    fun triggerType(): Optional<TriggerType> =
-        Optional.ofNullable(triggerType.getNullable("triggerType"))
+    fun triggerType(): Optional<TriggerType> = triggerType.getOptional("triggerType")
 
     /**
      * Returns the raw JSON value of [id].

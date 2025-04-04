@@ -424,8 +424,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun applyToChildren(): Optional<Boolean> =
-            Optional.ofNullable(applyToChildren.getNullable("applyToChildren"))
+        fun applyToChildren(): Optional<Boolean> = applyToChildren.getOptional("applyToChildren")
 
         /**
          * Returns the raw JSON value of [billingEntities].

@@ -131,7 +131,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun active(): Optional<Boolean> = Optional.ofNullable(active.getNullable("active"))
+    fun active(): Optional<Boolean> = active.getOptional("active")
 
     /**
      * A Boolean flag indicating whether the Notification is always triggered, regardless of other
@@ -146,8 +146,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun alwaysFireEvent(): Optional<Boolean> =
-        Optional.ofNullable(alwaysFireEvent.getNullable("alwaysFireEvent"))
+    fun alwaysFireEvent(): Optional<Boolean> = alwaysFireEvent.getOptional("alwaysFireEvent")
 
     /**
      * A logical expression that that is evaluated to a Boolean. If it evaluates as `True`, a
@@ -161,8 +160,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun calculation(): Optional<String> =
-        Optional.ofNullable(calculation.getNullable("calculation"))
+    fun calculation(): Optional<String> = calculation.getOptional("calculation")
 
     /**
      * The ID of the user who created this item.
@@ -170,7 +168,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * The DateTime when this item was created _(in ISO-8601 format)_.
@@ -178,8 +176,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when this item was last modified _(in ISO-8601 format)_.
@@ -187,8 +184,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * The name of the Event that the Notification is based on. When this Event occurs and the
@@ -201,7 +197,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun eventName(): Optional<String> = Optional.ofNullable(eventName.getNullable("eventName"))
+    fun eventName(): Optional<String> = eventName.getOptional("eventName")
 
     /**
      * The ID of the user who last modified this item.
@@ -209,8 +205,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * Returns the raw JSON value of [id].

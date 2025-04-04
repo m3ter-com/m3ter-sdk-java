@@ -102,9 +102,9 @@ private constructor(
         ) : this(data, nextToken, mutableMapOf())
 
         fun data(): List<IntegrationConfigurationListResponse> =
-            data.getNullable("data") ?: listOf()
+            data.getOptional("data").getOrNull() ?: listOf()
 
-        fun nextToken(): Optional<String> = Optional.ofNullable(nextToken.getNullable("nextToken"))
+        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
 
         @JsonProperty("data")
         fun _data(): Optional<JsonField<List<IntegrationConfigurationListResponse>>> =

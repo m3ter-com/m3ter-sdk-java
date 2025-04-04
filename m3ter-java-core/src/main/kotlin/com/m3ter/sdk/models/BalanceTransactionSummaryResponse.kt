@@ -41,21 +41,19 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun initialCreditAmount(): Optional<Double> =
-        Optional.ofNullable(initialCreditAmount.getNullable("initialCreditAmount"))
+        initialCreditAmount.getOptional("initialCreditAmount")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun totalCreditAmount(): Optional<Double> =
-        Optional.ofNullable(totalCreditAmount.getNullable("totalCreditAmount"))
+    fun totalCreditAmount(): Optional<Double> = totalCreditAmount.getOptional("totalCreditAmount")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun totalDebitAmount(): Optional<Double> =
-        Optional.ofNullable(totalDebitAmount.getNullable("totalDebitAmount"))
+    fun totalDebitAmount(): Optional<Double> = totalDebitAmount.getOptional("totalDebitAmount")
 
     /**
      * Returns the raw JSON value of [initialCreditAmount].

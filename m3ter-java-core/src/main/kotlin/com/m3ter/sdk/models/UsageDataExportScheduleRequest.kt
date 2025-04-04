@@ -127,8 +127,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun accountIds(): Optional<List<String>> =
-        Optional.ofNullable(accountIds.getNullable("accountIds"))
+    fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
     /**
      * Specifies the aggregation method applied to usage data collected in the numeric Data Fields
@@ -145,8 +144,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun aggregation(): Optional<Aggregation> =
-        Optional.ofNullable(aggregation.getNullable("aggregation"))
+    fun aggregation(): Optional<Aggregation> = aggregation.getOptional("aggregation")
 
     /**
      * List of meter IDs for which the usage data will be exported.
@@ -154,7 +152,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun meterIds(): Optional<List<String>> = Optional.ofNullable(meterIds.getNullable("meterIds"))
+    fun meterIds(): Optional<List<String>> = meterIds.getOptional("meterIds")
 
     /**
      * The version number of the entity:
@@ -167,7 +165,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+    fun version(): Optional<Long> = version.getOptional("version")
 
     /**
      * Returns the raw JSON value of [aggregationFrequency].

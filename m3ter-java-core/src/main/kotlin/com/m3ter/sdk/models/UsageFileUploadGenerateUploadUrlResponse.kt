@@ -39,7 +39,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun headers(): Optional<Headers> = Optional.ofNullable(headers.getNullable("headers"))
+    fun headers(): Optional<Headers> = headers.getOptional("headers")
 
     /**
      * UUID of the upload job
@@ -47,7 +47,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun jobId(): Optional<String> = Optional.ofNullable(jobId.getNullable("jobId"))
+    fun jobId(): Optional<String> = jobId.getOptional("jobId")
 
     /**
      * The URL
@@ -55,7 +55,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
+    fun url(): Optional<String> = url.getOptional("url")
 
     /**
      * Returns the raw JSON value of [headers].

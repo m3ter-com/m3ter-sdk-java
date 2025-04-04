@@ -38,8 +38,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun expirationTime(): Optional<OffsetDateTime> =
-        Optional.ofNullable(expirationTime.getNullable("expirationTime"))
+    fun expirationTime(): Optional<OffsetDateTime> = expirationTime.getOptional("expirationTime")
 
     /**
      * The presigned download URL
@@ -47,7 +46,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun url(): Optional<String> = Optional.ofNullable(url.getNullable("url"))
+    fun url(): Optional<String> = url.getOptional("url")
 
     /**
      * Returns the raw JSON value of [expirationTime].

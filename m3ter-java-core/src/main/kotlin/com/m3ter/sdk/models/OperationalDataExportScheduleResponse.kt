@@ -63,7 +63,7 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun operationalDataTypes(): Optional<List<OperationalDataType>> =
-        Optional.ofNullable(operationalDataTypes.getNullable("operationalDataTypes"))
+        operationalDataTypes.getOptional("operationalDataTypes")
 
     /**
      * Returns the raw JSON value of [id].

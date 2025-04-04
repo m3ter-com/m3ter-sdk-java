@@ -658,8 +658,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * UUID of the group the Meter belongs to. _(Optional)_.
@@ -667,7 +666,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun groupId(): Optional<String> = Optional.ofNullable(groupId.getNullable("groupId"))
+        fun groupId(): Optional<String> = groupId.getOptional("groupId")
 
         /**
          * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
@@ -676,7 +675,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+        fun productId(): Optional<String> = productId.getOptional("productId")
 
         /**
          * The version number of the entity:
@@ -689,7 +688,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [code].
@@ -1145,7 +1144,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+        fun unit(): Optional<String> = unit.getOptional("unit")
 
         /**
          * The calculation used to transform the value of submitted `dataFields` in usage data.

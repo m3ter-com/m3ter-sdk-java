@@ -1007,7 +1007,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun accountingProductId(): Optional<String> =
-            Optional.ofNullable(accountingProductId.getNullable("accountingProductId"))
+            accountingProductId.getOptional("accountingProductId")
 
         /**
          * Code of the new Aggregation. A unique short code to identify the Aggregation.
@@ -1015,20 +1015,19 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+        fun code(): Optional<String> = code.getOptional("code")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customFields(): Optional<CustomFields> =
-            Optional.ofNullable(customFields.getNullable("customFields"))
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun customSql(): Optional<String> = Optional.ofNullable(customSql.getNullable("customSql"))
+        fun customSql(): Optional<String> = customSql.getOptional("customSql")
 
         /**
          * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
@@ -1040,8 +1039,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun defaultValue(): Optional<Double> =
-            Optional.ofNullable(defaultValue.getNullable("defaultValue"))
+        fun defaultValue(): Optional<Double> = defaultValue.getOptional("defaultValue")
 
         /**
          * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
@@ -1057,7 +1055,7 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun segmentedFields(): Optional<List<String>> =
-            Optional.ofNullable(segmentedFields.getNullable("segmentedFields"))
+            segmentedFields.getOptional("segmentedFields")
 
         /**
          * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
@@ -1074,8 +1072,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun segments(): Optional<List<Segment>> =
-            Optional.ofNullable(segments.getNullable("segments"))
+        fun segments(): Optional<List<Segment>> = segments.getOptional("segments")
 
         /**
          * The version number of the entity:
@@ -1088,7 +1085,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun version(): Optional<Long> = Optional.ofNullable(version.getNullable("version"))
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * Returns the raw JSON value of [aggregation].

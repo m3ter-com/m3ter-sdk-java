@@ -107,7 +107,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun code(): Optional<String> = Optional.ofNullable(code.getNullable("code"))
+    fun code(): Optional<String> = code.getOptional("code")
 
     /**
      * The id of the user who created this meter.
@@ -115,7 +115,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun createdBy(): Optional<String> = Optional.ofNullable(createdBy.getNullable("createdBy"))
+    fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
@@ -132,8 +132,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun customFields(): Optional<CustomFields> =
-        Optional.ofNullable(customFields.getNullable("customFields"))
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * Used to submit categorized raw usage data values for ingest into the platform - either
@@ -143,8 +142,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dataFields(): Optional<List<DataFieldResponse>> =
-        Optional.ofNullable(dataFields.getNullable("dataFields"))
+    fun dataFields(): Optional<List<DataFieldResponse>> = dataFields.getOptional("dataFields")
 
     /**
      * Used to submit usage data values for ingest into the platform that are the result of a
@@ -154,8 +152,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun derivedFields(): Optional<List<DerivedField>> =
-        Optional.ofNullable(derivedFields.getNullable("derivedFields"))
+    fun derivedFields(): Optional<List<DerivedField>> = derivedFields.getOptional("derivedFields")
 
     /**
      * The DateTime when the meter was created _(in ISO-8601 format)_.
@@ -163,8 +160,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtCreated(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtCreated.getNullable("dtCreated"))
+    fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
      * The DateTime when the meter was last modified _(in ISO-8601 format)_.
@@ -172,8 +168,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dtLastModified(): Optional<OffsetDateTime> =
-        Optional.ofNullable(dtLastModified.getNullable("dtLastModified"))
+    fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
      * UUID of the MeterGroup the Meter belongs to. _(Optional)_.
@@ -181,7 +176,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun groupId(): Optional<String> = Optional.ofNullable(groupId.getNullable("groupId"))
+    fun groupId(): Optional<String> = groupId.getOptional("groupId")
 
     /**
      * The id of the user who last modified this meter.
@@ -189,8 +184,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun lastModifiedBy(): Optional<String> =
-        Optional.ofNullable(lastModifiedBy.getNullable("lastModifiedBy"))
+    fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
      * Descriptive name for the Meter.
@@ -198,7 +192,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun name(): Optional<String> = Optional.ofNullable(name.getNullable("name"))
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global.
@@ -206,7 +200,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun productId(): Optional<String> = Optional.ofNullable(productId.getNullable("productId"))
+    fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
      * Returns the raw JSON value of [id].
@@ -862,7 +856,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun unit(): Optional<String> = Optional.ofNullable(unit.getNullable("unit"))
+        fun unit(): Optional<String> = unit.getOptional("unit")
 
         /**
          * The calculation used to transform the value of submitted `dataFields` in usage data.
