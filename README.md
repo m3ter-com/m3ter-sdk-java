@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.1.0-alpha.12)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.1.0-alpha.12/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha.12)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.1.0-alpha)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.1.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha.12).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.1.0-alpha.12")
+implementation("com.m3ter:sdk-java:0.1.0-alpha")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.1.0-alpha.12")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.1.0-alpha.12</version>
+  <version>0.1.0-alpha</version>
 </dependency>
 ```
 
