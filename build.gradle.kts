@@ -8,7 +8,7 @@ repositories {
 }
 
 allprojects {
-    group = "com.m3ter.sdk"
+    group = "com.m3ter"
     version = "0.1.0-alpha.12" // x-release-please-version
 }
 
@@ -19,7 +19,7 @@ subprojects {
 // Avoid race conditions between `dokkaJavadocCollector` and `dokkaJavadocJar` tasks
 tasks.named("dokkaJavadocCollector").configure {
     subprojects.flatMap { it.tasks }
-        .filter { it.project.name != "m3ter-java" && it.name == "dokkaJavadocJar" }
+        .filter { it.project.name != "sdk-java" && it.name == "dokkaJavadocJar" }
         .forEach { mustRunAfter(it) }
 }
 
