@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-alpha (2025-04-08)
+
+Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.12...v0.1.0-alpha)
+
+### Features
+
+* **api:** prepare java target for release ([#141](https://github.com/m3ter-com/m3ter-sdk-java/issues/141)) ([fed748f](https://github.com/m3ter-com/m3ter-sdk-java/commit/fed748f72ac1bb481d7a5786c9a5d4191c37138b))
+* **api:** update contact email and package name ([#140](https://github.com/m3ter-com/m3ter-sdk-java/issues/140)) ([89be74d](https://github.com/m3ter-com/m3ter-sdk-java/commit/89be74d4ae27e3e6cf0e28364a2314e70ecf0ffb))
+* **client:** properly support client-level params ([#143](https://github.com/m3ter-com/m3ter-sdk-java/issues/143)) ([c414348](https://github.com/m3ter-com/m3ter-sdk-java/commit/c414348bc82cd1f6eb6536dedaa081d6e21a6b40))
+
+
+### Bug Fixes
+
+* **client:** return `Optional&lt;T&gt;` instead of `Optional<? extends T>` ([#137](https://github.com/m3ter-com/m3ter-sdk-java/issues/137)) ([cf5a1ac](https://github.com/m3ter-com/m3ter-sdk-java/commit/cf5a1acc8ea0b4a572b10374b1ed50855f50204d))
+
+
+### Chores
+
+* **internal:** swap from `getNullable` to `getOptional` ([#136](https://github.com/m3ter-com/m3ter-sdk-java/issues/136)) ([62eba59](https://github.com/m3ter-com/m3ter-sdk-java/commit/62eba595ce65d7b196b22b84928802fd1560b0e2))
+
+
+### Documentation
+
+* add comments to `JsonField` classes ([cf5a1ac](https://github.com/m3ter-com/m3ter-sdk-java/commit/cf5a1acc8ea0b4a572b10374b1ed50855f50204d))
+* document how to forcibly omit required field ([8c95e62](https://github.com/m3ter-com/m3ter-sdk-java/commit/8c95e628895ffbc6f66bc8310c4beb25b28e961a))
+* swap examples used in readme ([#139](https://github.com/m3ter-com/m3ter-sdk-java/issues/139)) ([8c95e62](https://github.com/m3ter-com/m3ter-sdk-java/commit/8c95e628895ffbc6f66bc8310c4beb25b28e961a))
+
 ## 0.1.0-alpha.12 (2025-04-03)
 
 Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
