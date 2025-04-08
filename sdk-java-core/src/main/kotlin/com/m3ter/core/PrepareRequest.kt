@@ -2,13 +2,13 @@
 
 package com.m3ter.core
 
-import com.m3ter.sdk.core.http.HttpRequest
-import com.m3ter.sdk.models.AuthenticationGetBearerTokenParams
-import com.m3ter.sdk.models.AuthenticationGetBearerTokenResponse
-import com.m3ter.sdk.services.async.AuthenticationServiceAsync
-import com.m3ter.sdk.services.async.AuthenticationServiceAsyncImpl
-import com.m3ter.sdk.services.blocking.AuthenticationService
-import com.m3ter.sdk.services.blocking.AuthenticationServiceImpl
+import com.m3ter.core.http.HttpRequest
+import com.m3ter.models.AuthenticationGetBearerTokenParams
+import com.m3ter.models.AuthenticationGetBearerTokenResponse
+import com.m3ter.services.async.AuthenticationServiceAsync
+import com.m3ter.services.async.AuthenticationServiceAsyncImpl
+import com.m3ter.services.blocking.AuthenticationService
+import com.m3ter.services.blocking.AuthenticationServiceImpl
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
