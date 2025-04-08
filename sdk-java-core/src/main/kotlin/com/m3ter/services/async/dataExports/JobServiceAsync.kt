@@ -37,14 +37,22 @@ interface JobServiceAsync {
     ): CompletableFuture<DataExportJobResponse>
 
     /** Retrieve a list of Export Job entities. */
-    fun list(params: DataExportJobListParams): CompletableFuture<DataExportJobListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<DataExportJobListPageAsync> = list(DataExportJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportJobListParams,
+        params: DataExportJobListParams = DataExportJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DataExportJobListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: DataExportJobListParams = DataExportJobListParams.none()
+    ): CompletableFuture<DataExportJobListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<DataExportJobListPageAsync> =
+        list(DataExportJobListParams.none(), requestOptions)
 
     /**
      * Returns a presigned download URL for data export file download based on the `jobId` provided.
@@ -99,17 +107,29 @@ interface JobServiceAsync {
          * otherwise the same as [JobServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<DataExportJobListPageAsync>> =
+            list(DataExportJobListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: DataExportJobListParams
+            params: DataExportJobListParams = DataExportJobListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportJobListParams = DataExportJobListParams.none()
         ): CompletableFuture<HttpResponseFor<DataExportJobListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportJobListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DataExportJobListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<DataExportJobListPageAsync>> =
+            list(DataExportJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

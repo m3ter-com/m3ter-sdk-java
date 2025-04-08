@@ -35,7 +35,6 @@ internal class PlanTemplateCreateParamsTest {
     fun pathParams() {
         val params =
             PlanTemplateCreateParams.builder()
-                .orgId("orgId")
                 .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
                 .currency("USD")
                 .name("string")
@@ -43,7 +42,7 @@ internal class PlanTemplateCreateParamsTest {
                 .standingCharge(0.0)
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -98,7 +97,6 @@ internal class PlanTemplateCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PlanTemplateCreateParams.builder()
-                .orgId("orgId")
                 .billFrequency(PlanTemplateCreateParams.BillFrequency.DAILY)
                 .currency("USD")
                 .name("string")

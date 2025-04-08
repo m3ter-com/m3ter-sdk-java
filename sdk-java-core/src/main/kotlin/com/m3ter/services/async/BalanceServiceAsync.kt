@@ -75,14 +75,22 @@ interface BalanceServiceAsync {
      * filter the Balances by the end customer's Account UUID and end dates, and paginate through
      * them using the `pageSize` and `nextToken` parameters.
      */
-    fun list(params: BalanceListParams): CompletableFuture<BalanceListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<BalanceListPageAsync> = list(BalanceListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BalanceListParams,
+        params: BalanceListParams = BalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: BalanceListParams = BalanceListParams.none()
+    ): CompletableFuture<BalanceListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<BalanceListPageAsync> =
+        list(BalanceListParams.none(), requestOptions)
 
     /**
      * Delete a specific Balance.
@@ -155,17 +163,29 @@ interface BalanceServiceAsync {
          * the same as [BalanceServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
+            list(BalanceListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: BalanceListParams
+            params: BalanceListParams = BalanceListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BalanceListParams = BalanceListParams.none()
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BalanceListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
+            list(BalanceListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is

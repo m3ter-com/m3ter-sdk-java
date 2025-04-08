@@ -68,7 +68,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "fileuploads",
                         "measurements",
                         "jobs",
@@ -102,7 +102,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "fileuploads",
                         "measurements",
                         "jobs",
@@ -139,7 +139,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "fileuploads",
                         "measurements",
                         "jobs",

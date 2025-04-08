@@ -65,7 +65,7 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "fileuploads",
                         "measurements",
                         "generateUploadUrl",

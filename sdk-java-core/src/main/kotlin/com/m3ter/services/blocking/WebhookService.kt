@@ -57,13 +57,21 @@ interface WebhookService {
     ): WebhookUpdateResponse
 
     /** Retrieve a list of all Destinations created in the Organization. */
-    fun list(params: WebhookListParams): WebhookListPage = list(params, RequestOptions.none())
+    fun list(): WebhookListPage = list(WebhookListParams.none())
 
     /** @see [list] */
     fun list(
-        params: WebhookListParams,
+        params: WebhookListParams = WebhookListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookListPage
+
+    /** @see [list] */
+    fun list(params: WebhookListParams = WebhookListParams.none()): WebhookListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): WebhookListPage =
+        list(WebhookListParams.none(), requestOptions)
 
     /** This endpoint deletes a specific webhook destination identified by its UUID. */
     fun delete(params: WebhookDeleteParams): Webhook = delete(params, RequestOptions.none())
@@ -145,16 +153,25 @@ interface WebhookService {
          * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
          * [WebhookService.list].
          */
-        @MustBeClosed
-        fun list(params: WebhookListParams): HttpResponseFor<WebhookListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<WebhookListPage> = list(WebhookListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: WebhookListParams,
+            params: WebhookListParams = WebhookListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<WebhookListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: WebhookListParams = WebhookListParams.none()
+        ): HttpResponseFor<WebhookListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<WebhookListPage> =
+            list(WebhookListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

@@ -18,15 +18,23 @@ interface OrganizationConfigServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide configuration details. */
-    fun retrieve(
-        params: OrganizationConfigRetrieveParams
-    ): CompletableFuture<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
+    fun retrieve(): CompletableFuture<OrganizationConfigResponse> =
+        retrieve(OrganizationConfigRetrieveParams.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        params: OrganizationConfigRetrieveParams,
+        params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<OrganizationConfigResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
+    ): CompletableFuture<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(requestOptions: RequestOptions): CompletableFuture<OrganizationConfigResponse> =
+        retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
     /** Update the Organization-wide configuration details. */
     fun update(
@@ -50,17 +58,29 @@ interface OrganizationConfigServiceAsync {
          * otherwise the same as [OrganizationConfigServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
+            retrieve(OrganizationConfigRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: OrganizationConfigRetrieveParams
+            params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: OrganizationConfigRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
+            retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is

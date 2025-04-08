@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.DebitReasonCreateParams
 import com.m3ter.models.DebitReasonDeleteParams
-import com.m3ter.models.DebitReasonListParams
 import com.m3ter.models.DebitReasonRetrieveParams
 import com.m3ter.models.DebitReasonUpdateParams
 import org.junit.jupiter.api.Test
@@ -100,7 +99,7 @@ internal class DebitReasonServiceTest {
                 .build()
         val debitReasonService = client.debitReasons()
 
-        val page = debitReasonService.list(DebitReasonListParams.builder().orgId("orgId").build())
+        val page = debitReasonService.list()
 
         page.response().validate()
     }

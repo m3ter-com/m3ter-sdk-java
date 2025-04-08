@@ -70,7 +70,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "balances",
                         params._pathParam(1),
                         "transactions",
@@ -104,7 +104,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "balances",
                         params._pathParam(1),
                         "transactions",
@@ -144,7 +144,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "balances",
                         params._pathParam(1),
                         "transactions",

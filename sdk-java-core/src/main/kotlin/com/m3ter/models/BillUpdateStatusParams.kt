@@ -18,6 +18,7 @@ import com.m3ter.core.http.QueryParams
 import com.m3ter.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
+import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /**
@@ -28,14 +29,14 @@ import kotlin.jvm.optionals.getOrNull
  */
 class BillUpdateStatusParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val id: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun id(): String = id
 
@@ -69,7 +70,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .id()
          * .status()
          * ```
@@ -95,7 +95,10 @@ private constructor(
             additionalQueryParams = billUpdateStatusParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun id(id: String) = apply { this.id = id }
 
@@ -243,7 +246,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .id()
          * .status()
          * ```
@@ -252,7 +254,7 @@ private constructor(
          */
         fun build(): BillUpdateStatusParams =
             BillUpdateStatusParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("id", id),
                 body.build(),
                 additionalHeaders.build(),
@@ -264,7 +266,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> id
             else -> ""
         }

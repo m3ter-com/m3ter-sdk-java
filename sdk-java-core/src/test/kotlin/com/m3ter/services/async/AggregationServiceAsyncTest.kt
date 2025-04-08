@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.AggregationCreateParams
 import com.m3ter.models.AggregationDeleteParams
-import com.m3ter.models.AggregationListParams
 import com.m3ter.models.AggregationRetrieveParams
 import com.m3ter.models.AggregationUpdateParams
 import org.junit.jupiter.api.Test
@@ -142,8 +141,7 @@ internal class AggregationServiceAsyncTest {
                 .build()
         val aggregationServiceAsync = client.aggregations()
 
-        val pageFuture =
-            aggregationServiceAsync.list(AggregationListParams.builder().orgId("orgId").build())
+        val pageFuture = aggregationServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

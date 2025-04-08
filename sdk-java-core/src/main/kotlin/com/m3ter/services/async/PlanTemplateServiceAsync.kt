@@ -79,14 +79,22 @@ interface PlanTemplateServiceAsync {
      * specific Organization, identified by its UUID. You can filter the list by PlanTemplate IDs or
      * Product IDs for more focused retrieval.
      */
-    fun list(params: PlanTemplateListParams): CompletableFuture<PlanTemplateListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<PlanTemplateListPageAsync> = list(PlanTemplateListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanTemplateListParams,
+        params: PlanTemplateListParams = PlanTemplateListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplateListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: PlanTemplateListParams = PlanTemplateListParams.none()
+    ): CompletableFuture<PlanTemplateListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PlanTemplateListPageAsync> =
+        list(PlanTemplateListParams.none(), requestOptions)
 
     /**
      * Delete a specific PlanTemplate.
@@ -165,17 +173,29 @@ interface PlanTemplateServiceAsync {
          * otherwise the same as [PlanTemplateServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
+            list(PlanTemplateListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: PlanTemplateListParams
+            params: PlanTemplateListParams = PlanTemplateListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanTemplateListParams = PlanTemplateListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanTemplateListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
+            list(PlanTemplateListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plantemplates/{id}`, but

@@ -43,7 +43,6 @@ internal class AggregationFunctionCreateParamsTest {
     fun pathParams() {
         val params =
             AggregationCreateParams.builder()
-                .orgId("orgId")
                 .aggregation(AggregationCreateParams.Aggregation.SUM)
                 .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .name("x")
@@ -53,7 +52,7 @@ internal class AggregationFunctionCreateParamsTest {
                 .unit("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -121,7 +120,6 @@ internal class AggregationFunctionCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             AggregationCreateParams.builder()
-                .orgId("orgId")
                 .aggregation(AggregationCreateParams.Aggregation.SUM)
                 .meterId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .name("x")

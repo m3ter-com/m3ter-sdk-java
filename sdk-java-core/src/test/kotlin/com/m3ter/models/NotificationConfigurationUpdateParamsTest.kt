@@ -27,7 +27,6 @@ internal class NotificationConfigurationUpdateParamsTest {
     fun pathParams() {
         val params =
             NotificationConfigurationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .code("x")
                 .description("x")
@@ -35,7 +34,7 @@ internal class NotificationConfigurationUpdateParamsTest {
                 .name("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -73,7 +72,6 @@ internal class NotificationConfigurationUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             NotificationConfigurationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .code("x")
                 .description("x")

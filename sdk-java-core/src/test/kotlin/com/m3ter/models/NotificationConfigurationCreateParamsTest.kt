@@ -26,14 +26,13 @@ internal class NotificationConfigurationCreateParamsTest {
     fun pathParams() {
         val params =
             NotificationConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .code("x")
                 .description("x")
                 .eventName("x")
                 .name("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -69,7 +68,6 @@ internal class NotificationConfigurationCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             NotificationConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .code("x")
                 .description("x")
                 .eventName("x")

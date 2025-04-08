@@ -18,17 +18,18 @@ import com.m3ter.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a new Counter. */
 class CounterCreateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * Descriptive name for the Counter.
@@ -128,7 +129,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .name()
          * .unit()
          * ```
@@ -152,7 +152,10 @@ private constructor(
             additionalQueryParams = counterCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -362,7 +365,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .name()
          * .unit()
          * ```
@@ -371,7 +373,7 @@ private constructor(
          */
         fun build(): CounterCreateParams =
             CounterCreateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -382,7 +384,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

@@ -26,7 +26,6 @@ internal class ExternalMappingUpdateParamsTest {
     fun pathParams() {
         val params =
             ExternalMappingUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .externalId("JS!?Q0]r] ]\$]")
                 .externalSystem("JS!?Q0]r] ]\$]")
@@ -35,7 +34,7 @@ internal class ExternalMappingUpdateParamsTest {
                 .m3terId("JS!?Q0]r] ]\$]")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -71,7 +70,6 @@ internal class ExternalMappingUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ExternalMappingUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .externalId("JS!?Q0]r] ]\$]")
                 .externalSystem("JS!?Q0]r] ]\$]")

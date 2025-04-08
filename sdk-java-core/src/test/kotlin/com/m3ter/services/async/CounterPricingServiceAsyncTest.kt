@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.CounterPricingCreateParams
 import com.m3ter.models.CounterPricingDeleteParams
-import com.m3ter.models.CounterPricingListParams
 import com.m3ter.models.CounterPricingRetrieveParams
 import com.m3ter.models.CounterPricingUpdateParams
 import com.m3ter.models.PricingBand
@@ -143,10 +142,7 @@ internal class CounterPricingServiceAsyncTest {
                 .build()
         val counterPricingServiceAsync = client.counterPricings()
 
-        val pageFuture =
-            counterPricingServiceAsync.list(
-                CounterPricingListParams.builder().orgId("orgId").build()
-            )
+        val pageFuture = counterPricingServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

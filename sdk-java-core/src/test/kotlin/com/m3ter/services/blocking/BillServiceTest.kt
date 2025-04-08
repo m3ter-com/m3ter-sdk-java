@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BillApproveParams
 import com.m3ter.models.BillDeleteParams
 import com.m3ter.models.BillLatestByAccountParams
-import com.m3ter.models.BillListParams
 import com.m3ter.models.BillLockParams
 import com.m3ter.models.BillRetrieveParams
 import com.m3ter.models.BillSearchParams
@@ -48,7 +47,7 @@ internal class BillServiceTest {
                 .build()
         val billService = client.bills()
 
-        val page = billService.list(BillListParams.builder().orgId("orgId").build())
+        val page = billService.list()
 
         page.response().validate()
     }

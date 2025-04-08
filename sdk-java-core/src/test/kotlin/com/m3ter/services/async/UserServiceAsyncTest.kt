@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.PermissionStatementResponse
 import com.m3ter.models.UserGetPermissionsParams
 import com.m3ter.models.UserGetUserGroupsParams
-import com.m3ter.models.UserListParams
 import com.m3ter.models.UserMeParams
 import com.m3ter.models.UserResendPasswordParams
 import com.m3ter.models.UserRetrieveParams
@@ -83,7 +82,7 @@ internal class UserServiceAsyncTest {
                 .build()
         val userServiceAsync = client.users()
 
-        val pageFuture = userServiceAsync.list(UserListParams.builder().orgId("orgId").build())
+        val pageFuture = userServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

@@ -54,14 +54,22 @@ interface CounterServiceAsync {
     /**
      * Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes.
      */
-    fun list(params: CounterListParams): CompletableFuture<CounterListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CounterListPageAsync> = list(CounterListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterListParams,
+        params: CounterListParams = CounterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CounterListParams = CounterListParams.none()
+    ): CompletableFuture<CounterListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CounterListPageAsync> =
+        list(CounterListParams.none(), requestOptions)
 
     /** Delete a Counter for the given UUID. */
     fun delete(params: CounterDeleteParams): CompletableFuture<CounterResponse> =
@@ -134,17 +142,29 @@ interface CounterServiceAsync {
          * the same as [CounterServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
+            list(CounterListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CounterListParams
+            params: CounterListParams = CounterListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterListParams = CounterListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
+            list(CounterListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is

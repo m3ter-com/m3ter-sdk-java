@@ -77,16 +77,26 @@ interface NotificationConfigurationServiceAsync {
      * its UUID. The list can be paginated for easier management. The list also supports filtering
      * by parameters such as Notification UUID.
      */
+    fun list(): CompletableFuture<NotificationConfigurationListPageAsync> =
+        list(NotificationConfigurationListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: NotificationConfigurationListParams
+        params: NotificationConfigurationListParams = NotificationConfigurationListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<NotificationConfigurationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
     ): CompletableFuture<NotificationConfigurationListPageAsync> =
         list(params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
-        params: NotificationConfigurationListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<NotificationConfigurationListPageAsync>
+        requestOptions: RequestOptions
+    ): CompletableFuture<NotificationConfigurationListPageAsync> =
+        list(NotificationConfigurationListParams.none(), requestOptions)
 
     /**
      * Delete the Notification with the given UUID.
@@ -170,17 +180,30 @@ interface NotificationConfigurationServiceAsync {
          * [NotificationConfigurationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
+            list(NotificationConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: NotificationConfigurationListParams
+            params: NotificationConfigurationListParams =
+                NotificationConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: NotificationConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
+            list(NotificationConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

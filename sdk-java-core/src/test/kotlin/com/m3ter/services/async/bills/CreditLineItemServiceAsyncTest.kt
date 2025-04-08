@@ -126,7 +126,7 @@ internal class CreditLineItemServiceAsyncTest {
 
         val pageFuture =
             creditLineItemServiceAsync.list(
-                BillCreditLineItemListParams.builder().orgId("orgId").billId("billId").build()
+                BillCreditLineItemListParams.builder().billId("billId").build()
             )
 
         val page = pageFuture.get()

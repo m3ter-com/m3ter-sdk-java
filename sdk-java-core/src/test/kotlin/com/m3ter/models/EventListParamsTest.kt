@@ -27,9 +27,9 @@ internal class EventListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = EventListParams.builder().orgId("orgId").build()
+        val params = EventListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -72,7 +72,7 @@ internal class EventListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = EventListParams.builder().orgId("orgId").build()
+        val params = EventListParams.builder().build()
 
         val queryParams = params._queryParams()
 

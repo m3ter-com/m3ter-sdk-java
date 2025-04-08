@@ -51,13 +51,21 @@ interface EventService {
      *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
      *   endpoint in this section. The response lists the valid Query parameters.
      */
-    fun list(params: EventListParams): EventListPage = list(params, RequestOptions.none())
+    fun list(): EventListPage = list(EventListParams.none())
 
     /** @see [list] */
     fun list(
-        params: EventListParams,
+        params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
+
+    /** @see [list] */
+    fun list(params: EventListParams = EventListParams.none()): EventListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): EventListPage =
+        list(EventListParams.none(), requestOptions)
 
     /**
      * List Event Fields.
@@ -82,28 +90,43 @@ interface EventService {
      *   these Events, their `customFields` values will not be populated until such time as the
      *   custom fields functionality is implemented for them
      */
-    fun getFields(params: EventGetFieldsParams): EventGetFieldsResponse =
-        getFields(params, RequestOptions.none())
+    fun getFields(): EventGetFieldsResponse = getFields(EventGetFieldsParams.none())
 
     /** @see [getFields] */
     fun getFields(
-        params: EventGetFieldsParams,
+        params: EventGetFieldsParams = EventGetFieldsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventGetFieldsResponse
+
+    /** @see [getFields] */
+    fun getFields(
+        params: EventGetFieldsParams = EventGetFieldsParams.none()
+    ): EventGetFieldsResponse = getFields(params, RequestOptions.none())
+
+    /** @see [getFields] */
+    fun getFields(requestOptions: RequestOptions): EventGetFieldsResponse =
+        getFields(EventGetFieldsParams.none(), requestOptions)
 
     /**
      * Retrieve a list of Notification Event Types.
      *
      * This endpoint retrieves a list of Event Types that can have Notification rules configured.
      */
-    fun getTypes(params: EventGetTypesParams): EventGetTypesResponse =
-        getTypes(params, RequestOptions.none())
+    fun getTypes(): EventGetTypesResponse = getTypes(EventGetTypesParams.none())
 
     /** @see [getTypes] */
     fun getTypes(
-        params: EventGetTypesParams,
+        params: EventGetTypesParams = EventGetTypesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventGetTypesResponse
+
+    /** @see [getTypes] */
+    fun getTypes(params: EventGetTypesParams = EventGetTypesParams.none()): EventGetTypesResponse =
+        getTypes(params, RequestOptions.none())
+
+    /** @see [getTypes] */
+    fun getTypes(requestOptions: RequestOptions): EventGetTypesResponse =
+        getTypes(EventGetTypesParams.none(), requestOptions)
 
     /** A view of [EventService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -127,45 +150,75 @@ interface EventService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the
          * same as [EventService.list].
          */
-        @MustBeClosed
-        fun list(params: EventListParams): HttpResponseFor<EventListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<EventListPage> = list(EventListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: EventListParams,
+            params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: EventListParams = EventListParams.none()): HttpResponseFor<EventListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPage> =
+            list(EventListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/fields`, but is
          * otherwise the same as [EventService.getFields].
          */
         @MustBeClosed
-        fun getFields(params: EventGetFieldsParams): HttpResponseFor<EventGetFieldsResponse> =
-            getFields(params, RequestOptions.none())
+        fun getFields(): HttpResponseFor<EventGetFieldsResponse> =
+            getFields(EventGetFieldsParams.none())
 
         /** @see [getFields] */
         @MustBeClosed
         fun getFields(
-            params: EventGetFieldsParams,
+            params: EventGetFieldsParams = EventGetFieldsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventGetFieldsResponse>
+
+        /** @see [getFields] */
+        @MustBeClosed
+        fun getFields(
+            params: EventGetFieldsParams = EventGetFieldsParams.none()
+        ): HttpResponseFor<EventGetFieldsResponse> = getFields(params, RequestOptions.none())
+
+        /** @see [getFields] */
+        @MustBeClosed
+        fun getFields(requestOptions: RequestOptions): HttpResponseFor<EventGetFieldsResponse> =
+            getFields(EventGetFieldsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/types`, but is
          * otherwise the same as [EventService.getTypes].
          */
         @MustBeClosed
-        fun getTypes(params: EventGetTypesParams): HttpResponseFor<EventGetTypesResponse> =
-            getTypes(params, RequestOptions.none())
+        fun getTypes(): HttpResponseFor<EventGetTypesResponse> =
+            getTypes(EventGetTypesParams.none())
 
         /** @see [getTypes] */
         @MustBeClosed
         fun getTypes(
-            params: EventGetTypesParams,
+            params: EventGetTypesParams = EventGetTypesParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventGetTypesResponse>
+
+        /** @see [getTypes] */
+        @MustBeClosed
+        fun getTypes(
+            params: EventGetTypesParams = EventGetTypesParams.none()
+        ): HttpResponseFor<EventGetTypesResponse> = getTypes(params, RequestOptions.none())
+
+        /** @see [getTypes] */
+        @MustBeClosed
+        fun getTypes(requestOptions: RequestOptions): HttpResponseFor<EventGetTypesResponse> =
+            getTypes(EventGetTypesParams.none(), requestOptions)
     }
 }

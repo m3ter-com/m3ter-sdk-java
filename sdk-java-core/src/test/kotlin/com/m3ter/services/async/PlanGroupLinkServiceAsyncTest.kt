@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.PlanGroupLinkCreateParams
 import com.m3ter.models.PlanGroupLinkDeleteParams
-import com.m3ter.models.PlanGroupLinkListParams
 import com.m3ter.models.PlanGroupLinkRetrieveParams
 import com.m3ter.models.PlanGroupLinkUpdateParams
 import org.junit.jupiter.api.Test
@@ -101,8 +100,7 @@ internal class PlanGroupLinkServiceAsyncTest {
                 .build()
         val planGroupLinkServiceAsync = client.planGroupLinks()
 
-        val pageFuture =
-            planGroupLinkServiceAsync.list(PlanGroupLinkListParams.builder().orgId("orgId").build())
+        val pageFuture = planGroupLinkServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

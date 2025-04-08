@@ -77,7 +77,6 @@ internal class UsageSubmitParamsTest {
     fun pathParams() {
         val params =
             UsageSubmitParams.builder()
-                .orgId("orgId")
                 .addMeasurement(
                     UsageSubmitParams.Measurement.builder()
                         .account("Acme Corp")
@@ -87,7 +86,7 @@ internal class UsageSubmitParamsTest {
                 )
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -222,7 +221,6 @@ internal class UsageSubmitParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             UsageSubmitParams.builder()
-                .orgId("orgId")
                 .addMeasurement(
                     UsageSubmitParams.Measurement.builder()
                         .account("Acme Corp")

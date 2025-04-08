@@ -74,15 +74,23 @@ interface CounterAdjustmentServiceAsync {
      * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
      *   use the `accountId` query parameter.
      */
-    fun list(
-        params: CounterAdjustmentListParams
-    ): CompletableFuture<CounterAdjustmentListPageAsync> = list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CounterAdjustmentListPageAsync> =
+        list(CounterAdjustmentListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterAdjustmentListParams,
+        params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterAdjustmentListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
+    ): CompletableFuture<CounterAdjustmentListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CounterAdjustmentListPageAsync> =
+        list(CounterAdjustmentListParams.none(), requestOptions)
 
     /** Delete a CounterAdjustment for the given UUID. */
     fun delete(
@@ -157,17 +165,29 @@ interface CounterAdjustmentServiceAsync {
          * otherwise the same as [CounterAdjustmentServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
+            list(CounterAdjustmentListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CounterAdjustmentListParams
+            params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterAdjustmentListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
+            list(CounterAdjustmentListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,

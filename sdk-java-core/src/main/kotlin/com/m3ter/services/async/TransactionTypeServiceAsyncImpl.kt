@@ -86,7 +86,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "transactiontypes",
                     )
@@ -122,7 +122,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "transactiontypes",
                         params._pathParam(1),
@@ -158,7 +158,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "transactiontypes",
                         params._pathParam(1),
@@ -195,7 +195,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "transactiontypes",
                     )
@@ -237,7 +237,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "transactiontypes",
                         params._pathParam(1),

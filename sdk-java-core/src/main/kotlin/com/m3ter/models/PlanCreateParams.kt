@@ -24,13 +24,13 @@ import kotlin.jvm.optionals.getOrNull
 /** Create a new Plan. */
 class PlanCreateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * Unique short code reference for the Plan.
@@ -339,7 +339,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .code()
          * .name()
          * .planTemplateId()
@@ -364,7 +363,10 @@ private constructor(
             additionalQueryParams = planCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -791,7 +793,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .code()
          * .name()
          * .planTemplateId()
@@ -801,7 +802,7 @@ private constructor(
          */
         fun build(): PlanCreateParams =
             PlanCreateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -812,7 +813,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

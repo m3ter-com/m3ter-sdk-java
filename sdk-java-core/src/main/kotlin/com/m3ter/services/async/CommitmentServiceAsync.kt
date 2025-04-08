@@ -86,14 +86,22 @@ interface CommitmentServiceAsync {
      * pagination and includes various query parameters to filter the Commitments based on Account,
      * Product, date, and end dates.
      */
-    fun list(params: CommitmentListParams): CompletableFuture<CommitmentListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CommitmentListPageAsync> = list(CommitmentListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CommitmentListParams,
+        params: CommitmentListParams = CommitmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CommitmentListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CommitmentListParams = CommitmentListParams.none()
+    ): CompletableFuture<CommitmentListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CommitmentListPageAsync> =
+        list(CommitmentListParams.none(), requestOptions)
 
     /**
      * Remove a specific Commitment.
@@ -117,14 +125,23 @@ interface CommitmentServiceAsync {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Commitments can be paginated for easier management.
      */
-    fun search(params: CommitmentSearchParams): CompletableFuture<CommitmentSearchResponse> =
-        search(params, RequestOptions.none())
+    fun search(): CompletableFuture<CommitmentSearchResponse> =
+        search(CommitmentSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: CommitmentSearchParams,
+        params: CommitmentSearchParams = CommitmentSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CommitmentSearchResponse>
+
+    /** @see [search] */
+    fun search(
+        params: CommitmentSearchParams = CommitmentSearchParams.none()
+    ): CompletableFuture<CommitmentSearchResponse> = search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): CompletableFuture<CommitmentSearchResponse> =
+        search(CommitmentSearchParams.none(), requestOptions)
 
     /**
      * A view of [CommitmentServiceAsync] that provides access to raw HTTP responses for each
@@ -188,17 +205,29 @@ interface CommitmentServiceAsync {
          * otherwise the same as [CommitmentServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
+            list(CommitmentListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CommitmentListParams
+            params: CommitmentListParams = CommitmentListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CommitmentListParams = CommitmentListParams.none()
         ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CommitmentListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
+            list(CommitmentListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/commitments/{id}`, but is
@@ -222,16 +251,28 @@ interface CommitmentServiceAsync {
          * otherwise the same as [CommitmentServiceAsync.search].
          */
         @MustBeClosed
+        fun search(): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
+            search(CommitmentSearchParams.none())
+
+        /** @see [search] */
+        @MustBeClosed
         fun search(
-            params: CommitmentSearchParams
+            params: CommitmentSearchParams = CommitmentSearchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: CommitmentSearchParams = CommitmentSearchParams.none()
         ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
             search(params, RequestOptions.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: CommitmentSearchParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
+            search(CommitmentSearchParams.none(), requestOptions)
     }
 }

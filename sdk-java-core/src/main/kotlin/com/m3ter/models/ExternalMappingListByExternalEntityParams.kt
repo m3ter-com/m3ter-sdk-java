@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class ExternalMappingListByExternalEntityParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val system: String,
     private val externalTable: String,
     private val externalId: String,
@@ -28,7 +28,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun system(): String = system
 
@@ -59,7 +59,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .system()
          * .externalTable()
          * .externalId()
@@ -96,7 +95,10 @@ private constructor(
                 externalMappingListByExternalEntityParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun system(system: String) = apply { this.system = system }
 
@@ -231,7 +233,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .system()
          * .externalTable()
          * .externalId()
@@ -241,7 +242,7 @@ private constructor(
          */
         fun build(): ExternalMappingListByExternalEntityParams =
             ExternalMappingListByExternalEntityParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("system", system),
                 checkRequired("externalTable", externalTable),
                 checkRequired("externalId", externalId),
@@ -254,7 +255,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> system
             2 -> externalTable
             3 -> externalId

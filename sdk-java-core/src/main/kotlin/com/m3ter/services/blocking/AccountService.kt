@@ -60,13 +60,21 @@ interface AccountService {
     ): AccountResponse
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
-    fun list(params: AccountListParams): AccountListPage = list(params, RequestOptions.none())
+    fun list(): AccountListPage = list(AccountListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AccountListParams,
+        params: AccountListParams = AccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPage
+
+    /** @see [list] */
+    fun list(params: AccountListParams = AccountListParams.none()): AccountListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): AccountListPage =
+        list(AccountListParams.none(), requestOptions)
 
     /**
      * Delete the Account with the given UUID. This may fail if there are any AccountPlans that
@@ -114,14 +122,21 @@ interface AccountService {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Accounts can be paginated for easier management.
      */
-    fun search(params: AccountSearchParams): AccountSearchResponse =
-        search(params, RequestOptions.none())
+    fun search(): AccountSearchResponse = search(AccountSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: AccountSearchParams,
+        params: AccountSearchParams = AccountSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSearchResponse
+
+    /** @see [search] */
+    fun search(params: AccountSearchParams = AccountSearchParams.none()): AccountSearchResponse =
+        search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): AccountSearchResponse =
+        search(AccountSearchParams.none(), requestOptions)
 
     /** A view of [AccountService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -175,16 +190,25 @@ interface AccountService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts`, but is otherwise
          * the same as [AccountService.list].
          */
-        @MustBeClosed
-        fun list(params: AccountListParams): HttpResponseFor<AccountListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<AccountListPage> = list(AccountListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AccountListParams,
+            params: AccountListParams = AccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountListParams = AccountListParams.none()
+        ): HttpResponseFor<AccountListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPage> =
+            list(AccountListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accounts/{id}`, but is
@@ -239,14 +263,24 @@ interface AccountService {
          * otherwise the same as [AccountService.search].
          */
         @MustBeClosed
-        fun search(params: AccountSearchParams): HttpResponseFor<AccountSearchResponse> =
-            search(params, RequestOptions.none())
+        fun search(): HttpResponseFor<AccountSearchResponse> = search(AccountSearchParams.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: AccountSearchParams,
+            params: AccountSearchParams = AccountSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountSearchResponse>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: AccountSearchParams = AccountSearchParams.none()
+        ): HttpResponseFor<AccountSearchResponse> = search(params, RequestOptions.none())
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(requestOptions: RequestOptions): HttpResponseFor<AccountSearchResponse> =
+            search(AccountSearchParams.none(), requestOptions)
     }
 }

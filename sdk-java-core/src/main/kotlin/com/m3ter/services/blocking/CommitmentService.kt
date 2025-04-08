@@ -85,13 +85,21 @@ interface CommitmentService {
      * pagination and includes various query parameters to filter the Commitments based on Account,
      * Product, date, and end dates.
      */
-    fun list(params: CommitmentListParams): CommitmentListPage = list(params, RequestOptions.none())
+    fun list(): CommitmentListPage = list(CommitmentListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CommitmentListParams,
+        params: CommitmentListParams = CommitmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentListPage
+
+    /** @see [list] */
+    fun list(params: CommitmentListParams = CommitmentListParams.none()): CommitmentListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CommitmentListPage =
+        list(CommitmentListParams.none(), requestOptions)
 
     /**
      * Remove a specific Commitment.
@@ -115,14 +123,22 @@ interface CommitmentService {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Commitments can be paginated for easier management.
      */
-    fun search(params: CommitmentSearchParams): CommitmentSearchResponse =
-        search(params, RequestOptions.none())
+    fun search(): CommitmentSearchResponse = search(CommitmentSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: CommitmentSearchParams,
+        params: CommitmentSearchParams = CommitmentSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentSearchResponse
+
+    /** @see [search] */
+    fun search(
+        params: CommitmentSearchParams = CommitmentSearchParams.none()
+    ): CommitmentSearchResponse = search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): CommitmentSearchResponse =
+        search(CommitmentSearchParams.none(), requestOptions)
 
     /** A view of [CommitmentService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -177,15 +193,25 @@ interface CommitmentService {
          * otherwise the same as [CommitmentService.list].
          */
         @MustBeClosed
-        fun list(params: CommitmentListParams): HttpResponseFor<CommitmentListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CommitmentListPage> = list(CommitmentListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CommitmentListParams,
+            params: CommitmentListParams = CommitmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CommitmentListParams = CommitmentListParams.none()
+        ): HttpResponseFor<CommitmentListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CommitmentListPage> =
+            list(CommitmentListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/commitments/{id}`, but is
@@ -207,14 +233,25 @@ interface CommitmentService {
          * otherwise the same as [CommitmentService.search].
          */
         @MustBeClosed
-        fun search(params: CommitmentSearchParams): HttpResponseFor<CommitmentSearchResponse> =
-            search(params, RequestOptions.none())
+        fun search(): HttpResponseFor<CommitmentSearchResponse> =
+            search(CommitmentSearchParams.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: CommitmentSearchParams,
+            params: CommitmentSearchParams = CommitmentSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentSearchResponse>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: CommitmentSearchParams = CommitmentSearchParams.none()
+        ): HttpResponseFor<CommitmentSearchResponse> = search(params, RequestOptions.none())
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(requestOptions: RequestOptions): HttpResponseFor<CommitmentSearchResponse> =
+            search(CommitmentSearchParams.none(), requestOptions)
     }
 }

@@ -19,9 +19,9 @@ internal class PermissionPolicyListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = PermissionPolicyListParams.builder().orgId("orgId").build()
+        val params = PermissionPolicyListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -45,7 +45,7 @@ internal class PermissionPolicyListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = PermissionPolicyListParams.builder().orgId("orgId").build()
+        val params = PermissionPolicyListParams.builder().build()
 
         val queryParams = params._queryParams()
 

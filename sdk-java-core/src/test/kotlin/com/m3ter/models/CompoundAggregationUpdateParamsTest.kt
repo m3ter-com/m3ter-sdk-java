@@ -35,7 +35,6 @@ internal class CompoundAggregationFunctionUpdateParamsTest {
     fun pathParams() {
         val params =
             CompoundAggregationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .calculation("x")
                 .name("x")
@@ -44,7 +43,7 @@ internal class CompoundAggregationFunctionUpdateParamsTest {
                 .unit("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -97,7 +96,6 @@ internal class CompoundAggregationFunctionUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CompoundAggregationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .calculation("x")
                 .name("x")

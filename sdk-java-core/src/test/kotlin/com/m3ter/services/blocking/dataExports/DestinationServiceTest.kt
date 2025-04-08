@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.DataExportDestinationCreateParams
 import com.m3ter.models.DataExportDestinationDeleteParams
-import com.m3ter.models.DataExportDestinationListParams
 import com.m3ter.models.DataExportDestinationRetrieveParams
 import com.m3ter.models.DataExportDestinationUpdateParams
 import org.junit.jupiter.api.Test
@@ -106,10 +105,7 @@ internal class DestinationServiceTest {
                 .build()
         val destinationService = client.dataExports().destinations()
 
-        val page =
-            destinationService.list(
-                DataExportDestinationListParams.builder().orgId("orgId").build()
-            )
+        val page = destinationService.list()
 
         page.response().validate()
     }

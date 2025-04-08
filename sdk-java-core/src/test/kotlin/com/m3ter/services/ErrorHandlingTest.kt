@@ -22,7 +22,6 @@ import com.m3ter.errors.RateLimitException
 import com.m3ter.errors.UnauthorizedException
 import com.m3ter.errors.UnexpectedStatusCodeException
 import com.m3ter.errors.UnprocessableEntityException
-import com.m3ter.models.ProductListParams
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.BeforeEach
@@ -69,10 +68,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<BadRequestException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<BadRequestException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(400)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -89,10 +85,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<UnauthorizedException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<UnauthorizedException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(401)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -109,10 +102,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<PermissionDeniedException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<PermissionDeniedException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(403)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -129,10 +119,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<NotFoundException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<NotFoundException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(404)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -149,10 +136,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<UnprocessableEntityException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<UnprocessableEntityException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(422)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -169,10 +153,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<RateLimitException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<RateLimitException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(429)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -189,10 +170,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<InternalServerException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<InternalServerException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(500)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -209,10 +187,7 @@ internal class ErrorHandlingTest {
                 )
         )
 
-        val e =
-            assertThrows<UnexpectedStatusCodeException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<UnexpectedStatusCodeException> { productService.list() }
 
         assertThat(e.statusCode()).isEqualTo(999)
         assertThat(e.headers().toMap()).contains(entry(HEADER_NAME, listOf(HEADER_VALUE)))
@@ -227,10 +202,7 @@ internal class ErrorHandlingTest {
                 .willReturn(status(200).withHeader(HEADER_NAME, HEADER_VALUE).withBody(NOT_JSON))
         )
 
-        val e =
-            assertThrows<M3terException> {
-                productService.list(ProductListParams.builder().orgId("orgId").build())
-            }
+        val e = assertThrows<M3terException> { productService.list() }
 
         assertThat(e).hasMessage("Error reading response")
     }

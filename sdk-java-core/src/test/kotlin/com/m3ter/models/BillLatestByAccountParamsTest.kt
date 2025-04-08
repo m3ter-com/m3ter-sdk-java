@@ -14,10 +14,9 @@ internal class BillLatestByAccountParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            BillLatestByAccountParams.builder().orgId("orgId").accountId("accountId").build()
+        val params = BillLatestByAccountParams.builder().accountId("accountId").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("accountId")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")

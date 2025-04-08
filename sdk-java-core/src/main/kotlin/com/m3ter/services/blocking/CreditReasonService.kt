@@ -59,14 +59,21 @@ interface CreditReasonService {
      * the list returned for the call by Credit Reason ID, Credit Reason short code, or by Archive
      * status.
      */
-    fun list(params: CreditReasonListParams): CreditReasonListPage =
-        list(params, RequestOptions.none())
+    fun list(): CreditReasonListPage = list(CreditReasonListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CreditReasonListParams,
+        params: CreditReasonListParams = CreditReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonListPage
+
+    /** @see [list] */
+    fun list(params: CreditReasonListParams = CreditReasonListParams.none()): CreditReasonListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CreditReasonListPage =
+        list(CreditReasonListParams.none(), requestOptions)
 
     /** Delete the Credit Reason with the given UUID. */
     fun delete(params: CreditReasonDeleteParams): CreditReasonResponse =
@@ -135,15 +142,25 @@ interface CreditReasonService {
          * is otherwise the same as [CreditReasonService.list].
          */
         @MustBeClosed
-        fun list(params: CreditReasonListParams): HttpResponseFor<CreditReasonListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CreditReasonListPage> = list(CreditReasonListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CreditReasonListParams,
+            params: CreditReasonListParams = CreditReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditReasonListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CreditReasonListParams = CreditReasonListParams.none()
+        ): HttpResponseFor<CreditReasonListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CreditReasonListPage> =
+            list(CreditReasonListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

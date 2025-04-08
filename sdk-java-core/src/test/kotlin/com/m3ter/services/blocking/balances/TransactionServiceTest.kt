@@ -59,7 +59,7 @@ internal class TransactionServiceTest {
 
         val page =
             transactionService.list(
-                BalanceTransactionListParams.builder().orgId("orgId").balanceId("balanceId").build()
+                BalanceTransactionListParams.builder().balanceId("balanceId").build()
             )
 
         page.response().validate()

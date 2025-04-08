@@ -68,13 +68,21 @@ interface CurrencyService {
      * pagination and includes various query parameters to filter the Currencies based on Currency
      * ID, and short codes.
      */
-    fun list(params: CurrencyListParams): CurrencyListPage = list(params, RequestOptions.none())
+    fun list(): CurrencyListPage = list(CurrencyListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CurrencyListParams,
+        params: CurrencyListParams = CurrencyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CurrencyListPage
+
+    /** @see [list] */
+    fun list(params: CurrencyListParams = CurrencyListParams.none()): CurrencyListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CurrencyListPage =
+        list(CurrencyListParams.none(), requestOptions)
 
     /**
      * Delete the Currency with the given UUID.
@@ -143,15 +151,25 @@ interface CurrencyService {
          * otherwise the same as [CurrencyService.list].
          */
         @MustBeClosed
-        fun list(params: CurrencyListParams): HttpResponseFor<CurrencyListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CurrencyListPage> = list(CurrencyListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CurrencyListParams,
+            params: CurrencyListParams = CurrencyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CurrencyListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CurrencyListParams = CurrencyListParams.none()
+        ): HttpResponseFor<CurrencyListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CurrencyListPage> =
+            list(CurrencyListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/picklists/currency/{id}`,

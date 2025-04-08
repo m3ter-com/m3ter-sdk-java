@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BalanceCreateParams
 import com.m3ter.models.BalanceDeleteParams
-import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
 import java.time.OffsetDateTime
@@ -125,7 +124,7 @@ internal class BalanceServiceTest {
                 .build()
         val balanceService = client.balances()
 
-        val page = balanceService.list(BalanceListParams.builder().orgId("orgId").build())
+        val page = balanceService.list()
 
         page.response().validate()
     }

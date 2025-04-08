@@ -52,14 +52,22 @@ interface EventServiceAsync {
      *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
      *   endpoint in this section. The response lists the valid Query parameters.
      */
-    fun list(params: EventListParams): CompletableFuture<EventListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<EventListPageAsync> = list(EventListParams.none())
 
     /** @see [list] */
     fun list(
-        params: EventListParams,
+        params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: EventListParams = EventListParams.none()
+    ): CompletableFuture<EventListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<EventListPageAsync> =
+        list(EventListParams.none(), requestOptions)
 
     /**
      * List Event Fields.
@@ -84,28 +92,45 @@ interface EventServiceAsync {
      *   these Events, their `customFields` values will not be populated until such time as the
      *   custom fields functionality is implemented for them
      */
-    fun getFields(params: EventGetFieldsParams): CompletableFuture<EventGetFieldsResponse> =
-        getFields(params, RequestOptions.none())
+    fun getFields(): CompletableFuture<EventGetFieldsResponse> =
+        getFields(EventGetFieldsParams.none())
 
     /** @see [getFields] */
     fun getFields(
-        params: EventGetFieldsParams,
+        params: EventGetFieldsParams = EventGetFieldsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventGetFieldsResponse>
+
+    /** @see [getFields] */
+    fun getFields(
+        params: EventGetFieldsParams = EventGetFieldsParams.none()
+    ): CompletableFuture<EventGetFieldsResponse> = getFields(params, RequestOptions.none())
+
+    /** @see [getFields] */
+    fun getFields(requestOptions: RequestOptions): CompletableFuture<EventGetFieldsResponse> =
+        getFields(EventGetFieldsParams.none(), requestOptions)
 
     /**
      * Retrieve a list of Notification Event Types.
      *
      * This endpoint retrieves a list of Event Types that can have Notification rules configured.
      */
-    fun getTypes(params: EventGetTypesParams): CompletableFuture<EventGetTypesResponse> =
-        getTypes(params, RequestOptions.none())
+    fun getTypes(): CompletableFuture<EventGetTypesResponse> = getTypes(EventGetTypesParams.none())
 
     /** @see [getTypes] */
     fun getTypes(
-        params: EventGetTypesParams,
+        params: EventGetTypesParams = EventGetTypesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<EventGetTypesResponse>
+
+    /** @see [getTypes] */
+    fun getTypes(
+        params: EventGetTypesParams = EventGetTypesParams.none()
+    ): CompletableFuture<EventGetTypesResponse> = getTypes(params, RequestOptions.none())
+
+    /** @see [getTypes] */
+    fun getTypes(requestOptions: RequestOptions): CompletableFuture<EventGetTypesResponse> =
+        getTypes(EventGetTypesParams.none(), requestOptions)
 
     /** A view of [EventServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -132,48 +157,86 @@ interface EventServiceAsync {
          * same as [EventServiceAsync.list].
          */
         @MustBeClosed
-        fun list(params: EventListParams): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+        fun list(): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+            list(EventListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: EventListParams = EventListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<EventListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: EventListParams = EventListParams.none()
+        ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: EventListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EventListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
+            list(EventListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/fields`, but is
          * otherwise the same as [EventServiceAsync.getFields].
          */
         @MustBeClosed
+        fun getFields(): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
+            getFields(EventGetFieldsParams.none())
+
+        /** @see [getFields] */
+        @MustBeClosed
         fun getFields(
-            params: EventGetFieldsParams
+            params: EventGetFieldsParams = EventGetFieldsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>>
+
+        /** @see [getFields] */
+        @MustBeClosed
+        fun getFields(
+            params: EventGetFieldsParams = EventGetFieldsParams.none()
         ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
             getFields(params, RequestOptions.none())
 
         /** @see [getFields] */
         @MustBeClosed
         fun getFields(
-            params: EventGetFieldsParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
+            getFields(EventGetFieldsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/types`, but is
          * otherwise the same as [EventServiceAsync.getTypes].
          */
         @MustBeClosed
+        fun getTypes(): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
+            getTypes(EventGetTypesParams.none())
+
+        /** @see [getTypes] */
+        @MustBeClosed
         fun getTypes(
-            params: EventGetTypesParams
+            params: EventGetTypesParams = EventGetTypesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>>
+
+        /** @see [getTypes] */
+        @MustBeClosed
+        fun getTypes(
+            params: EventGetTypesParams = EventGetTypesParams.none()
         ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
             getTypes(params, RequestOptions.none())
 
         /** @see [getTypes] */
         @MustBeClosed
         fun getTypes(
-            params: EventGetTypesParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
+            getTypes(EventGetTypesParams.none(), requestOptions)
     }
 }

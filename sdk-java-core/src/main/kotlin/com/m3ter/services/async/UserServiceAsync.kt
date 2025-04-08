@@ -68,14 +68,21 @@ interface UserServiceAsync {
      * overview of all users and their basic details. The list can be paginated for easier
      * management.
      */
-    fun list(params: UserListParams): CompletableFuture<UserListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<UserListPageAsync> = list(UserListParams.none())
 
     /** @see [list] */
     fun list(
-        params: UserListParams,
+        params: UserListParams = UserListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserListPageAsync>
+
+    /** @see [list] */
+    fun list(params: UserListParams = UserListParams.none()): CompletableFuture<UserListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<UserListPageAsync> =
+        list(UserListParams.none(), requestOptions)
 
     /**
      * Retrieve the permissions for the OrgUser with the given UUID.
@@ -126,14 +133,21 @@ interface UserServiceAsync {
     ): CompletableFuture<ResourceGroupResponse>
 
     /** Retrieve information about the current user */
-    fun me(params: UserMeParams): CompletableFuture<UserMeResponse> =
-        me(params, RequestOptions.none())
+    fun me(): CompletableFuture<UserMeResponse> = me(UserMeParams.none())
 
     /** @see [me] */
     fun me(
-        params: UserMeParams,
+        params: UserMeParams = UserMeParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserMeResponse>
+
+    /** @see [me] */
+    fun me(params: UserMeParams = UserMeParams.none()): CompletableFuture<UserMeResponse> =
+        me(params, RequestOptions.none())
+
+    /** @see [me] */
+    fun me(requestOptions: RequestOptions): CompletableFuture<UserMeResponse> =
+        me(UserMeParams.none(), requestOptions)
 
     /** Resend temporary password for user */
     fun resendPassword(params: UserResendPasswordParams): CompletableFuture<Void?> =
@@ -185,15 +199,29 @@ interface UserServiceAsync {
          * same as [UserServiceAsync.list].
          */
         @MustBeClosed
-        fun list(params: UserListParams): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
+        fun list(): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
+            list(UserListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: UserListParams = UserListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: UserListParams = UserListParams.none()
+        ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: UserListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
+            list(UserListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
@@ -234,15 +262,25 @@ interface UserServiceAsync {
          * the same as [UserServiceAsync.me].
          */
         @MustBeClosed
-        fun me(params: UserMeParams): CompletableFuture<HttpResponseFor<UserMeResponse>> =
-            me(params, RequestOptions.none())
+        fun me(): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(UserMeParams.none())
 
         /** @see [me] */
         @MustBeClosed
         fun me(
-            params: UserMeParams,
+            params: UserMeParams = UserMeParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserMeResponse>>
+
+        /** @see [me] */
+        @MustBeClosed
+        fun me(
+            params: UserMeParams = UserMeParams.none()
+        ): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(params, RequestOptions.none())
+
+        /** @see [me] */
+        @MustBeClosed
+        fun me(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<UserMeResponse>> =
+            me(UserMeParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,

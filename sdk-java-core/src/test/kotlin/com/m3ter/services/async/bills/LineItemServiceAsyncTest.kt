@@ -50,9 +50,7 @@ internal class LineItemServiceAsyncTest {
         val lineItemServiceAsync = client.bills().lineItems()
 
         val pageFuture =
-            lineItemServiceAsync.list(
-                BillLineItemListParams.builder().orgId("orgId").billId("billId").build()
-            )
+            lineItemServiceAsync.list(BillLineItemListParams.builder().billId("billId").build())
 
         val page = pageFuture.get()
         page.response().validate()

@@ -19,6 +19,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Add a Transaction to a Balance. This endpoint allows you to create a new Transaction amount for a
@@ -39,14 +40,14 @@ import java.util.Optional
  */
 class BalanceTransactionCreateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val balanceId: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun balanceId(): String = balanceId
 
@@ -194,7 +195,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * .amount()
          * ```
@@ -220,7 +220,10 @@ private constructor(
             additionalQueryParams = balanceTransactionCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
 
@@ -480,7 +483,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * .amount()
          * ```
@@ -489,7 +491,7 @@ private constructor(
          */
         fun build(): BalanceTransactionCreateParams =
             BalanceTransactionCreateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("balanceId", balanceId),
                 body.build(),
                 additionalHeaders.build(),
@@ -501,7 +503,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> balanceId
             else -> ""
         }

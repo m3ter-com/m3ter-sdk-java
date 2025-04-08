@@ -81,15 +81,23 @@ interface CompoundAggregationServiceAsync {
      * Aggregations of usage data. It supports pagination, and includes various query parameters to
      * filter the CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
      */
-    fun list(
-        params: CompoundAggregationListParams
-    ): CompletableFuture<CompoundAggregationListPageAsync> = list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CompoundAggregationListPageAsync> =
+        list(CompoundAggregationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CompoundAggregationListParams,
+        params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CompoundAggregationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CompoundAggregationListParams = CompoundAggregationListParams.none()
+    ): CompletableFuture<CompoundAggregationListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CompoundAggregationListPageAsync> =
+        list(CompoundAggregationListParams.none(), requestOptions)
 
     /**
      * Delete a CompoundAggregation with the given UUID.
@@ -170,17 +178,29 @@ interface CompoundAggregationServiceAsync {
          * otherwise the same as [CompoundAggregationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
+            list(CompoundAggregationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CompoundAggregationListParams
+            params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams = CompoundAggregationListParams.none()
         ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CompoundAggregationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
+            list(CompoundAggregationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

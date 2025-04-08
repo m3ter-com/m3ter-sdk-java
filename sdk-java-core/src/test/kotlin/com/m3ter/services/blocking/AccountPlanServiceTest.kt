@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
 import com.m3ter.models.AccountPlanCreateParams
 import com.m3ter.models.AccountPlanDeleteParams
-import com.m3ter.models.AccountPlanListParams
 import com.m3ter.models.AccountPlanRetrieveParams
 import com.m3ter.models.AccountPlanUpdateParams
 import java.time.LocalDate
@@ -125,7 +124,7 @@ internal class AccountPlanServiceTest {
                 .build()
         val accountPlanService = client.accountPlans()
 
-        val page = accountPlanService.list(AccountPlanListParams.builder().orgId("orgId").build())
+        val page = accountPlanService.list()
 
         page.response().validate()
     }

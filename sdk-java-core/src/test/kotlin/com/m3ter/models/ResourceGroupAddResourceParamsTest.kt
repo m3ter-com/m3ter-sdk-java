@@ -23,14 +23,13 @@ internal class ResourceGroupAddResourceParamsTest {
     fun pathParams() {
         val params =
             ResourceGroupAddResourceParams.builder()
-                .orgId("orgId")
                 .type("type")
                 .resourceGroupId("resourceGroupId")
                 .targetId("06f6b50c-a868-4ca6-XXXX-448e507d5248")
                 .targetType(ResourceGroupAddResourceParams.TargetType.ITEM)
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("type")
         assertThat(params._pathParam(2)).isEqualTo("resourceGroupId")
         // out-of-bound path param
@@ -60,7 +59,6 @@ internal class ResourceGroupAddResourceParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ResourceGroupAddResourceParams.builder()
-                .orgId("orgId")
                 .type("type")
                 .resourceGroupId("resourceGroupId")
                 .targetId("06f6b50c-a868-4ca6-XXXX-448e507d5248")

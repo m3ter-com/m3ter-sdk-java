@@ -41,7 +41,6 @@ internal class ServiceParamsTest {
 
         productService.list(
             ProductListParams.builder()
-                .orgId("orgId")
                 .putAdditionalHeader("Secret-Header", "42")
                 .putAdditionalQueryParam("secret_query_param", "42")
                 .build()

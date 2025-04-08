@@ -123,7 +123,7 @@ internal class CreditLineItemServiceTest {
 
         val page =
             creditLineItemService.list(
-                BillCreditLineItemListParams.builder().orgId("orgId").billId("billId").build()
+                BillCreditLineItemListParams.builder().billId("billId").build()
             )
 
         page.response().validate()

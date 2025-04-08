@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.m3ter.core.Enum
 import com.m3ter.core.JsonField
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import com.m3ter.core.toImmutable
@@ -18,7 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 /** Retrieve a list of Export Job entities. */
 class DataExportJobListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val dateCreatedEnd: String?,
     private val dateCreatedStart: String?,
     private val ids: List<String>?,
@@ -30,7 +29,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** Include only Job entities created before this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z' */
     fun dateCreatedEnd(): Optional<String> = Optional.ofNullable(dateCreatedEnd)
@@ -61,14 +60,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [DataExportJobListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         */
+        @JvmStatic fun none(): DataExportJobListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [DataExportJobListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -100,7 +94,10 @@ private constructor(
             additionalQueryParams = dataExportJobListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** Include only Job entities created before this date. Format: yyyy-MM-dd'T'HH:mm:ss'Z' */
         fun dateCreatedEnd(dateCreatedEnd: String?) = apply { this.dateCreatedEnd = dateCreatedEnd }
@@ -266,17 +263,10 @@ private constructor(
          * Returns an immutable instance of [DataExportJobListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): DataExportJobListParams =
             DataExportJobListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 dateCreatedEnd,
                 dateCreatedStart,
                 ids?.toImmutable(),
@@ -291,7 +281,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

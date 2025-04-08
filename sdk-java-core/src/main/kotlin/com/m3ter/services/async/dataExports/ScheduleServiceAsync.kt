@@ -116,15 +116,23 @@ interface ScheduleServiceAsync {
      * The response will contain an array for both the operational and usage Data Export Schedules
      * in your Organization.
      */
-    fun list(
-        params: DataExportScheduleListParams
-    ): CompletableFuture<DataExportScheduleListPageAsync> = list(params, RequestOptions.none())
+    fun list(): CompletableFuture<DataExportScheduleListPageAsync> =
+        list(DataExportScheduleListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportScheduleListParams,
+        params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DataExportScheduleListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: DataExportScheduleListParams = DataExportScheduleListParams.none()
+    ): CompletableFuture<DataExportScheduleListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<DataExportScheduleListPageAsync> =
+        list(DataExportScheduleListParams.none(), requestOptions)
 
     /**
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
@@ -201,17 +209,29 @@ interface ScheduleServiceAsync {
          * is otherwise the same as [ScheduleServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>> =
+            list(DataExportScheduleListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: DataExportScheduleListParams
+            params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportScheduleListParams = DataExportScheduleListParams.none()
         ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportScheduleListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleListPageAsync>> =
+            list(DataExportScheduleListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

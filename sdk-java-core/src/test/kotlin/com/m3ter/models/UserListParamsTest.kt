@@ -20,9 +20,9 @@ internal class UserListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = UserListParams.builder().orgId("orgId").build()
+        val params = UserListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -51,7 +51,7 @@ internal class UserListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = UserListParams.builder().orgId("orgId").build()
+        val params = UserListParams.builder().build()
 
         val queryParams = params._queryParams()
 

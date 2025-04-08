@@ -60,7 +60,7 @@ internal class TransactionServiceAsyncTest {
 
         val pageFuture =
             transactionServiceAsync.list(
-                BalanceTransactionListParams.builder().orgId("orgId").balanceId("balanceId").build()
+                BalanceTransactionListParams.builder().balanceId("balanceId").build()
             )
 
         val page = pageFuture.get()

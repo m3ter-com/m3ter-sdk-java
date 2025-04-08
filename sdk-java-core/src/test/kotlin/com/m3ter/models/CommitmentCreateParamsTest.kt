@@ -54,7 +54,6 @@ internal class CommitmentCreateParamsTest {
     fun pathParams() {
         val params =
             CommitmentCreateParams.builder()
-                .orgId("orgId")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .amount(1.0)
                 .currency("x")
@@ -62,7 +61,7 @@ internal class CommitmentCreateParamsTest {
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -152,7 +151,6 @@ internal class CommitmentCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CommitmentCreateParams.builder()
-                .orgId("orgId")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .amount(1.0)
                 .currency("x")

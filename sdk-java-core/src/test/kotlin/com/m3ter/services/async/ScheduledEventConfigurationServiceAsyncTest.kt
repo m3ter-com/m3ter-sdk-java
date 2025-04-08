@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.models.ScheduledEventConfigurationDeleteParams
-import com.m3ter.models.ScheduledEventConfigurationListParams
 import com.m3ter.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.models.ScheduledEventConfigurationUpdateParams
 import org.junit.jupiter.api.Test
@@ -105,10 +104,7 @@ internal class ScheduledEventConfigurationServiceAsyncTest {
                 .build()
         val scheduledEventConfigurationServiceAsync = client.scheduledEventConfigurations()
 
-        val pageFuture =
-            scheduledEventConfigurationServiceAsync.list(
-                ScheduledEventConfigurationListParams.builder().orgId("orgId").build()
-            )
+        val pageFuture = scheduledEventConfigurationServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()
