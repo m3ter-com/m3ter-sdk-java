@@ -57,14 +57,21 @@ interface AggregationService {
     ): AggregationResponse
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
-    fun list(params: AggregationListParams): AggregationListPage =
-        list(params, RequestOptions.none())
+    fun list(): AggregationListPage = list(AggregationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AggregationListParams,
+        params: AggregationListParams = AggregationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationListPage
+
+    /** @see [list] */
+    fun list(params: AggregationListParams = AggregationListParams.none()): AggregationListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): AggregationListPage =
+        list(AggregationListParams.none(), requestOptions)
 
     /** Delete the Aggregation with the given UUID. */
     fun delete(params: AggregationDeleteParams): AggregationResponse =
@@ -131,15 +138,25 @@ interface AggregationService {
          * otherwise the same as [AggregationService.list].
          */
         @MustBeClosed
-        fun list(params: AggregationListParams): HttpResponseFor<AggregationListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<AggregationListPage> = list(AggregationListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AggregationListParams,
+            params: AggregationListParams = AggregationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AggregationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AggregationListParams = AggregationListParams.none()
+        ): HttpResponseFor<AggregationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AggregationListPage> =
+            list(AggregationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/aggregations/{id}`, but is

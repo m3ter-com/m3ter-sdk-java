@@ -102,10 +102,7 @@ internal class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val page =
-            resourceGroupService.list(
-                ResourceGroupListParams.builder().orgId("orgId").type("type").build()
-            )
+        val page = resourceGroupService.list(ResourceGroupListParams.builder().type("type").build())
 
         page.response().validate()
     }
@@ -172,7 +169,6 @@ internal class ResourceGroupServiceTest {
         val page =
             resourceGroupService.listContents(
                 ResourceGroupListContentsParams.builder()
-                    .orgId("orgId")
                     .type("type")
                     .resourceGroupId("resourceGroupId")
                     .build()
@@ -196,7 +192,6 @@ internal class ResourceGroupServiceTest {
         val page =
             resourceGroupService.listPermissions(
                 ResourceGroupListPermissionsParams.builder()
-                    .orgId("orgId")
                     .type("type")
                     .resourceGroupId("resourceGroupId")
                     .build()

@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.TransactionTypeCreateParams
 import com.m3ter.models.TransactionTypeDeleteParams
-import com.m3ter.models.TransactionTypeListParams
 import com.m3ter.models.TransactionTypeRetrieveParams
 import com.m3ter.models.TransactionTypeUpdateParams
 import org.junit.jupiter.api.Test
@@ -100,8 +99,7 @@ internal class TransactionTypeServiceTest {
                 .build()
         val transactionTypeService = client.transactionTypes()
 
-        val page =
-            transactionTypeService.list(TransactionTypeListParams.builder().orgId("orgId").build())
+        val page = transactionTypeService.list()
 
         page.response().validate()
     }

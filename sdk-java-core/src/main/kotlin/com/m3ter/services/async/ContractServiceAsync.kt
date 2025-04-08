@@ -71,14 +71,22 @@ interface ContractServiceAsync {
      * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various
      * query parameters to filter the Contracts returned based on Contract IDs or short codes.
      */
-    fun list(params: ContractListParams): CompletableFuture<ContractListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<ContractListPageAsync> = list(ContractListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ContractListParams,
+        params: ContractListParams = ContractListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: ContractListParams = ContractListParams.none()
+    ): CompletableFuture<ContractListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ContractListPageAsync> =
+        list(ContractListParams.none(), requestOptions)
 
     /**
      * Deletes the Contract with the specified UUID. Used to remove an existing Contract from an
@@ -181,17 +189,29 @@ interface ContractServiceAsync {
          * the same as [ContractServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
+            list(ContractListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: ContractListParams
+            params: ContractListParams = ContractListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ContractListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ContractListParams = ContractListParams.none()
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ContractListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ContractListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
+            list(ContractListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is

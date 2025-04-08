@@ -10,18 +10,19 @@ import com.m3ter.core.http.QueryParams
 import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Remove a permission policy from support users for an organization. */
 class PermissionPolicyRemoveFromSupportUserParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val permissionPolicyId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun permissionPolicyId(): String = permissionPolicyId
 
@@ -41,7 +42,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .permissionPolicyId()
          * ```
          */
@@ -71,7 +71,10 @@ private constructor(
                 permissionPolicyRemoveFromSupportUserParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun permissionPolicyId(permissionPolicyId: String) = apply {
             this.permissionPolicyId = permissionPolicyId
@@ -204,7 +207,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .permissionPolicyId()
          * ```
          *
@@ -212,7 +214,7 @@ private constructor(
          */
         fun build(): PermissionPolicyRemoveFromSupportUserParams =
             PermissionPolicyRemoveFromSupportUserParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("permissionPolicyId", permissionPolicyId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -225,7 +227,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> permissionPolicyId
             else -> ""
         }

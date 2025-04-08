@@ -17,14 +17,22 @@ interface BillConfigService {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide BillConfig. */
-    fun retrieve(params: BillConfigRetrieveParams): BillConfigResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(): BillConfigResponse = retrieve(BillConfigRetrieveParams.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        params: BillConfigRetrieveParams,
+        params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfigResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
+    ): BillConfigResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(requestOptions: RequestOptions): BillConfigResponse =
+        retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Organization-wide BillConfig.
@@ -33,14 +41,21 @@ interface BillConfigService {
      * service period end date on or before the set date will be locked and cannot be updated or
      * recalculated.
      */
-    fun update(params: BillConfigUpdateParams): BillConfigResponse =
-        update(params, RequestOptions.none())
+    fun update(): BillConfigResponse = update(BillConfigUpdateParams.none())
 
     /** @see [update] */
     fun update(
-        params: BillConfigUpdateParams,
+        params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfigResponse
+
+    /** @see [update] */
+    fun update(params: BillConfigUpdateParams = BillConfigUpdateParams.none()): BillConfigResponse =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(requestOptions: RequestOptions): BillConfigResponse =
+        update(BillConfigUpdateParams.none(), requestOptions)
 
     /** A view of [BillConfigService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -50,29 +65,50 @@ interface BillConfigService {
          * the same as [BillConfigService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: BillConfigRetrieveParams): HttpResponseFor<BillConfigResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(): HttpResponseFor<BillConfigResponse> =
+            retrieve(BillConfigRetrieveParams.none())
 
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: BillConfigRetrieveParams,
+            params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillConfigResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
+        ): HttpResponseFor<BillConfigResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(requestOptions: RequestOptions): HttpResponseFor<BillConfigResponse> =
+            retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigService.update].
          */
         @MustBeClosed
-        fun update(params: BillConfigUpdateParams): HttpResponseFor<BillConfigResponse> =
-            update(params, RequestOptions.none())
+        fun update(): HttpResponseFor<BillConfigResponse> = update(BillConfigUpdateParams.none())
 
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: BillConfigUpdateParams,
+            params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillConfigResponse>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: BillConfigUpdateParams = BillConfigUpdateParams.none()
+        ): HttpResponseFor<BillConfigResponse> = update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(requestOptions: RequestOptions): HttpResponseFor<BillConfigResponse> =
+            update(BillConfigUpdateParams.none(), requestOptions)
     }
 }

@@ -76,14 +76,22 @@ interface ExternalMappingService {
      * The list can be paginated for better management, and supports filtering using the external
      * system.
      */
-    fun list(params: ExternalMappingListParams): ExternalMappingListPage =
-        list(params, RequestOptions.none())
+    fun list(): ExternalMappingListPage = list(ExternalMappingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ExternalMappingListParams,
+        params: ExternalMappingListParams = ExternalMappingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalMappingListPage
+
+    /** @see [list] */
+    fun list(
+        params: ExternalMappingListParams = ExternalMappingListParams.none()
+    ): ExternalMappingListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): ExternalMappingListPage =
+        list(ExternalMappingListParams.none(), requestOptions)
 
     /** Delete an External Mapping with the given UUID. */
     fun delete(params: ExternalMappingDeleteParams): ExternalMappingResponse =
@@ -184,15 +192,26 @@ interface ExternalMappingService {
          * otherwise the same as [ExternalMappingService.list].
          */
         @MustBeClosed
-        fun list(params: ExternalMappingListParams): HttpResponseFor<ExternalMappingListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<ExternalMappingListPage> =
+            list(ExternalMappingListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ExternalMappingListParams,
+            params: ExternalMappingListParams = ExternalMappingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalMappingListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ExternalMappingListParams = ExternalMappingListParams.none()
+        ): HttpResponseFor<ExternalMappingListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<ExternalMappingListPage> =
+            list(ExternalMappingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/externalmappings/{id}`,

@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.ContractCreateParams
 import com.m3ter.models.ContractDeleteParams
 import com.m3ter.models.ContractEndDateBillingEntitiesParams
-import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
 import java.time.LocalDate
@@ -125,8 +124,7 @@ internal class ContractServiceAsyncTest {
                 .build()
         val contractServiceAsync = client.contracts()
 
-        val pageFuture =
-            contractServiceAsync.list(ContractListParams.builder().orgId("orgId").build())
+        val pageFuture = contractServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

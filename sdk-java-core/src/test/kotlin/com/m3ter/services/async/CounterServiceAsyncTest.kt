@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.CounterCreateParams
 import com.m3ter.models.CounterDeleteParams
-import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterRetrieveParams
 import com.m3ter.models.CounterUpdateParams
 import org.junit.jupiter.api.Test
@@ -105,8 +104,7 @@ internal class CounterServiceAsyncTest {
                 .build()
         val counterServiceAsync = client.counters()
 
-        val pageFuture =
-            counterServiceAsync.list(CounterListParams.builder().orgId("orgId").build())
+        val pageFuture = counterServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

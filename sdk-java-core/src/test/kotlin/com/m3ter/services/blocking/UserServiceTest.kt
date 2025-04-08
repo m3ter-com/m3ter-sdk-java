@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.PermissionStatementResponse
 import com.m3ter.models.UserGetPermissionsParams
 import com.m3ter.models.UserGetUserGroupsParams
-import com.m3ter.models.UserListParams
 import com.m3ter.models.UserMeParams
 import com.m3ter.models.UserResendPasswordParams
 import com.m3ter.models.UserRetrieveParams
@@ -81,7 +80,7 @@ internal class UserServiceTest {
                 .build()
         val userService = client.users()
 
-        val page = userService.list(UserListParams.builder().orgId("orgId").build())
+        val page = userService.list()
 
         page.response().validate()
     }

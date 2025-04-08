@@ -73,13 +73,21 @@ interface ProductService {
      * This endpoint retrieves a list of all the Products within a specified Organization. The list
      * can be paginated, and supports filtering by specific Product IDs.
      */
-    fun list(params: ProductListParams): ProductListPage = list(params, RequestOptions.none())
+    fun list(): ProductListPage = list(ProductListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ProductListParams,
+        params: ProductListParams = ProductListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ProductListPage
+
+    /** @see [list] */
+    fun list(params: ProductListParams = ProductListParams.none()): ProductListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): ProductListPage =
+        list(ProductListParams.none(), requestOptions)
 
     /**
      * Delete a Product with the given UUID.
@@ -147,16 +155,25 @@ interface ProductService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductService.list].
          */
-        @MustBeClosed
-        fun list(params: ProductListParams): HttpResponseFor<ProductListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<ProductListPage> = list(ProductListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ProductListParams,
+            params: ProductListParams = ProductListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ProductListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ProductListParams = ProductListParams.none()
+        ): HttpResponseFor<ProductListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<ProductListPage> =
+            list(ProductListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/products/{id}`, but is

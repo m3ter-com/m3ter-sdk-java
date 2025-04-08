@@ -25,10 +25,9 @@ internal class ProductCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            ProductCreateParams.builder().orgId("orgId").code("JS!?Q0]r] ]\$]").name("x").build()
+        val params = ProductCreateParams.builder().code("JS!?Q0]r] ]\$]").name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -63,8 +62,7 @@ internal class ProductCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            ProductCreateParams.builder().orgId("orgId").code("JS!?Q0]r] ]\$]").name("x").build()
+        val params = ProductCreateParams.builder().code("JS!?Q0]r] ]\$]").name("x").build()
 
         val body = params._body()
 

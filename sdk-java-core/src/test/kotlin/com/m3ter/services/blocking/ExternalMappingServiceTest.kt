@@ -8,7 +8,6 @@ import com.m3ter.models.ExternalMappingCreateParams
 import com.m3ter.models.ExternalMappingDeleteParams
 import com.m3ter.models.ExternalMappingListByExternalEntityParams
 import com.m3ter.models.ExternalMappingListByM3terEntityParams
-import com.m3ter.models.ExternalMappingListParams
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
 import org.junit.jupiter.api.Test
@@ -108,8 +107,7 @@ internal class ExternalMappingServiceTest {
                 .build()
         val externalMappingService = client.externalMappings()
 
-        val page =
-            externalMappingService.list(ExternalMappingListParams.builder().orgId("orgId").build())
+        val page = externalMappingService.list()
 
         page.response().validate()
     }
@@ -149,7 +147,6 @@ internal class ExternalMappingServiceTest {
         val page =
             externalMappingService.listByExternalEntity(
                 ExternalMappingListByExternalEntityParams.builder()
-                    .orgId("orgId")
                     .system("system")
                     .externalTable("externalTable")
                     .externalId("externalId")
@@ -174,7 +171,6 @@ internal class ExternalMappingServiceTest {
         val page =
             externalMappingService.listByM3terEntity(
                 ExternalMappingListByM3terEntityParams.builder()
-                    .orgId("orgId")
                     .entity("entity")
                     .m3terId("m3terId")
                     .build()

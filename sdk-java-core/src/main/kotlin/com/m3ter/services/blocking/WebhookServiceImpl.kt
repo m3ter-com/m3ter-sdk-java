@@ -87,7 +87,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                     )
@@ -119,7 +119,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                         params._pathParam(1),
@@ -152,7 +152,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                         params._pathParam(1),
@@ -186,7 +186,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                     )
@@ -218,7 +218,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                         params._pathParam(1),
@@ -252,7 +252,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationdestinations",
                         "webhooks",
                         params._pathParam(1),

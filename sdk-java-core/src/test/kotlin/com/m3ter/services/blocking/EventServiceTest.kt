@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.EventGetFieldsParams
 import com.m3ter.models.EventGetTypesParams
-import com.m3ter.models.EventListParams
 import com.m3ter.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -44,7 +43,7 @@ internal class EventServiceTest {
                 .build()
         val eventService = client.events()
 
-        val page = eventService.list(EventListParams.builder().orgId("orgId").build())
+        val page = eventService.list()
 
         page.response().validate()
     }

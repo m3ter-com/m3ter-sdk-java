@@ -51,13 +51,21 @@ interface CounterService {
     /**
      * Retrieve a list of Counter entities that can be filtered by Product, Counter ID, or Codes.
      */
-    fun list(params: CounterListParams): CounterListPage = list(params, RequestOptions.none())
+    fun list(): CounterListPage = list(CounterListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterListParams,
+        params: CounterListParams = CounterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterListPage
+
+    /** @see [list] */
+    fun list(params: CounterListParams = CounterListParams.none()): CounterListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CounterListPage =
+        list(CounterListParams.none(), requestOptions)
 
     /** Delete a Counter for the given UUID. */
     fun delete(params: CounterDeleteParams): CounterResponse = delete(params, RequestOptions.none())
@@ -120,16 +128,25 @@ interface CounterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
          * the same as [CounterService.list].
          */
-        @MustBeClosed
-        fun list(params: CounterListParams): HttpResponseFor<CounterListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<CounterListPage> = list(CounterListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterListParams,
+            params: CounterListParams = CounterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterListParams = CounterListParams.none()
+        ): HttpResponseFor<CounterListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CounterListPage> =
+            list(CounterListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is

@@ -14,14 +14,9 @@ internal class BillCreditLineItemRetrieveParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            BillCreditLineItemRetrieveParams.builder()
-                .orgId("orgId")
-                .billId("billId")
-                .id("id")
-                .build()
+        val params = BillCreditLineItemRetrieveParams.builder().billId("billId").id("id").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("billId")
         assertThat(params._pathParam(2)).isEqualTo("id")
         // out-of-bound path param

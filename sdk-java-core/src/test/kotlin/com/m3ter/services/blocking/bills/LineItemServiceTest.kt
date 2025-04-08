@@ -48,10 +48,7 @@ internal class LineItemServiceTest {
                 .build()
         val lineItemService = client.bills().lineItems()
 
-        val page =
-            lineItemService.list(
-                BillLineItemListParams.builder().orgId("orgId").billId("billId").build()
-            )
+        val page = lineItemService.list(BillLineItemListParams.builder().billId("billId").build())
 
         page.response().validate()
     }

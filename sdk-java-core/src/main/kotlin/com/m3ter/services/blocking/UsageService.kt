@@ -44,15 +44,24 @@ interface UsageService {
      *   then you can perform this **GET** call using the full URL returned for any ingest failure
      *   Event to obtain a failed ingest file download URL for the Event.
      */
-    fun getFailedIngestDownloadUrl(
-        params: UsageGetFailedIngestDownloadUrlParams
-    ): DownloadUrlResponse = getFailedIngestDownloadUrl(params, RequestOptions.none())
+    fun getFailedIngestDownloadUrl(): DownloadUrlResponse =
+        getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
     /** @see [getFailedIngestDownloadUrl] */
     fun getFailedIngestDownloadUrl(
-        params: UsageGetFailedIngestDownloadUrlParams,
+        params: UsageGetFailedIngestDownloadUrlParams =
+            UsageGetFailedIngestDownloadUrlParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DownloadUrlResponse
+
+    /** @see [getFailedIngestDownloadUrl] */
+    fun getFailedIngestDownloadUrl(
+        params: UsageGetFailedIngestDownloadUrlParams = UsageGetFailedIngestDownloadUrlParams.none()
+    ): DownloadUrlResponse = getFailedIngestDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getFailedIngestDownloadUrl] */
+    fun getFailedIngestDownloadUrl(requestOptions: RequestOptions): DownloadUrlResponse =
+        getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none(), requestOptions)
 
     /** Query and filter usage data */
     fun query(params: UsageQueryParams): UsageQueryResponse = query(params, RequestOptions.none())
@@ -117,17 +126,31 @@ interface UsageService {
          * same as [UsageService.getFailedIngestDownloadUrl].
          */
         @MustBeClosed
+        fun getFailedIngestDownloadUrl(): HttpResponseFor<DownloadUrlResponse> =
+            getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
+
+        /** @see [getFailedIngestDownloadUrl] */
+        @MustBeClosed
         fun getFailedIngestDownloadUrl(
-            params: UsageGetFailedIngestDownloadUrlParams
+            params: UsageGetFailedIngestDownloadUrlParams =
+                UsageGetFailedIngestDownloadUrlParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DownloadUrlResponse>
+
+        /** @see [getFailedIngestDownloadUrl] */
+        @MustBeClosed
+        fun getFailedIngestDownloadUrl(
+            params: UsageGetFailedIngestDownloadUrlParams =
+                UsageGetFailedIngestDownloadUrlParams.none()
         ): HttpResponseFor<DownloadUrlResponse> =
             getFailedIngestDownloadUrl(params, RequestOptions.none())
 
         /** @see [getFailedIngestDownloadUrl] */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
-            params: UsageGetFailedIngestDownloadUrlParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DownloadUrlResponse>
+            requestOptions: RequestOptions
+        ): HttpResponseFor<DownloadUrlResponse> =
+            getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/usage/query`, but is

@@ -5,7 +5,6 @@ package com.m3ter.services.blocking.users
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.UserInvitationCreateParams
-import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -77,7 +76,7 @@ internal class InvitationServiceTest {
                 .build()
         val invitationService = client.users().invitations()
 
-        val page = invitationService.list(UserInvitationListParams.builder().orgId("orgId").build())
+        val page = invitationService.list()
 
         page.response().validate()
     }

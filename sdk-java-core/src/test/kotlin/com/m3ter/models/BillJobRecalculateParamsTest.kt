@@ -14,9 +14,9 @@ internal class BillJobRecalculateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = BillJobRecalculateParams.builder().orgId("orgId").addBillId("string").build()
+        val params = BillJobRecalculateParams.builder().addBillId("string").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -38,7 +38,7 @@ internal class BillJobRecalculateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = BillJobRecalculateParams.builder().orgId("orgId").addBillId("string").build()
+        val params = BillJobRecalculateParams.builder().addBillId("string").build()
 
         val body = params._body()
 

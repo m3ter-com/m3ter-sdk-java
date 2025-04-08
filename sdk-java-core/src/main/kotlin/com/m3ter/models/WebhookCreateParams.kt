@@ -26,13 +26,13 @@ import kotlin.jvm.optionals.getOrNull
  */
 class WebhookCreateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * This schema defines the credentials required for m3ter request signing.
@@ -151,7 +151,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .credentials()
          * .description()
          * .name()
@@ -177,7 +176,10 @@ private constructor(
             additionalQueryParams = webhookCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -403,7 +405,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .credentials()
          * .description()
          * .name()
@@ -414,7 +415,7 @@ private constructor(
          */
         fun build(): WebhookCreateParams =
             WebhookCreateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -425,7 +426,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

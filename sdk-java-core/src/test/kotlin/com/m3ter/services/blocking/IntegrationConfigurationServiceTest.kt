@@ -9,7 +9,6 @@ import com.m3ter.models.IntegrationConfigurationCreateParams
 import com.m3ter.models.IntegrationConfigurationDeleteParams
 import com.m3ter.models.IntegrationConfigurationEnableParams
 import com.m3ter.models.IntegrationConfigurationGetByEntityParams
-import com.m3ter.models.IntegrationConfigurationListParams
 import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import org.junit.jupiter.api.Test
@@ -141,10 +140,7 @@ internal class IntegrationConfigurationServiceTest {
                 .build()
         val integrationConfigurationService = client.integrationConfigurations()
 
-        val page =
-            integrationConfigurationService.list(
-                IntegrationConfigurationListParams.builder().orgId("orgId").build()
-            )
+        val page = integrationConfigurationService.list()
 
         page.response().validate()
     }

@@ -20,9 +20,9 @@ internal class BillDebitLineItemListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = BillDebitLineItemListParams.builder().orgId("orgId").billId("billId").build()
+        val params = BillDebitLineItemListParams.builder().billId("billId").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("billId")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -48,7 +48,7 @@ internal class BillDebitLineItemListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = BillDebitLineItemListParams.builder().orgId("orgId").billId("billId").build()
+        val params = BillDebitLineItemListParams.builder().billId("billId").build()
 
         val queryParams = params._queryParams()
 

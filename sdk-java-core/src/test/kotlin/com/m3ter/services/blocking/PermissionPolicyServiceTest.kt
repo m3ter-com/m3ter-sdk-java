@@ -10,7 +10,6 @@ import com.m3ter.models.PermissionPolicyAddToUserGroupParams
 import com.m3ter.models.PermissionPolicyAddToUserParams
 import com.m3ter.models.PermissionPolicyCreateParams
 import com.m3ter.models.PermissionPolicyDeleteParams
-import com.m3ter.models.PermissionPolicyListParams
 import com.m3ter.models.PermissionPolicyRemoveFromServiceUserParams
 import com.m3ter.models.PermissionPolicyRemoveFromSupportUserParams
 import com.m3ter.models.PermissionPolicyRemoveFromUserGroupParams
@@ -120,10 +119,7 @@ internal class PermissionPolicyServiceTest {
                 .build()
         val permissionPolicyService = client.permissionPolicies()
 
-        val page =
-            permissionPolicyService.list(
-                PermissionPolicyListParams.builder().orgId("orgId").build()
-            )
+        val page = permissionPolicyService.list()
 
         page.response().validate()
     }

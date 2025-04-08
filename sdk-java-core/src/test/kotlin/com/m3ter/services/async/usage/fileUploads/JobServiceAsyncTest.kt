@@ -5,7 +5,6 @@ package com.m3ter.services.async.usage.fileUploads
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlParams
-import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -46,8 +45,7 @@ internal class JobServiceAsyncTest {
                 .build()
         val jobServiceAsync = client.usage().fileUploads().jobs()
 
-        val pageFuture =
-            jobServiceAsync.list(UsageFileUploadJobListParams.builder().orgId("orgId").build())
+        val pageFuture = jobServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

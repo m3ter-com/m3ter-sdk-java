@@ -42,7 +42,6 @@ internal class IntegrationConfigurationCreateParamsTest {
     fun pathParams() {
         val params =
             IntegrationConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .configData(
                     IntegrationConfigurationCreateParams.ConfigData.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -61,7 +60,7 @@ internal class IntegrationConfigurationCreateParamsTest {
                 .name("name")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -129,7 +128,6 @@ internal class IntegrationConfigurationCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             IntegrationConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .configData(
                     IntegrationConfigurationCreateParams.ConfigData.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))

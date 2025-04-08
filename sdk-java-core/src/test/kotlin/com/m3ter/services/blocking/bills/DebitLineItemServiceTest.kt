@@ -123,7 +123,7 @@ internal class DebitLineItemServiceTest {
 
         val page =
             debitLineItemService.list(
-                BillDebitLineItemListParams.builder().orgId("orgId").billId("billId").build()
+                BillDebitLineItemListParams.builder().billId("billId").build()
             )
 
         page.response().validate()

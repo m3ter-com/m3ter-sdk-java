@@ -60,14 +60,22 @@ interface CreditReasonServiceAsync {
      * the list returned for the call by Credit Reason ID, Credit Reason short code, or by Archive
      * status.
      */
-    fun list(params: CreditReasonListParams): CompletableFuture<CreditReasonListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CreditReasonListPageAsync> = list(CreditReasonListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CreditReasonListParams,
+        params: CreditReasonListParams = CreditReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CreditReasonListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CreditReasonListParams = CreditReasonListParams.none()
+    ): CompletableFuture<CreditReasonListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CreditReasonListPageAsync> =
+        list(CreditReasonListParams.none(), requestOptions)
 
     /** Delete the Credit Reason with the given UUID. */
     fun delete(params: CreditReasonDeleteParams): CompletableFuture<CreditReasonResponse> =
@@ -143,17 +151,29 @@ interface CreditReasonServiceAsync {
          * is otherwise the same as [CreditReasonServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
+            list(CreditReasonListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CreditReasonListParams
+            params: CreditReasonListParams = CreditReasonListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CreditReasonListParams = CreditReasonListParams.none()
         ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CreditReasonListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
+            list(CreditReasonListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

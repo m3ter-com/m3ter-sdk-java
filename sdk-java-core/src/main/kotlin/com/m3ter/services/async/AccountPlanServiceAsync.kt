@@ -84,14 +84,22 @@ interface AccountPlanServiceAsync {
      * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
      * always use it in combination with the `account` query parameter.
      */
-    fun list(params: AccountPlanListParams): CompletableFuture<AccountPlanListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<AccountPlanListPageAsync> = list(AccountPlanListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AccountPlanListParams,
+        params: AccountPlanListParams = AccountPlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountPlanListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: AccountPlanListParams = AccountPlanListParams.none()
+    ): CompletableFuture<AccountPlanListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<AccountPlanListPageAsync> =
+        list(AccountPlanListParams.none(), requestOptions)
 
     /**
      * Delete the AccountPlan or AccountPlanGroup with the given UUID.
@@ -170,17 +178,29 @@ interface AccountPlanServiceAsync {
          * otherwise the same as [AccountPlanServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
+            list(AccountPlanListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: AccountPlanListParams
+            params: AccountPlanListParams = AccountPlanListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountPlanListParams = AccountPlanListParams.none()
         ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AccountPlanListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
+            list(AccountPlanListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accountplans/{id}`, but is

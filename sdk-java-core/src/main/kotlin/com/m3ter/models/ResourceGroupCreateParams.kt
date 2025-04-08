@@ -18,18 +18,19 @@ import com.m3ter.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Create a ResourceGroup for the UUID */
 class ResourceGroupCreateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val type: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun type(): String = type
 
@@ -74,7 +75,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .name()
          * ```
@@ -100,7 +100,10 @@ private constructor(
             additionalQueryParams = resourceGroupCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun type(type: String) = apply { this.type = type }
 
@@ -258,7 +261,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .name()
          * ```
@@ -267,7 +269,7 @@ private constructor(
          */
         fun build(): ResourceGroupCreateParams =
             ResourceGroupCreateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("type", type),
                 body.build(),
                 additionalHeaders.build(),
@@ -279,7 +281,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> type
             else -> ""
         }

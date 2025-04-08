@@ -39,7 +39,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class BillApproveParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val accountIds: String?,
     private val externalInvoiceDateEnd: String?,
     private val externalInvoiceDateStart: String?,
@@ -48,7 +48,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * List of Account IDs to filter Bills. This allows you to approve Bills for specific Accounts
@@ -98,7 +98,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billIds()
          * ```
          */
@@ -127,7 +126,10 @@ private constructor(
             additionalQueryParams = billApproveParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * List of Account IDs to filter Bills. This allows you to approve Bills for specific
@@ -320,7 +322,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billIds()
          * ```
          *
@@ -328,7 +329,7 @@ private constructor(
          */
         fun build(): BillApproveParams =
             BillApproveParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 accountIds,
                 externalInvoiceDateEnd,
                 externalInvoiceDateStart,
@@ -342,7 +343,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

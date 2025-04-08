@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.PlanTemplateCreateParams
 import com.m3ter.models.PlanTemplateDeleteParams
-import com.m3ter.models.PlanTemplateListParams
 import com.m3ter.models.PlanTemplateRetrieveParams
 import com.m3ter.models.PlanTemplateUpdateParams
 import org.junit.jupiter.api.Test
@@ -129,8 +128,7 @@ internal class PlanTemplateServiceAsyncTest {
                 .build()
         val planTemplateServiceAsync = client.planTemplates()
 
-        val pageFuture =
-            planTemplateServiceAsync.list(PlanTemplateListParams.builder().orgId("orgId").build())
+        val pageFuture = planTemplateServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

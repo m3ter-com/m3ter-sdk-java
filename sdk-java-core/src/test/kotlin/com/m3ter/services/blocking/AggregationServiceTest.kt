@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
 import com.m3ter.models.AggregationCreateParams
 import com.m3ter.models.AggregationDeleteParams
-import com.m3ter.models.AggregationListParams
 import com.m3ter.models.AggregationRetrieveParams
 import com.m3ter.models.AggregationUpdateParams
 import org.junit.jupiter.api.Test
@@ -139,7 +138,7 @@ internal class AggregationServiceTest {
                 .build()
         val aggregationService = client.aggregations()
 
-        val page = aggregationService.list(AggregationListParams.builder().orgId("orgId").build())
+        val page = aggregationService.list()
 
         page.response().validate()
     }

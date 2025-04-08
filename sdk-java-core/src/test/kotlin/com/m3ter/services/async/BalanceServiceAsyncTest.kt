@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.BalanceCreateParams
 import com.m3ter.models.BalanceDeleteParams
-import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
 import java.time.OffsetDateTime
@@ -130,8 +129,7 @@ internal class BalanceServiceAsyncTest {
                 .build()
         val balanceServiceAsync = client.balances()
 
-        val pageFuture =
-            balanceServiceAsync.list(BalanceListParams.builder().orgId("orgId").build())
+        val pageFuture = balanceServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

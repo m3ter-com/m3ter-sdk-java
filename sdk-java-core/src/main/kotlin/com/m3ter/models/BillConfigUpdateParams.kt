@@ -11,7 +11,6 @@ import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import com.m3ter.errors.M3terInvalidDataException
@@ -19,6 +18,7 @@ import java.time.LocalDate
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Update the Organization-wide BillConfig.
@@ -28,13 +28,13 @@ import java.util.Optional
  */
 class BillConfigUpdateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
@@ -82,14 +82,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [BillConfigUpdateParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         */
+        @JvmStatic fun none(): BillConfigUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [BillConfigUpdateParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -109,7 +104,10 @@ private constructor(
             additionalQueryParams = billConfigUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -277,17 +275,10 @@ private constructor(
          * Returns an immutable instance of [BillConfigUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillConfigUpdateParams =
             BillConfigUpdateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -298,7 +289,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.TransactionTypeCreateParams
 import com.m3ter.models.TransactionTypeDeleteParams
-import com.m3ter.models.TransactionTypeListParams
 import com.m3ter.models.TransactionTypeRetrieveParams
 import com.m3ter.models.TransactionTypeUpdateParams
 import org.junit.jupiter.api.Test
@@ -103,10 +102,7 @@ internal class TransactionTypeServiceAsyncTest {
                 .build()
         val transactionTypeServiceAsync = client.transactionTypes()
 
-        val pageFuture =
-            transactionTypeServiceAsync.list(
-                TransactionTypeListParams.builder().orgId("orgId").build()
-            )
+        val pageFuture = transactionTypeServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

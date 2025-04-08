@@ -73,13 +73,21 @@ interface PlanGroupService {
      * Retrieves a list of PlanGroups within the specified organization. You can optionally filter
      * by Account IDs or PlanGroup IDs, and also paginate the results for easier management.
      */
-    fun list(params: PlanGroupListParams): PlanGroupListPage = list(params, RequestOptions.none())
+    fun list(): PlanGroupListPage = list(PlanGroupListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanGroupListParams,
+        params: PlanGroupListParams = PlanGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupListPage
+
+    /** @see [list] */
+    fun list(params: PlanGroupListParams = PlanGroupListParams.none()): PlanGroupListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PlanGroupListPage =
+        list(PlanGroupListParams.none(), requestOptions)
 
     /**
      * Delete a PlanGroup with the given UUID.
@@ -150,15 +158,25 @@ interface PlanGroupService {
          * the same as [PlanGroupService.list].
          */
         @MustBeClosed
-        fun list(params: PlanGroupListParams): HttpResponseFor<PlanGroupListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<PlanGroupListPage> = list(PlanGroupListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanGroupListParams,
+            params: PlanGroupListParams = PlanGroupListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanGroupListParams = PlanGroupListParams.none()
+        ): HttpResponseFor<PlanGroupListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PlanGroupListPage> =
+            list(PlanGroupListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangroups/{id}`, but is

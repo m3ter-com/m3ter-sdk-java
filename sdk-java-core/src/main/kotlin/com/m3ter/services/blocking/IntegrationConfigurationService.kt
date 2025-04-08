@@ -74,14 +74,22 @@ interface IntegrationConfigurationService {
      * This endpoint retrieves a list of all integration configurations for the specified
      * Organization. The list can be paginated for easier management.
      */
-    fun list(params: IntegrationConfigurationListParams): IntegrationConfigurationListPage =
-        list(params, RequestOptions.none())
+    fun list(): IntegrationConfigurationListPage = list(IntegrationConfigurationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: IntegrationConfigurationListParams,
+        params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationListPage
+
+    /** @see [list] */
+    fun list(
+        params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
+    ): IntegrationConfigurationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): IntegrationConfigurationListPage =
+        list(IntegrationConfigurationListParams.none(), requestOptions)
 
     /**
      * Delete the integration configuration for the given UUID.
@@ -185,16 +193,28 @@ interface IntegrationConfigurationService {
          * otherwise the same as [IntegrationConfigurationService.list].
          */
         @MustBeClosed
+        fun list(): HttpResponseFor<IntegrationConfigurationListPage> =
+            list(IntegrationConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: IntegrationConfigurationListParams
+            params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<IntegrationConfigurationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
         ): HttpResponseFor<IntegrationConfigurationListPage> = list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: IntegrationConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<IntegrationConfigurationListPage>
+            requestOptions: RequestOptions
+        ): HttpResponseFor<IntegrationConfigurationListPage> =
+            list(IntegrationConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/integrationconfigs/{id}`,

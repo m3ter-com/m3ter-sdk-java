@@ -78,14 +78,23 @@ interface ExternalMappingServiceAsync {
      * The list can be paginated for better management, and supports filtering using the external
      * system.
      */
-    fun list(params: ExternalMappingListParams): CompletableFuture<ExternalMappingListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<ExternalMappingListPageAsync> =
+        list(ExternalMappingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ExternalMappingListParams,
+        params: ExternalMappingListParams = ExternalMappingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalMappingListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: ExternalMappingListParams = ExternalMappingListParams.none()
+    ): CompletableFuture<ExternalMappingListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ExternalMappingListPageAsync> =
+        list(ExternalMappingListParams.none(), requestOptions)
 
     /** Delete an External Mapping with the given UUID. */
     fun delete(params: ExternalMappingDeleteParams): CompletableFuture<ExternalMappingResponse> =
@@ -193,17 +202,29 @@ interface ExternalMappingServiceAsync {
          * otherwise the same as [ExternalMappingServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ExternalMappingListPageAsync>> =
+            list(ExternalMappingListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: ExternalMappingListParams
+            params: ExternalMappingListParams = ExternalMappingListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ExternalMappingListParams = ExternalMappingListParams.none()
         ): CompletableFuture<HttpResponseFor<ExternalMappingListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ExternalMappingListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ExternalMappingListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListPageAsync>> =
+            list(ExternalMappingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/externalmappings/{id}`,

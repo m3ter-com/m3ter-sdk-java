@@ -20,15 +20,9 @@ internal class ResourceGroupUpdateParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            ResourceGroupUpdateParams.builder()
-                .orgId("orgId")
-                .type("type")
-                .id("id")
-                .name("x")
-                .build()
+        val params = ResourceGroupUpdateParams.builder().type("type").id("id").name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("type")
         assertThat(params._pathParam(2)).isEqualTo("id")
         // out-of-bound path param
@@ -54,13 +48,7 @@ internal class ResourceGroupUpdateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            ResourceGroupUpdateParams.builder()
-                .orgId("orgId")
-                .type("type")
-                .id("id")
-                .name("x")
-                .build()
+        val params = ResourceGroupUpdateParams.builder().type("type").id("id").name("x").build()
 
         val body = params._body()
 

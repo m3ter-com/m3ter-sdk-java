@@ -51,14 +51,22 @@ interface PlanGroupLinkService {
     ): PlanGroupLinkResponse
 
     /** Retrieve a list of PlanGroupLink entities */
-    fun list(params: PlanGroupLinkListParams): PlanGroupLinkListPage =
-        list(params, RequestOptions.none())
+    fun list(): PlanGroupLinkListPage = list(PlanGroupLinkListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanGroupLinkListParams,
+        params: PlanGroupLinkListParams = PlanGroupLinkListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkListPage
+
+    /** @see [list] */
+    fun list(
+        params: PlanGroupLinkListParams = PlanGroupLinkListParams.none()
+    ): PlanGroupLinkListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PlanGroupLinkListPage =
+        list(PlanGroupLinkListParams.none(), requestOptions)
 
     /** Delete a PlanGroupLink for the given UUID. */
     fun delete(params: PlanGroupLinkDeleteParams): PlanGroupLinkResponse =
@@ -125,15 +133,25 @@ interface PlanGroupLinkService {
          * otherwise the same as [PlanGroupLinkService.list].
          */
         @MustBeClosed
-        fun list(params: PlanGroupLinkListParams): HttpResponseFor<PlanGroupLinkListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<PlanGroupLinkListPage> = list(PlanGroupLinkListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanGroupLinkListParams,
+            params: PlanGroupLinkListParams = PlanGroupLinkListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupLinkListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanGroupLinkListParams = PlanGroupLinkListParams.none()
+        ): HttpResponseFor<PlanGroupLinkListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PlanGroupLinkListPage> =
+            list(PlanGroupLinkListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangrouplinks/{id}`, but

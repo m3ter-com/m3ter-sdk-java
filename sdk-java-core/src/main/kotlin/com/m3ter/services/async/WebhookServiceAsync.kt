@@ -59,14 +59,22 @@ interface WebhookServiceAsync {
     ): CompletableFuture<WebhookUpdateResponse>
 
     /** Retrieve a list of all Destinations created in the Organization. */
-    fun list(params: WebhookListParams): CompletableFuture<WebhookListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<WebhookListPageAsync> = list(WebhookListParams.none())
 
     /** @see [list] */
     fun list(
-        params: WebhookListParams,
+        params: WebhookListParams = WebhookListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<WebhookListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: WebhookListParams = WebhookListParams.none()
+    ): CompletableFuture<WebhookListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<WebhookListPageAsync> =
+        list(WebhookListParams.none(), requestOptions)
 
     /** This endpoint deletes a specific webhook destination identified by its UUID. */
     fun delete(params: WebhookDeleteParams): CompletableFuture<Webhook> =
@@ -156,17 +164,29 @@ interface WebhookServiceAsync {
          * [WebhookServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
+            list(WebhookListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: WebhookListParams
+            params: WebhookListParams = WebhookListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: WebhookListParams = WebhookListParams.none()
         ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: WebhookListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
+            list(WebhookListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

@@ -35,10 +35,9 @@ internal class PlanGroupCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            PlanGroupCreateParams.builder().orgId("orgId").currency("xxx").name("x").build()
+        val params = PlanGroupCreateParams.builder().currency("xxx").name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -95,8 +94,7 @@ internal class PlanGroupCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            PlanGroupCreateParams.builder().orgId("orgId").currency("xxx").name("x").build()
+        val params = PlanGroupCreateParams.builder().currency("xxx").name("x").build()
 
         val body = params._body()
 

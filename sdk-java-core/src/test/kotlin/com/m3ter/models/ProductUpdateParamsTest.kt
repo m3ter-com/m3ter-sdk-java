@@ -26,15 +26,9 @@ internal class ProductUpdateParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            ProductUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .code("JS!?Q0]r] ]\$]")
-                .name("x")
-                .build()
+        val params = ProductUpdateParams.builder().id("id").code("JS!?Q0]r] ]\$]").name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -71,13 +65,7 @@ internal class ProductUpdateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            ProductUpdateParams.builder()
-                .orgId("orgId")
-                .id("id")
-                .code("JS!?Q0]r] ]\$]")
-                .name("x")
-                .build()
+        val params = ProductUpdateParams.builder().id("id").code("JS!?Q0]r] ]\$]").name("x").build()
 
         val body = params._body()
 

@@ -20,9 +20,9 @@ internal class DataExportDestinationListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = DataExportDestinationListParams.builder().orgId("orgId").build()
+        val params = DataExportDestinationListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -51,7 +51,7 @@ internal class DataExportDestinationListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = DataExportDestinationListParams.builder().orgId("orgId").build()
+        val params = DataExportDestinationListParams.builder().build()
 
         val queryParams = params._queryParams()
 

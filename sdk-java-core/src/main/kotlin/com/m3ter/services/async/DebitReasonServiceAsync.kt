@@ -60,14 +60,22 @@ interface DebitReasonServiceAsync {
      * the list returned for the call by Debit Reason ID, Debit Reason short code, or by Archive
      * status.
      */
-    fun list(params: DebitReasonListParams): CompletableFuture<DebitReasonListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<DebitReasonListPageAsync> = list(DebitReasonListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DebitReasonListParams,
+        params: DebitReasonListParams = DebitReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: DebitReasonListParams = DebitReasonListParams.none()
+    ): CompletableFuture<DebitReasonListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<DebitReasonListPageAsync> =
+        list(DebitReasonListParams.none(), requestOptions)
 
     /** Delete the Debit Reason with the given UUID. */
     fun delete(params: DebitReasonDeleteParams): CompletableFuture<DebitReasonResponse> =
@@ -141,17 +149,29 @@ interface DebitReasonServiceAsync {
          * is otherwise the same as [DebitReasonServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
+            list(DebitReasonListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: DebitReasonListParams
+            params: DebitReasonListParams = DebitReasonListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DebitReasonListParams = DebitReasonListParams.none()
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DebitReasonListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
+            list(DebitReasonListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

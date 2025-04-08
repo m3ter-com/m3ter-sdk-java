@@ -20,13 +20,9 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
     @Test
     fun pathParams() {
         val params =
-            UsageFileUploadGenerateUploadUrlParams.builder()
-                .orgId("orgId")
-                .contentType("x")
-                .fileName("x")
-                .build()
+            UsageFileUploadGenerateUploadUrlParams.builder().contentType("x").fileName("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -51,11 +47,7 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params =
-            UsageFileUploadGenerateUploadUrlParams.builder()
-                .orgId("orgId")
-                .contentType("x")
-                .fileName("x")
-                .build()
+            UsageFileUploadGenerateUploadUrlParams.builder().contentType("x").fileName("x").build()
 
         val body = params._body()
 

@@ -111,14 +111,22 @@ interface ScheduleService {
      * The response will contain an array for both the operational and usage Data Export Schedules
      * in your Organization.
      */
-    fun list(params: DataExportScheduleListParams): DataExportScheduleListPage =
-        list(params, RequestOptions.none())
+    fun list(): DataExportScheduleListPage = list(DataExportScheduleListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportScheduleListParams,
+        params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleListPage
+
+    /** @see [list] */
+    fun list(
+        params: DataExportScheduleListParams = DataExportScheduleListParams.none()
+    ): DataExportScheduleListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): DataExportScheduleListPage =
+        list(DataExportScheduleListParams.none(), requestOptions)
 
     /**
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
@@ -190,16 +198,26 @@ interface ScheduleService {
          * is otherwise the same as [ScheduleService.list].
          */
         @MustBeClosed
-        fun list(
-            params: DataExportScheduleListParams
-        ): HttpResponseFor<DataExportScheduleListPage> = list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<DataExportScheduleListPage> =
+            list(DataExportScheduleListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportScheduleListParams,
+            params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportScheduleListParams = DataExportScheduleListParams.none()
+        ): HttpResponseFor<DataExportScheduleListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<DataExportScheduleListPage> =
+            list(DataExportScheduleListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

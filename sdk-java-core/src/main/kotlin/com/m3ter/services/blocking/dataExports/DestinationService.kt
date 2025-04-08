@@ -68,14 +68,22 @@ interface DestinationService {
      * Retrieve a list of Export Destination entities. You can filter the list of Destinations
      * returned by UUID.
      */
-    fun list(params: DataExportDestinationListParams): DataExportDestinationListPage =
-        list(params, RequestOptions.none())
+    fun list(): DataExportDestinationListPage = list(DataExportDestinationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportDestinationListParams,
+        params: DataExportDestinationListParams = DataExportDestinationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportDestinationListPage
+
+    /** @see [list] */
+    fun list(
+        params: DataExportDestinationListParams = DataExportDestinationListParams.none()
+    ): DataExportDestinationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): DataExportDestinationListPage =
+        list(DataExportDestinationListParams.none(), requestOptions)
 
     /**
      * Delete an Export Destination for the given UUID.
@@ -156,16 +164,26 @@ interface DestinationService {
          * but is otherwise the same as [DestinationService.list].
          */
         @MustBeClosed
-        fun list(
-            params: DataExportDestinationListParams
-        ): HttpResponseFor<DataExportDestinationListPage> = list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<DataExportDestinationListPage> =
+            list(DataExportDestinationListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportDestinationListParams,
+            params: DataExportDestinationListParams = DataExportDestinationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportDestinationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportDestinationListParams = DataExportDestinationListParams.none()
+        ): HttpResponseFor<DataExportDestinationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<DataExportDestinationListPage> =
+            list(DataExportDestinationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

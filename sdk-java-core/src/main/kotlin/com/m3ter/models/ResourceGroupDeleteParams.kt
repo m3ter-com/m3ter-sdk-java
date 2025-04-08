@@ -10,11 +10,12 @@ import com.m3ter.core.http.QueryParams
 import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Delete a ResourceGroup for the UUID */
 class ResourceGroupDeleteParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val type: String,
     private val id: String,
     private val additionalHeaders: Headers,
@@ -22,7 +23,7 @@ private constructor(
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun type(): String = type
 
@@ -43,7 +44,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .id()
          * ```
@@ -72,7 +72,10 @@ private constructor(
                 resourceGroupDeleteParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun type(type: String) = apply { this.type = type }
 
@@ -205,7 +208,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .id()
          * ```
@@ -214,7 +216,7 @@ private constructor(
          */
         fun build(): ResourceGroupDeleteParams =
             ResourceGroupDeleteParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("type", type),
                 checkRequired("id", id),
                 additionalHeaders.build(),
@@ -228,7 +230,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> type
             2 -> id
             else -> ""
