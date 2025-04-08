@@ -34,7 +34,6 @@ internal class WebhookUpdateParamsTest {
     fun pathParams() {
         val params =
             WebhookUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .credentials(
                     M3terSignedCredentialsRequest.builder()
@@ -48,7 +47,7 @@ internal class WebhookUpdateParamsTest {
                 .url("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -101,7 +100,6 @@ internal class WebhookUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             WebhookUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .credentials(
                     M3terSignedCredentialsRequest.builder()

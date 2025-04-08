@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.CounterAdjustmentCreateParams
 import com.m3ter.models.CounterAdjustmentDeleteParams
-import com.m3ter.models.CounterAdjustmentListParams
 import com.m3ter.models.CounterAdjustmentRetrieveParams
 import com.m3ter.models.CounterAdjustmentUpdateParams
 import org.junit.jupiter.api.Test
@@ -104,10 +103,7 @@ internal class CounterAdjustmentServiceTest {
                 .build()
         val counterAdjustmentService = client.counterAdjustments()
 
-        val page =
-            counterAdjustmentService.list(
-                CounterAdjustmentListParams.builder().orgId("orgId").build()
-            )
+        val page = counterAdjustmentService.list()
 
         page.response().validate()
     }

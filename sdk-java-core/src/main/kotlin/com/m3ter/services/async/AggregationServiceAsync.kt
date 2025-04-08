@@ -58,14 +58,22 @@ interface AggregationServiceAsync {
     ): CompletableFuture<AggregationResponse>
 
     /** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
-    fun list(params: AggregationListParams): CompletableFuture<AggregationListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<AggregationListPageAsync> = list(AggregationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AggregationListParams,
+        params: AggregationListParams = AggregationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AggregationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: AggregationListParams = AggregationListParams.none()
+    ): CompletableFuture<AggregationListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<AggregationListPageAsync> =
+        list(AggregationListParams.none(), requestOptions)
 
     /** Delete the Aggregation with the given UUID. */
     fun delete(params: AggregationDeleteParams): CompletableFuture<AggregationResponse> =
@@ -139,17 +147,29 @@ interface AggregationServiceAsync {
          * otherwise the same as [AggregationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<AggregationListPageAsync>> =
+            list(AggregationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: AggregationListParams
+            params: AggregationListParams = AggregationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AggregationListParams = AggregationListParams.none()
         ): CompletableFuture<HttpResponseFor<AggregationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AggregationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AggregationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<AggregationListPageAsync>> =
+            list(AggregationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/aggregations/{id}`, but is

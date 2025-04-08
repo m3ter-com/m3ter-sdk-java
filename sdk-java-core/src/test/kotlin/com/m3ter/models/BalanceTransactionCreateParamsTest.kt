@@ -27,13 +27,9 @@ internal class BalanceTransactionCreateParamsTest {
     @Test
     fun pathParams() {
         val params =
-            BalanceTransactionCreateParams.builder()
-                .orgId("orgId")
-                .balanceId("balanceId")
-                .amount(0.0)
-                .build()
+            BalanceTransactionCreateParams.builder().balanceId("balanceId").amount(0.0).build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("balanceId")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -71,11 +67,7 @@ internal class BalanceTransactionCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params =
-            BalanceTransactionCreateParams.builder()
-                .orgId("orgId")
-                .balanceId("balanceId")
-                .amount(0.0)
-                .build()
+            BalanceTransactionCreateParams.builder().balanceId("balanceId").amount(0.0).build()
 
         val body = params._body()
 

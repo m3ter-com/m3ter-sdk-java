@@ -40,14 +40,22 @@ interface JobService {
      * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
      *   Upload jobs are returned.
      */
-    fun list(params: UsageFileUploadJobListParams): UsageFileUploadJobListPage =
-        list(params, RequestOptions.none())
+    fun list(): UsageFileUploadJobListPage = list(UsageFileUploadJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: UsageFileUploadJobListParams,
+        params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageFileUploadJobListPage
+
+    /** @see [list] */
+    fun list(
+        params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
+    ): UsageFileUploadJobListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): UsageFileUploadJobListPage =
+        list(UsageFileUploadJobListParams.none(), requestOptions)
 
     /**
      * Use the original file upload job id to obtain a download URL, which you can then use to
@@ -95,16 +103,26 @@ interface JobService {
          * [JobService.list].
          */
         @MustBeClosed
-        fun list(
-            params: UsageFileUploadJobListParams
-        ): HttpResponseFor<UsageFileUploadJobListPage> = list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<UsageFileUploadJobListPage> =
+            list(UsageFileUploadJobListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: UsageFileUploadJobListParams,
+            params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageFileUploadJobListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
+        ): HttpResponseFor<UsageFileUploadJobListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<UsageFileUploadJobListPage> =
+            list(UsageFileUploadJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

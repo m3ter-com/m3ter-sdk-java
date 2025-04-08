@@ -14,9 +14,9 @@ internal class BillConfigRetrieveParamsTest {
 
     @Test
     fun pathParams() {
-        val params = BillConfigRetrieveParams.builder().orgId("orgId").build()
+        val params = BillConfigRetrieveParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }

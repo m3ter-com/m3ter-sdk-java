@@ -20,11 +20,10 @@ internal class PermissionPolicyAddToSupportUserParamsTest {
     fun pathParams() {
         val params =
             PermissionPolicyAddToSupportUserParams.builder()
-                .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("permissionPolicyId")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -48,7 +47,6 @@ internal class PermissionPolicyAddToSupportUserParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PermissionPolicyAddToSupportUserParams.builder()
-                .orgId("orgId")
                 .permissionPolicyId("permissionPolicyId")
                 .build()
 

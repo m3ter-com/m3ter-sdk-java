@@ -70,14 +70,22 @@ interface CounterAdjustmentService {
      * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
      *   use the `accountId` query parameter.
      */
-    fun list(params: CounterAdjustmentListParams): CounterAdjustmentListPage =
-        list(params, RequestOptions.none())
+    fun list(): CounterAdjustmentListPage = list(CounterAdjustmentListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterAdjustmentListParams,
+        params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentListPage
+
+    /** @see [list] */
+    fun list(
+        params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
+    ): CounterAdjustmentListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CounterAdjustmentListPage =
+        list(CounterAdjustmentListParams.none(), requestOptions)
 
     /** Delete a CounterAdjustment for the given UUID. */
     fun delete(params: CounterAdjustmentDeleteParams): CounterAdjustmentResponse =
@@ -148,15 +156,26 @@ interface CounterAdjustmentService {
          * otherwise the same as [CounterAdjustmentService.list].
          */
         @MustBeClosed
-        fun list(params: CounterAdjustmentListParams): HttpResponseFor<CounterAdjustmentListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CounterAdjustmentListPage> =
+            list(CounterAdjustmentListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterAdjustmentListParams,
+            params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
+        ): HttpResponseFor<CounterAdjustmentListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CounterAdjustmentListPage> =
+            list(CounterAdjustmentListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,

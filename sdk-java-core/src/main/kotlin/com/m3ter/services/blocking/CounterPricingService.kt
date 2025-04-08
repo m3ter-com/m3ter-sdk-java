@@ -64,14 +64,22 @@ interface CounterPricingService {
      * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
      * CounterPricing ID.
      */
-    fun list(params: CounterPricingListParams): CounterPricingListPage =
-        list(params, RequestOptions.none())
+    fun list(): CounterPricingListPage = list(CounterPricingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterPricingListParams,
+        params: CounterPricingListParams = CounterPricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingListPage
+
+    /** @see [list] */
+    fun list(
+        params: CounterPricingListParams = CounterPricingListParams.none()
+    ): CounterPricingListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CounterPricingListPage =
+        list(CounterPricingListParams.none(), requestOptions)
 
     /** Delete a CounterPricing for the given UUID. */
     fun delete(params: CounterPricingDeleteParams): CounterPricingResponse =
@@ -139,15 +147,25 @@ interface CounterPricingService {
          * otherwise the same as [CounterPricingService.list].
          */
         @MustBeClosed
-        fun list(params: CounterPricingListParams): HttpResponseFor<CounterPricingListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CounterPricingListPage> = list(CounterPricingListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterPricingListParams,
+            params: CounterPricingListParams = CounterPricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterPricingListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterPricingListParams = CounterPricingListParams.none()
+        ): HttpResponseFor<CounterPricingListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CounterPricingListPage> =
+            list(CounterPricingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counterpricings/{id}`, but

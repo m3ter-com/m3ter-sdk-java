@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.BillApproveParams
 import com.m3ter.models.BillDeleteParams
 import com.m3ter.models.BillLatestByAccountParams
-import com.m3ter.models.BillListParams
 import com.m3ter.models.BillLockParams
 import com.m3ter.models.BillRetrieveParams
 import com.m3ter.models.BillSearchParams
@@ -49,7 +48,7 @@ internal class BillServiceAsyncTest {
                 .build()
         val billServiceAsync = client.bills()
 
-        val pageFuture = billServiceAsync.list(BillListParams.builder().orgId("orgId").build())
+        val pageFuture = billServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

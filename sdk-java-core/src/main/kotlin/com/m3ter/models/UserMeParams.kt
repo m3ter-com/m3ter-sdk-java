@@ -3,20 +3,21 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieve information about the current user */
 class UserMeParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +27,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [UserMeParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         */
+        @JvmStatic fun none(): UserMeParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [UserMeParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -51,7 +47,10 @@ private constructor(
             additionalQueryParams = userMeParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -155,25 +154,14 @@ private constructor(
          * Returns an immutable instance of [UserMeParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UserMeParams =
-            UserMeParams(
-                checkRequired("orgId", orgId),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            UserMeParams(orgId, additionalHeaders.build(), additionalQueryParams.build())
     }
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

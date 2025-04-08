@@ -120,14 +120,22 @@ interface PermissionPolicyService {
     ): PermissionPolicyResponse
 
     /** Retrieve a list of PermissionPolicy entities */
-    fun list(params: PermissionPolicyListParams): PermissionPolicyListPage =
-        list(params, RequestOptions.none())
+    fun list(): PermissionPolicyListPage = list(PermissionPolicyListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PermissionPolicyListParams,
+        params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyListPage
+
+    /** @see [list] */
+    fun list(
+        params: PermissionPolicyListParams = PermissionPolicyListParams.none()
+    ): PermissionPolicyListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PermissionPolicyListPage =
+        list(PermissionPolicyListParams.none(), requestOptions)
 
     /** Delete the PermissionPolicy for the UUID */
     fun delete(params: PermissionPolicyDeleteParams): PermissionPolicyResponse =
@@ -288,15 +296,26 @@ interface PermissionPolicyService {
          * otherwise the same as [PermissionPolicyService.list].
          */
         @MustBeClosed
-        fun list(params: PermissionPolicyListParams): HttpResponseFor<PermissionPolicyListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<PermissionPolicyListPage> =
+            list(PermissionPolicyListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PermissionPolicyListParams,
+            params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PermissionPolicyListParams = PermissionPolicyListParams.none()
+        ): HttpResponseFor<PermissionPolicyListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PermissionPolicyListPage> =
+            list(PermissionPolicyListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/permissionpolicies/{id}`,

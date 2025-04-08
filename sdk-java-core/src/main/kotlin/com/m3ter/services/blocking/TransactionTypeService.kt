@@ -60,14 +60,22 @@ interface TransactionTypeService {
      * Retrieves a list of TransactionType entities for the specified Organization. The list can be
      * paginated for easier management, and supports filtering by various parameters.
      */
-    fun list(params: TransactionTypeListParams): TransactionTypeListPage =
-        list(params, RequestOptions.none())
+    fun list(): TransactionTypeListPage = list(TransactionTypeListParams.none())
 
     /** @see [list] */
     fun list(
-        params: TransactionTypeListParams,
+        params: TransactionTypeListParams = TransactionTypeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeListPage
+
+    /** @see [list] */
+    fun list(
+        params: TransactionTypeListParams = TransactionTypeListParams.none()
+    ): TransactionTypeListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): TransactionTypeListPage =
+        list(TransactionTypeListParams.none(), requestOptions)
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     fun delete(params: TransactionTypeDeleteParams): TransactionTypeResponse =
@@ -138,15 +146,26 @@ interface TransactionTypeService {
          * but is otherwise the same as [TransactionTypeService.list].
          */
         @MustBeClosed
-        fun list(params: TransactionTypeListParams): HttpResponseFor<TransactionTypeListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<TransactionTypeListPage> =
+            list(TransactionTypeListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: TransactionTypeListParams,
+            params: TransactionTypeListParams = TransactionTypeListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionTypeListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: TransactionTypeListParams = TransactionTypeListParams.none()
+        ): HttpResponseFor<TransactionTypeListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionTypeListPage> =
+            list(TransactionTypeListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

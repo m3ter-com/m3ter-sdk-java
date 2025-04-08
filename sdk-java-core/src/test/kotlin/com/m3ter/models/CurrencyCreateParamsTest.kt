@@ -22,9 +22,9 @@ internal class CurrencyCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CurrencyCreateParams.builder().orgId("orgId").name("x").build()
+        val params = CurrencyCreateParams.builder().name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -54,7 +54,7 @@ internal class CurrencyCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = CurrencyCreateParams.builder().orgId("orgId").name("x").build()
+        val params = CurrencyCreateParams.builder().name("x").build()
 
         val body = params._body()
 

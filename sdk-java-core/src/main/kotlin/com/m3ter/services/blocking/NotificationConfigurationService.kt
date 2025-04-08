@@ -73,14 +73,22 @@ interface NotificationConfigurationService {
      * its UUID. The list can be paginated for easier management. The list also supports filtering
      * by parameters such as Notification UUID.
      */
-    fun list(params: NotificationConfigurationListParams): NotificationConfigurationListPage =
-        list(params, RequestOptions.none())
+    fun list(): NotificationConfigurationListPage = list(NotificationConfigurationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: NotificationConfigurationListParams,
+        params: NotificationConfigurationListParams = NotificationConfigurationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationListPage
+
+    /** @see [list] */
+    fun list(
+        params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
+    ): NotificationConfigurationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): NotificationConfigurationListPage =
+        list(NotificationConfigurationListParams.none(), requestOptions)
 
     /**
      * Delete the Notification with the given UUID.
@@ -163,16 +171,29 @@ interface NotificationConfigurationService {
          * [NotificationConfigurationService.list].
          */
         @MustBeClosed
+        fun list(): HttpResponseFor<NotificationConfigurationListPage> =
+            list(NotificationConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: NotificationConfigurationListParams
+            params: NotificationConfigurationListParams =
+                NotificationConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
         ): HttpResponseFor<NotificationConfigurationListPage> = list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: NotificationConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<NotificationConfigurationListPage>
+            requestOptions: RequestOptions
+        ): HttpResponseFor<NotificationConfigurationListPage> =
+            list(NotificationConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

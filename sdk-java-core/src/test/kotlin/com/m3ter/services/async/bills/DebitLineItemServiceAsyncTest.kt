@@ -126,7 +126,7 @@ internal class DebitLineItemServiceAsyncTest {
 
         val pageFuture =
             debitLineItemServiceAsync.list(
-                BillDebitLineItemListParams.builder().orgId("orgId").billId("billId").build()
+                BillDebitLineItemListParams.builder().billId("billId").build()
             )
 
         val page = pageFuture.get()

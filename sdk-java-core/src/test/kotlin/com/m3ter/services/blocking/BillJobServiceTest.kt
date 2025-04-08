@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BillJobCancelParams
 import com.m3ter.models.BillJobCreateParams
-import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobRetrieveParams
 import com.m3ter.models.CurrencyConversion
@@ -86,7 +85,7 @@ internal class BillJobServiceTest {
                 .build()
         val billJobService = client.billJobs()
 
-        val page = billJobService.list(BillJobListParams.builder().orgId("orgId").build())
+        val page = billJobService.list()
 
         page.response().validate()
     }

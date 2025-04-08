@@ -20,9 +20,9 @@ internal class CreditReasonCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CreditReasonCreateParams.builder().orgId("orgId").name("x").build()
+        val params = CreditReasonCreateParams.builder().name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -48,7 +48,7 @@ internal class CreditReasonCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = CreditReasonCreateParams.builder().orgId("orgId").name("x").build()
+        val params = CreditReasonCreateParams.builder().name("x").build()
 
         val body = params._body()
 

@@ -65,14 +65,23 @@ interface CounterPricingServiceAsync {
      * Retrieve a list of CounterPricing entities filtered by date, Plan ID, Plan Template ID, or
      * CounterPricing ID.
      */
-    fun list(params: CounterPricingListParams): CompletableFuture<CounterPricingListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CounterPricingListPageAsync> =
+        list(CounterPricingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CounterPricingListParams,
+        params: CounterPricingListParams = CounterPricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricingListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CounterPricingListParams = CounterPricingListParams.none()
+    ): CompletableFuture<CounterPricingListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CounterPricingListPageAsync> =
+        list(CounterPricingListParams.none(), requestOptions)
 
     /** Delete a CounterPricing for the given UUID. */
     fun delete(params: CounterPricingDeleteParams): CompletableFuture<CounterPricingResponse> =
@@ -146,17 +155,29 @@ interface CounterPricingServiceAsync {
          * otherwise the same as [CounterPricingServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
+            list(CounterPricingListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CounterPricingListParams
+            params: CounterPricingListParams = CounterPricingListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CounterPricingListParams = CounterPricingListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CounterPricingListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
+            list(CounterPricingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counterpricings/{id}`, but

@@ -24,13 +24,12 @@ internal class ExternalMappingListByExternalEntityParamsTest {
     fun pathParams() {
         val params =
             ExternalMappingListByExternalEntityParams.builder()
-                .orgId("orgId")
                 .system("system")
                 .externalTable("externalTable")
                 .externalId("externalId")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("system")
         assertThat(params._pathParam(2)).isEqualTo("externalTable")
         assertThat(params._pathParam(3)).isEqualTo("externalId")
@@ -62,7 +61,6 @@ internal class ExternalMappingListByExternalEntityParamsTest {
     fun queryParamsWithoutOptionalFields() {
         val params =
             ExternalMappingListByExternalEntityParams.builder()
-                .orgId("orgId")
                 .system("system")
                 .externalTable("externalTable")
                 .externalId("externalId")

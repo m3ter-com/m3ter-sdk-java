@@ -79,14 +79,22 @@ interface CompoundAggregationService {
      * Aggregations of usage data. It supports pagination, and includes various query parameters to
      * filter the CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
      */
-    fun list(params: CompoundAggregationListParams): CompoundAggregationListPage =
-        list(params, RequestOptions.none())
+    fun list(): CompoundAggregationListPage = list(CompoundAggregationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CompoundAggregationListParams,
+        params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationListPage
+
+    /** @see [list] */
+    fun list(
+        params: CompoundAggregationListParams = CompoundAggregationListParams.none()
+    ): CompoundAggregationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompoundAggregationListPage =
+        list(CompoundAggregationListParams.none(), requestOptions)
 
     /**
      * Delete a CompoundAggregation with the given UUID.
@@ -161,16 +169,26 @@ interface CompoundAggregationService {
          * otherwise the same as [CompoundAggregationService.list].
          */
         @MustBeClosed
-        fun list(
-            params: CompoundAggregationListParams
-        ): HttpResponseFor<CompoundAggregationListPage> = list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<CompoundAggregationListPage> =
+            list(CompoundAggregationListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CompoundAggregationListParams,
+            params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CompoundAggregationListParams = CompoundAggregationListParams.none()
+        ): HttpResponseFor<CompoundAggregationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CompoundAggregationListPage> =
+            list(CompoundAggregationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

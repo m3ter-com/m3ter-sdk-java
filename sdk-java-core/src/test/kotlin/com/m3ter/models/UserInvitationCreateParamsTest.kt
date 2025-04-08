@@ -29,13 +29,12 @@ internal class UserInvitationCreateParamsTest {
     fun pathParams() {
         val params =
             UserInvitationCreateParams.builder()
-                .orgId("orgId")
                 .email("dev@stainless.com")
                 .firstName("x")
                 .lastName("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -73,7 +72,6 @@ internal class UserInvitationCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             UserInvitationCreateParams.builder()
-                .orgId("orgId")
                 .email("dev@stainless.com")
                 .firstName("x")
                 .lastName("x")

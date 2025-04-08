@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -19,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class BillJobListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val active: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
@@ -28,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled BillJobs
@@ -68,14 +67,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [BillJobListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         */
+        @JvmStatic fun none(): BillJobListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [BillJobListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -101,7 +95,10 @@ private constructor(
             additionalQueryParams = billJobListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled
@@ -254,17 +251,10 @@ private constructor(
          * Returns an immutable instance of [BillJobListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillJobListParams =
             BillJobListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 active,
                 nextToken,
                 pageSize,
@@ -276,7 +266,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class ExternalMappingListByM3terEntityParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val entity: String,
     private val m3terId: String,
     private val nextToken: String?,
@@ -27,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun entity(): String = entity
 
@@ -56,7 +56,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .entity()
          * .m3terId()
          * ```
@@ -89,7 +88,10 @@ private constructor(
                 externalMappingListByM3terEntityParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun entity(entity: String) = apply { this.entity = entity }
 
@@ -222,7 +224,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .entity()
          * .m3terId()
          * ```
@@ -231,7 +232,7 @@ private constructor(
          */
         fun build(): ExternalMappingListByM3terEntityParams =
             ExternalMappingListByM3terEntityParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("entity", entity),
                 checkRequired("m3terId", m3terId),
                 nextToken,
@@ -243,7 +244,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> entity
             2 -> m3terId
             else -> ""

@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.CompoundAggregationCreateParams
 import com.m3ter.models.CompoundAggregationDeleteParams
-import com.m3ter.models.CompoundAggregationListParams
 import com.m3ter.models.CompoundAggregationRetrieveParams
 import com.m3ter.models.CompoundAggregationUpdateParams
 import org.junit.jupiter.api.Test
@@ -126,10 +125,7 @@ internal class CompoundAggregationServiceAsyncTest {
                 .build()
         val compoundAggregationServiceAsync = client.compoundAggregations()
 
-        val pageFuture =
-            compoundAggregationServiceAsync.list(
-                CompoundAggregationListParams.builder().orgId("orgId").build()
-            )
+        val pageFuture = compoundAggregationServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

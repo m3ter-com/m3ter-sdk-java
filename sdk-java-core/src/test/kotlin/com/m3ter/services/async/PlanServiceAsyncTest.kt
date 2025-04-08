@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.PlanCreateParams
 import com.m3ter.models.PlanDeleteParams
-import com.m3ter.models.PlanListParams
 import com.m3ter.models.PlanRetrieveParams
 import com.m3ter.models.PlanUpdateParams
 import org.junit.jupiter.api.Test
@@ -134,7 +133,7 @@ internal class PlanServiceAsyncTest {
                 .build()
         val planServiceAsync = client.plans()
 
-        val pageFuture = planServiceAsync.list(PlanListParams.builder().orgId("orgId").build())
+        val pageFuture = planServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

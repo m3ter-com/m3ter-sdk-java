@@ -78,14 +78,21 @@ interface PlanTemplateService {
      * specific Organization, identified by its UUID. You can filter the list by PlanTemplate IDs or
      * Product IDs for more focused retrieval.
      */
-    fun list(params: PlanTemplateListParams): PlanTemplateListPage =
-        list(params, RequestOptions.none())
+    fun list(): PlanTemplateListPage = list(PlanTemplateListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanTemplateListParams,
+        params: PlanTemplateListParams = PlanTemplateListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplateListPage
+
+    /** @see [list] */
+    fun list(params: PlanTemplateListParams = PlanTemplateListParams.none()): PlanTemplateListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PlanTemplateListPage =
+        list(PlanTemplateListParams.none(), requestOptions)
 
     /**
      * Delete a specific PlanTemplate.
@@ -157,15 +164,25 @@ interface PlanTemplateService {
          * otherwise the same as [PlanTemplateService.list].
          */
         @MustBeClosed
-        fun list(params: PlanTemplateListParams): HttpResponseFor<PlanTemplateListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<PlanTemplateListPage> = list(PlanTemplateListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanTemplateListParams,
+            params: PlanTemplateListParams = PlanTemplateListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanTemplateListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanTemplateListParams = PlanTemplateListParams.none()
+        ): HttpResponseFor<PlanTemplateListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PlanTemplateListPage> =
+            list(PlanTemplateListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plantemplates/{id}`, but

@@ -54,13 +54,21 @@ interface PlanService {
     ): PlanResponse
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
-    fun list(params: PlanListParams): PlanListPage = list(params, RequestOptions.none())
+    fun list(): PlanListPage = list(PlanListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanListParams,
+        params: PlanListParams = PlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
+
+    /** @see [list] */
+    fun list(params: PlanListParams = PlanListParams.none()): PlanListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PlanListPage =
+        list(PlanListParams.none(), requestOptions)
 
     /** Delete the Plan with the given UUID. */
     fun delete(params: PlanDeleteParams): PlanResponse = delete(params, RequestOptions.none())
@@ -123,16 +131,24 @@ interface PlanService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanService.list].
          */
-        @MustBeClosed
-        fun list(params: PlanListParams): HttpResponseFor<PlanListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<PlanListPage> = list(PlanListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanListParams,
+            params: PlanListParams = PlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: PlanListParams = PlanListParams.none()): HttpResponseFor<PlanListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PlanListPage> =
+            list(PlanListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plans/{id}`, but is

@@ -5,7 +5,6 @@ package com.m3ter.services.blocking.usage.fileUploads
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlParams
-import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -45,7 +44,7 @@ internal class JobServiceTest {
                 .build()
         val jobService = client.usage().fileUploads().jobs()
 
-        val page = jobService.list(UsageFileUploadJobListParams.builder().orgId("orgId").build())
+        val page = jobService.list()
 
         page.response().validate()
     }

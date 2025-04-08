@@ -22,9 +22,9 @@ internal class CreditReasonListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CreditReasonListParams.builder().orgId("orgId").build()
+        val params = CreditReasonListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -57,7 +57,7 @@ internal class CreditReasonListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = CreditReasonListParams.builder().orgId("orgId").build()
+        val params = CreditReasonListParams.builder().build()
 
         val queryParams = params._queryParams()
 

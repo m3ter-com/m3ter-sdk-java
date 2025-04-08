@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.NotificationConfigurationCreateParams
 import com.m3ter.models.NotificationConfigurationDeleteParams
-import com.m3ter.models.NotificationConfigurationListParams
 import com.m3ter.models.NotificationConfigurationRetrieveParams
 import com.m3ter.models.NotificationConfigurationUpdateParams
 import org.junit.jupiter.api.Test
@@ -108,10 +107,7 @@ internal class NotificationConfigurationServiceTest {
                 .build()
         val notificationConfigurationService = client.notificationConfigurations()
 
-        val page =
-            notificationConfigurationService.list(
-                NotificationConfigurationListParams.builder().orgId("orgId").build()
-            )
+        val page = notificationConfigurationService.list()
 
         page.response().validate()
     }

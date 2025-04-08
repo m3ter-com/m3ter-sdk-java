@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.CreditReasonCreateParams
 import com.m3ter.models.CreditReasonDeleteParams
-import com.m3ter.models.CreditReasonListParams
 import com.m3ter.models.CreditReasonRetrieveParams
 import com.m3ter.models.CreditReasonUpdateParams
 import org.junit.jupiter.api.Test
@@ -103,8 +102,7 @@ internal class CreditReasonServiceAsyncTest {
                 .build()
         val creditReasonServiceAsync = client.creditReasons()
 
-        val pageFuture =
-            creditReasonServiceAsync.list(CreditReasonListParams.builder().orgId("orgId").build())
+        val pageFuture = creditReasonServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

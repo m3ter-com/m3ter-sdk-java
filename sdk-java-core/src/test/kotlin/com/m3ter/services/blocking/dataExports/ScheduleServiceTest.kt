@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.DataExportScheduleCreateParams
 import com.m3ter.models.DataExportScheduleDeleteParams
-import com.m3ter.models.DataExportScheduleListParams
 import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.OperationalDataExportScheduleRequest
@@ -111,8 +110,7 @@ internal class ScheduleServiceTest {
                 .build()
         val scheduleService = client.dataExports().schedules()
 
-        val page =
-            scheduleService.list(DataExportScheduleListParams.builder().orgId("orgId").build())
+        val page = scheduleService.list()
 
         page.response().validate()
     }

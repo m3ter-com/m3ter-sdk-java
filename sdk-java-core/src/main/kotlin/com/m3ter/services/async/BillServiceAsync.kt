@@ -57,14 +57,21 @@ interface BillServiceAsync {
      * Organization. Optional filters can be applied such as by date range, lock status, or other
      * attributes. The list can also be paginated for easier management.
      */
-    fun list(params: BillListParams): CompletableFuture<BillListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<BillListPageAsync> = list(BillListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BillListParams,
+        params: BillListParams = BillListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillListPageAsync>
+
+    /** @see [list] */
+    fun list(params: BillListParams = BillListParams.none()): CompletableFuture<BillListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<BillListPageAsync> =
+        list(BillListParams.none(), requestOptions)
 
     /**
      * Delete the Bill with the given UUID.
@@ -148,14 +155,22 @@ interface BillServiceAsync {
      * The search query is customizable, allowing for complex nested conditions and sorting. The
      * returned list of Bills can be paginated for easier management.
      */
-    fun search(params: BillSearchParams): CompletableFuture<BillSearchResponse> =
-        search(params, RequestOptions.none())
+    fun search(): CompletableFuture<BillSearchResponse> = search(BillSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: BillSearchParams,
+        params: BillSearchParams = BillSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillSearchResponse>
+
+    /** @see [search] */
+    fun search(
+        params: BillSearchParams = BillSearchParams.none()
+    ): CompletableFuture<BillSearchResponse> = search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): CompletableFuture<BillSearchResponse> =
+        search(BillSearchParams.none(), requestOptions)
 
     /**
      * Updates the status of a specified Bill with the given Bill ID.
@@ -201,15 +216,29 @@ interface BillServiceAsync {
          * same as [BillServiceAsync.list].
          */
         @MustBeClosed
-        fun list(params: BillListParams): CompletableFuture<HttpResponseFor<BillListPageAsync>> =
+        fun list(): CompletableFuture<HttpResponseFor<BillListPageAsync>> =
+            list(BillListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BillListParams = BillListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BillListParams = BillListParams.none()
+        ): CompletableFuture<HttpResponseFor<BillListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BillListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillListPageAsync>> =
+            list(BillListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/bills/{id}`, but is
@@ -280,17 +309,29 @@ interface BillServiceAsync {
          * otherwise the same as [BillServiceAsync.search].
          */
         @MustBeClosed
+        fun search(): CompletableFuture<HttpResponseFor<BillSearchResponse>> =
+            search(BillSearchParams.none())
+
+        /** @see [search] */
+        @MustBeClosed
         fun search(
-            params: BillSearchParams
+            params: BillSearchParams = BillSearchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillSearchResponse>>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: BillSearchParams = BillSearchParams.none()
         ): CompletableFuture<HttpResponseFor<BillSearchResponse>> =
             search(params, RequestOptions.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: BillSearchParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillSearchResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillSearchResponse>> =
+            search(BillSearchParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/status`, but is

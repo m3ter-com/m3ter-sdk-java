@@ -70,7 +70,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "jobs",
                         params._pathParam(1),
@@ -104,7 +104,12 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "dataexports", "jobs")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "dataexports",
+                        "jobs",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -143,7 +148,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "jobs",
                         params._pathParam(1),

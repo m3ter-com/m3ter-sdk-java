@@ -83,14 +83,21 @@ interface AccountPlanService {
      * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
      * always use it in combination with the `account` query parameter.
      */
-    fun list(params: AccountPlanListParams): AccountPlanListPage =
-        list(params, RequestOptions.none())
+    fun list(): AccountPlanListPage = list(AccountPlanListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AccountPlanListParams,
+        params: AccountPlanListParams = AccountPlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanListPage
+
+    /** @see [list] */
+    fun list(params: AccountPlanListParams = AccountPlanListParams.none()): AccountPlanListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): AccountPlanListPage =
+        list(AccountPlanListParams.none(), requestOptions)
 
     /**
      * Delete the AccountPlan or AccountPlanGroup with the given UUID.
@@ -162,15 +169,25 @@ interface AccountPlanService {
          * otherwise the same as [AccountPlanService.list].
          */
         @MustBeClosed
-        fun list(params: AccountPlanListParams): HttpResponseFor<AccountPlanListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<AccountPlanListPage> = list(AccountPlanListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AccountPlanListParams,
+            params: AccountPlanListParams = AccountPlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountPlanListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountPlanListParams = AccountPlanListParams.none()
+        ): HttpResponseFor<AccountPlanListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AccountPlanListPage> =
+            list(AccountPlanListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accountplans/{id}`, but is

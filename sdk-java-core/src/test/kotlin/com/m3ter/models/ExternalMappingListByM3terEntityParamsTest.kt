@@ -23,12 +23,11 @@ internal class ExternalMappingListByM3terEntityParamsTest {
     fun pathParams() {
         val params =
             ExternalMappingListByM3terEntityParams.builder()
-                .orgId("orgId")
                 .entity("entity")
                 .m3terId("m3terId")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("entity")
         assertThat(params._pathParam(2)).isEqualTo("m3terId")
         // out-of-bound path param
@@ -58,7 +57,6 @@ internal class ExternalMappingListByM3terEntityParamsTest {
     fun queryParamsWithoutOptionalFields() {
         val params =
             ExternalMappingListByM3terEntityParams.builder()
-                .orgId("orgId")
                 .entity("entity")
                 .m3terId("m3terId")
                 .build()

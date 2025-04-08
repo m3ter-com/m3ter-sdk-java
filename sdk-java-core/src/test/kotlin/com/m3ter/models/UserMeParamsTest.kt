@@ -14,9 +14,9 @@ internal class UserMeParamsTest {
 
     @Test
     fun pathParams() {
-        val params = UserMeParams.builder().orgId("orgId").build()
+        val params = UserMeParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }

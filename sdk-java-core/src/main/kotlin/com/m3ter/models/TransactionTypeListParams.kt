@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import com.m3ter.core.toImmutable
@@ -17,7 +16,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class TransactionTypeListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val archived: Boolean?,
     private val codes: List<String>?,
     private val ids: List<String>?,
@@ -27,7 +26,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * Filter with this Boolean flag whether to include TransactionTypes that are archived.
@@ -59,13 +58,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): TransactionTypeListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [TransactionTypeListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -94,7 +90,10 @@ private constructor(
             additionalQueryParams = transactionTypeListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Filter with this Boolean flag whether to include TransactionTypes that are archived.
@@ -263,17 +262,10 @@ private constructor(
          * Returns an immutable instance of [TransactionTypeListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TransactionTypeListParams =
             TransactionTypeListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 archived,
                 codes?.toImmutable(),
                 ids?.toImmutable(),
@@ -286,7 +278,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

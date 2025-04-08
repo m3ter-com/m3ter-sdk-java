@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
 import com.m3ter.models.ProductCreateParams
 import com.m3ter.models.ProductDeleteParams
-import com.m3ter.models.ProductListParams
 import com.m3ter.models.ProductRetrieveParams
 import com.m3ter.models.ProductUpdateParams
 import org.junit.jupiter.api.Test
@@ -107,7 +106,7 @@ internal class ProductServiceTest {
                 .build()
         val productService = client.products()
 
-        val page = productService.list(ProductListParams.builder().orgId("orgId").build())
+        val page = productService.list()
 
         page.response().validate()
     }

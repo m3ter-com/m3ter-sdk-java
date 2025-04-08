@@ -48,7 +48,6 @@ internal class OrganizationConfigUpdateParamsTest {
     fun pathParams() {
         val params =
             OrganizationConfigUpdateParams.builder()
-                .orgId("orgId")
                 .currency("USD")
                 .dayEpoch("2022-01-01")
                 .daysBeforeBillDue(1L)
@@ -58,7 +57,7 @@ internal class OrganizationConfigUpdateParamsTest {
                 .yearEpoch("2022-01-01")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -135,7 +134,6 @@ internal class OrganizationConfigUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             OrganizationConfigUpdateParams.builder()
-                .orgId("orgId")
                 .currency("USD")
                 .dayEpoch("2022-01-01")
                 .daysBeforeBillDue(1L)

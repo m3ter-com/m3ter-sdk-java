@@ -5,7 +5,6 @@ package com.m3ter.services.async.users
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.UserInvitationCreateParams
-import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -79,8 +78,7 @@ internal class InvitationServiceAsyncTest {
                 .build()
         val invitationServiceAsync = client.users().invitations()
 
-        val pageFuture =
-            invitationServiceAsync.list(UserInvitationListParams.builder().orgId("orgId").build())
+        val pageFuture = invitationServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

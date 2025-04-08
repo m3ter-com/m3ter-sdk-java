@@ -74,14 +74,22 @@ interface PlanGroupServiceAsync {
      * Retrieves a list of PlanGroups within the specified organization. You can optionally filter
      * by Account IDs or PlanGroup IDs, and also paginate the results for easier management.
      */
-    fun list(params: PlanGroupListParams): CompletableFuture<PlanGroupListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<PlanGroupListPageAsync> = list(PlanGroupListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanGroupListParams,
+        params: PlanGroupListParams = PlanGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: PlanGroupListParams = PlanGroupListParams.none()
+    ): CompletableFuture<PlanGroupListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PlanGroupListPageAsync> =
+        list(PlanGroupListParams.none(), requestOptions)
 
     /**
      * Delete a PlanGroup with the given UUID.
@@ -160,17 +168,29 @@ interface PlanGroupServiceAsync {
          * the same as [PlanGroupServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
+            list(PlanGroupListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: PlanGroupListParams
+            params: PlanGroupListParams = PlanGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanGroupListParams = PlanGroupListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanGroupListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
+            list(PlanGroupListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plangroups/{id}`, but is

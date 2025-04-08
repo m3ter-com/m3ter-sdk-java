@@ -85,7 +85,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "creditreasons",
                     )
@@ -118,7 +118,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "creditreasons",
                         params._pathParam(1),
@@ -151,7 +151,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "creditreasons",
                         params._pathParam(1),
@@ -185,7 +185,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "creditreasons",
                     )
@@ -220,7 +220,7 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "picklists",
                         "creditreasons",
                         params._pathParam(1),

@@ -18,18 +18,19 @@ import com.m3ter.errors.M3terInvalidDataException
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Add a permission policy to support users for an organization. */
 class PermissionPolicyAddToSupportUserParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val permissionPolicyId: String,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun permissionPolicyId(): String = permissionPolicyId
 
@@ -69,7 +70,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .permissionPolicyId()
          * ```
          */
@@ -97,7 +97,10 @@ private constructor(
                 permissionPolicyAddToSupportUserParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun permissionPolicyId(permissionPolicyId: String) = apply {
             this.permissionPolicyId = permissionPolicyId
@@ -254,7 +257,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .permissionPolicyId()
          * ```
          *
@@ -262,7 +264,7 @@ private constructor(
          */
         fun build(): PermissionPolicyAddToSupportUserParams =
             PermissionPolicyAddToSupportUserParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("permissionPolicyId", permissionPolicyId),
                 body.build(),
                 additionalHeaders.build(),
@@ -274,7 +276,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> permissionPolicyId
             else -> ""
         }

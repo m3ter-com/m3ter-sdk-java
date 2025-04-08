@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.ContractCreateParams
 import com.m3ter.models.ContractDeleteParams
 import com.m3ter.models.ContractEndDateBillingEntitiesParams
-import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
 import java.time.LocalDate
@@ -122,7 +121,7 @@ internal class ContractServiceTest {
                 .build()
         val contractService = client.contracts()
 
-        val page = contractService.list(ContractListParams.builder().orgId("orgId").build())
+        val page = contractService.list()
 
         page.response().validate()
     }

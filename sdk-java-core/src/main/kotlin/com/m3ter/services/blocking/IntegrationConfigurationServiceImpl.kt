@@ -104,7 +104,11 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "integrationconfigs")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "integrationconfigs",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -134,7 +138,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationconfigs",
                         params._pathParam(1),
                     )
@@ -166,7 +170,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationconfigs",
                         params._pathParam(1),
                     )
@@ -197,7 +201,11 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "integrationconfigs")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "integrationconfigs",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -233,7 +241,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationconfigs",
                         params._pathParam(1),
                     )
@@ -266,7 +274,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationconfigs",
                         params._pathParam(1),
                         "enable",
@@ -300,7 +308,7 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "integrationconfigs",
                         "entity",
                         params._pathParam(1),

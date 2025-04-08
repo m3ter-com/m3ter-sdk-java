@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.DataExportScheduleCreateParams
 import com.m3ter.models.DataExportScheduleDeleteParams
-import com.m3ter.models.DataExportScheduleListParams
 import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.OperationalDataExportScheduleRequest
@@ -114,8 +113,7 @@ internal class ScheduleServiceAsyncTest {
                 .build()
         val scheduleServiceAsync = client.dataExports().schedules()
 
-        val pageFuture =
-            scheduleServiceAsync.list(DataExportScheduleListParams.builder().orgId("orgId").build())
+        val pageFuture = scheduleServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

@@ -42,15 +42,23 @@ interface JobServiceAsync {
      * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
      *   Upload jobs are returned.
      */
-    fun list(
-        params: UsageFileUploadJobListParams
-    ): CompletableFuture<UsageFileUploadJobListPageAsync> = list(params, RequestOptions.none())
+    fun list(): CompletableFuture<UsageFileUploadJobListPageAsync> =
+        list(UsageFileUploadJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: UsageFileUploadJobListParams,
+        params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UsageFileUploadJobListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
+    ): CompletableFuture<UsageFileUploadJobListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<UsageFileUploadJobListPageAsync> =
+        list(UsageFileUploadJobListParams.none(), requestOptions)
 
     /**
      * Use the original file upload job id to obtain a download URL, which you can then use to
@@ -99,17 +107,29 @@ interface JobServiceAsync {
          * [JobServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
+            list(UsageFileUploadJobListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: UsageFileUploadJobListParams
+            params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: UsageFileUploadJobListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
+            list(UsageFileUploadJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

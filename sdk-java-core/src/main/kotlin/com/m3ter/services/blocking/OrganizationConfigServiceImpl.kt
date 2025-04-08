@@ -58,7 +58,11 @@ class OrganizationConfigServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "organizationconfig")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "organizationconfig",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -85,7 +89,11 @@ class OrganizationConfigServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
-                    .addPathSegments("organizations", params._pathParam(0), "organizationconfig")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "organizationconfig",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)

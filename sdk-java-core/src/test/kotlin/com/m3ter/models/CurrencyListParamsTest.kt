@@ -22,9 +22,9 @@ internal class CurrencyListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CurrencyListParams.builder().orgId("orgId").build()
+        val params = CurrencyListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -57,7 +57,7 @@ internal class CurrencyListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = CurrencyListParams.builder().orgId("orgId").build()
+        val params = CurrencyListParams.builder().build()
 
         val queryParams = params._queryParams()
 

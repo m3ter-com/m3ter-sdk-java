@@ -9,7 +9,6 @@ import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountGetChildrenParams
-import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountUpdateParams
@@ -174,8 +173,7 @@ internal class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val pageFuture =
-            accountServiceAsync.list(AccountListParams.builder().orgId("orgId").build())
+        val pageFuture = accountServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

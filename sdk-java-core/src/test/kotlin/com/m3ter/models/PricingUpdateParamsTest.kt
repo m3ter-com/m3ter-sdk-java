@@ -61,7 +61,6 @@ internal class PricingUpdateParamsTest {
     fun pathParams() {
         val params =
             PricingUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .addPricingBand(
                     PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()
@@ -69,7 +68,7 @@ internal class PricingUpdateParamsTest {
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -172,7 +171,6 @@ internal class PricingUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PricingUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .addPricingBand(
                     PricingBand.builder().fixedPrice(0.0).lowerLimit(0.0).unitPrice(0.0).build()

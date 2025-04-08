@@ -9,7 +9,6 @@ import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountGetChildrenParams
-import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountUpdateParams
@@ -169,7 +168,7 @@ internal class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val page = accountService.list(AccountListParams.builder().orgId("orgId").build())
+        val page = accountService.list()
 
         page.response().validate()
     }

@@ -58,14 +58,21 @@ interface PlanServiceAsync {
     ): CompletableFuture<PlanResponse>
 
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
-    fun list(params: PlanListParams): CompletableFuture<PlanListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<PlanListPageAsync> = list(PlanListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PlanListParams,
+        params: PlanListParams = PlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanListPageAsync>
+
+    /** @see [list] */
+    fun list(params: PlanListParams = PlanListParams.none()): CompletableFuture<PlanListPageAsync> =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PlanListPageAsync> =
+        list(PlanListParams.none(), requestOptions)
 
     /** Delete the Plan with the given UUID. */
     fun delete(params: PlanDeleteParams): CompletableFuture<PlanResponse> =
@@ -130,15 +137,29 @@ interface PlanServiceAsync {
          * same as [PlanServiceAsync.list].
          */
         @MustBeClosed
-        fun list(params: PlanListParams): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
+        fun list(): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
+            list(PlanListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanListParams = PlanListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PlanListParams = PlanListParams.none()
+        ): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PlanListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
+            list(PlanListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plans/{id}`, but is

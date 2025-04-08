@@ -23,12 +23,11 @@ internal class ResourceGroupListPermissionsParamsTest {
     fun pathParams() {
         val params =
             ResourceGroupListPermissionsParams.builder()
-                .orgId("orgId")
                 .type("type")
                 .resourceGroupId("resourceGroupId")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("type")
         assertThat(params._pathParam(2)).isEqualTo("resourceGroupId")
         // out-of-bound path param
@@ -58,7 +57,6 @@ internal class ResourceGroupListPermissionsParamsTest {
     fun queryParamsWithoutOptionalFields() {
         val params =
             ResourceGroupListPermissionsParams.builder()
-                .orgId("orgId")
                 .type("type")
                 .resourceGroupId("resourceGroupId")
                 .build()

@@ -62,14 +62,23 @@ interface TransactionTypeServiceAsync {
      * Retrieves a list of TransactionType entities for the specified Organization. The list can be
      * paginated for easier management, and supports filtering by various parameters.
      */
-    fun list(params: TransactionTypeListParams): CompletableFuture<TransactionTypeListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<TransactionTypeListPageAsync> =
+        list(TransactionTypeListParams.none())
 
     /** @see [list] */
     fun list(
-        params: TransactionTypeListParams,
+        params: TransactionTypeListParams = TransactionTypeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: TransactionTypeListParams = TransactionTypeListParams.none()
+    ): CompletableFuture<TransactionTypeListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<TransactionTypeListPageAsync> =
+        list(TransactionTypeListParams.none(), requestOptions)
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     fun delete(params: TransactionTypeDeleteParams): CompletableFuture<TransactionTypeResponse> =
@@ -145,17 +154,29 @@ interface TransactionTypeServiceAsync {
          * but is otherwise the same as [TransactionTypeServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
+            list(TransactionTypeListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: TransactionTypeListParams
+            params: TransactionTypeListParams = TransactionTypeListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: TransactionTypeListParams = TransactionTypeListParams.none()
         ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: TransactionTypeListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
+            list(TransactionTypeListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

@@ -55,13 +55,21 @@ interface BillService {
      * Organization. Optional filters can be applied such as by date range, lock status, or other
      * attributes. The list can also be paginated for easier management.
      */
-    fun list(params: BillListParams): BillListPage = list(params, RequestOptions.none())
+    fun list(): BillListPage = list(BillListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BillListParams,
+        params: BillListParams = BillListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillListPage
+
+    /** @see [list] */
+    fun list(params: BillListParams = BillListParams.none()): BillListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): BillListPage =
+        list(BillListParams.none(), requestOptions)
 
     /**
      * Delete the Bill with the given UUID.
@@ -143,13 +151,21 @@ interface BillService {
      * The search query is customizable, allowing for complex nested conditions and sorting. The
      * returned list of Bills can be paginated for easier management.
      */
-    fun search(params: BillSearchParams): BillSearchResponse = search(params, RequestOptions.none())
+    fun search(): BillSearchResponse = search(BillSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: BillSearchParams,
+        params: BillSearchParams = BillSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillSearchResponse
+
+    /** @see [search] */
+    fun search(params: BillSearchParams = BillSearchParams.none()): BillSearchResponse =
+        search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): BillSearchResponse =
+        search(BillSearchParams.none(), requestOptions)
 
     /**
      * Updates the status of a specified Bill with the given Bill ID.
@@ -194,16 +210,24 @@ interface BillService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills`, but is otherwise the
          * same as [BillService.list].
          */
-        @MustBeClosed
-        fun list(params: BillListParams): HttpResponseFor<BillListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<BillListPage> = list(BillListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BillListParams,
+            params: BillListParams = BillListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: BillListParams = BillListParams.none()): HttpResponseFor<BillListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<BillListPage> =
+            list(BillListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/bills/{id}`, but is
@@ -270,15 +294,25 @@ interface BillService {
          * otherwise the same as [BillService.search].
          */
         @MustBeClosed
-        fun search(params: BillSearchParams): HttpResponseFor<BillSearchResponse> =
-            search(params, RequestOptions.none())
+        fun search(): HttpResponseFor<BillSearchResponse> = search(BillSearchParams.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: BillSearchParams,
+            params: BillSearchParams = BillSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillSearchResponse>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: BillSearchParams = BillSearchParams.none()
+        ): HttpResponseFor<BillSearchResponse> = search(params, RequestOptions.none())
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(requestOptions: RequestOptions): HttpResponseFor<BillSearchResponse> =
+            search(BillSearchParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/bills/{id}/status`, but is

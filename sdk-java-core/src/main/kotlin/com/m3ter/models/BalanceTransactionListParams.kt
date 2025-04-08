@@ -18,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class BalanceTransactionListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val balanceId: String,
     private val nextToken: String?,
     private val pageSize: Long?,
@@ -27,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun balanceId(): String = balanceId
 
@@ -55,7 +55,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * ```
          */
@@ -84,7 +83,10 @@ private constructor(
             additionalQueryParams = balanceTransactionListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
 
@@ -223,7 +225,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * ```
          *
@@ -231,7 +232,7 @@ private constructor(
          */
         fun build(): BalanceTransactionListParams =
             BalanceTransactionListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("balanceId", balanceId),
                 nextToken,
                 pageSize,
@@ -243,7 +244,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> balanceId
             else -> ""
         }

@@ -120,7 +120,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                     )
@@ -154,7 +154,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                     )
@@ -188,7 +188,11 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "users")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "users",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -227,7 +231,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "permissions",
@@ -263,7 +267,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "usergroups",
@@ -296,7 +300,12 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "users", "me")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "users",
+                        "me",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -327,7 +336,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "password",

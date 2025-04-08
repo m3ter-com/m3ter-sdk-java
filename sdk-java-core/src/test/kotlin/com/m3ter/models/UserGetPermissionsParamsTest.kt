@@ -20,9 +20,9 @@ internal class UserGetPermissionsParamsTest {
 
     @Test
     fun pathParams() {
-        val params = UserGetPermissionsParams.builder().orgId("orgId").id("id").build()
+        val params = UserGetPermissionsParams.builder().id("id").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -48,7 +48,7 @@ internal class UserGetPermissionsParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = UserGetPermissionsParams.builder().orgId("orgId").id("id").build()
+        val params = UserGetPermissionsParams.builder().id("id").build()
 
         val queryParams = params._queryParams()
 

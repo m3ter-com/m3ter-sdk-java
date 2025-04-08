@@ -25,14 +25,13 @@ internal class DataExportDestinationCreateParamsTest {
     fun pathParams() {
         val params =
             DataExportDestinationCreateParams.builder()
-                .orgId("orgId")
                 .bucketName("xxx")
                 .code("JS!?Q0]r] ]\$]")
                 .iamRoleArn("arn:aws:iam::321669910225:role/z")
                 .name("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -67,7 +66,6 @@ internal class DataExportDestinationCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             DataExportDestinationCreateParams.builder()
-                .orgId("orgId")
                 .bucketName("xxx")
                 .code("JS!?Q0]r] ]\$]")
                 .iamRoleArn("arn:aws:iam::321669910225:role/z")

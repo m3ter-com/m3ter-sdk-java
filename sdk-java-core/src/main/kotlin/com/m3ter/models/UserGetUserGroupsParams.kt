@@ -35,7 +35,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class UserGetUserGroupsParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val id: String,
     private val nextToken: String?,
     private val pageSize: Long?,
@@ -43,7 +43,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun id(): String = id
 
@@ -69,7 +69,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .id()
          * ```
          */
@@ -96,7 +95,10 @@ private constructor(
             additionalQueryParams = userGetUserGroupsParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun id(id: String) = apply { this.id = id }
 
@@ -227,7 +229,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .id()
          * ```
          *
@@ -235,7 +236,7 @@ private constructor(
          */
         fun build(): UserGetUserGroupsParams =
             UserGetUserGroupsParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("id", id),
                 nextToken,
                 pageSize,
@@ -246,7 +247,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> id
             else -> ""
         }

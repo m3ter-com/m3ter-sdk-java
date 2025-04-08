@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.CurrencyCreateParams
 import com.m3ter.models.CurrencyDeleteParams
-import com.m3ter.models.CurrencyListParams
 import com.m3ter.models.CurrencyRetrieveParams
 import com.m3ter.models.CurrencyUpdateParams
 import org.junit.jupiter.api.Test
@@ -107,8 +106,7 @@ internal class CurrencyServiceAsyncTest {
                 .build()
         val currencyServiceAsync = client.currencies()
 
-        val pageFuture =
-            currencyServiceAsync.list(CurrencyListParams.builder().orgId("orgId").build())
+        val pageFuture = currencyServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

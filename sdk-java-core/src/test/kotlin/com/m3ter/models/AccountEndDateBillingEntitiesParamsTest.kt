@@ -23,13 +23,12 @@ internal class AccountEndDateBillingEntitiesParamsTest {
     fun pathParams() {
         val params =
             AccountEndDateBillingEntitiesParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .addBillingEntity(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -58,7 +57,6 @@ internal class AccountEndDateBillingEntitiesParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             AccountEndDateBillingEntitiesParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .addBillingEntity(AccountEndDateBillingEntitiesParams.BillingEntity.CONTRACT)
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

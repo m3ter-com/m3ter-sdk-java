@@ -85,14 +85,22 @@ interface MeterServiceAsync {
     ): CompletableFuture<MeterResponse>
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
-    fun list(params: MeterListParams): CompletableFuture<MeterListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<MeterListPageAsync> = list(MeterListParams.none())
 
     /** @see [list] */
     fun list(
-        params: MeterListParams,
+        params: MeterListParams = MeterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: MeterListParams = MeterListParams.none()
+    ): CompletableFuture<MeterListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<MeterListPageAsync> =
+        list(MeterListParams.none(), requestOptions)
 
     /** Delete the Meter with the given UUID. */
     fun delete(params: MeterDeleteParams): CompletableFuture<MeterResponse> =
@@ -159,15 +167,29 @@ interface MeterServiceAsync {
          * same as [MeterServiceAsync.list].
          */
         @MustBeClosed
-        fun list(params: MeterListParams): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
+        fun list(): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
+            list(MeterListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: MeterListParams = MeterListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<MeterListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: MeterListParams = MeterListParams.none()
+        ): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: MeterListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<MeterListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
+            list(MeterListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/meters/{id}`, but is

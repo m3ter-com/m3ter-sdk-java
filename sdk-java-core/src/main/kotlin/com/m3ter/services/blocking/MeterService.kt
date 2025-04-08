@@ -82,13 +82,21 @@ interface MeterService {
     ): MeterResponse
 
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
-    fun list(params: MeterListParams): MeterListPage = list(params, RequestOptions.none())
+    fun list(): MeterListPage = list(MeterListParams.none())
 
     /** @see [list] */
     fun list(
-        params: MeterListParams,
+        params: MeterListParams = MeterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterListPage
+
+    /** @see [list] */
+    fun list(params: MeterListParams = MeterListParams.none()): MeterListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): MeterListPage =
+        list(MeterListParams.none(), requestOptions)
 
     /** Delete the Meter with the given UUID. */
     fun delete(params: MeterDeleteParams): MeterResponse = delete(params, RequestOptions.none())
@@ -151,16 +159,24 @@ interface MeterService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/meters`, but is otherwise the
          * same as [MeterService.list].
          */
-        @MustBeClosed
-        fun list(params: MeterListParams): HttpResponseFor<MeterListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<MeterListPage> = list(MeterListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: MeterListParams,
+            params: MeterListParams = MeterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: MeterListParams = MeterListParams.none()): HttpResponseFor<MeterListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<MeterListPage> =
+            list(MeterListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/meters/{id}`, but is

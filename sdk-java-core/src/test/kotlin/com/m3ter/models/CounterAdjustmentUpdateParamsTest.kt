@@ -25,7 +25,6 @@ internal class CounterAdjustmentUpdateParamsTest {
     fun pathParams() {
         val params =
             CounterAdjustmentUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("x")
                 .counterId("x")
@@ -33,7 +32,7 @@ internal class CounterAdjustmentUpdateParamsTest {
                 .value(0L)
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -67,7 +66,6 @@ internal class CounterAdjustmentUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CounterAdjustmentUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("x")
                 .counterId("x")

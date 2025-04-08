@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.PlanGroupLinkCreateParams
 import com.m3ter.models.PlanGroupLinkDeleteParams
-import com.m3ter.models.PlanGroupLinkListParams
 import com.m3ter.models.PlanGroupLinkRetrieveParams
 import com.m3ter.models.PlanGroupLinkUpdateParams
 import org.junit.jupiter.api.Test
@@ -98,8 +97,7 @@ internal class PlanGroupLinkServiceTest {
                 .build()
         val planGroupLinkService = client.planGroupLinks()
 
-        val page =
-            planGroupLinkService.list(PlanGroupLinkListParams.builder().orgId("orgId").build())
+        val page = planGroupLinkService.list()
 
         page.response().validate()
     }

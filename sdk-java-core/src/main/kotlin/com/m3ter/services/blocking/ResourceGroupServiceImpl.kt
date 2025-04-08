@@ -119,7 +119,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                     )
@@ -152,7 +152,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -185,7 +185,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -219,7 +219,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                     )
@@ -258,7 +258,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -292,7 +292,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -327,7 +327,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -369,7 +369,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),
@@ -410,7 +410,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "resourcegroups",
                         params._pathParam(1),
                         params._pathParam(2),

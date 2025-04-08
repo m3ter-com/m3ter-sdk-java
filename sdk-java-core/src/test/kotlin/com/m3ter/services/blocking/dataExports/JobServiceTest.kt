@@ -5,7 +5,6 @@ package com.m3ter.services.blocking.dataExports
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.DataExportJobGetDownloadUrlParams
-import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -45,7 +44,7 @@ internal class JobServiceTest {
                 .build()
         val jobService = client.dataExports().jobs()
 
-        val page = jobService.list(DataExportJobListParams.builder().orgId("orgId").build())
+        val page = jobService.list()
 
         page.response().validate()
     }

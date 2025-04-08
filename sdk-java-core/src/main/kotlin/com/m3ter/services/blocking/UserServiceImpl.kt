@@ -105,7 +105,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                     )
@@ -136,7 +136,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                     )
@@ -167,7 +167,11 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "users")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "users",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -197,7 +201,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "permissions",
@@ -230,7 +234,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "usergroups",
@@ -260,7 +264,12 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "users", "me")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "users",
+                        "me",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -288,7 +297,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "users",
                         params._pathParam(1),
                         "password",

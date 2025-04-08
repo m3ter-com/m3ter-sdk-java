@@ -20,9 +20,9 @@ internal class ScheduledEventConfigurationListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = ScheduledEventConfigurationListParams.builder().orgId("orgId").build()
+        val params = ScheduledEventConfigurationListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -51,7 +51,7 @@ internal class ScheduledEventConfigurationListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = ScheduledEventConfigurationListParams.builder().orgId("orgId").build()
+        val params = ScheduledEventConfigurationListParams.builder().build()
 
         val queryParams = params._queryParams()
 

@@ -102,7 +102,11 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "externalmappings")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "externalmappings",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -132,7 +136,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "externalmappings",
                         params._pathParam(1),
                     )
@@ -164,7 +168,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "externalmappings",
                         params._pathParam(1),
                     )
@@ -195,7 +199,11 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "externalmappings")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "externalmappings",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -231,7 +239,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "externalmappings",
                         params._pathParam(1),
                     )
@@ -265,7 +273,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "externalmappings",
                         "externalid",
                         params._pathParam(1),
@@ -308,7 +316,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "externalmappings",
                         "external",
                         params._pathParam(1),

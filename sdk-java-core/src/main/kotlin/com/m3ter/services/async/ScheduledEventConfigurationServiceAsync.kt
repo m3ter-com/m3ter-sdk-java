@@ -58,16 +58,27 @@ interface ScheduledEventConfigurationServiceAsync {
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
+    fun list(): CompletableFuture<ScheduledEventConfigurationListPageAsync> =
+        list(ScheduledEventConfigurationListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: ScheduledEventConfigurationListParams
+        params: ScheduledEventConfigurationListParams =
+            ScheduledEventConfigurationListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ScheduledEventConfigurationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: ScheduledEventConfigurationListParams = ScheduledEventConfigurationListParams.none()
     ): CompletableFuture<ScheduledEventConfigurationListPageAsync> =
         list(params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
-        params: ScheduledEventConfigurationListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfigurationListPageAsync>
+        requestOptions: RequestOptions
+    ): CompletableFuture<ScheduledEventConfigurationListPageAsync> =
+        list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
     fun delete(
@@ -147,17 +158,31 @@ interface ScheduledEventConfigurationServiceAsync {
          * [ScheduledEventConfigurationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
+            list(ScheduledEventConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: ScheduledEventConfigurationListParams
+            params: ScheduledEventConfigurationListParams =
+                ScheduledEventConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ScheduledEventConfigurationListParams =
+                ScheduledEventConfigurationListParams.none()
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ScheduledEventConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
+            list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

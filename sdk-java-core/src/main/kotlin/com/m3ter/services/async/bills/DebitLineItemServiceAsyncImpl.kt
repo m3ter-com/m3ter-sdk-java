@@ -86,7 +86,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "debitlineitems",
@@ -123,7 +123,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "debitlineitems",
@@ -160,7 +160,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "debitlineitems",
@@ -198,7 +198,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "debitlineitems",
@@ -241,7 +241,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "debitlineitems",

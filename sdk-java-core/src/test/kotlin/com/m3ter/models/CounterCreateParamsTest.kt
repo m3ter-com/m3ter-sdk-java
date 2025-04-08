@@ -21,9 +21,9 @@ internal class CounterCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CounterCreateParams.builder().orgId("orgId").name("x").unit("x").build()
+        val params = CounterCreateParams.builder().name("x").unit("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -51,7 +51,7 @@ internal class CounterCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = CounterCreateParams.builder().orgId("orgId").name("x").unit("x").build()
+        val params = CounterCreateParams.builder().name("x").unit("x").build()
 
         val body = params._body()
 

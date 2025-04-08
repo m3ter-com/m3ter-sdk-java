@@ -7,6 +7,8 @@ import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Returns a presigned download URL for data export file download based on the `jobId` provided.
@@ -26,13 +28,13 @@ import java.util.Objects
  */
 class DataExportJobGetDownloadUrlParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val jobId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun jobId(): String = jobId
 
@@ -50,7 +52,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .jobId()
          * ```
          */
@@ -75,7 +76,10 @@ private constructor(
                     dataExportJobGetDownloadUrlParams.additionalQueryParams.toBuilder()
             }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun jobId(jobId: String) = apply { this.jobId = jobId }
 
@@ -184,7 +188,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .jobId()
          * ```
          *
@@ -192,7 +195,7 @@ private constructor(
          */
         fun build(): DataExportJobGetDownloadUrlParams =
             DataExportJobGetDownloadUrlParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("jobId", jobId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -201,7 +204,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> jobId
             else -> ""
         }
