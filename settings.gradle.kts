@@ -1,6 +1,6 @@
-rootProject.name = "m3ter-java-root"
+rootProject.name = "sdk-java-root"
 
-include("m3ter-java")
-include("m3ter-java-client-okhttp")
-include("m3ter-java-core")
-include("m3ter-java-example")
+include("sdk-java")
+include("sdk-java-client-okhttp")
+include("sdk-java-core")
+include("sdk-java-example")
