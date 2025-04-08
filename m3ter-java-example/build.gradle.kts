@@ -1,7 +1,10 @@
 plugins {
-    id("m3ter.kotlin")
-    id("java")
+    id("m3ter.java")
     application
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
