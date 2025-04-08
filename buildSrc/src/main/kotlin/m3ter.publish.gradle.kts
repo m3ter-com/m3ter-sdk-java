@@ -22,7 +22,7 @@ configure<PublishingExtension> {
                 developers {
                     developer {
                         name.set("M3ter")
-                        email.set("dev-feedback@m3ter.com")
+                        email.set("sdks@m3ter.com")
                     }
                 }
 
