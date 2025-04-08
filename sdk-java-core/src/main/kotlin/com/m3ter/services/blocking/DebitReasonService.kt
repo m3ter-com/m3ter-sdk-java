@@ -59,14 +59,21 @@ interface DebitReasonService {
      * the list returned for the call by Debit Reason ID, Debit Reason short code, or by Archive
      * status.
      */
-    fun list(params: DebitReasonListParams): DebitReasonListPage =
-        list(params, RequestOptions.none())
+    fun list(): DebitReasonListPage = list(DebitReasonListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DebitReasonListParams,
+        params: DebitReasonListParams = DebitReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonListPage
+
+    /** @see [list] */
+    fun list(params: DebitReasonListParams = DebitReasonListParams.none()): DebitReasonListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): DebitReasonListPage =
+        list(DebitReasonListParams.none(), requestOptions)
 
     /** Delete the Debit Reason with the given UUID. */
     fun delete(params: DebitReasonDeleteParams): DebitReasonResponse =
@@ -133,15 +140,25 @@ interface DebitReasonService {
          * is otherwise the same as [DebitReasonService.list].
          */
         @MustBeClosed
-        fun list(params: DebitReasonListParams): HttpResponseFor<DebitReasonListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<DebitReasonListPage> = list(DebitReasonListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DebitReasonListParams,
+            params: DebitReasonListParams = DebitReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DebitReasonListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DebitReasonListParams = DebitReasonListParams.none()
+        ): HttpResponseFor<DebitReasonListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<DebitReasonListPage> =
+            list(DebitReasonListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

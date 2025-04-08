@@ -69,14 +69,22 @@ interface CurrencyServiceAsync {
      * pagination and includes various query parameters to filter the Currencies based on Currency
      * ID, and short codes.
      */
-    fun list(params: CurrencyListParams): CompletableFuture<CurrencyListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<CurrencyListPageAsync> = list(CurrencyListParams.none())
 
     /** @see [list] */
     fun list(
-        params: CurrencyListParams,
+        params: CurrencyListParams = CurrencyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CurrencyListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: CurrencyListParams = CurrencyListParams.none()
+    ): CompletableFuture<CurrencyListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<CurrencyListPageAsync> =
+        list(CurrencyListParams.none(), requestOptions)
 
     /**
      * Delete the Currency with the given UUID.
@@ -153,17 +161,29 @@ interface CurrencyServiceAsync {
          * otherwise the same as [CurrencyServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>> =
+            list(CurrencyListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: CurrencyListParams
+            params: CurrencyListParams = CurrencyListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: CurrencyListParams = CurrencyListParams.none()
         ): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: CurrencyListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<CurrencyListPageAsync>> =
+            list(CurrencyListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/picklists/currency/{id}`,

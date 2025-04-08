@@ -7,17 +7,19 @@ import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /** Retrieves the Balance Transactions Summary for a given Balance. */
 class BalanceTransactionSummaryParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val balanceId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun balanceId(): String = balanceId
 
@@ -35,7 +37,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * ```
          */
@@ -60,7 +61,10 @@ private constructor(
                     balanceTransactionSummaryParams.additionalQueryParams.toBuilder()
             }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
 
@@ -169,7 +173,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .balanceId()
          * ```
          *
@@ -177,7 +180,7 @@ private constructor(
          */
         fun build(): BalanceTransactionSummaryParams =
             BalanceTransactionSummaryParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("balanceId", balanceId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -186,7 +189,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> balanceId
             else -> ""
         }

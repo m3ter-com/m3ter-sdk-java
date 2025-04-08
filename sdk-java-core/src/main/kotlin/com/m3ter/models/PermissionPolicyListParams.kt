@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -13,14 +12,14 @@ import kotlin.jvm.optionals.getOrNull
 /** Retrieve a list of PermissionPolicy entities */
 class PermissionPolicyListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** nextToken for multi page retrievals */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
@@ -36,13 +35,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): PermissionPolicyListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [PermissionPolicyListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -65,7 +61,10 @@ private constructor(
             additionalQueryParams = permissionPolicyListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -188,17 +187,10 @@ private constructor(
          * Returns an immutable instance of [PermissionPolicyListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PermissionPolicyListParams =
             PermissionPolicyListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -208,7 +200,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

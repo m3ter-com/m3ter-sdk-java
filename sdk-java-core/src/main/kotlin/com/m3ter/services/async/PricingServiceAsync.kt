@@ -62,14 +62,22 @@ interface PricingServiceAsync {
     ): CompletableFuture<PricingResponse>
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
-    fun list(params: PricingListParams): CompletableFuture<PricingListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<PricingListPageAsync> = list(PricingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PricingListParams,
+        params: PricingListParams = PricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: PricingListParams = PricingListParams.none()
+    ): CompletableFuture<PricingListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PricingListPageAsync> =
+        list(PricingListParams.none(), requestOptions)
 
     /** Delete the Pricing with the given UUID. */
     fun delete(params: PricingDeleteParams): CompletableFuture<PricingResponse> =
@@ -142,17 +150,29 @@ interface PricingServiceAsync {
          * the same as [PricingServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
+            list(PricingListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: PricingListParams
+            params: PricingListParams = PricingListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PricingListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PricingListParams = PricingListParams.none()
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PricingListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PricingListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
+            list(PricingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/pricings/{id}`, but is

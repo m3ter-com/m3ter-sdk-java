@@ -36,12 +36,11 @@ internal class AccountPlanCreateParamsTest {
     fun pathParams() {
         val params =
             AccountPlanCreateParams.builder()
-                .orgId("orgId")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -93,7 +92,6 @@ internal class AccountPlanCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             AccountPlanCreateParams.builder()
-                .orgId("orgId")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()

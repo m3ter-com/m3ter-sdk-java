@@ -122,14 +122,23 @@ interface PermissionPolicyServiceAsync {
     ): CompletableFuture<PermissionPolicyResponse>
 
     /** Retrieve a list of PermissionPolicy entities */
-    fun list(params: PermissionPolicyListParams): CompletableFuture<PermissionPolicyListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<PermissionPolicyListPageAsync> =
+        list(PermissionPolicyListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PermissionPolicyListParams,
+        params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: PermissionPolicyListParams = PermissionPolicyListParams.none()
+    ): CompletableFuture<PermissionPolicyListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<PermissionPolicyListPageAsync> =
+        list(PermissionPolicyListParams.none(), requestOptions)
 
     /** Delete the PermissionPolicy for the UUID */
     fun delete(params: PermissionPolicyDeleteParams): CompletableFuture<PermissionPolicyResponse> =
@@ -299,17 +308,29 @@ interface PermissionPolicyServiceAsync {
          * otherwise the same as [PermissionPolicyServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>> =
+            list(PermissionPolicyListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: PermissionPolicyListParams
+            params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PermissionPolicyListParams = PermissionPolicyListParams.none()
         ): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PermissionPolicyListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyListPageAsync>> =
+            list(PermissionPolicyListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/permissionpolicies/{id}`,

@@ -24,7 +24,6 @@ internal class ScheduledEventConfigurationUpdateParamsTest {
     fun pathParams() {
         val params =
             ScheduledEventConfigurationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .entity("Bill")
                 .field("endDate")
@@ -32,7 +31,7 @@ internal class ScheduledEventConfigurationUpdateParamsTest {
                 .offset(5L)
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -64,7 +63,6 @@ internal class ScheduledEventConfigurationUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ScheduledEventConfigurationUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .entity("Bill")
                 .field("endDate")

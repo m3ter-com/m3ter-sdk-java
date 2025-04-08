@@ -92,7 +92,11 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "contracts")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "contracts",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -124,7 +128,7 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "contracts",
                         params._pathParam(1),
                     )
@@ -158,7 +162,7 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "contracts",
                         params._pathParam(1),
                     )
@@ -192,7 +196,11 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "contracts")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "contracts",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -230,7 +238,7 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "contracts",
                         params._pathParam(1),
                     )
@@ -266,7 +274,7 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "contracts",
                         params._pathParam(1),
                         "enddatebillingentities",

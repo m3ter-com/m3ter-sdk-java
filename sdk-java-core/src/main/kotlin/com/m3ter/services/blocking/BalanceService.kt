@@ -71,13 +71,21 @@ interface BalanceService {
      * filter the Balances by the end customer's Account UUID and end dates, and paginate through
      * them using the `pageSize` and `nextToken` parameters.
      */
-    fun list(params: BalanceListParams): BalanceListPage = list(params, RequestOptions.none())
+    fun list(): BalanceListPage = list(BalanceListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BalanceListParams,
+        params: BalanceListParams = BalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPage
+
+    /** @see [list] */
+    fun list(params: BalanceListParams = BalanceListParams.none()): BalanceListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): BalanceListPage =
+        list(BalanceListParams.none(), requestOptions)
 
     /**
      * Delete a specific Balance.
@@ -146,16 +154,25 @@ interface BalanceService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/balances`, but is otherwise
          * the same as [BalanceService.list].
          */
-        @MustBeClosed
-        fun list(params: BalanceListParams): HttpResponseFor<BalanceListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<BalanceListPage> = list(BalanceListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BalanceListParams,
+            params: BalanceListParams = BalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BalanceListParams = BalanceListParams.none()
+        ): HttpResponseFor<BalanceListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPage> =
+            list(BalanceListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is

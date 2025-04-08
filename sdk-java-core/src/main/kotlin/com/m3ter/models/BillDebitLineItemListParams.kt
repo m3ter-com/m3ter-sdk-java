@@ -13,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 /** List the Debit line items for the given bill. */
 class BillDebitLineItemListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val billId: String,
     private val nextToken: String?,
     private val pageSize: Long?,
@@ -21,7 +21,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun billId(): String = billId
 
@@ -44,7 +44,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billId()
          * ```
          */
@@ -71,7 +70,10 @@ private constructor(
             additionalQueryParams = billDebitLineItemListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun billId(billId: String) = apply { this.billId = billId }
 
@@ -199,7 +201,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billId()
          * ```
          *
@@ -207,7 +208,7 @@ private constructor(
          */
         fun build(): BillDebitLineItemListParams =
             BillDebitLineItemListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("billId", billId),
                 nextToken,
                 pageSize,
@@ -218,7 +219,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> billId
             else -> ""
         }

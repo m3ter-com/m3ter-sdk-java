@@ -83,7 +83,11 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "counterpricings")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "counterpricings",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -113,7 +117,7 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counterpricings",
                         params._pathParam(1),
                     )
@@ -145,7 +149,7 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counterpricings",
                         params._pathParam(1),
                     )
@@ -176,7 +180,11 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "counterpricings")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "counterpricings",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -212,7 +220,7 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counterpricings",
                         params._pathParam(1),
                     )

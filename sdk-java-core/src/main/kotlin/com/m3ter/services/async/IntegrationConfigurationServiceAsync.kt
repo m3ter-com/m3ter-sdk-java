@@ -78,16 +78,26 @@ interface IntegrationConfigurationServiceAsync {
      * This endpoint retrieves a list of all integration configurations for the specified
      * Organization. The list can be paginated for easier management.
      */
+    fun list(): CompletableFuture<IntegrationConfigurationListPageAsync> =
+        list(IntegrationConfigurationListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: IntegrationConfigurationListParams
+        params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<IntegrationConfigurationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
     ): CompletableFuture<IntegrationConfigurationListPageAsync> =
         list(params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
-        params: IntegrationConfigurationListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<IntegrationConfigurationListPageAsync>
+        requestOptions: RequestOptions
+    ): CompletableFuture<IntegrationConfigurationListPageAsync> =
+        list(IntegrationConfigurationListParams.none(), requestOptions)
 
     /**
      * Delete the integration configuration for the given UUID.
@@ -194,17 +204,29 @@ interface IntegrationConfigurationServiceAsync {
          * otherwise the same as [IntegrationConfigurationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
+            list(IntegrationConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: IntegrationConfigurationListParams
+            params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: IntegrationConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
+            list(IntegrationConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/integrationconfigs/{id}`,

@@ -10,7 +10,6 @@ import com.m3ter.models.PermissionPolicyAddToUserGroupParams
 import com.m3ter.models.PermissionPolicyAddToUserParams
 import com.m3ter.models.PermissionPolicyCreateParams
 import com.m3ter.models.PermissionPolicyDeleteParams
-import com.m3ter.models.PermissionPolicyListParams
 import com.m3ter.models.PermissionPolicyRemoveFromServiceUserParams
 import com.m3ter.models.PermissionPolicyRemoveFromSupportUserParams
 import com.m3ter.models.PermissionPolicyRemoveFromUserGroupParams
@@ -123,10 +122,7 @@ internal class PermissionPolicyServiceAsyncTest {
                 .build()
         val permissionPolicyServiceAsync = client.permissionPolicies()
 
-        val pageFuture =
-            permissionPolicyServiceAsync.list(
-                PermissionPolicyListParams.builder().orgId("orgId").build()
-            )
+        val pageFuture = permissionPolicyServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

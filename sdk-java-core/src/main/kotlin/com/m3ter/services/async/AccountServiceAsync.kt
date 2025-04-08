@@ -63,14 +63,22 @@ interface AccountServiceAsync {
     ): CompletableFuture<AccountResponse>
 
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
-    fun list(params: AccountListParams): CompletableFuture<AccountListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<AccountListPageAsync> = list(AccountListParams.none())
 
     /** @see [list] */
     fun list(
-        params: AccountListParams,
+        params: AccountListParams = AccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: AccountListParams = AccountListParams.none()
+    ): CompletableFuture<AccountListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<AccountListPageAsync> =
+        list(AccountListParams.none(), requestOptions)
 
     /**
      * Delete the Account with the given UUID. This may fail if there are any AccountPlans that
@@ -120,14 +128,22 @@ interface AccountServiceAsync {
      * criteria. The search query is customizable, allowing for complex nested conditions and
      * sorting. The returned list of Accounts can be paginated for easier management.
      */
-    fun search(params: AccountSearchParams): CompletableFuture<AccountSearchResponse> =
-        search(params, RequestOptions.none())
+    fun search(): CompletableFuture<AccountSearchResponse> = search(AccountSearchParams.none())
 
     /** @see [search] */
     fun search(
-        params: AccountSearchParams,
+        params: AccountSearchParams = AccountSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountSearchResponse>
+
+    /** @see [search] */
+    fun search(
+        params: AccountSearchParams = AccountSearchParams.none()
+    ): CompletableFuture<AccountSearchResponse> = search(params, RequestOptions.none())
+
+    /** @see [search] */
+    fun search(requestOptions: RequestOptions): CompletableFuture<AccountSearchResponse> =
+        search(AccountSearchParams.none(), requestOptions)
 
     /**
      * A view of [AccountServiceAsync] that provides access to raw HTTP responses for each method.
@@ -190,17 +206,29 @@ interface AccountServiceAsync {
          * the same as [AccountServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
+            list(AccountListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: AccountListParams
+            params: AccountListParams = AccountListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: AccountListParams = AccountListParams.none()
         ): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: AccountListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
+            list(AccountListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accounts/{id}`, but is
@@ -259,16 +287,28 @@ interface AccountServiceAsync {
          * otherwise the same as [AccountServiceAsync.search].
          */
         @MustBeClosed
+        fun search(): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =
+            search(AccountSearchParams.none())
+
+        /** @see [search] */
+        @MustBeClosed
         fun search(
-            params: AccountSearchParams
+            params: AccountSearchParams = AccountSearchParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountSearchResponse>>
+
+        /** @see [search] */
+        @MustBeClosed
+        fun search(
+            params: AccountSearchParams = AccountSearchParams.none()
         ): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =
             search(params, RequestOptions.none())
 
         /** @see [search] */
         @MustBeClosed
         fun search(
-            params: AccountSearchParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountSearchResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =
+            search(AccountSearchParams.none(), requestOptions)
     }
 }

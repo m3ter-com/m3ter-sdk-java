@@ -54,14 +54,24 @@ interface ScheduledEventConfigurationService {
     ): ScheduledEventConfigurationResponse
 
     /** Retrieve a list of ScheduledEventConfiguration entities */
-    fun list(params: ScheduledEventConfigurationListParams): ScheduledEventConfigurationListPage =
-        list(params, RequestOptions.none())
+    fun list(): ScheduledEventConfigurationListPage =
+        list(ScheduledEventConfigurationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ScheduledEventConfigurationListParams,
+        params: ScheduledEventConfigurationListParams =
+            ScheduledEventConfigurationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationListPage
+
+    /** @see [list] */
+    fun list(
+        params: ScheduledEventConfigurationListParams = ScheduledEventConfigurationListParams.none()
+    ): ScheduledEventConfigurationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): ScheduledEventConfigurationListPage =
+        list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
     fun delete(
@@ -140,17 +150,31 @@ interface ScheduledEventConfigurationService {
          * [ScheduledEventConfigurationService.list].
          */
         @MustBeClosed
+        fun list(): HttpResponseFor<ScheduledEventConfigurationListPage> =
+            list(ScheduledEventConfigurationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: ScheduledEventConfigurationListParams
+            params: ScheduledEventConfigurationListParams =
+                ScheduledEventConfigurationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ScheduledEventConfigurationListParams =
+                ScheduledEventConfigurationListParams.none()
         ): HttpResponseFor<ScheduledEventConfigurationListPage> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ScheduledEventConfigurationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfigurationListPage>
+            requestOptions: RequestOptions
+        ): HttpResponseFor<ScheduledEventConfigurationListPage> =
+            list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

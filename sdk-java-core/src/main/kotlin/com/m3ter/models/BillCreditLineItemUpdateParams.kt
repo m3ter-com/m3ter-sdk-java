@@ -25,7 +25,7 @@ import kotlin.jvm.optionals.getOrNull
 /** Update the Credit line item with the given UUID. */
 class BillCreditLineItemUpdateParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val billId: String,
     private val id: String,
     private val body: Body,
@@ -33,7 +33,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun billId(): String = billId
 
@@ -227,7 +227,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billId()
          * .id()
          * .amount()
@@ -262,7 +261,10 @@ private constructor(
             additionalQueryParams = billCreditLineItemUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun billId(billId: String) = apply { this.billId = billId }
 
@@ -561,7 +563,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .billId()
          * .id()
          * .amount()
@@ -577,7 +578,7 @@ private constructor(
          */
         fun build(): BillCreditLineItemUpdateParams =
             BillCreditLineItemUpdateParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("billId", billId),
                 checkRequired("id", id),
                 body.build(),
@@ -590,7 +591,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> billId
             2 -> id
             else -> ""

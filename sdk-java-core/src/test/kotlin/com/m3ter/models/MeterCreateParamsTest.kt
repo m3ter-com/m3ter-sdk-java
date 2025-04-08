@@ -46,7 +46,6 @@ internal class MeterCreateParamsTest {
     fun pathParams() {
         val params =
             MeterCreateParams.builder()
-                .orgId("orgId")
                 .code("JS!?Q0]r] ]\$]")
                 .addDataField(
                     DataFieldResponse.builder()
@@ -66,7 +65,7 @@ internal class MeterCreateParamsTest {
                 .name("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -143,7 +142,6 @@ internal class MeterCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             MeterCreateParams.builder()
-                .orgId("orgId")
                 .code("JS!?Q0]r] ]\$]")
                 .addDataField(
                     DataFieldResponse.builder()

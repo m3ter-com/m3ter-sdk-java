@@ -14,10 +14,9 @@ internal class DataExportJobGetDownloadUrlParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            DataExportJobGetDownloadUrlParams.builder().orgId("orgId").jobId("jobId").build()
+        val params = DataExportJobGetDownloadUrlParams.builder().jobId("jobId").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("jobId")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")

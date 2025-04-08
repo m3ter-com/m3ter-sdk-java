@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.PlanGroupCreateParams
 import com.m3ter.models.PlanGroupDeleteParams
-import com.m3ter.models.PlanGroupListParams
 import com.m3ter.models.PlanGroupRetrieveParams
 import com.m3ter.models.PlanGroupUpdateParams
 import org.junit.jupiter.api.Test
@@ -132,8 +131,7 @@ internal class PlanGroupServiceAsyncTest {
                 .build()
         val planGroupServiceAsync = client.planGroups()
 
-        val pageFuture =
-            planGroupServiceAsync.list(PlanGroupListParams.builder().orgId("orgId").build())
+        val pageFuture = planGroupServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

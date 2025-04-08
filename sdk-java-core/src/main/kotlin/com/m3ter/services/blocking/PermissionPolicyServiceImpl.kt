@@ -156,7 +156,11 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "permissionpolicies")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "permissionpolicies",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -186,7 +190,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                     )
@@ -218,7 +222,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                     )
@@ -249,7 +253,11 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "permissionpolicies")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "permissionpolicies",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -285,7 +293,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                     )
@@ -318,7 +326,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "addtoserviceuser",
@@ -352,7 +360,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "addtosupportusers",
@@ -386,7 +394,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "addtouser",
@@ -420,7 +428,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "addtousergroup",
@@ -455,7 +463,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "removefromserviceuser",
@@ -490,7 +498,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "removefromsupportusers",
@@ -524,7 +532,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "removefromuser",
@@ -559,7 +567,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "permissionpolicies",
                         params._pathParam(1),
                         "removefromusergroup",

@@ -59,7 +59,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "lineitems",
@@ -93,7 +93,7 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "lineitems",

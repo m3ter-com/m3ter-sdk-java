@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.BillJobCancelParams
 import com.m3ter.models.BillJobCreateParams
-import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobRetrieveParams
 import com.m3ter.models.CurrencyConversion
@@ -90,8 +89,7 @@ internal class BillJobServiceAsyncTest {
                 .build()
         val billJobServiceAsync = client.billJobs()
 
-        val pageFuture =
-            billJobServiceAsync.list(BillJobListParams.builder().orgId("orgId").build())
+        val pageFuture = billJobServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

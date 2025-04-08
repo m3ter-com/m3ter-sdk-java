@@ -88,7 +88,7 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "schedules",
                     )
@@ -121,7 +121,7 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "schedules",
                         params._pathParam(1),
@@ -154,7 +154,7 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "schedules",
                         params._pathParam(1),
@@ -188,7 +188,7 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "schedules",
                     )
@@ -227,7 +227,7 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "schedules",
                         params._pathParam(1),

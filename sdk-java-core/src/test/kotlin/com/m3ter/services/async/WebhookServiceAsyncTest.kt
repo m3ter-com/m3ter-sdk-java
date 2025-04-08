@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.M3terSignedCredentialsRequest
 import com.m3ter.models.WebhookCreateParams
 import com.m3ter.models.WebhookDeleteParams
-import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
 import com.m3ter.models.WebhookUpdateParams
@@ -127,8 +126,7 @@ internal class WebhookServiceAsyncTest {
                 .build()
         val webhookServiceAsync = client.webhooks()
 
-        val pageFuture =
-            webhookServiceAsync.list(WebhookListParams.builder().orgId("orgId").build())
+        val pageFuture = webhookServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

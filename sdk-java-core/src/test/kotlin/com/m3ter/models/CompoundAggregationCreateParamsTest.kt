@@ -34,7 +34,6 @@ internal class CompoundAggregationFunctionCreateParamsTest {
     fun pathParams() {
         val params =
             CompoundAggregationCreateParams.builder()
-                .orgId("orgId")
                 .calculation("x")
                 .name("x")
                 .quantityPerUnit(1.0)
@@ -42,7 +41,7 @@ internal class CompoundAggregationFunctionCreateParamsTest {
                 .unit("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -93,7 +92,6 @@ internal class CompoundAggregationFunctionCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CompoundAggregationCreateParams.builder()
-                .orgId("orgId")
                 .calculation("x")
                 .name("x")
                 .quantityPerUnit(1.0)

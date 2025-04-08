@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.ProductCreateParams
 import com.m3ter.models.ProductDeleteParams
-import com.m3ter.models.ProductListParams
 import com.m3ter.models.ProductRetrieveParams
 import com.m3ter.models.ProductUpdateParams
 import org.junit.jupiter.api.Test
@@ -112,8 +111,7 @@ internal class ProductServiceAsyncTest {
                 .build()
         val productServiceAsync = client.products()
 
-        val pageFuture =
-            productServiceAsync.list(ProductListParams.builder().orgId("orgId").build())
+        val pageFuture = productServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

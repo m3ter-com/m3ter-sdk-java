@@ -18,14 +18,23 @@ interface BillConfigServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide BillConfig. */
-    fun retrieve(params: BillConfigRetrieveParams): CompletableFuture<BillConfigResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(): CompletableFuture<BillConfigResponse> =
+        retrieve(BillConfigRetrieveParams.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        params: BillConfigRetrieveParams,
+        params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
+    ): CompletableFuture<BillConfigResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
+        retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Organization-wide BillConfig.
@@ -34,14 +43,22 @@ interface BillConfigServiceAsync {
      * service period end date on or before the set date will be locked and cannot be updated or
      * recalculated.
      */
-    fun update(params: BillConfigUpdateParams): CompletableFuture<BillConfigResponse> =
-        update(params, RequestOptions.none())
+    fun update(): CompletableFuture<BillConfigResponse> = update(BillConfigUpdateParams.none())
 
     /** @see [update] */
     fun update(
-        params: BillConfigUpdateParams,
+        params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
+
+    /** @see [update] */
+    fun update(
+        params: BillConfigUpdateParams = BillConfigUpdateParams.none()
+    ): CompletableFuture<BillConfigResponse> = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
+        update(BillConfigUpdateParams.none(), requestOptions)
 
     /**
      * A view of [BillConfigServiceAsync] that provides access to raw HTTP responses for each
@@ -54,33 +71,57 @@ interface BillConfigServiceAsync {
          * the same as [BillConfigServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
+            retrieve(BillConfigRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: BillConfigRetrieveParams
+            params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: BillConfigRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
+            retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigServiceAsync.update].
          */
         @MustBeClosed
+        fun update(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
+            update(BillConfigUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
         fun update(
-            params: BillConfigUpdateParams
+            params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            params: BillConfigUpdateParams = BillConfigUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
         fun update(
-            params: BillConfigUpdateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
+            update(BillConfigUpdateParams.none(), requestOptions)
     }
 }

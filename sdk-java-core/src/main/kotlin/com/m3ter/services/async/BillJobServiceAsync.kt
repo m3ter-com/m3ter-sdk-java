@@ -46,14 +46,22 @@ interface BillJobServiceAsync {
      *   to create another one, you'll get an HTTP 429 response (Too many requests). When one of the
      *   existing BillJobs has completed, you'll be able to submit another job
      */
-    fun create(params: BillJobCreateParams): CompletableFuture<BillJobResponse> =
-        create(params, RequestOptions.none())
+    fun create(): CompletableFuture<BillJobResponse> = create(BillJobCreateParams.none())
 
     /** @see [create] */
     fun create(
-        params: BillJobCreateParams,
+        params: BillJobCreateParams = BillJobCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillJobResponse>
+
+    /** @see [create] */
+    fun create(
+        params: BillJobCreateParams = BillJobCreateParams.none()
+    ): CompletableFuture<BillJobResponse> = create(params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(requestOptions: RequestOptions): CompletableFuture<BillJobResponse> =
+        create(BillJobCreateParams.none(), requestOptions)
 
     /** Retrieve a Bill Job for the given UUID. */
     fun retrieve(params: BillJobRetrieveParams): CompletableFuture<BillJobResponse> =
@@ -72,14 +80,22 @@ interface BillJobServiceAsync {
      * paginated for easier management, and allows you to query and filter based on various
      * parameters, such as BillJob `status` and whether or not BillJob remains `active`.
      */
-    fun list(params: BillJobListParams): CompletableFuture<BillJobListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<BillJobListPageAsync> = list(BillJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BillJobListParams,
+        params: BillJobListParams = BillJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillJobListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: BillJobListParams = BillJobListParams.none()
+    ): CompletableFuture<BillJobListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<BillJobListPageAsync> =
+        list(BillJobListParams.none(), requestOptions)
 
     /**
      * Cancel an ongoing BillJob for the given Organization and BillJob UUID.
@@ -128,17 +144,29 @@ interface BillJobServiceAsync {
          * the same as [BillJobServiceAsync.create].
          */
         @MustBeClosed
+        fun create(): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            create(BillJobCreateParams.none())
+
+        /** @see [create] */
+        @MustBeClosed
         fun create(
-            params: BillJobCreateParams
+            params: BillJobCreateParams = BillJobCreateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            params: BillJobCreateParams = BillJobCreateParams.none()
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
         @MustBeClosed
         fun create(
-            params: BillJobCreateParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            create(BillJobCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
@@ -162,17 +190,29 @@ interface BillJobServiceAsync {
          * the same as [BillJobServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
+            list(BillJobListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: BillJobListParams
+            params: BillJobListParams = BillJobListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BillJobListParams = BillJobListParams.none()
         ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BillJobListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
+            list(BillJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but

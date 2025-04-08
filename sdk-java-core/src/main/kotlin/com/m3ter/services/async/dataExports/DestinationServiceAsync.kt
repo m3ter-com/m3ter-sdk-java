@@ -74,15 +74,25 @@ interface DestinationServiceAsync {
      * Retrieve a list of Export Destination entities. You can filter the list of Destinations
      * returned by UUID.
      */
+    fun list(): CompletableFuture<DataExportDestinationListPageAsync> =
+        list(DataExportDestinationListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: DataExportDestinationListParams
+        params: DataExportDestinationListParams = DataExportDestinationListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportDestinationListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: DataExportDestinationListParams = DataExportDestinationListParams.none()
     ): CompletableFuture<DataExportDestinationListPageAsync> = list(params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportDestinationListParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DataExportDestinationListPageAsync>
+        requestOptions: RequestOptions
+    ): CompletableFuture<DataExportDestinationListPageAsync> =
+        list(DataExportDestinationListParams.none(), requestOptions)
 
     /**
      * Delete an Export Destination for the given UUID.
@@ -166,17 +176,29 @@ interface DestinationServiceAsync {
          * but is otherwise the same as [DestinationServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
+            list(DataExportDestinationListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: DataExportDestinationListParams
+            params: DataExportDestinationListParams = DataExportDestinationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportDestinationListParams = DataExportDestinationListParams.none()
         ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportDestinationListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
+            list(DataExportDestinationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete

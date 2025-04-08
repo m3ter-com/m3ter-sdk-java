@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.core.JsonValue
 import com.m3ter.models.AccountPlanCreateParams
 import com.m3ter.models.AccountPlanDeleteParams
-import com.m3ter.models.AccountPlanListParams
 import com.m3ter.models.AccountPlanRetrieveParams
 import com.m3ter.models.AccountPlanUpdateParams
 import java.time.LocalDate
@@ -128,8 +127,7 @@ internal class AccountPlanServiceAsyncTest {
                 .build()
         val accountPlanServiceAsync = client.accountPlans()
 
-        val pageFuture =
-            accountPlanServiceAsync.list(AccountPlanListParams.builder().orgId("orgId").build())
+        val pageFuture = accountPlanServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

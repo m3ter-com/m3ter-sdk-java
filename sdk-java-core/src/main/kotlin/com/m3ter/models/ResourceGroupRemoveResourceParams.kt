@@ -24,7 +24,7 @@ import kotlin.jvm.optionals.getOrNull
 /** Remove an item from a ResourceGroup. */
 class ResourceGroupRemoveResourceParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val type: String,
     private val resourceGroupId: String,
     private val body: Body,
@@ -32,7 +32,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun type(): String = type
 
@@ -108,7 +108,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .resourceGroupId()
          * .targetId()
@@ -140,7 +139,10 @@ private constructor(
                     resourceGroupRemoveResourceParams.additionalQueryParams.toBuilder()
             }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun type(type: String) = apply { this.type = type }
 
@@ -330,7 +332,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .type()
          * .resourceGroupId()
          * .targetId()
@@ -341,7 +342,7 @@ private constructor(
          */
         fun build(): ResourceGroupRemoveResourceParams =
             ResourceGroupRemoveResourceParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("type", type),
                 checkRequired("resourceGroupId", resourceGroupId),
                 body.build(),
@@ -354,7 +355,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> type
             2 -> resourceGroupId
             else -> ""

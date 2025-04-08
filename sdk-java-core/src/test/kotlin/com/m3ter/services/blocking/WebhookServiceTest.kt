@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.M3terSignedCredentialsRequest
 import com.m3ter.models.WebhookCreateParams
 import com.m3ter.models.WebhookDeleteParams
-import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
 import com.m3ter.models.WebhookUpdateParams
@@ -122,7 +121,7 @@ internal class WebhookServiceTest {
                 .build()
         val webhookService = client.webhooks()
 
-        val page = webhookService.list(WebhookListParams.builder().orgId("orgId").build())
+        val page = webhookService.list()
 
         page.response().validate()
     }

@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.CurrencyCreateParams
 import com.m3ter.models.CurrencyDeleteParams
-import com.m3ter.models.CurrencyListParams
 import com.m3ter.models.CurrencyRetrieveParams
 import com.m3ter.models.CurrencyUpdateParams
 import org.junit.jupiter.api.Test
@@ -104,7 +103,7 @@ internal class CurrencyServiceTest {
                 .build()
         val currencyService = client.currencies()
 
-        val page = currencyService.list(CurrencyListParams.builder().orgId("orgId").build())
+        val page = currencyService.list()
 
         page.response().validate()
     }

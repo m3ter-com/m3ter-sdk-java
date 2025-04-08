@@ -85,7 +85,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "creditlineitems",
@@ -119,7 +119,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "creditlineitems",
@@ -153,7 +153,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "creditlineitems",
@@ -188,7 +188,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "creditlineitems",
@@ -228,7 +228,7 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "creditlineitems",

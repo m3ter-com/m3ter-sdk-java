@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -19,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
  */
 class UsageFileUploadJobListParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val dateCreatedEnd: String?,
     private val dateCreatedStart: String?,
     private val fileKey: String?,
@@ -29,7 +28,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
      * Include only File Upload jobs created before this date. Required format is ISO-8601:
@@ -60,13 +59,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): UsageFileUploadJobListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [UsageFileUploadJobListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -95,7 +91,10 @@ private constructor(
             additionalQueryParams = usageFileUploadJobListParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
          * Include only File Upload jobs created before this date. Required format is ISO-8601:
@@ -246,17 +245,10 @@ private constructor(
          * Returns an immutable instance of [UsageFileUploadJobListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .orgId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UsageFileUploadJobListParams =
             UsageFileUploadJobListParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 dateCreatedEnd,
                 dateCreatedStart,
                 fileKey,
@@ -269,7 +261,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

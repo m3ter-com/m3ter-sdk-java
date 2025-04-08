@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
 import com.m3ter.models.PlanCreateParams
 import com.m3ter.models.PlanDeleteParams
-import com.m3ter.models.PlanListParams
 import com.m3ter.models.PlanRetrieveParams
 import com.m3ter.models.PlanUpdateParams
 import org.junit.jupiter.api.Test
@@ -131,7 +130,7 @@ internal class PlanServiceTest {
                 .build()
         val planService = client.plans()
 
-        val page = planService.list(PlanListParams.builder().orgId("orgId").build())
+        val page = planService.list()
 
         page.response().validate()
     }

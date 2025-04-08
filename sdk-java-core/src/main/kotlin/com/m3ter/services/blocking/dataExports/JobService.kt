@@ -36,14 +36,22 @@ interface JobService {
     ): DataExportJobResponse
 
     /** Retrieve a list of Export Job entities. */
-    fun list(params: DataExportJobListParams): DataExportJobListPage =
-        list(params, RequestOptions.none())
+    fun list(): DataExportJobListPage = list(DataExportJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: DataExportJobListParams,
+        params: DataExportJobListParams = DataExportJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportJobListPage
+
+    /** @see [list] */
+    fun list(
+        params: DataExportJobListParams = DataExportJobListParams.none()
+    ): DataExportJobListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): DataExportJobListPage =
+        list(DataExportJobListParams.none(), requestOptions)
 
     /**
      * Returns a presigned download URL for data export file download based on the `jobId` provided.
@@ -95,15 +103,25 @@ interface JobService {
          * otherwise the same as [JobService.list].
          */
         @MustBeClosed
-        fun list(params: DataExportJobListParams): HttpResponseFor<DataExportJobListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<DataExportJobListPage> = list(DataExportJobListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: DataExportJobListParams,
+            params: DataExportJobListParams = DataExportJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportJobListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: DataExportJobListParams = DataExportJobListParams.none()
+        ): HttpResponseFor<DataExportJobListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<DataExportJobListPage> =
+            list(DataExportJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

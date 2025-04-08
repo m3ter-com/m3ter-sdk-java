@@ -83,7 +83,11 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "plans")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "plans",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -115,7 +119,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "plans",
                         params._pathParam(1),
                     )
@@ -149,7 +153,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "plans",
                         params._pathParam(1),
                     )
@@ -183,7 +187,11 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "plans")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "plans",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -221,7 +229,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "plans",
                         params._pathParam(1),
                     )

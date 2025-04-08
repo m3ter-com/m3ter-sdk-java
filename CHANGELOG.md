@@ -8,6 +8,7 @@ Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha](https://github.com/m3ter-com/m3
 
 * **api:** prepare java target for release ([#141](https://github.com/m3ter-com/m3ter-sdk-java/issues/141)) ([fed748f](https://github.com/m3ter-com/m3ter-sdk-java/commit/fed748f72ac1bb481d7a5786c9a5d4191c37138b))
 * **api:** update contact email and package name ([#140](https://github.com/m3ter-com/m3ter-sdk-java/issues/140)) ([89be74d](https://github.com/m3ter-com/m3ter-sdk-java/commit/89be74d4ae27e3e6cf0e28364a2314e70ecf0ffb))
+* **client:** properly support client-level params ([#143](https://github.com/m3ter-com/m3ter-sdk-java/issues/143)) ([c414348](https://github.com/m3ter-com/m3ter-sdk-java/commit/c414348bc82cd1f6eb6536dedaa081d6e21a6b40))
 
 
 ### Bug Fixes

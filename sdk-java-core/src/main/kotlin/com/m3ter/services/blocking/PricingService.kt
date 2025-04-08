@@ -59,13 +59,21 @@ interface PricingService {
     ): PricingResponse
 
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
-    fun list(params: PricingListParams): PricingListPage = list(params, RequestOptions.none())
+    fun list(): PricingListPage = list(PricingListParams.none())
 
     /** @see [list] */
     fun list(
-        params: PricingListParams,
+        params: PricingListParams = PricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingListPage
+
+    /** @see [list] */
+    fun list(params: PricingListParams = PricingListParams.none()): PricingListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): PricingListPage =
+        list(PricingListParams.none(), requestOptions)
 
     /** Delete the Pricing with the given UUID. */
     fun delete(params: PricingDeleteParams): PricingResponse = delete(params, RequestOptions.none())
@@ -128,16 +136,25 @@ interface PricingService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingService.list].
          */
-        @MustBeClosed
-        fun list(params: PricingListParams): HttpResponseFor<PricingListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<PricingListPage> = list(PricingListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: PricingListParams,
+            params: PricingListParams = PricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: PricingListParams = PricingListParams.none()
+        ): HttpResponseFor<PricingListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PricingListPage> =
+            list(PricingListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/pricings/{id}`, but is

@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.PlanTemplateCreateParams
 import com.m3ter.models.PlanTemplateDeleteParams
-import com.m3ter.models.PlanTemplateListParams
 import com.m3ter.models.PlanTemplateRetrieveParams
 import com.m3ter.models.PlanTemplateUpdateParams
 import org.junit.jupiter.api.Test
@@ -126,7 +125,7 @@ internal class PlanTemplateServiceTest {
                 .build()
         val planTemplateService = client.planTemplates()
 
-        val page = planTemplateService.list(PlanTemplateListParams.builder().orgId("orgId").build())
+        val page = planTemplateService.list()
 
         page.response().validate()
     }

@@ -86,7 +86,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "notifications",
                         "configurations",
                     )
@@ -119,7 +119,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "notifications",
                         "configurations",
                         params._pathParam(1),
@@ -152,7 +152,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "notifications",
                         "configurations",
                         params._pathParam(1),
@@ -186,7 +186,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "notifications",
                         "configurations",
                     )
@@ -225,7 +225,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "notifications",
                         "configurations",
                         params._pathParam(1),

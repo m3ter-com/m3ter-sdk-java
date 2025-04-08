@@ -23,9 +23,9 @@ internal class CounterPricingListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CounterPricingListParams.builder().orgId("orgId").build()
+        val params = CounterPricingListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -60,7 +60,7 @@ internal class CounterPricingListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = CounterPricingListParams.builder().orgId("orgId").build()
+        val params = CounterPricingListParams.builder().build()
 
         val queryParams = params._queryParams()
 

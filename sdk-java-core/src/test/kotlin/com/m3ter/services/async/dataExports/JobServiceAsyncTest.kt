@@ -5,7 +5,6 @@ package com.m3ter.services.async.dataExports
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.DataExportJobGetDownloadUrlParams
-import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -46,8 +45,7 @@ internal class JobServiceAsyncTest {
                 .build()
         val jobServiceAsync = client.dataExports().jobs()
 
-        val pageFuture =
-            jobServiceAsync.list(DataExportJobListParams.builder().orgId("orgId").build())
+        val pageFuture = jobServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

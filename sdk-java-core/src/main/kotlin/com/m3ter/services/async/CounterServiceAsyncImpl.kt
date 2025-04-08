@@ -83,7 +83,11 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "counters")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "counters",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -115,7 +119,7 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counters",
                         params._pathParam(1),
                     )
@@ -149,7 +153,7 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counters",
                         params._pathParam(1),
                     )
@@ -183,7 +187,11 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "counters")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "counters",
+                    )
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -221,7 +229,7 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "counters",
                         params._pathParam(1),
                     )

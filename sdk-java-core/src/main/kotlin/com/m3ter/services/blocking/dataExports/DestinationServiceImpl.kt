@@ -88,7 +88,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "destinations",
                     )
@@ -121,7 +121,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "destinations",
                         params._pathParam(1),
@@ -154,7 +154,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "destinations",
                         params._pathParam(1),
@@ -188,7 +188,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "destinations",
                     )
@@ -227,7 +227,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "dataexports",
                         "destinations",
                         params._pathParam(1),

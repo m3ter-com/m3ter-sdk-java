@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.PricingBand
 import com.m3ter.models.PricingCreateParams
 import com.m3ter.models.PricingDeleteParams
-import com.m3ter.models.PricingListParams
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
 import java.time.OffsetDateTime
@@ -171,7 +170,7 @@ internal class PricingServiceTest {
                 .build()
         val pricingService = client.pricings()
 
-        val page = pricingService.list(PricingListParams.builder().orgId("orgId").build())
+        val page = pricingService.list()
 
         page.response().validate()
     }

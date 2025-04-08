@@ -43,14 +43,22 @@ interface InvitationService {
     ): InvitationResponse
 
     /** Retrieve a list of all invitations in the Organization. */
-    fun list(params: UserInvitationListParams): UserInvitationListPage =
-        list(params, RequestOptions.none())
+    fun list(): UserInvitationListPage = list(UserInvitationListParams.none())
 
     /** @see [list] */
     fun list(
-        params: UserInvitationListParams,
+        params: UserInvitationListParams = UserInvitationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserInvitationListPage
+
+    /** @see [list] */
+    fun list(
+        params: UserInvitationListParams = UserInvitationListParams.none()
+    ): UserInvitationListPage = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): UserInvitationListPage =
+        list(UserInvitationListParams.none(), requestOptions)
 
     /** A view of [InvitationService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -90,14 +98,24 @@ interface InvitationService {
          * otherwise the same as [InvitationService.list].
          */
         @MustBeClosed
-        fun list(params: UserInvitationListParams): HttpResponseFor<UserInvitationListPage> =
-            list(params, RequestOptions.none())
+        fun list(): HttpResponseFor<UserInvitationListPage> = list(UserInvitationListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: UserInvitationListParams,
+            params: UserInvitationListParams = UserInvitationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserInvitationListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: UserInvitationListParams = UserInvitationListParams.none()
+        ): HttpResponseFor<UserInvitationListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<UserInvitationListPage> =
+            list(UserInvitationListParams.none(), requestOptions)
     }
 }

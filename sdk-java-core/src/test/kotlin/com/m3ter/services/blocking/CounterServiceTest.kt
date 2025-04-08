@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.CounterCreateParams
 import com.m3ter.models.CounterDeleteParams
-import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterRetrieveParams
 import com.m3ter.models.CounterUpdateParams
 import org.junit.jupiter.api.Test
@@ -100,7 +99,7 @@ internal class CounterServiceTest {
                 .build()
         val counterService = client.counters()
 
-        val page = counterService.list(CounterListParams.builder().orgId("orgId").build())
+        val page = counterService.list()
 
         page.response().validate()
     }

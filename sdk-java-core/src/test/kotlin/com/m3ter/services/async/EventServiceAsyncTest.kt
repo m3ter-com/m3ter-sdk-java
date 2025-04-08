@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.EventGetFieldsParams
 import com.m3ter.models.EventGetTypesParams
-import com.m3ter.models.EventListParams
 import com.m3ter.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -47,7 +46,7 @@ internal class EventServiceAsyncTest {
                 .build()
         val eventServiceAsync = client.events()
 
-        val pageFuture = eventServiceAsync.list(EventListParams.builder().orgId("orgId").build())
+        val pageFuture = eventServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

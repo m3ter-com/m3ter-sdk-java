@@ -65,13 +65,21 @@ interface UserService {
      * overview of all users and their basic details. The list can be paginated for easier
      * management.
      */
-    fun list(params: UserListParams): UserListPage = list(params, RequestOptions.none())
+    fun list(): UserListPage = list(UserListParams.none())
 
     /** @see [list] */
     fun list(
-        params: UserListParams,
+        params: UserListParams = UserListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserListPage
+
+    /** @see [list] */
+    fun list(params: UserListParams = UserListParams.none()): UserListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): UserListPage =
+        list(UserListParams.none(), requestOptions)
 
     /**
      * Retrieve the permissions for the OrgUser with the given UUID.
@@ -121,13 +129,20 @@ interface UserService {
     ): ResourceGroupResponse
 
     /** Retrieve information about the current user */
-    fun me(params: UserMeParams): UserMeResponse = me(params, RequestOptions.none())
+    fun me(): UserMeResponse = me(UserMeParams.none())
 
     /** @see [me] */
     fun me(
-        params: UserMeParams,
+        params: UserMeParams = UserMeParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserMeResponse
+
+    /** @see [me] */
+    fun me(params: UserMeParams = UserMeParams.none()): UserMeResponse =
+        me(params, RequestOptions.none())
+
+    /** @see [me] */
+    fun me(requestOptions: RequestOptions): UserMeResponse = me(UserMeParams.none(), requestOptions)
 
     /** Resend temporary password for user */
     fun resendPassword(params: UserResendPasswordParams) =
@@ -178,16 +193,24 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
          * same as [UserService.list].
          */
-        @MustBeClosed
-        fun list(params: UserListParams): HttpResponseFor<UserListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<UserListPage> = list(UserListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: UserListParams,
+            params: UserListParams = UserListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: UserListParams = UserListParams.none()): HttpResponseFor<UserListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<UserListPage> =
+            list(UserListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
@@ -224,16 +247,24 @@ interface UserService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
          * the same as [UserService.me].
          */
-        @MustBeClosed
-        fun me(params: UserMeParams): HttpResponseFor<UserMeResponse> =
-            me(params, RequestOptions.none())
+        @MustBeClosed fun me(): HttpResponseFor<UserMeResponse> = me(UserMeParams.none())
 
         /** @see [me] */
         @MustBeClosed
         fun me(
-            params: UserMeParams,
+            params: UserMeParams = UserMeParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserMeResponse>
+
+        /** @see [me] */
+        @MustBeClosed
+        fun me(params: UserMeParams = UserMeParams.none()): HttpResponseFor<UserMeResponse> =
+            me(params, RequestOptions.none())
+
+        /** @see [me] */
+        @MustBeClosed
+        fun me(requestOptions: RequestOptions): HttpResponseFor<UserMeResponse> =
+            me(UserMeParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,

@@ -140,7 +140,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                     )
@@ -170,7 +170,11 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "bills")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "bills",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -199,7 +203,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                     )
@@ -230,7 +234,12 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("organizations", params._pathParam(0), "bills", "approve")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "bills",
+                        "approve",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepare(clientOptions, params)
@@ -259,7 +268,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         "latest",
                         params._pathParam(1),
@@ -291,7 +300,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "lock",
@@ -322,7 +331,12 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("organizations", params._pathParam(0), "bills", "search")
+                    .addPathSegments(
+                        "organizations",
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
+                        "bills",
+                        "search",
+                    )
                     .build()
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -350,7 +364,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "bills",
                         params._pathParam(1),
                         "status",

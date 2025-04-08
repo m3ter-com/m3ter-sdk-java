@@ -34,7 +34,6 @@ internal class ContractUpdateParamsTest {
     fun pathParams() {
         val params =
             ContractUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("x")
                 .endDate(LocalDate.parse("2019-12-27"))
@@ -42,7 +41,7 @@ internal class ContractUpdateParamsTest {
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -91,7 +90,6 @@ internal class ContractUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ContractUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("x")
                 .endDate(LocalDate.parse("2019-12-27"))

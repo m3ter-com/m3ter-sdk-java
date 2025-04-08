@@ -20,9 +20,9 @@ internal class TransactionTypeCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = TransactionTypeCreateParams.builder().orgId("orgId").name("x").build()
+        val params = TransactionTypeCreateParams.builder().name("x").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -48,7 +48,7 @@ internal class TransactionTypeCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = TransactionTypeCreateParams.builder().orgId("orgId").name("x").build()
+        val params = TransactionTypeCreateParams.builder().name("x").build()
 
         val body = params._body()
 

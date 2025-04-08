@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.DataFieldResponse
 import com.m3ter.models.MeterCreateParams
 import com.m3ter.models.MeterDeleteParams
-import com.m3ter.models.MeterListParams
 import com.m3ter.models.MeterRetrieveParams
 import com.m3ter.models.MeterUpdateParams
 import org.junit.jupiter.api.Test
@@ -151,7 +150,7 @@ internal class MeterServiceAsyncTest {
                 .build()
         val meterServiceAsync = client.meters()
 
-        val pageFuture = meterServiceAsync.list(MeterListParams.builder().orgId("orgId").build())
+        val pageFuture = meterServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

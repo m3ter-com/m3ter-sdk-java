@@ -45,13 +45,21 @@ interface BillJobService {
      *   to create another one, you'll get an HTTP 429 response (Too many requests). When one of the
      *   existing BillJobs has completed, you'll be able to submit another job
      */
-    fun create(params: BillJobCreateParams): BillJobResponse = create(params, RequestOptions.none())
+    fun create(): BillJobResponse = create(BillJobCreateParams.none())
 
     /** @see [create] */
     fun create(
-        params: BillJobCreateParams,
+        params: BillJobCreateParams = BillJobCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
+
+    /** @see [create] */
+    fun create(params: BillJobCreateParams = BillJobCreateParams.none()): BillJobResponse =
+        create(params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(requestOptions: RequestOptions): BillJobResponse =
+        create(BillJobCreateParams.none(), requestOptions)
 
     /** Retrieve a Bill Job for the given UUID. */
     fun retrieve(params: BillJobRetrieveParams): BillJobResponse =
@@ -70,13 +78,21 @@ interface BillJobService {
      * paginated for easier management, and allows you to query and filter based on various
      * parameters, such as BillJob `status` and whether or not BillJob remains `active`.
      */
-    fun list(params: BillJobListParams): BillJobListPage = list(params, RequestOptions.none())
+    fun list(): BillJobListPage = list(BillJobListParams.none())
 
     /** @see [list] */
     fun list(
-        params: BillJobListParams,
+        params: BillJobListParams = BillJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobListPage
+
+    /** @see [list] */
+    fun list(params: BillJobListParams = BillJobListParams.none()): BillJobListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): BillJobListPage =
+        list(BillJobListParams.none(), requestOptions)
 
     /**
      * Cancel an ongoing BillJob for the given Organization and BillJob UUID.
@@ -122,15 +138,25 @@ interface BillJobService {
          * the same as [BillJobService.create].
          */
         @MustBeClosed
-        fun create(params: BillJobCreateParams): HttpResponseFor<BillJobResponse> =
-            create(params, RequestOptions.none())
+        fun create(): HttpResponseFor<BillJobResponse> = create(BillJobCreateParams.none())
 
         /** @see [create] */
         @MustBeClosed
         fun create(
-            params: BillJobCreateParams,
+            params: BillJobCreateParams = BillJobCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            params: BillJobCreateParams = BillJobCreateParams.none()
+        ): HttpResponseFor<BillJobResponse> = create(params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
+            create(BillJobCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
@@ -151,16 +177,25 @@ interface BillJobService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
          * the same as [BillJobService.list].
          */
-        @MustBeClosed
-        fun list(params: BillJobListParams): HttpResponseFor<BillJobListPage> =
-            list(params, RequestOptions.none())
+        @MustBeClosed fun list(): HttpResponseFor<BillJobListPage> = list(BillJobListParams.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: BillJobListParams,
+            params: BillJobListParams = BillJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BillJobListParams = BillJobListParams.none()
+        ): HttpResponseFor<BillJobListPage> = list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<BillJobListPage> =
+            list(BillJobListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but

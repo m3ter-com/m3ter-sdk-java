@@ -17,14 +17,22 @@ interface OrganizationConfigService {
     fun withRawResponse(): WithRawResponse
 
     /** Retrieve the Organization-wide configuration details. */
-    fun retrieve(params: OrganizationConfigRetrieveParams): OrganizationConfigResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(): OrganizationConfigResponse = retrieve(OrganizationConfigRetrieveParams.none())
 
     /** @see [retrieve] */
     fun retrieve(
-        params: OrganizationConfigRetrieveParams,
+        params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfigResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
+    ): OrganizationConfigResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(requestOptions: RequestOptions): OrganizationConfigResponse =
+        retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
     /** Update the Organization-wide configuration details. */
     fun update(params: OrganizationConfigUpdateParams): OrganizationConfigResponse =
@@ -47,16 +55,26 @@ interface OrganizationConfigService {
          * otherwise the same as [OrganizationConfigService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(
-            params: OrganizationConfigRetrieveParams
-        ): HttpResponseFor<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
+        fun retrieve(): HttpResponseFor<OrganizationConfigResponse> =
+            retrieve(OrganizationConfigRetrieveParams.none())
 
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: OrganizationConfigRetrieveParams,
+            params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<OrganizationConfigResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
+        ): HttpResponseFor<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(requestOptions: RequestOptions): HttpResponseFor<OrganizationConfigResponse> =
+            retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is

@@ -26,9 +26,9 @@ internal class CommitmentListParamsTest {
 
     @Test
     fun pathParams() {
-        val params = CommitmentListParams.builder().orgId("orgId").build()
+        val params = CommitmentListParams.builder().build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -69,7 +69,7 @@ internal class CommitmentListParamsTest {
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = CommitmentListParams.builder().orgId("orgId").build()
+        val params = CommitmentListParams.builder().build()
 
         val queryParams = params._queryParams()
 

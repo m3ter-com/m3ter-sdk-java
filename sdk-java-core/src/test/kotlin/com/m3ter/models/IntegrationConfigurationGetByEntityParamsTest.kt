@@ -20,12 +20,9 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
     @Test
     fun pathParams() {
         val params =
-            IntegrationConfigurationGetByEntityParams.builder()
-                .orgId("orgId")
-                .entityType("entityType")
-                .build()
+            IntegrationConfigurationGetByEntityParams.builder().entityType("entityType").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("entityType")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -48,10 +45,7 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
     @Test
     fun queryParamsWithoutOptionalFields() {
         val params =
-            IntegrationConfigurationGetByEntityParams.builder()
-                .orgId("orgId")
-                .entityType("entityType")
-                .build()
+            IntegrationConfigurationGetByEntityParams.builder().entityType("entityType").build()
 
         val queryParams = params._queryParams()
 

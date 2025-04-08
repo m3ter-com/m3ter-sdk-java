@@ -55,13 +55,12 @@ internal class AccountCreateParamsTest {
     fun pathParams() {
         val params =
             AccountCreateParams.builder()
-                .orgId("orgId")
                 .code("JS!?Q0]r] ]\$]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -154,7 +153,6 @@ internal class AccountCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             AccountCreateParams.builder()
-                .orgId("orgId")
                 .code("JS!?Q0]r] ]\$]")
                 .emailAddress("dev@stainless.com")
                 .name("x")

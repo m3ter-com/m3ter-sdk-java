@@ -23,14 +23,13 @@ internal class ScheduledEventConfigurationCreateParamsTest {
     fun pathParams() {
         val params =
             ScheduledEventConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .entity("Bill")
                 .field("endDate")
                 .name("scheduled.bill.enddateEvent")
                 .offset(5L)
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -60,7 +59,6 @@ internal class ScheduledEventConfigurationCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ScheduledEventConfigurationCreateParams.builder()
-                .orgId("orgId")
                 .entity("Bill")
                 .field("endDate")
                 .name("scheduled.bill.enddateEvent")

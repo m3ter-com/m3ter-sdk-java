@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.PricingBand
 import com.m3ter.models.PricingCreateParams
 import com.m3ter.models.PricingDeleteParams
-import com.m3ter.models.PricingListParams
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
 import java.time.OffsetDateTime
@@ -176,8 +175,7 @@ internal class PricingServiceAsyncTest {
                 .build()
         val pricingServiceAsync = client.pricings()
 
-        val pageFuture =
-            pricingServiceAsync.list(PricingListParams.builder().orgId("orgId").build())
+        val pageFuture = pricingServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

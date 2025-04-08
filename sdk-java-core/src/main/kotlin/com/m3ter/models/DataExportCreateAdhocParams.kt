@@ -75,13 +75,13 @@ import kotlin.jvm.optionals.getOrNull
  */
 class DataExportCreateAdhocParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** Request representing an operational data export configuration. */
     fun body(): Body = body
@@ -99,7 +99,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .body()
          * ```
          */
@@ -122,7 +121,10 @@ private constructor(
             additionalQueryParams = dataExportCreateAdhocParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** Request representing an operational data export configuration. */
         fun body(body: Body) = apply { this.body = body }
@@ -243,7 +245,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .body()
          * ```
          *
@@ -251,7 +252,7 @@ private constructor(
          */
         fun build(): DataExportCreateAdhocParams =
             DataExportCreateAdhocParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -262,7 +263,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             else -> ""
         }
 

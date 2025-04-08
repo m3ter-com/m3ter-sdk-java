@@ -13,14 +13,14 @@ import kotlin.jvm.optionals.getOrNull
 /** Retrieve the integration configuration for the entity */
 class IntegrationConfigurationGetByEntityParams
 private constructor(
-    private val orgId: String,
+    private val orgId: String?,
     private val entityType: String,
     private val entityId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun orgId(): String = orgId
+    fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun entityType(): String = entityType
 
@@ -41,7 +41,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .entityType()
          * ```
          */
@@ -70,7 +69,10 @@ private constructor(
                 integrationConfigurationGetByEntityParams.additionalQueryParams.toBuilder()
         }
 
-        fun orgId(orgId: String) = apply { this.orgId = orgId }
+        fun orgId(orgId: String?) = apply { this.orgId = orgId }
+
+        /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun entityType(entityType: String) = apply { this.entityType = entityType }
 
@@ -185,7 +187,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .orgId()
          * .entityType()
          * ```
          *
@@ -193,7 +194,7 @@ private constructor(
          */
         fun build(): IntegrationConfigurationGetByEntityParams =
             IntegrationConfigurationGetByEntityParams(
-                checkRequired("orgId", orgId),
+                orgId,
                 checkRequired("entityType", entityType),
                 entityId,
                 additionalHeaders.build(),
@@ -203,7 +204,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> orgId
+            0 -> orgId ?: ""
             1 -> entityType
             else -> ""
         }

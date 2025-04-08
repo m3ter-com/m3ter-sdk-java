@@ -55,7 +55,6 @@ internal class CommitmentUpdateParamsTest {
     fun pathParams() {
         val params =
             CommitmentUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .amount(1.0)
@@ -64,7 +63,7 @@ internal class CommitmentUpdateParamsTest {
                 .startDate(LocalDate.parse("2019-12-27"))
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
         assertThat(params._pathParam(2)).isEqualTo("")
@@ -156,7 +155,6 @@ internal class CommitmentUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CommitmentUpdateParams.builder()
-                .orgId("orgId")
                 .id("id")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .amount(1.0)

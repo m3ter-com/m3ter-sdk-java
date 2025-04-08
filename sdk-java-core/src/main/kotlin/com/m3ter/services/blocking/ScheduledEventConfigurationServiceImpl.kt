@@ -87,7 +87,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.POST)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "scheduledevents",
                         "configurations",
                     )
@@ -120,7 +120,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "scheduledevents",
                         "configurations",
                         params._pathParam(1),
@@ -153,7 +153,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.PUT)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "scheduledevents",
                         "configurations",
                         params._pathParam(1),
@@ -187,7 +187,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.GET)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "scheduledevents",
                         "configurations",
                     )
@@ -226,7 +226,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .method(HttpMethod.DELETE)
                     .addPathSegments(
                         "organizations",
-                        params._pathParam(0),
+                        params._pathParam(0).ifBlank { clientOptions.orgId },
                         "scheduledevents",
                         "configurations",
                         params._pathParam(1),

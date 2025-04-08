@@ -14,10 +14,9 @@ internal class ResourceGroupRetrieveParamsTest {
 
     @Test
     fun pathParams() {
-        val params =
-            ResourceGroupRetrieveParams.builder().orgId("orgId").type("type").id("id").build()
+        val params = ResourceGroupRetrieveParams.builder().type("type").id("id").build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("type")
         assertThat(params._pathParam(2)).isEqualTo("id")
         // out-of-bound path param

@@ -76,14 +76,22 @@ interface ProductServiceAsync {
      * This endpoint retrieves a list of all the Products within a specified Organization. The list
      * can be paginated, and supports filtering by specific Product IDs.
      */
-    fun list(params: ProductListParams): CompletableFuture<ProductListPageAsync> =
-        list(params, RequestOptions.none())
+    fun list(): CompletableFuture<ProductListPageAsync> = list(ProductListParams.none())
 
     /** @see [list] */
     fun list(
-        params: ProductListParams,
+        params: ProductListParams = ProductListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductListPageAsync>
+
+    /** @see [list] */
+    fun list(
+        params: ProductListParams = ProductListParams.none()
+    ): CompletableFuture<ProductListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(requestOptions: RequestOptions): CompletableFuture<ProductListPageAsync> =
+        list(ProductListParams.none(), requestOptions)
 
     /**
      * Delete a Product with the given UUID.
@@ -161,17 +169,29 @@ interface ProductServiceAsync {
          * the same as [ProductServiceAsync.list].
          */
         @MustBeClosed
+        fun list(): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
+            list(ProductListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
         fun list(
-            params: ProductListParams
+            params: ProductListParams = ProductListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ProductListPageAsync>>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: ProductListParams = ProductListParams.none()
         ): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
         fun list(
-            params: ProductListParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ProductListPageAsync>>
+            requestOptions: RequestOptions
+        ): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
+            list(ProductListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /organizations/{orgId}/products/{id}`, but is

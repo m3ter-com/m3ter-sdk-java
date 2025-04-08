@@ -27,7 +27,6 @@ internal class DataExportScheduleCreateParamsTest {
     fun pathParams() {
         val params =
             DataExportScheduleCreateParams.builder()
-                .orgId("orgId")
                 .body(
                     OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(
@@ -38,7 +37,7 @@ internal class DataExportScheduleCreateParamsTest {
                 )
                 .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("orgId")
+        assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -79,7 +78,6 @@ internal class DataExportScheduleCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             DataExportScheduleCreateParams.builder()
-                .orgId("orgId")
                 .body(
                     OperationalDataExportScheduleRequest.builder()
                         .addOperationalDataType(

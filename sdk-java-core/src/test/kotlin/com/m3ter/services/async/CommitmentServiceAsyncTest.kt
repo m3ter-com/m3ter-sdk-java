@@ -7,7 +7,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.CommitmentCreateParams
 import com.m3ter.models.CommitmentDeleteParams
 import com.m3ter.models.CommitmentFee
-import com.m3ter.models.CommitmentListParams
 import com.m3ter.models.CommitmentRetrieveParams
 import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentUpdateParams
@@ -169,8 +168,7 @@ internal class CommitmentServiceAsyncTest {
                 .build()
         val commitmentServiceAsync = client.commitments()
 
-        val pageFuture =
-            commitmentServiceAsync.list(CommitmentListParams.builder().orgId("orgId").build())
+        val pageFuture = commitmentServiceAsync.list()
 
         val page = pageFuture.get()
         page.response().validate()

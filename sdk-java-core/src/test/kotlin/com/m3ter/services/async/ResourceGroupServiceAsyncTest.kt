@@ -106,9 +106,7 @@ internal class ResourceGroupServiceAsyncTest {
         val resourceGroupServiceAsync = client.resourceGroups()
 
         val pageFuture =
-            resourceGroupServiceAsync.list(
-                ResourceGroupListParams.builder().orgId("orgId").type("type").build()
-            )
+            resourceGroupServiceAsync.list(ResourceGroupListParams.builder().type("type").build())
 
         val page = pageFuture.get()
         page.response().validate()
@@ -178,7 +176,6 @@ internal class ResourceGroupServiceAsyncTest {
         val pageFuture =
             resourceGroupServiceAsync.listContents(
                 ResourceGroupListContentsParams.builder()
-                    .orgId("orgId")
                     .type("type")
                     .resourceGroupId("resourceGroupId")
                     .build()
@@ -203,7 +200,6 @@ internal class ResourceGroupServiceAsyncTest {
         val pageFuture =
             resourceGroupServiceAsync.listPermissions(
                 ResourceGroupListPermissionsParams.builder()
-                    .orgId("orgId")
                     .type("type")
                     .resourceGroupId("resourceGroupId")
                     .build()
