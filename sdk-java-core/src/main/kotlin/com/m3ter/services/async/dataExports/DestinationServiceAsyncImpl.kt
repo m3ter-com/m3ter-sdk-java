@@ -20,6 +20,7 @@ import com.m3ter.models.DataExportDestinationCreateResponse
 import com.m3ter.models.DataExportDestinationDeleteParams
 import com.m3ter.models.DataExportDestinationDeleteResponse
 import com.m3ter.models.DataExportDestinationListPageAsync
+import com.m3ter.models.DataExportDestinationListPageResponse
 import com.m3ter.models.DataExportDestinationListParams
 import com.m3ter.models.DataExportDestinationRetrieveParams
 import com.m3ter.models.DataExportDestinationRetrieveResponse
@@ -185,8 +186,8 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val listHandler: Handler<DataExportDestinationListPageAsync.Response> =
-            jsonHandler<DataExportDestinationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DataExportDestinationListPageResponse> =
+            jsonHandler<DataExportDestinationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

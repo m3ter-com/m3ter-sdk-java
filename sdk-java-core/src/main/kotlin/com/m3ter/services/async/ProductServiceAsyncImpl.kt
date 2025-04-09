@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.ProductCreateParams
 import com.m3ter.models.ProductDeleteParams
 import com.m3ter.models.ProductListPageAsync
+import com.m3ter.models.ProductListPageResponse
 import com.m3ter.models.ProductListParams
 import com.m3ter.models.ProductResponse
 import com.m3ter.models.ProductRetrieveParams
@@ -176,8 +177,8 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val listHandler: Handler<ProductListPageAsync.Response> =
-            jsonHandler<ProductListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ProductListPageResponse> =
+            jsonHandler<ProductListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -26,6 +26,7 @@ import com.m3ter.models.PermissionPolicyAddToUserResponse
 import com.m3ter.models.PermissionPolicyCreateParams
 import com.m3ter.models.PermissionPolicyDeleteParams
 import com.m3ter.models.PermissionPolicyListPage
+import com.m3ter.models.PermissionPolicyListPageResponse
 import com.m3ter.models.PermissionPolicyListParams
 import com.m3ter.models.PermissionPolicyRemoveFromServiceUserParams
 import com.m3ter.models.PermissionPolicyRemoveFromServiceUserResponse
@@ -242,8 +243,8 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             }
         }
 
-        private val listHandler: Handler<PermissionPolicyListPage.Response> =
-            jsonHandler<PermissionPolicyListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PermissionPolicyListPageResponse> =
+            jsonHandler<PermissionPolicyListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

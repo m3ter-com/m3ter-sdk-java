@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.MeterCreateParams
 import com.m3ter.models.MeterDeleteParams
 import com.m3ter.models.MeterListPage
+import com.m3ter.models.MeterListPageResponse
 import com.m3ter.models.MeterListParams
 import com.m3ter.models.MeterResponse
 import com.m3ter.models.MeterRetrieveParams
@@ -154,8 +155,8 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val listHandler: Handler<MeterListPage.Response> =
-            jsonHandler<MeterListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<MeterListPageResponse> =
+            jsonHandler<MeterListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

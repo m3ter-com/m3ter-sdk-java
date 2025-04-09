@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.DebitReasonCreateParams
 import com.m3ter.models.DebitReasonDeleteParams
 import com.m3ter.models.DebitReasonListPage
+import com.m3ter.models.DebitReasonListPageResponse
 import com.m3ter.models.DebitReasonListParams
 import com.m3ter.models.DebitReasonResponse
 import com.m3ter.models.DebitReasonRetrieveParams
@@ -172,8 +173,8 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val listHandler: Handler<DebitReasonListPage.Response> =
-            jsonHandler<DebitReasonListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DebitReasonListPageResponse> =
+            jsonHandler<DebitReasonListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

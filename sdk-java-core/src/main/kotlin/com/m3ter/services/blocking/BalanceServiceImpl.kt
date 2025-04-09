@@ -19,6 +19,7 @@ import com.m3ter.models.Balance
 import com.m3ter.models.BalanceCreateParams
 import com.m3ter.models.BalanceDeleteParams
 import com.m3ter.models.BalanceListPage
+import com.m3ter.models.BalanceListPageResponse
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
@@ -163,8 +164,8 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<BalanceListPage.Response> =
-            jsonHandler<BalanceListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BalanceListPageResponse> =
+            jsonHandler<BalanceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
