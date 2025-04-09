@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.InvitationResponse
 import com.m3ter.models.UserInvitationCreateParams
 import com.m3ter.models.UserInvitationListPage
+import com.m3ter.models.UserInvitationListPageResponse
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 
@@ -118,8 +119,8 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val listHandler: Handler<UserInvitationListPage.Response> =
-            jsonHandler<UserInvitationListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<UserInvitationListPageResponse> =
+            jsonHandler<UserInvitationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

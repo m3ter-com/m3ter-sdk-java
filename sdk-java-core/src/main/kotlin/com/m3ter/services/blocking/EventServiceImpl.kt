@@ -19,6 +19,7 @@ import com.m3ter.models.EventGetFieldsResponse
 import com.m3ter.models.EventGetTypesParams
 import com.m3ter.models.EventGetTypesResponse
 import com.m3ter.models.EventListPage
+import com.m3ter.models.EventListPageResponse
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
@@ -93,8 +94,8 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val listHandler: Handler<EventListPage.Response> =
-            jsonHandler<EventListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<EventListPageResponse> =
+            jsonHandler<EventListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

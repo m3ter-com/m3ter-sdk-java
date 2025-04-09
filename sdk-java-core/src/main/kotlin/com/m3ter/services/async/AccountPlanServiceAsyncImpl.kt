@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.AccountPlanCreateParams
 import com.m3ter.models.AccountPlanDeleteParams
 import com.m3ter.models.AccountPlanListPageAsync
+import com.m3ter.models.AccountPlanListPageResponse
 import com.m3ter.models.AccountPlanListParams
 import com.m3ter.models.AccountPlanResponse
 import com.m3ter.models.AccountPlanRetrieveParams
@@ -179,8 +180,8 @@ class AccountPlanServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val listHandler: Handler<AccountPlanListPageAsync.Response> =
-            jsonHandler<AccountPlanListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AccountPlanListPageResponse> =
+            jsonHandler<AccountPlanListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

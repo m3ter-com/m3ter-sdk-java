@@ -17,6 +17,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.models.DataExportJobListPage
+import com.m3ter.models.DataExportJobListPageResponse
 import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
@@ -88,8 +89,8 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             }
         }
 
-        private val listHandler: Handler<DataExportJobListPage.Response> =
-            jsonHandler<DataExportJobListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DataExportJobListPageResponse> =
+            jsonHandler<DataExportJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

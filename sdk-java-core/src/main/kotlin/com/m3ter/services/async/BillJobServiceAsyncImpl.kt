@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.BillJobCancelParams
 import com.m3ter.models.BillJobCreateParams
 import com.m3ter.models.BillJobListPageAsync
+import com.m3ter.models.BillJobListPageResponse
 import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
@@ -141,8 +142,8 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val listHandler: Handler<BillJobListPageAsync.Response> =
-            jsonHandler<BillJobListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillJobListPageResponse> =
+            jsonHandler<BillJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

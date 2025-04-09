@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.BillDebitLineItemCreateParams
 import com.m3ter.models.BillDebitLineItemDeleteParams
 import com.m3ter.models.BillDebitLineItemListPageAsync
+import com.m3ter.models.BillDebitLineItemListPageResponse
 import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
@@ -185,8 +186,8 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val listHandler: Handler<BillDebitLineItemListPageAsync.Response> =
-            jsonHandler<BillDebitLineItemListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillDebitLineItemListPageResponse> =
+            jsonHandler<BillDebitLineItemListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

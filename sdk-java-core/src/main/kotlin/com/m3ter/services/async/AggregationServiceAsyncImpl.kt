@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.AggregationCreateParams
 import com.m3ter.models.AggregationDeleteParams
 import com.m3ter.models.AggregationListPageAsync
+import com.m3ter.models.AggregationListPageResponse
 import com.m3ter.models.AggregationListParams
 import com.m3ter.models.AggregationResponse
 import com.m3ter.models.AggregationRetrieveParams
@@ -179,8 +180,8 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val listHandler: Handler<AggregationListPageAsync.Response> =
-            jsonHandler<AggregationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AggregationListPageResponse> =
+            jsonHandler<AggregationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

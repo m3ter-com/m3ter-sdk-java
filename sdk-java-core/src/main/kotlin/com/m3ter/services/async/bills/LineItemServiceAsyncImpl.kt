@@ -15,6 +15,7 @@ import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.parseable
 import com.m3ter.core.prepareAsync
 import com.m3ter.models.BillLineItemListPageAsync
+import com.m3ter.models.BillLineItemListPageResponse
 import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import com.m3ter.models.LineItemResponse
@@ -84,8 +85,8 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val listHandler: Handler<BillLineItemListPageAsync.Response> =
-            jsonHandler<BillLineItemListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillLineItemListPageResponse> =
+            jsonHandler<BillLineItemListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

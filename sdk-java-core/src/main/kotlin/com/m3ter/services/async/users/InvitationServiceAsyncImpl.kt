@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.InvitationResponse
 import com.m3ter.models.UserInvitationCreateParams
 import com.m3ter.models.UserInvitationListPageAsync
+import com.m3ter.models.UserInvitationListPageResponse
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 import java.util.concurrent.CompletableFuture
@@ -125,8 +126,8 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val listHandler: Handler<UserInvitationListPageAsync.Response> =
-            jsonHandler<UserInvitationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<UserInvitationListPageResponse> =
+            jsonHandler<UserInvitationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

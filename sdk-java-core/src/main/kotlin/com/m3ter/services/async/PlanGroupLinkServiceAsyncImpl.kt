@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.PlanGroupLinkCreateParams
 import com.m3ter.models.PlanGroupLinkDeleteParams
 import com.m3ter.models.PlanGroupLinkListPageAsync
+import com.m3ter.models.PlanGroupLinkListPageResponse
 import com.m3ter.models.PlanGroupLinkListParams
 import com.m3ter.models.PlanGroupLinkResponse
 import com.m3ter.models.PlanGroupLinkRetrieveParams
@@ -179,8 +180,8 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val listHandler: Handler<PlanGroupLinkListPageAsync.Response> =
-            jsonHandler<PlanGroupLinkListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PlanGroupLinkListPageResponse> =
+            jsonHandler<PlanGroupLinkListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

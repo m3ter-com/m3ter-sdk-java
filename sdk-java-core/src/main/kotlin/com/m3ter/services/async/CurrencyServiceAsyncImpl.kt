@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.CurrencyCreateParams
 import com.m3ter.models.CurrencyDeleteParams
 import com.m3ter.models.CurrencyListPageAsync
+import com.m3ter.models.CurrencyListPageResponse
 import com.m3ter.models.CurrencyListParams
 import com.m3ter.models.CurrencyResponse
 import com.m3ter.models.CurrencyRetrieveParams
@@ -179,8 +180,8 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val listHandler: Handler<CurrencyListPageAsync.Response> =
-            jsonHandler<CurrencyListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CurrencyListPageResponse> =
+            jsonHandler<CurrencyListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.MeterCreateParams
 import com.m3ter.models.MeterDeleteParams
 import com.m3ter.models.MeterListPageAsync
+import com.m3ter.models.MeterListPageResponse
 import com.m3ter.models.MeterListParams
 import com.m3ter.models.MeterResponse
 import com.m3ter.models.MeterRetrieveParams
@@ -176,8 +177,8 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 }
         }
 
-        private val listHandler: Handler<MeterListPageAsync.Response> =
-            jsonHandler<MeterListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<MeterListPageResponse> =
+            jsonHandler<MeterListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
