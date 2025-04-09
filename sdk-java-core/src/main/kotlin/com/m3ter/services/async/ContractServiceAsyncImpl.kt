@@ -217,11 +217,11 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                ContractListPageAsync.of(
-                                    ContractServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ContractListPageAsync.builder()
+                                    .service(ContractServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

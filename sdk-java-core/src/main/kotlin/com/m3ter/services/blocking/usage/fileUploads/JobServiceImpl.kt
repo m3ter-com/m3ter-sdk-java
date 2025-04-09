@@ -121,7 +121,11 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                         }
                     }
                     .let {
-                        UsageFileUploadJobListPage.of(JobServiceImpl(clientOptions), params, it)
+                        UsageFileUploadJobListPage.builder()
+                            .service(JobServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

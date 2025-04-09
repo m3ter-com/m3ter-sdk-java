@@ -205,11 +205,11 @@ internal constructor(private val clientOptions: ClientOptions) :
                         }
                     }
                     .let {
-                        ScheduledEventConfigurationListPage.of(
-                            ScheduledEventConfigurationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ScheduledEventConfigurationListPage.builder()
+                            .service(ScheduledEventConfigurationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ContractServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,19 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieves a list of Contracts by Organization ID. Supports pagination and includes various query
- * parameters to filter the Contracts returned based on Contract IDs or short codes.
- */
+/** @see [ContractServiceAsync.list] */
 class ContractListPageAsync
 private constructor(
-    private val contractsService: ContractServiceAsync,
+    private val service: ContractServiceAsync,
     private val params: ContractListParams,
     private val response: ContractListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ContractListPageResponse = response
 
     /**
      * Delegates to [ContractListPageResponse], but gracefully handles missing data.
@@ -39,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ContractListPageAsync && contractsService == other.contractsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(contractsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ContractListPageAsync{contractsService=$contractsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ContractListParams> {
@@ -64,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ContractListPageAsync>> {
-        return getNextPageParams()
-            .map { contractsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ContractListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ContractListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ContractListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            contractsService: ContractServiceAsync,
-            params: ContractListParams,
-            response: ContractListPageResponse,
-        ) = ContractListPageAsync(contractsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [ContractListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ContractListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ContractServiceAsync? = null
+        private var params: ContractListParams? = null
+        private var response: ContractListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(contractListPageAsync: ContractListPageAsync) = apply {
+            service = contractListPageAsync.service
+            params = contractListPageAsync.params
+            response = contractListPageAsync.response
+        }
+
+        fun service(service: ContractServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ContractListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ContractListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [ContractListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ContractListPageAsync =
+            ContractListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ContractListPageAsync) {
@@ -110,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ContractListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ContractListPageAsync{service=$service, params=$params, response=$response}"
 }

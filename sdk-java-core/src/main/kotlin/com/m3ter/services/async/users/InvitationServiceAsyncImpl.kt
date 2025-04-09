@@ -157,11 +157,11 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
                                 }
                             }
                             .let {
-                                UserInvitationListPageAsync.of(
-                                    InvitationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                UserInvitationListPageAsync.builder()
+                                    .service(InvitationServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

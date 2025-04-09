@@ -128,11 +128,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                                 }
                             }
                             .let {
-                                UsageFileUploadJobListPageAsync.of(
-                                    JobServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                UsageFileUploadJobListPageAsync.builder()
+                                    .service(JobServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

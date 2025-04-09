@@ -148,7 +148,11 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
                         }
                     }
                     .let {
-                        UserInvitationListPage.of(InvitationServiceImpl(clientOptions), params, it)
+                        UserInvitationListPage.builder()
+                            .service(InvitationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

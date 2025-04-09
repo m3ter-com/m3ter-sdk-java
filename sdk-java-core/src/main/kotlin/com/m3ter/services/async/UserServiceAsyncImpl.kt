@@ -209,11 +209,11 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                                 }
                             }
                             .let {
-                                UserListPageAsync.of(
-                                    UserServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                UserListPageAsync.builder()
+                                    .service(UserServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

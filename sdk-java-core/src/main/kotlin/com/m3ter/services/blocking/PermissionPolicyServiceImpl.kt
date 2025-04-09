@@ -272,11 +272,11 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                         }
                     }
                     .let {
-                        PermissionPolicyListPage.of(
-                            PermissionPolicyServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        PermissionPolicyListPage.builder()
+                            .service(PermissionPolicyServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

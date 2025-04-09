@@ -211,11 +211,11 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
                                 }
                             }
                             .let {
-                                AggregationListPageAsync.of(
-                                    AggregationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                AggregationListPageAsync.builder()
+                                    .service(AggregationServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

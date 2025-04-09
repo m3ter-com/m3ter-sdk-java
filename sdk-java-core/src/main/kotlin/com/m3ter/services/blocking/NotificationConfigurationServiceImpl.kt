@@ -204,11 +204,11 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                         }
                     }
                     .let {
-                        NotificationConfigurationListPage.of(
-                            NotificationConfigurationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        NotificationConfigurationListPage.builder()
+                            .service(NotificationConfigurationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

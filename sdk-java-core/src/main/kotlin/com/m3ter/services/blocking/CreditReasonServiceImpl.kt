@@ -203,7 +203,11 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        CreditReasonListPage.of(CreditReasonServiceImpl(clientOptions), params, it)
+                        CreditReasonListPage.builder()
+                            .service(CreditReasonServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -211,11 +211,11 @@ class PlanTemplateServiceAsyncImpl internal constructor(private val clientOption
                                 }
                             }
                             .let {
-                                PlanTemplateListPageAsync.of(
-                                    PlanTemplateServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                PlanTemplateListPageAsync.builder()
+                                    .service(PlanTemplateServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

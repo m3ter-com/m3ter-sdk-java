@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.BillServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Bills.
- *
- * This endpoint retrieves a list of all Bills for the given Account within the specified
- * Organization. Optional filters can be applied such as by date range, lock status, or other
- * attributes. The list can also be paginated for easier management.
- */
+/** @see [BillServiceAsync.list] */
 class BillListPageAsync
 private constructor(
-    private val billsService: BillServiceAsync,
+    private val service: BillServiceAsync,
     private val params: BillListParams,
     private val response: BillListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BillListPageResponse = response
 
     /**
      * Delegates to [BillListPageResponse], but gracefully handles missing data.
@@ -41,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillListPageAsync && billsService == other.billsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(billsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BillListPageAsync{billsService=$billsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BillListParams> {
@@ -66,22 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<BillListPageAsync>> {
-        return getNextPageParams()
-            .map { billsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<BillListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BillListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BillListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            billsService: BillServiceAsync,
-            params: BillListParams,
-            response: BillListPageResponse,
-        ) = BillListPageAsync(billsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BillListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BillListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: BillServiceAsync? = null
+        private var params: BillListParams? = null
+        private var response: BillListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(billListPageAsync: BillListPageAsync) = apply {
+            service = billListPageAsync.service
+            params = billListPageAsync.params
+            response = billListPageAsync.response
+        }
+
+        fun service(service: BillServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BillListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BillListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [BillListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BillListPageAsync =
+            BillListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BillListPageAsync) {
@@ -109,4 +144,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BillListPageAsync{service=$service, params=$params, response=$response}"
 }

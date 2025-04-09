@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ResourceGroupServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of items for a ResourceGroup */
+/** @see [ResourceGroupServiceAsync.listContents] */
 class ResourceGroupListContentsPageAsync
 private constructor(
-    private val resourceGroupsService: ResourceGroupServiceAsync,
+    private val service: ResourceGroupServiceAsync,
     private val params: ResourceGroupListContentsParams,
     private val response: ResourceGroupListContentsPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ResourceGroupListContentsPageResponse = response
 
     /**
      * Delegates to [ResourceGroupListContentsPageResponse], but gracefully handles missing data.
@@ -36,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ResourceGroupListContentsPageAsync && resourceGroupsService == other.resourceGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(resourceGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ResourceGroupListContentsPageAsync{resourceGroupsService=$resourceGroupsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ResourceGroupListContentsParams> {
@@ -61,22 +46,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListContentsPageAsync>> {
-        return getNextPageParams()
-            .map { resourceGroupsService.listContents(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListContentsPageAsync>> =
+        getNextPageParams()
+            .map { service.listContents(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ResourceGroupListContentsParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ResourceGroupListContentsPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            resourceGroupsService: ResourceGroupServiceAsync,
-            params: ResourceGroupListContentsParams,
-            response: ResourceGroupListContentsPageResponse,
-        ) = ResourceGroupListContentsPageAsync(resourceGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ResourceGroupListContentsPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ResourceGroupListContentsPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ResourceGroupServiceAsync? = null
+        private var params: ResourceGroupListContentsParams? = null
+        private var response: ResourceGroupListContentsPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(resourceGroupListContentsPageAsync: ResourceGroupListContentsPageAsync) =
+            apply {
+                service = resourceGroupListContentsPageAsync.service
+                params = resourceGroupListContentsPageAsync.params
+                response = resourceGroupListContentsPageAsync.response
+            }
+
+        fun service(service: ResourceGroupServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ResourceGroupListContentsParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ResourceGroupListContentsPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ResourceGroupListContentsPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ResourceGroupListContentsPageAsync =
+            ResourceGroupListContentsPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ResourceGroupListContentsPageAsync) {
@@ -107,4 +152,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ResourceGroupListContentsPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ResourceGroupListContentsPageAsync{service=$service, params=$params, response=$response}"
 }

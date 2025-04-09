@@ -208,11 +208,11 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                ProductListPageAsync.of(
-                                    ProductServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ProductListPageAsync.builder()
+                                    .service(ProductServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

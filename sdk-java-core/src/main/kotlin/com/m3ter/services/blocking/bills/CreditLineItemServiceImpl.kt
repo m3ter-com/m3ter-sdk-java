@@ -207,11 +207,11 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
                         }
                     }
                     .let {
-                        BillCreditLineItemListPage.of(
-                            CreditLineItemServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        BillCreditLineItemListPage.builder()
+                            .service(CreditLineItemServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

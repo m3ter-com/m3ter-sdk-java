@@ -200,11 +200,11 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                         }
                     }
                     .let {
-                        CompoundAggregationListPage.of(
-                            CompoundAggregationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CompoundAggregationListPage.builder()
+                            .service(CompoundAggregationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

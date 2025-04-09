@@ -199,11 +199,11 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                         }
                     }
                     .let {
-                        CounterAdjustmentListPage.of(
-                            CounterAdjustmentServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CounterAdjustmentListPage.builder()
+                            .service(CounterAdjustmentServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

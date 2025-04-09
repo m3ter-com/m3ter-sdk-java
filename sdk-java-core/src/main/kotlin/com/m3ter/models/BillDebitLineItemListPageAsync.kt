@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.bills.DebitLineItemServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** List the Debit line items for the given bill. */
+/** @see [DebitLineItemServiceAsync.list] */
 class BillDebitLineItemListPageAsync
 private constructor(
-    private val debitLineItemsService: DebitLineItemServiceAsync,
+    private val service: DebitLineItemServiceAsync,
     private val params: BillDebitLineItemListParams,
     private val response: BillDebitLineItemListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BillDebitLineItemListPageResponse = response
 
     /**
      * Delegates to [BillDebitLineItemListPageResponse], but gracefully handles missing data.
@@ -36,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillDebitLineItemListPageAsync && debitLineItemsService == other.debitLineItemsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(debitLineItemsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BillDebitLineItemListPageAsync{debitLineItemsService=$debitLineItemsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BillDebitLineItemListParams> {
@@ -61,22 +46,81 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<BillDebitLineItemListPageAsync>> {
-        return getNextPageParams()
-            .map { debitLineItemsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<BillDebitLineItemListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BillDebitLineItemListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BillDebitLineItemListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            debitLineItemsService: DebitLineItemServiceAsync,
-            params: BillDebitLineItemListParams,
-            response: BillDebitLineItemListPageResponse,
-        ) = BillDebitLineItemListPageAsync(debitLineItemsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [BillDebitLineItemListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BillDebitLineItemListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: DebitLineItemServiceAsync? = null
+        private var params: BillDebitLineItemListParams? = null
+        private var response: BillDebitLineItemListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(billDebitLineItemListPageAsync: BillDebitLineItemListPageAsync) = apply {
+            service = billDebitLineItemListPageAsync.service
+            params = billDebitLineItemListPageAsync.params
+            response = billDebitLineItemListPageAsync.response
+        }
+
+        fun service(service: DebitLineItemServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BillDebitLineItemListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BillDebitLineItemListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [BillDebitLineItemListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BillDebitLineItemListPageAsync =
+            BillDebitLineItemListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BillDebitLineItemListPageAsync) {
@@ -107,4 +151,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillDebitLineItemListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BillDebitLineItemListPageAsync{service=$service, params=$params, response=$response}"
 }

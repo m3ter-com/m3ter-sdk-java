@@ -220,11 +220,11 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        ExternalMappingListPage.of(
-                            ExternalMappingServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ExternalMappingListPage.builder()
+                            .service(ExternalMappingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -296,11 +296,11 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        ExternalMappingListByExternalEntityPage.of(
-                            ExternalMappingServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ExternalMappingListByExternalEntityPage.builder()
+                            .service(ExternalMappingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -338,11 +338,11 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        ExternalMappingListByM3terEntityPage.of(
-                            ExternalMappingServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ExternalMappingListByM3terEntityPage.builder()
+                            .service(ExternalMappingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

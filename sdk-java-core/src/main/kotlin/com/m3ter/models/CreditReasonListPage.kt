@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.CreditReasonService
 import java.util.Objects
 import java.util.Optional
@@ -9,19 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of the Credit Reason entities created for your Organization. You can filter the
- * list returned for the call by Credit Reason ID, Credit Reason short code, or by Archive status.
- */
+/** @see [CreditReasonService.list] */
 class CreditReasonListPage
 private constructor(
-    private val creditReasonsService: CreditReasonService,
+    private val service: CreditReasonService,
     private val params: CreditReasonListParams,
     private val response: CreditReasonListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CreditReasonListPageResponse = response
 
     /**
      * Delegates to [CreditReasonListPageResponse], but gracefully handles missing data.
@@ -38,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CreditReasonListPage && creditReasonsService == other.creditReasonsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditReasonsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CreditReasonListPage{creditReasonsService=$creditReasonsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<CreditReasonListParams> {
@@ -63,20 +45,75 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<CreditReasonListPage> {
-        return getNextPageParams().map { creditReasonsService.list(it) }
-    }
+    fun getNextPage(): Optional<CreditReasonListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CreditReasonListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CreditReasonListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            creditReasonsService: CreditReasonService,
-            params: CreditReasonListParams,
-            response: CreditReasonListPageResponse,
-        ) = CreditReasonListPage(creditReasonsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CreditReasonListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CreditReasonListPage]. */
+    class Builder internal constructor() {
+
+        private var service: CreditReasonService? = null
+        private var params: CreditReasonListParams? = null
+        private var response: CreditReasonListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(creditReasonListPage: CreditReasonListPage) = apply {
+            service = creditReasonListPage.service
+            params = creditReasonListPage.params
+            response = creditReasonListPage.response
+        }
+
+        fun service(service: CreditReasonService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CreditReasonListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CreditReasonListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [CreditReasonListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CreditReasonListPage =
+            CreditReasonListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CreditReasonListPage) : Iterable<CreditReasonResponse> {
@@ -97,4 +134,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CreditReasonListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CreditReasonListPage{service=$service, params=$params, response=$response}"
 }

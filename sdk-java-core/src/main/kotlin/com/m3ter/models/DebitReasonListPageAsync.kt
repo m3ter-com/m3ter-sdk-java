@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.DebitReasonServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,19 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of the Debit Reason entities created for your Organization. You can filter the
- * list returned for the call by Debit Reason ID, Debit Reason short code, or by Archive status.
- */
+/** @see [DebitReasonServiceAsync.list] */
 class DebitReasonListPageAsync
 private constructor(
-    private val debitReasonsService: DebitReasonServiceAsync,
+    private val service: DebitReasonServiceAsync,
     private val params: DebitReasonListParams,
     private val response: DebitReasonListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): DebitReasonListPageResponse = response
 
     /**
      * Delegates to [DebitReasonListPageResponse], but gracefully handles missing data.
@@ -39,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DebitReasonListPageAsync && debitReasonsService == other.debitReasonsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(debitReasonsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "DebitReasonListPageAsync{debitReasonsService=$debitReasonsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<DebitReasonListParams> {
@@ -64,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<DebitReasonListPageAsync>> {
-        return getNextPageParams()
-            .map { debitReasonsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<DebitReasonListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DebitReasonListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): DebitReasonListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            debitReasonsService: DebitReasonServiceAsync,
-            params: DebitReasonListParams,
-            response: DebitReasonListPageResponse,
-        ) = DebitReasonListPageAsync(debitReasonsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [DebitReasonListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [DebitReasonListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: DebitReasonServiceAsync? = null
+        private var params: DebitReasonListParams? = null
+        private var response: DebitReasonListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(debitReasonListPageAsync: DebitReasonListPageAsync) = apply {
+            service = debitReasonListPageAsync.service
+            params = debitReasonListPageAsync.params
+            response = debitReasonListPageAsync.response
+        }
+
+        fun service(service: DebitReasonServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DebitReasonListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: DebitReasonListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [DebitReasonListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DebitReasonListPageAsync =
+            DebitReasonListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: DebitReasonListPageAsync) {
@@ -110,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DebitReasonListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "DebitReasonListPageAsync{service=$service, params=$params, response=$response}"
 }

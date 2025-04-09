@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.NotificationConfigurationServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Event Notifications for the specified Organization.
- *
- * This endpoint retrieves a list of all Event Notifications for the Organization identified by its
- * UUID. The list can be paginated for easier management. The list also supports filtering by
- * parameters such as Notification UUID.
- */
+/** @see [NotificationConfigurationServiceAsync.list] */
 class NotificationConfigurationListPageAsync
 private constructor(
-    private val notificationConfigurationsService: NotificationConfigurationServiceAsync,
+    private val service: NotificationConfigurationServiceAsync,
     private val params: NotificationConfigurationListParams,
     private val response: NotificationConfigurationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): NotificationConfigurationListPageResponse = response
 
     /**
      * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
@@ -44,19 +36,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is NotificationConfigurationListPageAsync && notificationConfigurationsService == other.notificationConfigurationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(notificationConfigurationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "NotificationConfigurationListPageAsync{notificationConfigurationsService=$notificationConfigurationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<NotificationConfigurationListParams> {
@@ -69,26 +48,84 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<NotificationConfigurationListPageAsync>> {
-        return getNextPageParams()
-            .map { notificationConfigurationsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<NotificationConfigurationListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): NotificationConfigurationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): NotificationConfigurationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            notificationConfigurationsService: NotificationConfigurationServiceAsync,
-            params: NotificationConfigurationListParams,
-            response: NotificationConfigurationListPageResponse,
-        ) =
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [NotificationConfigurationListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [NotificationConfigurationListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: NotificationConfigurationServiceAsync? = null
+        private var params: NotificationConfigurationListParams? = null
+        private var response: NotificationConfigurationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(
+            notificationConfigurationListPageAsync: NotificationConfigurationListPageAsync
+        ) = apply {
+            service = notificationConfigurationListPageAsync.service
+            params = notificationConfigurationListPageAsync.params
+            response = notificationConfigurationListPageAsync.response
+        }
+
+        fun service(service: NotificationConfigurationServiceAsync) = apply {
+            this.service = service
+        }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: NotificationConfigurationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: NotificationConfigurationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [NotificationConfigurationListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): NotificationConfigurationListPageAsync =
             NotificationConfigurationListPageAsync(
-                notificationConfigurationsService,
-                params,
-                response,
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 
@@ -120,4 +157,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is NotificationConfigurationListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "NotificationConfigurationListPageAsync{service=$service, params=$params, response=$response}"
 }

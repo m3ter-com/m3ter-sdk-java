@@ -251,11 +251,11 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -371,11 +371,11 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListContentsPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListContentsPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -415,11 +415,11 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListPermissionsPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListPermissionsPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

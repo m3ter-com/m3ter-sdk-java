@@ -199,7 +199,11 @@ class AccountPlanServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        AccountPlanListPage.of(AccountPlanServiceImpl(clientOptions), params, it)
+                        AccountPlanListPage.builder()
+                            .service(AccountPlanServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

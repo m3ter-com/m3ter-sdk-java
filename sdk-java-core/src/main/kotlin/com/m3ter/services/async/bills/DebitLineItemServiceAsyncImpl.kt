@@ -219,11 +219,11 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                BillDebitLineItemListPageAsync.of(
-                                    DebitLineItemServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillDebitLineItemListPageAsync.builder()
+                                    .service(DebitLineItemServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.ResourceGroupService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of items for a ResourceGroup */
+/** @see [ResourceGroupService.listContents] */
 class ResourceGroupListContentsPage
 private constructor(
-    private val resourceGroupsService: ResourceGroupService,
+    private val service: ResourceGroupService,
     private val params: ResourceGroupListContentsParams,
     private val response: ResourceGroupListContentsPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ResourceGroupListContentsPageResponse = response
 
     /**
      * Delegates to [ResourceGroupListContentsPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ResourceGroupListContentsPage && resourceGroupsService == other.resourceGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(resourceGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ResourceGroupListContentsPage{resourceGroupsService=$resourceGroupsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ResourceGroupListContentsParams> {
@@ -60,20 +45,79 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<ResourceGroupListContentsPage> {
-        return getNextPageParams().map { resourceGroupsService.listContents(it) }
-    }
+    fun getNextPage(): Optional<ResourceGroupListContentsPage> =
+        getNextPageParams().map { service.listContents(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ResourceGroupListContentsParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ResourceGroupListContentsPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            resourceGroupsService: ResourceGroupService,
-            params: ResourceGroupListContentsParams,
-            response: ResourceGroupListContentsPageResponse,
-        ) = ResourceGroupListContentsPage(resourceGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ResourceGroupListContentsPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ResourceGroupListContentsPage]. */
+    class Builder internal constructor() {
+
+        private var service: ResourceGroupService? = null
+        private var params: ResourceGroupListContentsParams? = null
+        private var response: ResourceGroupListContentsPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(resourceGroupListContentsPage: ResourceGroupListContentsPage) = apply {
+            service = resourceGroupListContentsPage.service
+            params = resourceGroupListContentsPage.params
+            response = resourceGroupListContentsPage.response
+        }
+
+        fun service(service: ResourceGroupService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ResourceGroupListContentsParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ResourceGroupListContentsPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ResourceGroupListContentsPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ResourceGroupListContentsPage =
+            ResourceGroupListContentsPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ResourceGroupListContentsPage) :
@@ -95,4 +139,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ResourceGroupListContentsPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ResourceGroupListContentsPage{service=$service, params=$params, response=$response}"
 }

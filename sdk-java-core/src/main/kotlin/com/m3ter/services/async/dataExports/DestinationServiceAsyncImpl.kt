@@ -218,11 +218,11 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
                                 }
                             }
                             .let {
-                                DataExportDestinationListPageAsync.of(
-                                    DestinationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DataExportDestinationListPageAsync.builder()
+                                    .service(DestinationServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

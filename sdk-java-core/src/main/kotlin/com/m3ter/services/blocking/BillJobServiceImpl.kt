@@ -160,7 +160,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { BillJobListPage.of(BillJobServiceImpl(clientOptions), params, it) }
+                    .let {
+                        BillJobListPage.builder()
+                            .service(BillJobServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

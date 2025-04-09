@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ResourceGroupServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of permission policies for a ResourceGroup */
+/** @see [ResourceGroupServiceAsync.listPermissions] */
 class ResourceGroupListPermissionsPageAsync
 private constructor(
-    private val resourceGroupsService: ResourceGroupServiceAsync,
+    private val service: ResourceGroupServiceAsync,
     private val params: ResourceGroupListPermissionsParams,
     private val response: ResourceGroupListPermissionsPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ResourceGroupListPermissionsPageResponse = response
 
     /**
      * Delegates to [ResourceGroupListPermissionsPageResponse], but gracefully handles missing data.
@@ -36,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ResourceGroupListPermissionsPageAsync && resourceGroupsService == other.resourceGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(resourceGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ResourceGroupListPermissionsPageAsync{resourceGroupsService=$resourceGroupsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ResourceGroupListPermissionsParams> {
@@ -61,22 +46,83 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListPermissionsPageAsync>> {
-        return getNextPageParams()
-            .map { resourceGroupsService.listPermissions(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListPermissionsPageAsync>> =
+        getNextPageParams()
+            .map { service.listPermissions(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ResourceGroupListPermissionsParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ResourceGroupListPermissionsPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            resourceGroupsService: ResourceGroupServiceAsync,
-            params: ResourceGroupListPermissionsParams,
-            response: ResourceGroupListPermissionsPageResponse,
-        ) = ResourceGroupListPermissionsPageAsync(resourceGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ResourceGroupListPermissionsPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ResourceGroupListPermissionsPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ResourceGroupServiceAsync? = null
+        private var params: ResourceGroupListPermissionsParams? = null
+        private var response: ResourceGroupListPermissionsPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(
+            resourceGroupListPermissionsPageAsync: ResourceGroupListPermissionsPageAsync
+        ) = apply {
+            service = resourceGroupListPermissionsPageAsync.service
+            params = resourceGroupListPermissionsPageAsync.params
+            response = resourceGroupListPermissionsPageAsync.response
+        }
+
+        fun service(service: ResourceGroupServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ResourceGroupListPermissionsParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ResourceGroupListPermissionsPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ResourceGroupListPermissionsPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ResourceGroupListPermissionsPageAsync =
+            ResourceGroupListPermissionsPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ResourceGroupListPermissionsPageAsync) {
@@ -107,4 +153,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ResourceGroupListPermissionsPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ResourceGroupListPermissionsPageAsync{service=$service, params=$params, response=$response}"
 }

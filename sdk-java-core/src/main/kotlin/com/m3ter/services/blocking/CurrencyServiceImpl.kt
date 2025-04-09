@@ -199,7 +199,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
                             it.validate()
                         }
                     }
-                    .let { CurrencyListPage.of(CurrencyServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CurrencyListPage.builder()
+                            .service(CurrencyServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

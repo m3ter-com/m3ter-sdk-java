@@ -220,11 +220,11 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
                         }
                     }
                     .let {
-                        IntegrationConfigurationListPage.of(
-                            IntegrationConfigurationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        IntegrationConfigurationListPage.builder()
+                            .service(IntegrationConfigurationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

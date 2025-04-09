@@ -217,11 +217,11 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                                 }
                             }
                             .let {
-                                CommitmentListPageAsync.of(
-                                    CommitmentServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CommitmentListPageAsync.builder()
+                                    .service(CommitmentServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

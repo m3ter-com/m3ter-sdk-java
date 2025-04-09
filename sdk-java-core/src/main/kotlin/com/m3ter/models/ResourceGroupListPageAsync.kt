@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ResourceGroupServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of ResourceGroup entities */
+/** @see [ResourceGroupServiceAsync.list] */
 class ResourceGroupListPageAsync
 private constructor(
-    private val resourceGroupsService: ResourceGroupServiceAsync,
+    private val service: ResourceGroupServiceAsync,
     private val params: ResourceGroupListParams,
     private val response: ResourceGroupListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ResourceGroupListPageResponse = response
 
     /**
      * Delegates to [ResourceGroupListPageResponse], but gracefully handles missing data.
@@ -36,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ResourceGroupListPageAsync && resourceGroupsService == other.resourceGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(resourceGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ResourceGroupListPageAsync{resourceGroupsService=$resourceGroupsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ResourceGroupListParams> {
@@ -61,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListPageAsync>> {
-        return getNextPageParams()
-            .map { resourceGroupsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ResourceGroupListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ResourceGroupListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ResourceGroupListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            resourceGroupsService: ResourceGroupServiceAsync,
-            params: ResourceGroupListParams,
-            response: ResourceGroupListPageResponse,
-        ) = ResourceGroupListPageAsync(resourceGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [ResourceGroupListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ResourceGroupListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ResourceGroupServiceAsync? = null
+        private var params: ResourceGroupListParams? = null
+        private var response: ResourceGroupListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(resourceGroupListPageAsync: ResourceGroupListPageAsync) = apply {
+            service = resourceGroupListPageAsync.service
+            params = resourceGroupListPageAsync.params
+            response = resourceGroupListPageAsync.response
+        }
+
+        fun service(service: ResourceGroupServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ResourceGroupListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ResourceGroupListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [ResourceGroupListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ResourceGroupListPageAsync =
+            ResourceGroupListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ResourceGroupListPageAsync) {
@@ -107,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ResourceGroupListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ResourceGroupListPageAsync{service=$service, params=$params, response=$response}"
 }

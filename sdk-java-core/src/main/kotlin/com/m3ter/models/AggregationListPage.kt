@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.AggregationService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of Aggregations that can be filtered by Product, Aggregation ID, or Code. */
+/** @see [AggregationService.list] */
 class AggregationListPage
 private constructor(
-    private val aggregationsService: AggregationService,
+    private val service: AggregationService,
     private val params: AggregationListParams,
     private val response: AggregationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): AggregationListPageResponse = response
 
     /**
      * Delegates to [AggregationListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AggregationListPage && aggregationsService == other.aggregationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(aggregationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "AggregationListPage{aggregationsService=$aggregationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<AggregationListParams> {
@@ -60,20 +45,75 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<AggregationListPage> {
-        return getNextPageParams().map { aggregationsService.list(it) }
-    }
+    fun getNextPage(): Optional<AggregationListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): AggregationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): AggregationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            aggregationsService: AggregationService,
-            params: AggregationListParams,
-            response: AggregationListPageResponse,
-        ) = AggregationListPage(aggregationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [AggregationListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [AggregationListPage]. */
+    class Builder internal constructor() {
+
+        private var service: AggregationService? = null
+        private var params: AggregationListParams? = null
+        private var response: AggregationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(aggregationListPage: AggregationListPage) = apply {
+            service = aggregationListPage.service
+            params = aggregationListPage.params
+            response = aggregationListPage.response
+        }
+
+        fun service(service: AggregationService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: AggregationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: AggregationListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [AggregationListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): AggregationListPage =
+            AggregationListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: AggregationListPage) : Iterable<AggregationResponse> {
@@ -94,4 +134,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AggregationListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "AggregationListPage{service=$service, params=$params, response=$response}"
 }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,19 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieves a list of TransactionType entities for the specified Organization. The list can be
- * paginated for easier management, and supports filtering by various parameters.
- */
+/** @see [TransactionTypeServiceAsync.list] */
 class TransactionTypeListPageAsync
 private constructor(
-    private val transactionTypesService: TransactionTypeServiceAsync,
+    private val service: TransactionTypeServiceAsync,
     private val params: TransactionTypeListParams,
     private val response: TransactionTypeListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): TransactionTypeListPageResponse = response
 
     /**
      * Delegates to [TransactionTypeListPageResponse], but gracefully handles missing data.
@@ -39,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TransactionTypeListPageAsync && transactionTypesService == other.transactionTypesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(transactionTypesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "TransactionTypeListPageAsync{transactionTypesService=$transactionTypesService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<TransactionTypeListParams> {
@@ -64,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<TransactionTypeListPageAsync>> {
-        return getNextPageParams()
-            .map { transactionTypesService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<TransactionTypeListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): TransactionTypeListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): TransactionTypeListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            transactionTypesService: TransactionTypeServiceAsync,
-            params: TransactionTypeListParams,
-            response: TransactionTypeListPageResponse,
-        ) = TransactionTypeListPageAsync(transactionTypesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [TransactionTypeListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [TransactionTypeListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: TransactionTypeServiceAsync? = null
+        private var params: TransactionTypeListParams? = null
+        private var response: TransactionTypeListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(transactionTypeListPageAsync: TransactionTypeListPageAsync) = apply {
+            service = transactionTypeListPageAsync.service
+            params = transactionTypeListPageAsync.params
+            response = transactionTypeListPageAsync.response
+        }
+
+        fun service(service: TransactionTypeServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: TransactionTypeListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: TransactionTypeListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [TransactionTypeListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): TransactionTypeListPageAsync =
+            TransactionTypeListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: TransactionTypeListPageAsync) {
@@ -110,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TransactionTypeListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "TransactionTypeListPageAsync{service=$service, params=$params, response=$response}"
 }

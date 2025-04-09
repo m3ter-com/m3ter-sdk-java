@@ -208,11 +208,11 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                PricingListPageAsync.of(
-                                    PricingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                PricingListPageAsync.builder()
+                                    .service(PricingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

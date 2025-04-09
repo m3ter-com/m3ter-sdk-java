@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.BillJobServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of BillJobs.
- *
- * This endpoint retrieves a list of BillJobs for a specified organization. The list can be
- * paginated for easier management, and allows you to query and filter based on various parameters,
- * such as BillJob `status` and whether or not BillJob remains `active`.
- */
+/** @see [BillJobServiceAsync.list] */
 class BillJobListPageAsync
 private constructor(
-    private val billJobsService: BillJobServiceAsync,
+    private val service: BillJobServiceAsync,
     private val params: BillJobListParams,
     private val response: BillJobListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BillJobListPageResponse = response
 
     /**
      * Delegates to [BillJobListPageResponse], but gracefully handles missing data.
@@ -42,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillJobListPageAsync && billJobsService == other.billJobsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(billJobsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BillJobListPageAsync{billJobsService=$billJobsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BillJobListParams> {
@@ -67,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<BillJobListPageAsync>> {
-        return getNextPageParams()
-            .map { billJobsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<BillJobListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BillJobListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BillJobListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            billJobsService: BillJobServiceAsync,
-            params: BillJobListParams,
-            response: BillJobListPageResponse,
-        ) = BillJobListPageAsync(billJobsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BillJobListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BillJobListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: BillJobServiceAsync? = null
+        private var params: BillJobListParams? = null
+        private var response: BillJobListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(billJobListPageAsync: BillJobListPageAsync) = apply {
+            service = billJobListPageAsync.service
+            params = billJobListPageAsync.params
+            response = billJobListPageAsync.response
+        }
+
+        fun service(service: BillJobServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BillJobListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BillJobListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [BillJobListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BillJobListPageAsync =
+            BillJobListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BillJobListPageAsync) {
@@ -113,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillJobListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BillJobListPageAsync{service=$service, params=$params, response=$response}"
 }
