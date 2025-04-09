@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.1.0-alpha)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.1.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.1.1-alpha)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.1.1-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.1-alpha)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.0-alpha).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.1-alpha).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.1.0-alpha")
+implementation("com.m3ter:sdk-java:0.1.1-alpha")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.1.0-alpha")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.1.0-alpha</version>
+  <version>0.1.1-alpha</version>
 </dependency>
 ```
 
@@ -55,7 +55,7 @@ import com.m3ter.models.ProductListParams;
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 ProductListPage page = client.products().list(params);
 ```
@@ -139,7 +139,7 @@ import java.util.concurrent.CompletableFuture;
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 CompletableFuture<ProductListPageAsync> page = client.async().products().list(params);
 ```
@@ -157,7 +157,7 @@ import java.util.concurrent.CompletableFuture;
 M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 ```
@@ -177,7 +177,7 @@ import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductListParams;
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
 
@@ -403,7 +403,7 @@ To set a documented parameter or property to an undocumented or not yet supporte
 import com.m3ter.models.ProductListParams;
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 ```
 
