@@ -5,7 +5,7 @@ package com.m3ter.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class AggregationRetrieveParamsTest {
+internal class AggregationFunctionRetrieveParamsTest {
 
     @Test
     fun create() {
