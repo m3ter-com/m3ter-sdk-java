@@ -55,7 +55,7 @@ import com.m3ter.models.ProductListParams;
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 ProductListPage page = client.products().list(params);
 ```
@@ -139,7 +139,7 @@ import java.util.concurrent.CompletableFuture;
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 CompletableFuture<ProductListPageAsync> page = client.async().products().list(params);
 ```
@@ -157,7 +157,7 @@ import java.util.concurrent.CompletableFuture;
 M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 ```
@@ -177,7 +177,7 @@ import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductListParams;
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
 
@@ -403,7 +403,7 @@ To set a documented parameter or property to an undocumented or not yet supporte
 import com.m3ter.models.ProductListParams;
 
 ProductListParams params = ProductListParams.builder()
-    .orgId("ORG_ID")
+    .orgId("My Org ID")
     .build();
 ```
 
