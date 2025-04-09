@@ -212,11 +212,11 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                CurrencyListPageAsync.of(
-                                    CurrencyServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CurrencyListPageAsync.builder()
+                                    .service(CurrencyServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

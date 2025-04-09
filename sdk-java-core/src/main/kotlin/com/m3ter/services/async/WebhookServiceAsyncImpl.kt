@@ -225,11 +225,11 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                WebhookListPageAsync.of(
-                                    WebhookServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                WebhookListPageAsync.builder()
+                                    .service(WebhookServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

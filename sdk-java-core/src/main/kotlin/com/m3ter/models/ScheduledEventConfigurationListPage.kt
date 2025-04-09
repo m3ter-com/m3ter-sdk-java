@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.ScheduledEventConfigurationService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of ScheduledEventConfiguration entities */
+/** @see [ScheduledEventConfigurationService.list] */
 class ScheduledEventConfigurationListPage
 private constructor(
-    private val scheduledEventConfigurationsService: ScheduledEventConfigurationService,
+    private val service: ScheduledEventConfigurationService,
     private val params: ScheduledEventConfigurationListParams,
     private val response: ScheduledEventConfigurationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ScheduledEventConfigurationListPageResponse = response
 
     /**
      * Delegates to [ScheduledEventConfigurationListPageResponse], but gracefully handles missing
@@ -37,19 +35,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ScheduledEventConfigurationListPage && scheduledEventConfigurationsService == other.scheduledEventConfigurationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(scheduledEventConfigurationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ScheduledEventConfigurationListPage{scheduledEventConfigurationsService=$scheduledEventConfigurationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ScheduledEventConfigurationListParams> {
@@ -62,24 +47,80 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<ScheduledEventConfigurationListPage> {
-        return getNextPageParams().map { scheduledEventConfigurationsService.list(it) }
-    }
+    fun getNextPage(): Optional<ScheduledEventConfigurationListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ScheduledEventConfigurationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ScheduledEventConfigurationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            scheduledEventConfigurationsService: ScheduledEventConfigurationService,
-            params: ScheduledEventConfigurationListParams,
-            response: ScheduledEventConfigurationListPageResponse,
-        ) =
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ScheduledEventConfigurationListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ScheduledEventConfigurationListPage]. */
+    class Builder internal constructor() {
+
+        private var service: ScheduledEventConfigurationService? = null
+        private var params: ScheduledEventConfigurationListParams? = null
+        private var response: ScheduledEventConfigurationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(
+            scheduledEventConfigurationListPage: ScheduledEventConfigurationListPage
+        ) = apply {
+            service = scheduledEventConfigurationListPage.service
+            params = scheduledEventConfigurationListPage.params
+            response = scheduledEventConfigurationListPage.response
+        }
+
+        fun service(service: ScheduledEventConfigurationService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ScheduledEventConfigurationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ScheduledEventConfigurationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ScheduledEventConfigurationListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ScheduledEventConfigurationListPage =
             ScheduledEventConfigurationListPage(
-                scheduledEventConfigurationsService,
-                params,
-                response,
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 
@@ -102,4 +143,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ScheduledEventConfigurationListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ScheduledEventConfigurationListPage{service=$service, params=$params, response=$response}"
 }

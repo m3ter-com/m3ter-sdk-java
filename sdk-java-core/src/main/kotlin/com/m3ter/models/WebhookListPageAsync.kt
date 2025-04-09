@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.WebhookServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of all Destinations created in the Organization. */
+/** @see [WebhookServiceAsync.list] */
 class WebhookListPageAsync
 private constructor(
-    private val webhooksService: WebhookServiceAsync,
+    private val service: WebhookServiceAsync,
     private val params: WebhookListParams,
     private val response: WebhookListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): WebhookListPageResponse = response
 
     /**
      * Delegates to [WebhookListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is WebhookListPageAsync && webhooksService == other.webhooksService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(webhooksService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "WebhookListPageAsync{webhooksService=$webhooksService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<WebhookListParams> {
@@ -60,22 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<WebhookListPageAsync>> {
-        return getNextPageParams()
-            .map { webhooksService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<WebhookListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): WebhookListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): WebhookListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            webhooksService: WebhookServiceAsync,
-            params: WebhookListParams,
-            response: WebhookListPageResponse,
-        ) = WebhookListPageAsync(webhooksService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [WebhookListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [WebhookListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: WebhookServiceAsync? = null
+        private var params: WebhookListParams? = null
+        private var response: WebhookListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(webhookListPageAsync: WebhookListPageAsync) = apply {
+            service = webhookListPageAsync.service
+            params = webhookListPageAsync.params
+            response = webhookListPageAsync.response
+        }
+
+        fun service(service: WebhookServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: WebhookListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: WebhookListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [WebhookListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): WebhookListPageAsync =
+            WebhookListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: WebhookListPageAsync) {
@@ -103,4 +144,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is WebhookListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "WebhookListPageAsync{service=$service, params=$params, response=$response}"
 }

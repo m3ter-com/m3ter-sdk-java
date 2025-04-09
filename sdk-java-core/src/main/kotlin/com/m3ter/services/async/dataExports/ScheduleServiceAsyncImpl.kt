@@ -218,11 +218,11 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                DataExportScheduleListPageAsync.of(
-                                    ScheduleServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DataExportScheduleListPageAsync.builder()
+                                    .service(ScheduleServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

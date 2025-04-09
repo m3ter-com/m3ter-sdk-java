@@ -208,11 +208,11 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                CounterListPageAsync.of(
-                                    CounterServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CounterListPageAsync.builder()
+                                    .service(CounterServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

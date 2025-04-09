@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.CounterAdjustmentServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,25 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of CounterAdjustments created for Accounts in your Organization. You can filter
- * the list returned by date, Account ID, or Counter ID.
- *
- * **CONSTRAINTS:**
- * - The `counterId` query parameter is always required when calling this endpoint, used either as a
- *   single query parameter or in combination with any of the other query parameters.
- * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also use
- *   the `accountId` query parameter.
- */
+/** @see [CounterAdjustmentServiceAsync.list] */
 class CounterAdjustmentListPageAsync
 private constructor(
-    private val counterAdjustmentsService: CounterAdjustmentServiceAsync,
+    private val service: CounterAdjustmentServiceAsync,
     private val params: CounterAdjustmentListParams,
     private val response: CounterAdjustmentListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CounterAdjustmentListPageResponse = response
 
     /**
      * Delegates to [CounterAdjustmentListPageResponse], but gracefully handles missing data.
@@ -45,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CounterAdjustmentListPageAsync && counterAdjustmentsService == other.counterAdjustmentsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(counterAdjustmentsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CounterAdjustmentListPageAsync{counterAdjustmentsService=$counterAdjustmentsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<CounterAdjustmentListParams> {
@@ -70,22 +46,81 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<CounterAdjustmentListPageAsync>> {
-        return getNextPageParams()
-            .map { counterAdjustmentsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<CounterAdjustmentListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CounterAdjustmentListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CounterAdjustmentListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            counterAdjustmentsService: CounterAdjustmentServiceAsync,
-            params: CounterAdjustmentListParams,
-            response: CounterAdjustmentListPageResponse,
-        ) = CounterAdjustmentListPageAsync(counterAdjustmentsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CounterAdjustmentListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CounterAdjustmentListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: CounterAdjustmentServiceAsync? = null
+        private var params: CounterAdjustmentListParams? = null
+        private var response: CounterAdjustmentListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(counterAdjustmentListPageAsync: CounterAdjustmentListPageAsync) = apply {
+            service = counterAdjustmentListPageAsync.service
+            params = counterAdjustmentListPageAsync.params
+            response = counterAdjustmentListPageAsync.response
+        }
+
+        fun service(service: CounterAdjustmentServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CounterAdjustmentListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CounterAdjustmentListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [CounterAdjustmentListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CounterAdjustmentListPageAsync =
+            CounterAdjustmentListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CounterAdjustmentListPageAsync) {
@@ -116,4 +151,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CounterAdjustmentListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CounterAdjustmentListPageAsync{service=$service, params=$params, response=$response}"
 }

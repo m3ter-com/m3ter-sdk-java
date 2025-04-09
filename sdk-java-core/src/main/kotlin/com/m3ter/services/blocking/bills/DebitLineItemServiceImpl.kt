@@ -207,11 +207,11 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        BillDebitLineItemListPage.of(
-                            DebitLineItemServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        BillDebitLineItemListPage.builder()
+                            .service(DebitLineItemServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -208,11 +208,11 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                                 }
                             }
                             .let {
-                                PlanListPageAsync.of(
-                                    PlanServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                PlanListPageAsync.builder()
+                                    .service(PlanServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

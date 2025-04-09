@@ -192,7 +192,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { PricingListPage.of(PricingServiceImpl(clientOptions), params, it) }
+                    .let {
+                        PricingListPage.builder()
+                            .service(PricingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

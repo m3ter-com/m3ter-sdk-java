@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.PlanServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,16 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
+/** @see [PlanServiceAsync.list] */
 class PlanListPageAsync
 private constructor(
-    private val plansService: PlanServiceAsync,
+    private val service: PlanServiceAsync,
     private val params: PlanListParams,
     private val response: PlanListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): PlanListPageResponse = response
 
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PlanListPageAsync && plansService == other.plansService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(plansService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PlanListPageAsync{plansService=$plansService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<PlanListParams> {
@@ -60,22 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<PlanListPageAsync>> {
-        return getNextPageParams()
-            .map { plansService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<PlanListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PlanListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PlanListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            plansService: PlanServiceAsync,
-            params: PlanListParams,
-            response: PlanListPageResponse,
-        ) = PlanListPageAsync(plansService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [PlanListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: PlanServiceAsync? = null
+        private var params: PlanListParams? = null
+        private var response: PlanListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(planListPageAsync: PlanListPageAsync) = apply {
+            service = planListPageAsync.service
+            params = planListPageAsync.params
+            response = planListPageAsync.response
+        }
+
+        fun service(service: PlanServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PlanListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: PlanListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [PlanListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PlanListPageAsync =
+            PlanListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PlanListPageAsync) {
@@ -103,4 +144,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PlanListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PlanListPageAsync{service=$service, params=$params, response=$response}"
 }

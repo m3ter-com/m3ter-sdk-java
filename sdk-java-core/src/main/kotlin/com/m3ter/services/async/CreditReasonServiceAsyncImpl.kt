@@ -215,11 +215,11 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
                                 }
                             }
                             .let {
-                                CreditReasonListPageAsync.of(
-                                    CreditReasonServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CreditReasonListPageAsync.builder()
+                                    .service(CreditReasonServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

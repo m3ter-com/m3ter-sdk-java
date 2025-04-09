@@ -118,11 +118,11 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                BillLineItemListPageAsync.of(
-                                    LineItemServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillLineItemListPageAsync.builder()
+                                    .service(LineItemServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.BalanceService
 import java.util.Objects
 import java.util.Optional
@@ -9,22 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of all Balances for your Organization.
- *
- * This endpoint returns a list of all Balances associated with your organization. You can filter
- * the Balances by the end customer's Account UUID and end dates, and paginate through them using
- * the `pageSize` and `nextToken` parameters.
- */
+/** @see [BalanceService.list] */
 class BalanceListPage
 private constructor(
-    private val balancesService: BalanceService,
+    private val service: BalanceService,
     private val params: BalanceListParams,
     private val response: BalanceListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BalanceListPageResponse = response
 
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
@@ -40,19 +32,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BalanceListPage && balancesService == other.balancesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(balancesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BalanceListPage{balancesService=$balancesService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BalanceListParams> {
@@ -65,20 +44,75 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<BalanceListPage> {
-        return getNextPageParams().map { balancesService.list(it) }
-    }
+    fun getNextPage(): Optional<BalanceListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BalanceListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BalanceListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            balancesService: BalanceService,
-            params: BalanceListParams,
-            response: BalanceListPageResponse,
-        ) = BalanceListPage(balancesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BalanceListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BalanceListPage]. */
+    class Builder internal constructor() {
+
+        private var service: BalanceService? = null
+        private var params: BalanceListParams? = null
+        private var response: BalanceListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(balanceListPage: BalanceListPage) = apply {
+            service = balanceListPage.service
+            params = balanceListPage.params
+            response = balanceListPage.response
+        }
+
+        fun service(service: BalanceService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BalanceListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BalanceListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [BalanceListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BalanceListPage =
+            BalanceListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BalanceListPage) : Iterable<Balance> {
@@ -99,4 +133,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BalanceListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BalanceListPage{service=$service, params=$params, response=$response}"
 }

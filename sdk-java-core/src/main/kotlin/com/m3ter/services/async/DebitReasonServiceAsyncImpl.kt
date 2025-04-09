@@ -215,11 +215,11 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                                 }
                             }
                             .let {
-                                DebitReasonListPageAsync.of(
-                                    DebitReasonServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DebitReasonListPageAsync.builder()
+                                    .service(DebitReasonServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

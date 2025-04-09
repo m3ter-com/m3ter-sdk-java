@@ -284,11 +284,11 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
                                 }
                             }
                             .let {
-                                PermissionPolicyListPageAsync.of(
-                                    PermissionPolicyServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                PermissionPolicyListPageAsync.builder()
+                                    .service(PermissionPolicyServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

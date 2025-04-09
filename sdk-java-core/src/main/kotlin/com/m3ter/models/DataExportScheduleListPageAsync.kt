@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.dataExports.ScheduleServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Data Export Schedules created for your Organization. You can filter the
- * response by Schedules `ids`.
- *
- * The response will contain an array for both the operational and usage Data Export Schedules in
- * your Organization.
- */
+/** @see [ScheduleServiceAsync.list] */
 class DataExportScheduleListPageAsync
 private constructor(
-    private val schedulesService: ScheduleServiceAsync,
+    private val service: ScheduleServiceAsync,
     private val params: DataExportScheduleListParams,
     private val response: DataExportScheduleListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): DataExportScheduleListPageResponse = response
 
     /**
      * Delegates to [DataExportScheduleListPageResponse], but gracefully handles missing data.
@@ -42,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DataExportScheduleListPageAsync && schedulesService == other.schedulesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(schedulesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "DataExportScheduleListPageAsync{schedulesService=$schedulesService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<DataExportScheduleListParams> {
@@ -67,22 +46,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<DataExportScheduleListPageAsync>> {
-        return getNextPageParams()
-            .map { schedulesService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<DataExportScheduleListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DataExportScheduleListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): DataExportScheduleListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            schedulesService: ScheduleServiceAsync,
-            params: DataExportScheduleListParams,
-            response: DataExportScheduleListPageResponse,
-        ) = DataExportScheduleListPageAsync(schedulesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DataExportScheduleListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [DataExportScheduleListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ScheduleServiceAsync? = null
+        private var params: DataExportScheduleListParams? = null
+        private var response: DataExportScheduleListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(dataExportScheduleListPageAsync: DataExportScheduleListPageAsync) =
+            apply {
+                service = dataExportScheduleListPageAsync.service
+                params = dataExportScheduleListPageAsync.params
+                response = dataExportScheduleListPageAsync.response
+            }
+
+        fun service(service: ScheduleServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DataExportScheduleListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: DataExportScheduleListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [DataExportScheduleListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DataExportScheduleListPageAsync =
+            DataExportScheduleListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: DataExportScheduleListPageAsync) {
@@ -113,4 +152,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DataExportScheduleListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "DataExportScheduleListPageAsync{service=$service, params=$params, response=$response}"
 }

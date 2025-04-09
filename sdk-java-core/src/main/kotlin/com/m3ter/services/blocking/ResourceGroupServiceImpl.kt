@@ -239,11 +239,11 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -350,11 +350,11 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListContentsPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListContentsPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -391,11 +391,11 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListPermissionsPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListPermissionsPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

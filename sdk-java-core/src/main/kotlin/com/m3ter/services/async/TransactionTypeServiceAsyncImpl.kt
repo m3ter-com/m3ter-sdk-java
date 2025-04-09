@@ -215,11 +215,11 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                                 }
                             }
                             .let {
-                                TransactionTypeListPageAsync.of(
-                                    TransactionTypeServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                TransactionTypeListPageAsync.builder()
+                                    .service(TransactionTypeServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

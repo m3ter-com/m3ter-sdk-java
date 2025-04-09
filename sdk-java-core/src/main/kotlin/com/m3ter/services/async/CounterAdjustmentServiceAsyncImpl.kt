@@ -211,11 +211,11 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
                                 }
                             }
                             .let {
-                                CounterAdjustmentListPageAsync.of(
-                                    CounterAdjustmentServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CounterAdjustmentListPageAsync.builder()
+                                    .service(CounterAdjustmentServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

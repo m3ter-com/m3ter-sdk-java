@@ -219,11 +219,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                                 }
                             }
                             .let {
-                                BillCreditLineItemListPageAsync.of(
-                                    CreditLineItemServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillCreditLineItemListPageAsync.builder()
+                                    .service(CreditLineItemServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.usage.fileUploads.JobServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
- * - You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define a
- *   date range to filter the File Uploads jobs returned for this call.
- * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File Upload
- *   jobs are returned.
- */
+/** @see [JobServiceAsync.list] */
 class UsageFileUploadJobListPageAsync
 private constructor(
-    private val jobsService: JobServiceAsync,
+    private val service: JobServiceAsync,
     private val params: UsageFileUploadJobListParams,
     private val response: UsageFileUploadJobListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): UsageFileUploadJobListPageResponse = response
 
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
@@ -42,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is UsageFileUploadJobListPageAsync && jobsService == other.jobsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(jobsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "UsageFileUploadJobListPageAsync{jobsService=$jobsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<UsageFileUploadJobListParams> {
@@ -67,22 +46,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<UsageFileUploadJobListPageAsync>> {
-        return getNextPageParams()
-            .map { jobsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<UsageFileUploadJobListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): UsageFileUploadJobListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): UsageFileUploadJobListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            jobsService: JobServiceAsync,
-            params: UsageFileUploadJobListParams,
-            response: UsageFileUploadJobListPageResponse,
-        ) = UsageFileUploadJobListPageAsync(jobsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageFileUploadJobListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [UsageFileUploadJobListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: JobServiceAsync? = null
+        private var params: UsageFileUploadJobListParams? = null
+        private var response: UsageFileUploadJobListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(usageFileUploadJobListPageAsync: UsageFileUploadJobListPageAsync) =
+            apply {
+                service = usageFileUploadJobListPageAsync.service
+                params = usageFileUploadJobListPageAsync.params
+                response = usageFileUploadJobListPageAsync.response
+            }
+
+        fun service(service: JobServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: UsageFileUploadJobListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: UsageFileUploadJobListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [UsageFileUploadJobListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): UsageFileUploadJobListPageAsync =
+            UsageFileUploadJobListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: UsageFileUploadJobListPageAsync) {
@@ -113,4 +152,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is UsageFileUploadJobListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "UsageFileUploadJobListPageAsync{service=$service, params=$params, response=$response}"
 }

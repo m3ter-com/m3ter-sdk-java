@@ -123,11 +123,11 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        BalanceTransactionListPage.of(
-                            TransactionServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        BalanceTransactionListPage.builder()
+                            .service(TransactionServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -111,7 +111,13 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
                             it.validate()
                         }
                     }
-                    .let { BillLineItemListPage.of(LineItemServiceImpl(clientOptions), params, it) }
+                    .let {
+                        BillLineItemListPage.builder()
+                            .service(LineItemServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
     }

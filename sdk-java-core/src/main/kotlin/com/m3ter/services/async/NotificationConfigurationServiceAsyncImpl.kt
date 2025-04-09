@@ -217,11 +217,13 @@ internal constructor(private val clientOptions: ClientOptions) :
                                 }
                             }
                             .let {
-                                NotificationConfigurationListPageAsync.of(
-                                    NotificationConfigurationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                NotificationConfigurationListPageAsync.builder()
+                                    .service(
+                                        NotificationConfigurationServiceAsyncImpl(clientOptions)
+                                    )
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

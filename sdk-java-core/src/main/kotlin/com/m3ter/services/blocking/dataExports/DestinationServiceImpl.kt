@@ -206,11 +206,11 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        DataExportDestinationListPage.of(
-                            DestinationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        DataExportDestinationListPage.builder()
+                            .service(DestinationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.BillService
 import java.util.Objects
 import java.util.Optional
@@ -9,22 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Bills.
- *
- * This endpoint retrieves a list of all Bills for the given Account within the specified
- * Organization. Optional filters can be applied such as by date range, lock status, or other
- * attributes. The list can also be paginated for easier management.
- */
+/** @see [BillService.list] */
 class BillListPage
 private constructor(
-    private val billsService: BillService,
+    private val service: BillService,
     private val params: BillListParams,
     private val response: BillListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BillListPageResponse = response
 
     /**
      * Delegates to [BillListPageResponse], but gracefully handles missing data.
@@ -40,19 +32,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillListPage && billsService == other.billsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(billsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BillListPage{billsService=$billsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BillListParams> {
@@ -65,17 +44,75 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<BillListPage> {
-        return getNextPageParams().map { billsService.list(it) }
-    }
+    fun getNextPage(): Optional<BillListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BillListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BillListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(billsService: BillService, params: BillListParams, response: BillListPageResponse) =
-            BillListPage(billsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BillListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BillListPage]. */
+    class Builder internal constructor() {
+
+        private var service: BillService? = null
+        private var params: BillListParams? = null
+        private var response: BillListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(billListPage: BillListPage) = apply {
+            service = billListPage.service
+            params = billListPage.params
+            response = billListPage.response
+        }
+
+        fun service(service: BillService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BillListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BillListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [BillListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BillListPage =
+            BillListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BillListPage) : Iterable<BillResponse> {
@@ -96,4 +133,16 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() = "BillListPage{service=$service, params=$params, response=$response}"
 }

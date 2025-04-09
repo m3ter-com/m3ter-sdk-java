@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.CompoundAggregationServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,23 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of all CompoundAggregations.
- *
- * This endpoint retrieves a list of CompoundAggregations associated with a specific organization.
- * CompoundAggregations enable you to define numerical measures based on simple Aggregations of
- * usage data. It supports pagination, and includes various query parameters to filter the
- * CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
- */
+/** @see [CompoundAggregationServiceAsync.list] */
 class CompoundAggregationListPageAsync
 private constructor(
-    private val compoundAggregationsService: CompoundAggregationServiceAsync,
+    private val service: CompoundAggregationServiceAsync,
     private val params: CompoundAggregationListParams,
     private val response: CompoundAggregationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CompoundAggregationListPageResponse = response
 
     /**
      * Delegates to [CompoundAggregationListPageResponse], but gracefully handles missing data.
@@ -43,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CompoundAggregationListPageAsync && compoundAggregationsService == other.compoundAggregationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(compoundAggregationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CompoundAggregationListPageAsync{compoundAggregationsService=$compoundAggregationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<CompoundAggregationListParams> {
@@ -68,22 +46,82 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<CompoundAggregationListPageAsync>> {
-        return getNextPageParams()
-            .map { compoundAggregationsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<CompoundAggregationListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CompoundAggregationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CompoundAggregationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            compoundAggregationsService: CompoundAggregationServiceAsync,
-            params: CompoundAggregationListParams,
-            response: CompoundAggregationListPageResponse,
-        ) = CompoundAggregationListPageAsync(compoundAggregationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CompoundAggregationListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CompoundAggregationListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: CompoundAggregationServiceAsync? = null
+        private var params: CompoundAggregationListParams? = null
+        private var response: CompoundAggregationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(compoundAggregationListPageAsync: CompoundAggregationListPageAsync) =
+            apply {
+                service = compoundAggregationListPageAsync.service
+                params = compoundAggregationListPageAsync.params
+                response = compoundAggregationListPageAsync.response
+            }
+
+        fun service(service: CompoundAggregationServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CompoundAggregationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CompoundAggregationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [CompoundAggregationListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CompoundAggregationListPageAsync =
+            CompoundAggregationListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CompoundAggregationListPageAsync) {
@@ -114,4 +152,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CompoundAggregationListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CompoundAggregationListPageAsync{service=$service, params=$params, response=$response}"
 }

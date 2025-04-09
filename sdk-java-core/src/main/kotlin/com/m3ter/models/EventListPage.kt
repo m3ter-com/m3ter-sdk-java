@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.EventService
 import java.util.Objects
 import java.util.Optional
@@ -9,29 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * List all Events.
- *
- * Retrieve a list of all Events, with options to filter the returned list based on various
- * criteria. Each Event represents a unique instance of a state change within the system, classified
- * under a specific kind of Event.
- *
- * **NOTES:** You can:
- * - Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
- *   `.../organizations/{orgId}/events?eventName=configuration.commitment.created`
- * - Use the
- *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
- *   endpoint in this section. The response lists the valid Query parameters.
- */
+/** @see [EventService.list] */
 class EventListPage
 private constructor(
-    private val eventsService: EventService,
+    private val service: EventService,
     private val params: EventListParams,
     private val response: EventListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): EventListPageResponse = response
 
     /**
      * Delegates to [EventListPageResponse], but gracefully handles missing data.
@@ -48,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventListPage && eventsService == other.eventsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "EventListPage{eventsService=$eventsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<EventListParams> {
@@ -73,20 +45,75 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<EventListPage> {
-        return getNextPageParams().map { eventsService.list(it) }
-    }
+    fun getNextPage(): Optional<EventListPage> = getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): EventListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): EventListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            eventsService: EventService,
-            params: EventListParams,
-            response: EventListPageResponse,
-        ) = EventListPage(eventsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [EventListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [EventListPage]. */
+    class Builder internal constructor() {
+
+        private var service: EventService? = null
+        private var params: EventListParams? = null
+        private var response: EventListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(eventListPage: EventListPage) = apply {
+            service = eventListPage.service
+            params = eventListPage.params
+            response = eventListPage.response
+        }
+
+        fun service(service: EventService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: EventListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: EventListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [EventListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): EventListPage =
+            EventListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: EventListPage) : Iterable<EventResponse> {
@@ -107,4 +134,16 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() = "EventListPage{service=$service, params=$params, response=$response}"
 }

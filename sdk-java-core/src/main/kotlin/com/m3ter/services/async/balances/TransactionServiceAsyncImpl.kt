@@ -129,11 +129,11 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                                 }
                             }
                             .let {
-                                BalanceTransactionListPageAsync.of(
-                                    TransactionServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BalanceTransactionListPageAsync.builder()
+                                    .service(TransactionServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

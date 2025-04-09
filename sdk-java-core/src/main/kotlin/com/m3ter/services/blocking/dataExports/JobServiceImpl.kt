@@ -118,7 +118,13 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                             it.validate()
                         }
                     }
-                    .let { DataExportJobListPage.of(JobServiceImpl(clientOptions), params, it) }
+                    .let {
+                        DataExportJobListPage.builder()
+                            .service(JobServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

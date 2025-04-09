@@ -217,11 +217,13 @@ internal constructor(private val clientOptions: ClientOptions) :
                                 }
                             }
                             .let {
-                                ScheduledEventConfigurationListPageAsync.of(
-                                    ScheduledEventConfigurationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ScheduledEventConfigurationListPageAsync.builder()
+                                    .service(
+                                        ScheduledEventConfigurationServiceAsyncImpl(clientOptions)
+                                    )
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

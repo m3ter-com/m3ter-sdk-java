@@ -199,11 +199,11 @@ class PlanGroupLinkServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        PlanGroupLinkListPage.of(
-                            PlanGroupLinkServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        PlanGroupLinkListPage.builder()
+                            .service(PlanGroupLinkServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

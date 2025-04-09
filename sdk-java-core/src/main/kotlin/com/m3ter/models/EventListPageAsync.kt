@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.EventServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,29 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * List all Events.
- *
- * Retrieve a list of all Events, with options to filter the returned list based on various
- * criteria. Each Event represents a unique instance of a state change within the system, classified
- * under a specific kind of Event.
- *
- * **NOTES:** You can:
- * - Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
- *   `.../organizations/{orgId}/events?eventName=configuration.commitment.created`
- * - Use the
- *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
- *   endpoint in this section. The response lists the valid Query parameters.
- */
+/** @see [EventServiceAsync.list] */
 class EventListPageAsync
 private constructor(
-    private val eventsService: EventServiceAsync,
+    private val service: EventServiceAsync,
     private val params: EventListParams,
     private val response: EventListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): EventListPageResponse = response
 
     /**
      * Delegates to [EventListPageResponse], but gracefully handles missing data.
@@ -49,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventListPageAsync && eventsService == other.eventsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "EventListPageAsync{eventsService=$eventsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<EventListParams> {
@@ -74,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<EventListPageAsync>> {
-        return getNextPageParams()
-            .map { eventsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<EventListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): EventListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): EventListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            eventsService: EventServiceAsync,
-            params: EventListParams,
-            response: EventListPageResponse,
-        ) = EventListPageAsync(eventsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [EventListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [EventListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: EventServiceAsync? = null
+        private var params: EventListParams? = null
+        private var response: EventListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(eventListPageAsync: EventListPageAsync) = apply {
+            service = eventListPageAsync.service
+            params = eventListPageAsync.params
+            response = eventListPageAsync.response
+        }
+
+        fun service(service: EventServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: EventListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: EventListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [EventListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): EventListPageAsync =
+            EventListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: EventListPageAsync) {
@@ -117,4 +145,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "EventListPageAsync{service=$service, params=$params, response=$response}"
 }

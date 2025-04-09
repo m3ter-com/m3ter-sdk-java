@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.CommitmentServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,22 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Commitments.
- *
- * Retrieves a list of all Commitments associated with an Organization. This endpoint supports
- * pagination and includes various query parameters to filter the Commitments based on Account,
- * Product, date, and end dates.
- */
+/** @see [CommitmentServiceAsync.list] */
 class CommitmentListPageAsync
 private constructor(
-    private val commitmentsService: CommitmentServiceAsync,
+    private val service: CommitmentServiceAsync,
     private val params: CommitmentListParams,
     private val response: CommitmentListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CommitmentListPageResponse = response
 
     /**
      * Delegates to [CommitmentListPageResponse], but gracefully handles missing data.
@@ -42,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CommitmentListPageAsync && commitmentsService == other.commitmentsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(commitmentsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CommitmentListPageAsync{commitmentsService=$commitmentsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<CommitmentListParams> {
@@ -67,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<CommitmentListPageAsync>> {
-        return getNextPageParams()
-            .map { commitmentsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<CommitmentListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CommitmentListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CommitmentListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            commitmentsService: CommitmentServiceAsync,
-            params: CommitmentListParams,
-            response: CommitmentListPageResponse,
-        ) = CommitmentListPageAsync(commitmentsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CommitmentListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CommitmentListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: CommitmentServiceAsync? = null
+        private var params: CommitmentListParams? = null
+        private var response: CommitmentListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(commitmentListPageAsync: CommitmentListPageAsync) = apply {
+            service = commitmentListPageAsync.service
+            params = commitmentListPageAsync.params
+            response = commitmentListPageAsync.response
+        }
+
+        fun service(service: CommitmentServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CommitmentListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CommitmentListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [CommitmentListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CommitmentListPageAsync =
+            CommitmentListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CommitmentListPageAsync) {
@@ -113,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CommitmentListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CommitmentListPageAsync{service=$service, params=$params, response=$response}"
 }

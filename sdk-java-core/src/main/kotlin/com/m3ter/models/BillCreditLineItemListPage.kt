@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.bills.CreditLineItemService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** List the Credit line items for the given Bill. */
+/** @see [CreditLineItemService.list] */
 class BillCreditLineItemListPage
 private constructor(
-    private val creditLineItemsService: CreditLineItemService,
+    private val service: CreditLineItemService,
     private val params: BillCreditLineItemListParams,
     private val response: BillCreditLineItemListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): BillCreditLineItemListPageResponse = response
 
     /**
      * Delegates to [BillCreditLineItemListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillCreditLineItemListPage && creditLineItemsService == other.creditLineItemsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditLineItemsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BillCreditLineItemListPage{creditLineItemsService=$creditLineItemsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BillCreditLineItemListParams> {
@@ -60,20 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<BillCreditLineItemListPage> {
-        return getNextPageParams().map { creditLineItemsService.list(it) }
-    }
+    fun getNextPage(): Optional<BillCreditLineItemListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BillCreditLineItemListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BillCreditLineItemListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            creditLineItemsService: CreditLineItemService,
-            params: BillCreditLineItemListParams,
-            response: BillCreditLineItemListPageResponse,
-        ) = BillCreditLineItemListPage(creditLineItemsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BillCreditLineItemListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [BillCreditLineItemListPage]. */
+    class Builder internal constructor() {
+
+        private var service: CreditLineItemService? = null
+        private var params: BillCreditLineItemListParams? = null
+        private var response: BillCreditLineItemListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(billCreditLineItemListPage: BillCreditLineItemListPage) = apply {
+            service = billCreditLineItemListPage.service
+            params = billCreditLineItemListPage.params
+            response = billCreditLineItemListPage.response
+        }
+
+        fun service(service: CreditLineItemService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: BillCreditLineItemListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: BillCreditLineItemListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [BillCreditLineItemListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BillCreditLineItemListPage =
+            BillCreditLineItemListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BillCreditLineItemListPage) :
@@ -95,4 +138,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillCreditLineItemListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BillCreditLineItemListPage{service=$service, params=$params, response=$response}"
 }
