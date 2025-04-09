@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.1-alpha (2025-04-09)
+
+Full Changelog: [v0.1.0-alpha...v0.1.1-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha...v0.1.1-alpha)
+
+### Features
+
+* **api:** change java target to Sonatype portal ([#146](https://github.com/m3ter-com/m3ter-sdk-java/issues/146)) ([3ec5cc4](https://github.com/m3ter-com/m3ter-sdk-java/commit/3ec5cc4e151788f79260cdf6fb20b72b7e667f3c))
+
+
+### Documentation
+
+* Use "My Org Id" in example requests ([#144](https://github.com/m3ter-com/m3ter-sdk-java/issues/144)) ([c999b68](https://github.com/m3ter-com/m3ter-sdk-java/commit/c999b686fba82ea4b0f22b320209fc0aa1dda1eb))
+
 ## 0.1.0-alpha (2025-04-08)
 
 Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha.12...v0.1.0-alpha)
