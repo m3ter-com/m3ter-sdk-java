@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ExternalMappingServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,21 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of all External Mapping entities.
- *
- * This endpoint retrieves a list of all External Mapping entities for a specific Organization. The
- * list can be paginated for better management, and supports filtering using the external system.
- */
+/** @see [ExternalMappingServiceAsync.list] */
 class ExternalMappingListPageAsync
 private constructor(
-    private val externalMappingsService: ExternalMappingServiceAsync,
+    private val service: ExternalMappingServiceAsync,
     private val params: ExternalMappingListParams,
     private val response: ExternalMappingListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ExternalMappingListPageResponse = response
 
     /**
      * Delegates to [ExternalMappingListPageResponse], but gracefully handles missing data.
@@ -41,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ExternalMappingListPageAsync && externalMappingsService == other.externalMappingsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalMappingsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ExternalMappingListPageAsync{externalMappingsService=$externalMappingsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ExternalMappingListParams> {
@@ -66,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ExternalMappingListPageAsync>> {
-        return getNextPageParams()
-            .map { externalMappingsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<ExternalMappingListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ExternalMappingListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ExternalMappingListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            externalMappingsService: ExternalMappingServiceAsync,
-            params: ExternalMappingListParams,
-            response: ExternalMappingListPageResponse,
-        ) = ExternalMappingListPageAsync(externalMappingsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalMappingListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [ExternalMappingListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ExternalMappingServiceAsync? = null
+        private var params: ExternalMappingListParams? = null
+        private var response: ExternalMappingListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(externalMappingListPageAsync: ExternalMappingListPageAsync) = apply {
+            service = externalMappingListPageAsync.service
+            params = externalMappingListPageAsync.params
+            response = externalMappingListPageAsync.response
+        }
+
+        fun service(service: ExternalMappingServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ExternalMappingListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ExternalMappingListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [ExternalMappingListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ExternalMappingListPageAsync =
+            ExternalMappingListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ExternalMappingListPageAsync) {
@@ -112,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ExternalMappingListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ExternalMappingListPageAsync{service=$service, params=$params, response=$response}"
 }

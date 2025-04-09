@@ -211,11 +211,11 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                PlanGroupLinkListPageAsync.of(
-                                    PlanGroupLinkServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                PlanGroupLinkListPageAsync.builder()
+                                    .service(PlanGroupLinkServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

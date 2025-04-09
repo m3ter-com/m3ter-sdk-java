@@ -203,11 +203,11 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        TransactionTypeListPage.of(
-                            TransactionTypeServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        TransactionTypeListPage.builder()
+                            .service(TransactionTypeServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

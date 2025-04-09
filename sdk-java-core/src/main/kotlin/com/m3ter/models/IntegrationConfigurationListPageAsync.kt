@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.IntegrationConfigurationServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,21 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * List all integration configurations.
- *
- * This endpoint retrieves a list of all integration configurations for the specified Organization.
- * The list can be paginated for easier management.
- */
+/** @see [IntegrationConfigurationServiceAsync.list] */
 class IntegrationConfigurationListPageAsync
 private constructor(
-    private val integrationConfigurationsService: IntegrationConfigurationServiceAsync,
+    private val service: IntegrationConfigurationServiceAsync,
     private val params: IntegrationConfigurationListParams,
     private val response: IntegrationConfigurationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): IntegrationConfigurationListPageResponse = response
 
     /**
      * Delegates to [IntegrationConfigurationListPageResponse], but gracefully handles missing data.
@@ -41,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is IntegrationConfigurationListPageAsync && integrationConfigurationsService == other.integrationConfigurationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(integrationConfigurationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "IntegrationConfigurationListPageAsync{integrationConfigurationsService=$integrationConfigurationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<IntegrationConfigurationListParams> {
@@ -66,26 +46,84 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<IntegrationConfigurationListPageAsync>> {
-        return getNextPageParams()
-            .map { integrationConfigurationsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<IntegrationConfigurationListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): IntegrationConfigurationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): IntegrationConfigurationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            integrationConfigurationsService: IntegrationConfigurationServiceAsync,
-            params: IntegrationConfigurationListParams,
-            response: IntegrationConfigurationListPageResponse,
-        ) =
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [IntegrationConfigurationListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [IntegrationConfigurationListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: IntegrationConfigurationServiceAsync? = null
+        private var params: IntegrationConfigurationListParams? = null
+        private var response: IntegrationConfigurationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(
+            integrationConfigurationListPageAsync: IntegrationConfigurationListPageAsync
+        ) = apply {
+            service = integrationConfigurationListPageAsync.service
+            params = integrationConfigurationListPageAsync.params
+            response = integrationConfigurationListPageAsync.response
+        }
+
+        fun service(service: IntegrationConfigurationServiceAsync) = apply {
+            this.service = service
+        }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: IntegrationConfigurationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: IntegrationConfigurationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [IntegrationConfigurationListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): IntegrationConfigurationListPageAsync =
             IntegrationConfigurationListPageAsync(
-                integrationConfigurationsService,
-                params,
-                response,
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 
@@ -119,4 +157,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is IntegrationConfigurationListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "IntegrationConfigurationListPageAsync{service=$service, params=$params, response=$response}"
 }

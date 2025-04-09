@@ -188,7 +188,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                             it.validate()
                         }
                     }
-                    .let { BillListPage.of(BillServiceImpl(clientOptions), params, it) }
+                    .let {
+                        BillListPage.builder()
+                            .service(BillServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -233,11 +233,13 @@ internal constructor(private val clientOptions: ClientOptions) :
                                 }
                             }
                             .let {
-                                IntegrationConfigurationListPageAsync.of(
-                                    IntegrationConfigurationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                IntegrationConfigurationListPageAsync.builder()
+                                    .service(
+                                        IntegrationConfigurationServiceAsyncImpl(clientOptions)
+                                    )
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

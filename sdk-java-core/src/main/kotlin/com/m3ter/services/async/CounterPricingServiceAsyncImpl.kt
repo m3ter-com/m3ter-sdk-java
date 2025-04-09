@@ -211,11 +211,11 @@ internal constructor(private val clientOptions: ClientOptions) : CounterPricingS
                                 }
                             }
                             .let {
-                                CounterPricingListPageAsync.of(
-                                    CounterPricingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CounterPricingListPageAsync.builder()
+                                    .service(CounterPricingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

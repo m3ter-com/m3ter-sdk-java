@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.PlanGroupLinkService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of PlanGroupLink entities */
+/** @see [PlanGroupLinkService.list] */
 class PlanGroupLinkListPage
 private constructor(
-    private val planGroupLinksService: PlanGroupLinkService,
+    private val service: PlanGroupLinkService,
     private val params: PlanGroupLinkListParams,
     private val response: PlanGroupLinkListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): PlanGroupLinkListPageResponse = response
 
     /**
      * Delegates to [PlanGroupLinkListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PlanGroupLinkListPage && planGroupLinksService == other.planGroupLinksService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(planGroupLinksService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PlanGroupLinkListPage{planGroupLinksService=$planGroupLinksService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<PlanGroupLinkListParams> {
@@ -60,20 +45,76 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<PlanGroupLinkListPage> {
-        return getNextPageParams().map { planGroupLinksService.list(it) }
-    }
+    fun getNextPage(): Optional<PlanGroupLinkListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PlanGroupLinkListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PlanGroupLinkListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            planGroupLinksService: PlanGroupLinkService,
-            params: PlanGroupLinkListParams,
-            response: PlanGroupLinkListPageResponse,
-        ) = PlanGroupLinkListPage(planGroupLinksService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanGroupLinkListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [PlanGroupLinkListPage]. */
+    class Builder internal constructor() {
+
+        private var service: PlanGroupLinkService? = null
+        private var params: PlanGroupLinkListParams? = null
+        private var response: PlanGroupLinkListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(planGroupLinkListPage: PlanGroupLinkListPage) = apply {
+            service = planGroupLinkListPage.service
+            params = planGroupLinkListPage.params
+            response = planGroupLinkListPage.response
+        }
+
+        fun service(service: PlanGroupLinkService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PlanGroupLinkListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: PlanGroupLinkListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [PlanGroupLinkListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PlanGroupLinkListPage =
+            PlanGroupLinkListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PlanGroupLinkListPage) :
@@ -95,4 +136,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PlanGroupLinkListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PlanGroupLinkListPage{service=$service, params=$params, response=$response}"
 }

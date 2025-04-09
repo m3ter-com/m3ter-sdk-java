@@ -205,11 +205,11 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                                 }
                             }
                             .let {
-                                BillListPageAsync.of(
-                                    BillServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillListPageAsync.builder()
+                                    .service(BillServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

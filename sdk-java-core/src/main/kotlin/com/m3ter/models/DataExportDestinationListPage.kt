@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.dataExports.DestinationService
 import java.util.Objects
 import java.util.Optional
@@ -9,19 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Export Destination entities. You can filter the list of Destinations returned
- * by UUID.
- */
+/** @see [DestinationService.list] */
 class DataExportDestinationListPage
 private constructor(
-    private val destinationsService: DestinationService,
+    private val service: DestinationService,
     private val params: DataExportDestinationListParams,
     private val response: DataExportDestinationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): DataExportDestinationListPageResponse = response
 
     /**
      * Delegates to [DataExportDestinationListPageResponse], but gracefully handles missing data.
@@ -38,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DataExportDestinationListPage && destinationsService == other.destinationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(destinationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "DataExportDestinationListPage{destinationsService=$destinationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<DataExportDestinationListParams> {
@@ -63,20 +45,79 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<DataExportDestinationListPage> {
-        return getNextPageParams().map { destinationsService.list(it) }
-    }
+    fun getNextPage(): Optional<DataExportDestinationListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DataExportDestinationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): DataExportDestinationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            destinationsService: DestinationService,
-            params: DataExportDestinationListParams,
-            response: DataExportDestinationListPageResponse,
-        ) = DataExportDestinationListPage(destinationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DataExportDestinationListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [DataExportDestinationListPage]. */
+    class Builder internal constructor() {
+
+        private var service: DestinationService? = null
+        private var params: DataExportDestinationListParams? = null
+        private var response: DataExportDestinationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(dataExportDestinationListPage: DataExportDestinationListPage) = apply {
+            service = dataExportDestinationListPage.service
+            params = dataExportDestinationListPage.params
+            response = dataExportDestinationListPage.response
+        }
+
+        fun service(service: DestinationService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DataExportDestinationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: DataExportDestinationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [DataExportDestinationListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DataExportDestinationListPage =
+            DataExportDestinationListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: DataExportDestinationListPage) :
@@ -98,4 +139,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DataExportDestinationListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "DataExportDestinationListPage{service=$service, params=$params, response=$response}"
 }

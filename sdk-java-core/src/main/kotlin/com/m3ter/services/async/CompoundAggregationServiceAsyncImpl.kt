@@ -213,11 +213,11 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                                 }
                             }
                             .let {
-                                CompoundAggregationListPageAsync.of(
-                                    CompoundAggregationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CompoundAggregationListPageAsync.builder()
+                                    .service(CompoundAggregationServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

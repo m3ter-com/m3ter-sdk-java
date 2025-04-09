@@ -192,7 +192,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { CounterListPage.of(CounterServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CounterListPage.builder()
+                            .service(CounterServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

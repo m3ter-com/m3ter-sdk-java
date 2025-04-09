@@ -192,7 +192,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { ProductListPage.of(ProductServiceImpl(clientOptions), params, it) }
+                    .let {
+                        ProductListPage.builder()
+                            .service(ProductServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

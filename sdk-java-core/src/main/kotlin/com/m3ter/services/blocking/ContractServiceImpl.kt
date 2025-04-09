@@ -204,7 +204,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                             it.validate()
                         }
                     }
-                    .let { ContractListPage.of(ContractServiceImpl(clientOptions), params, it) }
+                    .let {
+                        ContractListPage.builder()
+                            .service(ContractServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -126,11 +126,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                                 }
                             }
                             .let {
-                                DataExportJobListPageAsync.of(
-                                    JobServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DataExportJobListPageAsync.builder()
+                                    .service(JobServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

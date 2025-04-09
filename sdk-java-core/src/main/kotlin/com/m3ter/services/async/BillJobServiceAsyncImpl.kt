@@ -173,11 +173,11 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                BillJobListPageAsync.of(
-                                    BillJobServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillJobListPageAsync.builder()
+                                    .service(BillJobServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

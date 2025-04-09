@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.CompoundAggregationService
 import java.util.Objects
 import java.util.Optional
@@ -9,23 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of all CompoundAggregations.
- *
- * This endpoint retrieves a list of CompoundAggregations associated with a specific organization.
- * CompoundAggregations enable you to define numerical measures based on simple Aggregations of
- * usage data. It supports pagination, and includes various query parameters to filter the
- * CompoundAggregations based on Product, CompoundAggregation IDs or short codes.
- */
+/** @see [CompoundAggregationService.list] */
 class CompoundAggregationListPage
 private constructor(
-    private val compoundAggregationsService: CompoundAggregationService,
+    private val service: CompoundAggregationService,
     private val params: CompoundAggregationListParams,
     private val response: CompoundAggregationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CompoundAggregationListPageResponse = response
 
     /**
      * Delegates to [CompoundAggregationListPageResponse], but gracefully handles missing data.
@@ -42,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CompoundAggregationListPage && compoundAggregationsService == other.compoundAggregationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(compoundAggregationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CompoundAggregationListPage{compoundAggregationsService=$compoundAggregationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<CompoundAggregationListParams> {
@@ -67,20 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<CompoundAggregationListPage> {
-        return getNextPageParams().map { compoundAggregationsService.list(it) }
-    }
+    fun getNextPage(): Optional<CompoundAggregationListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CompoundAggregationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CompoundAggregationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            compoundAggregationsService: CompoundAggregationService,
-            params: CompoundAggregationListParams,
-            response: CompoundAggregationListPageResponse,
-        ) = CompoundAggregationListPage(compoundAggregationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CompoundAggregationListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [CompoundAggregationListPage]. */
+    class Builder internal constructor() {
+
+        private var service: CompoundAggregationService? = null
+        private var params: CompoundAggregationListParams? = null
+        private var response: CompoundAggregationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(compoundAggregationListPage: CompoundAggregationListPage) = apply {
+            service = compoundAggregationListPage.service
+            params = compoundAggregationListPage.params
+            response = compoundAggregationListPage.response
+        }
+
+        fun service(service: CompoundAggregationService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CompoundAggregationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CompoundAggregationListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [CompoundAggregationListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CompoundAggregationListPage =
+            CompoundAggregationListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CompoundAggregationListPage) :
@@ -102,4 +138,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CompoundAggregationListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CompoundAggregationListPage{service=$service, params=$params, response=$response}"
 }

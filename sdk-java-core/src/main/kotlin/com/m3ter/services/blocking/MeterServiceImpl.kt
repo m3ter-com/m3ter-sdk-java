@@ -183,7 +183,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
                             it.validate()
                         }
                     }
-                    .let { MeterListPage.of(MeterServiceImpl(clientOptions), params, it) }
+                    .let {
+                        MeterListPage.builder()
+                            .service(MeterServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -199,7 +199,11 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        PlanTemplateListPage.of(PlanTemplateServiceImpl(clientOptions), params, it)
+                        PlanTemplateListPage.builder()
+                            .service(PlanTemplateServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -211,11 +211,11 @@ class AccountPlanServiceAsyncImpl internal constructor(private val clientOptions
                                 }
                             }
                             .let {
-                                AccountPlanListPageAsync.of(
-                                    AccountPlanServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                AccountPlanListPageAsync.builder()
+                                    .service(AccountPlanServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

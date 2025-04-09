@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.users.InvitationService
 import java.util.Objects
 import java.util.Optional
@@ -9,16 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of all invitations in the Organization. */
+/** @see [InvitationService.list] */
 class UserInvitationListPage
 private constructor(
-    private val invitationsService: InvitationService,
+    private val service: InvitationService,
     private val params: UserInvitationListParams,
     private val response: UserInvitationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): UserInvitationListPageResponse = response
 
     /**
      * Delegates to [UserInvitationListPageResponse], but gracefully handles missing data.
@@ -35,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is UserInvitationListPage && invitationsService == other.invitationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invitationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "UserInvitationListPage{invitationsService=$invitationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<UserInvitationListParams> {
@@ -60,20 +45,76 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<UserInvitationListPage> {
-        return getNextPageParams().map { invitationsService.list(it) }
-    }
+    fun getNextPage(): Optional<UserInvitationListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): UserInvitationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): UserInvitationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            invitationsService: InvitationService,
-            params: UserInvitationListParams,
-            response: UserInvitationListPageResponse,
-        ) = UserInvitationListPage(invitationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [UserInvitationListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [UserInvitationListPage]. */
+    class Builder internal constructor() {
+
+        private var service: InvitationService? = null
+        private var params: UserInvitationListParams? = null
+        private var response: UserInvitationListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(userInvitationListPage: UserInvitationListPage) = apply {
+            service = userInvitationListPage.service
+            params = userInvitationListPage.params
+            response = userInvitationListPage.response
+        }
+
+        fun service(service: InvitationService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: UserInvitationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: UserInvitationListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [UserInvitationListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): UserInvitationListPage =
+            UserInvitationListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: UserInvitationListPage) : Iterable<InvitationResponse> {
@@ -94,4 +135,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is UserInvitationListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "UserInvitationListPage{service=$service, params=$params, response=$response}"
 }

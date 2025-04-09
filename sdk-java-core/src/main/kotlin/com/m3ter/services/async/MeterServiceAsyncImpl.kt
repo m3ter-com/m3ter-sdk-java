@@ -208,11 +208,11 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
                                 }
                             }
                             .let {
-                                MeterListPageAsync.of(
-                                    MeterServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                MeterListPageAsync.builder()
+                                    .service(MeterServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

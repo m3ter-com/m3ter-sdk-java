@@ -204,7 +204,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { CommitmentListPage.of(CommitmentServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CommitmentListPage.builder()
+                            .service(CommitmentServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

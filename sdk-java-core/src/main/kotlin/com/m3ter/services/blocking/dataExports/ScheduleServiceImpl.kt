@@ -206,11 +206,11 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
                         }
                     }
                     .let {
-                        DataExportScheduleListPage.of(
-                            ScheduleServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        DataExportScheduleListPage.builder()
+                            .service(ScheduleServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

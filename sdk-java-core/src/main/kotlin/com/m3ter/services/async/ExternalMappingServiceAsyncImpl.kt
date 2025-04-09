@@ -232,11 +232,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -314,11 +314,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListByExternalEntityPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListByExternalEntityPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -359,11 +359,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListByM3terEntityPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListByM3terEntityPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

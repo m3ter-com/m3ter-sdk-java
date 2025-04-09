@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.AccountPlanServiceAsync
 import java.util.Objects
 import java.util.Optional
@@ -10,24 +11,13 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
- *
- * This endpoint retrieves a list of AccountPlans and AccountPlanGroups for a specific Organization.
- * The list can be paginated for easier management, and supports filtering with various parameters.
- *
- * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
- * always use it in combination with the `account` query parameter.
- */
+/** @see [AccountPlanServiceAsync.list] */
 class AccountPlanListPageAsync
 private constructor(
-    private val accountPlansService: AccountPlanServiceAsync,
+    private val service: AccountPlanServiceAsync,
     private val params: AccountPlanListParams,
     private val response: AccountPlanListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): AccountPlanListPageResponse = response
 
     /**
      * Delegates to [AccountPlanListPageResponse], but gracefully handles missing data.
@@ -44,19 +34,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountPlanListPageAsync && accountPlansService == other.accountPlansService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountPlansService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "AccountPlanListPageAsync{accountPlansService=$accountPlansService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<AccountPlanListParams> {
@@ -69,22 +46,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<AccountPlanListPageAsync>> {
-        return getNextPageParams()
-            .map { accountPlansService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<AccountPlanListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): AccountPlanListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): AccountPlanListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            accountPlansService: AccountPlanServiceAsync,
-            params: AccountPlanListParams,
-            response: AccountPlanListPageResponse,
-        ) = AccountPlanListPageAsync(accountPlansService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountPlanListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [AccountPlanListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: AccountPlanServiceAsync? = null
+        private var params: AccountPlanListParams? = null
+        private var response: AccountPlanListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(accountPlanListPageAsync: AccountPlanListPageAsync) = apply {
+            service = accountPlanListPageAsync.service
+            params = accountPlanListPageAsync.params
+            response = accountPlanListPageAsync.response
+        }
+
+        fun service(service: AccountPlanServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: AccountPlanListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: AccountPlanListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [AccountPlanListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): AccountPlanListPageAsync =
+            AccountPlanListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: AccountPlanListPageAsync) {
@@ -115,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountPlanListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "AccountPlanListPageAsync{service=$service, params=$params, response=$response}"
 }

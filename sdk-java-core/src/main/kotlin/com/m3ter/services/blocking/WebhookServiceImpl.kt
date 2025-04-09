@@ -203,7 +203,13 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { WebhookListPage.of(WebhookServiceImpl(clientOptions), params, it) }
+                    .let {
+                        WebhookListPage.builder()
+                            .service(WebhookServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

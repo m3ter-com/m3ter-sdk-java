@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.usage.fileUploads.JobService
 import java.util.Objects
 import java.util.Optional
@@ -9,22 +10,13 @@ import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
- * - You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define a
- *   date range to filter the File Uploads jobs returned for this call.
- * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File Upload
- *   jobs are returned.
- */
+/** @see [JobService.list] */
 class UsageFileUploadJobListPage
 private constructor(
-    private val jobsService: JobService,
+    private val service: JobService,
     private val params: UsageFileUploadJobListParams,
     private val response: UsageFileUploadJobListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): UsageFileUploadJobListPageResponse = response
 
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
@@ -41,19 +33,6 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is UsageFileUploadJobListPage && jobsService == other.jobsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(jobsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "UsageFileUploadJobListPage{jobsService=$jobsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<UsageFileUploadJobListParams> {
@@ -66,20 +45,78 @@ private constructor(
         )
     }
 
-    fun getNextPage(): Optional<UsageFileUploadJobListPage> {
-        return getNextPageParams().map { jobsService.list(it) }
-    }
+    fun getNextPage(): Optional<UsageFileUploadJobListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): UsageFileUploadJobListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): UsageFileUploadJobListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            jobsService: JobService,
-            params: UsageFileUploadJobListParams,
-            response: UsageFileUploadJobListPageResponse,
-        ) = UsageFileUploadJobListPage(jobsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [UsageFileUploadJobListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [UsageFileUploadJobListPage]. */
+    class Builder internal constructor() {
+
+        private var service: JobService? = null
+        private var params: UsageFileUploadJobListParams? = null
+        private var response: UsageFileUploadJobListPageResponse? = null
+
+        @JvmSynthetic
+        internal fun from(usageFileUploadJobListPage: UsageFileUploadJobListPage) = apply {
+            service = usageFileUploadJobListPage.service
+            params = usageFileUploadJobListPage.params
+            response = usageFileUploadJobListPage.response
+        }
+
+        fun service(service: JobService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: UsageFileUploadJobListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: UsageFileUploadJobListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [UsageFileUploadJobListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): UsageFileUploadJobListPage =
+            UsageFileUploadJobListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: UsageFileUploadJobListPage) :
@@ -101,4 +138,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is UsageFileUploadJobListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "UsageFileUploadJobListPage{service=$service, params=$params, response=$response}"
 }

@@ -199,7 +199,11 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        AggregationListPage.of(AggregationServiceImpl(clientOptions), params, it)
+                        AggregationListPage.builder()
+                            .service(AggregationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

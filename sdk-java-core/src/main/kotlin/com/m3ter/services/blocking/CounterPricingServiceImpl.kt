@@ -199,11 +199,11 @@ class CounterPricingServiceImpl internal constructor(private val clientOptions: 
                         }
                     }
                     .let {
-                        CounterPricingListPage.of(
-                            CounterPricingServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CounterPricingListPage.builder()
+                            .service(CounterPricingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

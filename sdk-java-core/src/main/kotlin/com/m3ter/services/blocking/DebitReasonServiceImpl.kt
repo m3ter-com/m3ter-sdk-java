@@ -203,7 +203,11 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        DebitReasonListPage.of(DebitReasonServiceImpl(clientOptions), params, it)
+                        DebitReasonListPage.builder()
+                            .service(DebitReasonServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
