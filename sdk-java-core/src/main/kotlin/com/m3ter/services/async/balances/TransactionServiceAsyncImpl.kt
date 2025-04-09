@@ -17,6 +17,7 @@ import com.m3ter.core.http.parseable
 import com.m3ter.core.prepareAsync
 import com.m3ter.models.BalanceTransactionCreateParams
 import com.m3ter.models.BalanceTransactionListPageAsync
+import com.m3ter.models.BalanceTransactionListPageResponse
 import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
@@ -95,8 +96,8 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val listHandler: Handler<BalanceTransactionListPageAsync.Response> =
-            jsonHandler<BalanceTransactionListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BalanceTransactionListPageResponse> =
+            jsonHandler<BalanceTransactionListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

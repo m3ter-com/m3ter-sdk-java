@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.DebitReasonCreateParams
 import com.m3ter.models.DebitReasonDeleteParams
 import com.m3ter.models.DebitReasonListPageAsync
+import com.m3ter.models.DebitReasonListPageResponse
 import com.m3ter.models.DebitReasonListParams
 import com.m3ter.models.DebitReasonResponse
 import com.m3ter.models.DebitReasonRetrieveParams
@@ -182,8 +183,8 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                 }
         }
 
-        private val listHandler: Handler<DebitReasonListPageAsync.Response> =
-            jsonHandler<DebitReasonListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DebitReasonListPageResponse> =
+            jsonHandler<DebitReasonListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

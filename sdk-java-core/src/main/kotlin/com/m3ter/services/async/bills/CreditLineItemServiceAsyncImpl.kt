@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.BillCreditLineItemCreateParams
 import com.m3ter.models.BillCreditLineItemDeleteParams
 import com.m3ter.models.BillCreditLineItemListPageAsync
+import com.m3ter.models.BillCreditLineItemListPageResponse
 import com.m3ter.models.BillCreditLineItemListParams
 import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
@@ -185,8 +186,8 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                 }
         }
 
-        private val listHandler: Handler<BillCreditLineItemListPageAsync.Response> =
-            jsonHandler<BillCreditLineItemListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillCreditLineItemListPageResponse> =
+            jsonHandler<BillCreditLineItemListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

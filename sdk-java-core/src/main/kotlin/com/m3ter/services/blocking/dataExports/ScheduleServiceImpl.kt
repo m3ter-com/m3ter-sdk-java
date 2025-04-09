@@ -20,6 +20,7 @@ import com.m3ter.models.DataExportScheduleCreateResponse
 import com.m3ter.models.DataExportScheduleDeleteParams
 import com.m3ter.models.DataExportScheduleDeleteResponse
 import com.m3ter.models.DataExportScheduleListPage
+import com.m3ter.models.DataExportScheduleListPageResponse
 import com.m3ter.models.DataExportScheduleListParams
 import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleRetrieveResponse
@@ -175,8 +176,8 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val listHandler: Handler<DataExportScheduleListPage.Response> =
-            jsonHandler<DataExportScheduleListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DataExportScheduleListPageResponse> =
+            jsonHandler<DataExportScheduleListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

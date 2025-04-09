@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.ScheduledEventConfigurationCreateParams
 import com.m3ter.models.ScheduledEventConfigurationDeleteParams
 import com.m3ter.models.ScheduledEventConfigurationListPageAsync
+import com.m3ter.models.ScheduledEventConfigurationListPageResponse
 import com.m3ter.models.ScheduledEventConfigurationListParams
 import com.m3ter.models.ScheduledEventConfigurationResponse
 import com.m3ter.models.ScheduledEventConfigurationRetrieveParams
@@ -184,8 +185,8 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val listHandler: Handler<ScheduledEventConfigurationListPageAsync.Response> =
-            jsonHandler<ScheduledEventConfigurationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ScheduledEventConfigurationListPageResponse> =
+            jsonHandler<ScheduledEventConfigurationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

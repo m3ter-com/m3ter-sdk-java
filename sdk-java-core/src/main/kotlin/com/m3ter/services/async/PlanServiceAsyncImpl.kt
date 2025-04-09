@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.PlanCreateParams
 import com.m3ter.models.PlanDeleteParams
 import com.m3ter.models.PlanListPageAsync
+import com.m3ter.models.PlanListPageResponse
 import com.m3ter.models.PlanListParams
 import com.m3ter.models.PlanResponse
 import com.m3ter.models.PlanRetrieveParams
@@ -176,8 +177,8 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val listHandler: Handler<PlanListPageAsync.Response> =
-            jsonHandler<PlanListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PlanListPageResponse> =
+            jsonHandler<PlanListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

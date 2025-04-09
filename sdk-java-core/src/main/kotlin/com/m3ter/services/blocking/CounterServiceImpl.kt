@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.CounterCreateParams
 import com.m3ter.models.CounterDeleteParams
 import com.m3ter.models.CounterListPage
+import com.m3ter.models.CounterListPageResponse
 import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterResponse
 import com.m3ter.models.CounterRetrieveParams
@@ -163,8 +164,8 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<CounterListPage.Response> =
-            jsonHandler<CounterListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CounterListPageResponse> =
+            jsonHandler<CounterListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.CounterPricingCreateParams
 import com.m3ter.models.CounterPricingDeleteParams
 import com.m3ter.models.CounterPricingListPageAsync
+import com.m3ter.models.CounterPricingListPageResponse
 import com.m3ter.models.CounterPricingListParams
 import com.m3ter.models.CounterPricingResponse
 import com.m3ter.models.CounterPricingRetrieveParams
@@ -179,8 +180,8 @@ internal constructor(private val clientOptions: ClientOptions) : CounterPricingS
                 }
         }
 
-        private val listHandler: Handler<CounterPricingListPageAsync.Response> =
-            jsonHandler<CounterPricingListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CounterPricingListPageResponse> =
+            jsonHandler<CounterPricingListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(

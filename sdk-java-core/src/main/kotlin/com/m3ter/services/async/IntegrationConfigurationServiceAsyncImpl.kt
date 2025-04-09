@@ -23,6 +23,7 @@ import com.m3ter.models.IntegrationConfigurationEnableParams
 import com.m3ter.models.IntegrationConfigurationEnableResponse
 import com.m3ter.models.IntegrationConfigurationGetByEntityParams
 import com.m3ter.models.IntegrationConfigurationListPageAsync
+import com.m3ter.models.IntegrationConfigurationListPageResponse
 import com.m3ter.models.IntegrationConfigurationListParams
 import com.m3ter.models.IntegrationConfigurationResponse
 import com.m3ter.models.IntegrationConfigurationRetrieveParams
@@ -201,8 +202,8 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val listHandler: Handler<IntegrationConfigurationListPageAsync.Response> =
-            jsonHandler<IntegrationConfigurationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<IntegrationConfigurationListPageResponse> =
+            jsonHandler<IntegrationConfigurationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
