@@ -81,7 +81,6 @@ import com.m3ter.client.okhttp.M3terOkHttpClient;
 M3terClient client = M3terOkHttpClient.builder()
     .apiKey("My API Key")
     .apiSecret("My API Secret")
-    .token("My Token")
     .orgId("My Org ID")
     .build();
 ```
@@ -105,7 +104,6 @@ See this table for the available options:
 | ----------- | -------------------- | -------- | ------------- |
 | `apiKey`    | `M3TER_API_KEY`      | true     | -             |
 | `apiSecret` | `M3TER_API_SECRET`   | true     | -             |
-| `token`     | `M3TER_API_TOKEN`    | false    | -             |
 | `orgId`     | `M3TER_ORG_ID`       | true     | -             |
 
 > [!TIP]
