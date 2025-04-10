@@ -5,7 +5,8 @@ package com.m3ter.services.blocking
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
-import com.m3ter.models.DataFieldResponse
+import com.m3ter.models.DataField
+import com.m3ter.models.DerivedField
 import com.m3ter.models.MeterCreateParams
 import com.m3ter.models.MeterDeleteParams
 import com.m3ter.models.MeterRetrieveParams
@@ -34,16 +35,16 @@ internal class MeterServiceTest {
                     .orgId("orgId")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataFieldResponse.builder()
-                            .category(DataFieldResponse.Category.WHO)
+                        DataField.builder()
+                            .category(DataField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
                             .build()
                     )
                     .addDerivedField(
-                        MeterCreateParams.DerivedField.builder()
-                            .category(DataFieldResponse.Category.WHO)
+                        DerivedField.builder()
+                            .category(DataField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
@@ -102,16 +103,16 @@ internal class MeterServiceTest {
                     .id("id")
                     .code("JS!?Q0]r] ]\$]")
                     .addDataField(
-                        DataFieldResponse.builder()
-                            .category(DataFieldResponse.Category.WHO)
+                        DataField.builder()
+                            .category(DataField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
                             .build()
                     )
                     .addDerivedField(
-                        MeterUpdateParams.DerivedField.builder()
-                            .category(DataFieldResponse.Category.WHO)
+                        DerivedField.builder()
+                            .category(DataField.Category.WHO)
                             .code("{1{}}_")
                             .name("x")
                             .unit("x")
