@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.BillJobCancelParams
 import com.m3ter.models.BillJobCreateParams
 import com.m3ter.models.BillJobListPage
+import com.m3ter.models.BillJobListPageResponse
 import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
@@ -131,8 +132,8 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<BillJobListPage.Response> =
-            jsonHandler<BillJobListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillJobListPageResponse> =
+            jsonHandler<BillJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -159,7 +160,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { BillJobListPage.of(BillJobServiceImpl(clientOptions), params, it) }
+                    .let {
+                        BillJobListPage.builder()
+                            .service(BillJobServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

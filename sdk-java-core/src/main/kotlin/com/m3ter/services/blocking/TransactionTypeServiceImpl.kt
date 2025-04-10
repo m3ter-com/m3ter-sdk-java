@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.TransactionTypeCreateParams
 import com.m3ter.models.TransactionTypeDeleteParams
 import com.m3ter.models.TransactionTypeListPage
+import com.m3ter.models.TransactionTypeListPageResponse
 import com.m3ter.models.TransactionTypeListParams
 import com.m3ter.models.TransactionTypeResponse
 import com.m3ter.models.TransactionTypeRetrieveParams
@@ -172,8 +173,8 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             }
         }
 
-        private val listHandler: Handler<TransactionTypeListPage.Response> =
-            jsonHandler<TransactionTypeListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<TransactionTypeListPageResponse> =
+            jsonHandler<TransactionTypeListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -202,11 +203,11 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        TransactionTypeListPage.of(
-                            TransactionTypeServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        TransactionTypeListPage.builder()
+                            .service(TransactionTypeServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

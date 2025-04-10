@@ -17,6 +17,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.DataExportJobGetDownloadUrlParams
 import com.m3ter.models.DataExportJobGetDownloadUrlResponse
 import com.m3ter.models.DataExportJobListPageAsync
+import com.m3ter.models.DataExportJobListPageResponse
 import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
@@ -93,8 +94,8 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                 }
         }
 
-        private val listHandler: Handler<DataExportJobListPageAsync.Response> =
-            jsonHandler<DataExportJobListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DataExportJobListPageResponse> =
+            jsonHandler<DataExportJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -125,11 +126,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                                 }
                             }
                             .let {
-                                DataExportJobListPageAsync.of(
-                                    JobServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DataExportJobListPageAsync.builder()
+                                    .service(JobServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -19,6 +19,7 @@ import com.m3ter.models.EventGetFieldsResponse
 import com.m3ter.models.EventGetTypesParams
 import com.m3ter.models.EventGetTypesResponse
 import com.m3ter.models.EventListPageAsync
+import com.m3ter.models.EventListPageResponse
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
@@ -100,8 +101,8 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 }
         }
 
-        private val listHandler: Handler<EventListPageAsync.Response> =
-            jsonHandler<EventListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<EventListPageResponse> =
+            jsonHandler<EventListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -131,11 +132,11 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                                 }
                             }
                             .let {
-                                EventListPageAsync.of(
-                                    EventServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                EventListPageAsync.builder()
+                                    .service(EventServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

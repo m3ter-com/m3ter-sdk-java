@@ -142,9 +142,15 @@ class UsageServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: UsageSubmitParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubmitMeasurementsResponse> {
+            var ingestUrl = clientOptions.baseUrl
+            if (!ingestUrl.startsWith("http://localhost")) {
+                ingestUrl = ingestUrl.replace("api.", "ingest.")
+            }
+
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .url(ingestUrl)
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },

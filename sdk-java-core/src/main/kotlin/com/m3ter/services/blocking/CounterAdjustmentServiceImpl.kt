@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.CounterAdjustmentCreateParams
 import com.m3ter.models.CounterAdjustmentDeleteParams
 import com.m3ter.models.CounterAdjustmentListPage
+import com.m3ter.models.CounterAdjustmentListPageResponse
 import com.m3ter.models.CounterAdjustmentListParams
 import com.m3ter.models.CounterAdjustmentResponse
 import com.m3ter.models.CounterAdjustmentRetrieveParams
@@ -169,8 +170,8 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
             }
         }
 
-        private val listHandler: Handler<CounterAdjustmentListPage.Response> =
-            jsonHandler<CounterAdjustmentListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CounterAdjustmentListPageResponse> =
+            jsonHandler<CounterAdjustmentListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -198,11 +199,11 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                         }
                     }
                     .let {
-                        CounterAdjustmentListPage.of(
-                            CounterAdjustmentServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CounterAdjustmentListPage.builder()
+                            .service(CounterAdjustmentServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

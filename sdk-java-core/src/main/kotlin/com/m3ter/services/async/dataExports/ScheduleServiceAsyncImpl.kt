@@ -20,6 +20,7 @@ import com.m3ter.models.DataExportScheduleCreateResponse
 import com.m3ter.models.DataExportScheduleDeleteParams
 import com.m3ter.models.DataExportScheduleDeleteResponse
 import com.m3ter.models.DataExportScheduleListPageAsync
+import com.m3ter.models.DataExportScheduleListPageResponse
 import com.m3ter.models.DataExportScheduleListParams
 import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleRetrieveResponse
@@ -185,8 +186,8 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val listHandler: Handler<DataExportScheduleListPageAsync.Response> =
-            jsonHandler<DataExportScheduleListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<DataExportScheduleListPageResponse> =
+            jsonHandler<DataExportScheduleListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -217,11 +218,11 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                DataExportScheduleListPageAsync.of(
-                                    ScheduleServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                DataExportScheduleListPageAsync.builder()
+                                    .service(ScheduleServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -18,6 +18,7 @@ import com.m3ter.models.FileUploadJobResponse
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.models.UsageFileUploadJobListPageAsync
+import com.m3ter.models.UsageFileUploadJobListPageResponse
 import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
 import java.util.concurrent.CompletableFuture
@@ -94,8 +95,8 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                 }
         }
 
-        private val listHandler: Handler<UsageFileUploadJobListPageAsync.Response> =
-            jsonHandler<UsageFileUploadJobListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<UsageFileUploadJobListPageResponse> =
+            jsonHandler<UsageFileUploadJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -127,11 +128,11 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                                 }
                             }
                             .let {
-                                UsageFileUploadJobListPageAsync.of(
-                                    JobServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                UsageFileUploadJobListPageAsync.builder()
+                                    .service(JobServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

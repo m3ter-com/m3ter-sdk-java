@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.CounterCreateParams
 import com.m3ter.models.CounterDeleteParams
 import com.m3ter.models.CounterListPageAsync
+import com.m3ter.models.CounterListPageResponse
 import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterResponse
 import com.m3ter.models.CounterRetrieveParams
@@ -176,8 +177,8 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val listHandler: Handler<CounterListPageAsync.Response> =
-            jsonHandler<CounterListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CounterListPageResponse> =
+            jsonHandler<CounterListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -207,11 +208,11 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                CounterListPageAsync.of(
-                                    CounterServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CounterListPageAsync.builder()
+                                    .service(CounterServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

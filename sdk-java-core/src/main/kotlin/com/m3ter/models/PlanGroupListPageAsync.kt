@@ -2,17 +2,8 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
-import com.m3ter.core.JsonValue
-import com.m3ter.errors.M3terInvalidDataException
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.PlanGroupServiceAsync
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
@@ -20,45 +11,30 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of PlanGroups.
- *
- * Retrieves a list of PlanGroups within the specified organization. You can optionally filter by
- * Account IDs or PlanGroup IDs, and also paginate the results for easier management.
- */
+/** @see [PlanGroupServiceAsync.list] */
 class PlanGroupListPageAsync
 private constructor(
-    private val planGroupsService: PlanGroupServiceAsync,
+    private val service: PlanGroupServiceAsync,
     private val params: PlanGroupListParams,
-    private val response: Response,
+    private val response: PlanGroupListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /**
+     * Delegates to [PlanGroupListPageResponse], but gracefully handles missing data.
+     *
+     * @see [PlanGroupListPageResponse.data]
+     */
+    fun data(): List<PlanGroupResponse> =
+        response._data().getOptional("data").getOrNull() ?: emptyList()
 
-    fun data(): List<PlanGroupResponse> = response().data()
+    /**
+     * Delegates to [PlanGroupListPageResponse], but gracefully handles missing data.
+     *
+     * @see [PlanGroupListPageResponse.nextToken]
+     */
+    fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun nextToken(): Optional<String> = response().nextToken()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PlanGroupListPageAsync && planGroupsService == other.planGroupsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(planGroupsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PlanGroupListPageAsync{planGroupsService=$planGroupsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return nextToken().isPresent
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<PlanGroupListParams> {
         if (!hasNextPage()) {
@@ -66,138 +42,82 @@ private constructor(
         }
 
         return Optional.of(
-            PlanGroupListParams.builder()
-                .from(params)
-                .apply { nextToken().ifPresent { this.nextToken(it) } }
-                .build()
+            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<PlanGroupListPageAsync>> {
-        return getNextPageParams()
-            .map { planGroupsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<PlanGroupListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PlanGroupListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PlanGroupListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            planGroupsService: PlanGroupServiceAsync,
-            params: PlanGroupListParams,
-            response: Response,
-        ) = PlanGroupListPageAsync(planGroupsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PlanGroupListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
     }
 
-    class Response(
-        private val data: JsonField<List<PlanGroupResponse>>,
-        private val nextToken: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
+    /** A builder for [PlanGroupListPageAsync]. */
+    class Builder internal constructor() {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<PlanGroupResponse>> = JsonMissing.of(),
-            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
-        ) : this(data, nextToken, mutableMapOf())
+        private var service: PlanGroupServiceAsync? = null
+        private var params: PlanGroupListParams? = null
+        private var response: PlanGroupListPageResponse? = null
 
-        fun data(): List<PlanGroupResponse> = data.getOptional("data").getOrNull() ?: listOf()
-
-        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
-
-        @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<PlanGroupResponse>>> = Optional.ofNullable(data)
-
-        @JsonProperty("nextToken")
-        fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
+        @JvmSynthetic
+        internal fun from(planGroupListPageAsync: PlanGroupListPageAsync) = apply {
+            service = planGroupListPageAsync.service
+            params = planGroupListPageAsync.params
+            response = planGroupListPageAsync.response
         }
 
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun service(service: PlanGroupServiceAsync) = apply { this.service = service }
 
-        private var validated: Boolean = false
+        /** The parameters that were used to request this page. */
+        fun params(params: PlanGroupListParams) = apply { this.params = params }
 
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
+        /** The response that this page was parsed from. */
+        fun response(response: PlanGroupListPageResponse) = apply { this.response = response }
 
-            data().map { it.validate() }
-            nextToken()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, nextToken, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [PlanGroupListPageAsync].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<PlanGroupResponse>> = JsonMissing.of()
-            private var nextToken: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.nextToken = page.nextToken
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<PlanGroupResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<PlanGroupResponse>>) = apply { this.data = data }
-
-            fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
-
-            fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
-        }
+        /**
+         * Returns an immutable instance of [PlanGroupListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PlanGroupListPageAsync =
+            PlanGroupListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PlanGroupListPageAsync) {
@@ -228,4 +148,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PlanGroupListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PlanGroupListPageAsync{service=$service, params=$params, response=$response}"
 }

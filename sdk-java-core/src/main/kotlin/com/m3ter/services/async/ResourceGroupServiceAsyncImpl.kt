@@ -19,10 +19,13 @@ import com.m3ter.models.ResourceGroupAddResourceParams
 import com.m3ter.models.ResourceGroupCreateParams
 import com.m3ter.models.ResourceGroupDeleteParams
 import com.m3ter.models.ResourceGroupListContentsPageAsync
+import com.m3ter.models.ResourceGroupListContentsPageResponse
 import com.m3ter.models.ResourceGroupListContentsParams
 import com.m3ter.models.ResourceGroupListPageAsync
+import com.m3ter.models.ResourceGroupListPageResponse
 import com.m3ter.models.ResourceGroupListParams
 import com.m3ter.models.ResourceGroupListPermissionsPageAsync
+import com.m3ter.models.ResourceGroupListPermissionsPageResponse
 import com.m3ter.models.ResourceGroupListPermissionsParams
 import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupResponse
@@ -216,8 +219,8 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val listHandler: Handler<ResourceGroupListPageAsync.Response> =
-            jsonHandler<ResourceGroupListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ResourceGroupListPageResponse> =
+            jsonHandler<ResourceGroupListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -248,11 +251,11 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -333,8 +336,8 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                 }
         }
 
-        private val listContentsHandler: Handler<ResourceGroupListContentsPageAsync.Response> =
-            jsonHandler<ResourceGroupListContentsPageAsync.Response>(clientOptions.jsonMapper)
+        private val listContentsHandler: Handler<ResourceGroupListContentsPageResponse> =
+            jsonHandler<ResourceGroupListContentsPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listContents(
@@ -368,19 +371,18 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListContentsPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListContentsPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
         }
 
-        private val listPermissionsHandler:
-            Handler<ResourceGroupListPermissionsPageAsync.Response> =
-            jsonHandler<ResourceGroupListPermissionsPageAsync.Response>(clientOptions.jsonMapper)
+        private val listPermissionsHandler: Handler<ResourceGroupListPermissionsPageResponse> =
+            jsonHandler<ResourceGroupListPermissionsPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listPermissions(
@@ -413,11 +415,11 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                                 }
                             }
                             .let {
-                                ResourceGroupListPermissionsPageAsync.of(
-                                    ResourceGroupServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ResourceGroupListPermissionsPageAsync.builder()
+                                    .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

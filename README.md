@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.1.1-alpha)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.1.1-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.1-alpha)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.2.0-alpha)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.2.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.1.1-alpha).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.1.1-alpha")
+implementation("com.m3ter:sdk-java:0.2.0-alpha")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.1.1-alpha")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.1.1-alpha</version>
+  <version>0.2.0-alpha</version>
 </dependency>
 ```
 
@@ -51,7 +51,7 @@ import com.m3ter.client.okhttp.M3terOkHttpClient;
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductListParams;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
@@ -68,7 +68,7 @@ Configure the client using environment variables:
 import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 ```
 
@@ -92,7 +92,7 @@ import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build();
@@ -100,11 +100,12 @@ M3terClient client = M3terOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter      | Environment variable | Required | Default value |
-| ----------- | -------------------- | -------- | ------------- |
-| `apiKey`    | `M3TER_API_KEY`      | true     | -             |
-| `apiSecret` | `M3TER_API_SECRET`   | true     | -             |
-| `orgId`     | `M3TER_ORG_ID`       | true     | -             |
+| Setter      | Environment variable | Required | Default value             |
+| ----------- | -------------------- | -------- | ------------------------- |
+| `apiKey`    | `M3TER_API_KEY`      | true     | -                         |
+| `apiSecret` | `M3TER_API_SECRET`   | true     | -                         |
+| `orgId`     | `M3TER_ORG_ID`       | true     | -                         |
+| `baseUrl`   | `M3TER_BASE_URL`     | true     | `"https://api.m3ter.com"` |
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
@@ -135,7 +136,7 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
@@ -153,7 +154,7 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN` and `M3TER_ORG_ID` environment variables
+// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
 ProductListParams params = ProductListParams.builder()

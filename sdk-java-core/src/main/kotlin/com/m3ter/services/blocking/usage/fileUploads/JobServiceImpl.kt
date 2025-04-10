@@ -18,6 +18,7 @@ import com.m3ter.models.FileUploadJobResponse
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlParams
 import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.models.UsageFileUploadJobListPage
+import com.m3ter.models.UsageFileUploadJobListPageResponse
 import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
 
@@ -89,8 +90,8 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             }
         }
 
-        private val listHandler: Handler<UsageFileUploadJobListPage.Response> =
-            jsonHandler<UsageFileUploadJobListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<UsageFileUploadJobListPageResponse> =
+            jsonHandler<UsageFileUploadJobListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -120,7 +121,11 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                         }
                     }
                     .let {
-                        UsageFileUploadJobListPage.of(JobServiceImpl(clientOptions), params, it)
+                        UsageFileUploadJobListPage.builder()
+                            .service(JobServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

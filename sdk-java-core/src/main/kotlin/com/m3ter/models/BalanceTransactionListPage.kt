@@ -2,62 +2,38 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
-import com.m3ter.core.JsonValue
-import com.m3ter.errors.M3terInvalidDataException
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.balances.TransactionService
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve all Transactions for a specific Balance.
- *
- * This endpoint returns a list of all Transactions associated with a specific Balance. You can
- * paginate through the Transactions by using the `pageSize` and `nextToken` parameters.
- */
+/** @see [TransactionService.list] */
 class BalanceTransactionListPage
 private constructor(
-    private val transactionsService: TransactionService,
+    private val service: TransactionService,
     private val params: BalanceTransactionListParams,
-    private val response: Response,
+    private val response: BalanceTransactionListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /**
+     * Delegates to [BalanceTransactionListPageResponse], but gracefully handles missing data.
+     *
+     * @see [BalanceTransactionListPageResponse.data]
+     */
+    fun data(): List<TransactionResponse> =
+        response._data().getOptional("data").getOrNull() ?: emptyList()
 
-    fun data(): List<TransactionResponse> = response().data()
+    /**
+     * Delegates to [BalanceTransactionListPageResponse], but gracefully handles missing data.
+     *
+     * @see [BalanceTransactionListPageResponse.nextToken]
+     */
+    fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun nextToken(): Optional<String> = response().nextToken()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BalanceTransactionListPage && transactionsService == other.transactionsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(transactionsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "BalanceTransactionListPage{transactionsService=$transactionsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return nextToken().isPresent
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<BalanceTransactionListParams> {
         if (!hasNextPage()) {
@@ -65,137 +41,82 @@ private constructor(
         }
 
         return Optional.of(
-            BalanceTransactionListParams.builder()
-                .from(params)
-                .apply { nextToken().ifPresent { this.nextToken(it) } }
-                .build()
+            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
         )
     }
 
-    fun getNextPage(): Optional<BalanceTransactionListPage> {
-        return getNextPageParams().map { transactionsService.list(it) }
-    }
+    fun getNextPage(): Optional<BalanceTransactionListPage> =
+        getNextPageParams().map { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): BalanceTransactionListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): BalanceTransactionListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            transactionsService: TransactionService,
-            params: BalanceTransactionListParams,
-            response: Response,
-        ) = BalanceTransactionListPage(transactionsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [BalanceTransactionListPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
     }
 
-    class Response(
-        private val data: JsonField<List<TransactionResponse>>,
-        private val nextToken: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
+    /** A builder for [BalanceTransactionListPage]. */
+    class Builder internal constructor() {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<TransactionResponse>> = JsonMissing.of(),
-            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
-        ) : this(data, nextToken, mutableMapOf())
+        private var service: TransactionService? = null
+        private var params: BalanceTransactionListParams? = null
+        private var response: BalanceTransactionListPageResponse? = null
 
-        fun data(): List<TransactionResponse> = data.getOptional("data").getOrNull() ?: listOf()
-
-        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
-
-        @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<TransactionResponse>>> = Optional.ofNullable(data)
-
-        @JsonProperty("nextToken")
-        fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
+        @JvmSynthetic
+        internal fun from(balanceTransactionListPage: BalanceTransactionListPage) = apply {
+            service = balanceTransactionListPage.service
+            params = balanceTransactionListPage.params
+            response = balanceTransactionListPage.response
         }
 
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun service(service: TransactionService) = apply { this.service = service }
 
-        private var validated: Boolean = false
+        /** The parameters that were used to request this page. */
+        fun params(params: BalanceTransactionListParams) = apply { this.params = params }
 
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            nextToken()
-            validated = true
+        /** The response that this page was parsed from. */
+        fun response(response: BalanceTransactionListPageResponse) = apply {
+            this.response = response
         }
 
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, nextToken, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [BalanceTransactionListPage].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<TransactionResponse>> = JsonMissing.of()
-            private var nextToken: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.nextToken = page.nextToken
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<TransactionResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<TransactionResponse>>) = apply { this.data = data }
-
-            fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
-
-            fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
-        }
+        /**
+         * Returns an immutable instance of [BalanceTransactionListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): BalanceTransactionListPage =
+            BalanceTransactionListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: BalanceTransactionListPage) :
@@ -217,4 +138,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BalanceTransactionListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "BalanceTransactionListPage{service=$service, params=$params, response=$response}"
 }

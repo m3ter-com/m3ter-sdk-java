@@ -19,6 +19,7 @@ import com.m3ter.models.AggregationResponse
 import com.m3ter.models.CompoundAggregationCreateParams
 import com.m3ter.models.CompoundAggregationDeleteParams
 import com.m3ter.models.CompoundAggregationListPage
+import com.m3ter.models.CompoundAggregationListPageResponse
 import com.m3ter.models.CompoundAggregationListParams
 import com.m3ter.models.CompoundAggregationResponse
 import com.m3ter.models.CompoundAggregationRetrieveParams
@@ -170,8 +171,8 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             }
         }
 
-        private val listHandler: Handler<CompoundAggregationListPage.Response> =
-            jsonHandler<CompoundAggregationListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CompoundAggregationListPageResponse> =
+            jsonHandler<CompoundAggregationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -199,11 +200,11 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                         }
                     }
                     .let {
-                        CompoundAggregationListPage.of(
-                            CompoundAggregationServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CompoundAggregationListPage.builder()
+                            .service(CompoundAggregationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

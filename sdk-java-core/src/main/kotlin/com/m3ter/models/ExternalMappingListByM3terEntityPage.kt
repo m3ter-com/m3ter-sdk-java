@@ -2,62 +2,40 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
-import com.m3ter.core.JsonValue
-import com.m3ter.errors.M3terInvalidDataException
+import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.ExternalMappingService
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of External Mapping entities for a specified m3ter entity.
- *
- * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
- * m3ter entity. The list can be paginated for easier management.
- */
+/** @see [ExternalMappingService.listByM3terEntity] */
 class ExternalMappingListByM3terEntityPage
 private constructor(
-    private val externalMappingsService: ExternalMappingService,
+    private val service: ExternalMappingService,
     private val params: ExternalMappingListByM3terEntityParams,
-    private val response: Response,
+    private val response: ExternalMappingListByM3terEntityPageResponse,
 ) {
 
-    fun response(): Response = response
+    /**
+     * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
+     * data.
+     *
+     * @see [ExternalMappingListByM3terEntityPageResponse.data]
+     */
+    fun data(): List<ExternalMappingResponse> =
+        response._data().getOptional("data").getOrNull() ?: emptyList()
 
-    fun data(): List<ExternalMappingResponse> = response().data()
+    /**
+     * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
+     * data.
+     *
+     * @see [ExternalMappingListByM3terEntityPageResponse.nextToken]
+     */
+    fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun nextToken(): Optional<String> = response().nextToken()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ExternalMappingListByM3terEntityPage && externalMappingsService == other.externalMappingsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalMappingsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ExternalMappingListByM3terEntityPage{externalMappingsService=$externalMappingsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return nextToken().isPresent
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<ExternalMappingListByM3terEntityParams> {
         if (!hasNextPage()) {
@@ -65,137 +43,85 @@ private constructor(
         }
 
         return Optional.of(
-            ExternalMappingListByM3terEntityParams.builder()
-                .from(params)
-                .apply { nextToken().ifPresent { this.nextToken(it) } }
-                .build()
+            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
         )
     }
 
-    fun getNextPage(): Optional<ExternalMappingListByM3terEntityPage> {
-        return getNextPageParams().map { externalMappingsService.listByM3terEntity(it) }
-    }
+    fun getNextPage(): Optional<ExternalMappingListByM3terEntityPage> =
+        getNextPageParams().map { service.listByM3terEntity(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ExternalMappingListByM3terEntityParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ExternalMappingListByM3terEntityPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            externalMappingsService: ExternalMappingService,
-            params: ExternalMappingListByM3terEntityParams,
-            response: Response,
-        ) = ExternalMappingListByM3terEntityPage(externalMappingsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalMappingListByM3terEntityPage].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
     }
 
-    class Response(
-        private val data: JsonField<List<ExternalMappingResponse>>,
-        private val nextToken: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
+    /** A builder for [ExternalMappingListByM3terEntityPage]. */
+    class Builder internal constructor() {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<ExternalMappingResponse>> = JsonMissing.of(),
-            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
-        ) : this(data, nextToken, mutableMapOf())
+        private var service: ExternalMappingService? = null
+        private var params: ExternalMappingListByM3terEntityParams? = null
+        private var response: ExternalMappingListByM3terEntityPageResponse? = null
 
-        fun data(): List<ExternalMappingResponse> = data.getOptional("data").getOrNull() ?: listOf()
-
-        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
-
-        @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<ExternalMappingResponse>>> = Optional.ofNullable(data)
-
-        @JsonProperty("nextToken")
-        fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
+        @JvmSynthetic
+        internal fun from(
+            externalMappingListByM3terEntityPage: ExternalMappingListByM3terEntityPage
+        ) = apply {
+            service = externalMappingListByM3terEntityPage.service
+            params = externalMappingListByM3terEntityPage.params
+            response = externalMappingListByM3terEntityPage.response
         }
 
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
+        fun service(service: ExternalMappingService) = apply { this.service = service }
 
-        private var validated: Boolean = false
+        /** The parameters that were used to request this page. */
+        fun params(params: ExternalMappingListByM3terEntityParams) = apply { this.params = params }
 
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            nextToken()
-            validated = true
+        /** The response that this page was parsed from. */
+        fun response(response: ExternalMappingListByM3terEntityPageResponse) = apply {
+            this.response = response
         }
 
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, nextToken, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [ExternalMappingListByM3terEntityPage].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<ExternalMappingResponse>> = JsonMissing.of()
-            private var nextToken: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.nextToken = page.nextToken
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<ExternalMappingResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<ExternalMappingResponse>>) = apply { this.data = data }
-
-            fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
-
-            fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
-        }
+        /**
+         * Returns an immutable instance of [ExternalMappingListByM3terEntityPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ExternalMappingListByM3terEntityPage =
+            ExternalMappingListByM3terEntityPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ExternalMappingListByM3terEntityPage) :
@@ -217,4 +143,17 @@ private constructor(
             return StreamSupport.stream(spliterator(), false)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ExternalMappingListByM3terEntityPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ExternalMappingListByM3terEntityPage{service=$service, params=$params, response=$response}"
 }

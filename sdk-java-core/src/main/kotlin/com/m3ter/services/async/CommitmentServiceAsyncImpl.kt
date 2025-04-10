@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.CommitmentCreateParams
 import com.m3ter.models.CommitmentDeleteParams
 import com.m3ter.models.CommitmentListPageAsync
+import com.m3ter.models.CommitmentListPageResponse
 import com.m3ter.models.CommitmentListParams
 import com.m3ter.models.CommitmentResponse
 import com.m3ter.models.CommitmentRetrieveParams
@@ -185,8 +186,8 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                 }
         }
 
-        private val listHandler: Handler<CommitmentListPageAsync.Response> =
-            jsonHandler<CommitmentListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CommitmentListPageResponse> =
+            jsonHandler<CommitmentListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -216,11 +217,11 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                                 }
                             }
                             .let {
-                                CommitmentListPageAsync.of(
-                                    CommitmentServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                CommitmentListPageAsync.builder()
+                                    .service(CommitmentServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

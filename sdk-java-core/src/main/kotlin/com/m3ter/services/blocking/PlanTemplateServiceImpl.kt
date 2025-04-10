@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.PlanTemplateCreateParams
 import com.m3ter.models.PlanTemplateDeleteParams
 import com.m3ter.models.PlanTemplateListPage
+import com.m3ter.models.PlanTemplateListPageResponse
 import com.m3ter.models.PlanTemplateListParams
 import com.m3ter.models.PlanTemplateResponse
 import com.m3ter.models.PlanTemplateRetrieveParams
@@ -169,8 +170,8 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val listHandler: Handler<PlanTemplateListPage.Response> =
-            jsonHandler<PlanTemplateListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PlanTemplateListPageResponse> =
+            jsonHandler<PlanTemplateListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -198,7 +199,11 @@ class PlanTemplateServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        PlanTemplateListPage.of(PlanTemplateServiceImpl(clientOptions), params, it)
+                        PlanTemplateListPage.builder()
+                            .service(PlanTemplateServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

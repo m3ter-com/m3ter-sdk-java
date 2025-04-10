@@ -2,17 +2,8 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
-import com.m3ter.core.JsonValue
-import com.m3ter.errors.M3terInvalidDataException
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.usage.fileUploads.JobServiceAsync
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
@@ -20,46 +11,30 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
- * - You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define a
- *   date range to filter the File Uploads jobs returned for this call.
- * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File Upload
- *   jobs are returned.
- */
+/** @see [JobServiceAsync.list] */
 class UsageFileUploadJobListPageAsync
 private constructor(
-    private val jobsService: JobServiceAsync,
+    private val service: JobServiceAsync,
     private val params: UsageFileUploadJobListParams,
-    private val response: Response,
+    private val response: UsageFileUploadJobListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /**
+     * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
+     *
+     * @see [UsageFileUploadJobListPageResponse.data]
+     */
+    fun data(): List<FileUploadJobResponse> =
+        response._data().getOptional("data").getOrNull() ?: emptyList()
 
-    fun data(): List<FileUploadJobResponse> = response().data()
+    /**
+     * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
+     *
+     * @see [UsageFileUploadJobListPageResponse.nextToken]
+     */
+    fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun nextToken(): Optional<String> = response().nextToken()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is UsageFileUploadJobListPageAsync && jobsService == other.jobsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(jobsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "UsageFileUploadJobListPageAsync{jobsService=$jobsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return nextToken().isPresent
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<UsageFileUploadJobListParams> {
         if (!hasNextPage()) {
@@ -67,139 +42,86 @@ private constructor(
         }
 
         return Optional.of(
-            UsageFileUploadJobListParams.builder()
-                .from(params)
-                .apply { nextToken().ifPresent { this.nextToken(it) } }
-                .build()
+            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<UsageFileUploadJobListPageAsync>> {
-        return getNextPageParams()
-            .map { jobsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<UsageFileUploadJobListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): UsageFileUploadJobListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): UsageFileUploadJobListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            jobsService: JobServiceAsync,
-            params: UsageFileUploadJobListParams,
-            response: Response,
-        ) = UsageFileUploadJobListPageAsync(jobsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [UsageFileUploadJobListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
     }
 
-    class Response(
-        private val data: JsonField<List<FileUploadJobResponse>>,
-        private val nextToken: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
+    /** A builder for [UsageFileUploadJobListPageAsync]. */
+    class Builder internal constructor() {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<FileUploadJobResponse>> = JsonMissing.of(),
-            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
-        ) : this(data, nextToken, mutableMapOf())
+        private var service: JobServiceAsync? = null
+        private var params: UsageFileUploadJobListParams? = null
+        private var response: UsageFileUploadJobListPageResponse? = null
 
-        fun data(): List<FileUploadJobResponse> = data.getOptional("data").getOrNull() ?: listOf()
-
-        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
-
-        @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<FileUploadJobResponse>>> = Optional.ofNullable(data)
-
-        @JsonProperty("nextToken")
-        fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        private var validated: Boolean = false
-
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
+        @JvmSynthetic
+        internal fun from(usageFileUploadJobListPageAsync: UsageFileUploadJobListPageAsync) =
+            apply {
+                service = usageFileUploadJobListPageAsync.service
+                params = usageFileUploadJobListPageAsync.params
+                response = usageFileUploadJobListPageAsync.response
             }
 
-            data().map { it.validate() }
-            nextToken()
-            validated = true
+        fun service(service: JobServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: UsageFileUploadJobListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: UsageFileUploadJobListPageResponse) = apply {
+            this.response = response
         }
 
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, nextToken, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [UsageFileUploadJobListPageAsync].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<FileUploadJobResponse>> = JsonMissing.of()
-            private var nextToken: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.nextToken = page.nextToken
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<FileUploadJobResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<FileUploadJobResponse>>) = apply { this.data = data }
-
-            fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
-
-            fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
-        }
+        /**
+         * Returns an immutable instance of [UsageFileUploadJobListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): UsageFileUploadJobListPageAsync =
+            UsageFileUploadJobListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: UsageFileUploadJobListPageAsync) {
@@ -230,4 +152,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is UsageFileUploadJobListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "UsageFileUploadJobListPageAsync{service=$service, params=$params, response=$response}"
 }

@@ -13,59 +13,63 @@ internal class UsageSubmitParamsTest {
     fun create() {
         UsageSubmitParams.builder()
             .orgId("orgId")
-            .addMeasurement(
-                UsageSubmitParams.Measurement.builder()
-                    .account("Acme Corp")
-                    .meter("string")
-                    .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
-                    .cost(
-                        UsageSubmitParams.Measurement.Cost.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
-                    .income(
-                        UsageSubmitParams.Measurement.Income.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .measure(
-                        UsageSubmitParams.Measurement.Measure.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .metadata(
-                        UsageSubmitParams.Measurement.Metadata.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .other(
-                        UsageSubmitParams.Measurement.Other.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .uid("string")
-                    .what(
-                        UsageSubmitParams.Measurement.What.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .where(
-                        UsageSubmitParams.Measurement.Where.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .who(
-                        UsageSubmitParams.Measurement.Who.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
+            .submitMeasurementsRequest(
+                SubmitMeasurementsRequest.builder()
+                    .addMeasurement(
+                        MeasurementRequest.builder()
+                            .account("Acme Corp")
+                            .meter("string")
+                            .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                            .cost(
+                                MeasurementRequest.Cost.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
+                            .income(
+                                MeasurementRequest.Income.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .measure(
+                                MeasurementRequest.Measure.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .metadata(
+                                MeasurementRequest.Metadata.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .other(
+                                MeasurementRequest.Other.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .uid("string")
+                            .what(
+                                MeasurementRequest.What.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .where(
+                                MeasurementRequest.Where.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .who(
+                                MeasurementRequest.Who.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
                             .build()
                     )
                     .build()
@@ -77,11 +81,15 @@ internal class UsageSubmitParamsTest {
     fun pathParams() {
         val params =
             UsageSubmitParams.builder()
-                .addMeasurement(
-                    UsageSubmitParams.Measurement.builder()
-                        .account("Acme Corp")
-                        .meter("string")
-                        .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                .submitMeasurementsRequest(
+                    SubmitMeasurementsRequest.builder()
+                        .addMeasurement(
+                            MeasurementRequest.builder()
+                                .account("Acme Corp")
+                                .meter("string")
+                                .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                                .build()
+                        )
                         .build()
                 )
                 .build()
@@ -96,59 +104,93 @@ internal class UsageSubmitParamsTest {
         val params =
             UsageSubmitParams.builder()
                 .orgId("orgId")
-                .addMeasurement(
-                    UsageSubmitParams.Measurement.builder()
-                        .account("Acme Corp")
-                        .meter("string")
-                        .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
-                        .cost(
-                            UsageSubmitParams.Measurement.Cost.builder()
-                                .putAdditionalProperty("property1", JsonValue.from(0))
-                                .putAdditionalProperty("property2", JsonValue.from(0))
-                                .build()
-                        )
-                        .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
-                        .income(
-                            UsageSubmitParams.Measurement.Income.builder()
-                                .putAdditionalProperty("property1", JsonValue.from(0))
-                                .putAdditionalProperty("property2", JsonValue.from(0))
-                                .build()
-                        )
-                        .measure(
-                            UsageSubmitParams.Measurement.Measure.builder()
-                                .putAdditionalProperty("property1", JsonValue.from(0))
-                                .putAdditionalProperty("property2", JsonValue.from(0))
-                                .build()
-                        )
-                        .metadata(
-                            UsageSubmitParams.Measurement.Metadata.builder()
-                                .putAdditionalProperty("property1", JsonValue.from("string"))
-                                .putAdditionalProperty("property2", JsonValue.from("string"))
-                                .build()
-                        )
-                        .other(
-                            UsageSubmitParams.Measurement.Other.builder()
-                                .putAdditionalProperty("property1", JsonValue.from("string"))
-                                .putAdditionalProperty("property2", JsonValue.from("string"))
-                                .build()
-                        )
-                        .uid("string")
-                        .what(
-                            UsageSubmitParams.Measurement.What.builder()
-                                .putAdditionalProperty("property1", JsonValue.from("string"))
-                                .putAdditionalProperty("property2", JsonValue.from("string"))
-                                .build()
-                        )
-                        .where(
-                            UsageSubmitParams.Measurement.Where.builder()
-                                .putAdditionalProperty("property1", JsonValue.from("string"))
-                                .putAdditionalProperty("property2", JsonValue.from("string"))
-                                .build()
-                        )
-                        .who(
-                            UsageSubmitParams.Measurement.Who.builder()
-                                .putAdditionalProperty("property1", JsonValue.from("string"))
-                                .putAdditionalProperty("property2", JsonValue.from("string"))
+                .submitMeasurementsRequest(
+                    SubmitMeasurementsRequest.builder()
+                        .addMeasurement(
+                            MeasurementRequest.builder()
+                                .account("Acme Corp")
+                                .meter("string")
+                                .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                                .cost(
+                                    MeasurementRequest.Cost.builder()
+                                        .putAdditionalProperty("property1", JsonValue.from(0))
+                                        .putAdditionalProperty("property2", JsonValue.from(0))
+                                        .build()
+                                )
+                                .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
+                                .income(
+                                    MeasurementRequest.Income.builder()
+                                        .putAdditionalProperty("property1", JsonValue.from(0))
+                                        .putAdditionalProperty("property2", JsonValue.from(0))
+                                        .build()
+                                )
+                                .measure(
+                                    MeasurementRequest.Measure.builder()
+                                        .putAdditionalProperty("property1", JsonValue.from(0))
+                                        .putAdditionalProperty("property2", JsonValue.from(0))
+                                        .build()
+                                )
+                                .metadata(
+                                    MeasurementRequest.Metadata.builder()
+                                        .putAdditionalProperty(
+                                            "property1",
+                                            JsonValue.from("string"),
+                                        )
+                                        .putAdditionalProperty(
+                                            "property2",
+                                            JsonValue.from("string"),
+                                        )
+                                        .build()
+                                )
+                                .other(
+                                    MeasurementRequest.Other.builder()
+                                        .putAdditionalProperty(
+                                            "property1",
+                                            JsonValue.from("string"),
+                                        )
+                                        .putAdditionalProperty(
+                                            "property2",
+                                            JsonValue.from("string"),
+                                        )
+                                        .build()
+                                )
+                                .uid("string")
+                                .what(
+                                    MeasurementRequest.What.builder()
+                                        .putAdditionalProperty(
+                                            "property1",
+                                            JsonValue.from("string"),
+                                        )
+                                        .putAdditionalProperty(
+                                            "property2",
+                                            JsonValue.from("string"),
+                                        )
+                                        .build()
+                                )
+                                .where(
+                                    MeasurementRequest.Where.builder()
+                                        .putAdditionalProperty(
+                                            "property1",
+                                            JsonValue.from("string"),
+                                        )
+                                        .putAdditionalProperty(
+                                            "property2",
+                                            JsonValue.from("string"),
+                                        )
+                                        .build()
+                                )
+                                .who(
+                                    MeasurementRequest.Who.builder()
+                                        .putAdditionalProperty(
+                                            "property1",
+                                            JsonValue.from("string"),
+                                        )
+                                        .putAdditionalProperty(
+                                            "property2",
+                                            JsonValue.from("string"),
+                                        )
+                                        .build()
+                                )
                                 .build()
                         )
                         .build()
@@ -157,60 +199,64 @@ internal class UsageSubmitParamsTest {
 
         val body = params._body()
 
-        assertThat(body.measurements())
-            .containsExactly(
-                UsageSubmitParams.Measurement.builder()
-                    .account("Acme Corp")
-                    .meter("string")
-                    .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
-                    .cost(
-                        UsageSubmitParams.Measurement.Cost.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
-                    .income(
-                        UsageSubmitParams.Measurement.Income.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .measure(
-                        UsageSubmitParams.Measurement.Measure.builder()
-                            .putAdditionalProperty("property1", JsonValue.from(0))
-                            .putAdditionalProperty("property2", JsonValue.from(0))
-                            .build()
-                    )
-                    .metadata(
-                        UsageSubmitParams.Measurement.Metadata.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .other(
-                        UsageSubmitParams.Measurement.Other.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .uid("string")
-                    .what(
-                        UsageSubmitParams.Measurement.What.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .where(
-                        UsageSubmitParams.Measurement.Where.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
-                            .build()
-                    )
-                    .who(
-                        UsageSubmitParams.Measurement.Who.builder()
-                            .putAdditionalProperty("property1", JsonValue.from("string"))
-                            .putAdditionalProperty("property2", JsonValue.from("string"))
+        assertThat(body)
+            .isEqualTo(
+                SubmitMeasurementsRequest.builder()
+                    .addMeasurement(
+                        MeasurementRequest.builder()
+                            .account("Acme Corp")
+                            .meter("string")
+                            .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                            .cost(
+                                MeasurementRequest.Cost.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .ets(OffsetDateTime.parse("2022-08-24T15:15:22Z"))
+                            .income(
+                                MeasurementRequest.Income.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .measure(
+                                MeasurementRequest.Measure.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from(0))
+                                    .putAdditionalProperty("property2", JsonValue.from(0))
+                                    .build()
+                            )
+                            .metadata(
+                                MeasurementRequest.Metadata.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .other(
+                                MeasurementRequest.Other.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .uid("string")
+                            .what(
+                                MeasurementRequest.What.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .where(
+                                MeasurementRequest.Where.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .who(
+                                MeasurementRequest.Who.builder()
+                                    .putAdditionalProperty("property1", JsonValue.from("string"))
+                                    .putAdditionalProperty("property2", JsonValue.from("string"))
+                                    .build()
+                            )
                             .build()
                     )
                     .build()
@@ -221,23 +267,31 @@ internal class UsageSubmitParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             UsageSubmitParams.builder()
-                .addMeasurement(
-                    UsageSubmitParams.Measurement.builder()
-                        .account("Acme Corp")
-                        .meter("string")
-                        .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                .submitMeasurementsRequest(
+                    SubmitMeasurementsRequest.builder()
+                        .addMeasurement(
+                            MeasurementRequest.builder()
+                                .account("Acme Corp")
+                                .meter("string")
+                                .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                                .build()
+                        )
                         .build()
                 )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.measurements())
-            .containsExactly(
-                UsageSubmitParams.Measurement.builder()
-                    .account("Acme Corp")
-                    .meter("string")
-                    .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+        assertThat(body)
+            .isEqualTo(
+                SubmitMeasurementsRequest.builder()
+                    .addMeasurement(
+                        MeasurementRequest.builder()
+                            .account("Acme Corp")
+                            .meter("string")
+                            .ts(OffsetDateTime.parse("2022-08-24T14:15:22Z"))
+                            .build()
+                    )
                     .build()
             )
     }

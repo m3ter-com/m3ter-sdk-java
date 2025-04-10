@@ -20,6 +20,7 @@ import com.m3ter.models.BillApproveResponse
 import com.m3ter.models.BillDeleteParams
 import com.m3ter.models.BillLatestByAccountParams
 import com.m3ter.models.BillListPageAsync
+import com.m3ter.models.BillListPageResponse
 import com.m3ter.models.BillListParams
 import com.m3ter.models.BillLockParams
 import com.m3ter.models.BillResponse
@@ -173,8 +174,8 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val listHandler: Handler<BillListPageAsync.Response> =
-            jsonHandler<BillListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillListPageResponse> =
+            jsonHandler<BillListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -204,11 +205,11 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                                 }
                             }
                             .let {
-                                BillListPageAsync.of(
-                                    BillServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BillListPageAsync.builder()
+                                    .service(BillServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

@@ -21,6 +21,7 @@ import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.models.AccountGetChildrenParams
 import com.m3ter.models.AccountListPageAsync
+import com.m3ter.models.AccountListPageResponse
 import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountResponse
 import com.m3ter.models.AccountRetrieveParams
@@ -202,8 +203,8 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val listHandler: Handler<AccountListPageAsync.Response> =
-            jsonHandler<AccountListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AccountListPageResponse> =
+            jsonHandler<AccountListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -233,11 +234,11 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                AccountListPageAsync.of(
-                                    AccountServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                AccountListPageAsync.builder()
+                                    .service(AccountServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

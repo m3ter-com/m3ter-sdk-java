@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.NotificationConfigurationCreateParams
 import com.m3ter.models.NotificationConfigurationDeleteParams
 import com.m3ter.models.NotificationConfigurationListPageAsync
+import com.m3ter.models.NotificationConfigurationListPageResponse
 import com.m3ter.models.NotificationConfigurationListParams
 import com.m3ter.models.NotificationConfigurationResponse
 import com.m3ter.models.NotificationConfigurationRetrieveParams
@@ -184,8 +185,8 @@ internal constructor(private val clientOptions: ClientOptions) :
                 }
         }
 
-        private val listHandler: Handler<NotificationConfigurationListPageAsync.Response> =
-            jsonHandler<NotificationConfigurationListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<NotificationConfigurationListPageResponse> =
+            jsonHandler<NotificationConfigurationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -216,11 +217,13 @@ internal constructor(private val clientOptions: ClientOptions) :
                                 }
                             }
                             .let {
-                                NotificationConfigurationListPageAsync.of(
-                                    NotificationConfigurationServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                NotificationConfigurationListPageAsync.builder()
+                                    .service(
+                                        NotificationConfigurationServiceAsyncImpl(clientOptions)
+                                    )
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

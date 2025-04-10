@@ -22,6 +22,7 @@ import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.UserGetPermissionsParams
 import com.m3ter.models.UserGetUserGroupsParams
 import com.m3ter.models.UserListPageAsync
+import com.m3ter.models.UserListPageResponse
 import com.m3ter.models.UserListParams
 import com.m3ter.models.UserMeParams
 import com.m3ter.models.UserMeResponse
@@ -177,8 +178,8 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 }
         }
 
-        private val listHandler: Handler<UserListPageAsync.Response> =
-            jsonHandler<UserListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<UserListPageResponse> =
+            jsonHandler<UserListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -208,11 +209,11 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                                 }
                             }
                             .let {
-                                UserListPageAsync.of(
-                                    UserServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                UserListPageAsync.builder()
+                                    .service(UserServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

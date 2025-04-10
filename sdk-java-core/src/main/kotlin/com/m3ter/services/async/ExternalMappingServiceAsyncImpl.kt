@@ -18,10 +18,13 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.ExternalMappingCreateParams
 import com.m3ter.models.ExternalMappingDeleteParams
 import com.m3ter.models.ExternalMappingListByExternalEntityPageAsync
+import com.m3ter.models.ExternalMappingListByExternalEntityPageResponse
 import com.m3ter.models.ExternalMappingListByExternalEntityParams
 import com.m3ter.models.ExternalMappingListByM3terEntityPageAsync
+import com.m3ter.models.ExternalMappingListByM3terEntityPageResponse
 import com.m3ter.models.ExternalMappingListByM3terEntityParams
 import com.m3ter.models.ExternalMappingListPageAsync
+import com.m3ter.models.ExternalMappingListPageResponse
 import com.m3ter.models.ExternalMappingListParams
 import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
@@ -198,8 +201,8 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                 }
         }
 
-        private val listHandler: Handler<ExternalMappingListPageAsync.Response> =
-            jsonHandler<ExternalMappingListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ExternalMappingListPageResponse> =
+            jsonHandler<ExternalMappingListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -229,11 +232,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
@@ -276,10 +279,8 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
         }
 
         private val listByExternalEntityHandler:
-            Handler<ExternalMappingListByExternalEntityPageAsync.Response> =
-            jsonHandler<ExternalMappingListByExternalEntityPageAsync.Response>(
-                    clientOptions.jsonMapper
-                )
+            Handler<ExternalMappingListByExternalEntityPageResponse> =
+            jsonHandler<ExternalMappingListByExternalEntityPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listByExternalEntity(
@@ -313,21 +314,19 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListByExternalEntityPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListByExternalEntityPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }
         }
 
         private val listByM3terEntityHandler:
-            Handler<ExternalMappingListByM3terEntityPageAsync.Response> =
-            jsonHandler<ExternalMappingListByM3terEntityPageAsync.Response>(
-                    clientOptions.jsonMapper
-                )
+            Handler<ExternalMappingListByM3terEntityPageResponse> =
+            jsonHandler<ExternalMappingListByM3terEntityPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listByM3terEntity(
@@ -360,11 +359,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                                 }
                             }
                             .let {
-                                ExternalMappingListByM3terEntityPageAsync.of(
-                                    ExternalMappingServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ExternalMappingListByM3terEntityPageAsync.builder()
+                                    .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

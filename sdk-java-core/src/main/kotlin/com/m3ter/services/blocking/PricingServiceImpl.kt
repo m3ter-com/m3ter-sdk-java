@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.PricingCreateParams
 import com.m3ter.models.PricingDeleteParams
 import com.m3ter.models.PricingListPage
+import com.m3ter.models.PricingListPageResponse
 import com.m3ter.models.PricingListParams
 import com.m3ter.models.PricingResponse
 import com.m3ter.models.PricingRetrieveParams
@@ -163,8 +164,8 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<PricingListPage.Response> =
-            jsonHandler<PricingListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<PricingListPageResponse> =
+            jsonHandler<PricingListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -191,7 +192,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { PricingListPage.of(PricingServiceImpl(clientOptions), params, it) }
+                    .let {
+                        PricingListPage.builder()
+                            .service(PricingServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

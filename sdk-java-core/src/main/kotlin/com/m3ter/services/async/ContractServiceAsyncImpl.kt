@@ -20,6 +20,7 @@ import com.m3ter.models.ContractDeleteParams
 import com.m3ter.models.ContractEndDateBillingEntitiesParams
 import com.m3ter.models.ContractEndDateBillingEntitiesResponse
 import com.m3ter.models.ContractListPageAsync
+import com.m3ter.models.ContractListPageResponse
 import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
@@ -185,8 +186,8 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                 }
         }
 
-        private val listHandler: Handler<ContractListPageAsync.Response> =
-            jsonHandler<ContractListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ContractListPageResponse> =
+            jsonHandler<ContractListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -216,11 +217,11 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
                                 }
                             }
                             .let {
-                                ContractListPageAsync.of(
-                                    ContractServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                ContractListPageAsync.builder()
+                                    .service(ContractServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

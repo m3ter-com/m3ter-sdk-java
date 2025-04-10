@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.BillDebitLineItemCreateParams
 import com.m3ter.models.BillDebitLineItemDeleteParams
 import com.m3ter.models.BillDebitLineItemListPage
+import com.m3ter.models.BillDebitLineItemListPageResponse
 import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
@@ -175,8 +176,8 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listHandler: Handler<BillDebitLineItemListPage.Response> =
-            jsonHandler<BillDebitLineItemListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BillDebitLineItemListPageResponse> =
+            jsonHandler<BillDebitLineItemListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -206,11 +207,11 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        BillDebitLineItemListPage.of(
-                            DebitLineItemServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        BillDebitLineItemListPage.builder()
+                            .service(DebitLineItemServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

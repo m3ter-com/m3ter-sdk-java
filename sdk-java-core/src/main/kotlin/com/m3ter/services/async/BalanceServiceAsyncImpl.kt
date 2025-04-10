@@ -19,6 +19,7 @@ import com.m3ter.models.Balance
 import com.m3ter.models.BalanceCreateParams
 import com.m3ter.models.BalanceDeleteParams
 import com.m3ter.models.BalanceListPageAsync
+import com.m3ter.models.BalanceListPageResponse
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
@@ -190,8 +191,8 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val listHandler: Handler<BalanceListPageAsync.Response> =
-            jsonHandler<BalanceListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BalanceListPageResponse> =
+            jsonHandler<BalanceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -221,11 +222,11 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                                 }
                             }
                             .let {
-                                BalanceListPageAsync.of(
-                                    BalanceServiceAsyncImpl(clientOptions),
-                                    params,
-                                    it,
-                                )
+                                BalanceListPageAsync.builder()
+                                    .service(BalanceServiceAsyncImpl(clientOptions))
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

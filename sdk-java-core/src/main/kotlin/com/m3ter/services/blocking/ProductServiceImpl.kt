@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.ProductCreateParams
 import com.m3ter.models.ProductDeleteParams
 import com.m3ter.models.ProductListPage
+import com.m3ter.models.ProductListPageResponse
 import com.m3ter.models.ProductListParams
 import com.m3ter.models.ProductResponse
 import com.m3ter.models.ProductRetrieveParams
@@ -163,8 +164,8 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<ProductListPage.Response> =
-            jsonHandler<ProductListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ProductListPageResponse> =
+            jsonHandler<ProductListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -191,7 +192,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { ProductListPage.of(ProductServiceImpl(clientOptions), params, it) }
+                    .let {
+                        ProductListPage.builder()
+                            .service(ProductServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -19,10 +19,13 @@ import com.m3ter.models.ResourceGroupAddResourceParams
 import com.m3ter.models.ResourceGroupCreateParams
 import com.m3ter.models.ResourceGroupDeleteParams
 import com.m3ter.models.ResourceGroupListContentsPage
+import com.m3ter.models.ResourceGroupListContentsPageResponse
 import com.m3ter.models.ResourceGroupListContentsParams
 import com.m3ter.models.ResourceGroupListPage
+import com.m3ter.models.ResourceGroupListPageResponse
 import com.m3ter.models.ResourceGroupListParams
 import com.m3ter.models.ResourceGroupListPermissionsPage
+import com.m3ter.models.ResourceGroupListPermissionsPageResponse
 import com.m3ter.models.ResourceGroupListPermissionsParams
 import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupResponse
@@ -206,8 +209,8 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listHandler: Handler<ResourceGroupListPage.Response> =
-            jsonHandler<ResourceGroupListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<ResourceGroupListPageResponse> =
+            jsonHandler<ResourceGroupListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -236,11 +239,11 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
@@ -314,8 +317,8 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             }
         }
 
-        private val listContentsHandler: Handler<ResourceGroupListContentsPage.Response> =
-            jsonHandler<ResourceGroupListContentsPage.Response>(clientOptions.jsonMapper)
+        private val listContentsHandler: Handler<ResourceGroupListContentsPageResponse> =
+            jsonHandler<ResourceGroupListContentsPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listContents(
@@ -347,17 +350,17 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListContentsPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListContentsPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
 
-        private val listPermissionsHandler: Handler<ResourceGroupListPermissionsPage.Response> =
-            jsonHandler<ResourceGroupListPermissionsPage.Response>(clientOptions.jsonMapper)
+        private val listPermissionsHandler: Handler<ResourceGroupListPermissionsPageResponse> =
+            jsonHandler<ResourceGroupListPermissionsPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun listPermissions(
@@ -388,11 +391,11 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        ResourceGroupListPermissionsPage.of(
-                            ResourceGroupServiceImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ResourceGroupListPermissionsPage.builder()
+                            .service(ResourceGroupServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

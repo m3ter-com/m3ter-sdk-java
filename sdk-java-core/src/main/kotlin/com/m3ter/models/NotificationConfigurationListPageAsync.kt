@@ -2,17 +2,8 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
-import com.m3ter.core.JsonValue
-import com.m3ter.errors.M3terInvalidDataException
+import com.m3ter.core.checkRequired
 import com.m3ter.services.async.NotificationConfigurationServiceAsync
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
@@ -20,46 +11,32 @@ import java.util.concurrent.Executor
 import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
-/**
- * Retrieve a list of Event Notifications for the specified Organization.
- *
- * This endpoint retrieves a list of all Event Notifications for the Organization identified by its
- * UUID. The list can be paginated for easier management. The list also supports filtering by
- * parameters such as Notification UUID.
- */
+/** @see [NotificationConfigurationServiceAsync.list] */
 class NotificationConfigurationListPageAsync
 private constructor(
-    private val notificationConfigurationsService: NotificationConfigurationServiceAsync,
+    private val service: NotificationConfigurationServiceAsync,
     private val params: NotificationConfigurationListParams,
-    private val response: Response,
+    private val response: NotificationConfigurationListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /**
+     * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
+     * data.
+     *
+     * @see [NotificationConfigurationListPageResponse.data]
+     */
+    fun data(): List<NotificationConfigurationResponse> =
+        response._data().getOptional("data").getOrNull() ?: emptyList()
 
-    fun data(): List<NotificationConfigurationResponse> = response().data()
+    /**
+     * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
+     * data.
+     *
+     * @see [NotificationConfigurationListPageResponse.nextToken]
+     */
+    fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun nextToken(): Optional<String> = response().nextToken()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is NotificationConfigurationListPageAsync && notificationConfigurationsService == other.notificationConfigurationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(notificationConfigurationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "NotificationConfigurationListPageAsync{notificationConfigurationsService=$notificationConfigurationsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return nextToken().isPresent
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
 
     fun getNextPageParams(): Optional<NotificationConfigurationListParams> {
         if (!hasNextPage()) {
@@ -67,149 +44,89 @@ private constructor(
         }
 
         return Optional.of(
-            NotificationConfigurationListParams.builder()
-                .from(params)
-                .apply { nextToken().ifPresent { this.nextToken(it) } }
-                .build()
+            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
         )
     }
 
-    fun getNextPage(): CompletableFuture<Optional<NotificationConfigurationListPageAsync>> {
-        return getNextPageParams()
-            .map { notificationConfigurationsService.list(it).thenApply { Optional.of(it) } }
+    fun getNextPage(): CompletableFuture<Optional<NotificationConfigurationListPageAsync>> =
+        getNextPageParams()
+            .map { service.list(it).thenApply { Optional.of(it) } }
             .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
-    }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): NotificationConfigurationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): NotificationConfigurationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic
-        fun of(
-            notificationConfigurationsService: NotificationConfigurationServiceAsync,
-            params: NotificationConfigurationListParams,
-            response: Response,
-        ) =
-            NotificationConfigurationListPageAsync(
-                notificationConfigurationsService,
-                params,
-                response,
-            )
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [NotificationConfigurationListPageAsync].
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        @JvmStatic fun builder() = Builder()
     }
 
-    class Response(
-        private val data: JsonField<List<NotificationConfigurationResponse>>,
-        private val nextToken: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
+    /** A builder for [NotificationConfigurationListPageAsync]. */
+    class Builder internal constructor() {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data")
-            data: JsonField<List<NotificationConfigurationResponse>> = JsonMissing.of(),
-            @JsonProperty("nextToken") nextToken: JsonField<String> = JsonMissing.of(),
-        ) : this(data, nextToken, mutableMapOf())
+        private var service: NotificationConfigurationServiceAsync? = null
+        private var params: NotificationConfigurationListParams? = null
+        private var response: NotificationConfigurationListPageResponse? = null
 
-        fun data(): List<NotificationConfigurationResponse> =
-            data.getOptional("data").getOrNull() ?: listOf()
-
-        fun nextToken(): Optional<String> = nextToken.getOptional("nextToken")
-
-        @JsonProperty("data")
-        fun _data(): Optional<JsonField<List<NotificationConfigurationResponse>>> =
-            Optional.ofNullable(data)
-
-        @JsonProperty("nextToken")
-        fun _nextToken(): Optional<JsonField<String>> = Optional.ofNullable(nextToken)
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
+        @JvmSynthetic
+        internal fun from(
+            notificationConfigurationListPageAsync: NotificationConfigurationListPageAsync
+        ) = apply {
+            service = notificationConfigurationListPageAsync.service
+            params = notificationConfigurationListPageAsync.params
+            response = notificationConfigurationListPageAsync.response
         }
 
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        private var validated: Boolean = false
-
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            nextToken()
-            validated = true
+        fun service(service: NotificationConfigurationServiceAsync) = apply {
+            this.service = service
         }
 
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
+        /** The parameters that were used to request this page. */
+        fun params(params: NotificationConfigurationListParams) = apply { this.params = params }
 
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
+        /** The response that this page was parsed from. */
+        fun response(response: NotificationConfigurationListPageResponse) = apply {
+            this.response = response
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, nextToken, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [NotificationConfigurationListPageAsync].
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<NotificationConfigurationResponse>> = JsonMissing.of()
-            private var nextToken: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.nextToken = page.nextToken
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<NotificationConfigurationResponse>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<NotificationConfigurationResponse>>) = apply {
-                this.data = data
-            }
-
-            fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
-
-            fun nextToken(nextToken: JsonField<String>) = apply { this.nextToken = nextToken }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, nextToken, additionalProperties.toMutableMap())
-        }
+        /**
+         * Returns an immutable instance of [NotificationConfigurationListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): NotificationConfigurationListPageAsync =
+            NotificationConfigurationListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: NotificationConfigurationListPageAsync) {
@@ -240,4 +157,17 @@ private constructor(
             return forEach(values::add, executor).thenApply { values }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is NotificationConfigurationListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "NotificationConfigurationListPageAsync{service=$service, params=$params, response=$response}"
 }

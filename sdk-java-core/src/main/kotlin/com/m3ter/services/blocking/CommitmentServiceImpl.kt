@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.CommitmentCreateParams
 import com.m3ter.models.CommitmentDeleteParams
 import com.m3ter.models.CommitmentListPage
+import com.m3ter.models.CommitmentListPageResponse
 import com.m3ter.models.CommitmentListParams
 import com.m3ter.models.CommitmentResponse
 import com.m3ter.models.CommitmentRetrieveParams
@@ -175,8 +176,8 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val listHandler: Handler<CommitmentListPage.Response> =
-            jsonHandler<CommitmentListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CommitmentListPageResponse> =
+            jsonHandler<CommitmentListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -203,7 +204,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { CommitmentListPage.of(CommitmentServiceImpl(clientOptions), params, it) }
+                    .let {
+                        CommitmentListPage.builder()
+                            .service(CommitmentServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

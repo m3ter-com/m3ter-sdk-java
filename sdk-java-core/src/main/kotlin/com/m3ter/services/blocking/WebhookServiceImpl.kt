@@ -20,6 +20,7 @@ import com.m3ter.models.WebhookCreateParams
 import com.m3ter.models.WebhookCreateResponse
 import com.m3ter.models.WebhookDeleteParams
 import com.m3ter.models.WebhookListPage
+import com.m3ter.models.WebhookListPageResponse
 import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
@@ -173,8 +174,8 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val listHandler: Handler<WebhookListPage.Response> =
-            jsonHandler<WebhookListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<WebhookListPageResponse> =
+            jsonHandler<WebhookListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -202,7 +203,13 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                             it.validate()
                         }
                     }
-                    .let { WebhookListPage.of(WebhookServiceImpl(clientOptions), params, it) }
+                    .let {
+                        WebhookListPage.builder()
+                            .service(WebhookServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.CreditReasonCreateParams
 import com.m3ter.models.CreditReasonDeleteParams
 import com.m3ter.models.CreditReasonListPage
+import com.m3ter.models.CreditReasonListPageResponse
 import com.m3ter.models.CreditReasonListParams
 import com.m3ter.models.CreditReasonResponse
 import com.m3ter.models.CreditReasonRetrieveParams
@@ -172,8 +173,8 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val listHandler: Handler<CreditReasonListPage.Response> =
-            jsonHandler<CreditReasonListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CreditReasonListPageResponse> =
+            jsonHandler<CreditReasonListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -202,7 +203,11 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        CreditReasonListPage.of(CreditReasonServiceImpl(clientOptions), params, it)
+                        CreditReasonListPage.builder()
+                            .service(CreditReasonServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.AggregationCreateParams
 import com.m3ter.models.AggregationDeleteParams
 import com.m3ter.models.AggregationListPage
+import com.m3ter.models.AggregationListPageResponse
 import com.m3ter.models.AggregationListParams
 import com.m3ter.models.AggregationResponse
 import com.m3ter.models.AggregationRetrieveParams
@@ -169,8 +170,8 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val listHandler: Handler<AggregationListPage.Response> =
-            jsonHandler<AggregationListPage.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AggregationListPageResponse> =
+            jsonHandler<AggregationListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override fun list(
@@ -198,7 +199,11 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
                         }
                     }
                     .let {
-                        AggregationListPage.of(AggregationServiceImpl(clientOptions), params, it)
+                        AggregationListPage.builder()
+                            .service(AggregationServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

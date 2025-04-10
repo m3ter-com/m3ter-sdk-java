@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.2.0-alpha (2025-04-10)
+
+Full Changelog: [v0.1.1-alpha...v0.2.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.1-alpha...v0.2.0-alpha)
+
+### Features
+
+* **api:** add measurement request model ([6dbe595](https://github.com/m3ter-com/m3ter-sdk-java/commit/6dbe5955274607b417ee458885973226dc1ebc6f))
+* **api:** rename DataFieldResponse to DataField and add DerivedField as a model ([bb3bfb9](https://github.com/m3ter-com/m3ter-sdk-java/commit/bb3bfb93e38c28c2eaa0a5b4cb47d7996a6b575b))
+* **client:** make pagination robust to missing data ([bed5986](https://github.com/m3ter-com/m3ter-sdk-java/commit/bed598622ef9918c7f53588af6a195c2ef3a5c14))
+* **client:** support setting base URL via env var ([#148](https://github.com/m3ter-com/m3ter-sdk-java/issues/148)) ([556a49a](https://github.com/m3ter-com/m3ter-sdk-java/commit/556a49a8d87a14ed7ff49a57b28bb5ca28ff2e3a))
+
+
+### Bug Fixes
+
+* **client:** bump to better jackson version ([#151](https://github.com/m3ter-com/m3ter-sdk-java/issues/151)) ([4a3b5f0](https://github.com/m3ter-com/m3ter-sdk-java/commit/4a3b5f04797a570bc3a5aaef6e3a4cb52684d0bd))
+* use correct base url for client.usage().submit() ([#155](https://github.com/m3ter-com/m3ter-sdk-java/issues/155)) ([393b7be](https://github.com/m3ter-com/m3ter-sdk-java/commit/393b7be18f4b7cd4e55aba008b4c22f8bd01dacc))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([#150](https://github.com/m3ter-com/m3ter-sdk-java/issues/150)) ([8f383c5](https://github.com/m3ter-com/m3ter-sdk-java/commit/8f383c5a81636ddd39418640102a9ac8433f0c4e))
+* **internal:** reduce CI branch coverage ([644f79b](https://github.com/m3ter-com/m3ter-sdk-java/commit/644f79bf200e51ca597d58d0e8f4ccceaacf8221))
+
+
+### Documentation
+
+* add comments for page methods ([bed5986](https://github.com/m3ter-com/m3ter-sdk-java/commit/bed598622ef9918c7f53588af6a195c2ef3a5c14))
+
+
+### Refactors
+
+* **client:** deduplicate page response classes ([#152](https://github.com/m3ter-com/m3ter-sdk-java/issues/152)) ([bed5986](https://github.com/m3ter-com/m3ter-sdk-java/commit/bed598622ef9918c7f53588af6a195c2ef3a5c14))
+* **client:** migrate pages to builder pattern ([#153](https://github.com/m3ter-com/m3ter-sdk-java/issues/153)) ([ca5182f](https://github.com/m3ter-com/m3ter-sdk-java/commit/ca5182f28b4a46f516f05638b22da8d34a79f7e8))
+
 ## 0.1.1-alpha (2025-04-09)
 
 Full Changelog: [v0.1.0-alpha...v0.1.1-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.0-alpha...v0.1.1-alpha)
