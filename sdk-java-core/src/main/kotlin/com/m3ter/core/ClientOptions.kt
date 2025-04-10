@@ -208,7 +208,10 @@ private constructor(
 
         fun removeAllQueryParams(keys: Set<String>) = apply { queryParams.removeAll(keys) }
 
+        fun baseUrl(): String = baseUrl
+
         fun fromEnv() = apply {
+            System.getenv("M3TER_BASE_URL")?.let { baseUrl(it) }
             System.getenv("M3TER_API_KEY")?.let { apiKey(it) }
             System.getenv("M3TER_API_SECRET")?.let { apiSecret(it) }
             System.getenv("M3TER_API_TOKEN")?.let { token(it) }
