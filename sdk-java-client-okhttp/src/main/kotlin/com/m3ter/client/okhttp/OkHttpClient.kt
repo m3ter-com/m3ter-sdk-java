@@ -140,11 +140,18 @@ private constructor(private val okHttpClient: okhttp3.OkHttpClient, private val 
         }
 
     private fun HttpRequest.toUrl(): String {
-        url?.let {
-            return it
-        }
+        val builder =
+            if (!url.isNullOrBlank()) {
+                    try {
+                        baseUrl.newBuilder(url.toString())?.build() ?: baseUrl
+                    } catch (_: Exception) {
+                        baseUrl
+                    }
+                } else {
+                    baseUrl
+                }
+                .newBuilder()
 
-        val builder = baseUrl.newBuilder()
         pathSegments.forEach(builder::addPathSegment)
         queryParams.keys().forEach { key ->
             queryParams.values(key).forEach { builder.addQueryParameter(key, it) }
