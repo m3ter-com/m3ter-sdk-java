@@ -73,6 +73,8 @@ This can happen if you are either:
 2. Depending on some library that depends on different Jackson versions, potentially transitively
 
 Double-check that you are depending on compatible Jackson versions.
+
+See https://www.github.com/m3ter-com/m3ter-sdk-java#jackson for more information.
         """
             .trimIndent()
     }
