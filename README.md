@@ -374,6 +374,42 @@ M3terClient client = M3terOkHttpClient.builder()
     .build();
 ```
 
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `sdk-java-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terClient`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClient.kt), [`M3terClientAsync`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsync.kt), [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt), and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), all of which can work with any HTTP client
+- `sdk-java-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) and [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), which provide a way to construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), respectively, using OkHttp
+- `sdk-java`
+  - Depends on and exposes the APIs of both `sdk-java-core` and `sdk-java-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Copy `sdk-java-client-okhttp`'s [`OkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Write a class that implements the [`HttpClient`](sdk-java-core/src/main/kotlin/com/m3ter/core/http/HttpClient.kt) interface
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your new client class
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
