@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.2.0-alpha)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.2.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.2.1-alpha)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.2.1-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.1-alpha)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.1-alpha).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.2.0-alpha")
+implementation("com.m3ter:sdk-java:0.2.1-alpha")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.2.0-alpha")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.2.0-alpha</version>
+  <version>0.2.1-alpha</version>
 </dependency>
 ```
 
@@ -285,6 +285,17 @@ Or to `debug` for more verbose logging:
 $ export M3TER_LOG=debug
 ```
 
+## Jackson
+
+The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization. It is compatible with version 2.13.4 or higher, but depends on version 2.18.2 by default.
+
+The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the default version was overridden in your Maven or Gradle config).
+
+If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt).
+
+> [!CAUTION]
+> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
+
 ## Network options
 
 ### Retries
@@ -360,6 +371,42 @@ M3terClient client = M3terOkHttpClient.builder()
     ))
     .build();
 ```
+
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `sdk-java-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terClient`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClient.kt), [`M3terClientAsync`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsync.kt), [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt), and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), all of which can work with any HTTP client
+- `sdk-java-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) and [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), which provide a way to construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), respectively, using OkHttp
+- `sdk-java`
+  - Depends on and exposes the APIs of both `sdk-java-core` and `sdk-java-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Copy `sdk-java-client-okhttp`'s [`OkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Write a class that implements the [`HttpClient`](sdk-java-core/src/main/kotlin/com/m3ter/core/http/HttpClient.kt) interface
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your new client class
 
 ## Undocumented API functionality
 

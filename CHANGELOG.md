@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.2.1-alpha (2025-04-16)
+
+Full Changelog: [v0.2.0-alpha...v0.2.1-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.2.0-alpha...v0.2.1-alpha)
+
+### Performance Improvements
+
+* **internal:** improve compilation+test speed ([bbcdab6](https://github.com/m3ter-com/m3ter-sdk-java/commit/bbcdab6a98c3f838a4ddbc9310eeeae6d312b241))
+
+
+### Chores
+
+* **internal:** codegen related update ([a143b4a](https://github.com/m3ter-com/m3ter-sdk-java/commit/a143b4ac36d2c4202ba3b62b0f666e9d36d7b8d0))
+
+
+### Documentation
+
+* **client:** update jackson compat error message ([4458cdd](https://github.com/m3ter-com/m3ter-sdk-java/commit/4458cddb670fad4aa20488e28af461ee6071d743))
+* explain http client customization ([867618b](https://github.com/m3ter-com/m3ter-sdk-java/commit/867618bb5cc9609f965daa535de01befc92649a8))
+* explain jackson compat in readme ([fd85caf](https://github.com/m3ter-com/m3ter-sdk-java/commit/fd85cafdee532933e8f3d8062a2a559b34971ee3))
+
 ## 0.2.0-alpha (2025-04-10)
 
 Full Changelog: [v0.1.1-alpha...v0.2.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.1-alpha...v0.2.0-alpha)
