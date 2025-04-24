@@ -30,6 +30,7 @@ private constructor(
     private val balanceId: JsonField<String>,
     private val bandUsage: JsonField<List<BandUsage>>,
     private val billId: JsonField<String>,
+    private val chargeId: JsonField<String>,
     private val commitmentId: JsonField<String>,
     private val compoundAggregationId: JsonField<String>,
     private val contractId: JsonField<String>,
@@ -82,6 +83,7 @@ private constructor(
         @ExcludeMissing
         bandUsage: JsonField<List<BandUsage>> = JsonMissing.of(),
         @JsonProperty("billId") @ExcludeMissing billId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("chargeId") @ExcludeMissing chargeId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("commitmentId")
         @ExcludeMissing
         commitmentId: JsonField<String> = JsonMissing.of(),
@@ -164,6 +166,7 @@ private constructor(
         balanceId,
         bandUsage,
         billId,
+        chargeId,
         commitmentId,
         compoundAggregationId,
         contractId,
@@ -259,6 +262,12 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun billId(): Optional<String> = billId.getOptional("billId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun chargeId(): Optional<String> = chargeId.getOptional("chargeId")
 
     /**
      * The unique identifier (UUID) of the Commitment _(if this is used)_.
@@ -603,6 +612,13 @@ private constructor(
     @JsonProperty("billId") @ExcludeMissing fun _billId(): JsonField<String> = billId
 
     /**
+     * Returns the raw JSON value of [chargeId].
+     *
+     * Unlike [chargeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("chargeId") @ExcludeMissing fun _chargeId(): JsonField<String> = chargeId
+
+    /**
      * Returns the raw JSON value of [commitmentId].
      *
      * Unlike [commitmentId], this method doesn't throw if the JSON field has an unexpected type.
@@ -913,6 +929,7 @@ private constructor(
         private var balanceId: JsonField<String> = JsonMissing.of()
         private var bandUsage: JsonField<MutableList<BandUsage>>? = null
         private var billId: JsonField<String> = JsonMissing.of()
+        private var chargeId: JsonField<String> = JsonMissing.of()
         private var commitmentId: JsonField<String> = JsonMissing.of()
         private var compoundAggregationId: JsonField<String> = JsonMissing.of()
         private var contractId: JsonField<String> = JsonMissing.of()
@@ -958,6 +975,7 @@ private constructor(
             balanceId = lineItemResponse.balanceId
             bandUsage = lineItemResponse.bandUsage.map { it.toMutableList() }
             billId = lineItemResponse.billId
+            chargeId = lineItemResponse.chargeId
             commitmentId = lineItemResponse.commitmentId
             compoundAggregationId = lineItemResponse.compoundAggregationId
             contractId = lineItemResponse.contractId
@@ -1106,6 +1124,16 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun billId(billId: JsonField<String>) = apply { this.billId = billId }
+
+        fun chargeId(chargeId: String) = chargeId(JsonField.of(chargeId))
+
+        /**
+         * Sets [Builder.chargeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.chargeId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun chargeId(chargeId: JsonField<String>) = apply { this.chargeId = chargeId }
 
         /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
         fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
@@ -1615,6 +1643,7 @@ private constructor(
                 balanceId,
                 (bandUsage ?: JsonMissing.of()).map { it.toImmutable() },
                 billId,
+                chargeId,
                 commitmentId,
                 compoundAggregationId,
                 contractId,
@@ -1667,6 +1696,7 @@ private constructor(
         balanceId()
         bandUsage().ifPresent { it.forEach { it.validate() } }
         billId()
+        chargeId()
         commitmentId()
         compoundAggregationId()
         contractId()
@@ -1726,6 +1756,7 @@ private constructor(
             (if (balanceId.asKnown().isPresent) 1 else 0) +
             (bandUsage.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (billId.asKnown().isPresent) 1 else 0) +
+            (if (chargeId.asKnown().isPresent) 1 else 0) +
             (if (commitmentId.asKnown().isPresent) 1 else 0) +
             (if (compoundAggregationId.asKnown().isPresent) 1 else 0) +
             (if (contractId.asKnown().isPresent) 1 else 0) +
@@ -2679,15 +2710,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && version == other.version && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LineItemResponse && id == other.id && version == other.version && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LineItemResponse{id=$id, version=$version, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, additionalProperties=$additionalProperties}"
+        "LineItemResponse{id=$id, version=$version, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, additionalProperties=$additionalProperties}"
 }

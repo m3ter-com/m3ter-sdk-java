@@ -22,6 +22,7 @@ private constructor(
     private val balanceId: String,
     private val nextToken: String?,
     private val pageSize: Long?,
+    private val scheduleId: String?,
     private val transactionTypeId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -39,6 +40,8 @@ private constructor(
 
     /** The maximum number of transactions to return per page. */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+
+    fun scheduleId(): Optional<String> = Optional.ofNullable(scheduleId)
 
     fun transactionTypeId(): Optional<String> = Optional.ofNullable(transactionTypeId)
 
@@ -68,6 +71,7 @@ private constructor(
         private var balanceId: String? = null
         private var nextToken: String? = null
         private var pageSize: Long? = null
+        private var scheduleId: String? = null
         private var transactionTypeId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -78,6 +82,7 @@ private constructor(
             balanceId = balanceTransactionListParams.balanceId
             nextToken = balanceTransactionListParams.nextToken
             pageSize = balanceTransactionListParams.pageSize
+            scheduleId = balanceTransactionListParams.scheduleId
             transactionTypeId = balanceTransactionListParams.transactionTypeId
             additionalHeaders = balanceTransactionListParams.additionalHeaders.toBuilder()
             additionalQueryParams = balanceTransactionListParams.additionalQueryParams.toBuilder()
@@ -111,6 +116,11 @@ private constructor(
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+
+        fun scheduleId(scheduleId: String?) = apply { this.scheduleId = scheduleId }
+
+        /** Alias for calling [Builder.scheduleId] with `scheduleId.orElse(null)`. */
+        fun scheduleId(scheduleId: Optional<String>) = scheduleId(scheduleId.getOrNull())
 
         fun transactionTypeId(transactionTypeId: String?) = apply {
             this.transactionTypeId = transactionTypeId
@@ -236,6 +246,7 @@ private constructor(
                 checkRequired("balanceId", balanceId),
                 nextToken,
                 pageSize,
+                scheduleId,
                 transactionTypeId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -256,6 +267,7 @@ private constructor(
             .apply {
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
+                scheduleId?.let { put("scheduleId", it) }
                 transactionTypeId?.let { put("transactionTypeId", it) }
                 putAll(additionalQueryParams)
             }
@@ -266,11 +278,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionListParams && orgId == other.orgId && balanceId == other.balanceId && nextToken == other.nextToken && pageSize == other.pageSize && transactionTypeId == other.transactionTypeId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BalanceTransactionListParams && orgId == other.orgId && balanceId == other.balanceId && nextToken == other.nextToken && pageSize == other.pageSize && scheduleId == other.scheduleId && transactionTypeId == other.transactionTypeId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, nextToken, pageSize, transactionTypeId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, nextToken, pageSize, scheduleId, transactionTypeId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BalanceTransactionListParams{orgId=$orgId, balanceId=$balanceId, nextToken=$nextToken, pageSize=$pageSize, transactionTypeId=$transactionTypeId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceTransactionListParams{orgId=$orgId, balanceId=$balanceId, nextToken=$nextToken, pageSize=$pageSize, scheduleId=$scheduleId, transactionTypeId=$transactionTypeId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

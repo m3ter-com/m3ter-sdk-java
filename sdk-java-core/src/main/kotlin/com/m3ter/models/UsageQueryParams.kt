@@ -35,7 +35,25 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** Query and filter usage data */
+/**
+ * Query and filter usage data collected for your Organization.
+ *
+ * You can use several parameters to filter the range of usage data returned:
+ * - **Time period.** Use `startDate` and `endDate` to define a period. The query references the
+ *   `timestamp` values of usage data submissions for applying the defined time period, and not the
+ *   time submissions were `receivedAt` by the platform. Only usage data with a `timestamp` that
+ *   falls in the defined time period are returned.(Required)
+ * - **Meters.** Specify the Meters you want the query to return data for.
+ * - **Accounts.** Specify the Accounts you want the query to return data for.
+ * - **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only data
+ *   that match the specified Dimension field values will be returned for the query.
+ *
+ * You can apply Aggregations functions to the usage data returned for the query. If you apply
+ * Aggregations, you can select to group the data by:
+ * - **Account**
+ * - **Time**
+ * - **Dimension**
+ */
 class UsageQueryParams
 private constructor(
     private val orgId: String?,
@@ -47,70 +65,91 @@ private constructor(
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
-     * ISO 8601 formatted end date to filter by.
+     * Specify the Accounts you want the query to return usage data for.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun endDate(): OffsetDateTime = body.endDate()
-
-    /**
-     * ISO 8601 formatted start date to filter by.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun startDate(): OffsetDateTime = body.startDate()
-
-    /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun accountIds(): Optional<List<String>> = body.accountIds()
 
     /**
+     * Define the Aggregation functions you want to apply to data fields on included Meters:
+     * - **SUM**. Adds the values.
+     * - **MIN**. Uses the minimum value.
+     * - **MAX**. Uses the maximum value.
+     * - **COUNT**. Counts the number of values.
+     * - **LATEST**. Uses the most recent value.
+     * - **MEAN**. Uses the arithmetic mean of the values.
+     * - **UNIQUE**. Uses a count of the number of unique values.
+     *
+     * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
+     * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
+     *   applied.
+     * - **Dimension** field. `COUNT` or `UNIQUE` functions can be applied.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun aggregations(): Optional<List<Aggregation>> = body.aggregations()
 
     /**
+     * Define Dimension filters you want to apply for the query.
+     *
+     * Specify values for Dimension data fields on included Meters. Only data that match the
+     * specified Dimension field values will be returned for the query.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun dimensionFilters(): Optional<List<DimensionFilter>> = body.dimensionFilters()
 
     /**
+     * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun endDate(): Optional<OffsetDateTime> = body.endDate()
+
+    /**
+     * If you've applied Aggregations for your query, specify any grouping you want to impose on the
+     * returned data:
+     * - **Account**
+     * - **Time** - group by frequency. Five options: `DAY`, `HOUR`, `WEEK`, `MONTH`, or `QUARTER`.
+     * - **Dimension** - group by Meter and data field.
+     *
+     * **NOTE:** If you attempt to impose grouping for a query that doesn't apply Aggregations,
+     * you'll receive an error.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun groups(): Optional<List<Group>> = body.groups()
 
     /**
+     * Define a limit for the number of usage data items you want the query to return, starting with
+     * the most recently received data item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun limit(): Optional<Long> = body.limit()
 
     /**
+     * Specify the Meters you want the query to return usage data for.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun meterIds(): Optional<List<String>> = body.meterIds()
 
     /**
-     * Returns the raw JSON value of [endDate].
+     * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
      *
-     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
-
-    /**
-     * Returns the raw JSON value of [startDate].
-     *
-     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
+    fun startDate(): Optional<OffsetDateTime> = body.startDate()
 
     /**
      * Returns the raw JSON value of [accountIds].
@@ -135,6 +174,13 @@ private constructor(
     fun _dimensionFilters(): JsonField<List<DimensionFilter>> = body._dimensionFilters()
 
     /**
+     * Returns the raw JSON value of [endDate].
+     *
+     * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
+
+    /**
      * Returns the raw JSON value of [groups].
      *
      * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
@@ -155,6 +201,13 @@ private constructor(
      */
     fun _meterIds(): JsonField<List<String>> = body._meterIds()
 
+    /**
+     * Returns the raw JSON value of [startDate].
+     *
+     * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
+
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -165,15 +218,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [UsageQueryParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .endDate()
-         * .startDate()
-         * ```
-         */
+        @JvmStatic fun none(): UsageQueryParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [UsageQueryParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -203,39 +250,16 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
-         * - [endDate]
-         * - [startDate]
          * - [accountIds]
          * - [aggregations]
          * - [dimensionFilters]
+         * - [endDate]
+         * - [groups]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
-        /** ISO 8601 formatted end date to filter by. */
-        fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
-
-        /**
-         * Sets [Builder.endDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
-
-        /** ISO 8601 formatted start date to filter by. */
-        fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
-
-        /**
-         * Sets [Builder.startDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
-
+        /** Specify the Accounts you want the query to return usage data for. */
         fun accountIds(accountIds: List<String>) = apply { body.accountIds(accountIds) }
 
         /**
@@ -254,6 +278,21 @@ private constructor(
          */
         fun addAccountId(accountId: String) = apply { body.addAccountId(accountId) }
 
+        /**
+         * Define the Aggregation functions you want to apply to data fields on included Meters:
+         * - **SUM**. Adds the values.
+         * - **MIN**. Uses the minimum value.
+         * - **MAX**. Uses the maximum value.
+         * - **COUNT**. Counts the number of values.
+         * - **LATEST**. Uses the most recent value.
+         * - **MEAN**. Uses the arithmetic mean of the values.
+         * - **UNIQUE**. Uses a count of the number of unique values.
+         *
+         * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
+         * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
+         *   applied.
+         * - **Dimension** field. `COUNT` or `UNIQUE` functions can be applied.
+         */
         fun aggregations(aggregations: List<Aggregation>) = apply {
             body.aggregations(aggregations)
         }
@@ -276,6 +315,12 @@ private constructor(
          */
         fun addAggregation(aggregation: Aggregation) = apply { body.addAggregation(aggregation) }
 
+        /**
+         * Define Dimension filters you want to apply for the query.
+         *
+         * Specify values for Dimension data fields on included Meters. Only data that match the
+         * specified Dimension field values will be returned for the query.
+         */
         fun dimensionFilters(dimensionFilters: List<DimensionFilter>) = apply {
             body.dimensionFilters(dimensionFilters)
         }
@@ -300,6 +345,29 @@ private constructor(
             body.addDimensionFilter(dimensionFilter)
         }
 
+        /** The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_) */
+        fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
+
+        /**
+         * Sets [Builder.endDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
+
+        /**
+         * If you've applied Aggregations for your query, specify any grouping you want to impose on
+         * the returned data:
+         * - **Account**
+         * - **Time** - group by frequency. Five options: `DAY`, `HOUR`, `WEEK`, `MONTH`, or
+         *   `QUARTER`.
+         * - **Dimension** - group by Meter and data field.
+         *
+         * **NOTE:** If you attempt to impose grouping for a query that doesn't apply Aggregations,
+         * you'll receive an error.
+         */
         fun groups(groups: List<Group>) = apply { body.groups(groups) }
 
         /**
@@ -318,23 +386,35 @@ private constructor(
          */
         fun addGroup(group: Group) = apply { body.addGroup(group) }
 
-        /** Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`. */
-        fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) = apply {
-            body.addGroup(dataExplorerAccount)
+        /**
+         * Alias for calling [addGroup] with
+         * `Group.ofDataExportsDataExplorerAccount(dataExportsDataExplorerAccount)`.
+         */
+        fun addGroup(dataExportsDataExplorerAccount: Group.DataExportsDataExplorerAccountGroup) =
+            apply {
+                body.addGroup(dataExportsDataExplorerAccount)
+            }
+
+        /**
+         * Alias for calling [addGroup] with
+         * `Group.ofDataExportsDataExplorerDimension(dataExportsDataExplorerDimension)`.
+         */
+        fun addGroup(
+            dataExportsDataExplorerDimension: Group.DataExportsDataExplorerDimensionGroup
+        ) = apply { body.addGroup(dataExportsDataExplorerDimension) }
+
+        /**
+         * Alias for calling [addGroup] with
+         * `Group.ofDataExportsDataExplorerTime(dataExportsDataExplorerTime)`.
+         */
+        fun addGroup(dataExportsDataExplorerTime: Group.DataExportsDataExplorerTimeGroup) = apply {
+            body.addGroup(dataExportsDataExplorerTime)
         }
 
         /**
-         * Alias for calling [addGroup] with `Group.ofDataExplorerDimension(dataExplorerDimension)`.
+         * Define a limit for the number of usage data items you want the query to return, starting
+         * with the most recently received data item.
          */
-        fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) = apply {
-            body.addGroup(dataExplorerDimension)
-        }
-
-        /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
-        fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) = apply {
-            body.addGroup(dataExplorerTime)
-        }
-
         fun limit(limit: Long) = apply { body.limit(limit) }
 
         /**
@@ -345,6 +425,7 @@ private constructor(
          */
         fun limit(limit: JsonField<Long>) = apply { body.limit(limit) }
 
+        /** Specify the Meters you want the query to return usage data for. */
         fun meterIds(meterIds: List<String>) = apply { body.meterIds(meterIds) }
 
         /**
@@ -362,6 +443,18 @@ private constructor(
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addMeterId(meterId: String) = apply { body.addMeterId(meterId) }
+
+        /** The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_) */
+        fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
+
+        /**
+         * Sets [Builder.startDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -484,14 +577,6 @@ private constructor(
          * Returns an immutable instance of [UsageQueryParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .endDate()
-         * .startDate()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UsageQueryParams =
             UsageQueryParams(
@@ -516,25 +601,19 @@ private constructor(
 
     class Body
     private constructor(
-        private val endDate: JsonField<OffsetDateTime>,
-        private val startDate: JsonField<OffsetDateTime>,
         private val accountIds: JsonField<List<String>>,
         private val aggregations: JsonField<List<Aggregation>>,
         private val dimensionFilters: JsonField<List<DimensionFilter>>,
+        private val endDate: JsonField<OffsetDateTime>,
         private val groups: JsonField<List<Group>>,
         private val limit: JsonField<Long>,
         private val meterIds: JsonField<List<String>>,
+        private val startDate: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("endDate")
-            @ExcludeMissing
-            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("startDate")
-            @ExcludeMissing
-            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("accountIds")
             @ExcludeMissing
             accountIds: JsonField<List<String>> = JsonMissing.of(),
@@ -544,6 +623,9 @@ private constructor(
             @JsonProperty("dimensionFilters")
             @ExcludeMissing
             dimensionFilters: JsonField<List<DimensionFilter>> = JsonMissing.of(),
+            @JsonProperty("endDate")
+            @ExcludeMissing
+            endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("groups")
             @ExcludeMissing
             groups: JsonField<List<Group>> = JsonMissing.of(),
@@ -551,47 +633,55 @@ private constructor(
             @JsonProperty("meterIds")
             @ExcludeMissing
             meterIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("startDate")
+            @ExcludeMissing
+            startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         ) : this(
-            endDate,
-            startDate,
             accountIds,
             aggregations,
             dimensionFilters,
+            endDate,
             groups,
             limit,
             meterIds,
+            startDate,
             mutableMapOf(),
         )
 
         /**
-         * ISO 8601 formatted end date to filter by.
+         * Specify the Accounts you want the query to return usage data for.
          *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
-
-        /**
-         * ISO 8601 formatted start date to filter by.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
-
-        /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
         /**
+         * Define the Aggregation functions you want to apply to data fields on included Meters:
+         * - **SUM**. Adds the values.
+         * - **MIN**. Uses the minimum value.
+         * - **MAX**. Uses the maximum value.
+         * - **COUNT**. Counts the number of values.
+         * - **LATEST**. Uses the most recent value.
+         * - **MEAN**. Uses the arithmetic mean of the values.
+         * - **UNIQUE**. Uses a count of the number of unique values.
+         *
+         * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
+         * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
+         *   applied.
+         * - **Dimension** field. `COUNT` or `UNIQUE` functions can be applied.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun aggregations(): Optional<List<Aggregation>> = aggregations.getOptional("aggregations")
 
         /**
+         * Define Dimension filters you want to apply for the query.
+         *
+         * Specify values for Dimension data fields on included Meters. Only data that match the
+         * specified Dimension field values will be returned for the query.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -599,38 +689,53 @@ private constructor(
             dimensionFilters.getOptional("dimensionFilters")
 
         /**
+         * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
+
+        /**
+         * If you've applied Aggregations for your query, specify any grouping you want to impose on
+         * the returned data:
+         * - **Account**
+         * - **Time** - group by frequency. Five options: `DAY`, `HOUR`, `WEEK`, `MONTH`, or
+         *   `QUARTER`.
+         * - **Dimension** - group by Meter and data field.
+         *
+         * **NOTE:** If you attempt to impose grouping for a query that doesn't apply Aggregations,
+         * you'll receive an error.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun groups(): Optional<List<Group>> = groups.getOptional("groups")
 
         /**
+         * Define a limit for the number of usage data items you want the query to return, starting
+         * with the most recently received data item.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun limit(): Optional<Long> = limit.getOptional("limit")
 
         /**
+         * Specify the Meters you want the query to return usage data for.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun meterIds(): Optional<List<String>> = meterIds.getOptional("meterIds")
 
         /**
-         * Returns the raw JSON value of [endDate].
+         * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
          *
-         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
-
-        /**
-         * Returns the raw JSON value of [startDate].
-         *
-         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("startDate")
-        @ExcludeMissing
-        fun _startDate(): JsonField<OffsetDateTime> = startDate
+        fun startDate(): Optional<OffsetDateTime> = startDate.getOptional("startDate")
 
         /**
          * Returns the raw JSON value of [accountIds].
@@ -662,6 +767,13 @@ private constructor(
         fun _dimensionFilters(): JsonField<List<DimensionFilter>> = dimensionFilters
 
         /**
+         * Returns the raw JSON value of [endDate].
+         *
+         * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("endDate") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+        /**
          * Returns the raw JSON value of [groups].
          *
          * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
@@ -684,6 +796,15 @@ private constructor(
         @ExcludeMissing
         fun _meterIds(): JsonField<List<String>> = meterIds
 
+        /**
+         * Returns the raw JSON value of [startDate].
+         *
+         * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("startDate")
+        @ExcludeMissing
+        fun _startDate(): JsonField<OffsetDateTime> = startDate
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -698,70 +819,37 @@ private constructor(
 
         companion object {
 
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .endDate()
-             * .startDate()
-             * ```
-             */
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
-            private var endDate: JsonField<OffsetDateTime>? = null
-            private var startDate: JsonField<OffsetDateTime>? = null
             private var accountIds: JsonField<MutableList<String>>? = null
             private var aggregations: JsonField<MutableList<Aggregation>>? = null
             private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
+            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var groups: JsonField<MutableList<Group>>? = null
             private var limit: JsonField<Long> = JsonMissing.of()
             private var meterIds: JsonField<MutableList<String>>? = null
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(body: Body) = apply {
-                endDate = body.endDate
-                startDate = body.startDate
                 accountIds = body.accountIds.map { it.toMutableList() }
                 aggregations = body.aggregations.map { it.toMutableList() }
                 dimensionFilters = body.dimensionFilters.map { it.toMutableList() }
+                endDate = body.endDate
                 groups = body.groups.map { it.toMutableList() }
                 limit = body.limit
                 meterIds = body.meterIds.map { it.toMutableList() }
+                startDate = body.startDate
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
-            /** ISO 8601 formatted end date to filter by. */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /**
-             * Sets [Builder.endDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
-            /** ISO 8601 formatted start date to filter by. */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            /**
-             * Sets [Builder.startDate] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
-
+            /** Specify the Accounts you want the query to return usage data for. */
             fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
 
             /**
@@ -787,6 +875,22 @@ private constructor(
                     }
             }
 
+            /**
+             * Define the Aggregation functions you want to apply to data fields on included Meters:
+             * - **SUM**. Adds the values.
+             * - **MIN**. Uses the minimum value.
+             * - **MAX**. Uses the maximum value.
+             * - **COUNT**. Counts the number of values.
+             * - **LATEST**. Uses the most recent value.
+             * - **MEAN**. Uses the arithmetic mean of the values.
+             * - **UNIQUE**. Uses a count of the number of unique values.
+             *
+             * **NOTE!** The Aggregation functions that can be applied depend on the data field
+             * type:
+             * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can
+             *   be applied.
+             * - **Dimension** field. `COUNT` or `UNIQUE` functions can be applied.
+             */
             fun aggregations(aggregations: List<Aggregation>) =
                 aggregations(JsonField.of(aggregations))
 
@@ -813,6 +917,12 @@ private constructor(
                     }
             }
 
+            /**
+             * Define Dimension filters you want to apply for the query.
+             *
+             * Specify values for Dimension data fields on included Meters. Only data that match the
+             * specified Dimension field values will be returned for the query.
+             */
             fun dimensionFilters(dimensionFilters: List<DimensionFilter>) =
                 dimensionFilters(JsonField.of(dimensionFilters))
 
@@ -839,6 +949,31 @@ private constructor(
                     }
             }
 
+            /**
+             * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+             */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /**
+             * Sets [Builder.endDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /**
+             * If you've applied Aggregations for your query, specify any grouping you want to
+             * impose on the returned data:
+             * - **Account**
+             * - **Time** - group by frequency. Five options: `DAY`, `HOUR`, `WEEK`, `MONTH`, or
+             *   `QUARTER`.
+             * - **Dimension** - group by Meter and data field.
+             *
+             * **NOTE:** If you attempt to impose grouping for a query that doesn't apply
+             * Aggregations, you'll receive an error.
+             */
             fun groups(groups: List<Group>) = groups(JsonField.of(groups))
 
             /**
@@ -865,22 +1000,32 @@ private constructor(
             }
 
             /**
-             * Alias for calling [addGroup] with `Group.ofDataExplorerAccount(dataExplorerAccount)`.
+             * Alias for calling [addGroup] with
+             * `Group.ofDataExportsDataExplorerAccount(dataExportsDataExplorerAccount)`.
              */
-            fun addGroup(dataExplorerAccount: Group.DataExplorerAccountGroup) =
-                addGroup(Group.ofDataExplorerAccount(dataExplorerAccount))
+            fun addGroup(
+                dataExportsDataExplorerAccount: Group.DataExportsDataExplorerAccountGroup
+            ) = addGroup(Group.ofDataExportsDataExplorerAccount(dataExportsDataExplorerAccount))
 
             /**
              * Alias for calling [addGroup] with
-             * `Group.ofDataExplorerDimension(dataExplorerDimension)`.
+             * `Group.ofDataExportsDataExplorerDimension(dataExportsDataExplorerDimension)`.
              */
-            fun addGroup(dataExplorerDimension: Group.DataExplorerDimensionGroup) =
-                addGroup(Group.ofDataExplorerDimension(dataExplorerDimension))
+            fun addGroup(
+                dataExportsDataExplorerDimension: Group.DataExportsDataExplorerDimensionGroup
+            ) = addGroup(Group.ofDataExportsDataExplorerDimension(dataExportsDataExplorerDimension))
 
-            /** Alias for calling [addGroup] with `Group.ofDataExplorerTime(dataExplorerTime)`. */
-            fun addGroup(dataExplorerTime: Group.DataExplorerTimeGroup) =
-                addGroup(Group.ofDataExplorerTime(dataExplorerTime))
+            /**
+             * Alias for calling [addGroup] with
+             * `Group.ofDataExportsDataExplorerTime(dataExportsDataExplorerTime)`.
+             */
+            fun addGroup(dataExportsDataExplorerTime: Group.DataExportsDataExplorerTimeGroup) =
+                addGroup(Group.ofDataExportsDataExplorerTime(dataExportsDataExplorerTime))
 
+            /**
+             * Define a limit for the number of usage data items you want the query to return,
+             * starting with the most recently received data item.
+             */
             fun limit(limit: Long) = limit(JsonField.of(limit))
 
             /**
@@ -892,6 +1037,7 @@ private constructor(
              */
             fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
 
+            /** Specify the Meters you want the query to return usage data for. */
             fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
 
             /**
@@ -917,6 +1063,22 @@ private constructor(
                     }
             }
 
+            /**
+             * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
+             */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            /**
+             * Sets [Builder.startDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startDate] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -940,25 +1102,17 @@ private constructor(
              * Returns an immutable instance of [Body].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .endDate()
-             * .startDate()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Body =
                 Body(
-                    checkRequired("endDate", endDate),
-                    checkRequired("startDate", startDate),
                     (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
                     (aggregations ?: JsonMissing.of()).map { it.toImmutable() },
                     (dimensionFilters ?: JsonMissing.of()).map { it.toImmutable() },
+                    endDate,
                     (groups ?: JsonMissing.of()).map { it.toImmutable() },
                     limit,
                     (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
+                    startDate,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -970,14 +1124,14 @@ private constructor(
                 return@apply
             }
 
-            endDate()
-            startDate()
             accountIds()
             aggregations().ifPresent { it.forEach { it.validate() } }
             dimensionFilters().ifPresent { it.forEach { it.validate() } }
+            endDate()
             groups().ifPresent { it.forEach { it.validate() } }
             limit()
             meterIds()
+            startDate()
             validated = true
         }
 
@@ -997,31 +1151,31 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (endDate.asKnown().isPresent) 1 else 0) +
-                (if (startDate.asKnown().isPresent) 1 else 0) +
-                (accountIds.asKnown().getOrNull()?.size ?: 0) +
+            (accountIds.asKnown().getOrNull()?.size ?: 0) +
                 (aggregations.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (dimensionFilters.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (endDate.asKnown().isPresent) 1 else 0) +
                 (groups.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (limit.asKnown().isPresent) 1 else 0) +
-                (meterIds.asKnown().getOrNull()?.size ?: 0)
+                (meterIds.asKnown().getOrNull()?.size ?: 0) +
+                (if (startDate.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Body && endDate == other.endDate && startDate == other.startDate && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && limit == other.limit && meterIds == other.meterIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && endDate == other.endDate && groups == other.groups && limit == other.limit && meterIds == other.meterIds && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(endDate, startDate, accountIds, aggregations, dimensionFilters, groups, limit, meterIds, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountIds, aggregations, dimensionFilters, endDate, groups, limit, meterIds, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{endDate=$endDate, startDate=$startDate, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, limit=$limit, meterIds=$meterIds, additionalProperties=$additionalProperties}"
+            "Body{accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, endDate=$endDate, groups=$groups, limit=$limit, meterIds=$meterIds, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     class Aggregation
@@ -1848,50 +2002,52 @@ private constructor(
     @JsonSerialize(using = Group.Serializer::class)
     class Group
     private constructor(
-        private val dataExplorerAccount: DataExplorerAccountGroup? = null,
-        private val dataExplorerDimension: DataExplorerDimensionGroup? = null,
-        private val dataExplorerTime: DataExplorerTimeGroup? = null,
+        private val dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup? = null,
+        private val dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup? = null,
+        private val dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup? = null,
         private val _json: JsonValue? = null,
     ) {
 
         /** Group by account */
-        fun dataExplorerAccount(): Optional<DataExplorerAccountGroup> =
-            Optional.ofNullable(dataExplorerAccount)
+        fun dataExportsDataExplorerAccount(): Optional<DataExportsDataExplorerAccountGroup> =
+            Optional.ofNullable(dataExportsDataExplorerAccount)
 
         /** Group by dimension */
-        fun dataExplorerDimension(): Optional<DataExplorerDimensionGroup> =
-            Optional.ofNullable(dataExplorerDimension)
+        fun dataExportsDataExplorerDimension(): Optional<DataExportsDataExplorerDimensionGroup> =
+            Optional.ofNullable(dataExportsDataExplorerDimension)
 
         /** Group by time */
-        fun dataExplorerTime(): Optional<DataExplorerTimeGroup> =
-            Optional.ofNullable(dataExplorerTime)
+        fun dataExportsDataExplorerTime(): Optional<DataExportsDataExplorerTimeGroup> =
+            Optional.ofNullable(dataExportsDataExplorerTime)
 
-        fun isDataExplorerAccount(): Boolean = dataExplorerAccount != null
+        fun isDataExportsDataExplorerAccount(): Boolean = dataExportsDataExplorerAccount != null
 
-        fun isDataExplorerDimension(): Boolean = dataExplorerDimension != null
+        fun isDataExportsDataExplorerDimension(): Boolean = dataExportsDataExplorerDimension != null
 
-        fun isDataExplorerTime(): Boolean = dataExplorerTime != null
+        fun isDataExportsDataExplorerTime(): Boolean = dataExportsDataExplorerTime != null
 
         /** Group by account */
-        fun asDataExplorerAccount(): DataExplorerAccountGroup =
-            dataExplorerAccount.getOrThrow("dataExplorerAccount")
+        fun asDataExportsDataExplorerAccount(): DataExportsDataExplorerAccountGroup =
+            dataExportsDataExplorerAccount.getOrThrow("dataExportsDataExplorerAccount")
 
         /** Group by dimension */
-        fun asDataExplorerDimension(): DataExplorerDimensionGroup =
-            dataExplorerDimension.getOrThrow("dataExplorerDimension")
+        fun asDataExportsDataExplorerDimension(): DataExportsDataExplorerDimensionGroup =
+            dataExportsDataExplorerDimension.getOrThrow("dataExportsDataExplorerDimension")
 
         /** Group by time */
-        fun asDataExplorerTime(): DataExplorerTimeGroup =
-            dataExplorerTime.getOrThrow("dataExplorerTime")
+        fun asDataExportsDataExplorerTime(): DataExportsDataExplorerTimeGroup =
+            dataExportsDataExplorerTime.getOrThrow("dataExportsDataExplorerTime")
 
         fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
         fun <T> accept(visitor: Visitor<T>): T =
             when {
-                dataExplorerAccount != null -> visitor.visitDataExplorerAccount(dataExplorerAccount)
-                dataExplorerDimension != null ->
-                    visitor.visitDataExplorerDimension(dataExplorerDimension)
-                dataExplorerTime != null -> visitor.visitDataExplorerTime(dataExplorerTime)
+                dataExportsDataExplorerAccount != null ->
+                    visitor.visitDataExportsDataExplorerAccount(dataExportsDataExplorerAccount)
+                dataExportsDataExplorerDimension != null ->
+                    visitor.visitDataExportsDataExplorerDimension(dataExportsDataExplorerDimension)
+                dataExportsDataExplorerTime != null ->
+                    visitor.visitDataExportsDataExplorerTime(dataExportsDataExplorerTime)
                 else -> visitor.unknown(_json)
             }
 
@@ -1904,20 +2060,22 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitDataExplorerAccount(
-                        dataExplorerAccount: DataExplorerAccountGroup
+                    override fun visitDataExportsDataExplorerAccount(
+                        dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
                     ) {
-                        dataExplorerAccount.validate()
+                        dataExportsDataExplorerAccount.validate()
                     }
 
-                    override fun visitDataExplorerDimension(
-                        dataExplorerDimension: DataExplorerDimensionGroup
+                    override fun visitDataExportsDataExplorerDimension(
+                        dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
                     ) {
-                        dataExplorerDimension.validate()
+                        dataExportsDataExplorerDimension.validate()
                     }
 
-                    override fun visitDataExplorerTime(dataExplorerTime: DataExplorerTimeGroup) {
-                        dataExplorerTime.validate()
+                    override fun visitDataExportsDataExplorerTime(
+                        dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
+                    ) {
+                        dataExportsDataExplorerTime.validate()
                     }
                 }
             )
@@ -1942,16 +2100,17 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitDataExplorerAccount(
-                        dataExplorerAccount: DataExplorerAccountGroup
-                    ) = dataExplorerAccount.validity()
+                    override fun visitDataExportsDataExplorerAccount(
+                        dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
+                    ) = dataExportsDataExplorerAccount.validity()
 
-                    override fun visitDataExplorerDimension(
-                        dataExplorerDimension: DataExplorerDimensionGroup
-                    ) = dataExplorerDimension.validity()
+                    override fun visitDataExportsDataExplorerDimension(
+                        dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
+                    ) = dataExportsDataExplorerDimension.validity()
 
-                    override fun visitDataExplorerTime(dataExplorerTime: DataExplorerTimeGroup) =
-                        dataExplorerTime.validity()
+                    override fun visitDataExportsDataExplorerTime(
+                        dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
+                    ) = dataExportsDataExplorerTime.validity()
 
                     override fun unknown(json: JsonValue?) = 0
                 }
@@ -1962,17 +2121,19 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Group && dataExplorerAccount == other.dataExplorerAccount && dataExplorerDimension == other.dataExplorerDimension && dataExplorerTime == other.dataExplorerTime /* spotless:on */
+            return /* spotless:off */ other is Group && dataExportsDataExplorerAccount == other.dataExportsDataExplorerAccount && dataExportsDataExplorerDimension == other.dataExportsDataExplorerDimension && dataExportsDataExplorerTime == other.dataExportsDataExplorerTime /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExplorerAccount, dataExplorerDimension, dataExplorerTime) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportsDataExplorerAccount, dataExportsDataExplorerDimension, dataExportsDataExplorerTime) /* spotless:on */
 
         override fun toString(): String =
             when {
-                dataExplorerAccount != null -> "Group{dataExplorerAccount=$dataExplorerAccount}"
-                dataExplorerDimension != null ->
-                    "Group{dataExplorerDimension=$dataExplorerDimension}"
-                dataExplorerTime != null -> "Group{dataExplorerTime=$dataExplorerTime}"
+                dataExportsDataExplorerAccount != null ->
+                    "Group{dataExportsDataExplorerAccount=$dataExportsDataExplorerAccount}"
+                dataExportsDataExplorerDimension != null ->
+                    "Group{dataExportsDataExplorerDimension=$dataExportsDataExplorerDimension}"
+                dataExportsDataExplorerTime != null ->
+                    "Group{dataExportsDataExplorerTime=$dataExportsDataExplorerTime}"
                 _json != null -> "Group{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Group")
             }
@@ -1981,31 +2142,40 @@ private constructor(
 
             /** Group by account */
             @JvmStatic
-            fun ofDataExplorerAccount(dataExplorerAccount: DataExplorerAccountGroup) =
-                Group(dataExplorerAccount = dataExplorerAccount)
+            fun ofDataExportsDataExplorerAccount(
+                dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
+            ) = Group(dataExportsDataExplorerAccount = dataExportsDataExplorerAccount)
 
             /** Group by dimension */
             @JvmStatic
-            fun ofDataExplorerDimension(dataExplorerDimension: DataExplorerDimensionGroup) =
-                Group(dataExplorerDimension = dataExplorerDimension)
+            fun ofDataExportsDataExplorerDimension(
+                dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
+            ) = Group(dataExportsDataExplorerDimension = dataExportsDataExplorerDimension)
 
             /** Group by time */
             @JvmStatic
-            fun ofDataExplorerTime(dataExplorerTime: DataExplorerTimeGroup) =
-                Group(dataExplorerTime = dataExplorerTime)
+            fun ofDataExportsDataExplorerTime(
+                dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
+            ) = Group(dataExportsDataExplorerTime = dataExportsDataExplorerTime)
         }
 
         /** An interface that defines how to map each variant of [Group] to a value of type [T]. */
         interface Visitor<out T> {
 
             /** Group by account */
-            fun visitDataExplorerAccount(dataExplorerAccount: DataExplorerAccountGroup): T
+            fun visitDataExportsDataExplorerAccount(
+                dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
+            ): T
 
             /** Group by dimension */
-            fun visitDataExplorerDimension(dataExplorerDimension: DataExplorerDimensionGroup): T
+            fun visitDataExportsDataExplorerDimension(
+                dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
+            ): T
 
             /** Group by time */
-            fun visitDataExplorerTime(dataExplorerTime: DataExplorerTimeGroup): T
+            fun visitDataExportsDataExplorerTime(
+                dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
+            ): T
 
             /**
              * Maps an unknown variant of [Group] to a value of type [T].
@@ -2029,14 +2199,20 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<DataExplorerAccountGroup>())?.let {
-                                Group(dataExplorerAccount = it, _json = json)
-                            },
-                            tryDeserialize(node, jacksonTypeRef<DataExplorerDimensionGroup>())
-                                ?.let { Group(dataExplorerDimension = it, _json = json) },
-                            tryDeserialize(node, jacksonTypeRef<DataExplorerTimeGroup>())?.let {
-                                Group(dataExplorerTime = it, _json = json)
-                            },
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<DataExportsDataExplorerAccountGroup>(),
+                                )
+                                ?.let { Group(dataExportsDataExplorerAccount = it, _json = json) },
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<DataExportsDataExplorerDimensionGroup>(),
+                                )
+                                ?.let {
+                                    Group(dataExportsDataExplorerDimension = it, _json = json)
+                                },
+                            tryDeserialize(node, jacksonTypeRef<DataExportsDataExplorerTimeGroup>())
+                                ?.let { Group(dataExportsDataExplorerTime = it, _json = json) },
                         )
                         .filterNotNull()
                         .allMaxBy { it.validity() }
@@ -2062,11 +2238,12 @@ private constructor(
                 provider: SerializerProvider,
             ) {
                 when {
-                    value.dataExplorerAccount != null ->
-                        generator.writeObject(value.dataExplorerAccount)
-                    value.dataExplorerDimension != null ->
-                        generator.writeObject(value.dataExplorerDimension)
-                    value.dataExplorerTime != null -> generator.writeObject(value.dataExplorerTime)
+                    value.dataExportsDataExplorerAccount != null ->
+                        generator.writeObject(value.dataExportsDataExplorerAccount)
+                    value.dataExportsDataExplorerDimension != null ->
+                        generator.writeObject(value.dataExportsDataExplorerDimension)
+                    value.dataExportsDataExplorerTime != null ->
+                        generator.writeObject(value.dataExportsDataExplorerTime)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Group")
                 }
@@ -2074,9 +2251,9 @@ private constructor(
         }
 
         /** Group by account */
-        class DataExplorerAccountGroup
+        class DataExportsDataExplorerAccountGroup
         private constructor(
-            private val groupType: JsonField<GroupType>,
+            private val groupType: JsonField<DataExplorerAccountGroup.GroupType>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -2084,14 +2261,18 @@ private constructor(
             private constructor(
                 @JsonProperty("groupType")
                 @ExcludeMissing
-                groupType: JsonField<GroupType> = JsonMissing.of()
+                groupType: JsonField<DataExplorerAccountGroup.GroupType> = JsonMissing.of()
             ) : this(groupType, mutableMapOf())
+
+            fun toDataExplorerAccountGroup(): DataExplorerAccountGroup =
+                DataExplorerAccountGroup.builder().groupType(groupType).build()
 
             /**
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+            fun groupType(): Optional<DataExplorerAccountGroup.GroupType> =
+                groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [groupType].
@@ -2101,7 +2282,7 @@ private constructor(
              */
             @JsonProperty("groupType")
             @ExcludeMissing
-            fun _groupType(): JsonField<GroupType> = groupType
+            fun _groupType(): JsonField<DataExplorerAccountGroup.GroupType> = groupType
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2119,34 +2300,38 @@ private constructor(
 
                 /**
                  * Returns a mutable builder for constructing an instance of
-                 * [DataExplorerAccountGroup].
+                 * [DataExportsDataExplorerAccountGroup].
                  */
                 @JvmStatic fun builder() = Builder()
             }
 
-            /** A builder for [DataExplorerAccountGroup]. */
+            /** A builder for [DataExportsDataExplorerAccountGroup]. */
             class Builder internal constructor() {
 
-                private var groupType: JsonField<GroupType> = JsonMissing.of()
+                private var groupType: JsonField<DataExplorerAccountGroup.GroupType> =
+                    JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
-                internal fun from(dataExplorerAccountGroup: DataExplorerAccountGroup) = apply {
-                    groupType = dataExplorerAccountGroup.groupType
+                internal fun from(
+                    dataExportsDataExplorerAccountGroup: DataExportsDataExplorerAccountGroup
+                ) = apply {
+                    groupType = dataExportsDataExplorerAccountGroup.groupType
                     additionalProperties =
-                        dataExplorerAccountGroup.additionalProperties.toMutableMap()
+                        dataExportsDataExplorerAccountGroup.additionalProperties.toMutableMap()
                 }
 
-                fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
+                fun groupType(groupType: DataExplorerAccountGroup.GroupType) =
+                    groupType(JsonField.of(groupType))
 
                 /**
                  * Sets [Builder.groupType] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * You should usually call [Builder.groupType] with a well-typed
+                 * [DataExplorerAccountGroup.GroupType] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
                  */
-                fun groupType(groupType: JsonField<GroupType>) = apply {
+                fun groupType(groupType: JsonField<DataExplorerAccountGroup.GroupType>) = apply {
                     this.groupType = groupType
                 }
 
@@ -2173,17 +2358,20 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [DataExplorerAccountGroup].
+                 * Returns an immutable instance of [DataExportsDataExplorerAccountGroup].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
-                fun build(): DataExplorerAccountGroup =
-                    DataExplorerAccountGroup(groupType, additionalProperties.toMutableMap())
+                fun build(): DataExportsDataExplorerAccountGroup =
+                    DataExportsDataExplorerAccountGroup(
+                        groupType,
+                        additionalProperties.toMutableMap(),
+                    )
             }
 
             private var validated: Boolean = false
 
-            fun validate(): DataExplorerAccountGroup = apply {
+            fun validate(): DataExportsDataExplorerAccountGroup = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2351,7 +2539,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DataExplorerAccountGroup && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is DataExportsDataExplorerAccountGroup && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2361,15 +2549,15 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "DataExplorerAccountGroup{groupType=$groupType, additionalProperties=$additionalProperties}"
+                "DataExportsDataExplorerAccountGroup{groupType=$groupType, additionalProperties=$additionalProperties}"
         }
 
         /** Group by dimension */
-        class DataExplorerDimensionGroup
+        class DataExportsDataExplorerDimensionGroup
         private constructor(
             private val fieldCode: JsonField<String>,
             private val meterId: JsonField<String>,
-            private val groupType: JsonField<GroupType>,
+            private val groupType: JsonField<DataExplorerDimensionGroup.GroupType>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -2383,8 +2571,15 @@ private constructor(
                 meterId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("groupType")
                 @ExcludeMissing
-                groupType: JsonField<GroupType> = JsonMissing.of(),
+                groupType: JsonField<DataExplorerDimensionGroup.GroupType> = JsonMissing.of(),
             ) : this(fieldCode, meterId, groupType, mutableMapOf())
+
+            fun toDataExplorerDimensionGroup(): DataExplorerDimensionGroup =
+                DataExplorerDimensionGroup.builder()
+                    .fieldCode(fieldCode)
+                    .meterId(meterId)
+                    .groupType(groupType)
+                    .build()
 
             /**
              * Field code to group by
@@ -2408,7 +2603,8 @@ private constructor(
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+            fun groupType(): Optional<DataExplorerDimensionGroup.GroupType> =
+                groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [fieldCode].
@@ -2435,7 +2631,7 @@ private constructor(
              */
             @JsonProperty("groupType")
             @ExcludeMissing
-            fun _groupType(): JsonField<GroupType> = groupType
+            fun _groupType(): JsonField<DataExplorerDimensionGroup.GroupType> = groupType
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2453,7 +2649,7 @@ private constructor(
 
                 /**
                  * Returns a mutable builder for constructing an instance of
-                 * [DataExplorerDimensionGroup].
+                 * [DataExportsDataExplorerDimensionGroup].
                  *
                  * The following fields are required:
                  * ```java
@@ -2464,21 +2660,24 @@ private constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            /** A builder for [DataExplorerDimensionGroup]. */
+            /** A builder for [DataExportsDataExplorerDimensionGroup]. */
             class Builder internal constructor() {
 
                 private var fieldCode: JsonField<String>? = null
                 private var meterId: JsonField<String>? = null
-                private var groupType: JsonField<GroupType> = JsonMissing.of()
+                private var groupType: JsonField<DataExplorerDimensionGroup.GroupType> =
+                    JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
-                internal fun from(dataExplorerDimensionGroup: DataExplorerDimensionGroup) = apply {
-                    fieldCode = dataExplorerDimensionGroup.fieldCode
-                    meterId = dataExplorerDimensionGroup.meterId
-                    groupType = dataExplorerDimensionGroup.groupType
+                internal fun from(
+                    dataExportsDataExplorerDimensionGroup: DataExportsDataExplorerDimensionGroup
+                ) = apply {
+                    fieldCode = dataExportsDataExplorerDimensionGroup.fieldCode
+                    meterId = dataExportsDataExplorerDimensionGroup.meterId
+                    groupType = dataExportsDataExplorerDimensionGroup.groupType
                     additionalProperties =
-                        dataExplorerDimensionGroup.additionalProperties.toMutableMap()
+                        dataExportsDataExplorerDimensionGroup.additionalProperties.toMutableMap()
                 }
 
                 /** Field code to group by */
@@ -2505,16 +2704,17 @@ private constructor(
                  */
                 fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
-                fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
+                fun groupType(groupType: DataExplorerDimensionGroup.GroupType) =
+                    groupType(JsonField.of(groupType))
 
                 /**
                  * Sets [Builder.groupType] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * You should usually call [Builder.groupType] with a well-typed
+                 * [DataExplorerDimensionGroup.GroupType] value instead. This method is primarily
+                 * for setting the field to an undocumented or not yet supported value.
                  */
-                fun groupType(groupType: JsonField<GroupType>) = apply {
+                fun groupType(groupType: JsonField<DataExplorerDimensionGroup.GroupType>) = apply {
                     this.groupType = groupType
                 }
 
@@ -2541,7 +2741,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [DataExplorerDimensionGroup].
+                 * Returns an immutable instance of [DataExportsDataExplorerDimensionGroup].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -2553,8 +2753,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): DataExplorerDimensionGroup =
-                    DataExplorerDimensionGroup(
+                fun build(): DataExportsDataExplorerDimensionGroup =
+                    DataExportsDataExplorerDimensionGroup(
                         checkRequired("fieldCode", fieldCode),
                         checkRequired("meterId", meterId),
                         groupType,
@@ -2564,7 +2764,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): DataExplorerDimensionGroup = apply {
+            fun validate(): DataExportsDataExplorerDimensionGroup = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2737,7 +2937,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DataExplorerDimensionGroup && fieldCode == other.fieldCode && meterId == other.meterId && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is DataExportsDataExplorerDimensionGroup && fieldCode == other.fieldCode && meterId == other.meterId && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2747,14 +2947,14 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "DataExplorerDimensionGroup{fieldCode=$fieldCode, meterId=$meterId, groupType=$groupType, additionalProperties=$additionalProperties}"
+                "DataExportsDataExplorerDimensionGroup{fieldCode=$fieldCode, meterId=$meterId, groupType=$groupType, additionalProperties=$additionalProperties}"
         }
 
         /** Group by time */
-        class DataExplorerTimeGroup
+        class DataExportsDataExplorerTimeGroup
         private constructor(
-            private val frequency: JsonField<Frequency>,
-            private val groupType: JsonField<GroupType>,
+            private val frequency: JsonField<DataExplorerTimeGroup.Frequency>,
+            private val groupType: JsonField<DataExplorerTimeGroup.GroupType>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -2762,11 +2962,14 @@ private constructor(
             private constructor(
                 @JsonProperty("frequency")
                 @ExcludeMissing
-                frequency: JsonField<Frequency> = JsonMissing.of(),
+                frequency: JsonField<DataExplorerTimeGroup.Frequency> = JsonMissing.of(),
                 @JsonProperty("groupType")
                 @ExcludeMissing
-                groupType: JsonField<GroupType> = JsonMissing.of(),
+                groupType: JsonField<DataExplorerTimeGroup.GroupType> = JsonMissing.of(),
             ) : this(frequency, groupType, mutableMapOf())
+
+            fun toDataExplorerTimeGroup(): DataExplorerTimeGroup =
+                DataExplorerTimeGroup.builder().frequency(frequency).groupType(groupType).build()
 
             /**
              * Frequency of usage data
@@ -2775,13 +2978,14 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun frequency(): Frequency = frequency.getRequired("frequency")
+            fun frequency(): DataExplorerTimeGroup.Frequency = frequency.getRequired("frequency")
 
             /**
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
-            fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+            fun groupType(): Optional<DataExplorerTimeGroup.GroupType> =
+                groupType.getOptional("groupType")
 
             /**
              * Returns the raw JSON value of [frequency].
@@ -2791,7 +2995,7 @@ private constructor(
              */
             @JsonProperty("frequency")
             @ExcludeMissing
-            fun _frequency(): JsonField<Frequency> = frequency
+            fun _frequency(): JsonField<DataExplorerTimeGroup.Frequency> = frequency
 
             /**
              * Returns the raw JSON value of [groupType].
@@ -2801,7 +3005,7 @@ private constructor(
              */
             @JsonProperty("groupType")
             @ExcludeMissing
-            fun _groupType(): JsonField<GroupType> = groupType
+            fun _groupType(): JsonField<DataExplorerTimeGroup.GroupType> = groupType
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2819,7 +3023,7 @@ private constructor(
 
                 /**
                  * Returns a mutable builder for constructing an instance of
-                 * [DataExplorerTimeGroup].
+                 * [DataExportsDataExplorerTimeGroup].
                  *
                  * The following fields are required:
                  * ```java
@@ -2829,44 +3033,49 @@ private constructor(
                 @JvmStatic fun builder() = Builder()
             }
 
-            /** A builder for [DataExplorerTimeGroup]. */
+            /** A builder for [DataExportsDataExplorerTimeGroup]. */
             class Builder internal constructor() {
 
-                private var frequency: JsonField<Frequency>? = null
-                private var groupType: JsonField<GroupType> = JsonMissing.of()
+                private var frequency: JsonField<DataExplorerTimeGroup.Frequency>? = null
+                private var groupType: JsonField<DataExplorerTimeGroup.GroupType> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 @JvmSynthetic
-                internal fun from(dataExplorerTimeGroup: DataExplorerTimeGroup) = apply {
-                    frequency = dataExplorerTimeGroup.frequency
-                    groupType = dataExplorerTimeGroup.groupType
-                    additionalProperties = dataExplorerTimeGroup.additionalProperties.toMutableMap()
+                internal fun from(
+                    dataExportsDataExplorerTimeGroup: DataExportsDataExplorerTimeGroup
+                ) = apply {
+                    frequency = dataExportsDataExplorerTimeGroup.frequency
+                    groupType = dataExportsDataExplorerTimeGroup.groupType
+                    additionalProperties =
+                        dataExportsDataExplorerTimeGroup.additionalProperties.toMutableMap()
                 }
 
                 /** Frequency of usage data */
-                fun frequency(frequency: Frequency) = frequency(JsonField.of(frequency))
+                fun frequency(frequency: DataExplorerTimeGroup.Frequency) =
+                    frequency(JsonField.of(frequency))
 
                 /**
                  * Sets [Builder.frequency] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.frequency] with a well-typed [Frequency] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * You should usually call [Builder.frequency] with a well-typed
+                 * [DataExplorerTimeGroup.Frequency] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
                  */
-                fun frequency(frequency: JsonField<Frequency>) = apply {
+                fun frequency(frequency: JsonField<DataExplorerTimeGroup.Frequency>) = apply {
                     this.frequency = frequency
                 }
 
-                fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
+                fun groupType(groupType: DataExplorerTimeGroup.GroupType) =
+                    groupType(JsonField.of(groupType))
 
                 /**
                  * Sets [Builder.groupType] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.groupType] with a well-typed [GroupType] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
+                 * You should usually call [Builder.groupType] with a well-typed
+                 * [DataExplorerTimeGroup.GroupType] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
                  */
-                fun groupType(groupType: JsonField<GroupType>) = apply {
+                fun groupType(groupType: JsonField<DataExplorerTimeGroup.GroupType>) = apply {
                     this.groupType = groupType
                 }
 
@@ -2893,7 +3102,7 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [DataExplorerTimeGroup].
+                 * Returns an immutable instance of [DataExportsDataExplorerTimeGroup].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  *
@@ -2904,8 +3113,8 @@ private constructor(
                  *
                  * @throws IllegalStateException if any required field is unset.
                  */
-                fun build(): DataExplorerTimeGroup =
-                    DataExplorerTimeGroup(
+                fun build(): DataExportsDataExplorerTimeGroup =
+                    DataExportsDataExplorerTimeGroup(
                         checkRequired("frequency", frequency),
                         groupType,
                         additionalProperties.toMutableMap(),
@@ -2914,7 +3123,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): DataExplorerTimeGroup = apply {
+            fun validate(): DataExportsDataExplorerTimeGroup = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2942,156 +3151,6 @@ private constructor(
             internal fun validity(): Int =
                 (frequency.asKnown().getOrNull()?.validity() ?: 0) +
                     (groupType.asKnown().getOrNull()?.validity() ?: 0)
-
-            /** Frequency of usage data */
-            class Frequency @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    @JvmField val DAY = of("DAY")
-
-                    @JvmField val HOUR = of("HOUR")
-
-                    @JvmField val WEEK = of("WEEK")
-
-                    @JvmField val MONTH = of("MONTH")
-
-                    @JvmField val QUARTER = of("QUARTER")
-
-                    @JvmStatic fun of(value: String) = Frequency(JsonField.of(value))
-                }
-
-                /** An enum containing [Frequency]'s known values. */
-                enum class Known {
-                    DAY,
-                    HOUR,
-                    WEEK,
-                    MONTH,
-                    QUARTER,
-                }
-
-                /**
-                 * An enum containing [Frequency]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [Frequency] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    DAY,
-                    HOUR,
-                    WEEK,
-                    MONTH,
-                    QUARTER,
-                    /**
-                     * An enum member indicating that [Frequency] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        DAY -> Value.DAY
-                        HOUR -> Value.HOUR
-                        WEEK -> Value.WEEK
-                        MONTH -> Value.MONTH
-                        QUARTER -> Value.QUARTER
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        DAY -> Known.DAY
-                        HOUR -> Known.HOUR
-                        WEEK -> Known.WEEK
-                        MONTH -> Known.MONTH
-                        QUARTER -> Known.QUARTER
-                        else -> throw M3terInvalidDataException("Unknown Frequency: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value does not have
-                 *   the expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString().orElseThrow {
-                        M3terInvalidDataException("Value is not a String")
-                    }
-
-                private var validated: Boolean = false
-
-                fun validate(): Frequency = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: M3terInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is Frequency && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
 
             class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
                 Enum {
@@ -3235,7 +3294,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DataExplorerTimeGroup && frequency == other.frequency && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is DataExportsDataExplorerTimeGroup && frequency == other.frequency && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -3245,7 +3304,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "DataExplorerTimeGroup{frequency=$frequency, groupType=$groupType, additionalProperties=$additionalProperties}"
+                "DataExportsDataExplorerTimeGroup{frequency=$frequency, groupType=$groupType, additionalProperties=$additionalProperties}"
         }
     }
 

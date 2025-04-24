@@ -31,6 +31,7 @@ private constructor(
     private val endDateStart: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
+    private val sortOrder: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -62,6 +63,9 @@ private constructor(
     /** Number of CounterAdjustments to retrieve per page */
     fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
 
+    /** Sort order for the results */
+    fun sortOrder(): Optional<String> = Optional.ofNullable(sortOrder)
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
@@ -91,6 +95,7 @@ private constructor(
         private var endDateStart: String? = null
         private var nextToken: String? = null
         private var pageSize: Long? = null
+        private var sortOrder: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -106,6 +111,7 @@ private constructor(
             endDateStart = counterAdjustmentListParams.endDateStart
             nextToken = counterAdjustmentListParams.nextToken
             pageSize = counterAdjustmentListParams.pageSize
+            sortOrder = counterAdjustmentListParams.sortOrder
             additionalHeaders = counterAdjustmentListParams.additionalHeaders.toBuilder()
             additionalQueryParams = counterAdjustmentListParams.additionalQueryParams.toBuilder()
         }
@@ -173,6 +179,12 @@ private constructor(
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
         fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+
+        /** Sort order for the results */
+        fun sortOrder(sortOrder: String?) = apply { this.sortOrder = sortOrder }
+
+        /** Alias for calling [Builder.sortOrder] with `sortOrder.orElse(null)`. */
+        fun sortOrder(sortOrder: Optional<String>) = sortOrder(sortOrder.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -289,6 +301,7 @@ private constructor(
                 endDateStart,
                 nextToken,
                 pageSize,
+                sortOrder,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -314,6 +327,7 @@ private constructor(
                 endDateStart?.let { put("endDateStart", it) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
+                sortOrder?.let { put("sortOrder", it) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -323,11 +337,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentListParams && orgId == other.orgId && accountId == other.accountId && counterId == other.counterId && date == other.date && dateEnd == other.dateEnd && dateStart == other.dateStart && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CounterAdjustmentListParams && orgId == other.orgId && accountId == other.accountId && counterId == other.counterId && date == other.date && dateEnd == other.dateEnd && dateStart == other.dateStart && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && sortOrder == other.sortOrder && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, counterId, date, dateEnd, dateStart, endDateEnd, endDateStart, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, counterId, date, dateEnd, dateStart, endDateEnd, endDateStart, nextToken, pageSize, sortOrder, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CounterAdjustmentListParams{orgId=$orgId, accountId=$accountId, counterId=$counterId, date=$date, dateEnd=$dateEnd, dateStart=$dateStart, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "CounterAdjustmentListParams{orgId=$orgId, accountId=$accountId, counterId=$counterId, date=$date, dateEnd=$dateEnd, dateStart=$dateStart, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, sortOrder=$sortOrder, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

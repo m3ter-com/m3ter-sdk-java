@@ -63,14 +63,40 @@ interface UsageService {
     fun getFailedIngestDownloadUrl(requestOptions: RequestOptions): DownloadUrlResponse =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none(), requestOptions)
 
-    /** Query and filter usage data */
-    fun query(params: UsageQueryParams): UsageQueryResponse = query(params, RequestOptions.none())
+    /**
+     * Query and filter usage data collected for your Organization.
+     *
+     * You can use several parameters to filter the range of usage data returned:
+     * - **Time period.** Use `startDate` and `endDate` to define a period. The query references the
+     *   `timestamp` values of usage data submissions for applying the defined time period, and not
+     *   the time submissions were `receivedAt` by the platform. Only usage data with a `timestamp`
+     *   that falls in the defined time period are returned.(Required)
+     * - **Meters.** Specify the Meters you want the query to return data for.
+     * - **Accounts.** Specify the Accounts you want the query to return data for.
+     * - **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only
+     *   data that match the specified Dimension field values will be returned for the query.
+     *
+     * You can apply Aggregations functions to the usage data returned for the query. If you apply
+     * Aggregations, you can select to group the data by:
+     * - **Account**
+     * - **Time**
+     * - **Dimension**
+     */
+    fun query(): UsageQueryResponse = query(UsageQueryParams.none())
 
     /** @see [query] */
     fun query(
-        params: UsageQueryParams,
+        params: UsageQueryParams = UsageQueryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageQueryResponse
+
+    /** @see [query] */
+    fun query(params: UsageQueryParams = UsageQueryParams.none()): UsageQueryResponse =
+        query(params, RequestOptions.none())
+
+    /** @see [query] */
+    fun query(requestOptions: RequestOptions): UsageQueryResponse =
+        query(UsageQueryParams.none(), requestOptions)
 
     /**
      * Submit a measurement or multiple measurements to the m3ter platform. The maximum size of the
@@ -157,15 +183,25 @@ interface UsageService {
          * otherwise the same as [UsageService.query].
          */
         @MustBeClosed
-        fun query(params: UsageQueryParams): HttpResponseFor<UsageQueryResponse> =
-            query(params, RequestOptions.none())
+        fun query(): HttpResponseFor<UsageQueryResponse> = query(UsageQueryParams.none())
 
         /** @see [query] */
         @MustBeClosed
         fun query(
-            params: UsageQueryParams,
+            params: UsageQueryParams = UsageQueryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageQueryResponse>
+
+        /** @see [query] */
+        @MustBeClosed
+        fun query(
+            params: UsageQueryParams = UsageQueryParams.none()
+        ): HttpResponseFor<UsageQueryResponse> = query(params, RequestOptions.none())
+
+        /** @see [query] */
+        @MustBeClosed
+        fun query(requestOptions: RequestOptions): HttpResponseFor<UsageQueryResponse> =
+            query(UsageQueryParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/measurements`, but is

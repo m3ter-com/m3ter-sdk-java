@@ -66,10 +66,29 @@ internal class DataExportScheduleDeleteResponseTest {
                 .id("id")
                 .version(0L)
                 .addAccountId("string")
-                .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
-                .aggregationFrequency(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
+                .addAggregation(
+                    UsageDataExportScheduleResponse.Aggregation.builder()
+                        .fieldCode("x")
+                        .fieldType(UsageDataExportScheduleResponse.Aggregation.FieldType.DIMENSION)
+                        .function(UsageDataExportScheduleResponse.Aggregation.Function.SUM)
+                        .meterId("x")
+                        .build()
+                )
+                .addDimensionFilter(
+                    UsageDataExportScheduleResponse.DimensionFilter.builder()
+                        .fieldCode("x")
+                        .meterId("x")
+                        .addValue("string")
+                        .build()
+                )
+                .addGroup(
+                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
+                        .builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        .build()
+                )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
                 .build()
 
         val dataExportScheduleDeleteResponse =
@@ -89,12 +108,31 @@ internal class DataExportScheduleDeleteResponseTest {
                     .id("id")
                     .version(0L)
                     .addAccountId("string")
-                    .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
-                    .aggregationFrequency(
-                        UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL
+                    .addAggregation(
+                        UsageDataExportScheduleResponse.Aggregation.builder()
+                            .fieldCode("x")
+                            .fieldType(
+                                UsageDataExportScheduleResponse.Aggregation.FieldType.DIMENSION
+                            )
+                            .function(UsageDataExportScheduleResponse.Aggregation.Function.SUM)
+                            .meterId("x")
+                            .build()
+                    )
+                    .addDimensionFilter(
+                        UsageDataExportScheduleResponse.DimensionFilter.builder()
+                            .fieldCode("x")
+                            .meterId("x")
+                            .addValue("string")
+                            .build()
+                    )
+                    .addGroup(
+                        UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
+                            .builder()
+                            .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                            .build()
                     )
                     .addMeterId("string")
-                    .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                    .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
                     .build()
             )
 

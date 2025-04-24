@@ -15,6 +15,7 @@ internal class BalanceTransactionListParamsTest {
             .balanceId("balanceId")
             .nextToken("nextToken")
             .pageSize(1L)
+            .scheduleId("scheduleId")
             .transactionTypeId("transactionTypeId")
             .build()
     }
@@ -37,6 +38,7 @@ internal class BalanceTransactionListParamsTest {
                 .balanceId("balanceId")
                 .nextToken("nextToken")
                 .pageSize(1L)
+                .scheduleId("scheduleId")
                 .transactionTypeId("transactionTypeId")
                 .build()
 
@@ -47,6 +49,7 @@ internal class BalanceTransactionListParamsTest {
                 QueryParams.builder()
                     .put("nextToken", "nextToken")
                     .put("pageSize", "1")
+                    .put("scheduleId", "scheduleId")
                     .put("transactionTypeId", "transactionTypeId")
                     .build()
             )

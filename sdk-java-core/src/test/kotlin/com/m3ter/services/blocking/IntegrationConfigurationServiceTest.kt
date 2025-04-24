@@ -202,6 +202,8 @@ internal class IntegrationConfigurationServiceTest {
                 IntegrationConfigurationGetByEntityParams.builder()
                     .orgId("orgId")
                     .entityType("entityType")
+                    .destination("destination")
+                    .destinationId("destinationId")
                     .entityId("entityId")
                     .build()
             )
