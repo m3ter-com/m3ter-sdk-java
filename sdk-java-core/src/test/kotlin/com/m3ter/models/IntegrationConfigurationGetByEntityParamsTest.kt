@@ -13,6 +13,8 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
         IntegrationConfigurationGetByEntityParams.builder()
             .orgId("orgId")
             .entityType("entityType")
+            .destination("destination")
+            .destinationId("destinationId")
             .entityId("entityId")
             .build()
     }
@@ -34,12 +36,21 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
             IntegrationConfigurationGetByEntityParams.builder()
                 .orgId("orgId")
                 .entityType("entityType")
+                .destination("destination")
+                .destinationId("destinationId")
                 .entityId("entityId")
                 .build()
 
         val queryParams = params._queryParams()
 
-        assertThat(queryParams).isEqualTo(QueryParams.builder().put("entityId", "entityId").build())
+        assertThat(queryParams)
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("destination", "destination")
+                    .put("destinationId", "destinationId")
+                    .put("entityId", "entityId")
+                    .build()
+            )
     }
 
     @Test

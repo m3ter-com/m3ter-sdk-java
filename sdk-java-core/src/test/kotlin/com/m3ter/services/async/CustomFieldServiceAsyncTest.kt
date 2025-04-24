@@ -60,6 +60,11 @@ internal class CustomFieldServiceAsyncTest {
                     .compoundAggregation(
                         CustomFieldUpdateParams.CompoundAggregation.builder().build()
                     )
+                    .contract(
+                        CustomFieldUpdateParams.Contract.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .meter(CustomFieldUpdateParams.Meter.builder().build())
                     .organization(
                         CustomFieldUpdateParams.Organization.builder()

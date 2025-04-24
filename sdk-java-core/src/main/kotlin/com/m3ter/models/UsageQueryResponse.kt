@@ -40,7 +40,17 @@ private constructor(
     fun data(): Optional<List<Data>> = data.getOptional("data")
 
     /**
-     * Flag to know if there are more data available than the one returned
+     * Boolean flag to indicate whether or not there are more data available for the query than are
+     * returned:
+     * - If there are more data, then TRUE.
+     * - If there are no more data, then FALSE.
+     *
+     * **NOTES:**
+     * - The limit on the size of the return is 20000 data items. If the query returns more than
+     *   this limit, only 20000 items are returned with most recent first and `hasMoreData` will be
+     *   TRUE.
+     * - If you have set `limit` in your query request at fewer than the number returned by the
+     *   query, then `hasMoreData` will be TRUE in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -119,7 +129,19 @@ private constructor(
                 }
         }
 
-        /** Flag to know if there are more data available than the one returned */
+        /**
+         * Boolean flag to indicate whether or not there are more data available for the query than
+         * are returned:
+         * - If there are more data, then TRUE.
+         * - If there are no more data, then FALSE.
+         *
+         * **NOTES:**
+         * - The limit on the size of the return is 20000 data items. If the query returns more than
+         *   this limit, only 20000 items are returned with most recent first and `hasMoreData` will
+         *   be TRUE.
+         * - If you have set `limit` in your query request at fewer than the number returned by the
+         *   query, then `hasMoreData` will be TRUE in the response.
+         */
         fun hasMoreData(hasMoreData: Boolean) = hasMoreData(JsonField.of(hasMoreData))
 
         /**

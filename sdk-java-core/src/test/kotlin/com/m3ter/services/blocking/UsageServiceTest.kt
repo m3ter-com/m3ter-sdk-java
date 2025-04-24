@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
+import com.m3ter.models.DataExplorerAccountGroup
 import com.m3ter.models.MeasurementRequest
 import com.m3ter.models.SubmitMeasurementsRequest
 import com.m3ter.models.UsageGetFailedIngestDownloadUrlParams
@@ -53,8 +54,6 @@ internal class UsageServiceTest {
             usageService.query(
                 UsageQueryParams.builder()
                     .orgId("orgId")
-                    .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addAccountId("string")
                     .addAggregation(
                         UsageQueryParams.Aggregation.builder()
@@ -71,15 +70,15 @@ internal class UsageServiceTest {
                             .addValue("string")
                             .build()
                     )
+                    .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addGroup(
-                        UsageQueryParams.Group.DataExplorerAccountGroup.builder()
-                            .groupType(
-                                UsageQueryParams.Group.DataExplorerAccountGroup.GroupType.ACCOUNT
-                            )
+                        UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
+                            .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
                             .build()
                     )
                     .limit(1L)
                     .addMeterId("string")
+                    .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
 

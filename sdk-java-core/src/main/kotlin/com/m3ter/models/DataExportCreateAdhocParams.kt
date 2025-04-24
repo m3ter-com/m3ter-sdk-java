@@ -285,7 +285,7 @@ private constructor(
         fun adHocOperationalDataRequest(): Optional<AdHocOperationalDataRequest> =
             Optional.ofNullable(adHocOperationalDataRequest)
 
-        /** Request representing an usage data export configuration. */
+        /** Request representing a usage data export configuration. */
         fun adHocUsageDataRequest(): Optional<AdHocUsageDataRequest> =
             Optional.ofNullable(adHocUsageDataRequest)
 
@@ -297,7 +297,7 @@ private constructor(
         fun asAdHocOperationalDataRequest(): AdHocOperationalDataRequest =
             adHocOperationalDataRequest.getOrThrow("adHocOperationalDataRequest")
 
-        /** Request representing an usage data export configuration. */
+        /** Request representing a usage data export configuration. */
         fun asAdHocUsageDataRequest(): AdHocUsageDataRequest =
             adHocUsageDataRequest.getOrThrow("adHocUsageDataRequest")
 
@@ -395,7 +395,7 @@ private constructor(
                 adHocOperationalDataRequest: AdHocOperationalDataRequest
             ) = Body(adHocOperationalDataRequest = adHocOperationalDataRequest)
 
-            /** Request representing an usage data export configuration. */
+            /** Request representing a usage data export configuration. */
             @JvmStatic
             fun ofAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest) =
                 Body(adHocUsageDataRequest = adHocUsageDataRequest)
@@ -409,7 +409,7 @@ private constructor(
                 adHocOperationalDataRequest: AdHocOperationalDataRequest
             ): T
 
-            /** Request representing an usage data export configuration. */
+            /** Request representing a usage data export configuration. */
             fun visitAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest): T
 
             /**

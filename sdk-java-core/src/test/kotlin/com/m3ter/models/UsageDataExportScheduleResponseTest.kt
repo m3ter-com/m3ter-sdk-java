@@ -17,23 +17,64 @@ internal class UsageDataExportScheduleResponseTest {
                 .id("id")
                 .version(0L)
                 .addAccountId("string")
-                .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
-                .aggregationFrequency(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
+                .addAggregation(
+                    UsageDataExportScheduleResponse.Aggregation.builder()
+                        .fieldCode("x")
+                        .fieldType(UsageDataExportScheduleResponse.Aggregation.FieldType.DIMENSION)
+                        .function(UsageDataExportScheduleResponse.Aggregation.Function.SUM)
+                        .meterId("x")
+                        .build()
+                )
+                .addDimensionFilter(
+                    UsageDataExportScheduleResponse.DimensionFilter.builder()
+                        .fieldCode("x")
+                        .meterId("x")
+                        .addValue("string")
+                        .build()
+                )
+                .addGroup(
+                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
+                        .builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        .build()
+                )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
                 .build()
 
         assertThat(usageDataExportScheduleResponse.id()).isEqualTo("id")
         assertThat(usageDataExportScheduleResponse.version()).isEqualTo(0L)
         assertThat(usageDataExportScheduleResponse.accountIds().getOrNull())
             .containsExactly("string")
-        assertThat(usageDataExportScheduleResponse.aggregation())
-            .contains(UsageDataExportScheduleResponse.Aggregation.SUM)
-        assertThat(usageDataExportScheduleResponse.aggregationFrequency())
-            .contains(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
+        assertThat(usageDataExportScheduleResponse.aggregations().getOrNull())
+            .containsExactly(
+                UsageDataExportScheduleResponse.Aggregation.builder()
+                    .fieldCode("x")
+                    .fieldType(UsageDataExportScheduleResponse.Aggregation.FieldType.DIMENSION)
+                    .function(UsageDataExportScheduleResponse.Aggregation.Function.SUM)
+                    .meterId("x")
+                    .build()
+            )
+        assertThat(usageDataExportScheduleResponse.dimensionFilters().getOrNull())
+            .containsExactly(
+                UsageDataExportScheduleResponse.DimensionFilter.builder()
+                    .fieldCode("x")
+                    .meterId("x")
+                    .addValue("string")
+                    .build()
+            )
+        assertThat(usageDataExportScheduleResponse.groups().getOrNull())
+            .containsExactly(
+                UsageDataExportScheduleResponse.Group.ofDataExportsDataExplorerAccount(
+                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
+                        .builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        .build()
+                )
+            )
         assertThat(usageDataExportScheduleResponse.meterIds().getOrNull()).containsExactly("string")
         assertThat(usageDataExportScheduleResponse.timePeriod())
-            .contains(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+            .contains(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
     }
 
     @Test
@@ -44,10 +85,29 @@ internal class UsageDataExportScheduleResponseTest {
                 .id("id")
                 .version(0L)
                 .addAccountId("string")
-                .aggregation(UsageDataExportScheduleResponse.Aggregation.SUM)
-                .aggregationFrequency(UsageDataExportScheduleResponse.AggregationFrequency.ORIGINAL)
+                .addAggregation(
+                    UsageDataExportScheduleResponse.Aggregation.builder()
+                        .fieldCode("x")
+                        .fieldType(UsageDataExportScheduleResponse.Aggregation.FieldType.DIMENSION)
+                        .function(UsageDataExportScheduleResponse.Aggregation.Function.SUM)
+                        .meterId("x")
+                        .build()
+                )
+                .addDimensionFilter(
+                    UsageDataExportScheduleResponse.DimensionFilter.builder()
+                        .fieldCode("x")
+                        .meterId("x")
+                        .addValue("string")
+                        .build()
+                )
+                .addGroup(
+                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
+                        .builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        .build()
+                )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
                 .build()
 
         val roundtrippedUsageDataExportScheduleResponse =

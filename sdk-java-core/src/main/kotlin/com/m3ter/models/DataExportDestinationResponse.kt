@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.m3ter.core.Enum
 import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
@@ -16,6 +17,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class DataExportDestinationResponse
 private constructor(
@@ -23,6 +25,7 @@ private constructor(
     private val version: JsonField<Long>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
+    private val destinationType: JsonField<DestinationType>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val lastModifiedBy: JsonField<String>,
@@ -36,6 +39,9 @@ private constructor(
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("destinationType")
+        @ExcludeMissing
+        destinationType: JsonField<DestinationType> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
         dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -51,6 +57,7 @@ private constructor(
         version,
         code,
         createdBy,
+        destinationType,
         dtCreated,
         dtLastModified,
         lastModifiedBy,
@@ -92,6 +99,13 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun destinationType(): Optional<DestinationType> =
+        destinationType.getOptional("destinationType")
 
     /**
      * The DateTime when the Export Destination was created.
@@ -152,6 +166,15 @@ private constructor(
      * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
+
+    /**
+     * Returns the raw JSON value of [destinationType].
+     *
+     * Unlike [destinationType], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("destinationType")
+    @ExcludeMissing
+    fun _destinationType(): JsonField<DestinationType> = destinationType
 
     /**
      * Returns the raw JSON value of [dtCreated].
@@ -221,6 +244,7 @@ private constructor(
         private var version: JsonField<Long>? = null
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
+        private var destinationType: JsonField<DestinationType> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
@@ -233,6 +257,7 @@ private constructor(
             version = dataExportDestinationResponse.version
             code = dataExportDestinationResponse.code
             createdBy = dataExportDestinationResponse.createdBy
+            destinationType = dataExportDestinationResponse.destinationType
             dtCreated = dataExportDestinationResponse.dtCreated
             dtLastModified = dataExportDestinationResponse.dtLastModified
             lastModifiedBy = dataExportDestinationResponse.lastModifiedBy
@@ -289,6 +314,20 @@ private constructor(
          * value.
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
+
+        fun destinationType(destinationType: DestinationType) =
+            destinationType(JsonField.of(destinationType))
+
+        /**
+         * Sets [Builder.destinationType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationType] with a well-typed [DestinationType]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun destinationType(destinationType: JsonField<DestinationType>) = apply {
+            this.destinationType = destinationType
+        }
 
         /** The DateTime when the Export Destination was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
@@ -380,6 +419,7 @@ private constructor(
                 checkRequired("version", version),
                 code,
                 createdBy,
+                destinationType,
                 dtCreated,
                 dtLastModified,
                 lastModifiedBy,
@@ -399,6 +439,7 @@ private constructor(
         version()
         code()
         createdBy()
+        destinationType().ifPresent { it.validate() }
         dtCreated()
         dtLastModified()
         lastModifiedBy()
@@ -425,25 +466,154 @@ private constructor(
             (if (version.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (destinationType.asKnown().getOrNull()?.validity() ?: 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0)
+
+    class DestinationType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val S3 = of("S3")
+
+            @JvmField val GCS = of("GCS")
+
+            @JvmStatic fun of(value: String) = DestinationType(JsonField.of(value))
+        }
+
+        /** An enum containing [DestinationType]'s known values. */
+        enum class Known {
+            S3,
+            GCS,
+        }
+
+        /**
+         * An enum containing [DestinationType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [DestinationType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            S3,
+            GCS,
+            /**
+             * An enum member indicating that [DestinationType] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                S3 -> Value.S3
+                GCS -> Value.GCS
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                S3 -> Known.S3
+                GCS -> Known.GCS
+                else -> throw M3terInvalidDataException("Unknown DestinationType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): DestinationType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is DestinationType && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationResponse && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is DataExportDestinationResponse && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DataExportDestinationResponse{id=$id, version=$version, code=$code, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, additionalProperties=$additionalProperties}"
+        "DataExportDestinationResponse{id=$id, version=$version, code=$code, createdBy=$createdBy, destinationType=$destinationType, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, additionalProperties=$additionalProperties}"
 }
