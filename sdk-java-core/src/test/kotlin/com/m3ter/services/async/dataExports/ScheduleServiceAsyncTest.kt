@@ -36,7 +36,7 @@ internal class ScheduleServiceAsyncTest {
                             .addOperationalDataType(
                                 OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                             .version(0L)
                             .build()
                     )
@@ -90,7 +90,7 @@ internal class ScheduleServiceAsyncTest {
                             .addOperationalDataType(
                                 OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                             .version(0L)
                             .build()
                     )

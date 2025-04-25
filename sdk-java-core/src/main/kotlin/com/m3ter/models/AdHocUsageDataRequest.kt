@@ -74,6 +74,8 @@ private constructor(
     )
 
     /**
+     * The type of data to export. Possible values are: USAGE
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -240,6 +242,7 @@ private constructor(
             additionalProperties = adHocUsageDataRequest.additionalProperties.toMutableMap()
         }
 
+        /** The type of data to export. Possible values are: USAGE */
         fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
 
         /**
@@ -506,6 +509,7 @@ private constructor(
             (meterIds.asKnown().getOrNull()?.size ?: 0) +
             (if (version.asKnown().isPresent) 1 else 0)
 
+    /** The type of data to export. Possible values are: USAGE */
     class SourceType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -522,15 +526,12 @@ private constructor(
 
             @JvmField val USAGE = of("USAGE")
 
-            @JvmField val OPERATIONAL = of("OPERATIONAL")
-
             @JvmStatic fun of(value: String) = SourceType(JsonField.of(value))
         }
 
         /** An enum containing [SourceType]'s known values. */
         enum class Known {
-            USAGE,
-            OPERATIONAL,
+            USAGE
         }
 
         /**
@@ -544,7 +545,6 @@ private constructor(
          */
         enum class Value {
             USAGE,
-            OPERATIONAL,
             /**
              * An enum member indicating that [SourceType] was instantiated with an unknown value.
              */
@@ -561,7 +561,6 @@ private constructor(
         fun value(): Value =
             when (this) {
                 USAGE -> Value.USAGE
-                OPERATIONAL -> Value.OPERATIONAL
                 else -> Value._UNKNOWN
             }
 
@@ -576,7 +575,6 @@ private constructor(
         fun known(): Known =
             when (this) {
                 USAGE -> Known.USAGE
-                OPERATIONAL -> Known.OPERATIONAL
                 else -> throw M3terInvalidDataException("Unknown SourceType: $value")
             }
 

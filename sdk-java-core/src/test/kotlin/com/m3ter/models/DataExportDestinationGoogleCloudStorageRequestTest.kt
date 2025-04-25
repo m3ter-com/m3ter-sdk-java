@@ -17,6 +17,7 @@ internal class DataExportDestinationGoogleCloudStorageRequestTest {
                 .poolId("x")
                 .projectNumber("x")
                 .providerId("x")
+                .destinationType(DataExportDestinationGoogleCloudStorageRequest.DestinationType.GCS)
                 .partitionOrder(
                     DataExportDestinationGoogleCloudStorageRequest.PartitionOrder.TYPE_FIRST
                 )
@@ -29,6 +30,8 @@ internal class DataExportDestinationGoogleCloudStorageRequestTest {
         assertThat(dataExportDestinationGoogleCloudStorageRequest.poolId()).isEqualTo("x")
         assertThat(dataExportDestinationGoogleCloudStorageRequest.projectNumber()).isEqualTo("x")
         assertThat(dataExportDestinationGoogleCloudStorageRequest.providerId()).isEqualTo("x")
+        assertThat(dataExportDestinationGoogleCloudStorageRequest.destinationType())
+            .contains(DataExportDestinationGoogleCloudStorageRequest.DestinationType.GCS)
         assertThat(dataExportDestinationGoogleCloudStorageRequest.partitionOrder())
             .contains(DataExportDestinationGoogleCloudStorageRequest.PartitionOrder.TYPE_FIRST)
         assertThat(dataExportDestinationGoogleCloudStorageRequest.prefix()).contains("prefix")
@@ -46,6 +49,7 @@ internal class DataExportDestinationGoogleCloudStorageRequestTest {
                 .poolId("x")
                 .projectNumber("x")
                 .providerId("x")
+                .destinationType(DataExportDestinationGoogleCloudStorageRequest.DestinationType.GCS)
                 .partitionOrder(
                     DataExportDestinationGoogleCloudStorageRequest.PartitionOrder.TYPE_FIRST
                 )
