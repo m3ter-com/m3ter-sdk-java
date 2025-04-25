@@ -49,6 +49,8 @@ private constructor(
         operationalDataTypes.getRequired("operationalDataTypes")
 
     /**
+     * The type of data to export. Possible values are: OPERATIONAL
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -168,6 +170,7 @@ private constructor(
                 }
         }
 
+        /** The type of data to export. Possible values are: OPERATIONAL */
         fun sourceType(sourceType: SourceType) = sourceType(JsonField.of(sourceType))
 
         /**
@@ -497,6 +500,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The type of data to export. Possible values are: OPERATIONAL */
     class SourceType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -511,8 +515,6 @@ private constructor(
 
         companion object {
 
-            @JvmField val USAGE = of("USAGE")
-
             @JvmField val OPERATIONAL = of("OPERATIONAL")
 
             @JvmStatic fun of(value: String) = SourceType(JsonField.of(value))
@@ -520,8 +522,7 @@ private constructor(
 
         /** An enum containing [SourceType]'s known values. */
         enum class Known {
-            USAGE,
-            OPERATIONAL,
+            OPERATIONAL
         }
 
         /**
@@ -534,7 +535,6 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            USAGE,
             OPERATIONAL,
             /**
              * An enum member indicating that [SourceType] was instantiated with an unknown value.
@@ -551,7 +551,6 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                USAGE -> Value.USAGE
                 OPERATIONAL -> Value.OPERATIONAL
                 else -> Value._UNKNOWN
             }
@@ -566,7 +565,6 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                USAGE -> Known.USAGE
                 OPERATIONAL -> Known.OPERATIONAL
                 else -> throw M3terInvalidDataException("Unknown SourceType: $value")
             }

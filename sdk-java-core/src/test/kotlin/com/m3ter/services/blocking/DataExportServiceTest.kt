@@ -33,7 +33,7 @@ internal class DataExportServiceTest {
                             .addOperationalDataType(
                                 AdHocOperationalDataRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                            .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                             .version(0L)
                             .build()
                     )

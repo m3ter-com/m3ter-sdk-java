@@ -35,6 +35,7 @@ internal class DestinationServiceTest {
                         DataExportDestinationS3Request.builder()
                             .bucketName("xxx")
                             .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                            .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                             .partitionOrder(
                                 DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST
                             )
@@ -89,6 +90,7 @@ internal class DestinationServiceTest {
                         DataExportDestinationS3Request.builder()
                             .bucketName("xxx")
                             .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                            .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                             .partitionOrder(
                                 DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST
                             )
