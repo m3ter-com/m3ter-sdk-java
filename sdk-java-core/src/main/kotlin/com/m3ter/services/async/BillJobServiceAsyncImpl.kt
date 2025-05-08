@@ -180,6 +180,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 BillJobListPageAsync.builder()
                                     .service(BillJobServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

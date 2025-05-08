@@ -218,6 +218,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 PricingListPageAsync.builder()
                                     .service(PricingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

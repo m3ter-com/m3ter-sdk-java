@@ -218,6 +218,7 @@ class ProductServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 ProductListPageAsync.builder()
                                     .service(ProductServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

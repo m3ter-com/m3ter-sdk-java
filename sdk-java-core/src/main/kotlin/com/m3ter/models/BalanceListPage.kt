@@ -2,12 +2,12 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPager
+import com.m3ter.core.Page
 import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.BalanceService
 import java.util.Objects
 import java.util.Optional
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [BalanceService.list] */
@@ -16,7 +16,7 @@ private constructor(
     private val service: BalanceService,
     private val params: BalanceListParams,
     private val response: BalanceListPageResponse,
-) {
+) : Page<Balance> {
 
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
@@ -32,21 +32,20 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<Balance> = data()
 
-    fun getNextPageParams(): Optional<BalanceListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): BalanceListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): Optional<BalanceListPage> = getNextPageParams().map { service.list(it) }
+    override fun nextPage(): BalanceListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<Balance> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): BalanceListParams = params
@@ -113,25 +112,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: BalanceListPage) : Iterable<Balance> {
-
-        override fun iterator(): Iterator<Balance> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage().getOrNull() ?: break
-                index = 0
-            }
-        }
-
-        fun stream(): Stream<Balance> {
-            return StreamSupport.stream(spliterator(), false)
-        }
     }
 
     override fun equals(other: Any?): Boolean {

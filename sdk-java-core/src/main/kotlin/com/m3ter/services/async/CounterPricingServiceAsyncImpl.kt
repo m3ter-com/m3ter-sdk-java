@@ -221,6 +221,7 @@ internal constructor(private val clientOptions: ClientOptions) : CounterPricingS
                             .let {
                                 CounterPricingListPageAsync.builder()
                                     .service(CounterPricingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

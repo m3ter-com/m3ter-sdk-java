@@ -228,6 +228,7 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 DataExportDestinationListPageAsync.builder()
                                     .service(DestinationServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

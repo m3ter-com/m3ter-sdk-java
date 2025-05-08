@@ -135,6 +135,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                             .let {
                                 UsageFileUploadJobListPageAsync.builder()
                                     .service(JobServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

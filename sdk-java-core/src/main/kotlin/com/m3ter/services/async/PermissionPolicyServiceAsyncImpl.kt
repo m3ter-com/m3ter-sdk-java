@@ -294,6 +294,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
                             .let {
                                 PermissionPolicyListPageAsync.builder()
                                     .service(PermissionPolicyServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

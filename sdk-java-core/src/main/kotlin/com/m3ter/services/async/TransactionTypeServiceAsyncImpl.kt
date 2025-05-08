@@ -225,6 +225,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
                             .let {
                                 TransactionTypeListPageAsync.builder()
                                     .service(TransactionTypeServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

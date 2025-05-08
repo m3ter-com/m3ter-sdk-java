@@ -221,6 +221,7 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 AggregationListPageAsync.builder()
                                     .service(AggregationServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

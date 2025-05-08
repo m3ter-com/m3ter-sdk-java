@@ -164,6 +164,7 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
                             .let {
                                 UserInvitationListPageAsync.builder()
                                     .service(InvitationServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

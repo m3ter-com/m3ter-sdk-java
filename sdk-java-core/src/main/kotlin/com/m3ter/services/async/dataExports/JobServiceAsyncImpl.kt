@@ -133,6 +133,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                             .let {
                                 DataExportJobListPageAsync.builder()
                                     .service(JobServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

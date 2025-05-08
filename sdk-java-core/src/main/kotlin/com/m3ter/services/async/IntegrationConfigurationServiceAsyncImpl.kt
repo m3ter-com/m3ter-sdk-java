@@ -245,6 +245,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                                     .service(
                                         IntegrationConfigurationServiceAsyncImpl(clientOptions)
                                     )
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

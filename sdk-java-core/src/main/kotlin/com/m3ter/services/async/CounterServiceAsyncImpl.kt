@@ -218,6 +218,7 @@ class CounterServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 CounterListPageAsync.builder()
                                     .service(CounterServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

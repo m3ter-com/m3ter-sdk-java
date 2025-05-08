@@ -2,12 +2,12 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPager
+import com.m3ter.core.Page
 import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.CounterPricingService
 import java.util.Objects
 import java.util.Optional
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [CounterPricingService.list] */
@@ -16,7 +16,7 @@ private constructor(
     private val service: CounterPricingService,
     private val params: CounterPricingListParams,
     private val response: CounterPricingListPageResponse,
-) {
+) : Page<CounterPricingResponse> {
 
     /**
      * Delegates to [CounterPricingListPageResponse], but gracefully handles missing data.
@@ -33,22 +33,20 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<CounterPricingResponse> = data()
 
-    fun getNextPageParams(): Optional<CounterPricingListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): CounterPricingListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): Optional<CounterPricingListPage> =
-        getNextPageParams().map { service.list(it) }
+    override fun nextPage(): CounterPricingListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<CounterPricingResponse> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CounterPricingListParams = params
@@ -115,26 +113,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CounterPricingListPage) :
-        Iterable<CounterPricingResponse> {
-
-        override fun iterator(): Iterator<CounterPricingResponse> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage().getOrNull() ?: break
-                index = 0
-            }
-        }
-
-        fun stream(): Stream<CounterPricingResponse> {
-            return StreamSupport.stream(spliterator(), false)
-        }
     }
 
     override fun equals(other: Any?): Boolean {

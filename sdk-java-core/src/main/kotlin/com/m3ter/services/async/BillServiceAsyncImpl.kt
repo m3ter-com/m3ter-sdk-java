@@ -212,6 +212,7 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             .let {
                                 BillListPageAsync.builder()
                                     .service(BillServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

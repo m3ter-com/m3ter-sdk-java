@@ -219,6 +219,7 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             .let {
                                 UserListPageAsync.builder()
                                     .service(UserServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

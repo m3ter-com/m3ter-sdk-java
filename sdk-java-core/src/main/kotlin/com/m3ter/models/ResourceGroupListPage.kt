@@ -2,12 +2,12 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPager
+import com.m3ter.core.Page
 import com.m3ter.core.checkRequired
 import com.m3ter.services.blocking.ResourceGroupService
 import java.util.Objects
 import java.util.Optional
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [ResourceGroupService.list] */
@@ -16,7 +16,7 @@ private constructor(
     private val service: ResourceGroupService,
     private val params: ResourceGroupListParams,
     private val response: ResourceGroupListPageResponse,
-) {
+) : Page<ResourceGroupResponse> {
 
     /**
      * Delegates to [ResourceGroupListPageResponse], but gracefully handles missing data.
@@ -33,22 +33,20 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<ResourceGroupResponse> = data()
 
-    fun getNextPageParams(): Optional<ResourceGroupListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): ResourceGroupListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): Optional<ResourceGroupListPage> =
-        getNextPageParams().map { service.list(it) }
+    override fun nextPage(): ResourceGroupListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<ResourceGroupResponse> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): ResourceGroupListParams = params
@@ -115,26 +113,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: ResourceGroupListPage) :
-        Iterable<ResourceGroupResponse> {
-
-        override fun iterator(): Iterator<ResourceGroupResponse> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage().getOrNull() ?: break
-                index = 0
-            }
-        }
-
-        fun stream(): Stream<ResourceGroupResponse> {
-            return StreamSupport.stream(spliterator(), false)
-        }
     }
 
     override fun equals(other: Any?): Boolean {
