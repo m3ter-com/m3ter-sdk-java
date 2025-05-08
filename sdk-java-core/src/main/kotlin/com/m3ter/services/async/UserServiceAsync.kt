@@ -36,14 +36,35 @@ interface UserServiceAsync {
      * Retrieves detailed information for a specific user within an Organization, using their unique
      * identifier (UUID).
      */
-    fun retrieve(params: UserRetrieveParams): CompletableFuture<UserResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<UserResponse> =
+        retrieve(id, UserRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: UserRetrieveParams = UserRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<UserResponse> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: UserRetrieveParams = UserRetrieveParams.none(),
+    ): CompletableFuture<UserResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: UserRetrieveParams): CompletableFuture<UserResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
+        retrieve(id, UserRetrieveParams.none(), requestOptions)
 
     /**
      * Update the OrgUser with the given UUID.
@@ -52,14 +73,34 @@ interface UserServiceAsync {
      * (UUID). Use this endpoint when you need to modify user information such as their permission
      * policy.
      */
-    fun update(params: UserUpdateParams): CompletableFuture<UserResponse> =
-        update(params, RequestOptions.none())
+    fun update(id: String): CompletableFuture<UserResponse> = update(id, UserUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: UserUpdateParams = UserUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<UserResponse> = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: UserUpdateParams = UserUpdateParams.none(),
+    ): CompletableFuture<UserResponse> = update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
+
+    /** @see [update] */
+    fun update(params: UserUpdateParams): CompletableFuture<UserResponse> =
+        update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
+        update(id, UserUpdateParams.none(), requestOptions)
 
     /**
      * Retrieve a list of OrgUsers.
@@ -90,15 +131,41 @@ interface UserServiceAsync {
      * Retrieves a list of all permissions associated with a specific user in an Organization using
      * their UUID. The list can be paginated for easier management.
      */
+    fun getPermissions(id: String): CompletableFuture<PermissionPolicyResponse> =
+        getPermissions(id, UserGetPermissionsParams.none())
+
+    /** @see [getPermissions] */
     fun getPermissions(
-        params: UserGetPermissionsParams
-    ): CompletableFuture<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
+        id: String,
+        params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyResponse> =
+        getPermissions(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [getPermissions] */
+    fun getPermissions(
+        id: String,
+        params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+    ): CompletableFuture<PermissionPolicyResponse> =
+        getPermissions(id, params, RequestOptions.none())
 
     /** @see [getPermissions] */
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyResponse>
+
+    /** @see [getPermissions] */
+    fun getPermissions(
+        params: UserGetPermissionsParams
+    ): CompletableFuture<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
+
+    /** @see [getPermissions] */
+    fun getPermissions(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PermissionPolicyResponse> =
+        getPermissions(id, UserGetPermissionsParams.none(), requestOptions)
 
     /**
      * Retrieve a list of User Groups for an OrgUser.
@@ -123,14 +190,39 @@ interface UserServiceAsync {
      *     - If `inherited = FALSE`, then only those User Resource Groups to which the user belongs
      *       are returned.
      */
-    fun getUserGroups(params: UserGetUserGroupsParams): CompletableFuture<ResourceGroupResponse> =
-        getUserGroups(params, RequestOptions.none())
+    fun getUserGroups(id: String): CompletableFuture<ResourceGroupResponse> =
+        getUserGroups(id, UserGetUserGroupsParams.none())
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(
+        id: String,
+        params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ResourceGroupResponse> =
+        getUserGroups(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(
+        id: String,
+        params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+    ): CompletableFuture<ResourceGroupResponse> = getUserGroups(id, params, RequestOptions.none())
 
     /** @see [getUserGroups] */
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ResourceGroupResponse>
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(params: UserGetUserGroupsParams): CompletableFuture<ResourceGroupResponse> =
+        getUserGroups(params, RequestOptions.none())
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ResourceGroupResponse> =
+        getUserGroups(id, UserGetUserGroupsParams.none(), requestOptions)
 
     /** Retrieve information about the current user */
     fun me(): CompletableFuture<UserMeResponse> = me(UserMeParams.none())
@@ -150,14 +242,35 @@ interface UserServiceAsync {
         me(UserMeParams.none(), requestOptions)
 
     /** Resend temporary password for user */
-    fun resendPassword(params: UserResendPasswordParams): CompletableFuture<Void?> =
-        resendPassword(params, RequestOptions.none())
+    fun resendPassword(id: String): CompletableFuture<Void?> =
+        resendPassword(id, UserResendPasswordParams.none())
+
+    /** @see [resendPassword] */
+    fun resendPassword(
+        id: String,
+        params: UserResendPasswordParams = UserResendPasswordParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<Void?> = resendPassword(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [resendPassword] */
+    fun resendPassword(
+        id: String,
+        params: UserResendPasswordParams = UserResendPasswordParams.none(),
+    ): CompletableFuture<Void?> = resendPassword(id, params, RequestOptions.none())
 
     /** @see [resendPassword] */
     fun resendPassword(
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
+
+    /** @see [resendPassword] */
+    fun resendPassword(params: UserResendPasswordParams): CompletableFuture<Void?> =
+        resendPassword(params, RequestOptions.none())
+
+    /** @see [resendPassword] */
+    fun resendPassword(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
+        resendPassword(id, UserResendPasswordParams.none(), requestOptions)
 
     /** A view of [UserServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -169,8 +282,25 @@ interface UserServiceAsync {
          * the same as [UserServiceAsync.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: UserRetrieveParams): CompletableFuture<HttpResponseFor<UserResponse>> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
+            retrieve(id, UserRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserRetrieveParams = UserRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserRetrieveParams = UserRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -179,13 +309,43 @@ interface UserServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: UserRetrieveParams): CompletableFuture<HttpResponseFor<UserResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            retrieve(id, UserRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserServiceAsync.update].
          */
         @MustBeClosed
-        fun update(params: UserUpdateParams): CompletableFuture<HttpResponseFor<UserResponse>> =
-            update(params, RequestOptions.none())
+        fun update(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
+            update(id, UserUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: UserUpdateParams = UserUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: UserUpdateParams = UserUpdateParams.none(),
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -193,6 +353,19 @@ interface UserServiceAsync {
             params: UserUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: UserUpdateParams): CompletableFuture<HttpResponseFor<UserResponse>> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<UserResponse>> =
+            update(id, UserUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
@@ -229,9 +402,26 @@ interface UserServiceAsync {
          */
         @MustBeClosed
         fun getPermissions(
-            params: UserGetPermissionsParams
+            id: String
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
-            getPermissions(params, RequestOptions.none())
+            getPermissions(id, UserGetPermissionsParams.none())
+
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            id: String,
+            params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            getPermissions(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            id: String,
+            params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            getPermissions(id, params, RequestOptions.none())
 
         /** @see [getPermissions] */
         @MustBeClosed
@@ -240,10 +430,54 @@ interface UserServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            getPermissions(params, RequestOptions.none())
+
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            getPermissions(id, UserGetPermissionsParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
          * is otherwise the same as [UserServiceAsync.getUserGroups].
          */
+        @MustBeClosed
+        fun getUserGroups(id: String): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
+            getUserGroups(id, UserGetUserGroupsParams.none())
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            id: String,
+            params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
+            getUserGroups(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            id: String,
+            params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
+            getUserGroups(id, params, RequestOptions.none())
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            params: UserGetUserGroupsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
+
+        /** @see [getUserGroups] */
         @MustBeClosed
         fun getUserGroups(
             params: UserGetUserGroupsParams
@@ -253,9 +487,10 @@ interface UserServiceAsync {
         /** @see [getUserGroups] */
         @MustBeClosed
         fun getUserGroups(
-            params: UserGetUserGroupsParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
+            getUserGroups(id, UserGetUserGroupsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
@@ -287,8 +522,24 @@ interface UserServiceAsync {
          * but is otherwise the same as [UserServiceAsync.resendPassword].
          */
         @MustBeClosed
-        fun resendPassword(params: UserResendPasswordParams): CompletableFuture<HttpResponse> =
-            resendPassword(params, RequestOptions.none())
+        fun resendPassword(id: String): CompletableFuture<HttpResponse> =
+            resendPassword(id, UserResendPasswordParams.none())
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(
+            id: String,
+            params: UserResendPasswordParams = UserResendPasswordParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponse> =
+            resendPassword(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(
+            id: String,
+            params: UserResendPasswordParams = UserResendPasswordParams.none(),
+        ): CompletableFuture<HttpResponse> = resendPassword(id, params, RequestOptions.none())
 
         /** @see [resendPassword] */
         @MustBeClosed
@@ -296,5 +547,18 @@ interface UserServiceAsync {
             params: UserResendPasswordParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(params: UserResendPasswordParams): CompletableFuture<HttpResponse> =
+            resendPassword(params, RequestOptions.none())
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponse> =
+            resendPassword(id, UserResendPasswordParams.none(), requestOptions)
     }
 }

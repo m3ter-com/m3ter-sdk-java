@@ -53,14 +53,34 @@ interface CommitmentService {
      * information about the Commitment, such as the agreed amount, overage surcharge percentage,
      * and other related details.
      */
-    fun retrieve(params: CommitmentRetrieveParams): CommitmentResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CommitmentResponse = retrieve(id, CommitmentRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CommitmentResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
+    ): CommitmentResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: CommitmentRetrieveParams): CommitmentResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CommitmentResponse =
+        retrieve(id, CommitmentRetrieveParams.none(), requestOptions)
 
     /**
      * Modify a specific Commitment.
@@ -69,6 +89,17 @@ interface CommitmentService {
      * Commitment parameters such as the fixed amount, overage surcharge percentage, or associated
      * contract details.
      */
+    fun update(id: String, params: CommitmentUpdateParams): CommitmentResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: CommitmentUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CommitmentResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: CommitmentUpdateParams): CommitmentResponse =
         update(params, RequestOptions.none())
 
@@ -107,14 +138,34 @@ interface CommitmentService {
      * Deletes the Commitment with the given UUID. Use this endpoint when a Commitment is no longer
      * valid or needs to be removed from the system.
      */
-    fun delete(params: CommitmentDeleteParams): CommitmentResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CommitmentResponse = delete(id, CommitmentDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CommitmentResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
+    ): CommitmentResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse
+
+    /** @see [delete] */
+    fun delete(params: CommitmentDeleteParams): CommitmentResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CommitmentResponse =
+        delete(id, CommitmentDeleteParams.none(), requestOptions)
 
     /**
      * Search for commitment entities.
@@ -163,8 +214,24 @@ interface CommitmentService {
          * otherwise the same as [CommitmentService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: CommitmentRetrieveParams): HttpResponseFor<CommitmentResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<CommitmentResponse> =
+            retrieve(id, CommitmentRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CommitmentResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
+        ): HttpResponseFor<CommitmentResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -173,10 +240,39 @@ interface CommitmentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: CommitmentRetrieveParams): HttpResponseFor<CommitmentResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CommitmentResponse> =
+            retrieve(id, CommitmentRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CommitmentUpdateParams,
+        ): HttpResponseFor<CommitmentResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CommitmentUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CommitmentResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: CommitmentUpdateParams): HttpResponseFor<CommitmentResponse> =
             update(params, RequestOptions.none())
@@ -218,8 +314,24 @@ interface CommitmentService {
          * otherwise the same as [CommitmentService.delete].
          */
         @MustBeClosed
-        fun delete(params: CommitmentDeleteParams): HttpResponseFor<CommitmentResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<CommitmentResponse> =
+            delete(id, CommitmentDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CommitmentResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
+        ): HttpResponseFor<CommitmentResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -227,6 +339,19 @@ interface CommitmentService {
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: CommitmentDeleteParams): HttpResponseFor<CommitmentResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CommitmentResponse> =
+            delete(id, CommitmentDeleteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/search`, but is

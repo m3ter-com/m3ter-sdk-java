@@ -23,6 +23,17 @@ interface LineItemService {
      * This endpoint retrieves the line item given by its unique identifier (UUID) from a specific
      * Bill.
      */
+    fun retrieve(id: String, params: BillLineItemRetrieveParams): LineItemResponse =
+        retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillLineItemRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LineItemResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
     fun retrieve(params: BillLineItemRetrieveParams): LineItemResponse =
         retrieve(params, RequestOptions.none())
 
@@ -39,14 +50,34 @@ interface LineItemService {
      * Organization. The list can also be paginated for easier management. The line items returned
      * in the list include individual charges, discounts, or adjustments within a Bill.
      */
-    fun list(params: BillLineItemListParams): BillLineItemListPage =
-        list(params, RequestOptions.none())
+    fun list(billId: String): BillLineItemListPage = list(billId, BillLineItemListParams.none())
+
+    /** @see [list] */
+    fun list(
+        billId: String,
+        params: BillLineItemListParams = BillLineItemListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillLineItemListPage = list(params.toBuilder().billId(billId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
+        billId: String,
+        params: BillLineItemListParams = BillLineItemListParams.none(),
+    ): BillLineItemListPage = list(billId, params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
         params: BillLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillLineItemListPage
+
+    /** @see [list] */
+    fun list(params: BillLineItemListParams): BillLineItemListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(billId: String, requestOptions: RequestOptions): BillLineItemListPage =
+        list(billId, BillLineItemListParams.none(), requestOptions)
 
     /** A view of [LineItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -56,6 +87,22 @@ interface LineItemService {
          * /organizations/{orgId}/bills/{billId}/lineitems/{id}`, but is otherwise the same as
          * [LineItemService.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillLineItemRetrieveParams,
+        ): HttpResponseFor<LineItemResponse> = retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LineItemResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(params: BillLineItemRetrieveParams): HttpResponseFor<LineItemResponse> =
             retrieve(params, RequestOptions.none())
@@ -72,8 +119,24 @@ interface LineItemService {
          * but is otherwise the same as [LineItemService.list].
          */
         @MustBeClosed
-        fun list(params: BillLineItemListParams): HttpResponseFor<BillLineItemListPage> =
-            list(params, RequestOptions.none())
+        fun list(billId: String): HttpResponseFor<BillLineItemListPage> =
+            list(billId, BillLineItemListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            params: BillLineItemListParams = BillLineItemListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillLineItemListPage> =
+            list(params.toBuilder().billId(billId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            params: BillLineItemListParams = BillLineItemListParams.none(),
+        ): HttpResponseFor<BillLineItemListPage> = list(billId, params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
@@ -81,5 +144,18 @@ interface LineItemService {
             params: BillLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillLineItemListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: BillLineItemListParams): HttpResponseFor<BillLineItemListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillLineItemListPage> =
+            list(billId, BillLineItemListParams.none(), requestOptions)
     }
 }

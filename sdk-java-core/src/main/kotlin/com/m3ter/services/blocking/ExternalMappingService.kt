@@ -45,8 +45,21 @@ interface ExternalMappingService {
      * This endpoint enables you to retrieve the External Mapping with the specified UUID for a
      * specific Organization.
      */
-    fun retrieve(params: ExternalMappingRetrieveParams): ExternalMappingResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): ExternalMappingResponse =
+        retrieve(id, ExternalMappingRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalMappingResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+    ): ExternalMappingResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -54,12 +67,31 @@ interface ExternalMappingService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalMappingResponse
 
+    /** @see [retrieve] */
+    fun retrieve(params: ExternalMappingRetrieveParams): ExternalMappingResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): ExternalMappingResponse =
+        retrieve(id, ExternalMappingRetrieveParams.none(), requestOptions)
+
     /**
      * Updates an External Mapping with the given UUID.
      *
      * This endpoint enables you to update an existing External Mapping entity, identified by its
      * UUID. You must supply a request body with the new details for the External Mapping.
      */
+    fun update(id: String, params: ExternalMappingUpdateParams): ExternalMappingResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ExternalMappingUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalMappingResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: ExternalMappingUpdateParams): ExternalMappingResponse =
         update(params, RequestOptions.none())
 
@@ -94,8 +126,20 @@ interface ExternalMappingService {
         list(ExternalMappingListParams.none(), requestOptions)
 
     /** Delete an External Mapping with the given UUID. */
-    fun delete(params: ExternalMappingDeleteParams): ExternalMappingResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): ExternalMappingResponse = delete(id, ExternalMappingDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalMappingResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+    ): ExternalMappingResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
@@ -103,12 +147,35 @@ interface ExternalMappingService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalMappingResponse
 
+    /** @see [delete] */
+    fun delete(params: ExternalMappingDeleteParams): ExternalMappingResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): ExternalMappingResponse =
+        delete(id, ExternalMappingDeleteParams.none(), requestOptions)
+
     /**
      * Retrieve a list of External Mapping entities for a specified external system entity.
      *
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * external system entity. The list can be paginated for easier management.
      */
+    fun listByExternalEntity(
+        externalId: String,
+        params: ExternalMappingListByExternalEntityParams,
+    ): ExternalMappingListByExternalEntityPage =
+        listByExternalEntity(externalId, params, RequestOptions.none())
+
+    /** @see [listByExternalEntity] */
+    fun listByExternalEntity(
+        externalId: String,
+        params: ExternalMappingListByExternalEntityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalMappingListByExternalEntityPage =
+        listByExternalEntity(params.toBuilder().externalId(externalId).build(), requestOptions)
+
+    /** @see [listByExternalEntity] */
     fun listByExternalEntity(
         params: ExternalMappingListByExternalEntityParams
     ): ExternalMappingListByExternalEntityPage = listByExternalEntity(params, RequestOptions.none())
@@ -125,6 +192,21 @@ interface ExternalMappingService {
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * m3ter entity. The list can be paginated for easier management.
      */
+    fun listByM3terEntity(
+        m3terId: String,
+        params: ExternalMappingListByM3terEntityParams,
+    ): ExternalMappingListByM3terEntityPage =
+        listByM3terEntity(m3terId, params, RequestOptions.none())
+
+    /** @see [listByM3terEntity] */
+    fun listByM3terEntity(
+        m3terId: String,
+        params: ExternalMappingListByM3terEntityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalMappingListByM3terEntityPage =
+        listByM3terEntity(params.toBuilder().m3terId(m3terId).build(), requestOptions)
+
+    /** @see [listByM3terEntity] */
     fun listByM3terEntity(
         params: ExternalMappingListByM3terEntityParams
     ): ExternalMappingListByM3terEntityPage = listByM3terEntity(params, RequestOptions.none())
@@ -161,9 +243,24 @@ interface ExternalMappingService {
          * is otherwise the same as [ExternalMappingService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<ExternalMappingResponse> =
+            retrieve(id, ExternalMappingRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: ExternalMappingRetrieveParams
-        ): HttpResponseFor<ExternalMappingResponse> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+        ): HttpResponseFor<ExternalMappingResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -172,10 +269,40 @@ interface ExternalMappingService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalMappingResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ExternalMappingRetrieveParams
+        ): HttpResponseFor<ExternalMappingResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ExternalMappingResponse> =
+            retrieve(id, ExternalMappingRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/externalmappings/{id}`, but
          * is otherwise the same as [ExternalMappingService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExternalMappingUpdateParams,
+        ): HttpResponseFor<ExternalMappingResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExternalMappingUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: ExternalMappingUpdateParams): HttpResponseFor<ExternalMappingResponse> =
             update(params, RequestOptions.none())
@@ -218,8 +345,24 @@ interface ExternalMappingService {
          * but is otherwise the same as [ExternalMappingService.delete].
          */
         @MustBeClosed
-        fun delete(params: ExternalMappingDeleteParams): HttpResponseFor<ExternalMappingResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<ExternalMappingResponse> =
+            delete(id, ExternalMappingDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+        ): HttpResponseFor<ExternalMappingResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -228,11 +371,41 @@ interface ExternalMappingService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalMappingResponse>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: ExternalMappingDeleteParams): HttpResponseFor<ExternalMappingResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ExternalMappingResponse> =
+            delete(id, ExternalMappingDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `get
          * /organizations/{orgId}/externalmappings/externalid/{system}/{externalTable}/{externalId}`,
          * but is otherwise the same as [ExternalMappingService.listByExternalEntity].
          */
+        @MustBeClosed
+        fun listByExternalEntity(
+            externalId: String,
+            params: ExternalMappingListByExternalEntityParams,
+        ): HttpResponseFor<ExternalMappingListByExternalEntityPage> =
+            listByExternalEntity(externalId, params, RequestOptions.none())
+
+        /** @see [listByExternalEntity] */
+        @MustBeClosed
+        fun listByExternalEntity(
+            externalId: String,
+            params: ExternalMappingListByExternalEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingListByExternalEntityPage> =
+            listByExternalEntity(params.toBuilder().externalId(externalId).build(), requestOptions)
+
+        /** @see [listByExternalEntity] */
         @MustBeClosed
         fun listByExternalEntity(
             params: ExternalMappingListByExternalEntityParams
@@ -251,6 +424,23 @@ interface ExternalMappingService {
          * /organizations/{orgId}/externalmappings/external/{entity}/{m3terId}`, but is otherwise
          * the same as [ExternalMappingService.listByM3terEntity].
          */
+        @MustBeClosed
+        fun listByM3terEntity(
+            m3terId: String,
+            params: ExternalMappingListByM3terEntityParams,
+        ): HttpResponseFor<ExternalMappingListByM3terEntityPage> =
+            listByM3terEntity(m3terId, params, RequestOptions.none())
+
+        /** @see [listByM3terEntity] */
+        @MustBeClosed
+        fun listByM3terEntity(
+            m3terId: String,
+            params: ExternalMappingListByM3terEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalMappingListByM3terEntityPage> =
+            listByM3terEntity(params.toBuilder().m3terId(m3terId).build(), requestOptions)
+
+        /** @see [listByM3terEntity] */
         @MustBeClosed
         fun listByM3terEntity(
             params: ExternalMappingListByM3terEntityParams

@@ -40,15 +40,39 @@ interface NotificationConfigurationService {
      * Notification is based on, and any calculation referencing the Event's field and which defines
      * further conditions that must be met to trigger the Notification when the Event occurs.
      */
+    fun retrieve(id: String): NotificationConfigurationResponse =
+        retrieve(id, NotificationConfigurationRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: NotificationConfigurationRetrieveParams
-    ): NotificationConfigurationResponse = retrieve(params, RequestOptions.none())
+        id: String,
+        params: NotificationConfigurationRetrieveParams =
+            NotificationConfigurationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): NotificationConfigurationResponse =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: NotificationConfigurationRetrieveParams =
+            NotificationConfigurationRetrieveParams.none(),
+    ): NotificationConfigurationResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: NotificationConfigurationRetrieveParams
+    ): NotificationConfigurationResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): NotificationConfigurationResponse =
+        retrieve(id, NotificationConfigurationRetrieveParams.none(), requestOptions)
 
     /**
      * Update a Notification with the given UUID.
@@ -57,6 +81,19 @@ interface NotificationConfigurationService {
      * the Event that triggers the Notification and/or update the conditions for sending the
      * Notification.
      */
+    fun update(
+        id: String,
+        params: NotificationConfigurationUpdateParams,
+    ): NotificationConfigurationResponse = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: NotificationConfigurationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): NotificationConfigurationResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: NotificationConfigurationUpdateParams): NotificationConfigurationResponse =
         update(params, RequestOptions.none())
 
@@ -96,14 +133,36 @@ interface NotificationConfigurationService {
      * This endpoint permanently removes a specified Notification and its configuration. This action
      * cannot be undone.
      */
-    fun delete(params: NotificationConfigurationDeleteParams): NotificationConfigurationResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): NotificationConfigurationResponse =
+        delete(id, NotificationConfigurationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: NotificationConfigurationDeleteParams =
+            NotificationConfigurationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): NotificationConfigurationResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: NotificationConfigurationDeleteParams = NotificationConfigurationDeleteParams.none(),
+    ): NotificationConfigurationResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse
+
+    /** @see [delete] */
+    fun delete(params: NotificationConfigurationDeleteParams): NotificationConfigurationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): NotificationConfigurationResponse =
+        delete(id, NotificationConfigurationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [NotificationConfigurationService] that provides access to raw HTTP responses for
@@ -135,10 +194,27 @@ interface NotificationConfigurationService {
          * [NotificationConfigurationService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<NotificationConfigurationResponse> =
+            retrieve(id, NotificationConfigurationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: NotificationConfigurationRetrieveParams
+            id: String,
+            params: NotificationConfigurationRetrieveParams =
+                NotificationConfigurationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NotificationConfigurationResponse> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: NotificationConfigurationRetrieveParams =
+                NotificationConfigurationRetrieveParams.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -147,11 +223,43 @@ interface NotificationConfigurationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NotificationConfigurationResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: NotificationConfigurationRetrieveParams
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            retrieve(id, NotificationConfigurationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: NotificationConfigurationUpdateParams,
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: NotificationConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams
@@ -201,6 +309,37 @@ interface NotificationConfigurationService {
          * [NotificationConfigurationService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<NotificationConfigurationResponse> =
+            delete(id, NotificationConfigurationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: NotificationConfigurationDeleteParams =
+                NotificationConfigurationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: NotificationConfigurationDeleteParams =
+                NotificationConfigurationDeleteParams.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: NotificationConfigurationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NotificationConfigurationResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams
         ): HttpResponseFor<NotificationConfigurationResponse> =
@@ -209,8 +348,9 @@ interface NotificationConfigurationService {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: NotificationConfigurationDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<NotificationConfigurationResponse>
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<NotificationConfigurationResponse> =
+            delete(id, NotificationConfigurationDeleteParams.none(), requestOptions)
     }
 }

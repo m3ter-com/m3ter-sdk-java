@@ -15,7 +15,7 @@ class ResourceGroupListPermissionsParams
 private constructor(
     private val orgId: String?,
     private val type: String,
-    private val resourceGroupId: String,
+    private val resourceGroupId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -27,7 +27,7 @@ private constructor(
 
     fun type(): String = type
 
-    fun resourceGroupId(): String = resourceGroupId
+    fun resourceGroupId(): Optional<String> = Optional.ofNullable(resourceGroupId)
 
     /** nextToken for multi page retrievals */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
@@ -50,7 +50,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -89,9 +88,13 @@ private constructor(
 
         fun type(type: String) = apply { this.type = type }
 
-        fun resourceGroupId(resourceGroupId: String) = apply {
+        fun resourceGroupId(resourceGroupId: String?) = apply {
             this.resourceGroupId = resourceGroupId
         }
+
+        /** Alias for calling [Builder.resourceGroupId] with `resourceGroupId.orElse(null)`. */
+        fun resourceGroupId(resourceGroupId: Optional<String>) =
+            resourceGroupId(resourceGroupId.getOrNull())
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -218,7 +221,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -227,7 +229,7 @@ private constructor(
             ResourceGroupListPermissionsParams(
                 orgId,
                 checkRequired("type", type),
-                checkRequired("resourceGroupId", resourceGroupId),
+                resourceGroupId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -239,7 +241,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> type
-            2 -> resourceGroupId
+            2 -> resourceGroupId ?: ""
             else -> ""
         }
 

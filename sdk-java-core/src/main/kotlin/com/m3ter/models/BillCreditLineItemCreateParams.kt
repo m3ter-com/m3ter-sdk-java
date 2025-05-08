@@ -31,7 +31,7 @@ import kotlin.jvm.optionals.getOrNull
 class BillCreditLineItemCreateParams
 private constructor(
     private val orgId: String?,
-    private val billId: String,
+    private val billId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -40,7 +40,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun billId(): String = billId
+    fun billId(): Optional<String> = Optional.ofNullable(billId)
 
     /**
      * The amount for the line item.
@@ -230,7 +230,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .billId()
          * .amount()
          * .description()
          * .productId()
@@ -268,7 +267,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun billId(billId: String) = apply { this.billId = billId }
+        fun billId(billId: String?) = apply { this.billId = billId }
+
+        /** Alias for calling [Builder.billId] with `billId.orElse(null)`. */
+        fun billId(billId: Optional<String>) = billId(billId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -563,7 +565,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .billId()
          * .amount()
          * .description()
          * .productId()
@@ -578,7 +579,7 @@ private constructor(
         fun build(): BillCreditLineItemCreateParams =
             BillCreditLineItemCreateParams(
                 orgId,
-                checkRequired("billId", billId),
+                billId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -590,7 +591,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> billId
+            1 -> billId ?: ""
             else -> ""
         }
 

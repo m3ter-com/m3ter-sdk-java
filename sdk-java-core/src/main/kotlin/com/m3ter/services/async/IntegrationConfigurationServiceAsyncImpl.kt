@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -30,6 +31,7 @@ import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import com.m3ter.models.IntegrationConfigurationUpdateResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) :
@@ -139,6 +141,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -174,6 +179,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: IntegrationConfigurationUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationUpdateResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -253,6 +261,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: IntegrationConfigurationDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationDeleteResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -289,6 +300,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: IntegrationConfigurationEnableParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationEnableResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -326,6 +340,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("entityType", params.entityType().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

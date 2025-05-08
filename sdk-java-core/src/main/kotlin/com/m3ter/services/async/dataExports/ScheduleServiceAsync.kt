@@ -63,6 +63,31 @@ interface ScheduleServiceAsync {
      * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
+    fun retrieve(id: String): CompletableFuture<DataExportScheduleRetrieveResponse> =
+        retrieve(id, DataExportScheduleRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportScheduleRetrieveResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+    ): CompletableFuture<DataExportScheduleRetrieveResponse> =
+        retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: DataExportScheduleRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportScheduleRetrieveResponse>
+
+    /** @see [retrieve] */
     fun retrieve(
         params: DataExportScheduleRetrieveParams
     ): CompletableFuture<DataExportScheduleRetrieveResponse> =
@@ -70,9 +95,10 @@ interface ScheduleServiceAsync {
 
     /** @see [retrieve] */
     fun retrieve(
-        params: DataExportScheduleRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DataExportScheduleRetrieveResponse>
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<DataExportScheduleRetrieveResponse> =
+        retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
 
     /**
      * Update a Data Export Schedule for the given UUID. Each Schedule can be configured for
@@ -99,6 +125,21 @@ interface ScheduleServiceAsync {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
+    fun update(
+        id: String,
+        params: DataExportScheduleUpdateParams,
+    ): CompletableFuture<DataExportScheduleUpdateResponse> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: DataExportScheduleUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportScheduleUpdateResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(
         params: DataExportScheduleUpdateParams
     ): CompletableFuture<DataExportScheduleUpdateResponse> = update(params, RequestOptions.none())
@@ -138,15 +179,41 @@ interface ScheduleServiceAsync {
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
+    fun delete(id: String): CompletableFuture<DataExportScheduleDeleteResponse> =
+        delete(id, DataExportScheduleDeleteParams.none())
+
+    /** @see [delete] */
     fun delete(
-        params: DataExportScheduleDeleteParams
-    ): CompletableFuture<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+        id: String,
+        params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportScheduleDeleteResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+    ): CompletableFuture<DataExportScheduleDeleteResponse> =
+        delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DataExportScheduleDeleteResponse>
+
+    /** @see [delete] */
+    fun delete(
+        params: DataExportScheduleDeleteParams
+    ): CompletableFuture<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<DataExportScheduleDeleteResponse> =
+        delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
 
     /**
      * A view of [ScheduleServiceAsync] that provides access to raw HTTP responses for each method.
@@ -176,9 +243,26 @@ interface ScheduleServiceAsync {
          */
         @MustBeClosed
         fun retrieve(
-            params: DataExportScheduleRetrieveParams
+            id: String
         ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(id, DataExportScheduleRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -187,10 +271,42 @@ interface ScheduleServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportScheduleRetrieveParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> =
+            retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportScheduleUpdateParams,
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleUpdateResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportScheduleUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleUpdateResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams
@@ -240,9 +356,26 @@ interface ScheduleServiceAsync {
          */
         @MustBeClosed
         fun delete(
-            params: DataExportScheduleDeleteParams
+            id: String
         ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
-            delete(params, RequestOptions.none())
+            delete(id, DataExportScheduleDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -250,5 +383,20 @@ interface ScheduleServiceAsync {
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: DataExportScheduleDeleteParams
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> =
+            delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
     }
 }

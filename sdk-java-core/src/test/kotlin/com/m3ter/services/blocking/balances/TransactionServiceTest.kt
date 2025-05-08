@@ -5,7 +5,6 @@ package com.m3ter.services.blocking.balances
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BalanceTransactionCreateParams
-import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -57,10 +56,7 @@ internal class TransactionServiceTest {
                 .build()
         val transactionService = client.balances().transactions()
 
-        val page =
-            transactionService.list(
-                BalanceTransactionListParams.builder().balanceId("balanceId").build()
-            )
+        val page = transactionService.list("balanceId")
 
         page.response().validate()
     }

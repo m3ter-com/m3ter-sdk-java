@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -28,6 +29,7 @@ import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountSearchResponse
 import com.m3ter.models.AccountUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class AccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     AccountService {
@@ -134,6 +136,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             params: AccountRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -165,6 +170,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             params: AccountUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -235,6 +243,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             params: AccountDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -268,6 +279,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             params: AccountEndDateBillingEntitiesParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountEndDateBillingEntitiesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -301,6 +315,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AccountResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

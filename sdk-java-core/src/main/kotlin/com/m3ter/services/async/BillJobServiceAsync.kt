@@ -64,14 +64,36 @@ interface BillJobServiceAsync {
         create(BillJobCreateParams.none(), requestOptions)
 
     /** Retrieve a Bill Job for the given UUID. */
-    fun retrieve(params: BillJobRetrieveParams): CompletableFuture<BillJobResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<BillJobResponse> =
+        retrieve(id, BillJobRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BillJobResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+    ): CompletableFuture<BillJobResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillJobResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: BillJobRetrieveParams): CompletableFuture<BillJobResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<BillJobResponse> =
+        retrieve(id, BillJobRetrieveParams.none(), requestOptions)
 
     /**
      * Retrieve a list of BillJobs.
@@ -103,14 +125,36 @@ interface BillJobServiceAsync {
      * This endpoint allows you to halt the processing of a specific BillJob, which might be
      * necessary if there are changes in billing requirements or other operational considerations.
      */
-    fun cancel(params: BillJobCancelParams): CompletableFuture<BillJobResponse> =
-        cancel(params, RequestOptions.none())
+    fun cancel(id: String): CompletableFuture<BillJobResponse> =
+        cancel(id, BillJobCancelParams.none())
+
+    /** @see [cancel] */
+    fun cancel(
+        id: String,
+        params: BillJobCancelParams = BillJobCancelParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BillJobResponse> =
+        cancel(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [cancel] */
+    fun cancel(
+        id: String,
+        params: BillJobCancelParams = BillJobCancelParams.none(),
+    ): CompletableFuture<BillJobResponse> = cancel(id, params, RequestOptions.none())
 
     /** @see [cancel] */
     fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillJobResponse>
+
+    /** @see [cancel] */
+    fun cancel(params: BillJobCancelParams): CompletableFuture<BillJobResponse> =
+        cancel(params, RequestOptions.none())
+
+    /** @see [cancel] */
+    fun cancel(id: String, requestOptions: RequestOptions): CompletableFuture<BillJobResponse> =
+        cancel(id, BillJobCancelParams.none(), requestOptions)
 
     /**
      * Create a new BillJob specifically to recalculate existing bills for a given Organization.
@@ -173,6 +217,35 @@ interface BillJobServiceAsync {
          * otherwise the same as [BillJobServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            retrieve(id, BillJobRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: BillJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: BillJobRetrieveParams
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
@@ -181,9 +254,10 @@ interface BillJobServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: BillJobRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            retrieve(id, BillJobRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
@@ -219,6 +293,35 @@ interface BillJobServiceAsync {
          * is otherwise the same as [BillJobServiceAsync.cancel].
          */
         @MustBeClosed
+        fun cancel(id: String): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            cancel(id, BillJobCancelParams.none())
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(
+            id: String,
+            params: BillJobCancelParams = BillJobCancelParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            cancel(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(
+            id: String,
+            params: BillJobCancelParams = BillJobCancelParams.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            cancel(id, params, RequestOptions.none())
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(
+            params: BillJobCancelParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+
+        /** @see [cancel] */
+        @MustBeClosed
         fun cancel(
             params: BillJobCancelParams
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
@@ -227,9 +330,10 @@ interface BillJobServiceAsync {
         /** @see [cancel] */
         @MustBeClosed
         fun cancel(
-            params: BillJobCancelParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BillJobResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
+            cancel(id, BillJobCancelParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but

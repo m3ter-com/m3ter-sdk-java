@@ -4,7 +4,6 @@ package com.m3ter.services.blocking.bills
 
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
-import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -48,7 +47,7 @@ internal class LineItemServiceTest {
                 .build()
         val lineItemService = client.bills().lineItems()
 
-        val page = lineItemService.list(BillLineItemListParams.builder().billId("billId").build())
+        val page = lineItemService.list("billId")
 
         page.response().validate()
     }

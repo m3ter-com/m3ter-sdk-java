@@ -20,7 +20,7 @@ class ExternalMappingListByM3terEntityParams
 private constructor(
     private val orgId: String?,
     private val entity: String,
-    private val m3terId: String,
+    private val m3terId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -32,7 +32,7 @@ private constructor(
 
     fun entity(): String = entity
 
-    fun m3terId(): String = m3terId
+    fun m3terId(): Optional<String> = Optional.ofNullable(m3terId)
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of External
@@ -58,7 +58,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .entity()
-         * .m3terId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -98,7 +97,10 @@ private constructor(
 
         fun entity(entity: String) = apply { this.entity = entity }
 
-        fun m3terId(m3terId: String) = apply { this.m3terId = m3terId }
+        fun m3terId(m3terId: String?) = apply { this.m3terId = m3terId }
+
+        /** Alias for calling [Builder.m3terId] with `m3terId.orElse(null)`. */
+        fun m3terId(m3terId: Optional<String>) = m3terId(m3terId.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of External
@@ -228,7 +230,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .entity()
-         * .m3terId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -237,7 +238,7 @@ private constructor(
             ExternalMappingListByM3terEntityParams(
                 orgId,
                 checkRequired("entity", entity),
-                checkRequired("m3terId", m3terId),
+                m3terId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -249,7 +250,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> entity
-            2 -> m3terId
+            2 -> m3terId ?: ""
             else -> ""
         }
 

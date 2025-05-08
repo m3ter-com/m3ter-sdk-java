@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.dataExports
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -26,6 +27,7 @@ import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleRetrieveResponse
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.DataExportScheduleUpdateResponse
+import kotlin.jvm.optionals.getOrNull
 
 class ScheduleServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ScheduleService {
@@ -117,6 +119,9 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
             params: DataExportScheduleRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -150,6 +155,9 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
             params: DataExportScheduleUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DataExportScheduleUpdateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -223,6 +231,9 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DataExportScheduleDeleteResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

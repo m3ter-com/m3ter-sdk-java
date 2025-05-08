@@ -27,7 +27,7 @@ class BillDebitLineItemUpdateParams
 private constructor(
     private val orgId: String?,
     private val billId: String,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -38,7 +38,7 @@ private constructor(
 
     fun billId(): String = billId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * The amount for the line item.
@@ -229,7 +229,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
-         * .id()
          * .amount()
          * .description()
          * .productId()
@@ -271,7 +270,10 @@ private constructor(
 
         fun billId(billId: String) = apply { this.billId = billId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -567,7 +569,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
-         * .id()
          * .amount()
          * .description()
          * .productId()
@@ -583,7 +584,7 @@ private constructor(
             BillDebitLineItemUpdateParams(
                 orgId,
                 checkRequired("billId", billId),
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -596,7 +597,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> billId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

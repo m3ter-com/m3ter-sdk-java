@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -36,7 +35,7 @@ import kotlin.jvm.optionals.getOrNull
 class UserGetUserGroupsParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -46,7 +45,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of User Groups
@@ -65,14 +64,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [UserGetUserGroupsParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         */
+        @JvmStatic fun none(): UserGetUserGroupsParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [UserGetUserGroupsParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -103,7 +97,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of User
@@ -229,18 +226,11 @@ private constructor(
          * Returns an immutable instance of [UserGetUserGroupsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UserGetUserGroupsParams =
             UserGetUserGroupsParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -251,7 +241,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

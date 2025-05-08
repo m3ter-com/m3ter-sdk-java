@@ -30,13 +30,31 @@ interface PlanService {
     ): PlanResponse
 
     /** Retrieve the Plan with the given UUID. */
-    fun retrieve(params: PlanRetrieveParams): PlanResponse = retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): PlanResponse = retrieve(id, PlanRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanRetrieveParams = PlanRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, params: PlanRetrieveParams = PlanRetrieveParams.none()): PlanResponse =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: PlanRetrieveParams): PlanResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): PlanResponse =
+        retrieve(id, PlanRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Plan with the given UUID.
@@ -45,6 +63,17 @@ interface PlanService {
      * the Plan use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
+    fun update(id: String, params: PlanUpdateParams): PlanResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PlanUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PlanUpdateParams): PlanResponse = update(params, RequestOptions.none())
 
     /** @see [update] */
@@ -71,13 +100,31 @@ interface PlanService {
         list(PlanListParams.none(), requestOptions)
 
     /** Delete the Plan with the given UUID. */
-    fun delete(params: PlanDeleteParams): PlanResponse = delete(params, RequestOptions.none())
+    fun delete(id: String): PlanResponse = delete(id, PlanDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanDeleteParams = PlanDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(id: String, params: PlanDeleteParams = PlanDeleteParams.none()): PlanResponse =
+        delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
+
+    /** @see [delete] */
+    fun delete(params: PlanDeleteParams): PlanResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): PlanResponse =
+        delete(id, PlanDeleteParams.none(), requestOptions)
 
     /** A view of [PlanService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -102,8 +149,24 @@ interface PlanService {
          * the same as [PlanService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: PlanRetrieveParams): HttpResponseFor<PlanResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<PlanResponse> =
+            retrieve(id, PlanRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanRetrieveParams = PlanRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanRetrieveParams = PlanRetrieveParams.none(),
+        ): HttpResponseFor<PlanResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -112,10 +175,33 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: PlanRetrieveParams): HttpResponseFor<PlanResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<PlanResponse> =
+            retrieve(id, PlanRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanService.update].
          */
+        @MustBeClosed
+        fun update(id: String, params: PlanUpdateParams): HttpResponseFor<PlanResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanResponse> = update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: PlanUpdateParams): HttpResponseFor<PlanResponse> =
             update(params, RequestOptions.none())
@@ -155,8 +241,22 @@ interface PlanService {
          * otherwise the same as [PlanService.delete].
          */
         @MustBeClosed
-        fun delete(params: PlanDeleteParams): HttpResponseFor<PlanResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<PlanResponse> = delete(id, PlanDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanDeleteParams = PlanDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanResponse> = delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanDeleteParams = PlanDeleteParams.none(),
+        ): HttpResponseFor<PlanResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -164,5 +264,15 @@ interface PlanService {
             params: PlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: PlanDeleteParams): HttpResponseFor<PlanResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<PlanResponse> =
+            delete(id, PlanDeleteParams.none(), requestOptions)
     }
 }

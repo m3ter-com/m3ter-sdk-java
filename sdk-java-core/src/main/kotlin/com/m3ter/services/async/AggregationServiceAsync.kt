@@ -32,14 +32,39 @@ interface AggregationServiceAsync {
     ): CompletableFuture<AggregationResponse>
 
     /** Retrieve the Aggregation with the given UUID. */
-    fun retrieve(params: AggregationRetrieveParams): CompletableFuture<AggregationResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<AggregationResponse> =
+        retrieve(id, AggregationRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AggregationResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+    ): CompletableFuture<AggregationResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AggregationResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: AggregationRetrieveParams): CompletableFuture<AggregationResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<AggregationResponse> =
+        retrieve(id, AggregationRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Aggregation with the given UUID.
@@ -48,6 +73,20 @@ interface AggregationServiceAsync {
      * update the Aggregation use the `customFields` parameter to preserve those Custom Fields. If
      * you omit them from the update request, they will be lost.
      */
+    fun update(
+        id: String,
+        params: AggregationUpdateParams,
+    ): CompletableFuture<AggregationResponse> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: AggregationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AggregationResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: AggregationUpdateParams): CompletableFuture<AggregationResponse> =
         update(params, RequestOptions.none())
 
@@ -76,14 +115,36 @@ interface AggregationServiceAsync {
         list(AggregationListParams.none(), requestOptions)
 
     /** Delete the Aggregation with the given UUID. */
-    fun delete(params: AggregationDeleteParams): CompletableFuture<AggregationResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<AggregationResponse> =
+        delete(id, AggregationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AggregationDeleteParams = AggregationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AggregationResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AggregationDeleteParams = AggregationDeleteParams.none(),
+    ): CompletableFuture<AggregationResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AggregationResponse>
+
+    /** @see [delete] */
+    fun delete(params: AggregationDeleteParams): CompletableFuture<AggregationResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<AggregationResponse> =
+        delete(id, AggregationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [AggregationServiceAsync] that provides access to raw HTTP responses for each
@@ -113,10 +174,25 @@ interface AggregationServiceAsync {
          * otherwise the same as [AggregationServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            retrieve(id, AggregationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: AggregationRetrieveParams
+            id: String,
+            params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -125,10 +201,42 @@ interface AggregationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AggregationResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: AggregationRetrieveParams
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            retrieve(id, AggregationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/aggregations/{id}`, but is
          * otherwise the same as [AggregationServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AggregationUpdateParams,
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AggregationUpdateParams
@@ -176,6 +284,35 @@ interface AggregationServiceAsync {
          * otherwise the same as [AggregationServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            delete(id, AggregationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: AggregationDeleteParams = AggregationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: AggregationDeleteParams = AggregationDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: AggregationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: AggregationDeleteParams
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
@@ -184,8 +321,9 @@ interface AggregationServiceAsync {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: AggregationDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AggregationResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
+            delete(id, AggregationDeleteParams.none(), requestOptions)
     }
 }

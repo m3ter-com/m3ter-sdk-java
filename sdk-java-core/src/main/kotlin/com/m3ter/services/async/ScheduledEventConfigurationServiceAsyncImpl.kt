@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.ScheduledEventConfigurationResponse
 import com.m3ter.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.models.ScheduledEventConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ScheduledEventConfigurationServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) :
@@ -120,6 +122,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -156,6 +161,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -237,6 +245,9 @@ internal constructor(private val clientOptions: ClientOptions) :
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

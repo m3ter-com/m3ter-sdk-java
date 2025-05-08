@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class BillJobServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BillJobService {
@@ -108,6 +110,9 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillJobResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -177,6 +182,9 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             params: BillJobCancelParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillJobResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

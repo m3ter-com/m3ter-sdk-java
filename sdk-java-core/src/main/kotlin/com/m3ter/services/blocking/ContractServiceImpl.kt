@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -25,6 +26,7 @@ import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class ContractServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ContractService {
@@ -120,6 +122,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             params: ContractRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ContractResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -151,6 +156,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             params: ContractUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ContractResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,6 +229,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             params: ContractDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ContractResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -254,6 +265,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             params: ContractEndDateBillingEntitiesParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

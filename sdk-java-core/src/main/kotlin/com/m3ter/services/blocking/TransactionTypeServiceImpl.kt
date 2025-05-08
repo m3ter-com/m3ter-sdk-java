@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.TransactionTypeListParams
 import com.m3ter.models.TransactionTypeResponse
 import com.m3ter.models.TransactionTypeRetrieveParams
 import com.m3ter.models.TransactionTypeUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class TransactionTypeServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     TransactionTypeService {
@@ -114,6 +116,9 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionTypeResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -147,6 +152,9 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             params: TransactionTypeUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionTypeResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -220,6 +228,9 @@ class TransactionTypeServiceImpl internal constructor(private val clientOptions:
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionTypeResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

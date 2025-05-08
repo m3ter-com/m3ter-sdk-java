@@ -31,14 +31,34 @@ interface AggregationService {
     ): AggregationResponse
 
     /** Retrieve the Aggregation with the given UUID. */
-    fun retrieve(params: AggregationRetrieveParams): AggregationResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): AggregationResponse = retrieve(id, AggregationRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AggregationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+    ): AggregationResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: AggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: AggregationRetrieveParams): AggregationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): AggregationResponse =
+        retrieve(id, AggregationRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Aggregation with the given UUID.
@@ -47,6 +67,17 @@ interface AggregationService {
      * update the Aggregation use the `customFields` parameter to preserve those Custom Fields. If
      * you omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: AggregationUpdateParams): AggregationResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: AggregationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AggregationResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: AggregationUpdateParams): AggregationResponse =
         update(params, RequestOptions.none())
 
@@ -74,14 +105,34 @@ interface AggregationService {
         list(AggregationListParams.none(), requestOptions)
 
     /** Delete the Aggregation with the given UUID. */
-    fun delete(params: AggregationDeleteParams): AggregationResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): AggregationResponse = delete(id, AggregationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AggregationDeleteParams = AggregationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AggregationResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AggregationDeleteParams = AggregationDeleteParams.none(),
+    ): AggregationResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: AggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationResponse
+
+    /** @see [delete] */
+    fun delete(params: AggregationDeleteParams): AggregationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): AggregationResponse =
+        delete(id, AggregationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [AggregationService] that provides access to raw HTTP responses for each method.
@@ -108,8 +159,24 @@ interface AggregationService {
          * otherwise the same as [AggregationService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: AggregationRetrieveParams): HttpResponseFor<AggregationResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<AggregationResponse> =
+            retrieve(id, AggregationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AggregationRetrieveParams = AggregationRetrieveParams.none(),
+        ): HttpResponseFor<AggregationResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -118,10 +185,39 @@ interface AggregationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AggregationResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: AggregationRetrieveParams): HttpResponseFor<AggregationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AggregationResponse> =
+            retrieve(id, AggregationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/aggregations/{id}`, but is
          * otherwise the same as [AggregationService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AggregationUpdateParams,
+        ): HttpResponseFor<AggregationResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: AggregationUpdateParams): HttpResponseFor<AggregationResponse> =
             update(params, RequestOptions.none())
@@ -163,8 +259,24 @@ interface AggregationService {
          * otherwise the same as [AggregationService.delete].
          */
         @MustBeClosed
-        fun delete(params: AggregationDeleteParams): HttpResponseFor<AggregationResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<AggregationResponse> =
+            delete(id, AggregationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: AggregationDeleteParams = AggregationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: AggregationDeleteParams = AggregationDeleteParams.none(),
+        ): HttpResponseFor<AggregationResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -172,5 +284,18 @@ interface AggregationService {
             params: AggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AggregationResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: AggregationDeleteParams): HttpResponseFor<AggregationResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AggregationResponse> =
+            delete(id, AggregationDeleteParams.none(), requestOptions)
     }
 }

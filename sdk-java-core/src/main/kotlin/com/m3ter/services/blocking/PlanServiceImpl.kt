@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.PlanListParams
 import com.m3ter.models.PlanResponse
 import com.m3ter.models.PlanRetrieveParams
 import com.m3ter.models.PlanUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class PlanServiceImpl internal constructor(private val clientOptions: ClientOptions) : PlanService {
 
@@ -98,6 +100,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: PlanRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PlanResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -129,6 +134,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: PlanUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PlanResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -199,6 +207,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: PlanDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PlanResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -27,6 +27,17 @@ interface ResourceGroupService {
     fun withRawResponse(): WithRawResponse
 
     /** Create a ResourceGroup for the UUID */
+    fun create(type: String, params: ResourceGroupCreateParams): ResourceGroupResponse =
+        create(type, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        type: String,
+        params: ResourceGroupCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse = create(params.toBuilder().type(type).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: ResourceGroupCreateParams): ResourceGroupResponse =
         create(params, RequestOptions.none())
 
@@ -37,6 +48,17 @@ interface ResourceGroupService {
     ): ResourceGroupResponse
 
     /** Retrieve the ResourceGroup for the UUID */
+    fun retrieve(id: String, params: ResourceGroupRetrieveParams): ResourceGroupResponse =
+        retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ResourceGroupRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
     fun retrieve(params: ResourceGroupRetrieveParams): ResourceGroupResponse =
         retrieve(params, RequestOptions.none())
 
@@ -47,6 +69,17 @@ interface ResourceGroupService {
     ): ResourceGroupResponse
 
     /** Update the ResourceGroup for the UUID */
+    fun update(id: String, params: ResourceGroupUpdateParams): ResourceGroupResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ResourceGroupUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: ResourceGroupUpdateParams): ResourceGroupResponse =
         update(params, RequestOptions.none())
 
@@ -57,8 +90,20 @@ interface ResourceGroupService {
     ): ResourceGroupResponse
 
     /** Retrieve a list of ResourceGroup entities */
-    fun list(params: ResourceGroupListParams): ResourceGroupListPage =
-        list(params, RequestOptions.none())
+    fun list(type: String): ResourceGroupListPage = list(type, ResourceGroupListParams.none())
+
+    /** @see [list] */
+    fun list(
+        type: String,
+        params: ResourceGroupListParams = ResourceGroupListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupListPage = list(params.toBuilder().type(type).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
+        type: String,
+        params: ResourceGroupListParams = ResourceGroupListParams.none(),
+    ): ResourceGroupListPage = list(type, params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
@@ -66,7 +111,26 @@ interface ResourceGroupService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupListPage
 
+    /** @see [list] */
+    fun list(params: ResourceGroupListParams): ResourceGroupListPage =
+        list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(type: String, requestOptions: RequestOptions): ResourceGroupListPage =
+        list(type, ResourceGroupListParams.none(), requestOptions)
+
     /** Delete a ResourceGroup for the UUID */
+    fun delete(id: String, params: ResourceGroupDeleteParams): ResourceGroupResponse =
+        delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ResourceGroupDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: ResourceGroupDeleteParams): ResourceGroupResponse =
         delete(params, RequestOptions.none())
 
@@ -77,6 +141,20 @@ interface ResourceGroupService {
     ): ResourceGroupResponse
 
     /** Add an item to a ResourceGroup. */
+    fun addResource(
+        resourceGroupId: String,
+        params: ResourceGroupAddResourceParams,
+    ): ResourceGroupResponse = addResource(resourceGroupId, params, RequestOptions.none())
+
+    /** @see [addResource] */
+    fun addResource(
+        resourceGroupId: String,
+        params: ResourceGroupAddResourceParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse =
+        addResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
+
+    /** @see [addResource] */
     fun addResource(params: ResourceGroupAddResourceParams): ResourceGroupResponse =
         addResource(params, RequestOptions.none())
 
@@ -87,6 +165,20 @@ interface ResourceGroupService {
     ): ResourceGroupResponse
 
     /** Retrieve a list of items for a ResourceGroup */
+    fun listContents(
+        resourceGroupId: String,
+        params: ResourceGroupListContentsParams,
+    ): ResourceGroupListContentsPage = listContents(resourceGroupId, params, RequestOptions.none())
+
+    /** @see [listContents] */
+    fun listContents(
+        resourceGroupId: String,
+        params: ResourceGroupListContentsParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupListContentsPage =
+        listContents(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
+
+    /** @see [listContents] */
     fun listContents(params: ResourceGroupListContentsParams): ResourceGroupListContentsPage =
         listContents(params, RequestOptions.none())
 
@@ -98,6 +190,21 @@ interface ResourceGroupService {
 
     /** Retrieve a list of permission policies for a ResourceGroup */
     fun listPermissions(
+        resourceGroupId: String,
+        params: ResourceGroupListPermissionsParams,
+    ): ResourceGroupListPermissionsPage =
+        listPermissions(resourceGroupId, params, RequestOptions.none())
+
+    /** @see [listPermissions] */
+    fun listPermissions(
+        resourceGroupId: String,
+        params: ResourceGroupListPermissionsParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupListPermissionsPage =
+        listPermissions(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
+
+    /** @see [listPermissions] */
+    fun listPermissions(
         params: ResourceGroupListPermissionsParams
     ): ResourceGroupListPermissionsPage = listPermissions(params, RequestOptions.none())
 
@@ -108,6 +215,20 @@ interface ResourceGroupService {
     ): ResourceGroupListPermissionsPage
 
     /** Remove an item from a ResourceGroup. */
+    fun removeResource(
+        resourceGroupId: String,
+        params: ResourceGroupRemoveResourceParams,
+    ): ResourceGroupResponse = removeResource(resourceGroupId, params, RequestOptions.none())
+
+    /** @see [removeResource] */
+    fun removeResource(
+        resourceGroupId: String,
+        params: ResourceGroupRemoveResourceParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse =
+        removeResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
+
+    /** @see [removeResource] */
     fun removeResource(params: ResourceGroupRemoveResourceParams): ResourceGroupResponse =
         removeResource(params, RequestOptions.none())
 
@@ -127,6 +248,22 @@ interface ResourceGroupService {
          * is otherwise the same as [ResourceGroupService.create].
          */
         @MustBeClosed
+        fun create(
+            type: String,
+            params: ResourceGroupCreateParams,
+        ): HttpResponseFor<ResourceGroupResponse> = create(type, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            type: String,
+            params: ResourceGroupCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            create(params.toBuilder().type(type).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
         fun create(params: ResourceGroupCreateParams): HttpResponseFor<ResourceGroupResponse> =
             create(params, RequestOptions.none())
 
@@ -141,6 +278,22 @@ interface ResourceGroupService {
          * Returns a raw HTTP response for `get /organizations/{orgId}/resourcegroups/{type}/{id}`,
          * but is otherwise the same as [ResourceGroupService.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ResourceGroupRetrieveParams,
+        ): HttpResponseFor<ResourceGroupResponse> = retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ResourceGroupRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(params: ResourceGroupRetrieveParams): HttpResponseFor<ResourceGroupResponse> =
             retrieve(params, RequestOptions.none())
@@ -157,6 +310,22 @@ interface ResourceGroupService {
          * but is otherwise the same as [ResourceGroupService.update].
          */
         @MustBeClosed
+        fun update(
+            id: String,
+            params: ResourceGroupUpdateParams,
+        ): HttpResponseFor<ResourceGroupResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ResourceGroupUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
         fun update(params: ResourceGroupUpdateParams): HttpResponseFor<ResourceGroupResponse> =
             update(params, RequestOptions.none())
 
@@ -172,8 +341,24 @@ interface ResourceGroupService {
          * is otherwise the same as [ResourceGroupService.list].
          */
         @MustBeClosed
-        fun list(params: ResourceGroupListParams): HttpResponseFor<ResourceGroupListPage> =
-            list(params, RequestOptions.none())
+        fun list(type: String): HttpResponseFor<ResourceGroupListPage> =
+            list(type, ResourceGroupListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            type: String,
+            params: ResourceGroupListParams = ResourceGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupListPage> =
+            list(params.toBuilder().type(type).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            type: String,
+            params: ResourceGroupListParams = ResourceGroupListParams.none(),
+        ): HttpResponseFor<ResourceGroupListPage> = list(type, params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
@@ -182,11 +367,40 @@ interface ResourceGroupService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ResourceGroupListPage>
 
+        /** @see [list] */
+        @MustBeClosed
+        fun list(params: ResourceGroupListParams): HttpResponseFor<ResourceGroupListPage> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            type: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ResourceGroupListPage> =
+            list(type, ResourceGroupListParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `delete
          * /organizations/{orgId}/resourcegroups/{type}/{id}`, but is otherwise the same as
          * [ResourceGroupService.delete].
          */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ResourceGroupDeleteParams,
+        ): HttpResponseFor<ResourceGroupResponse> = delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ResourceGroupDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(params: ResourceGroupDeleteParams): HttpResponseFor<ResourceGroupResponse> =
             delete(params, RequestOptions.none())
@@ -205,6 +419,23 @@ interface ResourceGroupService {
          */
         @MustBeClosed
         fun addResource(
+            resourceGroupId: String,
+            params: ResourceGroupAddResourceParams,
+        ): HttpResponseFor<ResourceGroupResponse> =
+            addResource(resourceGroupId, params, RequestOptions.none())
+
+        /** @see [addResource] */
+        @MustBeClosed
+        fun addResource(
+            resourceGroupId: String,
+            params: ResourceGroupAddResourceParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            addResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
+
+        /** @see [addResource] */
+        @MustBeClosed
+        fun addResource(
             params: ResourceGroupAddResourceParams
         ): HttpResponseFor<ResourceGroupResponse> = addResource(params, RequestOptions.none())
 
@@ -220,6 +451,26 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/contents`, but is
          * otherwise the same as [ResourceGroupService.listContents].
          */
+        @MustBeClosed
+        fun listContents(
+            resourceGroupId: String,
+            params: ResourceGroupListContentsParams,
+        ): HttpResponseFor<ResourceGroupListContentsPage> =
+            listContents(resourceGroupId, params, RequestOptions.none())
+
+        /** @see [listContents] */
+        @MustBeClosed
+        fun listContents(
+            resourceGroupId: String,
+            params: ResourceGroupListContentsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupListContentsPage> =
+            listContents(
+                params.toBuilder().resourceGroupId(resourceGroupId).build(),
+                requestOptions,
+            )
+
+        /** @see [listContents] */
         @MustBeClosed
         fun listContents(
             params: ResourceGroupListContentsParams
@@ -240,6 +491,26 @@ interface ResourceGroupService {
          */
         @MustBeClosed
         fun listPermissions(
+            resourceGroupId: String,
+            params: ResourceGroupListPermissionsParams,
+        ): HttpResponseFor<ResourceGroupListPermissionsPage> =
+            listPermissions(resourceGroupId, params, RequestOptions.none())
+
+        /** @see [listPermissions] */
+        @MustBeClosed
+        fun listPermissions(
+            resourceGroupId: String,
+            params: ResourceGroupListPermissionsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupListPermissionsPage> =
+            listPermissions(
+                params.toBuilder().resourceGroupId(resourceGroupId).build(),
+                requestOptions,
+            )
+
+        /** @see [listPermissions] */
+        @MustBeClosed
+        fun listPermissions(
             params: ResourceGroupListPermissionsParams
         ): HttpResponseFor<ResourceGroupListPermissionsPage> =
             listPermissions(params, RequestOptions.none())
@@ -256,6 +527,26 @@ interface ResourceGroupService {
          * /organizations/{orgId}/resourcegroups/{type}/{resourceGroupId}/removeresource`, but is
          * otherwise the same as [ResourceGroupService.removeResource].
          */
+        @MustBeClosed
+        fun removeResource(
+            resourceGroupId: String,
+            params: ResourceGroupRemoveResourceParams,
+        ): HttpResponseFor<ResourceGroupResponse> =
+            removeResource(resourceGroupId, params, RequestOptions.none())
+
+        /** @see [removeResource] */
+        @MustBeClosed
+        fun removeResource(
+            resourceGroupId: String,
+            params: ResourceGroupRemoveResourceParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            removeResource(
+                params.toBuilder().resourceGroupId(resourceGroupId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeResource] */
         @MustBeClosed
         fun removeResource(
             params: ResourceGroupRemoveResourceParams

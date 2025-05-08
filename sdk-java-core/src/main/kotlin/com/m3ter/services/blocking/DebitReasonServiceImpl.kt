@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.DebitReasonListParams
 import com.m3ter.models.DebitReasonResponse
 import com.m3ter.models.DebitReasonRetrieveParams
 import com.m3ter.models.DebitReasonUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class DebitReasonServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     DebitReasonService {
@@ -114,6 +116,9 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitReasonResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -147,6 +152,9 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitReasonResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -220,6 +228,9 @@ class DebitReasonServiceImpl internal constructor(private val clientOptions: Cli
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitReasonResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

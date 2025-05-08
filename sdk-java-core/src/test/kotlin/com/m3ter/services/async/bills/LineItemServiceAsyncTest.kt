@@ -4,7 +4,6 @@ package com.m3ter.services.async.bills
 
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
-import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -49,8 +48,7 @@ internal class LineItemServiceAsyncTest {
                 .build()
         val lineItemServiceAsync = client.bills().lineItems()
 
-        val pageFuture =
-            lineItemServiceAsync.list(BillLineItemListParams.builder().billId("billId").build())
+        val pageFuture = lineItemServiceAsync.list("billId")
 
         val page = pageFuture.get()
         page.response().validate()

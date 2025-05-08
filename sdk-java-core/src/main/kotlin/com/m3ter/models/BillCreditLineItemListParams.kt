@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 class BillCreditLineItemListParams
 private constructor(
     private val orgId: String?,
-    private val billId: String,
+    private val billId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -24,7 +23,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun billId(): String = billId
+    fun billId(): Optional<String> = Optional.ofNullable(billId)
 
     /** `nextToken` for multi page retrievals. */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
@@ -40,13 +39,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BillCreditLineItemListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BillCreditLineItemListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .billId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -78,7 +74,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun billId(billId: String) = apply { this.billId = billId }
+        fun billId(billId: String?) = apply { this.billId = billId }
+
+        /** Alias for calling [Builder.billId] with `billId.orElse(null)`. */
+        fun billId(billId: Optional<String>) = billId(billId.getOrNull())
 
         /** `nextToken` for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -201,18 +200,11 @@ private constructor(
          * Returns an immutable instance of [BillCreditLineItemListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .billId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillCreditLineItemListParams =
             BillCreditLineItemListParams(
                 orgId,
-                checkRequired("billId", billId),
+                billId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -223,7 +215,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> billId
+            1 -> billId ?: ""
             else -> ""
         }
 

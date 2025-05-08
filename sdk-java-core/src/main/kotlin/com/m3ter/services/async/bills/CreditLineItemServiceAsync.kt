@@ -27,6 +27,20 @@ interface CreditLineItemServiceAsync {
      * When creating Credit line items for Bills, use the Credit Reasons created for your
      * Organization. See [CreditReason](https://www.m3ter.com/docs/api#tag/CreditReason).
      */
+    fun create(
+        billId: String,
+        params: BillCreditLineItemCreateParams,
+    ): CompletableFuture<CreditLineItemResponse> = create(billId, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        billId: String,
+        params: BillCreditLineItemCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CreditLineItemResponse> =
+        create(params.toBuilder().billId(billId).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: BillCreditLineItemCreateParams): CompletableFuture<CreditLineItemResponse> =
         create(params, RequestOptions.none())
 
@@ -38,6 +52,20 @@ interface CreditLineItemServiceAsync {
 
     /** Retrieve the Credit line item with the given UUID. */
     fun retrieve(
+        id: String,
+        params: BillCreditLineItemRetrieveParams,
+    ): CompletableFuture<CreditLineItemResponse> = retrieve(id, params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillCreditLineItemRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CreditLineItemResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: BillCreditLineItemRetrieveParams
     ): CompletableFuture<CreditLineItemResponse> = retrieve(params, RequestOptions.none())
 
@@ -48,6 +76,20 @@ interface CreditLineItemServiceAsync {
     ): CompletableFuture<CreditLineItemResponse>
 
     /** Update the Credit line item with the given UUID. */
+    fun update(
+        id: String,
+        params: BillCreditLineItemUpdateParams,
+    ): CompletableFuture<CreditLineItemResponse> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: BillCreditLineItemUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CreditLineItemResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: BillCreditLineItemUpdateParams): CompletableFuture<CreditLineItemResponse> =
         update(params, RequestOptions.none())
 
@@ -58,9 +100,23 @@ interface CreditLineItemServiceAsync {
     ): CompletableFuture<CreditLineItemResponse>
 
     /** List the Credit line items for the given Bill. */
+    fun list(billId: String): CompletableFuture<BillCreditLineItemListPageAsync> =
+        list(billId, BillCreditLineItemListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: BillCreditLineItemListParams
-    ): CompletableFuture<BillCreditLineItemListPageAsync> = list(params, RequestOptions.none())
+        billId: String,
+        params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BillCreditLineItemListPageAsync> =
+        list(params.toBuilder().billId(billId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
+        billId: String,
+        params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
+    ): CompletableFuture<BillCreditLineItemListPageAsync> =
+        list(billId, params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
@@ -68,7 +124,33 @@ interface CreditLineItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillCreditLineItemListPageAsync>
 
+    /** @see [list] */
+    fun list(
+        params: BillCreditLineItemListParams
+    ): CompletableFuture<BillCreditLineItemListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(
+        billId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<BillCreditLineItemListPageAsync> =
+        list(billId, BillCreditLineItemListParams.none(), requestOptions)
+
     /** Delete the Credit line item with the given UUID. */
+    fun delete(
+        id: String,
+        params: BillCreditLineItemDeleteParams,
+    ): CompletableFuture<CreditLineItemResponse> = delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: BillCreditLineItemDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CreditLineItemResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
     fun delete(params: BillCreditLineItemDeleteParams): CompletableFuture<CreditLineItemResponse> =
         delete(params, RequestOptions.none())
 
@@ -91,6 +173,23 @@ interface CreditLineItemServiceAsync {
          */
         @MustBeClosed
         fun create(
+            billId: String,
+            params: BillCreditLineItemCreateParams,
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            create(billId, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            billId: String,
+            params: BillCreditLineItemCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            create(params.toBuilder().billId(billId).build(), requestOptions)
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
             params: BillCreditLineItemCreateParams
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
             create(params, RequestOptions.none())
@@ -107,6 +206,23 @@ interface CreditLineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/creditlineitems/{id}`, but is otherwise the same as
          * [CreditLineItemServiceAsync.retrieve].
          */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillCreditLineItemRetrieveParams,
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillCreditLineItemRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
             params: BillCreditLineItemRetrieveParams
@@ -127,6 +243,23 @@ interface CreditLineItemServiceAsync {
          */
         @MustBeClosed
         fun update(
+            id: String,
+            params: BillCreditLineItemUpdateParams,
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: BillCreditLineItemUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: BillCreditLineItemUpdateParams
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
             update(params, RequestOptions.none())
@@ -145,9 +278,26 @@ interface CreditLineItemServiceAsync {
          */
         @MustBeClosed
         fun list(
-            params: BillCreditLineItemListParams
+            billId: String
         ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> =
-            list(params, RequestOptions.none())
+            list(billId, BillCreditLineItemListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> =
+            list(params.toBuilder().billId(billId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
+        ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> =
+            list(billId, params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
@@ -156,11 +306,43 @@ interface CreditLineItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>>
 
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BillCreditLineItemListParams
+        ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            billId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> =
+            list(billId, BillCreditLineItemListParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `delete
          * /organizations/{orgId}/bills/{billId}/creditlineitems/{id}`, but is otherwise the same as
          * [CreditLineItemServiceAsync.delete].
          */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: BillCreditLineItemDeleteParams,
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: BillCreditLineItemDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
         @MustBeClosed
         fun delete(
             params: BillCreditLineItemDeleteParams

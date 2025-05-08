@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.BillCreditLineItemCreateParams
 import com.m3ter.models.BillCreditLineItemDeleteParams
-import com.m3ter.models.BillCreditLineItemListParams
 import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import java.time.OffsetDateTime
@@ -124,10 +123,7 @@ internal class CreditLineItemServiceAsyncTest {
                 .build()
         val creditLineItemServiceAsync = client.bills().creditLineItems()
 
-        val pageFuture =
-            creditLineItemServiceAsync.list(
-                BillCreditLineItemListParams.builder().billId("billId").build()
-            )
+        val pageFuture = creditLineItemServiceAsync.list("billId")
 
         val page = pageFuture.get()
         page.response().validate()

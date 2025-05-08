@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 class BalanceTransactionSummaryParams
 private constructor(
     private val orgId: String?,
-    private val balanceId: String,
+    private val balanceId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -22,7 +21,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun balanceId(): String = balanceId
+    fun balanceId(): Optional<String> = Optional.ofNullable(balanceId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -32,14 +31,11 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BalanceTransactionSummaryParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [BalanceTransactionSummaryParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -69,7 +65,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
+        fun balanceId(balanceId: String?) = apply { this.balanceId = balanceId }
+
+        /** Alias for calling [Builder.balanceId] with `balanceId.orElse(null)`. */
+        fun balanceId(balanceId: Optional<String>) = balanceId(balanceId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -173,18 +172,11 @@ private constructor(
          * Returns an immutable instance of [BalanceTransactionSummaryParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BalanceTransactionSummaryParams =
             BalanceTransactionSummaryParams(
                 orgId,
-                checkRequired("balanceId", balanceId),
+                balanceId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -193,7 +185,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> balanceId
+            1 -> balanceId ?: ""
             else -> ""
         }
 

@@ -38,7 +38,20 @@ interface WebhookService {
     ): WebhookCreateResponse
 
     /** Retrieve the webhook Destination for the UUID. */
-    fun retrieve(params: WebhookRetrieveParams): Webhook = retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): Webhook = retrieve(id, WebhookRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Webhook = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
+    ): Webhook = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -46,7 +59,25 @@ interface WebhookService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Webhook
 
+    /** @see [retrieve] */
+    fun retrieve(params: WebhookRetrieveParams): Webhook = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): Webhook =
+        retrieve(id, WebhookRetrieveParams.none(), requestOptions)
+
     /** Update a destination to be used for a webhook. */
+    fun update(id: String, params: WebhookUpdateParams): WebhookUpdateResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: WebhookUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): WebhookUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: WebhookUpdateParams): WebhookUpdateResponse =
         update(params, RequestOptions.none())
 
@@ -74,7 +105,18 @@ interface WebhookService {
         list(WebhookListParams.none(), requestOptions)
 
     /** This endpoint deletes a specific webhook destination identified by its UUID. */
-    fun delete(params: WebhookDeleteParams): Webhook = delete(params, RequestOptions.none())
+    fun delete(id: String): Webhook = delete(id, WebhookDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: WebhookDeleteParams = WebhookDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Webhook = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(id: String, params: WebhookDeleteParams = WebhookDeleteParams.none()): Webhook =
+        delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
@@ -82,20 +124,48 @@ interface WebhookService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Webhook
 
+    /** @see [delete] */
+    fun delete(params: WebhookDeleteParams): Webhook = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): Webhook =
+        delete(id, WebhookDeleteParams.none(), requestOptions)
+
     /**
      * Set the `active` status on a webhook integration destination.
      *
      * Use this endpoint to activate or deactivate a webhook integration destination. It toggles the
      * `active` status of the specific wehbook destination with the given ID.
      */
-    fun setActive(params: WebhookSetActiveParams): WebhookSetActiveResponse =
-        setActive(params, RequestOptions.none())
+    fun setActive(id: String): WebhookSetActiveResponse =
+        setActive(id, WebhookSetActiveParams.none())
+
+    /** @see [setActive] */
+    fun setActive(
+        id: String,
+        params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): WebhookSetActiveResponse = setActive(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [setActive] */
+    fun setActive(
+        id: String,
+        params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
+    ): WebhookSetActiveResponse = setActive(id, params, RequestOptions.none())
 
     /** @see [setActive] */
     fun setActive(
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): WebhookSetActiveResponse
+
+    /** @see [setActive] */
+    fun setActive(params: WebhookSetActiveParams): WebhookSetActiveResponse =
+        setActive(params, RequestOptions.none())
+
+    /** @see [setActive] */
+    fun setActive(id: String, requestOptions: RequestOptions): WebhookSetActiveResponse =
+        setActive(id, WebhookSetActiveParams.none(), requestOptions)
 
     /** A view of [WebhookService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -122,8 +192,23 @@ interface WebhookService {
          * as [WebhookService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: WebhookRetrieveParams): HttpResponseFor<Webhook> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<Webhook> =
+            retrieve(id, WebhookRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Webhook> = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
+        ): HttpResponseFor<Webhook> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -132,11 +217,37 @@ interface WebhookService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Webhook>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: WebhookRetrieveParams): HttpResponseFor<Webhook> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Webhook> =
+            retrieve(id, WebhookRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: WebhookUpdateParams,
+        ): HttpResponseFor<WebhookUpdateResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: WebhookUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookUpdateResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: WebhookUpdateParams): HttpResponseFor<WebhookUpdateResponse> =
             update(params, RequestOptions.none())
@@ -179,8 +290,22 @@ interface WebhookService {
          * as [WebhookService.delete].
          */
         @MustBeClosed
-        fun delete(params: WebhookDeleteParams): HttpResponseFor<Webhook> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<Webhook> = delete(id, WebhookDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: WebhookDeleteParams = WebhookDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Webhook> = delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: WebhookDeleteParams = WebhookDeleteParams.none(),
+        ): HttpResponseFor<Webhook> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -189,14 +314,40 @@ interface WebhookService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Webhook>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: WebhookDeleteParams): HttpResponseFor<Webhook> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<Webhook> =
+            delete(id, WebhookDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}/active`, but is otherwise
          * the same as [WebhookService.setActive].
          */
         @MustBeClosed
-        fun setActive(params: WebhookSetActiveParams): HttpResponseFor<WebhookSetActiveResponse> =
-            setActive(params, RequestOptions.none())
+        fun setActive(id: String): HttpResponseFor<WebhookSetActiveResponse> =
+            setActive(id, WebhookSetActiveParams.none())
+
+        /** @see [setActive] */
+        @MustBeClosed
+        fun setActive(
+            id: String,
+            params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<WebhookSetActiveResponse> =
+            setActive(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [setActive] */
+        @MustBeClosed
+        fun setActive(
+            id: String,
+            params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
+        ): HttpResponseFor<WebhookSetActiveResponse> = setActive(id, params, RequestOptions.none())
 
         /** @see [setActive] */
         @MustBeClosed
@@ -204,5 +355,18 @@ interface WebhookService {
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<WebhookSetActiveResponse>
+
+        /** @see [setActive] */
+        @MustBeClosed
+        fun setActive(params: WebhookSetActiveParams): HttpResponseFor<WebhookSetActiveResponse> =
+            setActive(params, RequestOptions.none())
+
+        /** @see [setActive] */
+        @MustBeClosed
+        fun setActive(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<WebhookSetActiveResponse> =
+            setActive(id, WebhookSetActiveParams.none(), requestOptions)
     }
 }

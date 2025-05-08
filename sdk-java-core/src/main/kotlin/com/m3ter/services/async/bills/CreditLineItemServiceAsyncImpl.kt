@@ -5,6 +5,7 @@ package com.m3ter.services.async.bills
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import com.m3ter.models.CreditLineItemResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class CreditLineItemServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : CreditLineItemServiceAsync {
@@ -82,6 +84,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
             params: BillCreditLineItemCreateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -119,6 +124,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
             params: BillCreditLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -156,6 +164,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
             params: BillCreditLineItemUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -194,6 +205,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
             params: BillCreditLineItemListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillCreditLineItemListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -237,6 +251,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
             params: BillCreditLineItemDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CreditLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

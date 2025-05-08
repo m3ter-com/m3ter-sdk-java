@@ -36,7 +36,7 @@ import kotlin.jvm.optionals.getOrNull
 class PlanTemplateUpdateParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -45,7 +45,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Determines the frequency at which bills are generated.
@@ -380,7 +380,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .billFrequency()
          * .currency()
          * .name()
@@ -416,7 +415,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -878,7 +880,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .billFrequency()
          * .currency()
          * .name()
@@ -891,7 +892,7 @@ private constructor(
         fun build(): PlanTemplateUpdateParams =
             PlanTemplateUpdateParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -903,7 +904,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

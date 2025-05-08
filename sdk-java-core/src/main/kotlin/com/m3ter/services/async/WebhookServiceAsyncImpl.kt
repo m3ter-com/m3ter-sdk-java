@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -28,6 +29,7 @@ import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
 import com.m3ter.models.WebhookUpdateResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class WebhookServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     WebhookServiceAsync {
@@ -128,6 +130,9 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: WebhookRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Webhook>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -164,6 +169,9 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: WebhookUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<WebhookUpdateResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -242,6 +250,9 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: WebhookDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Webhook>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -279,6 +290,9 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -19,7 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 class BalanceTransactionListParams
 private constructor(
     private val orgId: String?,
-    private val balanceId: String,
+    private val balanceId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val scheduleId: String?,
@@ -31,7 +30,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun balanceId(): String = balanceId
+    fun balanceId(): Optional<String> = Optional.ofNullable(balanceId)
 
     /**
      * `nextToken` for multi page retrievals. A token for retrieving the next page of transactions.
@@ -54,13 +53,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BalanceTransactionListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BalanceTransactionListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -96,7 +92,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
+        fun balanceId(balanceId: String?) = apply { this.balanceId = balanceId }
+
+        /** Alias for calling [Builder.balanceId] with `balanceId.orElse(null)`. */
+        fun balanceId(balanceId: Optional<String>) = balanceId(balanceId.getOrNull())
 
         /**
          * `nextToken` for multi page retrievals. A token for retrieving the next page of
@@ -235,18 +234,11 @@ private constructor(
          * Returns an immutable instance of [BalanceTransactionListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BalanceTransactionListParams =
             BalanceTransactionListParams(
                 orgId,
-                checkRequired("balanceId", balanceId),
+                balanceId,
                 nextToken,
                 pageSize,
                 scheduleId,
@@ -259,7 +251,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> balanceId
+            1 -> balanceId ?: ""
             else -> ""
         }
 

@@ -27,14 +27,39 @@ interface JobServiceAsync {
      * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
      * - The status of the Export Job.
      */
-    fun retrieve(params: DataExportJobRetrieveParams): CompletableFuture<DataExportJobResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<DataExportJobResponse> =
+        retrieve(id, DataExportJobRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportJobResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+    ): CompletableFuture<DataExportJobResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DataExportJobResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: DataExportJobRetrieveParams): CompletableFuture<DataExportJobResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<DataExportJobResponse> =
+        retrieve(id, DataExportJobRetrieveParams.none(), requestOptions)
 
     /** Retrieve a list of Export Job entities. */
     fun list(): CompletableFuture<DataExportJobListPageAsync> = list(DataExportJobListParams.none())
@@ -71,6 +96,31 @@ interface JobServiceAsync {
      * features are functional but may be incomplete, and there is no commitment at this stage to
      * particular functionality or timelines.
      */
+    fun getDownloadUrl(jobId: String): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
+        getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none())
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        jobId: String,
+        params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
+        getDownloadUrl(params.toBuilder().jobId(jobId).build(), requestOptions)
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        jobId: String,
+        params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+    ): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
+        getDownloadUrl(jobId, params, RequestOptions.none())
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        params: DataExportJobGetDownloadUrlParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<DataExportJobGetDownloadUrlResponse>
+
+    /** @see [getDownloadUrl] */
     fun getDownloadUrl(
         params: DataExportJobGetDownloadUrlParams
     ): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
@@ -78,9 +128,10 @@ interface JobServiceAsync {
 
     /** @see [getDownloadUrl] */
     fun getDownloadUrl(
-        params: DataExportJobGetDownloadUrlParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<DataExportJobGetDownloadUrlResponse>
+        jobId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
+        getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none(), requestOptions)
 
     /** A view of [JobServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -90,6 +141,35 @@ interface JobServiceAsync {
          * is otherwise the same as [JobServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<DataExportJobResponse>> =
+            retrieve(id, DataExportJobRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>> =
+            retrieve(id, params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportJobRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>>
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
             params: DataExportJobRetrieveParams
         ): CompletableFuture<HttpResponseFor<DataExportJobResponse>> =
@@ -98,9 +178,10 @@ interface JobServiceAsync {
         /** @see [retrieve] */
         @MustBeClosed
         fun retrieve(
-            params: DataExportJobRetrieveParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportJobResponse>> =
+            retrieve(id, DataExportJobRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is
@@ -138,9 +219,26 @@ interface JobServiceAsync {
          */
         @MustBeClosed
         fun getDownloadUrl(
-            params: DataExportJobGetDownloadUrlParams
+            jobId: String
         ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> =
-            getDownloadUrl(params, RequestOptions.none())
+            getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none())
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            jobId: String,
+            params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> =
+            getDownloadUrl(params.toBuilder().jobId(jobId).build(), requestOptions)
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            jobId: String,
+            params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+        ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> =
+            getDownloadUrl(jobId, params, RequestOptions.none())
 
         /** @see [getDownloadUrl] */
         @MustBeClosed
@@ -148,5 +246,20 @@ interface JobServiceAsync {
             params: DataExportJobGetDownloadUrlParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>>
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            params: DataExportJobGetDownloadUrlParams
+        ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> =
+            getDownloadUrl(params, RequestOptions.none())
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            jobId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> =
+            getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none(), requestOptions)
     }
 }

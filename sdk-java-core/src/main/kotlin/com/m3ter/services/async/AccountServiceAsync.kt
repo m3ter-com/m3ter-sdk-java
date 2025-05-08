@@ -37,14 +37,36 @@ interface AccountServiceAsync {
     ): CompletableFuture<AccountResponse>
 
     /** Retrieve the Account with the given Account UUID. */
-    fun retrieve(params: AccountRetrieveParams): CompletableFuture<AccountResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<AccountResponse> =
+        retrieve(id, AccountRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AccountRetrieveParams = AccountRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: AccountRetrieveParams = AccountRetrieveParams.none(),
+    ): CompletableFuture<AccountResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: AccountRetrieveParams): CompletableFuture<AccountResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<AccountResponse> =
+        retrieve(id, AccountRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Account with the given Account UUID.
@@ -53,6 +75,18 @@ interface AccountServiceAsync {
      * update the Account, use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: AccountUpdateParams): CompletableFuture<AccountResponse> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: AccountUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: AccountUpdateParams): CompletableFuture<AccountResponse> =
         update(params, RequestOptions.none())
 
@@ -84,14 +118,36 @@ interface AccountServiceAsync {
      * Delete the Account with the given UUID. This may fail if there are any AccountPlans that
      * reference the Account being deleted.
      */
-    fun delete(params: AccountDeleteParams): CompletableFuture<AccountResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<AccountResponse> =
+        delete(id, AccountDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AccountDeleteParams = AccountDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: AccountDeleteParams = AccountDeleteParams.none(),
+    ): CompletableFuture<AccountResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountResponse>
+
+    /** @see [delete] */
+    fun delete(params: AccountDeleteParams): CompletableFuture<AccountResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<AccountResponse> =
+        delete(id, AccountDeleteParams.none(), requestOptions)
 
     /**
      * Apply the specified end-date to billing entities associated with an Account.
@@ -100,6 +156,21 @@ interface AccountServiceAsync {
      * - When you successfully end-date billing entities, the version number of each entity is
      *   incremented.
      */
+    fun endDateBillingEntities(
+        id: String,
+        params: AccountEndDateBillingEntitiesParams,
+    ): CompletableFuture<AccountEndDateBillingEntitiesResponse> =
+        endDateBillingEntities(id, params, RequestOptions.none())
+
+    /** @see [endDateBillingEntities] */
+    fun endDateBillingEntities(
+        id: String,
+        params: AccountEndDateBillingEntitiesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountEndDateBillingEntitiesResponse> =
+        endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [endDateBillingEntities] */
     fun endDateBillingEntities(
         params: AccountEndDateBillingEntitiesParams
     ): CompletableFuture<AccountEndDateBillingEntitiesResponse> =
@@ -112,14 +183,39 @@ interface AccountServiceAsync {
     ): CompletableFuture<AccountEndDateBillingEntitiesResponse>
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    fun getChildren(params: AccountGetChildrenParams): CompletableFuture<AccountResponse> =
-        getChildren(params, RequestOptions.none())
+    fun getChildren(id: String): CompletableFuture<AccountResponse> =
+        getChildren(id, AccountGetChildrenParams.none())
+
+    /** @see [getChildren] */
+    fun getChildren(
+        id: String,
+        params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<AccountResponse> =
+        getChildren(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [getChildren] */
+    fun getChildren(
+        id: String,
+        params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+    ): CompletableFuture<AccountResponse> = getChildren(id, params, RequestOptions.none())
 
     /** @see [getChildren] */
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<AccountResponse>
+
+    /** @see [getChildren] */
+    fun getChildren(params: AccountGetChildrenParams): CompletableFuture<AccountResponse> =
+        getChildren(params, RequestOptions.none())
+
+    /** @see [getChildren] */
+    fun getChildren(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<AccountResponse> =
+        getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
     /**
      * Search for Account entities.
@@ -172,10 +268,25 @@ interface AccountServiceAsync {
          * otherwise the same as [AccountServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            retrieve(id, AccountRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: AccountRetrieveParams
+            id: String,
+            params: AccountRetrieveParams = AccountRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: AccountRetrieveParams = AccountRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -184,10 +295,42 @@ interface AccountServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: AccountRetrieveParams
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            retrieve(id, AccountRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountUpdateParams,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: AccountUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: AccountUpdateParams
@@ -235,10 +378,25 @@ interface AccountServiceAsync {
          * otherwise the same as [AccountServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            delete(id, AccountDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: AccountDeleteParams
+            id: String,
+            params: AccountDeleteParams = AccountDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
-            delete(params, RequestOptions.none())
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: AccountDeleteParams = AccountDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -247,11 +405,43 @@ interface AccountServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: AccountDeleteParams
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            delete(id, AccountDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/accounts/{id}/enddatebillingentities`, but is otherwise the same
          * as [AccountServiceAsync.endDateBillingEntities].
          */
+        @MustBeClosed
+        fun endDateBillingEntities(
+            id: String,
+            params: AccountEndDateBillingEntitiesParams,
+        ): CompletableFuture<HttpResponseFor<AccountEndDateBillingEntitiesResponse>> =
+            endDateBillingEntities(id, params, RequestOptions.none())
+
+        /** @see [endDateBillingEntities] */
+        @MustBeClosed
+        fun endDateBillingEntities(
+            id: String,
+            params: AccountEndDateBillingEntitiesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountEndDateBillingEntitiesResponse>> =
+            endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [endDateBillingEntities] */
         @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams
@@ -270,6 +460,35 @@ interface AccountServiceAsync {
          * is otherwise the same as [AccountServiceAsync.getChildren].
          */
         @MustBeClosed
+        fun getChildren(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            getChildren(id, AccountGetChildrenParams.none())
+
+        /** @see [getChildren] */
+        @MustBeClosed
+        fun getChildren(
+            id: String,
+            params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            getChildren(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [getChildren] */
+        @MustBeClosed
+        fun getChildren(
+            id: String,
+            params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            getChildren(id, params, RequestOptions.none())
+
+        /** @see [getChildren] */
+        @MustBeClosed
+        fun getChildren(
+            params: AccountGetChildrenParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<AccountResponse>>
+
+        /** @see [getChildren] */
+        @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
@@ -278,9 +497,10 @@ interface AccountServiceAsync {
         /** @see [getChildren] */
         @MustBeClosed
         fun getChildren(
-            params: AccountGetChildrenParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+            getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is

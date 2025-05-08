@@ -32,9 +32,24 @@ interface ScheduledEventConfigurationService {
     ): ScheduledEventConfigurationResponse
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
+    fun retrieve(id: String): ScheduledEventConfigurationResponse =
+        retrieve(id, ScheduledEventConfigurationRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: ScheduledEventConfigurationRetrieveParams
-    ): ScheduledEventConfigurationResponse = retrieve(params, RequestOptions.none())
+        id: String,
+        params: ScheduledEventConfigurationRetrieveParams =
+            ScheduledEventConfigurationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ScheduledEventConfigurationResponse =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ScheduledEventConfigurationRetrieveParams =
+            ScheduledEventConfigurationRetrieveParams.none(),
+    ): ScheduledEventConfigurationResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -42,7 +57,30 @@ interface ScheduledEventConfigurationService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationResponse
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: ScheduledEventConfigurationRetrieveParams
+    ): ScheduledEventConfigurationResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): ScheduledEventConfigurationResponse =
+        retrieve(id, ScheduledEventConfigurationRetrieveParams.none(), requestOptions)
+
     /** Update a ScheduledEventConfiguration for the given UUID. */
+    fun update(
+        id: String,
+        params: ScheduledEventConfigurationUpdateParams,
+    ): ScheduledEventConfigurationResponse = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ScheduledEventConfigurationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ScheduledEventConfigurationResponse =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(
         params: ScheduledEventConfigurationUpdateParams
     ): ScheduledEventConfigurationResponse = update(params, RequestOptions.none())
@@ -74,15 +112,39 @@ interface ScheduledEventConfigurationService {
         list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
+    fun delete(id: String): ScheduledEventConfigurationResponse =
+        delete(id, ScheduledEventConfigurationDeleteParams.none())
+
+    /** @see [delete] */
     fun delete(
-        params: ScheduledEventConfigurationDeleteParams
-    ): ScheduledEventConfigurationResponse = delete(params, RequestOptions.none())
+        id: String,
+        params: ScheduledEventConfigurationDeleteParams =
+            ScheduledEventConfigurationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ScheduledEventConfigurationResponse =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ScheduledEventConfigurationDeleteParams =
+            ScheduledEventConfigurationDeleteParams.none(),
+    ): ScheduledEventConfigurationResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: ScheduledEventConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ScheduledEventConfigurationResponse
+
+    /** @see [delete] */
+    fun delete(
+        params: ScheduledEventConfigurationDeleteParams
+    ): ScheduledEventConfigurationResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): ScheduledEventConfigurationResponse =
+        delete(id, ScheduledEventConfigurationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [ScheduledEventConfigurationService] that provides access to raw HTTP responses for
@@ -114,10 +176,27 @@ interface ScheduledEventConfigurationService {
          * [ScheduledEventConfigurationService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            retrieve(id, ScheduledEventConfigurationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: ScheduledEventConfigurationRetrieveParams
+            id: String,
+            params: ScheduledEventConfigurationRetrieveParams =
+                ScheduledEventConfigurationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ScheduledEventConfigurationResponse> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ScheduledEventConfigurationRetrieveParams =
+                ScheduledEventConfigurationRetrieveParams.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -126,11 +205,43 @@ interface ScheduledEventConfigurationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ScheduledEventConfigurationResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ScheduledEventConfigurationRetrieveParams
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            retrieve(id, ScheduledEventConfigurationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ScheduledEventConfigurationUpdateParams,
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ScheduledEventConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams
@@ -182,6 +293,37 @@ interface ScheduledEventConfigurationService {
          * [ScheduledEventConfigurationService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            delete(id, ScheduledEventConfigurationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ScheduledEventConfigurationDeleteParams =
+                ScheduledEventConfigurationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ScheduledEventConfigurationDeleteParams =
+                ScheduledEventConfigurationDeleteParams.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: ScheduledEventConfigurationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ScheduledEventConfigurationResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: ScheduledEventConfigurationDeleteParams
         ): HttpResponseFor<ScheduledEventConfigurationResponse> =
@@ -190,8 +332,9 @@ interface ScheduledEventConfigurationService {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: ScheduledEventConfigurationDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ScheduledEventConfigurationResponse>
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ScheduledEventConfigurationResponse> =
+            delete(id, ScheduledEventConfigurationDeleteParams.none(), requestOptions)
     }
 }

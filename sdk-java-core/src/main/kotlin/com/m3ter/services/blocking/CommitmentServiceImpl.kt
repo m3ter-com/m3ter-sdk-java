@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -25,6 +26,7 @@ import com.m3ter.models.CommitmentRetrieveParams
 import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentSearchResponse
 import com.m3ter.models.CommitmentUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class CommitmentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CommitmentService {
@@ -120,6 +122,9 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CommitmentResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -151,6 +156,9 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CommitmentResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,6 +229,9 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CommitmentResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

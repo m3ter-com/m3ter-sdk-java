@@ -75,15 +75,40 @@ interface PermissionPolicyServiceAsync {
     ): CompletableFuture<PermissionPolicyResponse>
 
     /** Retrieve the permission policy for the UUID */
+    fun retrieve(id: String): CompletableFuture<PermissionPolicyResponse> =
+        retrieve(id, PermissionPolicyRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: PermissionPolicyRetrieveParams
-    ): CompletableFuture<PermissionPolicyResponse> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
+    ): CompletableFuture<PermissionPolicyResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(
+        params: PermissionPolicyRetrieveParams
+    ): CompletableFuture<PermissionPolicyResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PermissionPolicyResponse> =
+        retrieve(id, PermissionPolicyRetrieveParams.none(), requestOptions)
 
     /**
      * Update a Permission Policy for the UUID
@@ -112,6 +137,20 @@ interface PermissionPolicyServiceAsync {
      * [Understanding, Creating, and Managing Permission Policies](https://www.m3ter.com/docs/guides/organization-and-access-management/creating-and-managing-permissions#permission-policy-statements---available-actions-and-resources)
      * in our main Documentation.
      */
+    fun update(
+        id: String,
+        params: PermissionPolicyUpdateParams,
+    ): CompletableFuture<PermissionPolicyResponse> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PermissionPolicyUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PermissionPolicyUpdateParams): CompletableFuture<PermissionPolicyResponse> =
         update(params, RequestOptions.none())
 
@@ -141,8 +180,22 @@ interface PermissionPolicyServiceAsync {
         list(PermissionPolicyListParams.none(), requestOptions)
 
     /** Delete the PermissionPolicy for the UUID */
-    fun delete(params: PermissionPolicyDeleteParams): CompletableFuture<PermissionPolicyResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<PermissionPolicyResponse> =
+        delete(id, PermissionPolicyDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
+    ): CompletableFuture<PermissionPolicyResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
@@ -150,7 +203,36 @@ interface PermissionPolicyServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyResponse>
 
+    /** @see [delete] */
+    fun delete(params: PermissionPolicyDeleteParams): CompletableFuture<PermissionPolicyResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PermissionPolicyResponse> =
+        delete(id, PermissionPolicyDeleteParams.none(), requestOptions)
+
     /** Add a permission policy to a service user. */
+    fun addToServiceUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToServiceUserParams,
+    ): CompletableFuture<PermissionPolicyAddToServiceUserResponse> =
+        addToServiceUser(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [addToServiceUser] */
+    fun addToServiceUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToServiceUserParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyAddToServiceUserResponse> =
+        addToServiceUser(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [addToServiceUser] */
     fun addToServiceUser(
         params: PermissionPolicyAddToServiceUserParams
     ): CompletableFuture<PermissionPolicyAddToServiceUserResponse> =
@@ -164,9 +246,29 @@ interface PermissionPolicyServiceAsync {
 
     /** Add a permission policy to support users for an organization. */
     fun addToSupportUser(
-        params: PermissionPolicyAddToSupportUserParams
+        permissionPolicyId: String
     ): CompletableFuture<PermissionPolicyAddToSupportUserResponse> =
-        addToSupportUser(params, RequestOptions.none())
+        addToSupportUser(permissionPolicyId, PermissionPolicyAddToSupportUserParams.none())
+
+    /** @see [addToSupportUser] */
+    fun addToSupportUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToSupportUserParams =
+            PermissionPolicyAddToSupportUserParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyAddToSupportUserResponse> =
+        addToSupportUser(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [addToSupportUser] */
+    fun addToSupportUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToSupportUserParams =
+            PermissionPolicyAddToSupportUserParams.none(),
+    ): CompletableFuture<PermissionPolicyAddToSupportUserResponse> =
+        addToSupportUser(permissionPolicyId, params, RequestOptions.none())
 
     /** @see [addToSupportUser] */
     fun addToSupportUser(
@@ -174,7 +276,39 @@ interface PermissionPolicyServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyAddToSupportUserResponse>
 
+    /** @see [addToSupportUser] */
+    fun addToSupportUser(
+        params: PermissionPolicyAddToSupportUserParams
+    ): CompletableFuture<PermissionPolicyAddToSupportUserResponse> =
+        addToSupportUser(params, RequestOptions.none())
+
+    /** @see [addToSupportUser] */
+    fun addToSupportUser(
+        permissionPolicyId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PermissionPolicyAddToSupportUserResponse> =
+        addToSupportUser(
+            permissionPolicyId,
+            PermissionPolicyAddToSupportUserParams.none(),
+            requestOptions,
+        )
+
     /** Add a permission policy to a user. */
+    fun addToUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToUserParams,
+    ): CompletableFuture<PermissionPolicyAddToUserResponse> =
+        addToUser(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [addToUser] */
+    fun addToUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToUserParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyAddToUserResponse> =
+        addToUser(params.toBuilder().permissionPolicyId(permissionPolicyId).build(), requestOptions)
+
+    /** @see [addToUser] */
     fun addToUser(
         params: PermissionPolicyAddToUserParams
     ): CompletableFuture<PermissionPolicyAddToUserResponse> =
@@ -188,6 +322,24 @@ interface PermissionPolicyServiceAsync {
 
     /** Add a permission Policy to a user group */
     fun addToUserGroup(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToUserGroupParams,
+    ): CompletableFuture<PermissionPolicyAddToUserGroupResponse> =
+        addToUserGroup(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [addToUserGroup] */
+    fun addToUserGroup(
+        permissionPolicyId: String,
+        params: PermissionPolicyAddToUserGroupParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyAddToUserGroupResponse> =
+        addToUserGroup(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [addToUserGroup] */
+    fun addToUserGroup(
         params: PermissionPolicyAddToUserGroupParams
     ): CompletableFuture<PermissionPolicyAddToUserGroupResponse> =
         addToUserGroup(params, RequestOptions.none())
@@ -199,6 +351,24 @@ interface PermissionPolicyServiceAsync {
     ): CompletableFuture<PermissionPolicyAddToUserGroupResponse>
 
     /** Remove a permission policy from a service user. */
+    fun removeFromServiceUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromServiceUserParams,
+    ): CompletableFuture<PermissionPolicyRemoveFromServiceUserResponse> =
+        removeFromServiceUser(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [removeFromServiceUser] */
+    fun removeFromServiceUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromServiceUserParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyRemoveFromServiceUserResponse> =
+        removeFromServiceUser(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeFromServiceUser] */
     fun removeFromServiceUser(
         params: PermissionPolicyRemoveFromServiceUserParams
     ): CompletableFuture<PermissionPolicyRemoveFromServiceUserResponse> =
@@ -212,9 +382,32 @@ interface PermissionPolicyServiceAsync {
 
     /** Remove a permission policy from support users for an organization. */
     fun removeFromSupportUser(
-        params: PermissionPolicyRemoveFromSupportUserParams
+        permissionPolicyId: String
     ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse> =
-        removeFromSupportUser(params, RequestOptions.none())
+        removeFromSupportUser(
+            permissionPolicyId,
+            PermissionPolicyRemoveFromSupportUserParams.none(),
+        )
+
+    /** @see [removeFromSupportUser] */
+    fun removeFromSupportUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromSupportUserParams =
+            PermissionPolicyRemoveFromSupportUserParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse> =
+        removeFromSupportUser(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeFromSupportUser] */
+    fun removeFromSupportUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromSupportUserParams =
+            PermissionPolicyRemoveFromSupportUserParams.none(),
+    ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse> =
+        removeFromSupportUser(permissionPolicyId, params, RequestOptions.none())
 
     /** @see [removeFromSupportUser] */
     fun removeFromSupportUser(
@@ -222,7 +415,42 @@ interface PermissionPolicyServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse>
 
+    /** @see [removeFromSupportUser] */
+    fun removeFromSupportUser(
+        params: PermissionPolicyRemoveFromSupportUserParams
+    ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse> =
+        removeFromSupportUser(params, RequestOptions.none())
+
+    /** @see [removeFromSupportUser] */
+    fun removeFromSupportUser(
+        permissionPolicyId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<PermissionPolicyRemoveFromSupportUserResponse> =
+        removeFromSupportUser(
+            permissionPolicyId,
+            PermissionPolicyRemoveFromSupportUserParams.none(),
+            requestOptions,
+        )
+
     /** Remove a permission policy from a user. */
+    fun removeFromUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromUserParams,
+    ): CompletableFuture<PermissionPolicyRemoveFromUserResponse> =
+        removeFromUser(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [removeFromUser] */
+    fun removeFromUser(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromUserParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyRemoveFromUserResponse> =
+        removeFromUser(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeFromUser] */
     fun removeFromUser(
         params: PermissionPolicyRemoveFromUserParams
     ): CompletableFuture<PermissionPolicyRemoveFromUserResponse> =
@@ -235,6 +463,24 @@ interface PermissionPolicyServiceAsync {
     ): CompletableFuture<PermissionPolicyRemoveFromUserResponse>
 
     /** Remove a permission policy from a user group. */
+    fun removeFromUserGroup(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromUserGroupParams,
+    ): CompletableFuture<PermissionPolicyRemoveFromUserGroupResponse> =
+        removeFromUserGroup(permissionPolicyId, params, RequestOptions.none())
+
+    /** @see [removeFromUserGroup] */
+    fun removeFromUserGroup(
+        permissionPolicyId: String,
+        params: PermissionPolicyRemoveFromUserGroupParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PermissionPolicyRemoveFromUserGroupResponse> =
+        removeFromUserGroup(
+            params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+            requestOptions,
+        )
+
+    /** @see [removeFromUserGroup] */
     fun removeFromUserGroup(
         params: PermissionPolicyRemoveFromUserGroupParams
     ): CompletableFuture<PermissionPolicyRemoveFromUserGroupResponse> =
@@ -274,10 +520,25 @@ interface PermissionPolicyServiceAsync {
          * is otherwise the same as [PermissionPolicyServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            retrieve(id, PermissionPolicyRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: PermissionPolicyRetrieveParams
+            id: String,
+            params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -286,10 +547,42 @@ interface PermissionPolicyServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: PermissionPolicyRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            retrieve(id, PermissionPolicyRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/permissionpolicies/{id}`, but
          * is otherwise the same as [PermissionPolicyServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PermissionPolicyUpdateParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PermissionPolicyUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PermissionPolicyUpdateParams
@@ -337,10 +630,25 @@ interface PermissionPolicyServiceAsync {
          * but is otherwise the same as [PermissionPolicyServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            delete(id, PermissionPolicyDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: PermissionPolicyDeleteParams
+            id: String,
+            params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
-            delete(params, RequestOptions.none())
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -349,11 +657,46 @@ interface PermissionPolicyServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: PermissionPolicyDeleteParams
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
+            delete(id, PermissionPolicyDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `post
          * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtoserviceuser`, but is
          * otherwise the same as [PermissionPolicyServiceAsync.addToServiceUser].
          */
+        @MustBeClosed
+        fun addToServiceUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToServiceUserParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToServiceUserResponse>> =
+            addToServiceUser(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [addToServiceUser] */
+        @MustBeClosed
+        fun addToServiceUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToServiceUserResponse>> =
+            addToServiceUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [addToServiceUser] */
         @MustBeClosed
         fun addToServiceUser(
             params: PermissionPolicyAddToServiceUserParams
@@ -374,9 +717,31 @@ interface PermissionPolicyServiceAsync {
          */
         @MustBeClosed
         fun addToSupportUser(
-            params: PermissionPolicyAddToSupportUserParams
+            permissionPolicyId: String
         ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>> =
-            addToSupportUser(params, RequestOptions.none())
+            addToSupportUser(permissionPolicyId, PermissionPolicyAddToSupportUserParams.none())
+
+        /** @see [addToSupportUser] */
+        @MustBeClosed
+        fun addToSupportUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToSupportUserParams =
+                PermissionPolicyAddToSupportUserParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>> =
+            addToSupportUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [addToSupportUser] */
+        @MustBeClosed
+        fun addToSupportUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToSupportUserParams =
+                PermissionPolicyAddToSupportUserParams.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>> =
+            addToSupportUser(permissionPolicyId, params, RequestOptions.none())
 
         /** @see [addToSupportUser] */
         @MustBeClosed
@@ -385,11 +750,50 @@ interface PermissionPolicyServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>>
 
+        /** @see [addToSupportUser] */
+        @MustBeClosed
+        fun addToSupportUser(
+            params: PermissionPolicyAddToSupportUserParams
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>> =
+            addToSupportUser(params, RequestOptions.none())
+
+        /** @see [addToSupportUser] */
+        @MustBeClosed
+        fun addToSupportUser(
+            permissionPolicyId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToSupportUserResponse>> =
+            addToSupportUser(
+                permissionPolicyId,
+                PermissionPolicyAddToSupportUserParams.none(),
+                requestOptions,
+            )
+
         /**
          * Returns a raw HTTP response for `post
          * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/addtouser`, but is
          * otherwise the same as [PermissionPolicyServiceAsync.addToUser].
          */
+        @MustBeClosed
+        fun addToUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToUserParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserResponse>> =
+            addToUser(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [addToUser] */
+        @MustBeClosed
+        fun addToUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserResponse>> =
+            addToUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [addToUser] */
         @MustBeClosed
         fun addToUser(
             params: PermissionPolicyAddToUserParams
@@ -410,6 +814,26 @@ interface PermissionPolicyServiceAsync {
          */
         @MustBeClosed
         fun addToUserGroup(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToUserGroupParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserGroupResponse>> =
+            addToUserGroup(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [addToUserGroup] */
+        @MustBeClosed
+        fun addToUserGroup(
+            permissionPolicyId: String,
+            params: PermissionPolicyAddToUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserGroupResponse>> =
+            addToUserGroup(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [addToUserGroup] */
+        @MustBeClosed
+        fun addToUserGroup(
             params: PermissionPolicyAddToUserGroupParams
         ): CompletableFuture<HttpResponseFor<PermissionPolicyAddToUserGroupResponse>> =
             addToUserGroup(params, RequestOptions.none())
@@ -426,6 +850,26 @@ interface PermissionPolicyServiceAsync {
          * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromserviceuser`,
          * but is otherwise the same as [PermissionPolicyServiceAsync.removeFromServiceUser].
          */
+        @MustBeClosed
+        fun removeFromServiceUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromServiceUserParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse>> =
+            removeFromServiceUser(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [removeFromServiceUser] */
+        @MustBeClosed
+        fun removeFromServiceUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromServiceUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse>> =
+            removeFromServiceUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeFromServiceUser] */
         @MustBeClosed
         fun removeFromServiceUser(
             params: PermissionPolicyRemoveFromServiceUserParams
@@ -446,9 +890,34 @@ interface PermissionPolicyServiceAsync {
          */
         @MustBeClosed
         fun removeFromSupportUser(
-            params: PermissionPolicyRemoveFromSupportUserParams
+            permissionPolicyId: String
         ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>> =
-            removeFromSupportUser(params, RequestOptions.none())
+            removeFromSupportUser(
+                permissionPolicyId,
+                PermissionPolicyRemoveFromSupportUserParams.none(),
+            )
+
+        /** @see [removeFromSupportUser] */
+        @MustBeClosed
+        fun removeFromSupportUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromSupportUserParams =
+                PermissionPolicyRemoveFromSupportUserParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>> =
+            removeFromSupportUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeFromSupportUser] */
+        @MustBeClosed
+        fun removeFromSupportUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromSupportUserParams =
+                PermissionPolicyRemoveFromSupportUserParams.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>> =
+            removeFromSupportUser(permissionPolicyId, params, RequestOptions.none())
 
         /** @see [removeFromSupportUser] */
         @MustBeClosed
@@ -457,11 +926,50 @@ interface PermissionPolicyServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>>
 
+        /** @see [removeFromSupportUser] */
+        @MustBeClosed
+        fun removeFromSupportUser(
+            params: PermissionPolicyRemoveFromSupportUserParams
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>> =
+            removeFromSupportUser(params, RequestOptions.none())
+
+        /** @see [removeFromSupportUser] */
+        @MustBeClosed
+        fun removeFromSupportUser(
+            permissionPolicyId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>> =
+            removeFromSupportUser(
+                permissionPolicyId,
+                PermissionPolicyRemoveFromSupportUserParams.none(),
+                requestOptions,
+            )
+
         /**
          * Returns a raw HTTP response for `post
          * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromuser`, but is
          * otherwise the same as [PermissionPolicyServiceAsync.removeFromUser].
          */
+        @MustBeClosed
+        fun removeFromUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromUserParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserResponse>> =
+            removeFromUser(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [removeFromUser] */
+        @MustBeClosed
+        fun removeFromUser(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromUserParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserResponse>> =
+            removeFromUser(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeFromUser] */
         @MustBeClosed
         fun removeFromUser(
             params: PermissionPolicyRemoveFromUserParams
@@ -480,6 +988,26 @@ interface PermissionPolicyServiceAsync {
          * /organizations/{orgId}/permissionpolicies/{permissionPolicyId}/removefromusergroup`, but
          * is otherwise the same as [PermissionPolicyServiceAsync.removeFromUserGroup].
          */
+        @MustBeClosed
+        fun removeFromUserGroup(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromUserGroupParams,
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse>> =
+            removeFromUserGroup(permissionPolicyId, params, RequestOptions.none())
+
+        /** @see [removeFromUserGroup] */
+        @MustBeClosed
+        fun removeFromUserGroup(
+            permissionPolicyId: String,
+            params: PermissionPolicyRemoveFromUserGroupParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse>> =
+            removeFromUserGroup(
+                params.toBuilder().permissionPolicyId(permissionPolicyId).build(),
+                requestOptions,
+            )
+
+        /** @see [removeFromUserGroup] */
         @MustBeClosed
         fun removeFromUserGroup(
             params: PermissionPolicyRemoveFromUserGroupParams
