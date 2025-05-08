@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.dataExports
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.m3ter.models.DataExportJobListPageResponse
 import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class JobServiceImpl internal constructor(private val clientOptions: ClientOptions) : JobService {
 
@@ -64,6 +66,9 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DataExportJobResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -136,6 +141,9 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             params: DataExportJobGetDownloadUrlParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("jobId", params.jobId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

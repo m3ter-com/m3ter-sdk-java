@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -29,6 +30,7 @@ import com.m3ter.models.ExternalMappingListParams
 import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class ExternalMappingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ExternalMappingService {
@@ -134,6 +136,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             params: ExternalMappingRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalMappingResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -166,6 +171,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             params: ExternalMappingUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalMappingResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -237,6 +245,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             params: ExternalMappingDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalMappingResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -271,6 +282,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             params: ExternalMappingListByExternalEntityParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalMappingListByExternalEntityPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalId", params.externalId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -314,6 +328,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             params: ExternalMappingListByM3terEntityParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalMappingListByM3terEntityPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("m3terId", params.m3terId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

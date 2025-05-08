@@ -61,14 +61,36 @@ interface ScheduleService {
      * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    fun retrieve(params: DataExportScheduleRetrieveParams): DataExportScheduleRetrieveResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): DataExportScheduleRetrieveResponse =
+        retrieve(id, DataExportScheduleRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportScheduleRetrieveResponse =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+    ): DataExportScheduleRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: DataExportScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleRetrieveResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: DataExportScheduleRetrieveParams): DataExportScheduleRetrieveResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): DataExportScheduleRetrieveResponse =
+        retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
 
     /**
      * Update a Data Export Schedule for the given UUID. Each Schedule can be configured for
@@ -95,6 +117,19 @@ interface ScheduleService {
      *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
      *   **COST** - will be included in the export each time the Export Schedule runs.
      */
+    fun update(
+        id: String,
+        params: DataExportScheduleUpdateParams,
+    ): DataExportScheduleUpdateResponse = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: DataExportScheduleUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportScheduleUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: DataExportScheduleUpdateParams): DataExportScheduleUpdateResponse =
         update(params, RequestOptions.none())
 
@@ -132,14 +167,35 @@ interface ScheduleService {
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
      * exporting _only one_ of either Usage or Operational data.
      */
-    fun delete(params: DataExportScheduleDeleteParams): DataExportScheduleDeleteResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): DataExportScheduleDeleteResponse =
+        delete(id, DataExportScheduleDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportScheduleDeleteResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+    ): DataExportScheduleDeleteResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleDeleteResponse
+
+    /** @see [delete] */
+    fun delete(params: DataExportScheduleDeleteParams): DataExportScheduleDeleteResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): DataExportScheduleDeleteResponse =
+        delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
 
     /** A view of [ScheduleService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -165,10 +221,25 @@ interface ScheduleService {
          * but is otherwise the same as [ScheduleService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<DataExportScheduleRetrieveResponse> =
+            retrieve(id, DataExportScheduleRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: DataExportScheduleRetrieveParams
+            id: String,
+            params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
+        ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -177,10 +248,42 @@ interface ScheduleService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleRetrieveResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportScheduleRetrieveParams
+        ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
+            retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/dataexports/schedules/{id}`,
          * but is otherwise the same as [ScheduleService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportScheduleUpdateParams,
+        ): HttpResponseFor<DataExportScheduleUpdateResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportScheduleUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportScheduleUpdateResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams
@@ -225,9 +328,25 @@ interface ScheduleService {
          * [ScheduleService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<DataExportScheduleDeleteResponse> =
+            delete(id, DataExportScheduleDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: DataExportScheduleDeleteParams
-        ): HttpResponseFor<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+            id: String,
+            params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportScheduleDeleteResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
+        ): HttpResponseFor<DataExportScheduleDeleteResponse> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -235,5 +354,19 @@ interface ScheduleService {
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleDeleteResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: DataExportScheduleDeleteParams
+        ): HttpResponseFor<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportScheduleDeleteResponse> =
+            delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
     }
 }

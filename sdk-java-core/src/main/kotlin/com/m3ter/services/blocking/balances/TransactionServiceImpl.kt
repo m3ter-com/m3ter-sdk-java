@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.balances
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -22,6 +23,7 @@ import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
 import com.m3ter.models.TransactionResponse
+import kotlin.jvm.optionals.getOrNull
 
 class TransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     TransactionService {
@@ -66,6 +68,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             params: BalanceTransactionCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("balanceId", params.balanceId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -100,6 +105,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             params: BalanceTransactionListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BalanceTransactionListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("balanceId", params.balanceId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -140,6 +148,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             params: BalanceTransactionSummaryParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BalanceTransactionSummaryResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("balanceId", params.balanceId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -35,6 +36,7 @@ import com.m3ter.services.async.bills.DebitLineItemServiceAsyncImpl
 import com.m3ter.services.async.bills.LineItemServiceAsync
 import com.m3ter.services.async.bills.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class BillServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BillServiceAsync {
@@ -147,6 +149,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: BillRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -222,6 +227,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: BillDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -293,6 +301,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("accountId", params.accountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -328,6 +339,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: BillLockParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -398,6 +412,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

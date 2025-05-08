@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.AggregationResponse
 import com.m3ter.models.AggregationRetrieveParams
 import com.m3ter.models.AggregationUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class AggregationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     AggregationServiceAsync {
@@ -117,6 +119,9 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             params: AggregationRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -152,6 +157,9 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             params: AggregationUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -229,6 +237,9 @@ class AggregationServiceAsyncImpl internal constructor(private val clientOptions
             params: AggregationDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.CompoundAggregationListParams
 import com.m3ter.models.CompoundAggregationResponse
 import com.m3ter.models.CompoundAggregationRetrieveParams
 import com.m3ter.models.CompoundAggregationUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class CompoundAggregationServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : CompoundAggregationService {
@@ -114,6 +116,9 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CompoundAggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -146,6 +151,9 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             params: CompoundAggregationUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -217,6 +225,9 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CompoundAggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

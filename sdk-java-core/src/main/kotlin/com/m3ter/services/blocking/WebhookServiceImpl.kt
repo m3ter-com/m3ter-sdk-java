@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -27,6 +28,7 @@ import com.m3ter.models.WebhookSetActiveParams
 import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
 import com.m3ter.models.WebhookUpdateResponse
+import kotlin.jvm.optionals.getOrNull
 
 class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     WebhookService {
@@ -115,6 +117,9 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             params: WebhookRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Webhook> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -148,6 +153,9 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             params: WebhookUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<WebhookUpdateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -220,6 +228,9 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             params: WebhookDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Webhook> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -254,6 +265,9 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<WebhookSetActiveResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

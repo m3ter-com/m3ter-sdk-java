@@ -37,6 +37,20 @@ interface TransactionServiceAsync {
      * of 200 USD to a Balance on a customer Account where the customer actually paid you 50 units
      * in virtual currency X.
      */
+    fun create(
+        balanceId: String,
+        params: BalanceTransactionCreateParams,
+    ): CompletableFuture<TransactionResponse> = create(balanceId, params, RequestOptions.none())
+
+    /** @see [create] */
+    fun create(
+        balanceId: String,
+        params: BalanceTransactionCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<TransactionResponse> =
+        create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+    /** @see [create] */
     fun create(params: BalanceTransactionCreateParams): CompletableFuture<TransactionResponse> =
         create(params, RequestOptions.none())
 
@@ -52,9 +66,23 @@ interface TransactionServiceAsync {
      * This endpoint returns a list of all Transactions associated with a specific Balance. You can
      * paginate through the Transactions by using the `pageSize` and `nextToken` parameters.
      */
+    fun list(balanceId: String): CompletableFuture<BalanceTransactionListPageAsync> =
+        list(balanceId, BalanceTransactionListParams.none())
+
+    /** @see [list] */
     fun list(
-        params: BalanceTransactionListParams
-    ): CompletableFuture<BalanceTransactionListPageAsync> = list(params, RequestOptions.none())
+        balanceId: String,
+        params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BalanceTransactionListPageAsync> =
+        list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+    /** @see [list] */
+    fun list(
+        balanceId: String,
+        params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
+    ): CompletableFuture<BalanceTransactionListPageAsync> =
+        list(balanceId, params, RequestOptions.none())
 
     /** @see [list] */
     fun list(
@@ -62,16 +90,54 @@ interface TransactionServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceTransactionListPageAsync>
 
+    /** @see [list] */
+    fun list(
+        params: BalanceTransactionListParams
+    ): CompletableFuture<BalanceTransactionListPageAsync> = list(params, RequestOptions.none())
+
+    /** @see [list] */
+    fun list(
+        balanceId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<BalanceTransactionListPageAsync> =
+        list(balanceId, BalanceTransactionListParams.none(), requestOptions)
+
     /** Retrieves the Balance Transactions Summary for a given Balance. */
+    fun summary(balanceId: String): CompletableFuture<BalanceTransactionSummaryResponse> =
+        summary(balanceId, BalanceTransactionSummaryParams.none())
+
+    /** @see [summary] */
     fun summary(
-        params: BalanceTransactionSummaryParams
-    ): CompletableFuture<BalanceTransactionSummaryResponse> = summary(params, RequestOptions.none())
+        balanceId: String,
+        params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<BalanceTransactionSummaryResponse> =
+        summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+    /** @see [summary] */
+    fun summary(
+        balanceId: String,
+        params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
+    ): CompletableFuture<BalanceTransactionSummaryResponse> =
+        summary(balanceId, params, RequestOptions.none())
 
     /** @see [summary] */
     fun summary(
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceTransactionSummaryResponse>
+
+    /** @see [summary] */
+    fun summary(
+        params: BalanceTransactionSummaryParams
+    ): CompletableFuture<BalanceTransactionSummaryResponse> = summary(params, RequestOptions.none())
+
+    /** @see [summary] */
+    fun summary(
+        balanceId: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<BalanceTransactionSummaryResponse> =
+        summary(balanceId, BalanceTransactionSummaryParams.none(), requestOptions)
 
     /**
      * A view of [TransactionServiceAsync] that provides access to raw HTTP responses for each
@@ -84,6 +150,23 @@ interface TransactionServiceAsync {
          * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
          * [TransactionServiceAsync.create].
          */
+        @MustBeClosed
+        fun create(
+            balanceId: String,
+            params: BalanceTransactionCreateParams,
+        ): CompletableFuture<HttpResponseFor<TransactionResponse>> =
+            create(balanceId, params, RequestOptions.none())
+
+        /** @see [create] */
+        @MustBeClosed
+        fun create(
+            balanceId: String,
+            params: BalanceTransactionCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<TransactionResponse>> =
+            create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: BalanceTransactionCreateParams
@@ -104,9 +187,26 @@ interface TransactionServiceAsync {
          */
         @MustBeClosed
         fun list(
-            params: BalanceTransactionListParams
+            balanceId: String
         ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
-            list(params, RequestOptions.none())
+            list(balanceId, BalanceTransactionListParams.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            balanceId: String,
+            params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
+            list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            balanceId: String,
+            params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
+            list(balanceId, params, RequestOptions.none())
 
         /** @see [list] */
         @MustBeClosed
@@ -115,11 +215,57 @@ interface TransactionServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>>
 
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            params: BalanceTransactionListParams
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
+            list(params, RequestOptions.none())
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            balanceId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionListPageAsync>> =
+            list(balanceId, BalanceTransactionListParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `get
          * /organizations/{orgId}/balances/{balanceId}/transactions/summary`, but is otherwise the
          * same as [TransactionServiceAsync.summary].
          */
+        @MustBeClosed
+        fun summary(
+            balanceId: String
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>> =
+            summary(balanceId, BalanceTransactionSummaryParams.none())
+
+        /** @see [summary] */
+        @MustBeClosed
+        fun summary(
+            balanceId: String,
+            params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>> =
+            summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
+
+        /** @see [summary] */
+        @MustBeClosed
+        fun summary(
+            balanceId: String,
+            params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>> =
+            summary(balanceId, params, RequestOptions.none())
+
+        /** @see [summary] */
+        @MustBeClosed
+        fun summary(
+            params: BalanceTransactionSummaryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>>
+
+        /** @see [summary] */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams
@@ -129,8 +275,9 @@ interface TransactionServiceAsync {
         /** @see [summary] */
         @MustBeClosed
         fun summary(
-            params: BalanceTransactionSummaryParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>>
+            balanceId: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<BalanceTransactionSummaryResponse>> =
+            summary(balanceId, BalanceTransactionSummaryParams.none(), requestOptions)
     }
 }

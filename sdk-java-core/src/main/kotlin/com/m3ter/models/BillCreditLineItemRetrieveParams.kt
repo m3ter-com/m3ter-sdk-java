@@ -15,7 +15,7 @@ class BillCreditLineItemRetrieveParams
 private constructor(
     private val orgId: String?,
     private val billId: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -25,7 +25,7 @@ private constructor(
 
     fun billId(): String = billId
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -42,7 +42,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -77,7 +76,10 @@ private constructor(
 
         fun billId(billId: String) = apply { this.billId = billId }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -185,7 +187,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -194,7 +195,7 @@ private constructor(
             BillCreditLineItemRetrieveParams(
                 orgId,
                 checkRequired("billId", billId),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -204,7 +205,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> billId
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

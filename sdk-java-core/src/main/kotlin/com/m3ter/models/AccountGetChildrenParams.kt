@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 class AccountGetChildrenParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -24,7 +23,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
@@ -38,14 +37,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [AccountGetChildrenParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         */
+        @JvmStatic fun none(): AccountGetChildrenParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [AccountGetChildrenParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -76,7 +70,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
 
@@ -197,18 +194,11 @@ private constructor(
          * Returns an immutable instance of [AccountGetChildrenParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AccountGetChildrenParams =
             AccountGetChildrenParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -219,7 +209,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

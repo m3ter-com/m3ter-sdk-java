@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.NotificationConfigurationListParams
 import com.m3ter.models.NotificationConfigurationResponse
 import com.m3ter.models.NotificationConfigurationRetrieveParams
 import com.m3ter.models.NotificationConfigurationUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class NotificationConfigurationServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : NotificationConfigurationService {
@@ -115,6 +117,9 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NotificationConfigurationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -148,6 +153,9 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             params: NotificationConfigurationUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NotificationConfigurationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -221,6 +229,9 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NotificationConfigurationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 class ResourceGroupListParams
 private constructor(
     private val orgId: String?,
-    private val type: String,
+    private val type: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -24,7 +23,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun type(): String = type
+    fun type(): Optional<String> = Optional.ofNullable(type)
 
     /** nextToken for multi page retrievals */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
@@ -40,14 +39,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [ResourceGroupListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .type()
-         * ```
-         */
+        @JvmStatic fun none(): ResourceGroupListParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [ResourceGroupListParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -78,7 +72,10 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun type(type: String) = apply { this.type = type }
+        fun type(type: String?) = apply { this.type = type }
+
+        /** Alias for calling [Builder.type] with `type.orElse(null)`. */
+        fun type(type: Optional<String>) = type(type.getOrNull())
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -201,18 +198,11 @@ private constructor(
          * Returns an immutable instance of [ResourceGroupListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .type()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ResourceGroupListParams =
             ResourceGroupListParams(
                 orgId,
-                checkRequired("type", type),
+                type,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -223,7 +213,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> type
+            1 -> type ?: ""
             else -> ""
         }
 

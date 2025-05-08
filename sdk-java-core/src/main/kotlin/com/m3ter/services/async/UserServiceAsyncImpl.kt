@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.emptyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
@@ -33,6 +34,7 @@ import com.m3ter.models.UserUpdateParams
 import com.m3ter.services.async.users.InvitationServiceAsync
 import com.m3ter.services.async.users.InvitationServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class UserServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     UserServiceAsync {
@@ -116,6 +118,9 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: UserRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<UserResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -150,6 +155,9 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: UserUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<UserResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -227,6 +235,9 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -263,6 +274,9 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -332,6 +346,9 @@ class UserServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: UserResendPasswordParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

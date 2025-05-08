@@ -21,7 +21,7 @@ private constructor(
     private val orgId: String?,
     private val system: String,
     private val externalTable: String,
-    private val externalId: String,
+    private val externalId: String?,
     private val nextToken: String?,
     private val pageSize: Long?,
     private val additionalHeaders: Headers,
@@ -35,7 +35,7 @@ private constructor(
 
     fun externalTable(): String = externalTable
 
-    fun externalId(): String = externalId
+    fun externalId(): Optional<String> = Optional.ofNullable(externalId)
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of External
@@ -62,7 +62,6 @@ private constructor(
          * ```java
          * .system()
          * .externalTable()
-         * .externalId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -107,7 +106,10 @@ private constructor(
 
         fun externalTable(externalTable: String) = apply { this.externalTable = externalTable }
 
-        fun externalId(externalId: String) = apply { this.externalId = externalId }
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
+
+        /** Alias for calling [Builder.externalId] with `externalId.orElse(null)`. */
+        fun externalId(externalId: Optional<String>) = externalId(externalId.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of External
@@ -238,7 +240,6 @@ private constructor(
          * ```java
          * .system()
          * .externalTable()
-         * .externalId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -248,7 +249,7 @@ private constructor(
                 orgId,
                 checkRequired("system", system),
                 checkRequired("externalTable", externalTable),
-                checkRequired("externalId", externalId),
+                externalId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -261,7 +262,7 @@ private constructor(
             0 -> orgId ?: ""
             1 -> system
             2 -> externalTable
-            3 -> externalId
+            3 -> externalId ?: ""
             else -> ""
         }
 

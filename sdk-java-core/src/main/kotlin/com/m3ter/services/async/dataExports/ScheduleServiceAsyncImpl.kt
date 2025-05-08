@@ -5,6 +5,7 @@ package com.m3ter.services.async.dataExports
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -27,6 +28,7 @@ import com.m3ter.models.DataExportScheduleRetrieveResponse
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.DataExportScheduleUpdateResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ScheduleServiceAsync {
@@ -121,6 +123,9 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             params: DataExportScheduleRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportScheduleRetrieveResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -157,6 +162,9 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             params: DataExportScheduleUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportScheduleUpdateResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -236,6 +244,9 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportScheduleDeleteResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

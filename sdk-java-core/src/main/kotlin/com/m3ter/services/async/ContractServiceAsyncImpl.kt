@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -26,6 +27,7 @@ import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ContractServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ContractServiceAsync {
@@ -124,6 +126,9 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             params: ContractRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ContractResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -158,6 +163,9 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             params: ContractUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ContractResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -234,6 +242,9 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             params: ContractDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ContractResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -270,6 +281,9 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
             params: ContractEndDateBillingEntitiesParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

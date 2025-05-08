@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BillDebitLineItemCreateParams
 import com.m3ter.models.BillDebitLineItemDeleteParams
-import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
 import java.time.OffsetDateTime
@@ -121,10 +120,7 @@ internal class DebitLineItemServiceTest {
                 .build()
         val debitLineItemService = client.bills().debitLineItems()
 
-        val page =
-            debitLineItemService.list(
-                BillDebitLineItemListParams.builder().billId("billId").build()
-            )
+        val page = debitLineItemService.list("billId")
 
         page.response().validate()
     }

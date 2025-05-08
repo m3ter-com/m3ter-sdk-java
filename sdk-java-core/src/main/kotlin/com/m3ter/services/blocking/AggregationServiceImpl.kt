@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.AggregationListParams
 import com.m3ter.models.AggregationResponse
 import com.m3ter.models.AggregationRetrieveParams
 import com.m3ter.models.AggregationUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class AggregationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     AggregationService {
@@ -113,6 +115,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             params: AggregationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -145,6 +150,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             params: AggregationUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -216,6 +224,9 @@ class AggregationServiceImpl internal constructor(private val clientOptions: Cli
             params: AggregationDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AggregationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

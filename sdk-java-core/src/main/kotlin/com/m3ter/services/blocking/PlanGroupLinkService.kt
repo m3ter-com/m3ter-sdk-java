@@ -31,8 +31,21 @@ interface PlanGroupLinkService {
     ): PlanGroupLinkResponse
 
     /** Retrieve a PlanGroupLink for the given UUID. */
-    fun retrieve(params: PlanGroupLinkRetrieveParams): PlanGroupLinkResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): PlanGroupLinkResponse =
+        retrieve(id, PlanGroupLinkRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanGroupLinkResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
+    ): PlanGroupLinkResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -40,7 +53,26 @@ interface PlanGroupLinkService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkResponse
 
+    /** @see [retrieve] */
+    fun retrieve(params: PlanGroupLinkRetrieveParams): PlanGroupLinkResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): PlanGroupLinkResponse =
+        retrieve(id, PlanGroupLinkRetrieveParams.none(), requestOptions)
+
     /** Update PlanGroupLink for the given UUID. */
+    fun update(id: String, params: PlanGroupLinkUpdateParams): PlanGroupLinkResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PlanGroupLinkUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanGroupLinkResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PlanGroupLinkUpdateParams): PlanGroupLinkResponse =
         update(params, RequestOptions.none())
 
@@ -69,14 +101,34 @@ interface PlanGroupLinkService {
         list(PlanGroupLinkListParams.none(), requestOptions)
 
     /** Delete a PlanGroupLink for the given UUID. */
-    fun delete(params: PlanGroupLinkDeleteParams): PlanGroupLinkResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): PlanGroupLinkResponse = delete(id, PlanGroupLinkDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanGroupLinkResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
+    ): PlanGroupLinkResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupLinkResponse
+
+    /** @see [delete] */
+    fun delete(params: PlanGroupLinkDeleteParams): PlanGroupLinkResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): PlanGroupLinkResponse =
+        delete(id, PlanGroupLinkDeleteParams.none(), requestOptions)
 
     /**
      * A view of [PlanGroupLinkService] that provides access to raw HTTP responses for each method.
@@ -103,8 +155,24 @@ interface PlanGroupLinkService {
          * otherwise the same as [PlanGroupLinkService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: PlanGroupLinkRetrieveParams): HttpResponseFor<PlanGroupLinkResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<PlanGroupLinkResponse> =
+            retrieve(id, PlanGroupLinkRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLinkResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
+        ): HttpResponseFor<PlanGroupLinkResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -113,10 +181,39 @@ interface PlanGroupLinkService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupLinkResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: PlanGroupLinkRetrieveParams): HttpResponseFor<PlanGroupLinkResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanGroupLinkResponse> =
+            retrieve(id, PlanGroupLinkRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangrouplinks/{id}`, but is
          * otherwise the same as [PlanGroupLinkService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanGroupLinkUpdateParams,
+        ): HttpResponseFor<PlanGroupLinkResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanGroupLinkUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLinkResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: PlanGroupLinkUpdateParams): HttpResponseFor<PlanGroupLinkResponse> =
             update(params, RequestOptions.none())
@@ -158,8 +255,24 @@ interface PlanGroupLinkService {
          * is otherwise the same as [PlanGroupLinkService.delete].
          */
         @MustBeClosed
-        fun delete(params: PlanGroupLinkDeleteParams): HttpResponseFor<PlanGroupLinkResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<PlanGroupLinkResponse> =
+            delete(id, PlanGroupLinkDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanGroupLinkResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
+        ): HttpResponseFor<PlanGroupLinkResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -167,5 +280,18 @@ interface PlanGroupLinkService {
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupLinkResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: PlanGroupLinkDeleteParams): HttpResponseFor<PlanGroupLinkResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanGroupLinkResponse> =
+            delete(id, PlanGroupLinkDeleteParams.none(), requestOptions)
     }
 }

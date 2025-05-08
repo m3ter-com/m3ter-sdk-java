@@ -4,7 +4,6 @@ package com.m3ter.models
 
 import com.m3ter.core.JsonValue
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import com.m3ter.core.toImmutable
@@ -16,7 +15,7 @@ import kotlin.jvm.optionals.getOrNull
 class PermissionPolicyRemoveFromSupportUserParams
 private constructor(
     private val orgId: String?,
-    private val permissionPolicyId: String,
+    private val permissionPolicyId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -25,7 +24,7 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun permissionPolicyId(): String = permissionPolicyId
+    fun permissionPolicyId(): Optional<String> = Optional.ofNullable(permissionPolicyId)
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -37,14 +36,11 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): PermissionPolicyRemoveFromSupportUserParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [PermissionPolicyRemoveFromSupportUserParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .permissionPolicyId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -79,9 +75,15 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun permissionPolicyId(permissionPolicyId: String) = apply {
+        fun permissionPolicyId(permissionPolicyId: String?) = apply {
             this.permissionPolicyId = permissionPolicyId
         }
+
+        /**
+         * Alias for calling [Builder.permissionPolicyId] with `permissionPolicyId.orElse(null)`.
+         */
+        fun permissionPolicyId(permissionPolicyId: Optional<String>) =
+            permissionPolicyId(permissionPolicyId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -207,18 +209,11 @@ private constructor(
          * Returns an immutable instance of [PermissionPolicyRemoveFromSupportUserParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .permissionPolicyId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PermissionPolicyRemoveFromSupportUserParams =
             PermissionPolicyRemoveFromSupportUserParams(
                 orgId,
-                checkRequired("permissionPolicyId", permissionPolicyId),
+                permissionPolicyId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -231,7 +226,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> permissionPolicyId
+            1 -> permissionPolicyId ?: ""
             else -> ""
         }
 

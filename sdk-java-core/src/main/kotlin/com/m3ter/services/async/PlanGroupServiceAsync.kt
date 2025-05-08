@@ -40,14 +40,36 @@ interface PlanGroupServiceAsync {
      * This endpoint retrieves detailed information about a specific PlanGroup identified by the
      * given UUID within a specific organization.
      */
-    fun retrieve(params: PlanGroupRetrieveParams): CompletableFuture<PlanGroupResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<PlanGroupResponse> =
+        retrieve(id, PlanGroupRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PlanGroupResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
+    ): CompletableFuture<PlanGroupResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupResponse>
+
+    /** @see [retrieve] */
+    fun retrieve(params: PlanGroupRetrieveParams): CompletableFuture<PlanGroupResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PlanGroupResponse> =
+        retrieve(id, PlanGroupRetrieveParams.none(), requestOptions)
 
     /**
      * Update the PlanGroup with the given UUID.
@@ -59,6 +81,18 @@ interface PlanGroupServiceAsync {
      * update the PlanGroup use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: PlanGroupUpdateParams): CompletableFuture<PlanGroupResponse> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PlanGroupUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PlanGroupResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PlanGroupUpdateParams): CompletableFuture<PlanGroupResponse> =
         update(params, RequestOptions.none())
 
@@ -98,14 +132,36 @@ interface PlanGroupServiceAsync {
      * organization. This operation is irreversible and removes the PlanGroup along with any
      * associated settings.
      */
-    fun delete(params: PlanGroupDeleteParams): CompletableFuture<PlanGroupResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<PlanGroupResponse> =
+        delete(id, PlanGroupDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<PlanGroupResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
+    ): CompletableFuture<PlanGroupResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupResponse>
+
+    /** @see [delete] */
+    fun delete(params: PlanGroupDeleteParams): CompletableFuture<PlanGroupResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<PlanGroupResponse> =
+        delete(id, PlanGroupDeleteParams.none(), requestOptions)
 
     /**
      * A view of [PlanGroupServiceAsync] that provides access to raw HTTP responses for each method.
@@ -134,10 +190,25 @@ interface PlanGroupServiceAsync {
          * otherwise the same as [PlanGroupServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            retrieve(id, PlanGroupRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: PlanGroupRetrieveParams
+            id: String,
+            params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -146,10 +217,42 @@ interface PlanGroupServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: PlanGroupRetrieveParams
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            retrieve(id, PlanGroupRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plangroups/{id}`, but is
          * otherwise the same as [PlanGroupServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanGroupUpdateParams,
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanGroupUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: PlanGroupUpdateParams
@@ -197,6 +300,35 @@ interface PlanGroupServiceAsync {
          * otherwise the same as [PlanGroupServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            delete(id, PlanGroupDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: PlanGroupDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: PlanGroupDeleteParams
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
@@ -205,8 +337,9 @@ interface PlanGroupServiceAsync {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: PlanGroupDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
+            delete(id, PlanGroupDeleteParams.none(), requestOptions)
     }
 }

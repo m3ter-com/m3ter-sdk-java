@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.bills
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
 import com.m3ter.models.DebitLineItemResponse
+import kotlin.jvm.optionals.getOrNull
 
 class DebitLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     DebitLineItemService {
@@ -81,6 +83,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitLineItemResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -115,6 +120,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitLineItemResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -149,6 +157,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitLineItemResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -184,6 +195,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             params: BillDebitLineItemListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillDebitLineItemListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -224,6 +238,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DebitLineItemResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

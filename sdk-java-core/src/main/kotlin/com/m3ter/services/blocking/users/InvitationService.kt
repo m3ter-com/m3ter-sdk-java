@@ -33,14 +33,34 @@ interface InvitationService {
     ): InvitationResponse
 
     /** Retrieve the specified invitation with the given UUID. */
-    fun retrieve(params: UserInvitationRetrieveParams): InvitationResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): InvitationResponse = retrieve(id, UserInvitationRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvitationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
+    ): InvitationResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: UserInvitationRetrieveParams): InvitationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): InvitationResponse =
+        retrieve(id, UserInvitationRetrieveParams.none(), requestOptions)
 
     /** Retrieve a list of all invitations in the Organization. */
     fun list(): UserInvitationListPage = list(UserInvitationListParams.none())
@@ -83,8 +103,24 @@ interface InvitationService {
          * otherwise the same as [InvitationService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: UserInvitationRetrieveParams): HttpResponseFor<InvitationResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<InvitationResponse> =
+            retrieve(id, UserInvitationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvitationResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
+        ): HttpResponseFor<InvitationResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -92,6 +128,19 @@ interface InvitationService {
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvitationResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: UserInvitationRetrieveParams): HttpResponseFor<InvitationResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvitationResponse> =
+            retrieve(id, UserInvitationRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations`, but is

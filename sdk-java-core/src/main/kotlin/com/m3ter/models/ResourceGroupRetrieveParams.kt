@@ -15,7 +15,7 @@ class ResourceGroupRetrieveParams
 private constructor(
     private val orgId: String?,
     private val type: String,
-    private val id: String,
+    private val id: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -25,7 +25,7 @@ private constructor(
 
     fun type(): String = type
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -41,7 +41,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .id()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -74,7 +73,10 @@ private constructor(
 
         fun type(type: String) = apply { this.type = type }
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -182,7 +184,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .id()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -191,7 +192,7 @@ private constructor(
             ResourceGroupRetrieveParams(
                 orgId,
                 checkRequired("type", type),
-                checkRequired("id", id),
+                id,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -201,7 +202,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> type
-            2 -> id
+            2 -> id ?: ""
             else -> ""
         }
 

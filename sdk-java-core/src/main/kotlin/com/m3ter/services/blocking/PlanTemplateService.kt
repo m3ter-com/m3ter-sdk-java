@@ -42,14 +42,34 @@ interface PlanTemplateService {
      * This endpoint allows you to retrieve a specific PlanTemplate within a specific Organization,
      * both identified by their unique identifiers (UUIDs).
      */
-    fun retrieve(params: PlanTemplateRetrieveParams): PlanTemplateResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): PlanTemplateResponse = retrieve(id, PlanTemplateRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanTemplateResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
+    ): PlanTemplateResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplateResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: PlanTemplateRetrieveParams): PlanTemplateResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): PlanTemplateResponse =
+        retrieve(id, PlanTemplateRetrieveParams.none(), requestOptions)
 
     /**
      * Update a specific PlanTemplate.
@@ -62,6 +82,17 @@ interface PlanTemplateService {
      * to update the Plan Template use the `customFields` parameter to preserve those Custom Fields.
      * If you omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: PlanTemplateUpdateParams): PlanTemplateResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PlanTemplateUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanTemplateResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PlanTemplateUpdateParams): PlanTemplateResponse =
         update(params, RequestOptions.none())
 
@@ -100,14 +131,34 @@ interface PlanTemplateService {
      * This endpoint enables you to delete a specific PlanTemplate within a specific Organization,
      * both identified by their unique identifiers (UUIDs).
      */
-    fun delete(params: PlanTemplateDeleteParams): PlanTemplateResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): PlanTemplateResponse = delete(id, PlanTemplateDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PlanTemplateResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
+    ): PlanTemplateResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanTemplateResponse
+
+    /** @see [delete] */
+    fun delete(params: PlanTemplateDeleteParams): PlanTemplateResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): PlanTemplateResponse =
+        delete(id, PlanTemplateDeleteParams.none(), requestOptions)
 
     /**
      * A view of [PlanTemplateService] that provides access to raw HTTP responses for each method.
@@ -134,8 +185,24 @@ interface PlanTemplateService {
          * otherwise the same as [PlanTemplateService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: PlanTemplateRetrieveParams): HttpResponseFor<PlanTemplateResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<PlanTemplateResponse> =
+            retrieve(id, PlanTemplateRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
+        ): HttpResponseFor<PlanTemplateResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -144,10 +211,39 @@ interface PlanTemplateService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanTemplateResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: PlanTemplateRetrieveParams): HttpResponseFor<PlanTemplateResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanTemplateResponse> =
+            retrieve(id, PlanTemplateRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/plantemplates/{id}`, but is
          * otherwise the same as [PlanTemplateService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanTemplateUpdateParams,
+        ): HttpResponseFor<PlanTemplateResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PlanTemplateUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: PlanTemplateUpdateParams): HttpResponseFor<PlanTemplateResponse> =
             update(params, RequestOptions.none())
@@ -189,8 +285,24 @@ interface PlanTemplateService {
          * is otherwise the same as [PlanTemplateService.delete].
          */
         @MustBeClosed
-        fun delete(params: PlanTemplateDeleteParams): HttpResponseFor<PlanTemplateResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<PlanTemplateResponse> =
+            delete(id, PlanTemplateDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PlanTemplateResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
+        ): HttpResponseFor<PlanTemplateResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -198,5 +310,18 @@ interface PlanTemplateService {
             params: PlanTemplateDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanTemplateResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: PlanTemplateDeleteParams): HttpResponseFor<PlanTemplateResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanTemplateResponse> =
+            delete(id, PlanTemplateDeleteParams.none(), requestOptions)
     }
 }

@@ -39,8 +39,22 @@ interface CurrencyServiceAsync {
      * Retrieve the specified Currency with the given UUID. Used to obtain the details of a
      * specified existing Currency in your Organization.
      */
-    fun retrieve(params: CurrencyRetrieveParams): CompletableFuture<CurrencyResponse> =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompletableFuture<CurrencyResponse> =
+        retrieve(id, CurrencyRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CurrencyRetrieveParams = CurrencyRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CurrencyResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CurrencyRetrieveParams = CurrencyRetrieveParams.none(),
+    ): CompletableFuture<CurrencyResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -48,11 +62,31 @@ interface CurrencyServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CurrencyResponse>
 
+    /** @see [retrieve] */
+    fun retrieve(params: CurrencyRetrieveParams): CompletableFuture<CurrencyResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<CurrencyResponse> =
+        retrieve(id, CurrencyRetrieveParams.none(), requestOptions)
+
     /**
      * Update a Currency with the given UUID.
      *
      * Used to update the attributes of the specified Currency for the specified Organization.
      */
+    fun update(id: String, params: CurrencyUpdateParams): CompletableFuture<CurrencyResponse> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: CurrencyUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CurrencyResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: CurrencyUpdateParams): CompletableFuture<CurrencyResponse> =
         update(params, RequestOptions.none())
 
@@ -91,14 +125,36 @@ interface CurrencyServiceAsync {
      *
      * Used to remove an existing Currency from your Organization that is no longer required.
      */
-    fun delete(params: CurrencyDeleteParams): CompletableFuture<CurrencyResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<CurrencyResponse> =
+        delete(id, CurrencyDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CurrencyDeleteParams = CurrencyDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<CurrencyResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CurrencyDeleteParams = CurrencyDeleteParams.none(),
+    ): CompletableFuture<CurrencyResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: CurrencyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CurrencyResponse>
+
+    /** @see [delete] */
+    fun delete(params: CurrencyDeleteParams): CompletableFuture<CurrencyResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<CurrencyResponse> =
+        delete(id, CurrencyDeleteParams.none(), requestOptions)
 
     /**
      * A view of [CurrencyServiceAsync] that provides access to raw HTTP responses for each method.
@@ -127,10 +183,25 @@ interface CurrencyServiceAsync {
          * is otherwise the same as [CurrencyServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            retrieve(id, CurrencyRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: CurrencyRetrieveParams
+            id: String,
+            params: CurrencyRetrieveParams = CurrencyRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CurrencyRetrieveParams = CurrencyRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -139,10 +210,42 @@ interface CurrencyServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: CurrencyRetrieveParams
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            retrieve(id, CurrencyRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/currency/{id}`, but
          * is otherwise the same as [CurrencyServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CurrencyUpdateParams,
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CurrencyUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CurrencyUpdateParams
@@ -190,6 +293,35 @@ interface CurrencyServiceAsync {
          * but is otherwise the same as [CurrencyServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            delete(id, CurrencyDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CurrencyDeleteParams = CurrencyDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CurrencyDeleteParams = CurrencyDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: CurrencyDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: CurrencyDeleteParams
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
@@ -198,8 +330,9 @@ interface CurrencyServiceAsync {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: CurrencyDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<CurrencyResponse>>
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<CurrencyResponse>> =
+            delete(id, CurrencyDeleteParams.none(), requestOptions)
     }
 }

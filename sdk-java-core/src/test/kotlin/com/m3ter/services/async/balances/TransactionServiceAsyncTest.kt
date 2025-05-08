@@ -5,7 +5,6 @@ package com.m3ter.services.async.balances
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.BalanceTransactionCreateParams
-import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -58,10 +57,7 @@ internal class TransactionServiceAsyncTest {
                 .build()
         val transactionServiceAsync = client.balances().transactions()
 
-        val pageFuture =
-            transactionServiceAsync.list(
-                BalanceTransactionListParams.builder().balanceId("balanceId").build()
-            )
+        val pageFuture = transactionServiceAsync.list("balanceId")
 
         val page = pageFuture.get()
         page.response().validate()

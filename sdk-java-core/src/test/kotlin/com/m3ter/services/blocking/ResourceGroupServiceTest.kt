@@ -8,7 +8,6 @@ import com.m3ter.models.ResourceGroupAddResourceParams
 import com.m3ter.models.ResourceGroupCreateParams
 import com.m3ter.models.ResourceGroupDeleteParams
 import com.m3ter.models.ResourceGroupListContentsParams
-import com.m3ter.models.ResourceGroupListParams
 import com.m3ter.models.ResourceGroupListPermissionsParams
 import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupRetrieveParams
@@ -102,7 +101,7 @@ internal class ResourceGroupServiceTest {
                 .build()
         val resourceGroupService = client.resourceGroups()
 
-        val page = resourceGroupService.list(ResourceGroupListParams.builder().type("type").build())
+        val page = resourceGroupService.list("type")
 
         page.response().validate()
     }
