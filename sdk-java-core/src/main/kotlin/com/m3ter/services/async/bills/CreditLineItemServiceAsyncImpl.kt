@@ -235,6 +235,7 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
                             .let {
                                 BillCreditLineItemListPageAsync.builder()
                                     .service(CreditLineItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

@@ -218,6 +218,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
                             .let {
                                 PlanGroupListPageAsync.builder()
                                     .service(PlanGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

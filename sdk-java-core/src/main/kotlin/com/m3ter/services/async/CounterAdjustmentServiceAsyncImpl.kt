@@ -221,6 +221,7 @@ internal constructor(private val clientOptions: ClientOptions) : CounterAdjustme
                             .let {
                                 CounterAdjustmentListPageAsync.builder()
                                     .service(CounterAdjustmentServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

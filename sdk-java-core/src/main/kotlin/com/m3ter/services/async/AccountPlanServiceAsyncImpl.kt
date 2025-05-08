@@ -221,6 +221,7 @@ class AccountPlanServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 AccountPlanListPageAsync.builder()
                                     .service(AccountPlanServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

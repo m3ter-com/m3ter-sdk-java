@@ -225,6 +225,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
                             .let {
                                 CreditReasonListPageAsync.builder()
                                     .service(CreditReasonServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

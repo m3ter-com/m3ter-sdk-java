@@ -225,6 +225,7 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 DebitReasonListPageAsync.builder()
                                     .service(DebitReasonServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

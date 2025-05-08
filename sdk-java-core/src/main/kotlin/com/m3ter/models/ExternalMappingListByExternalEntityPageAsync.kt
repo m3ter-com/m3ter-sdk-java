@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ExternalMappingServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [ExternalMappingServiceAsync.listByExternalEntity] */
 class ExternalMappingListByExternalEntityPageAsync
 private constructor(
     private val service: ExternalMappingServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: ExternalMappingListByExternalEntityParams,
     private val response: ExternalMappingListByExternalEntityPageResponse,
-) {
+) : PageAsync<ExternalMappingResponse> {
 
     /**
      * Delegates to [ExternalMappingListByExternalEntityPageResponse], but gracefully handles
@@ -36,24 +38,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<ExternalMappingResponse> = data()
 
-    fun getNextPageParams(): Optional<ExternalMappingListByExternalEntityParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): ExternalMappingListByExternalEntityParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ExternalMappingListByExternalEntityPageAsync>> =
-        getNextPageParams()
-            .map { service.listByExternalEntity(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<ExternalMappingListByExternalEntityPageAsync> =
+        service.listByExternalEntity(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<ExternalMappingResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): ExternalMappingListByExternalEntityParams = params
@@ -72,6 +72,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -83,6 +84,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: ExternalMappingServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: ExternalMappingListByExternalEntityParams? = null
         private var response: ExternalMappingListByExternalEntityPageResponse? = null
 
@@ -92,11 +94,17 @@ private constructor(
                 ExternalMappingListByExternalEntityPageAsync
         ) = apply {
             service = externalMappingListByExternalEntityPageAsync.service
+            streamHandlerExecutor =
+                externalMappingListByExternalEntityPageAsync.streamHandlerExecutor
             params = externalMappingListByExternalEntityPageAsync.params
             response = externalMappingListByExternalEntityPageAsync.response
         }
 
         fun service(service: ExternalMappingServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: ExternalMappingListByExternalEntityParams) = apply {
@@ -116,6 +124,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -125,38 +134,10 @@ private constructor(
         fun build(): ExternalMappingListByExternalEntityPageAsync =
             ExternalMappingListByExternalEntityPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: ExternalMappingListByExternalEntityPageAsync) {
-
-        fun forEach(
-            action: Predicate<ExternalMappingResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<ExternalMappingListByExternalEntityPageAsync>>.forEach(
-                action: (ExternalMappingResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<ExternalMappingResponse>> {
-            val values = mutableListOf<ExternalMappingResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -164,11 +145,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingListByExternalEntityPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is ExternalMappingListByExternalEntityPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "ExternalMappingListByExternalEntityPageAsync{service=$service, params=$params, response=$response}"
+        "ExternalMappingListByExternalEntityPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

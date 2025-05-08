@@ -232,6 +232,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 BalanceListPageAsync.builder()
                                     .service(BalanceServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

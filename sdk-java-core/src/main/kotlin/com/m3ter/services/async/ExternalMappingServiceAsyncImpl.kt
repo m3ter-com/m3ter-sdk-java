@@ -242,6 +242,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -330,6 +331,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListByExternalEntityPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -378,6 +380,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListByM3terEntityPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

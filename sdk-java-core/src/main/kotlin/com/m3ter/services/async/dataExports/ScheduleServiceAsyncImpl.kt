@@ -228,6 +228,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
                             .let {
                                 DataExportScheduleListPageAsync.builder()
                                     .service(ScheduleServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

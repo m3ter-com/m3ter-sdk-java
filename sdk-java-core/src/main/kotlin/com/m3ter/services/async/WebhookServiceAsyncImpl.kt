@@ -235,6 +235,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 WebhookListPageAsync.builder()
                                     .service(WebhookServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

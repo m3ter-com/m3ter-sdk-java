@@ -235,6 +235,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 BillDebitLineItemListPageAsync.builder()
                                     .service(DebitLineItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

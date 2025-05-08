@@ -221,6 +221,7 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 PlanGroupLinkListPageAsync.builder()
                                     .service(PlanGroupLinkServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

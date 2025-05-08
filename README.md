@@ -57,7 +57,7 @@ M3terClient client = M3terOkHttpClient.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-ProductListPage page = client.products().list(params);
+ProductListPage page = client.products().list();
 ```
 
 ## Client configuration
@@ -144,7 +144,7 @@ M3terClient client = M3terOkHttpClient.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-CompletableFuture<ProductListPageAsync> page = client.async().products().list(params);
+CompletableFuture<ProductListPageAsync> page = client.async().products().list();
 ```
 
 Or create an asynchronous client from the beginning:
@@ -162,7 +162,7 @@ M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-CompletableFuture<ProductListPageAsync> page = client.products().list(params);
+CompletableFuture<ProductListPageAsync> page = client.products().list();
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
@@ -182,7 +182,7 @@ import com.m3ter.models.ProductListParams;
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
+HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list();
 
 int statusCode = page.statusCode();
 Headers headers = page.headers();
@@ -221,53 +221,101 @@ The SDK throws custom unchecked exception types:
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
 
-### Synchronous
+When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductResponse;
 
-// As an Iterable:
-ProductListPage page = client.products().list(params);
+ProductListPage page = client.products().list();
+
+// Process as an Iterable
 for (ProductResponse product : page.autoPager()) {
     System.out.println(product);
-};
+}
 
-// As a Stream:
-client.products().list(params).autoPager().stream()
+// Process as a Stream
+page.autoPager()
+    .stream()
     .limit(50)
     .forEach(product -> System.out.println(product));
 ```
 
-### Asynchronous
+When using the asynchronous client, the method returns an [`AsyncStreamResponse`](sdk-java-core/src/main/kotlin/com/m3ter/core/http/AsyncStreamResponse.kt):
 
 ```java
-// Using forEach, which returns CompletableFuture<Void>:
-asyncClient.products().list(params).autoPager()
-    .forEach(product -> System.out.println(product), executor);
+import com.m3ter.core.http.AsyncStreamResponse;
+import com.m3ter.models.ProductListPageAsync;
+import com.m3ter.models.ProductResponse;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+CompletableFuture<ProductListPageAsync> pageFuture = client.async().products().list();
+
+pageFuture.thenRun(page -> page.autoPager().subscribe(product -> {
+    System.out.println(product);
+}));
+
+// If you need to handle errors or completion of the stream
+pageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {
+    @Override
+    public void onNext(ProductResponse product) {
+        System.out.println(product);
+    }
+
+    @Override
+    public void onComplete(Optional<Throwable> error) {
+        if (error.isPresent()) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error.get());
+        } else {
+            System.out.println("No more!");
+        }
+    }
+}));
+
+// Or use futures
+pageFuture.thenRun(page -> page.autoPager()
+    .subscribe(product -> {
+        System.out.println(product);
+    })
+    .onCompleteFuture()
+    .whenComplete((unused, error) -> {
+        if (error != null) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error);
+        } else {
+            System.out.println("No more!");
+        }
+    }));
 ```
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+To access individual page items and manually request the next page, use the `items()`,
+`hasNextPage()`, and `nextPage()` methods:
 
 ```java
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductResponse;
 
-ProductListPage page = client.products().list(params);
-while (page != null) {
-    for (ProductResponse product : page.data()) {
+ProductListPage page = client.products().list();
+while (true) {
+    for (ProductResponse product : page.items()) {
         System.out.println(product);
     }
 
-    page = page.getNextPage().orElse(null);
+    if (!page.hasNextPage()) {
+        break;
+    }
+
+    page = page.nextPage();
 }
 ```
 
@@ -334,11 +382,8 @@ To set a custom timeout, configure the method call using the `timeout` method:
 
 ```java
 import com.m3ter.models.ProductListPage;
-import com.m3ter.models.ProductListParams;
 
-ProductListPage page = client.products().list(
-  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
-);
+ProductListPage page = client.products().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());
 ```
 
 Or configure the default for all method calls at the client level:
@@ -582,11 +627,8 @@ Or configure the method call to validate the response using the `responseValidat
 
 ```java
 import com.m3ter.models.ProductListPage;
-import com.m3ter.models.ProductListParams;
 
-ProductListPage page = client.products().list(
-  params, RequestOptions.builder().responseValidation(true).build()
-);
+ProductListPage page = client.products().list(RequestOptions.builder().responseValidation(true).build());
 ```
 
 Or configure the default for all method calls at the client level:

@@ -223,6 +223,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                             .let {
                                 CompoundAggregationListPageAsync.builder()
                                     .service(CompoundAggregationServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

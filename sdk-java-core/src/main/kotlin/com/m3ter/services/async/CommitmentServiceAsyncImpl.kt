@@ -227,6 +227,7 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                             .let {
                                 CommitmentListPageAsync.builder()
                                     .service(CommitmentServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

@@ -267,6 +267,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -396,6 +397,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListContentsPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -443,6 +445,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListPermissionsPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
