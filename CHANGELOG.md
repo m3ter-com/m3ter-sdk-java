@@ -1,5 +1,58 @@
 # Changelog
 
+## 0.3.0-alpha (2025-05-09)
+
+Full Changelog: [v0.2.0-alpha...v0.3.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.2.0-alpha...v0.3.0-alpha)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** change precision of some numeric types
+* **client:** extract auto pagination to shared classes
+* **client:** **Migration:** - If you were referencing the `AutoPager` class on a specific `*Page` or `*PageAsync` type, then you should instead reference the shared `AutoPager` and `AutoPagerAsync` types, under the `core` package
+    - `AutoPagerAsync` now has different usage. You can call `.subscribe(...)` on the returned object instead to get called back each page item. You can also call `onCompleteFuture()` to get a future that completes when all items have been processed. Finally, you can call `.close()` on the returned object to stop auto-paginating early
+    - If you were referencing `getNextPage` or `getNextPageParams`:
+       - Swap to `nextPage()` and `nextPageParams()`
+       - Note that these both now return non-optional types (use `hasNextPage()` before calling these, since they will throw if it's impossible to get another page)
+
+### Features
+
+* **api:** Introduce OrganizationConfigRequest model ([b1bc507](https://github.com/m3ter-com/m3ter-sdk-java/commit/b1bc5074859d6a975b9e010e72a366a81f5651cc))
+* **api:** Spec fixes ([8150c9a](https://github.com/m3ter-com/m3ter-sdk-java/commit/8150c9ac7459302f9034ebf609b19a02c9ac7ab4))
+* **api:** update open api spec ([d3981d7](https://github.com/m3ter-com/m3ter-sdk-java/commit/d3981d7d434a910a648bc62dd7b5ac83ccda5aa2))
+* **api:** update OpenAPI spec + associated fixes ([d7a3738](https://github.com/m3ter-com/m3ter-sdk-java/commit/d7a3738c90b42eebb0c8a98c78e76cb216dcd18d))
+* **client:** allow providing some params positionally ([3e9c44c](https://github.com/m3ter-com/m3ter-sdk-java/commit/3e9c44cdad6191c03c4a4e63924ef9400a02e403))
+* **client:** extract auto pagination to shared classes ([9b42a1e](https://github.com/m3ter-com/m3ter-sdk-java/commit/9b42a1e1ce0fc4edd1759cc51edf566f3d4faf21))
+
+
+### Performance Improvements
+
+* **internal:** improve compilation+test speed ([bbcdab6](https://github.com/m3ter-com/m3ter-sdk-java/commit/bbcdab6a98c3f838a4ddbc9310eeeae6d312b241))
+
+
+### Chores
+
+* add missing `params` ([c28819f](https://github.com/m3ter-com/m3ter-sdk-java/commit/c28819f6d9791c6221f94cc368b1b1af97766e6c))
+* **ci:** add timeout thresholds for CI jobs ([8df0034](https://github.com/m3ter-com/m3ter-sdk-java/commit/8df00347b7f78fc3eb17d12a0daa64ae896bd2cc))
+* **ci:** only use depot for staging repos ([0dbbc55](https://github.com/m3ter-com/m3ter-sdk-java/commit/0dbbc55acad60c1240147812184f511cac6dc085))
+* **ci:** run on more branches and use depot runners ([ee58fda](https://github.com/m3ter-com/m3ter-sdk-java/commit/ee58fdabde1e637365e8f430575e67a7ef5ef914))
+* **internal:** codegen related update ([a143b4a](https://github.com/m3ter-com/m3ter-sdk-java/commit/a143b4ac36d2c4202ba3b62b0f666e9d36d7b8d0))
+* **internal:** java 17 -&gt; 21 on ci ([32cafed](https://github.com/m3ter-com/m3ter-sdk-java/commit/32cafed2588f225cdc7e9a6e40e82161d70b1a0f))
+* **internal:** remove flaky `-Xbackend-threads=0` option ([fc7531a](https://github.com/m3ter-com/m3ter-sdk-java/commit/fc7531acf28494664f7d82a07851c5338a071df1))
+* **internal:** update java toolchain ([df219b5](https://github.com/m3ter-com/m3ter-sdk-java/commit/df219b525c63cd06260f243e022a84b73f163fcc))
+* **internal:** updates ([e0d23b2](https://github.com/m3ter-com/m3ter-sdk-java/commit/e0d23b200ae15762b9bea7314ec15e91bc48faec))
+
+
+### Documentation
+
+* **client:** update jackson compat error message ([4458cdd](https://github.com/m3ter-com/m3ter-sdk-java/commit/4458cddb670fad4aa20488e28af461ee6071d743))
+* explain http client customization ([867618b](https://github.com/m3ter-com/m3ter-sdk-java/commit/867618bb5cc9609f965daa535de01befc92649a8))
+* explain jackson compat in readme ([fd85caf](https://github.com/m3ter-com/m3ter-sdk-java/commit/fd85cafdee532933e8f3d8062a2a559b34971ee3))
+
+
+### Refactors
+
+* **client:** change precision of some numeric types ([960b3c8](https://github.com/m3ter-com/m3ter-sdk-java/commit/960b3c8b079a7bd3680a50cf3153d0b0146ba09e))
+
 ## 0.2.0-alpha (2025-04-10)
 
 Full Changelog: [v0.1.1-alpha...v0.2.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.1.1-alpha...v0.2.0-alpha)
