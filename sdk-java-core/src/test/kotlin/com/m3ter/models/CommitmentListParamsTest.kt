@@ -19,7 +19,7 @@ internal class CommitmentListParamsTest {
             .endDateStart("endDateStart")
             .addId("string")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .productId("productId")
             .build()
     }
@@ -45,7 +45,7 @@ internal class CommitmentListParamsTest {
                 .endDateStart("endDateStart")
                 .addId("string")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .productId("productId")
                 .build()
 

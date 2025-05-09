@@ -16,7 +16,7 @@ internal class NotificationConfigurationListParamsTest {
             .eventName("eventName")
             .addId("string")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .build()
     }
 
@@ -38,7 +38,7 @@ internal class NotificationConfigurationListParamsTest {
                 .eventName("eventName")
                 .addId("string")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

@@ -59,7 +59,7 @@ private constructor(
     private val referencedBillId: JsonField<String>,
     private val referencedLineItemId: JsonField<String>,
     private val segment: JsonField<Segment>,
-    private val sequenceNumber: JsonField<Long>,
+    private val sequenceNumber: JsonField<Int>,
     private val servicePeriodEndDate: JsonField<OffsetDateTime>,
     private val servicePeriodStartDate: JsonField<OffsetDateTime>,
     private val subtotal: JsonField<Double>,
@@ -148,7 +148,7 @@ private constructor(
         @JsonProperty("segment") @ExcludeMissing segment: JsonField<Segment> = JsonMissing.of(),
         @JsonProperty("sequenceNumber")
         @ExcludeMissing
-        sequenceNumber: JsonField<Long> = JsonMissing.of(),
+        sequenceNumber: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("servicePeriodEndDate")
         @ExcludeMissing
         servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -507,7 +507,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun sequenceNumber(): Optional<Long> = sequenceNumber.getOptional("sequenceNumber")
+    fun sequenceNumber(): Optional<Int> = sequenceNumber.getOptional("sequenceNumber")
 
     /**
      * The _(exclusive)_ end date for the service period in ISO 68601 format.
@@ -850,7 +850,7 @@ private constructor(
      */
     @JsonProperty("sequenceNumber")
     @ExcludeMissing
-    fun _sequenceNumber(): JsonField<Long> = sequenceNumber
+    fun _sequenceNumber(): JsonField<Int> = sequenceNumber
 
     /**
      * Returns the raw JSON value of [servicePeriodEndDate].
@@ -958,7 +958,7 @@ private constructor(
         private var referencedBillId: JsonField<String> = JsonMissing.of()
         private var referencedLineItemId: JsonField<String> = JsonMissing.of()
         private var segment: JsonField<Segment> = JsonMissing.of()
-        private var sequenceNumber: JsonField<Long> = JsonMissing.of()
+        private var sequenceNumber: JsonField<Int> = JsonMissing.of()
         private var servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var subtotal: JsonField<Double> = JsonMissing.of()
@@ -1518,16 +1518,16 @@ private constructor(
         fun segment(segment: JsonField<Segment>) = apply { this.segment = segment }
 
         /** The number used for sequential invoices. */
-        fun sequenceNumber(sequenceNumber: Long) = sequenceNumber(JsonField.of(sequenceNumber))
+        fun sequenceNumber(sequenceNumber: Int) = sequenceNumber(JsonField.of(sequenceNumber))
 
         /**
          * Sets [Builder.sequenceNumber] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.sequenceNumber] with a well-typed [Long] value instead.
+         * You should usually call [Builder.sequenceNumber] with a well-typed [Int] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun sequenceNumber(sequenceNumber: JsonField<Long>) = apply {
+        fun sequenceNumber(sequenceNumber: JsonField<Int>) = apply {
             this.sequenceNumber = sequenceNumber
         }
 

@@ -14,7 +14,7 @@ internal class ResourceGroupListParamsTest {
             .orgId("orgId")
             .type("type")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .build()
     }
 
@@ -35,7 +35,7 @@ internal class ResourceGroupListParamsTest {
                 .orgId("orgId")
                 .type("type")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

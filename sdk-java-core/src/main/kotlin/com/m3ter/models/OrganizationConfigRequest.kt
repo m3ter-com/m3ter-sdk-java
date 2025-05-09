@@ -24,12 +24,12 @@ class OrganizationConfigRequest
 private constructor(
     private val currency: JsonField<String>,
     private val dayEpoch: JsonField<String>,
-    private val daysBeforeBillDue: JsonField<Long>,
+    private val daysBeforeBillDue: JsonField<Int>,
     private val monthEpoch: JsonField<String>,
     private val timezone: JsonField<String>,
     private val weekEpoch: JsonField<String>,
     private val yearEpoch: JsonField<String>,
-    private val autoApproveBillsGracePeriod: JsonField<Long>,
+    private val autoApproveBillsGracePeriod: JsonField<Int>,
     private val autoApproveBillsGracePeriodUnit: JsonField<String>,
     private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
     private val billPrefix: JsonField<String>,
@@ -41,7 +41,7 @@ private constructor(
     private val externalInvoiceDate: JsonField<String>,
     private val minimumSpendBillInAdvance: JsonField<Boolean>,
     private val scheduledBillInterval: JsonField<Double>,
-    private val sequenceStartNumber: JsonField<Long>,
+    private val sequenceStartNumber: JsonField<Int>,
     private val standingChargeBillInAdvance: JsonField<Boolean>,
     private val suppressedEmptyBills: JsonField<Boolean>,
     private val version: JsonField<Long>,
@@ -54,7 +54,7 @@ private constructor(
         @JsonProperty("dayEpoch") @ExcludeMissing dayEpoch: JsonField<String> = JsonMissing.of(),
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
-        daysBeforeBillDue: JsonField<Long> = JsonMissing.of(),
+        daysBeforeBillDue: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("monthEpoch")
         @ExcludeMissing
         monthEpoch: JsonField<String> = JsonMissing.of(),
@@ -63,7 +63,7 @@ private constructor(
         @JsonProperty("yearEpoch") @ExcludeMissing yearEpoch: JsonField<String> = JsonMissing.of(),
         @JsonProperty("autoApproveBillsGracePeriod")
         @ExcludeMissing
-        autoApproveBillsGracePeriod: JsonField<Long> = JsonMissing.of(),
+        autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("autoApproveBillsGracePeriodUnit")
         @ExcludeMissing
         autoApproveBillsGracePeriodUnit: JsonField<String> = JsonMissing.of(),
@@ -99,7 +99,7 @@ private constructor(
         scheduledBillInterval: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("sequenceStartNumber")
         @ExcludeMissing
-        sequenceStartNumber: JsonField<Long> = JsonMissing.of(),
+        sequenceStartNumber: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("standingChargeBillInAdvance")
         @ExcludeMissing
         standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
@@ -176,7 +176,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun daysBeforeBillDue(): Long = daysBeforeBillDue.getRequired("daysBeforeBillDue")
+    fun daysBeforeBillDue(): Int = daysBeforeBillDue.getRequired("daysBeforeBillDue")
 
     /**
      * Optional setting that defines the billing cycle date for Accounts that are billed monthly.
@@ -248,7 +248,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun autoApproveBillsGracePeriod(): Optional<Long> =
+    fun autoApproveBillsGracePeriod(): Optional<Int> =
         autoApproveBillsGracePeriod.getOptional("autoApproveBillsGracePeriod")
 
     /**
@@ -419,7 +419,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun sequenceStartNumber(): Optional<Long> =
+    fun sequenceStartNumber(): Optional<Int> =
         sequenceStartNumber.getOptional("sequenceStartNumber")
 
     /**
@@ -480,7 +480,7 @@ private constructor(
      */
     @JsonProperty("daysBeforeBillDue")
     @ExcludeMissing
-    fun _daysBeforeBillDue(): JsonField<Long> = daysBeforeBillDue
+    fun _daysBeforeBillDue(): JsonField<Int> = daysBeforeBillDue
 
     /**
      * Returns the raw JSON value of [monthEpoch].
@@ -518,7 +518,7 @@ private constructor(
      */
     @JsonProperty("autoApproveBillsGracePeriod")
     @ExcludeMissing
-    fun _autoApproveBillsGracePeriod(): JsonField<Long> = autoApproveBillsGracePeriod
+    fun _autoApproveBillsGracePeriod(): JsonField<Int> = autoApproveBillsGracePeriod
 
     /**
      * Returns the raw JSON value of [autoApproveBillsGracePeriodUnit].
@@ -636,7 +636,7 @@ private constructor(
      */
     @JsonProperty("sequenceStartNumber")
     @ExcludeMissing
-    fun _sequenceStartNumber(): JsonField<Long> = sequenceStartNumber
+    fun _sequenceStartNumber(): JsonField<Int> = sequenceStartNumber
 
     /**
      * Returns the raw JSON value of [standingChargeBillInAdvance].
@@ -701,12 +701,12 @@ private constructor(
 
         private var currency: JsonField<String>? = null
         private var dayEpoch: JsonField<String>? = null
-        private var daysBeforeBillDue: JsonField<Long>? = null
+        private var daysBeforeBillDue: JsonField<Int>? = null
         private var monthEpoch: JsonField<String>? = null
         private var timezone: JsonField<String>? = null
         private var weekEpoch: JsonField<String>? = null
         private var yearEpoch: JsonField<String>? = null
-        private var autoApproveBillsGracePeriod: JsonField<Long> = JsonMissing.of()
+        private var autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of()
         private var autoApproveBillsGracePeriodUnit: JsonField<String> = JsonMissing.of()
         private var autoGenerateStatementMode: JsonField<AutoGenerateStatementMode> =
             JsonMissing.of()
@@ -719,7 +719,7 @@ private constructor(
         private var externalInvoiceDate: JsonField<String> = JsonMissing.of()
         private var minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var scheduledBillInterval: JsonField<Double> = JsonMissing.of()
-        private var sequenceStartNumber: JsonField<Long> = JsonMissing.of()
+        private var sequenceStartNumber: JsonField<Int> = JsonMissing.of()
         private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of()
         private var version: JsonField<Long> = JsonMissing.of()
@@ -806,17 +806,17 @@ private constructor(
          * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
          * precedence over any `daysBeforeBillDue` setting defined at Organization level.
          */
-        fun daysBeforeBillDue(daysBeforeBillDue: Long) =
+        fun daysBeforeBillDue(daysBeforeBillDue: Int) =
             daysBeforeBillDue(JsonField.of(daysBeforeBillDue))
 
         /**
          * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
+        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Int>) = apply {
             this.daysBeforeBillDue = daysBeforeBillDue
         }
 
@@ -908,17 +908,17 @@ private constructor(
          * auto-approval of Bills for Organization, which occurs when the specified time period has
          * elapsed after Bill generation.
          */
-        fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: Long) =
+        fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: Int) =
             autoApproveBillsGracePeriod(JsonField.of(autoApproveBillsGracePeriod))
 
         /**
          * Sets [Builder.autoApproveBillsGracePeriod] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.autoApproveBillsGracePeriod] with a well-typed [Long]
+         * You should usually call [Builder.autoApproveBillsGracePeriod] with a well-typed [Int]
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
-        fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: JsonField<Long>) = apply {
+        fun autoApproveBillsGracePeriod(autoApproveBillsGracePeriod: JsonField<Int>) = apply {
             this.autoApproveBillsGracePeriod = autoApproveBillsGracePeriod
         }
 
@@ -1202,17 +1202,17 @@ private constructor(
          * Subsequent Bills created will be numbered in time sequence for their initial creation
          * date/time.
          */
-        fun sequenceStartNumber(sequenceStartNumber: Long) =
+        fun sequenceStartNumber(sequenceStartNumber: Int) =
             sequenceStartNumber(JsonField.of(sequenceStartNumber))
 
         /**
          * Sets [Builder.sequenceStartNumber] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.sequenceStartNumber] with a well-typed [Long] value
+         * You should usually call [Builder.sequenceStartNumber] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun sequenceStartNumber(sequenceStartNumber: JsonField<Long>) = apply {
+        fun sequenceStartNumber(sequenceStartNumber: JsonField<Int>) = apply {
             this.sequenceStartNumber = sequenceStartNumber
         }
 

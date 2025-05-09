@@ -34,7 +34,7 @@ internal class BillJobServiceAsyncTest {
                     .orgId("orgId")
                     .addAccountId("string")
                     .billDate(LocalDate.parse("2019-12-27"))
-                    .billFrequencyInterval(0L)
+                    .billFrequencyInterval(0)
                     .billingFrequency(BillJobCreateParams.BillingFrequency.DAILY)
                     .addCurrencyConversion(
                         CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()

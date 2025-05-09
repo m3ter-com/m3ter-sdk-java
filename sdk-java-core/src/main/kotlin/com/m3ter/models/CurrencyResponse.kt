@@ -29,7 +29,7 @@ private constructor(
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val lastModifiedBy: JsonField<String>,
-    private val maxDecimalPlaces: JsonField<Long>,
+    private val maxDecimalPlaces: JsonField<Int>,
     private val name: JsonField<String>,
     private val roundingMode: JsonField<RoundingMode>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -53,7 +53,7 @@ private constructor(
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("maxDecimalPlaces")
         @ExcludeMissing
-        maxDecimalPlaces: JsonField<Long> = JsonMissing.of(),
+        maxDecimalPlaces: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("roundingMode")
         @ExcludeMissing
@@ -147,7 +147,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun maxDecimalPlaces(): Optional<Long> = maxDecimalPlaces.getOptional("maxDecimalPlaces")
+    fun maxDecimalPlaces(): Optional<Int> = maxDecimalPlaces.getOptional("maxDecimalPlaces")
 
     /**
      * The name of the data entity.
@@ -233,7 +233,7 @@ private constructor(
      */
     @JsonProperty("maxDecimalPlaces")
     @ExcludeMissing
-    fun _maxDecimalPlaces(): JsonField<Long> = maxDecimalPlaces
+    fun _maxDecimalPlaces(): JsonField<Int> = maxDecimalPlaces
 
     /**
      * Returns the raw JSON value of [name].
@@ -288,7 +288,7 @@ private constructor(
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
-        private var maxDecimalPlaces: JsonField<Long> = JsonMissing.of()
+        private var maxDecimalPlaces: JsonField<Int> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var roundingMode: JsonField<RoundingMode> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -416,17 +416,17 @@ private constructor(
         }
 
         /** This indicates the maximum number of decimal places to use for this Currency. */
-        fun maxDecimalPlaces(maxDecimalPlaces: Long) =
+        fun maxDecimalPlaces(maxDecimalPlaces: Int) =
             maxDecimalPlaces(JsonField.of(maxDecimalPlaces))
 
         /**
          * Sets [Builder.maxDecimalPlaces] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Long] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Int] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
-        fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Long>) = apply {
+        fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Int>) = apply {
             this.maxDecimalPlaces = maxDecimalPlaces
         }
 

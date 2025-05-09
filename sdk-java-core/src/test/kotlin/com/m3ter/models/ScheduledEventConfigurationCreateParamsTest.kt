@@ -14,7 +14,7 @@ internal class ScheduledEventConfigurationCreateParamsTest {
             .entity("Bill")
             .field("endDate")
             .name("scheduled.bill.enddateEvent")
-            .offset(5L)
+            .offset(5)
             .version(0L)
             .build()
     }
@@ -26,7 +26,7 @@ internal class ScheduledEventConfigurationCreateParamsTest {
                 .entity("Bill")
                 .field("endDate")
                 .name("scheduled.bill.enddateEvent")
-                .offset(5L)
+                .offset(5)
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
@@ -42,7 +42,7 @@ internal class ScheduledEventConfigurationCreateParamsTest {
                 .entity("Bill")
                 .field("endDate")
                 .name("scheduled.bill.enddateEvent")
-                .offset(5L)
+                .offset(5)
                 .version(0L)
                 .build()
 
@@ -51,7 +51,7 @@ internal class ScheduledEventConfigurationCreateParamsTest {
         assertThat(body.entity()).isEqualTo("Bill")
         assertThat(body.field()).isEqualTo("endDate")
         assertThat(body.name()).isEqualTo("scheduled.bill.enddateEvent")
-        assertThat(body.offset()).isEqualTo(5L)
+        assertThat(body.offset()).isEqualTo(5)
         assertThat(body.version()).contains(0L)
     }
 
@@ -62,7 +62,7 @@ internal class ScheduledEventConfigurationCreateParamsTest {
                 .entity("Bill")
                 .field("endDate")
                 .name("scheduled.bill.enddateEvent")
-                .offset(5L)
+                .offset(5)
                 .build()
 
         val body = params._body()
@@ -70,6 +70,6 @@ internal class ScheduledEventConfigurationCreateParamsTest {
         assertThat(body.entity()).isEqualTo("Bill")
         assertThat(body.field()).isEqualTo("endDate")
         assertThat(body.name()).isEqualTo("scheduled.bill.enddateEvent")
-        assertThat(body.offset()).isEqualTo(5L)
+        assertThat(body.offset()).isEqualTo(5)
     }
 }

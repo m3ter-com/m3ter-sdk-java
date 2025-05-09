@@ -16,7 +16,7 @@ internal class ExternalMappingListByExternalEntityParamsTest {
             .externalTable("externalTable")
             .externalId("externalId")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .build()
     }
 
@@ -46,7 +46,7 @@ internal class ExternalMappingListByExternalEntityParamsTest {
                 .externalTable("externalTable")
                 .externalId("externalId")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

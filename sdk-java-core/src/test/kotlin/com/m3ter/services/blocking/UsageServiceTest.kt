@@ -76,7 +76,7 @@ internal class UsageServiceTest {
                             .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
                             .build()
                     )
-                    .limit(1L)
+                    .limit(1)
                     .addMeterId("string")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()

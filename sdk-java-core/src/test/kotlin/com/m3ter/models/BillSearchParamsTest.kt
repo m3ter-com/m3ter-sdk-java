@@ -12,9 +12,9 @@ internal class BillSearchParamsTest {
     fun create() {
         BillSearchParams.builder()
             .orgId("orgId")
-            .fromDocument(0L)
+            .fromDocument(0)
             .operator(BillSearchParams.Operator.AND)
-            .pageSize(1L)
+            .pageSize(1)
             .searchQuery("searchQuery")
             .sortBy("sortBy")
             .sortOrder(BillSearchParams.SortOrder.ASC)
@@ -35,9 +35,9 @@ internal class BillSearchParamsTest {
         val params =
             BillSearchParams.builder()
                 .orgId("orgId")
-                .fromDocument(0L)
+                .fromDocument(0)
                 .operator(BillSearchParams.Operator.AND)
-                .pageSize(1L)
+                .pageSize(1)
                 .searchQuery("searchQuery")
                 .sortBy("sortBy")
                 .sortOrder(BillSearchParams.SortOrder.ASC)

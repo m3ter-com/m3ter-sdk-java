@@ -13,7 +13,7 @@ internal class IntegrationConfigurationListParamsTest {
         IntegrationConfigurationListParams.builder()
             .orgId("orgId")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .build()
     }
 
@@ -32,7 +32,7 @@ internal class IntegrationConfigurationListParamsTest {
             IntegrationConfigurationListParams.builder()
                 .orgId("orgId")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

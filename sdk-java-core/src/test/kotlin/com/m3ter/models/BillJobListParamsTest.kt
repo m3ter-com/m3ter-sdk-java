@@ -14,7 +14,7 @@ internal class BillJobListParamsTest {
             .orgId("orgId")
             .active("active")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .status("status")
             .build()
     }
@@ -35,7 +35,7 @@ internal class BillJobListParamsTest {
                 .orgId("orgId")
                 .active("active")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .status("status")
                 .build()
 

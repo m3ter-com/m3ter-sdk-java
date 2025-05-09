@@ -15,7 +15,7 @@ internal class PlanListParamsTest {
             .addAccountId("string")
             .addId("string")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .productId("productId")
             .build()
     }
@@ -37,7 +37,7 @@ internal class PlanListParamsTest {
                 .addAccountId("string")
                 .addId("string")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .productId("productId")
                 .build()
 

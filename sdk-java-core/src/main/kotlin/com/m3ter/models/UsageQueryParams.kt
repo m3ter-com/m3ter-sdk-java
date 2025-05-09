@@ -134,7 +134,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun limit(): Optional<Long> = body.limit()
+    fun limit(): Optional<Int> = body.limit()
 
     /**
      * Specify the Meters you want the query to return usage data for.
@@ -193,7 +193,7 @@ private constructor(
      *
      * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _limit(): JsonField<Long> = body._limit()
+    fun _limit(): JsonField<Int> = body._limit()
 
     /**
      * Returns the raw JSON value of [meterIds].
@@ -418,15 +418,15 @@ private constructor(
          * Define a limit for the number of usage data items you want the query to return, starting
          * with the most recently received data item.
          */
-        fun limit(limit: Long) = apply { body.limit(limit) }
+        fun limit(limit: Int) = apply { body.limit(limit) }
 
         /**
          * Sets [Builder.limit] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.limit] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun limit(limit: JsonField<Long>) = apply { body.limit(limit) }
+        fun limit(limit: JsonField<Int>) = apply { body.limit(limit) }
 
         /** Specify the Meters you want the query to return usage data for. */
         fun meterIds(meterIds: List<String>) = apply { body.meterIds(meterIds) }
@@ -609,7 +609,7 @@ private constructor(
         private val dimensionFilters: JsonField<List<DimensionFilter>>,
         private val endDate: JsonField<OffsetDateTime>,
         private val groups: JsonField<List<Group>>,
-        private val limit: JsonField<Long>,
+        private val limit: JsonField<Int>,
         private val meterIds: JsonField<List<String>>,
         private val startDate: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -632,7 +632,7 @@ private constructor(
             @JsonProperty("groups")
             @ExcludeMissing
             groups: JsonField<List<Group>> = JsonMissing.of(),
-            @JsonProperty("limit") @ExcludeMissing limit: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("limit") @ExcludeMissing limit: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("meterIds")
             @ExcludeMissing
             meterIds: JsonField<List<String>> = JsonMissing.of(),
@@ -722,7 +722,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun limit(): Optional<Long> = limit.getOptional("limit")
+        fun limit(): Optional<Int> = limit.getOptional("limit")
 
         /**
          * Specify the Meters you want the query to return usage data for.
@@ -788,7 +788,7 @@ private constructor(
          *
          * Unlike [limit], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("limit") @ExcludeMissing fun _limit(): JsonField<Long> = limit
+        @JsonProperty("limit") @ExcludeMissing fun _limit(): JsonField<Int> = limit
 
         /**
          * Returns the raw JSON value of [meterIds].
@@ -834,7 +834,7 @@ private constructor(
             private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
             private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var groups: JsonField<MutableList<Group>>? = null
-            private var limit: JsonField<Long> = JsonMissing.of()
+            private var limit: JsonField<Int> = JsonMissing.of()
             private var meterIds: JsonField<MutableList<String>>? = null
             private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1029,16 +1029,16 @@ private constructor(
              * Define a limit for the number of usage data items you want the query to return,
              * starting with the most recently received data item.
              */
-            fun limit(limit: Long) = limit(JsonField.of(limit))
+            fun limit(limit: Int) = limit(JsonField.of(limit))
 
             /**
              * Sets [Builder.limit] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.limit] with a well-typed [Long] value instead. This
+             * You should usually call [Builder.limit] with a well-typed [Int] value instead. This
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
+            fun limit(limit: JsonField<Int>) = apply { this.limit = limit }
 
             /** Specify the Meters you want the query to return usage data for. */
             fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))

@@ -54,12 +54,12 @@ internal class OrganizationConfigServiceTest {
                         OrganizationConfigRequest.builder()
                             .currency("USD")
                             .dayEpoch("2022-01-01")
-                            .daysBeforeBillDue(1L)
+                            .daysBeforeBillDue(1)
                             .monthEpoch("2022-01-01")
                             .timezone("UTC")
                             .weekEpoch("2022-01-04")
                             .yearEpoch("2022-01-01")
-                            .autoApproveBillsGracePeriod(2L)
+                            .autoApproveBillsGracePeriod(2)
                             .autoApproveBillsGracePeriodUnit("DAYS")
                             .autoGenerateStatementMode(
                                 OrganizationConfigRequest.AutoGenerateStatementMode.NONE
@@ -81,7 +81,7 @@ internal class OrganizationConfigServiceTest {
                             .externalInvoiceDate("LAST_DAY_OF_ARREARS")
                             .minimumSpendBillInAdvance(true)
                             .scheduledBillInterval(0.0)
-                            .sequenceStartNumber(1000L)
+                            .sequenceStartNumber(1000)
                             .standingChargeBillInAdvance(true)
                             .suppressedEmptyBills(true)
                             .version(0L)
