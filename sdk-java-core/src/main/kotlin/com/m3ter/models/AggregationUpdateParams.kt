@@ -162,6 +162,10 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
+     * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release and on
+     * request. If you are interested in using this feature, please get in touch with m3ter Support
+     * or your m3ter contact.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -579,6 +583,11 @@ private constructor(
             body.customFields(customFields)
         }
 
+        /**
+         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
+         * and on request. If you are interested in using this feature, please get in touch with
+         * m3ter Support or your m3ter contact.
+         */
         fun customSql(customSql: String) = apply { body.customSql(customSql) }
 
         /**
@@ -1046,6 +1055,10 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
+         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
+         * and on request. If you are interested in using this feature, please get in touch with
+         * m3ter Support or your m3ter contact.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1494,6 +1507,11 @@ private constructor(
                 this.customFields = customFields
             }
 
+            /**
+             * **NOTE:** The `customSql` Aggregation type is currently only available in Beta
+             * release and on request. If you are interested in using this feature, please get in
+             * touch with m3ter Support or your m3ter contact.
+             */
             fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
             /**
@@ -1802,6 +1820,8 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
+            @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
+
             @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
         }
 
@@ -1814,6 +1834,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
         }
 
         /**
@@ -1833,6 +1854,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
             /**
              * An enum member indicating that [Aggregation] was instantiated with an unknown value.
              */
@@ -1855,6 +1877,7 @@ private constructor(
                 LATEST -> Value.LATEST
                 MEAN -> Value.MEAN
                 UNIQUE -> Value.UNIQUE
+                CUSTOM_SQL -> Value.CUSTOM_SQL
                 else -> Value._UNKNOWN
             }
 
@@ -1875,6 +1898,7 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
+                CUSTOM_SQL -> Known.CUSTOM_SQL
                 else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
             }
 

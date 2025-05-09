@@ -27,9 +27,11 @@ internal class FileUploadServiceAsyncTest {
             fileUploadServiceAsync.generateUploadUrl(
                 UsageFileUploadGenerateUploadUrlParams.builder()
                     .orgId("orgId")
-                    .contentType("x")
-                    .fileName("x")
                     .contentLength(1L)
+                    .contentType(
+                        UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON
+                    )
+                    .fileName("x")
                     .build()
             )
 

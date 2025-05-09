@@ -15,7 +15,7 @@ internal class UsageDataExportScheduleRequestTest {
         val usageDataExportScheduleRequest =
             UsageDataExportScheduleRequest.builder()
                 .sourceType(UsageDataExportScheduleRequest.SourceType.USAGE)
-                .timePeriod(UsageDataExportScheduleRequest.TimePeriod.LAST_12_HOURS)
+                .timePeriod(UsageDataExportScheduleRequest.TimePeriod.TODAY)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleRequest.Aggregation.builder()
@@ -45,7 +45,7 @@ internal class UsageDataExportScheduleRequestTest {
         assertThat(usageDataExportScheduleRequest.sourceType())
             .isEqualTo(UsageDataExportScheduleRequest.SourceType.USAGE)
         assertThat(usageDataExportScheduleRequest.timePeriod())
-            .isEqualTo(UsageDataExportScheduleRequest.TimePeriod.LAST_12_HOURS)
+            .isEqualTo(UsageDataExportScheduleRequest.TimePeriod.TODAY)
         assertThat(usageDataExportScheduleRequest.accountIds().getOrNull())
             .containsExactly("string")
         assertThat(usageDataExportScheduleRequest.aggregations().getOrNull())
@@ -84,7 +84,7 @@ internal class UsageDataExportScheduleRequestTest {
         val usageDataExportScheduleRequest =
             UsageDataExportScheduleRequest.builder()
                 .sourceType(UsageDataExportScheduleRequest.SourceType.USAGE)
-                .timePeriod(UsageDataExportScheduleRequest.TimePeriod.LAST_12_HOURS)
+                .timePeriod(UsageDataExportScheduleRequest.TimePeriod.TODAY)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleRequest.Aggregation.builder()

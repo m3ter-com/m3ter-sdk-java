@@ -4,7 +4,6 @@ package com.m3ter.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.core.jsonMapper
-import java.time.LocalDate
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -36,7 +35,7 @@ internal class OrganizationConfigResponseTest {
                 .addCurrencyConversion(
                     CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
                 )
-                .dayEpoch(LocalDate.parse("2019-12-27"))
+                .dayEpoch("2022-01-01")
                 .daysBeforeBillDue(0)
                 .defaultStatementDefinitionId("defaultStatementDefinitionId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -46,14 +45,14 @@ internal class OrganizationConfigResponseTest {
                 )
                 .lastModifiedBy("lastModifiedBy")
                 .minimumSpendBillInAdvance(true)
-                .monthEpoch(LocalDate.parse("2019-12-27"))
+                .monthEpoch("2022-01-01")
                 .scheduledBillInterval(0.0)
                 .sequenceStartNumber(0)
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)
                 .timezone("UTC")
-                .weekEpoch(LocalDate.parse("2019-12-27"))
-                .yearEpoch(LocalDate.parse("2019-12-27"))
+                .weekEpoch("2022-01-04")
+                .yearEpoch("2022-01-01")
                 .build()
 
         assertThat(organizationConfigResponse.id()).isEqualTo("id")
@@ -74,7 +73,7 @@ internal class OrganizationConfigResponseTest {
             .containsExactly(
                 CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
             )
-        assertThat(organizationConfigResponse.dayEpoch()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(organizationConfigResponse.dayEpoch()).contains("2022-01-01")
         assertThat(organizationConfigResponse.daysBeforeBillDue()).contains(0)
         assertThat(organizationConfigResponse.defaultStatementDefinitionId())
             .contains("defaultStatementDefinitionId")
@@ -86,14 +85,14 @@ internal class OrganizationConfigResponseTest {
             .contains(OrganizationConfigResponse.ExternalInvoiceDate.LAST_DAY_OF_ARREARS)
         assertThat(organizationConfigResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(organizationConfigResponse.minimumSpendBillInAdvance()).contains(true)
-        assertThat(organizationConfigResponse.monthEpoch()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(organizationConfigResponse.monthEpoch()).contains("2022-01-01")
         assertThat(organizationConfigResponse.scheduledBillInterval()).contains(0.0)
         assertThat(organizationConfigResponse.sequenceStartNumber()).contains(0)
         assertThat(organizationConfigResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(organizationConfigResponse.suppressedEmptyBills()).contains(true)
         assertThat(organizationConfigResponse.timezone()).contains("UTC")
-        assertThat(organizationConfigResponse.weekEpoch()).contains(LocalDate.parse("2019-12-27"))
-        assertThat(organizationConfigResponse.yearEpoch()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(organizationConfigResponse.weekEpoch()).contains("2022-01-04")
+        assertThat(organizationConfigResponse.yearEpoch()).contains("2022-01-01")
     }
 
     @Test
@@ -121,7 +120,7 @@ internal class OrganizationConfigResponseTest {
                 .addCurrencyConversion(
                     CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
                 )
-                .dayEpoch(LocalDate.parse("2019-12-27"))
+                .dayEpoch("2022-01-01")
                 .daysBeforeBillDue(0)
                 .defaultStatementDefinitionId("defaultStatementDefinitionId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -131,14 +130,14 @@ internal class OrganizationConfigResponseTest {
                 )
                 .lastModifiedBy("lastModifiedBy")
                 .minimumSpendBillInAdvance(true)
-                .monthEpoch(LocalDate.parse("2019-12-27"))
+                .monthEpoch("2022-01-01")
                 .scheduledBillInterval(0.0)
                 .sequenceStartNumber(0)
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)
                 .timezone("UTC")
-                .weekEpoch(LocalDate.parse("2019-12-27"))
-                .yearEpoch(LocalDate.parse("2019-12-27"))
+                .weekEpoch("2022-01-04")
+                .yearEpoch("2022-01-01")
                 .build()
 
         val roundtrippedOrganizationConfigResponse =

@@ -2746,38 +2746,59 @@ private constructor(
 
         companion object {
 
-            @JvmField val LAST_12_HOURS = of("LAST_12_HOURS")
-
             @JvmField val TODAY = of("TODAY")
 
             @JvmField val YESTERDAY = of("YESTERDAY")
 
             @JvmField val WEEK_TO_DATE = of("WEEK_TO_DATE")
 
-            @JvmField val CURRENT_MONTH = of("CURRENT_MONTH")
+            @JvmField val MONTH_TO_DATE = of("MONTH_TO_DATE")
+
+            @JvmField val YEAR_TO_DATE = of("YEAR_TO_DATE")
+
+            @JvmField val PREVIOUS_WEEK = of("PREVIOUS_WEEK")
+
+            @JvmField val PREVIOUS_MONTH = of("PREVIOUS_MONTH")
+
+            @JvmField val PREVIOUS_QUARTER = of("PREVIOUS_QUARTER")
+
+            @JvmField val PREVIOUS_YEAR = of("PREVIOUS_YEAR")
+
+            @JvmField val LAST_12_HOURS = of("LAST_12_HOURS")
+
+            @JvmField val LAST_7_DAYS = of("LAST_7_DAYS")
 
             @JvmField val LAST_30_DAYS = of("LAST_30_DAYS")
 
             @JvmField val LAST_35_DAYS = of("LAST_35_DAYS")
 
-            @JvmField val PREVIOUS_WEEK = of("PREVIOUS_WEEK")
+            @JvmField val LAST_90_DAYS = of("LAST_90_DAYS")
 
-            @JvmField val PREVIOUS_MONTH = of("PREVIOUS_MONTH")
+            @JvmField val LAST_120_DAYS = of("LAST_120_DAYS")
+
+            @JvmField val LAST_YEAR = of("LAST_YEAR")
 
             @JvmStatic fun of(value: String) = TimePeriod(JsonField.of(value))
         }
 
         /** An enum containing [TimePeriod]'s known values. */
         enum class Known {
-            LAST_12_HOURS,
             TODAY,
             YESTERDAY,
             WEEK_TO_DATE,
-            CURRENT_MONTH,
-            LAST_30_DAYS,
-            LAST_35_DAYS,
+            MONTH_TO_DATE,
+            YEAR_TO_DATE,
             PREVIOUS_WEEK,
             PREVIOUS_MONTH,
+            PREVIOUS_QUARTER,
+            PREVIOUS_YEAR,
+            LAST_12_HOURS,
+            LAST_7_DAYS,
+            LAST_30_DAYS,
+            LAST_35_DAYS,
+            LAST_90_DAYS,
+            LAST_120_DAYS,
+            LAST_YEAR,
         }
 
         /**
@@ -2790,15 +2811,22 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            LAST_12_HOURS,
             TODAY,
             YESTERDAY,
             WEEK_TO_DATE,
-            CURRENT_MONTH,
-            LAST_30_DAYS,
-            LAST_35_DAYS,
+            MONTH_TO_DATE,
+            YEAR_TO_DATE,
             PREVIOUS_WEEK,
             PREVIOUS_MONTH,
+            PREVIOUS_QUARTER,
+            PREVIOUS_YEAR,
+            LAST_12_HOURS,
+            LAST_7_DAYS,
+            LAST_30_DAYS,
+            LAST_35_DAYS,
+            LAST_90_DAYS,
+            LAST_120_DAYS,
+            LAST_YEAR,
             /**
              * An enum member indicating that [TimePeriod] was instantiated with an unknown value.
              */
@@ -2814,15 +2842,22 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                LAST_12_HOURS -> Value.LAST_12_HOURS
                 TODAY -> Value.TODAY
                 YESTERDAY -> Value.YESTERDAY
                 WEEK_TO_DATE -> Value.WEEK_TO_DATE
-                CURRENT_MONTH -> Value.CURRENT_MONTH
-                LAST_30_DAYS -> Value.LAST_30_DAYS
-                LAST_35_DAYS -> Value.LAST_35_DAYS
+                MONTH_TO_DATE -> Value.MONTH_TO_DATE
+                YEAR_TO_DATE -> Value.YEAR_TO_DATE
                 PREVIOUS_WEEK -> Value.PREVIOUS_WEEK
                 PREVIOUS_MONTH -> Value.PREVIOUS_MONTH
+                PREVIOUS_QUARTER -> Value.PREVIOUS_QUARTER
+                PREVIOUS_YEAR -> Value.PREVIOUS_YEAR
+                LAST_12_HOURS -> Value.LAST_12_HOURS
+                LAST_7_DAYS -> Value.LAST_7_DAYS
+                LAST_30_DAYS -> Value.LAST_30_DAYS
+                LAST_35_DAYS -> Value.LAST_35_DAYS
+                LAST_90_DAYS -> Value.LAST_90_DAYS
+                LAST_120_DAYS -> Value.LAST_120_DAYS
+                LAST_YEAR -> Value.LAST_YEAR
                 else -> Value._UNKNOWN
             }
 
@@ -2836,15 +2871,22 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                LAST_12_HOURS -> Known.LAST_12_HOURS
                 TODAY -> Known.TODAY
                 YESTERDAY -> Known.YESTERDAY
                 WEEK_TO_DATE -> Known.WEEK_TO_DATE
-                CURRENT_MONTH -> Known.CURRENT_MONTH
-                LAST_30_DAYS -> Known.LAST_30_DAYS
-                LAST_35_DAYS -> Known.LAST_35_DAYS
+                MONTH_TO_DATE -> Known.MONTH_TO_DATE
+                YEAR_TO_DATE -> Known.YEAR_TO_DATE
                 PREVIOUS_WEEK -> Known.PREVIOUS_WEEK
                 PREVIOUS_MONTH -> Known.PREVIOUS_MONTH
+                PREVIOUS_QUARTER -> Known.PREVIOUS_QUARTER
+                PREVIOUS_YEAR -> Known.PREVIOUS_YEAR
+                LAST_12_HOURS -> Known.LAST_12_HOURS
+                LAST_7_DAYS -> Known.LAST_7_DAYS
+                LAST_30_DAYS -> Known.LAST_30_DAYS
+                LAST_35_DAYS -> Known.LAST_35_DAYS
+                LAST_90_DAYS -> Known.LAST_90_DAYS
+                LAST_120_DAYS -> Known.LAST_120_DAYS
+                LAST_YEAR -> Known.LAST_YEAR
                 else -> throw M3terInvalidDataException("Unknown TimePeriod: $value")
             }
 
