@@ -57,7 +57,7 @@ M3terClient client = M3terOkHttpClient.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-ProductListPage page = client.products().list();
+ProductListPage page = client.products().list(params);
 ```
 
 ## Client configuration
@@ -142,7 +142,7 @@ M3terClient client = M3terOkHttpClient.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-CompletableFuture<ProductListPageAsync> page = client.async().products().list();
+CompletableFuture<ProductListPageAsync> page = client.async().products().list(params);
 ```
 
 Or create an asynchronous client from the beginning:
@@ -160,7 +160,7 @@ M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-CompletableFuture<ProductListPageAsync> page = client.products().list();
+CompletableFuture<ProductListPageAsync> page = client.products().list(params);
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods return `CompletableFuture`s.
@@ -180,7 +180,7 @@ import com.m3ter.models.ProductListParams;
 ProductListParams params = ProductListParams.builder()
     .orgId("My Org ID")
     .build();
-HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list();
+HttpResponseFor<ProductListPage> page = client.products().withRawResponse().list(params);
 
 int statusCode = page.statusCode();
 Headers headers = page.headers();
