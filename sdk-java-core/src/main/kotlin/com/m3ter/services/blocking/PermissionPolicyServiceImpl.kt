@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -39,6 +40,7 @@ import com.m3ter.models.PermissionPolicyRemoveFromUserResponse
 import com.m3ter.models.PermissionPolicyResponse
 import com.m3ter.models.PermissionPolicyRetrieveParams
 import com.m3ter.models.PermissionPolicyUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class PermissionPolicyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     PermissionPolicyService {
@@ -186,6 +188,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -218,6 +223,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -289,6 +297,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -322,6 +333,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyAddToServiceUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyAddToServiceUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -356,6 +370,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyAddToSupportUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -390,6 +407,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyAddToUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyAddToUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -424,6 +444,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyAddToUserGroupParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyAddToUserGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -459,6 +482,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyRemoveFromServiceUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -494,6 +520,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyRemoveFromSupportUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -528,6 +557,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyRemoveFromUserParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyRemoveFromUserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -563,6 +595,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             params: PermissionPolicyRemoveFromUserGroupParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("permissionPolicyId", params.permissionPolicyId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

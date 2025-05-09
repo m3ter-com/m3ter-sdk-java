@@ -208,6 +208,8 @@ internal class IntegrationConfigurationServiceAsyncTest {
                 IntegrationConfigurationGetByEntityParams.builder()
                     .orgId("orgId")
                     .entityType("entityType")
+                    .destination("destination")
+                    .destinationId("destinationId")
                     .entityId("entityId")
                     .build()
             )

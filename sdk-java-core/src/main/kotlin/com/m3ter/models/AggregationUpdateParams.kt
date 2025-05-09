@@ -33,15 +33,16 @@ import kotlin.jvm.optionals.getOrNull
 class AggregationUpdateParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -161,6 +162,10 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
+     * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release and on
+     * request. If you are interested in using this feature, please get in touch with m3ter Support
+     * or your m3ter contact.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -343,7 +348,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .aggregation()
          * .meterId()
          * .name()
@@ -374,12 +378,17 @@ private constructor(
             additionalQueryParams = aggregationUpdateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -574,6 +583,11 @@ private constructor(
             body.customFields(customFields)
         }
 
+        /**
+         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
+         * and on request. If you are interested in using this feature, please get in touch with
+         * m3ter Support or your m3ter contact.
+         */
         fun customSql(customSql: String) = apply { body.customSql(customSql) }
 
         /**
@@ -811,7 +825,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .aggregation()
          * .meterId()
          * .name()
@@ -826,7 +839,7 @@ private constructor(
         fun build(): AggregationUpdateParams =
             AggregationUpdateParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -838,7 +851,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 
@@ -1042,6 +1055,10 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
+         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
+         * and on request. If you are interested in using this feature, please get in touch with
+         * m3ter Support or your m3ter contact.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1490,6 +1507,11 @@ private constructor(
                 this.customFields = customFields
             }
 
+            /**
+             * **NOTE:** The `customSql` Aggregation type is currently only available in Beta
+             * release and on request. If you are interested in using this feature, please get in
+             * touch with m3ter Support or your m3ter contact.
+             */
             fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
             /**

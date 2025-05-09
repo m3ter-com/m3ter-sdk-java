@@ -8,7 +8,6 @@ import com.m3ter.models.ResourceGroupAddResourceParams
 import com.m3ter.models.ResourceGroupCreateParams
 import com.m3ter.models.ResourceGroupDeleteParams
 import com.m3ter.models.ResourceGroupListContentsParams
-import com.m3ter.models.ResourceGroupListParams
 import com.m3ter.models.ResourceGroupListPermissionsParams
 import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupRetrieveParams
@@ -105,8 +104,7 @@ internal class ResourceGroupServiceAsyncTest {
                 .build()
         val resourceGroupServiceAsync = client.resourceGroups()
 
-        val pageFuture =
-            resourceGroupServiceAsync.list(ResourceGroupListParams.builder().type("type").build())
+        val pageFuture = resourceGroupServiceAsync.list("type")
 
         val page = pageFuture.get()
         page.response().validate()

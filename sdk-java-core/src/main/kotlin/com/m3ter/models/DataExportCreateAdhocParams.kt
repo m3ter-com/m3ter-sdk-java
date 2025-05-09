@@ -81,6 +81,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** Request representing an operational data export configuration. */
@@ -121,9 +122,11 @@ private constructor(
             additionalQueryParams = dataExportCreateAdhocParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** Request representing an operational data export configuration. */
@@ -285,7 +288,7 @@ private constructor(
         fun adHocOperationalDataRequest(): Optional<AdHocOperationalDataRequest> =
             Optional.ofNullable(adHocOperationalDataRequest)
 
-        /** Request representing an usage data export configuration. */
+        /** Request representing a usage data export configuration. */
         fun adHocUsageDataRequest(): Optional<AdHocUsageDataRequest> =
             Optional.ofNullable(adHocUsageDataRequest)
 
@@ -297,7 +300,7 @@ private constructor(
         fun asAdHocOperationalDataRequest(): AdHocOperationalDataRequest =
             adHocOperationalDataRequest.getOrThrow("adHocOperationalDataRequest")
 
-        /** Request representing an usage data export configuration. */
+        /** Request representing a usage data export configuration. */
         fun asAdHocUsageDataRequest(): AdHocUsageDataRequest =
             adHocUsageDataRequest.getOrThrow("adHocUsageDataRequest")
 
@@ -395,7 +398,7 @@ private constructor(
                 adHocOperationalDataRequest: AdHocOperationalDataRequest
             ) = Body(adHocOperationalDataRequest = adHocOperationalDataRequest)
 
-            /** Request representing an usage data export configuration. */
+            /** Request representing a usage data export configuration. */
             @JvmStatic
             fun ofAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest) =
                 Body(adHocUsageDataRequest = adHocUsageDataRequest)
@@ -409,7 +412,7 @@ private constructor(
                 adHocOperationalDataRequest: AdHocOperationalDataRequest
             ): T
 
-            /** Request representing an usage data export configuration. */
+            /** Request representing a usage data export configuration. */
             fun visitAdHocUsageDataRequest(adHocUsageDataRequest: AdHocUsageDataRequest): T
 
             /**

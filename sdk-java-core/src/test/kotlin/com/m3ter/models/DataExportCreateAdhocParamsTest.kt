@@ -14,7 +14,7 @@ internal class DataExportCreateAdhocParamsTest {
             .body(
                 AdHocOperationalDataRequest.builder()
                     .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
-                    .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                    .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                     .version(0L)
                     .build()
             )
@@ -30,7 +30,7 @@ internal class DataExportCreateAdhocParamsTest {
                         .addOperationalDataType(
                             AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                         .build()
                 )
                 .build()
@@ -50,7 +50,7 @@ internal class DataExportCreateAdhocParamsTest {
                         .addOperationalDataType(
                             AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                         .version(0L)
                         .build()
                 )
@@ -65,7 +65,7 @@ internal class DataExportCreateAdhocParamsTest {
                         .addOperationalDataType(
                             AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                         .version(0L)
                         .build()
                 )
@@ -81,7 +81,7 @@ internal class DataExportCreateAdhocParamsTest {
                         .addOperationalDataType(
                             AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                         .build()
                 )
                 .build()
@@ -95,7 +95,7 @@ internal class DataExportCreateAdhocParamsTest {
                         .addOperationalDataType(
                             AdHocOperationalDataRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                        .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                         .build()
                 )
             )

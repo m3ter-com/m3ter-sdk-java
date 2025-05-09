@@ -20,6 +20,11 @@ internal class CustomFieldUpdateParamsTest {
             )
             .aggregation(CustomFieldUpdateParams.Aggregation.builder().build())
             .compoundAggregation(CustomFieldUpdateParams.CompoundAggregation.builder().build())
+            .contract(
+                CustomFieldUpdateParams.Contract.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
             .meter(CustomFieldUpdateParams.Meter.builder().build())
             .organization(
                 CustomFieldUpdateParams.Organization.builder()
@@ -60,6 +65,11 @@ internal class CustomFieldUpdateParamsTest {
                 )
                 .aggregation(CustomFieldUpdateParams.Aggregation.builder().build())
                 .compoundAggregation(CustomFieldUpdateParams.CompoundAggregation.builder().build())
+                .contract(
+                    CustomFieldUpdateParams.Contract.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .meter(CustomFieldUpdateParams.Meter.builder().build())
                 .organization(
                     CustomFieldUpdateParams.Organization.builder()
@@ -90,6 +100,12 @@ internal class CustomFieldUpdateParamsTest {
             .contains(CustomFieldUpdateParams.Aggregation.builder().build())
         assertThat(body.compoundAggregation())
             .contains(CustomFieldUpdateParams.CompoundAggregation.builder().build())
+        assertThat(body.contract())
+            .contains(
+                CustomFieldUpdateParams.Contract.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
         assertThat(body.meter()).contains(CustomFieldUpdateParams.Meter.builder().build())
         assertThat(body.organization())
             .contains(

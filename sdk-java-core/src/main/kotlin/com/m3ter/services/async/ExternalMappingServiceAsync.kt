@@ -46,9 +46,22 @@ interface ExternalMappingServiceAsync {
      * This endpoint enables you to retrieve the External Mapping with the specified UUID for a
      * specific Organization.
      */
+    fun retrieve(id: String): CompletableFuture<ExternalMappingResponse> =
+        retrieve(id, ExternalMappingRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: ExternalMappingRetrieveParams
-    ): CompletableFuture<ExternalMappingResponse> = retrieve(params, RequestOptions.none())
+        id: String,
+        params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ExternalMappingResponse> =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+    ): CompletableFuture<ExternalMappingResponse> = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -56,12 +69,38 @@ interface ExternalMappingServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalMappingResponse>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: ExternalMappingRetrieveParams
+    ): CompletableFuture<ExternalMappingResponse> = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ExternalMappingResponse> =
+        retrieve(id, ExternalMappingRetrieveParams.none(), requestOptions)
+
     /**
      * Updates an External Mapping with the given UUID.
      *
      * This endpoint enables you to update an existing External Mapping entity, identified by its
      * UUID. You must supply a request body with the new details for the External Mapping.
      */
+    fun update(
+        id: String,
+        params: ExternalMappingUpdateParams,
+    ): CompletableFuture<ExternalMappingResponse> = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ExternalMappingUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ExternalMappingResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: ExternalMappingUpdateParams): CompletableFuture<ExternalMappingResponse> =
         update(params, RequestOptions.none())
 
@@ -97,8 +136,22 @@ interface ExternalMappingServiceAsync {
         list(ExternalMappingListParams.none(), requestOptions)
 
     /** Delete an External Mapping with the given UUID. */
-    fun delete(params: ExternalMappingDeleteParams): CompletableFuture<ExternalMappingResponse> =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompletableFuture<ExternalMappingResponse> =
+        delete(id, ExternalMappingDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ExternalMappingResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+    ): CompletableFuture<ExternalMappingResponse> = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
@@ -106,12 +159,38 @@ interface ExternalMappingServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ExternalMappingResponse>
 
+    /** @see [delete] */
+    fun delete(params: ExternalMappingDeleteParams): CompletableFuture<ExternalMappingResponse> =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ExternalMappingResponse> =
+        delete(id, ExternalMappingDeleteParams.none(), requestOptions)
+
     /**
      * Retrieve a list of External Mapping entities for a specified external system entity.
      *
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * external system entity. The list can be paginated for easier management.
      */
+    fun listByExternalEntity(
+        externalId: String,
+        params: ExternalMappingListByExternalEntityParams,
+    ): CompletableFuture<ExternalMappingListByExternalEntityPageAsync> =
+        listByExternalEntity(externalId, params, RequestOptions.none())
+
+    /** @see [listByExternalEntity] */
+    fun listByExternalEntity(
+        externalId: String,
+        params: ExternalMappingListByExternalEntityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ExternalMappingListByExternalEntityPageAsync> =
+        listByExternalEntity(params.toBuilder().externalId(externalId).build(), requestOptions)
+
+    /** @see [listByExternalEntity] */
     fun listByExternalEntity(
         params: ExternalMappingListByExternalEntityParams
     ): CompletableFuture<ExternalMappingListByExternalEntityPageAsync> =
@@ -129,6 +208,21 @@ interface ExternalMappingServiceAsync {
      * Use this endpoint to retrieve a list of External Mapping entities associated with a specific
      * m3ter entity. The list can be paginated for easier management.
      */
+    fun listByM3terEntity(
+        m3terId: String,
+        params: ExternalMappingListByM3terEntityParams,
+    ): CompletableFuture<ExternalMappingListByM3terEntityPageAsync> =
+        listByM3terEntity(m3terId, params, RequestOptions.none())
+
+    /** @see [listByM3terEntity] */
+    fun listByM3terEntity(
+        m3terId: String,
+        params: ExternalMappingListByM3terEntityParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ExternalMappingListByM3terEntityPageAsync> =
+        listByM3terEntity(params.toBuilder().m3terId(m3terId).build(), requestOptions)
+
+    /** @see [listByM3terEntity] */
     fun listByM3terEntity(
         params: ExternalMappingListByM3terEntityParams
     ): CompletableFuture<ExternalMappingListByM3terEntityPageAsync> =
@@ -168,10 +262,25 @@ interface ExternalMappingServiceAsync {
          * is otherwise the same as [ExternalMappingServiceAsync.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            retrieve(id, ExternalMappingRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: ExternalMappingRetrieveParams
+            id: String,
+            params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ExternalMappingRetrieveParams = ExternalMappingRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -180,10 +289,42 @@ interface ExternalMappingServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ExternalMappingRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            retrieve(id, ExternalMappingRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/externalmappings/{id}`, but
          * is otherwise the same as [ExternalMappingServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExternalMappingUpdateParams,
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ExternalMappingUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ExternalMappingUpdateParams
@@ -231,10 +372,25 @@ interface ExternalMappingServiceAsync {
          * but is otherwise the same as [ExternalMappingServiceAsync.delete].
          */
         @MustBeClosed
+        fun delete(id: String): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            delete(id, ExternalMappingDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: ExternalMappingDeleteParams
+            id: String,
+            params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
-            delete(params, RequestOptions.none())
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ExternalMappingDeleteParams = ExternalMappingDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -243,11 +399,43 @@ interface ExternalMappingServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: ExternalMappingDeleteParams
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> =
+            delete(id, ExternalMappingDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `get
          * /organizations/{orgId}/externalmappings/externalid/{system}/{externalTable}/{externalId}`,
          * but is otherwise the same as [ExternalMappingServiceAsync.listByExternalEntity].
          */
+        @MustBeClosed
+        fun listByExternalEntity(
+            externalId: String,
+            params: ExternalMappingListByExternalEntityParams,
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListByExternalEntityPageAsync>> =
+            listByExternalEntity(externalId, params, RequestOptions.none())
+
+        /** @see [listByExternalEntity] */
+        @MustBeClosed
+        fun listByExternalEntity(
+            externalId: String,
+            params: ExternalMappingListByExternalEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListByExternalEntityPageAsync>> =
+            listByExternalEntity(params.toBuilder().externalId(externalId).build(), requestOptions)
+
+        /** @see [listByExternalEntity] */
         @MustBeClosed
         fun listByExternalEntity(
             params: ExternalMappingListByExternalEntityParams
@@ -266,6 +454,23 @@ interface ExternalMappingServiceAsync {
          * /organizations/{orgId}/externalmappings/external/{entity}/{m3terId}`, but is otherwise
          * the same as [ExternalMappingServiceAsync.listByM3terEntity].
          */
+        @MustBeClosed
+        fun listByM3terEntity(
+            m3terId: String,
+            params: ExternalMappingListByM3terEntityParams,
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListByM3terEntityPageAsync>> =
+            listByM3terEntity(m3terId, params, RequestOptions.none())
+
+        /** @see [listByM3terEntity] */
+        @MustBeClosed
+        fun listByM3terEntity(
+            m3terId: String,
+            params: ExternalMappingListByM3terEntityParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ExternalMappingListByM3terEntityPageAsync>> =
+            listByM3terEntity(params.toBuilder().m3terId(m3terId).build(), requestOptions)
+
+        /** @see [listByM3terEntity] */
         @MustBeClosed
         fun listByM3terEntity(
             params: ExternalMappingListByM3terEntityParams

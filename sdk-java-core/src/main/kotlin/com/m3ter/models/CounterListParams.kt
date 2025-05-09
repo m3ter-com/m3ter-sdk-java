@@ -17,12 +17,13 @@ private constructor(
     private val codes: List<String>?,
     private val ids: List<String>?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val productId: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** List of Counter codes to retrieve. These are unique short codes to identify each Counter. */
@@ -35,7 +36,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of Counters to retrieve per page */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /** List of Products UUIDs to retrieve Counters for. */
     fun productId(): Optional<List<String>> = Optional.ofNullable(productId)
@@ -61,7 +62,7 @@ private constructor(
         private var codes: MutableList<String>? = null
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var productId: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -78,9 +79,11 @@ private constructor(
             additionalQueryParams = counterListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -118,17 +121,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of Counters to retrieve per page */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /** List of Products UUIDs to retrieve Counters for. */
         fun productId(productId: List<String>?) = apply {

@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.users
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -21,6 +22,7 @@ import com.m3ter.models.UserInvitationListPage
 import com.m3ter.models.UserInvitationListPageResponse
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class InvitationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     InvitationService {
@@ -95,6 +97,9 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<InvitationResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

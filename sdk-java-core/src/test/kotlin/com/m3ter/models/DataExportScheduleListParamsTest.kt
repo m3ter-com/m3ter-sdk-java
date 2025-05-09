@@ -14,7 +14,7 @@ internal class DataExportScheduleListParamsTest {
             .orgId("orgId")
             .addId("string")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .build()
     }
 
@@ -34,7 +34,7 @@ internal class DataExportScheduleListParamsTest {
                 .orgId("orgId")
                 .addId("string")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

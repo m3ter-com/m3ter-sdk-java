@@ -33,7 +33,7 @@ private constructor(
     fun operationalDataExportSchedule(): Optional<OperationalDataExportScheduleResponse> =
         Optional.ofNullable(operationalDataExportSchedule)
 
-    /** Response representing an usage data export configuration. */
+    /** Response representing an usage schedule configuration. */
     fun usageDataExportSchedule(): Optional<UsageDataExportScheduleResponse> =
         Optional.ofNullable(usageDataExportSchedule)
 
@@ -45,7 +45,7 @@ private constructor(
     fun asOperationalDataExportSchedule(): OperationalDataExportScheduleResponse =
         operationalDataExportSchedule.getOrThrow("operationalDataExportSchedule")
 
-    /** Response representing an usage data export configuration. */
+    /** Response representing an usage schedule configuration. */
     fun asUsageDataExportSchedule(): UsageDataExportScheduleResponse =
         usageDataExportSchedule.getOrThrow("usageDataExportSchedule")
 
@@ -145,7 +145,7 @@ private constructor(
                 operationalDataExportSchedule = operationalDataExportSchedule
             )
 
-        /** Response representing an usage data export configuration. */
+        /** Response representing an usage schedule configuration. */
         @JvmStatic
         fun ofUsageDataExportSchedule(usageDataExportSchedule: UsageDataExportScheduleResponse) =
             DataExportScheduleCreateResponse(usageDataExportSchedule = usageDataExportSchedule)
@@ -162,7 +162,7 @@ private constructor(
             operationalDataExportSchedule: OperationalDataExportScheduleResponse
         ): T
 
-        /** Response representing an usage data export configuration. */
+        /** Response representing an usage schedule configuration. */
         fun visitUsageDataExportSchedule(
             usageDataExportSchedule: UsageDataExportScheduleResponse
         ): T

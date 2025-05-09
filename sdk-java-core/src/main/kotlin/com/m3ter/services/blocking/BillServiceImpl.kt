@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -34,6 +35,7 @@ import com.m3ter.services.blocking.bills.DebitLineItemService
 import com.m3ter.services.blocking.bills.DebitLineItemServiceImpl
 import com.m3ter.services.blocking.bills.LineItemService
 import com.m3ter.services.blocking.bills.LineItemServiceImpl
+import kotlin.jvm.optionals.getOrNull
 
 class BillServiceImpl internal constructor(private val clientOptions: ClientOptions) : BillService {
 
@@ -136,6 +138,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: BillRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -205,6 +210,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: BillDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -270,6 +278,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("accountId", params.accountId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -302,6 +313,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: BillLockParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -366,6 +380,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: BillUpdateStatusParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

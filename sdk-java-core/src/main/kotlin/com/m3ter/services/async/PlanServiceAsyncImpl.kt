@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.PlanResponse
 import com.m3ter.models.PlanRetrieveParams
 import com.m3ter.models.PlanUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class PlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PlanServiceAsync {
@@ -115,6 +117,9 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: PlanRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PlanResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -149,6 +154,9 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: PlanUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PlanResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -210,6 +218,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             .let {
                                 PlanListPageAsync.builder()
                                     .service(PlanServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -225,6 +234,9 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: PlanDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PlanResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

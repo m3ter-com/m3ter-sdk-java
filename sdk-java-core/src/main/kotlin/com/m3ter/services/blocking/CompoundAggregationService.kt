@@ -42,14 +42,35 @@ interface CompoundAggregationService {
      * This endpoint returns a specific CompoundAggregation associated with an Organization. It
      * provides detailed information about the CompoundAggregation.
      */
-    fun retrieve(params: CompoundAggregationRetrieveParams): CompoundAggregationResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CompoundAggregationResponse =
+        retrieve(id, CompoundAggregationRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompoundAggregationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
+    ): CompoundAggregationResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: CompoundAggregationRetrieveParams): CompoundAggregationResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CompoundAggregationResponse =
+        retrieve(id, CompoundAggregationRetrieveParams.none(), requestOptions)
 
     /**
      * Update the CompoundAggregation with the given UUID.
@@ -62,6 +83,17 @@ interface CompoundAggregationService {
      * endpoint to update the Compound Aggregation use the `customFields` parameter to preserve
      * those Custom Fields. If you omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: CompoundAggregationUpdateParams): AggregationResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: CompoundAggregationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AggregationResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: CompoundAggregationUpdateParams): AggregationResponse =
         update(params, RequestOptions.none())
 
@@ -103,14 +135,35 @@ interface CompoundAggregationService {
      * Organization. Useful when you need to remove an existing CompoundAggregation that is no
      * longer required, such as when changing pricing or planning models.
      */
-    fun delete(params: CompoundAggregationDeleteParams): CompoundAggregationResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CompoundAggregationResponse =
+        delete(id, CompoundAggregationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompoundAggregationResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
+    ): CompoundAggregationResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse
+
+    /** @see [delete] */
+    fun delete(params: CompoundAggregationDeleteParams): CompoundAggregationResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CompoundAggregationResponse =
+        delete(id, CompoundAggregationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [CompoundAggregationService] that provides access to raw HTTP responses for each
@@ -138,9 +191,25 @@ interface CompoundAggregationService {
          * but is otherwise the same as [CompoundAggregationService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<CompoundAggregationResponse> =
+            retrieve(id, CompoundAggregationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: CompoundAggregationRetrieveParams
-        ): HttpResponseFor<CompoundAggregationResponse> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CompoundAggregationResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
+        ): HttpResponseFor<CompoundAggregationResponse> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -149,10 +218,40 @@ interface CompoundAggregationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: CompoundAggregationRetrieveParams
+        ): HttpResponseFor<CompoundAggregationResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CompoundAggregationResponse> =
+            retrieve(id, CompoundAggregationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CompoundAggregationUpdateParams,
+        ): HttpResponseFor<AggregationResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CompoundAggregationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AggregationResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: CompoundAggregationUpdateParams): HttpResponseFor<AggregationResponse> =
             update(params, RequestOptions.none())
@@ -196,9 +295,24 @@ interface CompoundAggregationService {
          * [CompoundAggregationService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<CompoundAggregationResponse> =
+            delete(id, CompoundAggregationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: CompoundAggregationDeleteParams
-        ): HttpResponseFor<CompoundAggregationResponse> = delete(params, RequestOptions.none())
+            id: String,
+            params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CompoundAggregationResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
+        ): HttpResponseFor<CompoundAggregationResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -206,5 +320,19 @@ interface CompoundAggregationService {
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: CompoundAggregationDeleteParams
+        ): HttpResponseFor<CompoundAggregationResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CompoundAggregationResponse> =
+            delete(id, CompoundAggregationDeleteParams.none(), requestOptions)
     }
 }

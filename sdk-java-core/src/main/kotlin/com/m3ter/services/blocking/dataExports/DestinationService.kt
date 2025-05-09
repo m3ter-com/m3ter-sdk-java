@@ -39,9 +39,22 @@ interface DestinationService {
     ): DataExportDestinationCreateResponse
 
     /** Retrieve an Export Destination for the given UUID. */
+    fun retrieve(id: String): DataExportDestinationRetrieveResponse =
+        retrieve(id, DataExportDestinationRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: DataExportDestinationRetrieveParams
-    ): DataExportDestinationRetrieveResponse = retrieve(params, RequestOptions.none())
+        id: String,
+        params: DataExportDestinationRetrieveParams = DataExportDestinationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportDestinationRetrieveResponse =
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportDestinationRetrieveParams = DataExportDestinationRetrieveParams.none(),
+    ): DataExportDestinationRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -49,12 +62,38 @@ interface DestinationService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportDestinationRetrieveResponse
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: DataExportDestinationRetrieveParams
+    ): DataExportDestinationRetrieveResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): DataExportDestinationRetrieveResponse =
+        retrieve(id, DataExportDestinationRetrieveParams.none(), requestOptions)
+
     /**
      * Update an Export Destination for the given UUID.
      *
      * **NOTE:** Currently, only Export Destinations using an S3 bucket on your AWS Account are
      * supported.
      */
+    fun update(
+        id: String,
+        params: DataExportDestinationUpdateParams,
+    ): DataExportDestinationUpdateResponse = update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: DataExportDestinationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportDestinationUpdateResponse =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: DataExportDestinationUpdateParams): DataExportDestinationUpdateResponse =
         update(params, RequestOptions.none())
 
@@ -92,14 +131,36 @@ interface DestinationService {
      * Export Schedule, an error message is returned and you won't be able to delete the
      * Destination.
      */
-    fun delete(params: DataExportDestinationDeleteParams): DataExportDestinationDeleteResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): DataExportDestinationDeleteResponse =
+        delete(id, DataExportDestinationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportDestinationDeleteResponse =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
+    ): DataExportDestinationDeleteResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: DataExportDestinationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportDestinationDeleteResponse
+
+    /** @see [delete] */
+    fun delete(params: DataExportDestinationDeleteParams): DataExportDestinationDeleteResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): DataExportDestinationDeleteResponse =
+        delete(id, DataExportDestinationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [DestinationService] that provides access to raw HTTP responses for each method.
@@ -129,10 +190,26 @@ interface DestinationService {
          * [DestinationService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<DataExportDestinationRetrieveResponse> =
+            retrieve(id, DataExportDestinationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: DataExportDestinationRetrieveParams
+            id: String,
+            params: DataExportDestinationRetrieveParams =
+                DataExportDestinationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportDestinationRetrieveResponse> =
-            retrieve(params, RequestOptions.none())
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportDestinationRetrieveParams = DataExportDestinationRetrieveParams.none(),
+        ): HttpResponseFor<DataExportDestinationRetrieveResponse> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -141,11 +218,43 @@ interface DestinationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportDestinationRetrieveResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: DataExportDestinationRetrieveParams
+        ): HttpResponseFor<DataExportDestinationRetrieveResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportDestinationRetrieveResponse> =
+            retrieve(id, DataExportDestinationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportDestinationUpdateParams,
+        ): HttpResponseFor<DataExportDestinationUpdateResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: DataExportDestinationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationUpdateResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: DataExportDestinationUpdateParams
@@ -191,6 +300,35 @@ interface DestinationService {
          * [DestinationService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<DataExportDestinationDeleteResponse> =
+            delete(id, DataExportDestinationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationDeleteResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
+        ): HttpResponseFor<DataExportDestinationDeleteResponse> =
+            delete(id, params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: DataExportDestinationDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportDestinationDeleteResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
             params: DataExportDestinationDeleteParams
         ): HttpResponseFor<DataExportDestinationDeleteResponse> =
@@ -199,8 +337,9 @@ interface DestinationService {
         /** @see [delete] */
         @MustBeClosed
         fun delete(
-            params: DataExportDestinationDeleteParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DataExportDestinationDeleteResponse>
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportDestinationDeleteResponse> =
+            delete(id, DataExportDestinationDeleteParams.none(), requestOptions)
     }
 }

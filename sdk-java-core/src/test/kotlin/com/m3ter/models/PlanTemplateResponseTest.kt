@@ -18,7 +18,7 @@ internal class PlanTemplateResponseTest {
                 .id("id")
                 .version(0L)
                 .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
-                .billFrequencyInterval(0L)
+                .billFrequencyInterval(0)
                 .code("code")
                 .createdBy("createdBy")
                 .currency("currency")
@@ -39,15 +39,15 @@ internal class PlanTemplateResponseTest {
                 .standingCharge(0.0)
                 .standingChargeBillInAdvance(true)
                 .standingChargeDescription("standingChargeDescription")
-                .standingChargeInterval(0L)
-                .standingChargeOffset(0L)
+                .standingChargeInterval(0)
+                .standingChargeOffset(0)
                 .build()
 
         assertThat(planTemplateResponse.id()).isEqualTo("id")
         assertThat(planTemplateResponse.version()).isEqualTo(0L)
         assertThat(planTemplateResponse.billFrequency())
             .contains(PlanTemplateResponse.BillFrequency.DAILY)
-        assertThat(planTemplateResponse.billFrequencyInterval()).contains(0L)
+        assertThat(planTemplateResponse.billFrequencyInterval()).contains(0)
         assertThat(planTemplateResponse.code()).contains("code")
         assertThat(planTemplateResponse.createdBy()).contains("createdBy")
         assertThat(planTemplateResponse.currency()).contains("currency")
@@ -73,8 +73,8 @@ internal class PlanTemplateResponseTest {
         assertThat(planTemplateResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(planTemplateResponse.standingChargeDescription())
             .contains("standingChargeDescription")
-        assertThat(planTemplateResponse.standingChargeInterval()).contains(0L)
-        assertThat(planTemplateResponse.standingChargeOffset()).contains(0L)
+        assertThat(planTemplateResponse.standingChargeInterval()).contains(0)
+        assertThat(planTemplateResponse.standingChargeOffset()).contains(0)
     }
 
     @Test
@@ -85,7 +85,7 @@ internal class PlanTemplateResponseTest {
                 .id("id")
                 .version(0L)
                 .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
-                .billFrequencyInterval(0L)
+                .billFrequencyInterval(0)
                 .code("code")
                 .createdBy("createdBy")
                 .currency("currency")
@@ -106,8 +106,8 @@ internal class PlanTemplateResponseTest {
                 .standingCharge(0.0)
                 .standingChargeBillInAdvance(true)
                 .standingChargeDescription("standingChargeDescription")
-                .standingChargeInterval(0L)
-                .standingChargeOffset(0L)
+                .standingChargeInterval(0)
+                .standingChargeOffset(0)
                 .build()
 
         val roundtrippedPlanTemplateResponse =

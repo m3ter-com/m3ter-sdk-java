@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.emptyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
@@ -32,6 +33,7 @@ import com.m3ter.models.UserRetrieveParams
 import com.m3ter.models.UserUpdateParams
 import com.m3ter.services.blocking.users.InvitationService
 import com.m3ter.services.blocking.users.InvitationServiceImpl
+import kotlin.jvm.optionals.getOrNull
 
 class UserServiceImpl internal constructor(private val clientOptions: ClientOptions) : UserService {
 
@@ -101,6 +103,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: UserRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<UserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -132,6 +137,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: UserUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<UserResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -203,6 +211,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<PermissionPolicyResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -236,6 +247,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -299,6 +313,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             params: UserResendPasswordParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)

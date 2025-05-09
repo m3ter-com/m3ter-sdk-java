@@ -29,6 +29,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -40,7 +41,7 @@ private constructor(
     fun account(): Optional<Account> = body.account()
 
     /**
-     * Updates to accountPlan entity CustomFields.
+     * Updates to AccountPlan entity CustomFields.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -62,6 +63,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun compoundAggregation(): Optional<CompoundAggregation> = body.compoundAggregation()
+
+    /**
+     * Updates to Contract entity CustomFields.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun contract(): Optional<Contract> = body.contract()
 
     /**
      * Updates to Meter entity CustomFields.
@@ -146,6 +155,13 @@ private constructor(
     fun _compoundAggregation(): JsonField<CompoundAggregation> = body._compoundAggregation()
 
     /**
+     * Returns the raw JSON value of [contract].
+     *
+     * Unlike [contract], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _contract(): JsonField<Contract> = body._contract()
+
+    /**
      * Returns the raw JSON value of [meter].
      *
      * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
@@ -219,9 +235,11 @@ private constructor(
             additionalQueryParams = customFieldUpdateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -233,7 +251,7 @@ private constructor(
          * - [accountPlan]
          * - [aggregation]
          * - [compoundAggregation]
-         * - [meter]
+         * - [contract]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -249,7 +267,7 @@ private constructor(
          */
         fun account(account: JsonField<Account>) = apply { body.account(account) }
 
-        /** Updates to accountPlan entity CustomFields. */
+        /** Updates to AccountPlan entity CustomFields. */
         fun accountPlan(accountPlan: AccountPlan) = apply { body.accountPlan(accountPlan) }
 
         /**
@@ -292,6 +310,18 @@ private constructor(
         fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
             body.compoundAggregation(compoundAggregation)
         }
+
+        /** Updates to Contract entity CustomFields. */
+        fun contract(contract: Contract) = apply { body.contract(contract) }
+
+        /**
+         * Sets [Builder.contract] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contract] with a well-typed [Contract] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun contract(contract: JsonField<Contract>) = apply { body.contract(contract) }
 
         /** Updates to Meter entity CustomFields. */
         fun meter(meter: Meter) = apply { body.meter(meter) }
@@ -521,6 +551,7 @@ private constructor(
         private val accountPlan: JsonField<AccountPlan>,
         private val aggregation: JsonField<Aggregation>,
         private val compoundAggregation: JsonField<CompoundAggregation>,
+        private val contract: JsonField<Contract>,
         private val meter: JsonField<Meter>,
         private val organization: JsonField<Organization>,
         private val plan: JsonField<Plan>,
@@ -542,6 +573,9 @@ private constructor(
             @JsonProperty("compoundAggregation")
             @ExcludeMissing
             compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of(),
+            @JsonProperty("contract")
+            @ExcludeMissing
+            contract: JsonField<Contract> = JsonMissing.of(),
             @JsonProperty("meter") @ExcludeMissing meter: JsonField<Meter> = JsonMissing.of(),
             @JsonProperty("organization")
             @ExcludeMissing
@@ -557,6 +591,7 @@ private constructor(
             accountPlan,
             aggregation,
             compoundAggregation,
+            contract,
             meter,
             organization,
             plan,
@@ -575,7 +610,7 @@ private constructor(
         fun account(): Optional<Account> = account.getOptional("account")
 
         /**
-         * Updates to accountPlan entity CustomFields.
+         * Updates to AccountPlan entity CustomFields.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -598,6 +633,14 @@ private constructor(
          */
         fun compoundAggregation(): Optional<CompoundAggregation> =
             compoundAggregation.getOptional("compoundAggregation")
+
+        /**
+         * Updates to Contract entity CustomFields.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun contract(): Optional<Contract> = contract.getOptional("contract")
 
         /**
          * Updates to Meter entity CustomFields.
@@ -688,6 +731,13 @@ private constructor(
         fun _compoundAggregation(): JsonField<CompoundAggregation> = compoundAggregation
 
         /**
+         * Returns the raw JSON value of [contract].
+         *
+         * Unlike [contract], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("contract") @ExcludeMissing fun _contract(): JsonField<Contract> = contract
+
+        /**
          * Returns the raw JSON value of [meter].
          *
          * Unlike [meter], this method doesn't throw if the JSON field has an unexpected type.
@@ -760,6 +810,7 @@ private constructor(
             private var accountPlan: JsonField<AccountPlan> = JsonMissing.of()
             private var aggregation: JsonField<Aggregation> = JsonMissing.of()
             private var compoundAggregation: JsonField<CompoundAggregation> = JsonMissing.of()
+            private var contract: JsonField<Contract> = JsonMissing.of()
             private var meter: JsonField<Meter> = JsonMissing.of()
             private var organization: JsonField<Organization> = JsonMissing.of()
             private var plan: JsonField<Plan> = JsonMissing.of()
@@ -774,6 +825,7 @@ private constructor(
                 accountPlan = body.accountPlan
                 aggregation = body.aggregation
                 compoundAggregation = body.compoundAggregation
+                contract = body.contract
                 meter = body.meter
                 organization = body.organization
                 plan = body.plan
@@ -795,7 +847,7 @@ private constructor(
              */
             fun account(account: JsonField<Account>) = apply { this.account = account }
 
-            /** Updates to accountPlan entity CustomFields. */
+            /** Updates to AccountPlan entity CustomFields. */
             fun accountPlan(accountPlan: AccountPlan) = accountPlan(JsonField.of(accountPlan))
 
             /**
@@ -837,6 +889,18 @@ private constructor(
             fun compoundAggregation(compoundAggregation: JsonField<CompoundAggregation>) = apply {
                 this.compoundAggregation = compoundAggregation
             }
+
+            /** Updates to Contract entity CustomFields. */
+            fun contract(contract: Contract) = contract(JsonField.of(contract))
+
+            /**
+             * Sets [Builder.contract] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contract] with a well-typed [Contract] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun contract(contract: JsonField<Contract>) = apply { this.contract = contract }
 
             /** Updates to Meter entity CustomFields. */
             fun meter(meter: Meter) = meter(JsonField.of(meter))
@@ -951,6 +1015,7 @@ private constructor(
                     accountPlan,
                     aggregation,
                     compoundAggregation,
+                    contract,
                     meter,
                     organization,
                     plan,
@@ -972,6 +1037,7 @@ private constructor(
             accountPlan().ifPresent { it.validate() }
             aggregation().ifPresent { it.validate() }
             compoundAggregation().ifPresent { it.validate() }
+            contract().ifPresent { it.validate() }
             meter().ifPresent { it.validate() }
             organization().ifPresent { it.validate() }
             plan().ifPresent { it.validate() }
@@ -1001,6 +1067,7 @@ private constructor(
                 (accountPlan.asKnown().getOrNull()?.validity() ?: 0) +
                 (aggregation.asKnown().getOrNull()?.validity() ?: 0) +
                 (compoundAggregation.asKnown().getOrNull()?.validity() ?: 0) +
+                (contract.asKnown().getOrNull()?.validity() ?: 0) +
                 (meter.asKnown().getOrNull()?.validity() ?: 0) +
                 (organization.asKnown().getOrNull()?.validity() ?: 0) +
                 (plan.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1013,17 +1080,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(account, accountPlan, aggregation, compoundAggregation, meter, organization, plan, planTemplate, product, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(account, accountPlan, aggregation, compoundAggregation, contract, meter, organization, plan, planTemplate, product, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, version=$version, additionalProperties=$additionalProperties}"
+            "Body{account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, contract=$contract, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /** Updates to Account entity CustomFields. */
@@ -1128,7 +1195,7 @@ private constructor(
         override fun toString() = "Account{additionalProperties=$additionalProperties}"
     }
 
-    /** Updates to accountPlan entity CustomFields. */
+    /** Updates to AccountPlan entity CustomFields. */
     class AccountPlan
     @JsonCreator
     private constructor(
@@ -1433,6 +1500,108 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() = "CompoundAggregation{additionalProperties=$additionalProperties}"
+    }
+
+    /** Updates to Contract entity CustomFields. */
+    class Contract
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Contract]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Contract]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(contract: Contract) = apply {
+                additionalProperties = contract.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Contract].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Contract = Contract(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Contract = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Contract && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Contract{additionalProperties=$additionalProperties}"
     }
 
     /** Updates to Meter entity CustomFields. */

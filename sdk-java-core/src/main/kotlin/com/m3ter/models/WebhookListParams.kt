@@ -16,11 +16,12 @@ private constructor(
     private val orgId: String?,
     private val ids: List<String>?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun ids(): Optional<List<String>> = Optional.ofNullable(ids)
@@ -29,7 +30,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of WebhookIntegrations to retrieve per page */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -51,7 +52,7 @@ private constructor(
         private var orgId: String? = null
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -65,9 +66,11 @@ private constructor(
             additionalQueryParams = webhookListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
@@ -89,17 +92,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of WebhookIntegrations to retrieve per page */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

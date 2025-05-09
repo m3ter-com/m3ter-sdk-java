@@ -33,7 +33,7 @@ private constructor(
     private val exportFileFormat: JsonField<ExportFileFormat>,
     private val lastModifiedBy: JsonField<String>,
     private val name: JsonField<String>,
-    private val period: JsonField<Long>,
+    private val period: JsonField<Int>,
     private val scheduleType: JsonField<ScheduleType>,
     private val sourceType: JsonField<SourceType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -61,7 +61,7 @@ private constructor(
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("period") @ExcludeMissing period: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("period") @ExcludeMissing period: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("scheduleType")
         @ExcludeMissing
         scheduleType: JsonField<ScheduleType> = JsonMissing.of(),
@@ -174,7 +174,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun period(): Optional<Long> = period.getOptional("period")
+    fun period(): Optional<Int> = period.getOptional("period")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -274,7 +274,7 @@ private constructor(
      *
      * Unlike [period], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("period") @ExcludeMissing fun _period(): JsonField<Long> = period
+    @JsonProperty("period") @ExcludeMissing fun _period(): JsonField<Int> = period
 
     /**
      * Returns the raw JSON value of [scheduleType].
@@ -334,7 +334,7 @@ private constructor(
         private var exportFileFormat: JsonField<ExportFileFormat> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
-        private var period: JsonField<Long> = JsonMissing.of()
+        private var period: JsonField<Int> = JsonMissing.of()
         private var scheduleType: JsonField<ScheduleType> = JsonMissing.of()
         private var sourceType: JsonField<SourceType> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -506,15 +506,15 @@ private constructor(
          * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
          * conjunction with the `scheduleType` parameter.
          */
-        fun period(period: Long) = period(JsonField.of(period))
+        fun period(period: Int) = period(JsonField.of(period))
 
         /**
          * Sets [Builder.period] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.period] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.period] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun period(period: JsonField<Long>) = apply { this.period = period }
+        fun period(period: JsonField<Int>) = apply { this.period = period }
 
         fun scheduleType(scheduleType: ScheduleType) = scheduleType(JsonField.of(scheduleType))
 

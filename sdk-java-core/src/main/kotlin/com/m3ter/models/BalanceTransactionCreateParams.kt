@@ -41,15 +41,16 @@ import kotlin.jvm.optionals.getOrNull
 class BalanceTransactionCreateParams
 private constructor(
     private val orgId: String?,
-    private val balanceId: String,
+    private val balanceId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun balanceId(): String = balanceId
+    fun balanceId(): Optional<String> = Optional.ofNullable(balanceId)
 
     /**
      * The financial value of the transaction.
@@ -195,7 +196,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .balanceId()
          * .amount()
          * ```
          */
@@ -220,12 +220,17 @@ private constructor(
             additionalQueryParams = balanceTransactionCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
+        fun balanceId(balanceId: String?) = apply { this.balanceId = balanceId }
+
+        /** Alias for calling [Builder.balanceId] with `balanceId.orElse(null)`. */
+        fun balanceId(balanceId: Optional<String>) = balanceId(balanceId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -483,7 +488,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .balanceId()
          * .amount()
          * ```
          *
@@ -492,7 +496,7 @@ private constructor(
         fun build(): BalanceTransactionCreateParams =
             BalanceTransactionCreateParams(
                 orgId,
-                checkRequired("balanceId", balanceId),
+                balanceId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -504,7 +508,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> balanceId
+            1 -> balanceId ?: ""
             else -> ""
         }
 

@@ -6,7 +6,6 @@ import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.models.BillCreditLineItemCreateParams
 import com.m3ter.models.BillCreditLineItemDeleteParams
-import com.m3ter.models.BillCreditLineItemListParams
 import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import java.time.OffsetDateTime
@@ -121,10 +120,7 @@ internal class CreditLineItemServiceTest {
                 .build()
         val creditLineItemService = client.bills().creditLineItems()
 
-        val page =
-            creditLineItemService.list(
-                BillCreditLineItemListParams.builder().billId("billId").build()
-            )
+        val page = creditLineItemService.list("billId")
 
         page.response().validate()
     }

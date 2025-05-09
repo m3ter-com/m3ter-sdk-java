@@ -12,9 +12,9 @@ internal class CommitmentSearchParamsTest {
     fun create() {
         CommitmentSearchParams.builder()
             .orgId("orgId")
-            .fromDocument(0L)
+            .fromDocument(0)
             .operator(CommitmentSearchParams.Operator.AND)
-            .pageSize(1L)
+            .pageSize(1)
             .searchQuery("searchQuery")
             .sortBy("sortBy")
             .sortOrder(CommitmentSearchParams.SortOrder.ASC)
@@ -35,9 +35,9 @@ internal class CommitmentSearchParamsTest {
         val params =
             CommitmentSearchParams.builder()
                 .orgId("orgId")
-                .fromDocument(0L)
+                .fromDocument(0)
                 .operator(CommitmentSearchParams.Operator.AND)
-                .pageSize(1L)
+                .pageSize(1)
                 .searchQuery("searchQuery")
                 .sortBy("sortBy")
                 .sortOrder(CommitmentSearchParams.SortOrder.ASC)

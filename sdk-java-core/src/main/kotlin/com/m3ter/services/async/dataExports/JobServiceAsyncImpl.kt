@@ -5,6 +5,7 @@ package com.m3ter.services.async.dataExports
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -22,6 +23,7 @@ import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class JobServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     JobServiceAsync {
@@ -66,6 +68,9 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportJobResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -128,6 +133,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
                             .let {
                                 DataExportJobListPageAsync.builder()
                                     .service(JobServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -144,6 +150,9 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             params: DataExportJobGetDownloadUrlParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportJobGetDownloadUrlResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("jobId", params.jobId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

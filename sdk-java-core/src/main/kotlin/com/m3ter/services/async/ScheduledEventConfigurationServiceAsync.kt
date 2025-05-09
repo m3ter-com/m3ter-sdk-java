@@ -34,10 +34,25 @@ interface ScheduledEventConfigurationServiceAsync {
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
     /** Retrieve a ScheduledEventConfiguration for the given UUID. */
+    fun retrieve(id: String): CompletableFuture<ScheduledEventConfigurationResponse> =
+        retrieve(id, ScheduledEventConfigurationRetrieveParams.none())
+
+    /** @see [retrieve] */
     fun retrieve(
-        params: ScheduledEventConfigurationRetrieveParams
+        id: String,
+        params: ScheduledEventConfigurationRetrieveParams =
+            ScheduledEventConfigurationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationResponse> =
-        retrieve(params, RequestOptions.none())
+        retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ScheduledEventConfigurationRetrieveParams =
+            ScheduledEventConfigurationRetrieveParams.none(),
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -45,7 +60,35 @@ interface ScheduledEventConfigurationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ScheduledEventConfigurationResponse>
 
+    /** @see [retrieve] */
+    fun retrieve(
+        params: ScheduledEventConfigurationRetrieveParams
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        retrieve(id, ScheduledEventConfigurationRetrieveParams.none(), requestOptions)
+
     /** Update a ScheduledEventConfiguration for the given UUID. */
+    fun update(
+        id: String,
+        params: ScheduledEventConfigurationUpdateParams,
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ScheduledEventConfigurationUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(
         params: ScheduledEventConfigurationUpdateParams
     ): CompletableFuture<ScheduledEventConfigurationResponse> =
@@ -81,6 +124,33 @@ interface ScheduledEventConfigurationServiceAsync {
         list(ScheduledEventConfigurationListParams.none(), requestOptions)
 
     /** Delete the ScheduledEventConfiguration for the given UUID. */
+    fun delete(id: String): CompletableFuture<ScheduledEventConfigurationResponse> =
+        delete(id, ScheduledEventConfigurationDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ScheduledEventConfigurationDeleteParams =
+            ScheduledEventConfigurationDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ScheduledEventConfigurationDeleteParams =
+            ScheduledEventConfigurationDeleteParams.none(),
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        delete(id, params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(
+        params: ScheduledEventConfigurationDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<ScheduledEventConfigurationResponse>
+
+    /** @see [delete] */
     fun delete(
         params: ScheduledEventConfigurationDeleteParams
     ): CompletableFuture<ScheduledEventConfigurationResponse> =
@@ -88,9 +158,10 @@ interface ScheduledEventConfigurationServiceAsync {
 
     /** @see [delete] */
     fun delete(
-        params: ScheduledEventConfigurationDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<ScheduledEventConfigurationResponse>
+        id: String,
+        requestOptions: RequestOptions,
+    ): CompletableFuture<ScheduledEventConfigurationResponse> =
+        delete(id, ScheduledEventConfigurationDeleteParams.none(), requestOptions)
 
     /**
      * A view of [ScheduledEventConfigurationServiceAsync] that provides access to raw HTTP
@@ -123,9 +194,28 @@ interface ScheduledEventConfigurationServiceAsync {
          */
         @MustBeClosed
         fun retrieve(
-            params: ScheduledEventConfigurationRetrieveParams
+            id: String
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
-            retrieve(params, RequestOptions.none())
+            retrieve(id, ScheduledEventConfigurationRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ScheduledEventConfigurationRetrieveParams =
+                ScheduledEventConfigurationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ScheduledEventConfigurationRetrieveParams =
+                ScheduledEventConfigurationRetrieveParams.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -134,11 +224,43 @@ interface ScheduledEventConfigurationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: ScheduledEventConfigurationRetrieveParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            retrieve(id, ScheduledEventConfigurationRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ScheduledEventConfigurationUpdateParams,
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ScheduledEventConfigurationUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams
@@ -191,9 +313,28 @@ interface ScheduledEventConfigurationServiceAsync {
          */
         @MustBeClosed
         fun delete(
-            params: ScheduledEventConfigurationDeleteParams
+            id: String
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
-            delete(params, RequestOptions.none())
+            delete(id, ScheduledEventConfigurationDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ScheduledEventConfigurationDeleteParams =
+                ScheduledEventConfigurationDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ScheduledEventConfigurationDeleteParams =
+                ScheduledEventConfigurationDeleteParams.none(),
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -201,5 +342,20 @@ interface ScheduledEventConfigurationServiceAsync {
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: ScheduledEventConfigurationDeleteParams
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
+            delete(id, ScheduledEventConfigurationDeleteParams.none(), requestOptions)
     }
 }

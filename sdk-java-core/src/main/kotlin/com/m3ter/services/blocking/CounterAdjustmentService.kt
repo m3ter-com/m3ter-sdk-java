@@ -41,8 +41,21 @@ interface CounterAdjustmentService {
     ): CounterAdjustmentResponse
 
     /** Retrieve a CounterAdjustment for the given UUID. */
-    fun retrieve(params: CounterAdjustmentRetrieveParams): CounterAdjustmentResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CounterAdjustmentResponse =
+        retrieve(id, CounterAdjustmentRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CounterAdjustmentResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
+    ): CounterAdjustmentResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -50,7 +63,26 @@ interface CounterAdjustmentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
 
+    /** @see [retrieve] */
+    fun retrieve(params: CounterAdjustmentRetrieveParams): CounterAdjustmentResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CounterAdjustmentResponse =
+        retrieve(id, CounterAdjustmentRetrieveParams.none(), requestOptions)
+
     /** Update a CounterAdjustment for an Account. */
+    fun update(id: String, params: CounterAdjustmentUpdateParams): CounterAdjustmentResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: CounterAdjustmentUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CounterAdjustmentResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: CounterAdjustmentUpdateParams): CounterAdjustmentResponse =
         update(params, RequestOptions.none())
 
@@ -88,14 +120,35 @@ interface CounterAdjustmentService {
         list(CounterAdjustmentListParams.none(), requestOptions)
 
     /** Delete a CounterAdjustment for the given UUID. */
-    fun delete(params: CounterAdjustmentDeleteParams): CounterAdjustmentResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CounterAdjustmentResponse =
+        delete(id, CounterAdjustmentDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CounterAdjustmentResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
+    ): CounterAdjustmentResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
+
+    /** @see [delete] */
+    fun delete(params: CounterAdjustmentDeleteParams): CounterAdjustmentResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CounterAdjustmentResponse =
+        delete(id, CounterAdjustmentDeleteParams.none(), requestOptions)
 
     /**
      * A view of [CounterAdjustmentService] that provides access to raw HTTP responses for each
@@ -124,9 +177,24 @@ interface CounterAdjustmentService {
          * is otherwise the same as [CounterAdjustmentService.retrieve].
          */
         @MustBeClosed
+        fun retrieve(id: String): HttpResponseFor<CounterAdjustmentResponse> =
+            retrieve(id, CounterAdjustmentRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
         fun retrieve(
-            params: CounterAdjustmentRetrieveParams
-        ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(params, RequestOptions.none())
+            id: String,
+            params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustmentResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
+        ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -135,10 +203,40 @@ interface CounterAdjustmentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            params: CounterAdjustmentRetrieveParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CounterAdjustmentResponse> =
+            retrieve(id, CounterAdjustmentRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CounterAdjustmentUpdateParams,
+        ): HttpResponseFor<CounterAdjustmentResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CounterAdjustmentUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustmentResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams
@@ -182,9 +280,24 @@ interface CounterAdjustmentService {
          * but is otherwise the same as [CounterAdjustmentService.delete].
          */
         @MustBeClosed
+        fun delete(id: String): HttpResponseFor<CounterAdjustmentResponse> =
+            delete(id, CounterAdjustmentDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
         fun delete(
-            params: CounterAdjustmentDeleteParams
-        ): HttpResponseFor<CounterAdjustmentResponse> = delete(params, RequestOptions.none())
+            id: String,
+            params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CounterAdjustmentResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
+        ): HttpResponseFor<CounterAdjustmentResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -192,5 +305,19 @@ interface CounterAdjustmentService {
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            params: CounterAdjustmentDeleteParams
+        ): HttpResponseFor<CounterAdjustmentResponse> = delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CounterAdjustmentResponse> =
+            delete(id, CounterAdjustmentDeleteParams.none(), requestOptions)
     }
 }

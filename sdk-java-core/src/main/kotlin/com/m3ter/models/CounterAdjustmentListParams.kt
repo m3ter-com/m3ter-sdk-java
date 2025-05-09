@@ -30,11 +30,13 @@ private constructor(
     private val endDateEnd: String?,
     private val endDateStart: String?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
+    private val sortOrder: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** List CounterAdjustment items for the Account UUID. */
@@ -60,7 +62,10 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of CounterAdjustments to retrieve per page */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
+
+    /** Sort order for the results */
+    fun sortOrder(): Optional<String> = Optional.ofNullable(sortOrder)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -90,7 +95,8 @@ private constructor(
         private var endDateEnd: String? = null
         private var endDateStart: String? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
+        private var sortOrder: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -106,13 +112,16 @@ private constructor(
             endDateStart = counterAdjustmentListParams.endDateStart
             nextToken = counterAdjustmentListParams.nextToken
             pageSize = counterAdjustmentListParams.pageSize
+            sortOrder = counterAdjustmentListParams.sortOrder
             additionalHeaders = counterAdjustmentListParams.additionalHeaders.toBuilder()
             additionalQueryParams = counterAdjustmentListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** List CounterAdjustment items for the Account UUID. */
@@ -162,17 +171,23 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of CounterAdjustments to retrieve per page */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
+
+        /** Sort order for the results */
+        fun sortOrder(sortOrder: String?) = apply { this.sortOrder = sortOrder }
+
+        /** Alias for calling [Builder.sortOrder] with `sortOrder.orElse(null)`. */
+        fun sortOrder(sortOrder: Optional<String>) = sortOrder(sortOrder.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -289,6 +304,7 @@ private constructor(
                 endDateStart,
                 nextToken,
                 pageSize,
+                sortOrder,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -314,6 +330,7 @@ private constructor(
                 endDateStart?.let { put("endDateStart", it) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
+                sortOrder?.let { put("sortOrder", it) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -323,11 +340,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentListParams && orgId == other.orgId && accountId == other.accountId && counterId == other.counterId && date == other.date && dateEnd == other.dateEnd && dateStart == other.dateStart && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CounterAdjustmentListParams && orgId == other.orgId && accountId == other.accountId && counterId == other.counterId && date == other.date && dateEnd == other.dateEnd && dateStart == other.dateStart && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && sortOrder == other.sortOrder && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, counterId, date, dateEnd, dateStart, endDateEnd, endDateStart, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, counterId, date, dateEnd, dateStart, endDateEnd, endDateStart, nextToken, pageSize, sortOrder, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CounterAdjustmentListParams{orgId=$orgId, accountId=$accountId, counterId=$counterId, date=$date, dateEnd=$dateEnd, dateStart=$dateStart, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "CounterAdjustmentListParams{orgId=$orgId, accountId=$accountId, counterId=$counterId, date=$date, dateEnd=$dateEnd, dateStart=$dateStart, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, sortOrder=$sortOrder, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

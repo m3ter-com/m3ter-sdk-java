@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.DebitReasonServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [DebitReasonServiceAsync.list] */
 class DebitReasonListPageAsync
 private constructor(
     private val service: DebitReasonServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: DebitReasonListParams,
     private val response: DebitReasonListPageResponse,
-) {
+) : PageAsync<DebitReasonResponse> {
 
     /**
      * Delegates to [DebitReasonListPageResponse], but gracefully handles missing data.
@@ -34,24 +36,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<DebitReasonResponse> = data()
 
-    fun getNextPageParams(): Optional<DebitReasonListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): DebitReasonListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<DebitReasonListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<DebitReasonListPageAsync> =
+        service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<DebitReasonResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): DebitReasonListParams = params
@@ -69,6 +69,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -80,17 +81,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: DebitReasonServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: DebitReasonListParams? = null
         private var response: DebitReasonListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(debitReasonListPageAsync: DebitReasonListPageAsync) = apply {
             service = debitReasonListPageAsync.service
+            streamHandlerExecutor = debitReasonListPageAsync.streamHandlerExecutor
             params = debitReasonListPageAsync.params
             response = debitReasonListPageAsync.response
         }
 
         fun service(service: DebitReasonServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: DebitReasonListParams) = apply { this.params = params }
@@ -106,6 +113,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -115,38 +123,10 @@ private constructor(
         fun build(): DebitReasonListPageAsync =
             DebitReasonListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: DebitReasonListPageAsync) {
-
-        fun forEach(
-            action: Predicate<DebitReasonResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<DebitReasonListPageAsync>>.forEach(
-                action: (DebitReasonResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<DebitReasonResponse>> {
-            val values = mutableListOf<DebitReasonResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -154,11 +134,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DebitReasonListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is DebitReasonListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "DebitReasonListPageAsync{service=$service, params=$params, response=$response}"
+        "DebitReasonListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

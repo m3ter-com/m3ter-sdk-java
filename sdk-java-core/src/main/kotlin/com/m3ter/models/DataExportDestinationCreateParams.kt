@@ -2,21 +2,23 @@
 
 package com.m3ter.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.m3ter.core.Enum
-import com.m3ter.core.ExcludeMissing
-import com.m3ter.core.JsonField
-import com.m3ter.core.JsonMissing
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.core.BaseDeserializer
+import com.m3ter.core.BaseSerializer
 import com.m3ter.core.JsonValue
 import com.m3ter.core.Params
+import com.m3ter.core.allMaxBy
 import com.m3ter.core.checkRequired
+import com.m3ter.core.getOrThrow
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import com.m3ter.errors.M3terInvalidDataException
-import java.util.Collections
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -35,146 +37,10 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    /**
-     * Name of the S3 bucket for the Export Destination.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun bucketName(): String = body.bucketName()
-
-    /**
-     * The code of the Export Destination.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun code(): String = body.code()
-
-    /**
-     * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an IAM
-     * role with PutObject permission for the specified `bucketName`. Create a suitable IAM role in
-     * your AWS account and enter ARN:
-     *
-     * **Formatting Constraints:**
-     * - The IAM role ARN must begin with "arn:aws:iam".
-     * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-     *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-     * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-     *   returned.
-     *
-     * **More Details:** For more details and examples of the Permission and Trust Policies you can
-     * use to create the required IAM Role ARN, see
-     * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-     * in our main User documentation.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun iamRoleArn(): String = body.iamRoleArn()
-
-    /**
-     * The name of the Export Destination.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun name(): String = body.name()
-
-    /**
-     * Specify how you want the file path to be structured in your bucket destination - by Time
-     * first (Default) or Type first.
-     *
-     * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
-     *   available, such as `account`, `commitment`, `meter`, and so on.
-     *
-     * Example for Usage Data Export using .CSV format:
-     * - Time first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun partitionOrder(): Optional<PartitionOrder> = body.partitionOrder()
-
-    /**
-     * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then the
-     * root of the bucket will be used.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun prefix(): Optional<String> = body.prefix()
-
-    /**
-     * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
-     *   On initial Create, version is set at 1 and listed in the response.
-     * - **Update Entity:** On Update, version is required and must match the existing version
-     *   because a check is performed to ensure sequential versioning is preserved. Version is
-     *   incremented by 1 and listed in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun version(): Optional<Long> = body.version()
-
-    /**
-     * Returns the raw JSON value of [bucketName].
-     *
-     * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _bucketName(): JsonField<String> = body._bucketName()
-
-    /**
-     * Returns the raw JSON value of [code].
-     *
-     * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _code(): JsonField<String> = body._code()
-
-    /**
-     * Returns the raw JSON value of [iamRoleArn].
-     *
-     * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _iamRoleArn(): JsonField<String> = body._iamRoleArn()
-
-    /**
-     * Returns the raw JSON value of [name].
-     *
-     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _name(): JsonField<String> = body._name()
-
-    /**
-     * Returns the raw JSON value of [partitionOrder].
-     *
-     * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _partitionOrder(): JsonField<PartitionOrder> = body._partitionOrder()
-
-    /**
-     * Returns the raw JSON value of [prefix].
-     *
-     * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _prefix(): JsonField<String> = body._prefix()
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _version(): JsonField<Long> = body._version()
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+    fun body(): Body = body
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -190,10 +56,7 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .bucketName()
-         * .code()
-         * .iamRoleArn()
-         * .name()
+         * .body()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -203,7 +66,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var body: Body.Builder = Body.builder()
+        private var body: Body? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -211,177 +74,41 @@ private constructor(
         internal fun from(dataExportDestinationCreateParams: DataExportDestinationCreateParams) =
             apply {
                 orgId = dataExportDestinationCreateParams.orgId
-                body = dataExportDestinationCreateParams.body.toBuilder()
+                body = dataExportDestinationCreateParams.body
                 additionalHeaders = dataExportDestinationCreateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     dataExportDestinationCreateParams.additionalQueryParams.toBuilder()
             }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        /**
-         * Sets the entire request body.
-         *
-         * This is generally only useful if you are already constructing the body separately.
-         * Otherwise, it's more convenient to use the top-level setters instead:
-         * - [bucketName]
-         * - [code]
-         * - [iamRoleArn]
-         * - [name]
-         * - [partitionOrder]
-         * - etc.
-         */
-        fun body(body: Body) = apply { this.body = body.toBuilder() }
-
-        /** Name of the S3 bucket for the Export Destination. */
-        fun bucketName(bucketName: String) = apply { body.bucketName(bucketName) }
+        fun body(body: Body) = apply { this.body = body }
 
         /**
-         * Sets [Builder.bucketName] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.bucketName] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * Alias for calling [body] with
+         * `Body.ofDataExportDestinationS3Request(dataExportDestinationS3Request)`.
          */
-        fun bucketName(bucketName: JsonField<String>) = apply { body.bucketName(bucketName) }
-
-        /** The code of the Export Destination. */
-        fun code(code: String) = apply { body.code(code) }
+        fun body(dataExportDestinationS3Request: DataExportDestinationS3Request) =
+            body(Body.ofDataExportDestinationS3Request(dataExportDestinationS3Request))
 
         /**
-         * Sets [Builder.code] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.code] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * Alias for calling [body] with
+         * `Body.ofDataExportDestinationGoogleCloudStorageRequest(dataExportDestinationGoogleCloudStorageRequest)`.
          */
-        fun code(code: JsonField<String>) = apply { body.code(code) }
-
-        /**
-         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
-         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
-         * role in your AWS account and enter ARN:
-         *
-         * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-         *   returned.
-         *
-         * **More Details:** For more details and examples of the Permission and Trust Policies you
-         * can use to create the required IAM Role ARN, see
-         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-         * in our main User documentation.
-         */
-        fun iamRoleArn(iamRoleArn: String) = apply { body.iamRoleArn(iamRoleArn) }
-
-        /**
-         * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.iamRoleArn] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { body.iamRoleArn(iamRoleArn) }
-
-        /** The name of the Export Destination. */
-        fun name(name: String) = apply { body.name(name) }
-
-        /**
-         * Sets [Builder.name] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.name] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun name(name: JsonField<String>) = apply { body.name(name) }
-
-        /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
-         *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         */
-        fun partitionOrder(partitionOrder: PartitionOrder?) = apply {
-            body.partitionOrder(partitionOrder)
-        }
-
-        /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
-        fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
-            partitionOrder(partitionOrder.getOrNull())
-
-        /**
-         * Sets [Builder.partitionOrder] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
-            body.partitionOrder(partitionOrder)
-        }
-
-        /**
-         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
-         * the root of the bucket will be used.
-         */
-        fun prefix(prefix: String) = apply { body.prefix(prefix) }
-
-        /**
-         * Sets [Builder.prefix] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.prefix] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun prefix(prefix: JsonField<String>) = apply { body.prefix(prefix) }
-
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         */
-        fun version(version: Long) = apply { body.version(version) }
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { body.version(version) }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
+        fun body(
+            dataExportDestinationGoogleCloudStorageRequest:
+                DataExportDestinationGoogleCloudStorageRequest
+        ) =
+            body(
+                Body.ofDataExportDestinationGoogleCloudStorageRequest(
+                    dataExportDestinationGoogleCloudStorageRequest
+                )
+            )
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -488,10 +215,7 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .bucketName()
-         * .code()
-         * .iamRoleArn()
-         * .name()
+         * .body()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -499,7 +223,7 @@ private constructor(
         fun build(): DataExportDestinationCreateParams =
             DataExportDestinationCreateParams(
                 orgId,
-                body.build(),
+                checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -517,418 +241,50 @@ private constructor(
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
+    @JsonDeserialize(using = Body.Deserializer::class)
+    @JsonSerialize(using = Body.Serializer::class)
     class Body
     private constructor(
-        private val bucketName: JsonField<String>,
-        private val code: JsonField<String>,
-        private val iamRoleArn: JsonField<String>,
-        private val name: JsonField<String>,
-        private val partitionOrder: JsonField<PartitionOrder>,
-        private val prefix: JsonField<String>,
-        private val version: JsonField<Long>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
+        private val dataExportDestinationS3Request: DataExportDestinationS3Request? = null,
+        private val dataExportDestinationGoogleCloudStorageRequest:
+            DataExportDestinationGoogleCloudStorageRequest? =
+            null,
+        private val _json: JsonValue? = null,
     ) {
 
-        @JsonCreator
-        private constructor(
-            @JsonProperty("bucketName")
-            @ExcludeMissing
-            bucketName: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("iamRoleArn")
-            @ExcludeMissing
-            iamRoleArn: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("partitionOrder")
-            @ExcludeMissing
-            partitionOrder: JsonField<PartitionOrder> = JsonMissing.of(),
-            @JsonProperty("prefix") @ExcludeMissing prefix: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
-        ) : this(
-            bucketName,
-            code,
-            iamRoleArn,
-            name,
-            partitionOrder,
-            prefix,
-            version,
-            mutableMapOf(),
-        )
+        fun dataExportDestinationS3Request(): Optional<DataExportDestinationS3Request> =
+            Optional.ofNullable(dataExportDestinationS3Request)
 
-        /**
-         * Name of the S3 bucket for the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun bucketName(): String = bucketName.getRequired("bucketName")
+        fun dataExportDestinationGoogleCloudStorageRequest():
+            Optional<DataExportDestinationGoogleCloudStorageRequest> =
+            Optional.ofNullable(dataExportDestinationGoogleCloudStorageRequest)
 
-        /**
-         * The code of the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun code(): String = code.getRequired("code")
+        fun isDataExportDestinationS3Request(): Boolean = dataExportDestinationS3Request != null
 
-        /**
-         * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume an
-         * IAM role with PutObject permission for the specified `bucketName`. Create a suitable IAM
-         * role in your AWS account and enter ARN:
-         *
-         * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
-         *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
-         *   returned.
-         *
-         * **More Details:** For more details and examples of the Permission and Trust Policies you
-         * can use to create the required IAM Role ARN, see
-         * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-         * in our main User documentation.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun iamRoleArn(): String = iamRoleArn.getRequired("iamRoleArn")
+        fun isDataExportDestinationGoogleCloudStorageRequest(): Boolean =
+            dataExportDestinationGoogleCloudStorageRequest != null
 
-        /**
-         * The name of the Export Destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun name(): String = name.getRequired("name")
+        fun asDataExportDestinationS3Request(): DataExportDestinationS3Request =
+            dataExportDestinationS3Request.getOrThrow("dataExportDestinationS3Request")
 
-        /**
-         * Specify how you want the file path to be structured in your bucket destination - by Time
-         * first (Default) or Type first.
-         *
-         * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
-         *   available, such as `account`, `commitment`, `meter`, and so on.
-         *
-         * Example for Usage Data Export using .CSV format:
-         * - Time first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
-         *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun partitionOrder(): Optional<PartitionOrder> =
-            partitionOrder.getOptional("partitionOrder")
+        fun asDataExportDestinationGoogleCloudStorageRequest():
+            DataExportDestinationGoogleCloudStorageRequest =
+            dataExportDestinationGoogleCloudStorageRequest.getOrThrow(
+                "dataExportDestinationGoogleCloudStorageRequest"
+            )
 
-        /**
-         * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`, then
-         * the root of the bucket will be used.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun prefix(): Optional<String> = prefix.getOptional("prefix")
+        fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
 
-        /**
-         * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
-         * - **Update Entity:** On Update, version is required and must match the existing version
-         *   because a check is performed to ensure sequential versioning is preserved. Version is
-         *   incremented by 1 and listed in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun version(): Optional<Long> = version.getOptional("version")
-
-        /**
-         * Returns the raw JSON value of [bucketName].
-         *
-         * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("bucketName")
-        @ExcludeMissing
-        fun _bucketName(): JsonField<String> = bucketName
-
-        /**
-         * Returns the raw JSON value of [code].
-         *
-         * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
-
-        /**
-         * Returns the raw JSON value of [iamRoleArn].
-         *
-         * Unlike [iamRoleArn], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("iamRoleArn")
-        @ExcludeMissing
-        fun _iamRoleArn(): JsonField<String> = iamRoleArn
-
-        /**
-         * Returns the raw JSON value of [name].
-         *
-         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-        /**
-         * Returns the raw JSON value of [partitionOrder].
-         *
-         * Unlike [partitionOrder], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("partitionOrder")
-        @ExcludeMissing
-        fun _partitionOrder(): JsonField<PartitionOrder> = partitionOrder
-
-        /**
-         * Returns the raw JSON value of [prefix].
-         *
-         * Unlike [prefix], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("prefix") @ExcludeMissing fun _prefix(): JsonField<String> = prefix
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```java
-             * .bucketName()
-             * .code()
-             * .iamRoleArn()
-             * .name()
-             * ```
-             */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [Body]. */
-        class Builder internal constructor() {
-
-            private var bucketName: JsonField<String>? = null
-            private var code: JsonField<String>? = null
-            private var iamRoleArn: JsonField<String>? = null
-            private var name: JsonField<String>? = null
-            private var partitionOrder: JsonField<PartitionOrder> = JsonMissing.of()
-            private var prefix: JsonField<String> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(body: Body) = apply {
-                bucketName = body.bucketName
-                code = body.code
-                iamRoleArn = body.iamRoleArn
-                name = body.name
-                partitionOrder = body.partitionOrder
-                prefix = body.prefix
-                version = body.version
-                additionalProperties = body.additionalProperties.toMutableMap()
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                dataExportDestinationS3Request != null ->
+                    visitor.visitDataExportDestinationS3Request(dataExportDestinationS3Request)
+                dataExportDestinationGoogleCloudStorageRequest != null ->
+                    visitor.visitDataExportDestinationGoogleCloudStorageRequest(
+                        dataExportDestinationGoogleCloudStorageRequest
+                    )
+                else -> visitor.unknown(_json)
             }
-
-            /** Name of the S3 bucket for the Export Destination. */
-            fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
-
-            /**
-             * Sets [Builder.bucketName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.bucketName] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun bucketName(bucketName: JsonField<String>) = apply { this.bucketName = bucketName }
-
-            /** The code of the Export Destination. */
-            fun code(code: String) = code(JsonField.of(code))
-
-            /**
-             * Sets [Builder.code] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.code] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun code(code: JsonField<String>) = apply { this.code = code }
-
-            /**
-             * To enable m3ter to upload a Data Exports to your S3 bucket, the service has to assume
-             * an IAM role with PutObject permission for the specified `bucketName`. Create a
-             * suitable IAM role in your AWS account and enter ARN:
-             *
-             * **Formatting Constraints:**
-             * - The IAM role ARN must begin with "arn:aws:iam".
-             * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>".
-             *   For example: "arn:aws:iam::922609978421:role/IAMRole636".
-             * - If the `iamRoleArn` used doesn't comply with this format, then an error message
-             *   will be returned.
-             *
-             * **More Details:** For more details and examples of the Permission and Trust Policies
-             * you can use to create the required IAM Role ARN, see
-             * [Creating Data Export Destinations](https://www.m3ter.com/docs/guides/data-exports/creating-data-export-destinations)
-             * in our main User documentation.
-             */
-            fun iamRoleArn(iamRoleArn: String) = iamRoleArn(JsonField.of(iamRoleArn))
-
-            /**
-             * Sets [Builder.iamRoleArn] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.iamRoleArn] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun iamRoleArn(iamRoleArn: JsonField<String>) = apply { this.iamRoleArn = iamRoleArn }
-
-            /** The name of the Export Destination. */
-            fun name(name: String) = name(JsonField.of(name))
-
-            /**
-             * Sets [Builder.name] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.name] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            /**
-             * Specify how you want the file path to be structured in your bucket destination - by
-             * Time first (Default) or Type first.
-             *
-             * Type is dependent on whether the Export is for Usage data or Operational data:
-             * - **Usage.** Type is `measurements`.
-             * - **Operational.** Type is one of the entities for which operational data exports are
-             *   available, such as `account`, `commitment`, `meter`, and so on.
-             *
-             * Example for Usage Data Export using .CSV format:
-             * - Time first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             * - Type first:
-             *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-             */
-            fun partitionOrder(partitionOrder: PartitionOrder?) =
-                partitionOrder(JsonField.ofNullable(partitionOrder))
-
-            /** Alias for calling [Builder.partitionOrder] with `partitionOrder.orElse(null)`. */
-            fun partitionOrder(partitionOrder: Optional<PartitionOrder>) =
-                partitionOrder(partitionOrder.getOrNull())
-
-            /**
-             * Sets [Builder.partitionOrder] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.partitionOrder] with a well-typed [PartitionOrder]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun partitionOrder(partitionOrder: JsonField<PartitionOrder>) = apply {
-                this.partitionOrder = partitionOrder
-            }
-
-            /**
-             * Location in specified S3 bucket for the Export Destination. If you omit a `prefix`,
-             * then the root of the bucket will be used.
-             */
-            fun prefix(prefix: String) = prefix(JsonField.of(prefix))
-
-            /**
-             * Sets [Builder.prefix] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.prefix] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun prefix(prefix: JsonField<String>) = apply { this.prefix = prefix }
-
-            /**
-             * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity:** On Update, version is required and must match the existing
-             *   version because a check is performed to ensure sequential versioning is preserved.
-             *   Version is incremented by 1 and listed in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [Body].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .bucketName()
-             * .code()
-             * .iamRoleArn()
-             * .name()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): Body =
-                Body(
-                    checkRequired("bucketName", bucketName),
-                    checkRequired("code", code),
-                    checkRequired("iamRoleArn", iamRoleArn),
-                    checkRequired("name", name),
-                    partitionOrder,
-                    prefix,
-                    version,
-                    additionalProperties.toMutableMap(),
-                )
-        }
 
         private var validated: Boolean = false
 
@@ -937,13 +293,22 @@ private constructor(
                 return@apply
             }
 
-            bucketName()
-            code()
-            iamRoleArn()
-            name()
-            partitionOrder().ifPresent { it.validate() }
-            prefix()
-            version()
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitDataExportDestinationS3Request(
+                        dataExportDestinationS3Request: DataExportDestinationS3Request
+                    ) {
+                        dataExportDestinationS3Request.validate()
+                    }
+
+                    override fun visitDataExportDestinationGoogleCloudStorageRequest(
+                        dataExportDestinationGoogleCloudStorageRequest:
+                            DataExportDestinationGoogleCloudStorageRequest
+                    ) {
+                        dataExportDestinationGoogleCloudStorageRequest.validate()
+                    }
+                }
+            )
             validated = true
         }
 
@@ -963,173 +328,142 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (bucketName.asKnown().isPresent) 1 else 0) +
-                (if (code.asKnown().isPresent) 1 else 0) +
-                (if (iamRoleArn.asKnown().isPresent) 1 else 0) +
-                (if (name.asKnown().isPresent) 1 else 0) +
-                (partitionOrder.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (prefix.asKnown().isPresent) 1 else 0) +
-                (if (version.asKnown().isPresent) 1 else 0)
+            accept(
+                object : Visitor<Int> {
+                    override fun visitDataExportDestinationS3Request(
+                        dataExportDestinationS3Request: DataExportDestinationS3Request
+                    ) = dataExportDestinationS3Request.validity()
+
+                    override fun visitDataExportDestinationGoogleCloudStorageRequest(
+                        dataExportDestinationGoogleCloudStorageRequest:
+                            DataExportDestinationGoogleCloudStorageRequest
+                    ) = dataExportDestinationGoogleCloudStorageRequest.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Body && bucketName == other.bucketName && code == other.code && iamRoleArn == other.iamRoleArn && name == other.name && partitionOrder == other.partitionOrder && prefix == other.prefix && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && dataExportDestinationS3Request == other.dataExportDestinationS3Request && dataExportDestinationGoogleCloudStorageRequest == other.dataExportDestinationGoogleCloudStorageRequest /* spotless:on */
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(bucketName, code, iamRoleArn, name, partitionOrder, prefix, version, additionalProperties) }
-        /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportDestinationS3Request, dataExportDestinationGoogleCloudStorageRequest) /* spotless:on */
 
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "Body{bucketName=$bucketName, code=$code, iamRoleArn=$iamRoleArn, name=$name, partitionOrder=$partitionOrder, prefix=$prefix, version=$version, additionalProperties=$additionalProperties}"
-    }
-
-    /**
-     * Specify how you want the file path to be structured in your bucket destination - by Time
-     * first (Default) or Type first.
-     *
-     * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
-     *   available, such as `account`, `commitment`, `meter`, and so on.
-     *
-     * Example for Usage Data Export using .CSV format:
-     * - Time first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
-     *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     */
-    class PartitionOrder @JsonCreator private constructor(private val value: JsonField<String>) :
-        Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        override fun toString(): String =
+            when {
+                dataExportDestinationS3Request != null ->
+                    "Body{dataExportDestinationS3Request=$dataExportDestinationS3Request}"
+                dataExportDestinationGoogleCloudStorageRequest != null ->
+                    "Body{dataExportDestinationGoogleCloudStorageRequest=$dataExportDestinationGoogleCloudStorageRequest}"
+                _json != null -> "Body{_unknown=$_json}"
+                else -> throw IllegalStateException("Invalid Body")
+            }
 
         companion object {
 
-            @JvmField val TYPE_FIRST = of("TYPE_FIRST")
+            @JvmStatic
+            fun ofDataExportDestinationS3Request(
+                dataExportDestinationS3Request: DataExportDestinationS3Request
+            ) = Body(dataExportDestinationS3Request = dataExportDestinationS3Request)
 
-            @JvmField val TIME_FIRST = of("TIME_FIRST")
-
-            @JvmStatic fun of(value: String) = PartitionOrder(JsonField.of(value))
+            @JvmStatic
+            fun ofDataExportDestinationGoogleCloudStorageRequest(
+                dataExportDestinationGoogleCloudStorageRequest:
+                    DataExportDestinationGoogleCloudStorageRequest
+            ) =
+                Body(
+                    dataExportDestinationGoogleCloudStorageRequest =
+                        dataExportDestinationGoogleCloudStorageRequest
+                )
         }
 
-        /** An enum containing [PartitionOrder]'s known values. */
-        enum class Known {
-            TYPE_FIRST,
-            TIME_FIRST,
-        }
+        /** An interface that defines how to map each variant of [Body] to a value of type [T]. */
+        interface Visitor<out T> {
 
-        /**
-         * An enum containing [PartitionOrder]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [PartitionOrder] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            TYPE_FIRST,
-            TIME_FIRST,
+            fun visitDataExportDestinationS3Request(
+                dataExportDestinationS3Request: DataExportDestinationS3Request
+            ): T
+
+            fun visitDataExportDestinationGoogleCloudStorageRequest(
+                dataExportDestinationGoogleCloudStorageRequest:
+                    DataExportDestinationGoogleCloudStorageRequest
+            ): T
+
             /**
-             * An enum member indicating that [PartitionOrder] was instantiated with an unknown
-             * value.
+             * Maps an unknown variant of [Body] to a value of type [T].
+             *
+             * An instance of [Body] can contain an unknown variant if it was deserialized from data
+             * that doesn't match any known variant. For example, if the SDK is on an older version
+             * than the API, then the API may respond with new variants that the SDK is unaware of.
+             *
+             * @throws M3terInvalidDataException in the default implementation.
              */
-            _UNKNOWN,
+            fun unknown(json: JsonValue?): T {
+                throw M3terInvalidDataException("Unknown Body: $json")
+            }
         }
 
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                TYPE_FIRST -> Value.TYPE_FIRST
-                TIME_FIRST -> Value.TIME_FIRST
-                else -> Value._UNKNOWN
+        internal class Deserializer : BaseDeserializer<Body>(Body::class) {
+
+            override fun ObjectCodec.deserialize(node: JsonNode): Body {
+                val json = JsonValue.fromJsonNode(node)
+                val destinationType =
+                    json.asObject().getOrNull()?.get("destinationType")?.asString()?.getOrNull()
+
+                when (destinationType) {}
+
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<DataExportDestinationS3Request>())
+                                ?.let { Body(dataExportDestinationS3Request = it, _json = json) },
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<DataExportDestinationGoogleCloudStorageRequest>(),
+                                )
+                                ?.let {
+                                    Body(
+                                        dataExportDestinationGoogleCloudStorageRequest = it,
+                                        _json = json,
+                                    )
+                                },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from boolean).
+                    0 -> Body(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                }
             }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
-         */
-        fun known(): Known =
-            when (this) {
-                TYPE_FIRST -> Known.TYPE_FIRST
-                TIME_FIRST -> Known.TIME_FIRST
-                else -> throw M3terInvalidDataException("Unknown PartitionOrder: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws M3terInvalidDataException if this class instance's value does not have the
-         *   expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
-
-        private var validated: Boolean = false
-
-        fun validate(): PartitionOrder = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
         }
 
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
+        internal class Serializer : BaseSerializer<Body>(Body::class) {
+
+            override fun serialize(
+                value: Body,
+                generator: JsonGenerator,
+                provider: SerializerProvider,
+            ) {
+                when {
+                    value.dataExportDestinationS3Request != null ->
+                        generator.writeObject(value.dataExportDestinationS3Request)
+                    value.dataExportDestinationGoogleCloudStorageRequest != null ->
+                        generator.writeObject(value.dataExportDestinationGoogleCloudStorageRequest)
+                    value._json != null -> generator.writeObject(value._json)
+                    else -> throw IllegalStateException("Invalid Body")
+                }
             }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
         }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

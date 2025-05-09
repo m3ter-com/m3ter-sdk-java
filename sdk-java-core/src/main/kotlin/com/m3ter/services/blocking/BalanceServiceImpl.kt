@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -25,6 +26,7 @@ import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
 import com.m3ter.services.blocking.balances.TransactionService
 import com.m3ter.services.blocking.balances.TransactionServiceImpl
+import kotlin.jvm.optionals.getOrNull
 
 class BalanceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceService {
@@ -108,6 +110,9 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             params: BalanceRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Balance> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -139,6 +144,9 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             params: BalanceUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Balance> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -209,6 +217,9 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             params: BalanceDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Balance> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

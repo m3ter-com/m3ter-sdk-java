@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,22 +13,23 @@ import kotlin.jvm.optionals.getOrNull
 class BillDebitLineItemListParams
 private constructor(
     private val orgId: String?,
-    private val billId: String,
+    private val billId: String?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun billId(): String = billId
+    fun billId(): Optional<String> = Optional.ofNullable(billId)
 
     /** `nextToken` for multi page retrievals. */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of line items to retrieve per page. */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -39,13 +39,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BillDebitLineItemListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BillDebitLineItemListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .billId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -56,7 +53,7 @@ private constructor(
         private var orgId: String? = null
         private var billId: String? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -70,12 +67,17 @@ private constructor(
             additionalQueryParams = billDebitLineItemListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun billId(billId: String) = apply { this.billId = billId }
+        fun billId(billId: String?) = apply { this.billId = billId }
+
+        /** Alias for calling [Builder.billId] with `billId.orElse(null)`. */
+        fun billId(billId: Optional<String>) = billId(billId.getOrNull())
 
         /** `nextToken` for multi page retrievals. */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -84,17 +86,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of line items to retrieve per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -198,18 +200,11 @@ private constructor(
          * Returns an immutable instance of [BillDebitLineItemListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .billId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillDebitLineItemListParams =
             BillDebitLineItemListParams(
                 orgId,
-                checkRequired("billId", billId),
+                billId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -220,7 +215,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> billId
+            1 -> billId ?: ""
             else -> ""
         }
 

@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.CounterAdjustmentServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [CounterAdjustmentServiceAsync.list] */
 class CounterAdjustmentListPageAsync
 private constructor(
     private val service: CounterAdjustmentServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: CounterAdjustmentListParams,
     private val response: CounterAdjustmentListPageResponse,
-) {
+) : PageAsync<CounterAdjustmentResponse> {
 
     /**
      * Delegates to [CounterAdjustmentListPageResponse], but gracefully handles missing data.
@@ -34,24 +36,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<CounterAdjustmentResponse> = data()
 
-    fun getNextPageParams(): Optional<CounterAdjustmentListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): CounterAdjustmentListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<CounterAdjustmentListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<CounterAdjustmentListPageAsync> =
+        service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<CounterAdjustmentResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): CounterAdjustmentListParams = params
@@ -70,6 +70,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -81,17 +82,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: CounterAdjustmentServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: CounterAdjustmentListParams? = null
         private var response: CounterAdjustmentListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(counterAdjustmentListPageAsync: CounterAdjustmentListPageAsync) = apply {
             service = counterAdjustmentListPageAsync.service
+            streamHandlerExecutor = counterAdjustmentListPageAsync.streamHandlerExecutor
             params = counterAdjustmentListPageAsync.params
             response = counterAdjustmentListPageAsync.response
         }
 
         fun service(service: CounterAdjustmentServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: CounterAdjustmentListParams) = apply { this.params = params }
@@ -109,6 +116,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -118,38 +126,10 @@ private constructor(
         fun build(): CounterAdjustmentListPageAsync =
             CounterAdjustmentListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CounterAdjustmentListPageAsync) {
-
-        fun forEach(
-            action: Predicate<CounterAdjustmentResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<CounterAdjustmentListPageAsync>>.forEach(
-                action: (CounterAdjustmentResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<CounterAdjustmentResponse>> {
-            val values = mutableListOf<CounterAdjustmentResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -157,11 +137,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is CounterAdjustmentListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "CounterAdjustmentListPageAsync{service=$service, params=$params, response=$response}"
+        "CounterAdjustmentListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

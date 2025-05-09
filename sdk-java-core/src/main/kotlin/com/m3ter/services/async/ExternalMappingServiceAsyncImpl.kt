@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -30,6 +31,7 @@ import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ExternalMappingServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : ExternalMappingServiceAsync {
@@ -138,6 +140,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
             params: ExternalMappingRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -173,6 +178,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
             params: ExternalMappingUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -234,6 +242,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -250,6 +259,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
             params: ExternalMappingDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ExternalMappingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -287,6 +299,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
             params: ExternalMappingListByExternalEntityParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ExternalMappingListByExternalEntityPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalId", params.externalId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -316,6 +331,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListByExternalEntityPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -333,6 +349,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
             params: ExternalMappingListByM3terEntityParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ExternalMappingListByM3terEntityPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("m3terId", params.m3terId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -361,6 +380,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
                             .let {
                                 ExternalMappingListByM3terEntityPageAsync.builder()
                                     .service(ExternalMappingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

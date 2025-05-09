@@ -24,15 +24,16 @@ import kotlin.jvm.optionals.getOrNull
 class ScheduledEventConfigurationUpdateParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * The referenced configuration or billing entity for which the desired scheduled Event will
@@ -73,7 +74,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun offset(): Long = body.offset()
+    fun offset(): Int = body.offset()
 
     /**
      * The version number of the scheduled event configuration:
@@ -114,7 +115,7 @@ private constructor(
      *
      * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _offset(): JsonField<Long> = body._offset()
+    fun _offset(): JsonField<Int> = body._offset()
 
     /**
      * Returns the raw JSON value of [version].
@@ -139,7 +140,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .entity()
          * .field()
          * .name()
@@ -171,12 +171,17 @@ private constructor(
                 scheduledEventConfigurationUpdateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -243,15 +248,15 @@ private constructor(
          * The offset in days from the specified DateTime field on the referenced entity when the
          * scheduled Event will trigger.
          */
-        fun offset(offset: Long) = apply { body.offset(offset) }
+        fun offset(offset: Int) = apply { body.offset(offset) }
 
         /**
          * Sets [Builder.offset] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.offset] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun offset(offset: JsonField<Long>) = apply { body.offset(offset) }
+        fun offset(offset: JsonField<Int>) = apply { body.offset(offset) }
 
         /**
          * The version number of the scheduled event configuration:
@@ -395,7 +400,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .entity()
          * .field()
          * .name()
@@ -407,7 +411,7 @@ private constructor(
         fun build(): ScheduledEventConfigurationUpdateParams =
             ScheduledEventConfigurationUpdateParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -419,7 +423,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 
@@ -433,7 +437,7 @@ private constructor(
         private val entity: JsonField<String>,
         private val field: JsonField<String>,
         private val name: JsonField<String>,
-        private val offset: JsonField<Long>,
+        private val offset: JsonField<Int>,
         private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -443,7 +447,7 @@ private constructor(
             @JsonProperty("entity") @ExcludeMissing entity: JsonField<String> = JsonMissing.of(),
             @JsonProperty("field") @ExcludeMissing field: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("offset") @ExcludeMissing offset: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("offset") @ExcludeMissing offset: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(entity, field, name, offset, version, mutableMapOf())
 
@@ -486,7 +490,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun offset(): Long = offset.getRequired("offset")
+        fun offset(): Int = offset.getRequired("offset")
 
         /**
          * The version number of the scheduled event configuration:
@@ -527,7 +531,7 @@ private constructor(
          *
          * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Long> = offset
+        @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Int> = offset
 
         /**
          * Returns the raw JSON value of [version].
@@ -570,7 +574,7 @@ private constructor(
             private var entity: JsonField<String>? = null
             private var field: JsonField<String>? = null
             private var name: JsonField<String>? = null
-            private var offset: JsonField<Long>? = null
+            private var offset: JsonField<Int>? = null
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -638,16 +642,16 @@ private constructor(
              * The offset in days from the specified DateTime field on the referenced entity when
              * the scheduled Event will trigger.
              */
-            fun offset(offset: Long) = offset(JsonField.of(offset))
+            fun offset(offset: Int) = offset(JsonField.of(offset))
 
             /**
              * Sets [Builder.offset] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+             * You should usually call [Builder.offset] with a well-typed [Int] value instead. This
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun offset(offset: JsonField<Long>) = apply { this.offset = offset }
+            fun offset(offset: JsonField<Int>) = apply { this.offset = offset }
 
             /**
              * The version number of the scheduled event configuration:

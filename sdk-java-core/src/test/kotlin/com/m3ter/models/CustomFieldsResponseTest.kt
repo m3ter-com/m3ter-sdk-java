@@ -37,6 +37,11 @@ internal class CustomFieldsResponseTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .contract(
+                    CustomFieldsResponse.Contract.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -92,6 +97,12 @@ internal class CustomFieldsResponseTest {
             .contains(
                 CustomFieldsResponse.CompoundAggregation.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
+        assertThat(customFieldsResponse.contract())
+            .contains(
+                CustomFieldsResponse.Contract.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .build()
             )
         assertThat(customFieldsResponse.createdBy()).contains("createdBy")
@@ -157,6 +168,11 @@ internal class CustomFieldsResponseTest {
                 .compoundAggregation(
                     CustomFieldsResponse.CompoundAggregation.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .contract(
+                    CustomFieldsResponse.Contract.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
                         .build()
                 )
                 .createdBy("createdBy")

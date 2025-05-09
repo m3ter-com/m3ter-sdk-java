@@ -16,7 +16,7 @@ internal class DataExportScheduleCreateParamsTest {
                     .addOperationalDataType(
                         OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                     )
-                    .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                    .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                     .version(0L)
                     .build()
             )
@@ -32,7 +32,7 @@ internal class DataExportScheduleCreateParamsTest {
                         .addOperationalDataType(
                             OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                         .build()
                 )
                 .build()
@@ -52,7 +52,7 @@ internal class DataExportScheduleCreateParamsTest {
                         .addOperationalDataType(
                             OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                         .version(0L)
                         .build()
                 )
@@ -67,7 +67,7 @@ internal class DataExportScheduleCreateParamsTest {
                         .addOperationalDataType(
                             OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                         .version(0L)
                         .build()
                 )
@@ -83,7 +83,7 @@ internal class DataExportScheduleCreateParamsTest {
                         .addOperationalDataType(
                             OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                         .build()
                 )
                 .build()
@@ -97,7 +97,7 @@ internal class DataExportScheduleCreateParamsTest {
                         .addOperationalDataType(
                             OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                         )
-                        .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                        .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                         .build()
                 )
             )

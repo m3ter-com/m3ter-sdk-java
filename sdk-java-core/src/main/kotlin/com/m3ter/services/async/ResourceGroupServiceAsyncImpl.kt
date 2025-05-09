@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -32,6 +33,7 @@ import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.ResourceGroupRetrieveParams
 import com.m3ter.models.ResourceGroupUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ResourceGroupServiceAsync {
@@ -118,6 +120,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("type", params.type().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -154,6 +159,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -190,6 +198,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -227,6 +238,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("type", params.type().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -253,6 +267,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -269,6 +284,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -306,6 +324,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -344,6 +365,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupListContentsParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupListContentsPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -373,6 +397,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListContentsPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -389,6 +414,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupListPermissionsParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPermissionsPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -417,6 +445,7 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 ResourceGroupListPermissionsPageAsync.builder()
                                     .service(ResourceGroupServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -433,6 +462,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

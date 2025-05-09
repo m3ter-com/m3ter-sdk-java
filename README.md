@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.2.0-alpha)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.2.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.3.0-alpha)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.3.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.3.0-alpha)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are also available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.2.0-alpha).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.3.0-alpha).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.2.0-alpha")
+implementation("com.m3ter:sdk-java:0.3.0-alpha")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.2.0-alpha")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.2.0-alpha</version>
+  <version>0.3.0-alpha</version>
 </dependency>
 ```
 
@@ -219,53 +219,101 @@ The SDK throws custom unchecked exception types:
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
 
-### Synchronous
+When using the synchronous client, the method returns an [`Iterable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html)
 
 ```java
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductResponse;
 
-// As an Iterable:
-ProductListPage page = client.products().list(params);
+ProductListPage page = client.products().list();
+
+// Process as an Iterable
 for (ProductResponse product : page.autoPager()) {
     System.out.println(product);
-};
+}
 
-// As a Stream:
-client.products().list(params).autoPager().stream()
+// Process as a Stream
+page.autoPager()
+    .stream()
     .limit(50)
     .forEach(product -> System.out.println(product));
 ```
 
-### Asynchronous
+When using the asynchronous client, the method returns an [`AsyncStreamResponse`](sdk-java-core/src/main/kotlin/com/m3ter/core/http/AsyncStreamResponse.kt):
 
 ```java
-// Using forEach, which returns CompletableFuture<Void>:
-asyncClient.products().list(params).autoPager()
-    .forEach(product -> System.out.println(product), executor);
+import com.m3ter.core.http.AsyncStreamResponse;
+import com.m3ter.models.ProductListPageAsync;
+import com.m3ter.models.ProductResponse;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+CompletableFuture<ProductListPageAsync> pageFuture = client.async().products().list();
+
+pageFuture.thenRun(page -> page.autoPager().subscribe(product -> {
+    System.out.println(product);
+}));
+
+// If you need to handle errors or completion of the stream
+pageFuture.thenRun(page -> page.autoPager().subscribe(new AsyncStreamResponse.Handler<>() {
+    @Override
+    public void onNext(ProductResponse product) {
+        System.out.println(product);
+    }
+
+    @Override
+    public void onComplete(Optional<Throwable> error) {
+        if (error.isPresent()) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error.get());
+        } else {
+            System.out.println("No more!");
+        }
+    }
+}));
+
+// Or use futures
+pageFuture.thenRun(page -> page.autoPager()
+    .subscribe(product -> {
+        System.out.println(product);
+    })
+    .onCompleteFuture()
+    .whenComplete((unused, error) -> {
+        if (error != null) {
+            System.out.println("Something went wrong!");
+            throw new RuntimeException(error);
+        } else {
+            System.out.println("No more!");
+        }
+    }));
 ```
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+To access individual page items and manually request the next page, use the `items()`,
+`hasNextPage()`, and `nextPage()` methods:
 
 ```java
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductResponse;
 
-ProductListPage page = client.products().list(params);
-while (page != null) {
-    for (ProductResponse product : page.data()) {
+ProductListPage page = client.products().list();
+while (true) {
+    for (ProductResponse product : page.items()) {
         System.out.println(product);
     }
 
-    page = page.getNextPage().orElse(null);
+    if (!page.hasNextPage()) {
+        break;
+    }
+
+    page = page.nextPage();
 }
 ```
 
@@ -284,6 +332,17 @@ Or to `debug` for more verbose logging:
 ```sh
 $ export M3TER_LOG=debug
 ```
+
+## Jackson
+
+The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization. It is compatible with version 2.13.4 or higher, but depends on version 2.18.2 by default.
+
+The SDK throws an exception if it detects an incompatible Jackson version at runtime (e.g. if the default version was overridden in your Maven or Gradle config).
+
+If the SDK threw an exception, but you're _certain_ the version is compatible, then disable the version check using the `checkJacksonVersionCompatibility` on [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt).
+
+> [!CAUTION]
+> We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
 
 ## Network options
 
@@ -321,11 +380,8 @@ To set a custom timeout, configure the method call using the `timeout` method:
 
 ```java
 import com.m3ter.models.ProductListPage;
-import com.m3ter.models.ProductListParams;
 
-ProductListPage page = client.products().list(
-  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
-);
+ProductListPage page = client.products().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build());
 ```
 
 Or configure the default for all method calls at the client level:
@@ -360,6 +416,42 @@ M3terClient client = M3terOkHttpClient.builder()
     ))
     .build();
 ```
+
+### Custom HTTP client
+
+The SDK consists of three artifacts:
+
+- `sdk-java-core`
+  - Contains core SDK logic
+  - Does not depend on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terClient`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClient.kt), [`M3terClientAsync`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsync.kt), [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt), and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), all of which can work with any HTTP client
+- `sdk-java-client-okhttp`
+  - Depends on [OkHttp](https://square.github.io/okhttp)
+  - Exposes [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) and [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), which provide a way to construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) and [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), respectively, using OkHttp
+- `sdk-java`
+  - Depends on and exposes the APIs of both `sdk-java-core` and `sdk-java-client-okhttp`
+  - Does not have its own logic
+
+This structure allows replacing the SDK's default HTTP client without pulling in unnecessary dependencies.
+
+#### Customized [`OkHttpClient`](https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.html)
+
+> [!TIP]
+> Try the available [network options](#network-options) before replacing the default client.
+
+To use a customized `OkHttpClient`:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Copy `sdk-java-client-okhttp`'s [`OkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/OkHttpClient.kt) class into your code and customize it
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your customized client
+
+### Completely custom HTTP client
+
+To use a completely custom HTTP client:
+
+1. Replace your [`sdk-java` dependency](#installation) with `sdk-java-core`
+2. Write a class that implements the [`HttpClient`](sdk-java-core/src/main/kotlin/com/m3ter/core/http/HttpClient.kt) interface
+3. Construct [`M3terClientImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientImpl.kt) or [`M3terClientAsyncImpl`](sdk-java-core/src/main/kotlin/com/m3ter/client/M3terClientAsyncImpl.kt), similarly to [`M3terOkHttpClient`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClient.kt) or [`M3terOkHttpClientAsync`](sdk-java-client-okhttp/src/main/kotlin/com/m3ter/client/okhttp/M3terOkHttpClientAsync.kt), using your new client class
 
 ## Undocumented API functionality
 
@@ -533,11 +625,8 @@ Or configure the method call to validate the response using the `responseValidat
 
 ```java
 import com.m3ter.models.ProductListPage;
-import com.m3ter.models.ProductListParams;
 
-ProductListPage page = client.products().list(
-  params, RequestOptions.builder().responseValidation(true).build()
-);
+ProductListPage page = client.products().list(RequestOptions.builder().responseValidation(true).build());
 ```
 
 Or configure the default for all method calls at the client level:

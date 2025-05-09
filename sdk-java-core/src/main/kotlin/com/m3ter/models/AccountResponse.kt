@@ -35,7 +35,7 @@ private constructor(
     private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
     private val currency: JsonField<String>,
     private val customFields: JsonField<CustomFields>,
-    private val daysBeforeBillDue: JsonField<Long>,
+    private val daysBeforeBillDue: JsonField<Int>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val emailAddress: JsonField<String>,
@@ -72,7 +72,7 @@ private constructor(
         customFields: JsonField<CustomFields> = JsonMissing.of(),
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
-        daysBeforeBillDue: JsonField<Long> = JsonMissing.of(),
+        daysBeforeBillDue: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
         dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -249,7 +249,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun daysBeforeBillDue(): Optional<Long> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
+    fun daysBeforeBillDue(): Optional<Int> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
     /**
      * The DateTime when the Account was created _(in ISO 8601 format)_.
@@ -428,7 +428,7 @@ private constructor(
      */
     @JsonProperty("daysBeforeBillDue")
     @ExcludeMissing
-    fun _daysBeforeBillDue(): JsonField<Long> = daysBeforeBillDue
+    fun _daysBeforeBillDue(): JsonField<Int> = daysBeforeBillDue
 
     /**
      * Returns the raw JSON value of [dtCreated].
@@ -543,7 +543,7 @@ private constructor(
         private var creditApplicationOrder: JsonField<MutableList<CreditApplicationOrder>>? = null
         private var currency: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
-        private var daysBeforeBillDue: JsonField<Long> = JsonMissing.of()
+        private var daysBeforeBillDue: JsonField<Int> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var emailAddress: JsonField<String> = JsonMissing.of()
@@ -776,17 +776,17 @@ private constructor(
         }
 
         /** The number of days after the Bill generation date shown on Bills as the due date. */
-        fun daysBeforeBillDue(daysBeforeBillDue: Long) =
+        fun daysBeforeBillDue(daysBeforeBillDue: Int) =
             daysBeforeBillDue(JsonField.of(daysBeforeBillDue))
 
         /**
          * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
+        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Int>) = apply {
             this.daysBeforeBillDue = daysBeforeBillDue
         }
 

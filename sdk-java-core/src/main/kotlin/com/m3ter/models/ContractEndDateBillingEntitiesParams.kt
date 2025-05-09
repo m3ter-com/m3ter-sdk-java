@@ -40,15 +40,16 @@ import kotlin.jvm.optionals.getOrNull
 class ContractEndDateBillingEntitiesParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Defines which billing entities associated with the Account will have the specified end-date
@@ -114,7 +115,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .billingEntities()
          * .endDate()
          * ```
@@ -143,12 +143,17 @@ private constructor(
                 contractEndDateBillingEntitiesParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -348,7 +353,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .billingEntities()
          * .endDate()
          * ```
@@ -358,7 +362,7 @@ private constructor(
         fun build(): ContractEndDateBillingEntitiesParams =
             ContractEndDateBillingEntitiesParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -370,7 +374,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

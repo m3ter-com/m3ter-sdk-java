@@ -47,6 +47,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -97,6 +98,11 @@ private constructor(
      * The unique identifier (UUID) for the Product linked to the Commitment for accounting
      * purposes. _(Optional)_
      *
+     * **NOTE:** If you're planning to set up an integration for sending Bills to an external
+     * accounts receivable system, please check requirements for your chosen system. Some systems,
+     * such as NetSuite, require a Product to be linked with any Bill line items associated with
+     * Account Commitments, and the integration will fail if this is not present
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -135,7 +141,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billingInterval(): Optional<Long> = body.billingInterval()
+    fun billingInterval(): Optional<Int> = body.billingInterval()
 
     /**
      * Defines an offset for when the Commitment fees are first applied to bills on the Account. For
@@ -146,7 +152,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billingOffset(): Optional<Long> = body.billingOffset()
+    fun billingOffset(): Optional<Int> = body.billingOffset()
 
     /**
      * The unique identifier (UUID) for the Product Plan used for billing Commitment fees due.
@@ -402,14 +408,14 @@ private constructor(
      *
      * Unlike [billingInterval], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _billingInterval(): JsonField<Long> = body._billingInterval()
+    fun _billingInterval(): JsonField<Int> = body._billingInterval()
 
     /**
      * Returns the raw JSON value of [billingOffset].
      *
      * Unlike [billingOffset], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _billingOffset(): JsonField<Long> = body._billingOffset()
+    fun _billingOffset(): JsonField<Int> = body._billingOffset()
 
     /**
      * Returns the raw JSON value of [billingPlanId].
@@ -566,9 +572,11 @@ private constructor(
             additionalQueryParams = commitmentCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -653,6 +661,11 @@ private constructor(
         /**
          * The unique identifier (UUID) for the Product linked to the Commitment for accounting
          * purposes. _(Optional)_
+         *
+         * **NOTE:** If you're planning to set up an integration for sending Bills to an external
+         * accounts receivable system, please check requirements for your chosen system. Some
+         * systems, such as NetSuite, require a Product to be linked with any Bill line items
+         * associated with Account Commitments, and the integration will fail if this is not present
          */
         fun accountingProductId(accountingProductId: String) = apply {
             body.accountingProductId(accountingProductId)
@@ -722,16 +735,16 @@ private constructor(
          * to bill for Commitment fees is set to issue bills every three months and the
          * `billingInterval` is set to 2, then the Commitment fees are applied every six months.
          */
-        fun billingInterval(billingInterval: Long) = apply { body.billingInterval(billingInterval) }
+        fun billingInterval(billingInterval: Int) = apply { body.billingInterval(billingInterval) }
 
         /**
          * Sets [Builder.billingInterval] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.billingInterval] with a well-typed [Long] value instead.
+         * You should usually call [Builder.billingInterval] with a well-typed [Int] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun billingInterval(billingInterval: JsonField<Long>) = apply {
+        fun billingInterval(billingInterval: JsonField<Int>) = apply {
             body.billingInterval(billingInterval)
         }
 
@@ -741,16 +754,16 @@ private constructor(
          * the charge is applied to the first bill (at three months); if set to 1, it's applied to
          * the next bill (at six months), and so on.
          */
-        fun billingOffset(billingOffset: Long) = apply { body.billingOffset(billingOffset) }
+        fun billingOffset(billingOffset: Int) = apply { body.billingOffset(billingOffset) }
 
         /**
          * Sets [Builder.billingOffset] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.billingOffset] with a well-typed [Long] value instead.
+         * You should usually call [Builder.billingOffset] with a well-typed [Int] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun billingOffset(billingOffset: JsonField<Long>) = apply {
+        fun billingOffset(billingOffset: JsonField<Int>) = apply {
             body.billingOffset(billingOffset)
         }
 
@@ -1253,8 +1266,8 @@ private constructor(
         private val amountFirstBill: JsonField<Double>,
         private val amountPrePaid: JsonField<Double>,
         private val billEpoch: JsonField<LocalDate>,
-        private val billingInterval: JsonField<Long>,
-        private val billingOffset: JsonField<Long>,
+        private val billingInterval: JsonField<Int>,
+        private val billingOffset: JsonField<Int>,
         private val billingPlanId: JsonField<String>,
         private val childBillingMode: JsonField<ChildBillingMode>,
         private val commitmentFeeBillInAdvance: JsonField<Boolean>,
@@ -1302,10 +1315,10 @@ private constructor(
             billEpoch: JsonField<LocalDate> = JsonMissing.of(),
             @JsonProperty("billingInterval")
             @ExcludeMissing
-            billingInterval: JsonField<Long> = JsonMissing.of(),
+            billingInterval: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("billingOffset")
             @ExcludeMissing
-            billingOffset: JsonField<Long> = JsonMissing.of(),
+            billingOffset: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("billingPlanId")
             @ExcludeMissing
             billingPlanId: JsonField<String> = JsonMissing.of(),
@@ -1428,6 +1441,11 @@ private constructor(
          * The unique identifier (UUID) for the Product linked to the Commitment for accounting
          * purposes. _(Optional)_
          *
+         * **NOTE:** If you're planning to set up an integration for sending Bills to an external
+         * accounts receivable system, please check requirements for your chosen system. Some
+         * systems, such as NetSuite, require a Product to be linked with any Bill line items
+         * associated with Account Commitments, and the integration will fail if this is not present
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1468,7 +1486,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billingInterval(): Optional<Long> = billingInterval.getOptional("billingInterval")
+        fun billingInterval(): Optional<Int> = billingInterval.getOptional("billingInterval")
 
         /**
          * Defines an offset for when the Commitment fees are first applied to bills on the Account.
@@ -1479,7 +1497,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billingOffset(): Optional<Long> = billingOffset.getOptional("billingOffset")
+        fun billingOffset(): Optional<Int> = billingOffset.getOptional("billingOffset")
 
         /**
          * The unique identifier (UUID) for the Product Plan used for billing Commitment fees due.
@@ -1761,7 +1779,7 @@ private constructor(
          */
         @JsonProperty("billingInterval")
         @ExcludeMissing
-        fun _billingInterval(): JsonField<Long> = billingInterval
+        fun _billingInterval(): JsonField<Int> = billingInterval
 
         /**
          * Returns the raw JSON value of [billingOffset].
@@ -1771,7 +1789,7 @@ private constructor(
          */
         @JsonProperty("billingOffset")
         @ExcludeMissing
-        fun _billingOffset(): JsonField<Long> = billingOffset
+        fun _billingOffset(): JsonField<Int> = billingOffset
 
         /**
          * Returns the raw JSON value of [billingPlanId].
@@ -1958,8 +1976,8 @@ private constructor(
             private var amountFirstBill: JsonField<Double> = JsonMissing.of()
             private var amountPrePaid: JsonField<Double> = JsonMissing.of()
             private var billEpoch: JsonField<LocalDate> = JsonMissing.of()
-            private var billingInterval: JsonField<Long> = JsonMissing.of()
-            private var billingOffset: JsonField<Long> = JsonMissing.of()
+            private var billingInterval: JsonField<Int> = JsonMissing.of()
+            private var billingOffset: JsonField<Int> = JsonMissing.of()
             private var billingPlanId: JsonField<String> = JsonMissing.of()
             private var childBillingMode: JsonField<ChildBillingMode> = JsonMissing.of()
             private var commitmentFeeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
@@ -2080,6 +2098,12 @@ private constructor(
             /**
              * The unique identifier (UUID) for the Product linked to the Commitment for accounting
              * purposes. _(Optional)_
+             *
+             * **NOTE:** If you're planning to set up an integration for sending Bills to an
+             * external accounts receivable system, please check requirements for your chosen
+             * system. Some systems, such as NetSuite, require a Product to be linked with any Bill
+             * line items associated with Account Commitments, and the integration will fail if this
+             * is not present
              */
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
@@ -2147,17 +2171,17 @@ private constructor(
              * used to bill for Commitment fees is set to issue bills every three months and the
              * `billingInterval` is set to 2, then the Commitment fees are applied every six months.
              */
-            fun billingInterval(billingInterval: Long) =
+            fun billingInterval(billingInterval: Int) =
                 billingInterval(JsonField.of(billingInterval))
 
             /**
              * Sets [Builder.billingInterval] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.billingInterval] with a well-typed [Long] value
+             * You should usually call [Builder.billingInterval] with a well-typed [Int] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun billingInterval(billingInterval: JsonField<Long>) = apply {
+            fun billingInterval(billingInterval: JsonField<Int>) = apply {
                 this.billingInterval = billingInterval
             }
 
@@ -2167,16 +2191,16 @@ private constructor(
              * is 0, then the charge is applied to the first bill (at three months); if set to 1,
              * it's applied to the next bill (at six months), and so on.
              */
-            fun billingOffset(billingOffset: Long) = billingOffset(JsonField.of(billingOffset))
+            fun billingOffset(billingOffset: Int) = billingOffset(JsonField.of(billingOffset))
 
             /**
              * Sets [Builder.billingOffset] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.billingOffset] with a well-typed [Long] value
+             * You should usually call [Builder.billingOffset] with a well-typed [Int] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun billingOffset(billingOffset: JsonField<Long>) = apply {
+            fun billingOffset(billingOffset: JsonField<Int>) = apply {
                 this.billingOffset = billingOffset
             }
 

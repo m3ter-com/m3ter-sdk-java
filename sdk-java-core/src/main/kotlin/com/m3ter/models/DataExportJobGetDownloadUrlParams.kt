@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -29,14 +28,15 @@ import kotlin.jvm.optionals.getOrNull
 class DataExportJobGetDownloadUrlParams
 private constructor(
     private val orgId: String?,
-    private val jobId: String,
+    private val jobId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun jobId(): String = jobId
+    fun jobId(): Optional<String> = Optional.ofNullable(jobId)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -46,14 +46,11 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): DataExportJobGetDownloadUrlParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [DataExportJobGetDownloadUrlParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .jobId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -76,12 +73,17 @@ private constructor(
                     dataExportJobGetDownloadUrlParams.additionalQueryParams.toBuilder()
             }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun jobId(jobId: String) = apply { this.jobId = jobId }
+        fun jobId(jobId: String?) = apply { this.jobId = jobId }
+
+        /** Alias for calling [Builder.jobId] with `jobId.orElse(null)`. */
+        fun jobId(jobId: Optional<String>) = jobId(jobId.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -185,18 +187,11 @@ private constructor(
          * Returns an immutable instance of [DataExportJobGetDownloadUrlParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .jobId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): DataExportJobGetDownloadUrlParams =
             DataExportJobGetDownloadUrlParams(
                 orgId,
-                checkRequired("jobId", jobId),
+                jobId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -205,7 +200,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> jobId
+            1 -> jobId ?: ""
             else -> ""
         }
 

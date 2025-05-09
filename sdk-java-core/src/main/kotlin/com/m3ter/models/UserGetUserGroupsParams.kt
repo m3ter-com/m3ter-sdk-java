@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -36,16 +35,17 @@ import kotlin.jvm.optionals.getOrNull
 class UserGetUserGroupsParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of User Groups
@@ -54,7 +54,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Specifies the maximum number of User Groups to retrieve per page. */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -64,14 +64,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [UserGetUserGroupsParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         */
+        @JvmStatic fun none(): UserGetUserGroupsParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [UserGetUserGroupsParams]. */
         @JvmStatic fun builder() = Builder()
     }
 
@@ -81,7 +76,7 @@ private constructor(
         private var orgId: String? = null
         private var id: String? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -95,12 +90,17 @@ private constructor(
             additionalQueryParams = userGetUserGroupsParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of User
@@ -112,17 +112,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Specifies the maximum number of User Groups to retrieve per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -226,18 +226,11 @@ private constructor(
          * Returns an immutable instance of [UserGetUserGroupsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .id()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UserGetUserGroupsParams =
             UserGetUserGroupsParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -248,7 +241,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 

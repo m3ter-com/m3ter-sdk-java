@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -26,6 +27,7 @@ import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentSearchResponse
 import com.m3ter.models.CommitmentUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class CommitmentServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CommitmentServiceAsync {
@@ -124,6 +126,9 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -158,6 +163,9 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -219,6 +227,7 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
                             .let {
                                 CommitmentListPageAsync.builder()
                                     .service(CommitmentServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -234,6 +243,9 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

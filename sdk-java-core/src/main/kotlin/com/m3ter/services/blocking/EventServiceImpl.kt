@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -23,6 +24,7 @@ import com.m3ter.models.EventListPageResponse
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
+import kotlin.jvm.optionals.getOrNull
 
 class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     EventService {
@@ -70,6 +72,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             params: EventRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -16,14 +16,14 @@ internal class OperationalDataExportScheduleRequestTest {
                 .addOperationalDataType(
                     OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                 )
-                .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                 .version(0L)
                 .build()
 
         assertThat(operationalDataExportScheduleRequest.operationalDataTypes())
             .containsExactly(OperationalDataExportScheduleRequest.OperationalDataType.BILLS)
         assertThat(operationalDataExportScheduleRequest.sourceType())
-            .isEqualTo(OperationalDataExportScheduleRequest.SourceType.USAGE)
+            .isEqualTo(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
         assertThat(operationalDataExportScheduleRequest.version()).contains(0L)
     }
 
@@ -35,7 +35,7 @@ internal class OperationalDataExportScheduleRequestTest {
                 .addOperationalDataType(
                     OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                 )
-                .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                 .version(0L)
                 .build()
 

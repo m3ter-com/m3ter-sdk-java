@@ -28,13 +28,14 @@ private constructor(
     private val ids: List<String>?,
     private val includeall: Boolean?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val plan: String?,
     private val product: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -72,7 +73,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /**
      * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
@@ -113,7 +114,7 @@ private constructor(
         private var ids: MutableList<String>? = null
         private var includeall: Boolean? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var plan: String? = null
         private var product: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -135,9 +136,11 @@ private constructor(
             additionalQueryParams = accountPlanListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -208,17 +211,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of AccountPlans and AccountPlanGroups to return per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /**
          * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or

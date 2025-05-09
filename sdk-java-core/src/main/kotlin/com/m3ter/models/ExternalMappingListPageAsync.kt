@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.ExternalMappingServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [ExternalMappingServiceAsync.list] */
 class ExternalMappingListPageAsync
 private constructor(
     private val service: ExternalMappingServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: ExternalMappingListParams,
     private val response: ExternalMappingListPageResponse,
-) {
+) : PageAsync<ExternalMappingResponse> {
 
     /**
      * Delegates to [ExternalMappingListPageResponse], but gracefully handles missing data.
@@ -34,24 +36,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<ExternalMappingResponse> = data()
 
-    fun getNextPageParams(): Optional<ExternalMappingListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): ExternalMappingListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<ExternalMappingListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<ExternalMappingListPageAsync> =
+        service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<ExternalMappingResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): ExternalMappingListParams = params
@@ -69,6 +69,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -80,17 +81,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: ExternalMappingServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: ExternalMappingListParams? = null
         private var response: ExternalMappingListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(externalMappingListPageAsync: ExternalMappingListPageAsync) = apply {
             service = externalMappingListPageAsync.service
+            streamHandlerExecutor = externalMappingListPageAsync.streamHandlerExecutor
             params = externalMappingListPageAsync.params
             response = externalMappingListPageAsync.response
         }
 
         fun service(service: ExternalMappingServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: ExternalMappingListParams) = apply { this.params = params }
@@ -106,6 +113,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -115,38 +123,10 @@ private constructor(
         fun build(): ExternalMappingListPageAsync =
             ExternalMappingListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: ExternalMappingListPageAsync) {
-
-        fun forEach(
-            action: Predicate<ExternalMappingResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<ExternalMappingListPageAsync>>.forEach(
-                action: (ExternalMappingResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<ExternalMappingResponse>> {
-            val values = mutableListOf<ExternalMappingResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -154,11 +134,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is ExternalMappingListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "ExternalMappingListPageAsync{service=$service, params=$params, response=$response}"
+        "ExternalMappingListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

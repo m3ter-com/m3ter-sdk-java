@@ -23,9 +23,9 @@ import kotlin.jvm.optionals.getOrNull
 class BillSearchParams
 private constructor(
     private val orgId: String?,
-    private val fromDocument: Long?,
+    private val fromDocument: Int?,
     private val operator: Operator?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val searchQuery: String?,
     private val sortBy: String?,
     private val sortOrder: SortOrder?,
@@ -33,10 +33,11 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** `fromDocument` for multi page retrievals. */
-    fun fromDocument(): Optional<Long> = Optional.ofNullable(fromDocument)
+    fun fromDocument(): Optional<Int> = Optional.ofNullable(fromDocument)
 
     /** Search Operator to be used while querying search. */
     fun operator(): Optional<Operator> = Optional.ofNullable(operator)
@@ -46,7 +47,7 @@ private constructor(
      *
      * **NOTE:** If not defined, default is 10.
      */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /**
      * Query for data using special syntax:
@@ -97,9 +98,9 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
-        private var fromDocument: Long? = null
+        private var fromDocument: Int? = null
         private var operator: Operator? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var searchQuery: String? = null
         private var sortBy: String? = null
         private var sortOrder: SortOrder? = null
@@ -119,23 +120,25 @@ private constructor(
             additionalQueryParams = billSearchParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** `fromDocument` for multi page retrievals. */
-        fun fromDocument(fromDocument: Long?) = apply { this.fromDocument = fromDocument }
+        fun fromDocument(fromDocument: Int?) = apply { this.fromDocument = fromDocument }
 
         /**
          * Alias for [Builder.fromDocument].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun fromDocument(fromDocument: Long) = fromDocument(fromDocument as Long?)
+        fun fromDocument(fromDocument: Int) = fromDocument(fromDocument as Int?)
 
         /** Alias for calling [Builder.fromDocument] with `fromDocument.orElse(null)`. */
-        fun fromDocument(fromDocument: Optional<Long>) = fromDocument(fromDocument.getOrNull())
+        fun fromDocument(fromDocument: Optional<Int>) = fromDocument(fromDocument.getOrNull())
 
         /** Search Operator to be used while querying search. */
         fun operator(operator: Operator?) = apply { this.operator = operator }
@@ -148,17 +151,17 @@ private constructor(
          *
          * **NOTE:** If not defined, default is 10.
          */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /**
          * Query for data using special syntax:

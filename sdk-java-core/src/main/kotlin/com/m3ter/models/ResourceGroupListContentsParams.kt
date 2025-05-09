@@ -17,25 +17,26 @@ class ResourceGroupListContentsParams
 private constructor(
     private val orgId: String?,
     private val type: String,
-    private val resourceGroupId: String,
+    private val resourceGroupId: String?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun type(): String = type
 
-    fun resourceGroupId(): String = resourceGroupId
+    fun resourceGroupId(): Optional<String> = Optional.ofNullable(resourceGroupId)
 
     /** nextToken for multi page retrievals */
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of ResourceGroupItems to retrieve per page */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -54,7 +55,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -67,7 +67,7 @@ private constructor(
         private var type: String? = null
         private var resourceGroupId: String? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -87,16 +87,22 @@ private constructor(
                     resourceGroupListContentsParams.additionalBodyProperties.toMutableMap()
             }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun type(type: String) = apply { this.type = type }
 
-        fun resourceGroupId(resourceGroupId: String) = apply {
+        fun resourceGroupId(resourceGroupId: String?) = apply {
             this.resourceGroupId = resourceGroupId
         }
+
+        /** Alias for calling [Builder.resourceGroupId] with `resourceGroupId.orElse(null)`. */
+        fun resourceGroupId(resourceGroupId: Optional<String>) =
+            resourceGroupId(resourceGroupId.getOrNull())
 
         /** nextToken for multi page retrievals */
         fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
@@ -105,17 +111,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of ResourceGroupItems to retrieve per page */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -245,7 +251,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -254,7 +259,7 @@ private constructor(
             ResourceGroupListContentsParams(
                 orgId,
                 checkRequired("type", type),
-                checkRequired("resourceGroupId", resourceGroupId),
+                resourceGroupId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -270,7 +275,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> type
-            2 -> resourceGroupId
+            2 -> resourceGroupId ?: ""
             else -> ""
         }
 

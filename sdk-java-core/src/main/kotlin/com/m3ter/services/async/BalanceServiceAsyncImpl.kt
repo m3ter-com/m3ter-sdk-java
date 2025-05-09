@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -26,6 +27,7 @@ import com.m3ter.models.BalanceUpdateParams
 import com.m3ter.services.async.balances.TransactionServiceAsync
 import com.m3ter.services.async.balances.TransactionServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class BalanceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BalanceServiceAsync {
@@ -129,6 +131,9 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: BalanceRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Balance>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -163,6 +168,9 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: BalanceUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Balance>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -224,6 +232,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 BalanceListPageAsync.builder()
                                     .service(BalanceServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -239,6 +248,9 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: BalanceDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<Balance>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

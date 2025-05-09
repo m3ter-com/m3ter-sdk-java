@@ -13,8 +13,6 @@ internal class UsageQueryParamsTest {
     fun create() {
         UsageQueryParams.builder()
             .orgId("orgId")
-            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .addAccountId("string")
             .addAggregation(
                 UsageQueryParams.Aggregation.builder()
@@ -31,23 +29,21 @@ internal class UsageQueryParamsTest {
                     .addValue("string")
                     .build()
             )
+            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .addGroup(
-                UsageQueryParams.Group.DataExplorerAccountGroup.builder()
-                    .groupType(UsageQueryParams.Group.DataExplorerAccountGroup.GroupType.ACCOUNT)
+                UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
+                    .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
                     .build()
             )
-            .limit(1L)
+            .limit(1)
             .addMeterId("string")
+            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .build()
     }
 
     @Test
     fun pathParams() {
-        val params =
-            UsageQueryParams.builder()
-                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
+        val params = UsageQueryParams.builder().build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
@@ -59,8 +55,6 @@ internal class UsageQueryParamsTest {
         val params =
             UsageQueryParams.builder()
                 .orgId("orgId")
-                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addAccountId("string")
                 .addAggregation(
                     UsageQueryParams.Aggregation.builder()
@@ -77,21 +71,19 @@ internal class UsageQueryParamsTest {
                         .addValue("string")
                         .build()
                 )
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addGroup(
-                    UsageQueryParams.Group.DataExplorerAccountGroup.builder()
-                        .groupType(
-                            UsageQueryParams.Group.DataExplorerAccountGroup.GroupType.ACCOUNT
-                        )
+                    UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
                         .build()
                 )
-                .limit(1L)
+                .limit(1)
                 .addMeterId("string")
+                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
         val body = params._body()
 
-        assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.accountIds().getOrNull()).containsExactly("string")
         assertThat(body.aggregations().getOrNull())
             .containsExactly(
@@ -110,31 +102,24 @@ internal class UsageQueryParamsTest {
                     .addValue("string")
                     .build()
             )
+        assertThat(body.endDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.groups().getOrNull())
             .containsExactly(
-                UsageQueryParams.Group.ofDataExplorerAccount(
-                    UsageQueryParams.Group.DataExplorerAccountGroup.builder()
-                        .groupType(
-                            UsageQueryParams.Group.DataExplorerAccountGroup.GroupType.ACCOUNT
-                        )
+                UsageQueryParams.Group.ofDataExportsDataExplorerAccount(
+                    UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
+                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
                         .build()
                 )
             )
-        assertThat(body.limit()).contains(1L)
+        assertThat(body.limit()).contains(1)
         assertThat(body.meterIds().getOrNull()).containsExactly("string")
+        assertThat(body.startDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params =
-            UsageQueryParams.builder()
-                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .build()
+        val params = UsageQueryParams.builder().build()
 
         val body = params._body()
-
-        assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }

@@ -38,14 +38,34 @@ interface ContractService {
     ): ContractResponse
 
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
-    fun retrieve(params: ContractRetrieveParams): ContractResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): ContractResponse = retrieve(id, ContractRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ContractRetrieveParams = ContractRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ContractResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: ContractRetrieveParams = ContractRetrieveParams.none(),
+    ): ContractResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: ContractRetrieveParams): ContractResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): ContractResponse =
+        retrieve(id, ContractRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Contract with the given UUID.
@@ -57,6 +77,17 @@ interface ContractService {
      * update the Contract use the `customFields` parameter to preserve those Custom Fields. If you
      * omit them from the update request, they will be lost.
      */
+    fun update(id: String, params: ContractUpdateParams): ContractResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: ContractUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ContractResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: ContractUpdateParams): ContractResponse =
         update(params, RequestOptions.none())
 
@@ -93,14 +124,34 @@ interface ContractService {
      * **Note:** This call will fail if there are any AccountPlans or Commitments that have been
      * added to the Contract.
      */
-    fun delete(params: ContractDeleteParams): ContractResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): ContractResponse = delete(id, ContractDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ContractDeleteParams = ContractDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ContractResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: ContractDeleteParams = ContractDeleteParams.none(),
+    ): ContractResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse
+
+    /** @see [delete] */
+    fun delete(params: ContractDeleteParams): ContractResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): ContractResponse =
+        delete(id, ContractDeleteParams.none(), requestOptions)
 
     /**
      * Apply the specified end-date to billing entities associated with Accounts the Contract has
@@ -115,6 +166,21 @@ interface ContractService {
      * - When you successfully end-date billing entities, the version number of each entity is
      *   incremented.
      */
+    fun endDateBillingEntities(
+        id: String,
+        params: ContractEndDateBillingEntitiesParams,
+    ): ContractEndDateBillingEntitiesResponse =
+        endDateBillingEntities(id, params, RequestOptions.none())
+
+    /** @see [endDateBillingEntities] */
+    fun endDateBillingEntities(
+        id: String,
+        params: ContractEndDateBillingEntitiesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ContractEndDateBillingEntitiesResponse =
+        endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [endDateBillingEntities] */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams
     ): ContractEndDateBillingEntitiesResponse =
@@ -149,8 +215,24 @@ interface ContractService {
          * otherwise the same as [ContractService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: ContractRetrieveParams): HttpResponseFor<ContractResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<ContractResponse> =
+            retrieve(id, ContractRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ContractRetrieveParams = ContractRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: ContractRetrieveParams = ContractRetrieveParams.none(),
+        ): HttpResponseFor<ContractResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -159,10 +241,37 @@ interface ContractService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ContractResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: ContractRetrieveParams): HttpResponseFor<ContractResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ContractResponse> =
+            retrieve(id, ContractRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractService.update].
          */
+        @MustBeClosed
+        fun update(id: String, params: ContractUpdateParams): HttpResponseFor<ContractResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: ContractUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: ContractUpdateParams): HttpResponseFor<ContractResponse> =
             update(params, RequestOptions.none())
@@ -204,8 +313,24 @@ interface ContractService {
          * otherwise the same as [ContractService.delete].
          */
         @MustBeClosed
-        fun delete(params: ContractDeleteParams): HttpResponseFor<ContractResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<ContractResponse> =
+            delete(id, ContractDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ContractDeleteParams = ContractDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: ContractDeleteParams = ContractDeleteParams.none(),
+        ): HttpResponseFor<ContractResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -214,11 +339,38 @@ interface ContractService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ContractResponse>
 
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: ContractDeleteParams): HttpResponseFor<ContractResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<ContractResponse> =
+            delete(id, ContractDeleteParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
          * as [ContractService.endDateBillingEntities].
          */
+        @MustBeClosed
+        fun endDateBillingEntities(
+            id: String,
+            params: ContractEndDateBillingEntitiesParams,
+        ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
+            endDateBillingEntities(id, params, RequestOptions.none())
+
+        /** @see [endDateBillingEntities] */
+        @MustBeClosed
+        fun endDateBillingEntities(
+            id: String,
+            params: ContractEndDateBillingEntitiesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
+            endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [endDateBillingEntities] */
         @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams

@@ -15,7 +15,7 @@ internal class CounterAdjustmentUpdateParamsTest {
             .accountId("x")
             .counterId("x")
             .date("2022-01-04")
-            .value(0L)
+            .value(0)
             .purchaseOrderNumber("purchaseOrderNumber")
             .version(0L)
             .build()
@@ -29,7 +29,7 @@ internal class CounterAdjustmentUpdateParamsTest {
                 .accountId("x")
                 .counterId("x")
                 .date("2022-01-04")
-                .value(0L)
+                .value(0)
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
@@ -47,7 +47,7 @@ internal class CounterAdjustmentUpdateParamsTest {
                 .accountId("x")
                 .counterId("x")
                 .date("2022-01-04")
-                .value(0L)
+                .value(0)
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .version(0L)
                 .build()
@@ -57,7 +57,7 @@ internal class CounterAdjustmentUpdateParamsTest {
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
-        assertThat(body.value()).isEqualTo(0L)
+        assertThat(body.value()).isEqualTo(0)
         assertThat(body.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(body.version()).contains(0L)
     }
@@ -70,7 +70,7 @@ internal class CounterAdjustmentUpdateParamsTest {
                 .accountId("x")
                 .counterId("x")
                 .date("2022-01-04")
-                .value(0L)
+                .value(0)
                 .build()
 
         val body = params._body()
@@ -78,6 +78,6 @@ internal class CounterAdjustmentUpdateParamsTest {
         assertThat(body.accountId()).isEqualTo("x")
         assertThat(body.counterId()).isEqualTo("x")
         assertThat(body.date()).isEqualTo("2022-01-04")
-        assertThat(body.value()).isEqualTo(0L)
+        assertThat(body.value()).isEqualTo(0)
     }
 }

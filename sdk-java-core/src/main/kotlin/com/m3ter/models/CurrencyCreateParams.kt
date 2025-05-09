@@ -34,6 +34,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -69,7 +70,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun maxDecimalPlaces(): Optional<Long> = body.maxDecimalPlaces()
+    fun maxDecimalPlaces(): Optional<Int> = body.maxDecimalPlaces()
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -117,7 +118,7 @@ private constructor(
      * Unlike [maxDecimalPlaces], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
-    fun _maxDecimalPlaces(): JsonField<Long> = body._maxDecimalPlaces()
+    fun _maxDecimalPlaces(): JsonField<Int> = body._maxDecimalPlaces()
 
     /**
      * Returns the raw JSON value of [roundingMode].
@@ -170,9 +171,11 @@ private constructor(
             additionalQueryParams = currencyCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -229,18 +232,18 @@ private constructor(
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /** Indicates the maximum number of decimal places to use for this Currency. */
-        fun maxDecimalPlaces(maxDecimalPlaces: Long) = apply {
+        fun maxDecimalPlaces(maxDecimalPlaces: Int) = apply {
             body.maxDecimalPlaces(maxDecimalPlaces)
         }
 
         /**
          * Sets [Builder.maxDecimalPlaces] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Long] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Int] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
-        fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Long>) = apply {
+        fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Int>) = apply {
             body.maxDecimalPlaces(maxDecimalPlaces)
         }
 
@@ -430,7 +433,7 @@ private constructor(
         private val name: JsonField<String>,
         private val archived: JsonField<Boolean>,
         private val code: JsonField<String>,
-        private val maxDecimalPlaces: JsonField<Long>,
+        private val maxDecimalPlaces: JsonField<Int>,
         private val roundingMode: JsonField<RoundingMode>,
         private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -445,7 +448,7 @@ private constructor(
             @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
             @JsonProperty("maxDecimalPlaces")
             @ExcludeMissing
-            maxDecimalPlaces: JsonField<Long> = JsonMissing.of(),
+            maxDecimalPlaces: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("roundingMode")
             @ExcludeMissing
             roundingMode: JsonField<RoundingMode> = JsonMissing.of(),
@@ -485,7 +488,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun maxDecimalPlaces(): Optional<Long> = maxDecimalPlaces.getOptional("maxDecimalPlaces")
+        fun maxDecimalPlaces(): Optional<Int> = maxDecimalPlaces.getOptional("maxDecimalPlaces")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -535,7 +538,7 @@ private constructor(
          */
         @JsonProperty("maxDecimalPlaces")
         @ExcludeMissing
-        fun _maxDecimalPlaces(): JsonField<Long> = maxDecimalPlaces
+        fun _maxDecimalPlaces(): JsonField<Int> = maxDecimalPlaces
 
         /**
          * Returns the raw JSON value of [roundingMode].
@@ -585,7 +588,7 @@ private constructor(
             private var name: JsonField<String>? = null
             private var archived: JsonField<Boolean> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
-            private var maxDecimalPlaces: JsonField<Long> = JsonMissing.of()
+            private var maxDecimalPlaces: JsonField<Int> = JsonMissing.of()
             private var roundingMode: JsonField<RoundingMode> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -643,17 +646,17 @@ private constructor(
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /** Indicates the maximum number of decimal places to use for this Currency. */
-            fun maxDecimalPlaces(maxDecimalPlaces: Long) =
+            fun maxDecimalPlaces(maxDecimalPlaces: Int) =
                 maxDecimalPlaces(JsonField.of(maxDecimalPlaces))
 
             /**
              * Sets [Builder.maxDecimalPlaces] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Long] value
+             * You should usually call [Builder.maxDecimalPlaces] with a well-typed [Int] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Long>) = apply {
+            fun maxDecimalPlaces(maxDecimalPlaces: JsonField<Int>) = apply {
                 this.maxDecimalPlaces = maxDecimalPlaces
             }
 

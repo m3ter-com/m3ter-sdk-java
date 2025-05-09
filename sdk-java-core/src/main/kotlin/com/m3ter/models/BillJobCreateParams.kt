@@ -55,6 +55,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -84,7 +85,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billFrequencyInterval(): Optional<Long> = body.billFrequencyInterval()
+    fun billFrequencyInterval(): Optional<Int> = body.billFrequencyInterval()
 
     /**
      * How often Bills are generated.
@@ -241,7 +242,7 @@ private constructor(
      * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
-    fun _billFrequencyInterval(): JsonField<Long> = body._billFrequencyInterval()
+    fun _billFrequencyInterval(): JsonField<Int> = body._billFrequencyInterval()
 
     /**
      * Returns the raw JSON value of [billingFrequency].
@@ -363,9 +364,11 @@ private constructor(
             additionalQueryParams = billJobCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -424,18 +427,18 @@ private constructor(
          * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set
          * to 3, Bills are issued every three months.
          */
-        fun billFrequencyInterval(billFrequencyInterval: Long) = apply {
+        fun billFrequencyInterval(billFrequencyInterval: Int) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
         }
 
         /**
          * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long] value
+         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
+        fun billFrequencyInterval(billFrequencyInterval: JsonField<Int>) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
         }
 
@@ -818,7 +821,7 @@ private constructor(
     private constructor(
         private val accountIds: JsonField<List<String>>,
         private val billDate: JsonField<LocalDate>,
-        private val billFrequencyInterval: JsonField<Long>,
+        private val billFrequencyInterval: JsonField<Int>,
         private val billingFrequency: JsonField<BillingFrequency>,
         private val currencyConversions: JsonField<List<CurrencyConversion>>,
         private val dayEpoch: JsonField<LocalDate>,
@@ -844,7 +847,7 @@ private constructor(
             billDate: JsonField<LocalDate> = JsonMissing.of(),
             @JsonProperty("billFrequencyInterval")
             @ExcludeMissing
-            billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
+            billFrequencyInterval: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("billingFrequency")
             @ExcludeMissing
             billingFrequency: JsonField<BillingFrequency> = JsonMissing.of(),
@@ -926,7 +929,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billFrequencyInterval(): Optional<Long> =
+        fun billFrequencyInterval(): Optional<Int> =
             billFrequencyInterval.getOptional("billFrequencyInterval")
 
         /**
@@ -1094,7 +1097,7 @@ private constructor(
          */
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
-        fun _billFrequencyInterval(): JsonField<Long> = billFrequencyInterval
+        fun _billFrequencyInterval(): JsonField<Int> = billFrequencyInterval
 
         /**
          * Returns the raw JSON value of [billingFrequency].
@@ -1224,7 +1227,7 @@ private constructor(
 
             private var accountIds: JsonField<MutableList<String>>? = null
             private var billDate: JsonField<LocalDate> = JsonMissing.of()
-            private var billFrequencyInterval: JsonField<Long> = JsonMissing.of()
+            private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
             private var billingFrequency: JsonField<BillingFrequency> = JsonMissing.of()
             private var currencyConversions: JsonField<MutableList<CurrencyConversion>>? = null
             private var dayEpoch: JsonField<LocalDate> = JsonMissing.of()
@@ -1310,17 +1313,17 @@ private constructor(
              * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is
              * set to 3, Bills are issued every three months.
              */
-            fun billFrequencyInterval(billFrequencyInterval: Long) =
+            fun billFrequencyInterval(billFrequencyInterval: Int) =
                 billFrequencyInterval(JsonField.of(billFrequencyInterval))
 
             /**
              * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
+             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Int] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
-            fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
+            fun billFrequencyInterval(billFrequencyInterval: JsonField<Int>) = apply {
                 this.billFrequencyInterval = billFrequencyInterval
             }
 

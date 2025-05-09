@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -19,17 +18,19 @@ import kotlin.jvm.optionals.getOrNull
 class BalanceTransactionListParams
 private constructor(
     private val orgId: String?,
-    private val balanceId: String,
+    private val balanceId: String?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
+    private val scheduleId: String?,
     private val transactionTypeId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun balanceId(): String = balanceId
+    fun balanceId(): Optional<String> = Optional.ofNullable(balanceId)
 
     /**
      * `nextToken` for multi page retrievals. A token for retrieving the next page of transactions.
@@ -38,7 +39,9 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** The maximum number of transactions to return per page. */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
+
+    fun scheduleId(): Optional<String> = Optional.ofNullable(scheduleId)
 
     fun transactionTypeId(): Optional<String> = Optional.ofNullable(transactionTypeId)
 
@@ -50,13 +53,10 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): BalanceTransactionListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BalanceTransactionListParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -67,7 +67,8 @@ private constructor(
         private var orgId: String? = null
         private var balanceId: String? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
+        private var scheduleId: String? = null
         private var transactionTypeId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -78,17 +79,23 @@ private constructor(
             balanceId = balanceTransactionListParams.balanceId
             nextToken = balanceTransactionListParams.nextToken
             pageSize = balanceTransactionListParams.pageSize
+            scheduleId = balanceTransactionListParams.scheduleId
             transactionTypeId = balanceTransactionListParams.transactionTypeId
             additionalHeaders = balanceTransactionListParams.additionalHeaders.toBuilder()
             additionalQueryParams = balanceTransactionListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
+        fun balanceId(balanceId: String?) = apply { this.balanceId = balanceId }
+
+        /** Alias for calling [Builder.balanceId] with `balanceId.orElse(null)`. */
+        fun balanceId(balanceId: Optional<String>) = balanceId(balanceId.getOrNull())
 
         /**
          * `nextToken` for multi page retrievals. A token for retrieving the next page of
@@ -100,17 +107,22 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** The maximum number of transactions to return per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
+
+        fun scheduleId(scheduleId: String?) = apply { this.scheduleId = scheduleId }
+
+        /** Alias for calling [Builder.scheduleId] with `scheduleId.orElse(null)`. */
+        fun scheduleId(scheduleId: Optional<String>) = scheduleId(scheduleId.getOrNull())
 
         fun transactionTypeId(transactionTypeId: String?) = apply {
             this.transactionTypeId = transactionTypeId
@@ -222,20 +234,14 @@ private constructor(
          * Returns an immutable instance of [BalanceTransactionListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .balanceId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BalanceTransactionListParams =
             BalanceTransactionListParams(
                 orgId,
-                checkRequired("balanceId", balanceId),
+                balanceId,
                 nextToken,
                 pageSize,
+                scheduleId,
                 transactionTypeId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -245,7 +251,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> balanceId
+            1 -> balanceId ?: ""
             else -> ""
         }
 
@@ -256,6 +262,7 @@ private constructor(
             .apply {
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
+                scheduleId?.let { put("scheduleId", it) }
                 transactionTypeId?.let { put("transactionTypeId", it) }
                 putAll(additionalQueryParams)
             }
@@ -266,11 +273,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionListParams && orgId == other.orgId && balanceId == other.balanceId && nextToken == other.nextToken && pageSize == other.pageSize && transactionTypeId == other.transactionTypeId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BalanceTransactionListParams && orgId == other.orgId && balanceId == other.balanceId && nextToken == other.nextToken && pageSize == other.pageSize && scheduleId == other.scheduleId && transactionTypeId == other.transactionTypeId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, nextToken, pageSize, transactionTypeId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, nextToken, pageSize, scheduleId, transactionTypeId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BalanceTransactionListParams{orgId=$orgId, balanceId=$balanceId, nextToken=$nextToken, pageSize=$pageSize, transactionTypeId=$transactionTypeId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceTransactionListParams{orgId=$orgId, balanceId=$balanceId, nextToken=$nextToken, pageSize=$pageSize, scheduleId=$scheduleId, transactionTypeId=$transactionTypeId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

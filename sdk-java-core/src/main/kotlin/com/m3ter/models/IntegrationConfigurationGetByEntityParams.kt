@@ -3,7 +3,6 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
-import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
@@ -14,15 +13,24 @@ import kotlin.jvm.optionals.getOrNull
 class IntegrationConfigurationGetByEntityParams
 private constructor(
     private val orgId: String?,
-    private val entityType: String,
+    private val entityType: String?,
+    private val destination: String?,
+    private val destinationId: String?,
     private val entityId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun entityType(): String = entityType
+    fun entityType(): Optional<String> = Optional.ofNullable(entityType)
+
+    /** Destination type to retrieve IntegrationConfigs for */
+    fun destination(): Optional<String> = Optional.ofNullable(destination)
+
+    /** UUID of the destination to retrieve IntegrationConfigs for */
+    fun destinationId(): Optional<String> = Optional.ofNullable(destinationId)
 
     /** UUID of the entity to retrieve IntegrationConfigs for */
     fun entityId(): Optional<String> = Optional.ofNullable(entityId)
@@ -35,14 +43,11 @@ private constructor(
 
     companion object {
 
+        @JvmStatic fun none(): IntegrationConfigurationGetByEntityParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [IntegrationConfigurationGetByEntityParams].
-         *
-         * The following fields are required:
-         * ```java
-         * .entityType()
-         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -52,6 +57,8 @@ private constructor(
 
         private var orgId: String? = null
         private var entityType: String? = null
+        private var destination: String? = null
+        private var destinationId: String? = null
         private var entityId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -62,6 +69,8 @@ private constructor(
         ) = apply {
             orgId = integrationConfigurationGetByEntityParams.orgId
             entityType = integrationConfigurationGetByEntityParams.entityType
+            destination = integrationConfigurationGetByEntityParams.destination
+            destinationId = integrationConfigurationGetByEntityParams.destinationId
             entityId = integrationConfigurationGetByEntityParams.entityId
             additionalHeaders =
                 integrationConfigurationGetByEntityParams.additionalHeaders.toBuilder()
@@ -69,12 +78,30 @@ private constructor(
                 integrationConfigurationGetByEntityParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun entityType(entityType: String) = apply { this.entityType = entityType }
+        fun entityType(entityType: String?) = apply { this.entityType = entityType }
+
+        /** Alias for calling [Builder.entityType] with `entityType.orElse(null)`. */
+        fun entityType(entityType: Optional<String>) = entityType(entityType.getOrNull())
+
+        /** Destination type to retrieve IntegrationConfigs for */
+        fun destination(destination: String?) = apply { this.destination = destination }
+
+        /** Alias for calling [Builder.destination] with `destination.orElse(null)`. */
+        fun destination(destination: Optional<String>) = destination(destination.getOrNull())
+
+        /** UUID of the destination to retrieve IntegrationConfigs for */
+        fun destinationId(destinationId: String?) = apply { this.destinationId = destinationId }
+
+        /** Alias for calling [Builder.destinationId] with `destinationId.orElse(null)`. */
+        fun destinationId(destinationId: Optional<String>) =
+            destinationId(destinationId.getOrNull())
 
         /** UUID of the entity to retrieve IntegrationConfigs for */
         fun entityId(entityId: String?) = apply { this.entityId = entityId }
@@ -184,18 +211,13 @@ private constructor(
          * Returns an immutable instance of [IntegrationConfigurationGetByEntityParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```java
-         * .entityType()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): IntegrationConfigurationGetByEntityParams =
             IntegrationConfigurationGetByEntityParams(
                 orgId,
-                checkRequired("entityType", entityType),
+                entityType,
+                destination,
+                destinationId,
                 entityId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -205,7 +227,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> entityType
+            1 -> entityType ?: ""
             else -> ""
         }
 
@@ -214,6 +236,8 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
+                destination?.let { put("destination", it) }
+                destinationId?.let { put("destinationId", it) }
                 entityId?.let { put("entityId", it) }
                 putAll(additionalQueryParams)
             }
@@ -224,11 +248,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationGetByEntityParams && orgId == other.orgId && entityType == other.entityType && entityId == other.entityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is IntegrationConfigurationGetByEntityParams && orgId == other.orgId && entityType == other.entityType && destination == other.destination && destinationId == other.destinationId && entityId == other.entityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, entityType, entityId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, entityType, destination, destinationId, entityId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "IntegrationConfigurationGetByEntityParams{orgId=$orgId, entityType=$entityType, entityId=$entityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "IntegrationConfigurationGetByEntityParams{orgId=$orgId, entityType=$entityType, destination=$destination, destinationId=$destinationId, entityId=$entityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -62,14 +62,34 @@ interface BillJobService {
         create(BillJobCreateParams.none(), requestOptions)
 
     /** Retrieve a Bill Job for the given UUID. */
-    fun retrieve(params: BillJobRetrieveParams): BillJobResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): BillJobResponse = retrieve(id, BillJobRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillJobResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+    ): BillJobResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: BillJobRetrieveParams): BillJobResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): BillJobResponse =
+        retrieve(id, BillJobRetrieveParams.none(), requestOptions)
 
     /**
      * Retrieve a list of BillJobs.
@@ -100,13 +120,33 @@ interface BillJobService {
      * This endpoint allows you to halt the processing of a specific BillJob, which might be
      * necessary if there are changes in billing requirements or other operational considerations.
      */
-    fun cancel(params: BillJobCancelParams): BillJobResponse = cancel(params, RequestOptions.none())
+    fun cancel(id: String): BillJobResponse = cancel(id, BillJobCancelParams.none())
+
+    /** @see [cancel] */
+    fun cancel(
+        id: String,
+        params: BillJobCancelParams = BillJobCancelParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillJobResponse = cancel(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [cancel] */
+    fun cancel(
+        id: String,
+        params: BillJobCancelParams = BillJobCancelParams.none(),
+    ): BillJobResponse = cancel(id, params, RequestOptions.none())
 
     /** @see [cancel] */
     fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
+
+    /** @see [cancel] */
+    fun cancel(params: BillJobCancelParams): BillJobResponse = cancel(params, RequestOptions.none())
+
+    /** @see [cancel] */
+    fun cancel(id: String, requestOptions: RequestOptions): BillJobResponse =
+        cancel(id, BillJobCancelParams.none(), requestOptions)
 
     /**
      * Create a new BillJob specifically to recalculate existing bills for a given Organization.
@@ -163,8 +203,24 @@ interface BillJobService {
          * otherwise the same as [BillJobService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: BillJobRetrieveParams): HttpResponseFor<BillJobResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<BillJobResponse> =
+            retrieve(id, BillJobRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJobResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
+        ): HttpResponseFor<BillJobResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -172,6 +228,16 @@ interface BillJobService {
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: BillJobRetrieveParams): HttpResponseFor<BillJobResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
+            retrieve(id, BillJobRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
@@ -202,8 +268,24 @@ interface BillJobService {
          * is otherwise the same as [BillJobService.cancel].
          */
         @MustBeClosed
-        fun cancel(params: BillJobCancelParams): HttpResponseFor<BillJobResponse> =
-            cancel(params, RequestOptions.none())
+        fun cancel(id: String): HttpResponseFor<BillJobResponse> =
+            cancel(id, BillJobCancelParams.none())
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(
+            id: String,
+            params: BillJobCancelParams = BillJobCancelParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillJobResponse> =
+            cancel(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(
+            id: String,
+            params: BillJobCancelParams = BillJobCancelParams.none(),
+        ): HttpResponseFor<BillJobResponse> = cancel(id, params, RequestOptions.none())
 
         /** @see [cancel] */
         @MustBeClosed
@@ -211,6 +293,16 @@ interface BillJobService {
             params: BillJobCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(params: BillJobCancelParams): HttpResponseFor<BillJobResponse> =
+            cancel(params, RequestOptions.none())
+
+        /** @see [cancel] */
+        @MustBeClosed
+        fun cancel(id: String, requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
+            cancel(id, BillJobCancelParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but

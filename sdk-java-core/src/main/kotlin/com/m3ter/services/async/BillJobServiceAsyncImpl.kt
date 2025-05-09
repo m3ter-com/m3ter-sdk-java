@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class BillJobServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BillJobServiceAsync {
@@ -115,6 +117,9 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -175,6 +180,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 BillJobListPageAsync.builder()
                                     .service(BillJobServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -190,6 +196,9 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: BillJobCancelParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

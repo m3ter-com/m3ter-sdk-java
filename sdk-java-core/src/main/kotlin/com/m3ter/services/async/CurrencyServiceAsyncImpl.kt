@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.CurrencyResponse
 import com.m3ter.models.CurrencyRetrieveParams
 import com.m3ter.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CurrencyServiceAsync {
@@ -116,6 +118,9 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CurrencyRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -151,6 +156,9 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CurrencyUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -214,6 +222,7 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
                             .let {
                                 CurrencyListPageAsync.builder()
                                     .service(CurrencyServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -229,6 +238,9 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
             params: CurrencyDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<CurrencyResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

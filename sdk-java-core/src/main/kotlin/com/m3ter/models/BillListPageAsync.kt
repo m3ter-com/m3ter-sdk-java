@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.BillServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [BillServiceAsync.list] */
 class BillListPageAsync
 private constructor(
     private val service: BillServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: BillListParams,
     private val response: BillListPageResponse,
-) {
+) : PageAsync<BillResponse> {
 
     /**
      * Delegates to [BillListPageResponse], but gracefully handles missing data.
@@ -33,24 +35,20 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<BillResponse> = data()
 
-    fun getNextPageParams(): Optional<BillListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): BillListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<BillListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<BillListPageAsync> = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<BillResponse> = AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): BillListParams = params
@@ -68,6 +66,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -79,17 +78,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: BillServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: BillListParams? = null
         private var response: BillListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(billListPageAsync: BillListPageAsync) = apply {
             service = billListPageAsync.service
+            streamHandlerExecutor = billListPageAsync.streamHandlerExecutor
             params = billListPageAsync.params
             response = billListPageAsync.response
         }
 
         fun service(service: BillServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: BillListParams) = apply { this.params = params }
@@ -105,6 +110,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -114,35 +120,10 @@ private constructor(
         fun build(): BillListPageAsync =
             BillListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: BillListPageAsync) {
-
-        fun forEach(action: Predicate<BillResponse>, executor: Executor): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<BillListPageAsync>>.forEach(
-                action: (BillResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<BillResponse>> {
-            val values = mutableListOf<BillResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -150,11 +131,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is BillListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "BillListPageAsync{service=$service, params=$params, response=$response}"
+        "BillListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

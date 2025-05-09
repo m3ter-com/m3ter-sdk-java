@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.AccountPlanServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [AccountPlanServiceAsync.list] */
 class AccountPlanListPageAsync
 private constructor(
     private val service: AccountPlanServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: AccountPlanListParams,
     private val response: AccountPlanListPageResponse,
-) {
+) : PageAsync<AccountPlanResponse> {
 
     /**
      * Delegates to [AccountPlanListPageResponse], but gracefully handles missing data.
@@ -34,24 +36,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<AccountPlanResponse> = data()
 
-    fun getNextPageParams(): Optional<AccountPlanListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): AccountPlanListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<AccountPlanListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<AccountPlanListPageAsync> =
+        service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<AccountPlanResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): AccountPlanListParams = params
@@ -69,6 +69,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -80,17 +81,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: AccountPlanServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: AccountPlanListParams? = null
         private var response: AccountPlanListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(accountPlanListPageAsync: AccountPlanListPageAsync) = apply {
             service = accountPlanListPageAsync.service
+            streamHandlerExecutor = accountPlanListPageAsync.streamHandlerExecutor
             params = accountPlanListPageAsync.params
             response = accountPlanListPageAsync.response
         }
 
         fun service(service: AccountPlanServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: AccountPlanListParams) = apply { this.params = params }
@@ -106,6 +113,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -115,38 +123,10 @@ private constructor(
         fun build(): AccountPlanListPageAsync =
             AccountPlanListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: AccountPlanListPageAsync) {
-
-        fun forEach(
-            action: Predicate<AccountPlanResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<AccountPlanListPageAsync>>.forEach(
-                action: (AccountPlanResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<AccountPlanResponse>> {
-            val values = mutableListOf<AccountPlanResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -154,11 +134,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountPlanListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is AccountPlanListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "AccountPlanListPageAsync{service=$service, params=$params, response=$response}"
+        "AccountPlanListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

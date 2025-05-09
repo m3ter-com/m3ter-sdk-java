@@ -5,6 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -31,6 +32,7 @@ import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.ResourceGroupRetrieveParams
 import com.m3ter.models.ResourceGroupUpdateParams
+import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ResourceGroupService {
@@ -117,6 +119,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("type", params.type().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -150,6 +155,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -183,6 +191,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -217,6 +228,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("type", params.type().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -256,6 +270,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -290,6 +307,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -325,6 +345,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupListContentsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupListContentsPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -367,6 +390,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupListPermissionsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupListPermissionsPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -408,6 +434,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ResourceGroupResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("resourceGroupId", params.resourceGroupId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -5,6 +5,7 @@ package com.m3ter.services.blocking.bills
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -19,6 +20,7 @@ import com.m3ter.models.BillLineItemListPageResponse
 import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import com.m3ter.models.LineItemResponse
+import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemService {
@@ -55,6 +57,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<LineItemResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -89,6 +94,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
             params: BillLineItemListParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillLineItemListPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

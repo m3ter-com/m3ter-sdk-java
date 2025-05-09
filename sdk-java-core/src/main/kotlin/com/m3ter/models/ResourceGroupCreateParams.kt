@@ -24,15 +24,16 @@ import kotlin.jvm.optionals.getOrNull
 class ResourceGroupCreateParams
 private constructor(
     private val orgId: String?,
-    private val type: String,
+    private val type: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun type(): String = type
+    fun type(): Optional<String> = Optional.ofNullable(type)
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -75,7 +76,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .type()
          * .name()
          * ```
          */
@@ -100,12 +100,17 @@ private constructor(
             additionalQueryParams = resourceGroupCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun type(type: String) = apply { this.type = type }
+        fun type(type: String?) = apply { this.type = type }
+
+        /** Alias for calling [Builder.type] with `type.orElse(null)`. */
+        fun type(type: Optional<String>) = type(type.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -261,7 +266,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .type()
          * .name()
          * ```
          *
@@ -270,7 +274,7 @@ private constructor(
         fun build(): ResourceGroupCreateParams =
             ResourceGroupCreateParams(
                 orgId,
-                checkRequired("type", type),
+                type,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -282,7 +286,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> type
+            1 -> type ?: ""
             else -> ""
         }
 

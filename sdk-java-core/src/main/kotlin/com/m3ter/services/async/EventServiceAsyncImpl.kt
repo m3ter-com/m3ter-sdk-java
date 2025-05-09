@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     EventServiceAsync {
@@ -74,6 +76,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             params: EventRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<EventResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -134,6 +139,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             .let {
                                 EventListPageAsync.builder()
                                     .service(EventServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()

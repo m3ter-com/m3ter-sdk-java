@@ -26,17 +26,18 @@ class ResourceGroupAddResourceParams
 private constructor(
     private val orgId: String?,
     private val type: String,
-    private val resourceGroupId: String,
+    private val resourceGroupId: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun type(): String = type
 
-    fun resourceGroupId(): String = resourceGroupId
+    fun resourceGroupId(): Optional<String> = Optional.ofNullable(resourceGroupId)
 
     /**
      * The id of the item or group you want to:
@@ -109,7 +110,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * .targetId()
          * .targetType()
          * ```
@@ -137,16 +137,22 @@ private constructor(
             additionalQueryParams = resourceGroupAddResourceParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         fun type(type: String) = apply { this.type = type }
 
-        fun resourceGroupId(resourceGroupId: String) = apply {
+        fun resourceGroupId(resourceGroupId: String?) = apply {
             this.resourceGroupId = resourceGroupId
         }
+
+        /** Alias for calling [Builder.resourceGroupId] with `resourceGroupId.orElse(null)`. */
+        fun resourceGroupId(resourceGroupId: Optional<String>) =
+            resourceGroupId(resourceGroupId.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -331,7 +337,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .type()
-         * .resourceGroupId()
          * .targetId()
          * .targetType()
          * ```
@@ -342,7 +347,7 @@ private constructor(
             ResourceGroupAddResourceParams(
                 orgId,
                 checkRequired("type", type),
-                checkRequired("resourceGroupId", resourceGroupId),
+                resourceGroupId,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -355,7 +360,7 @@ private constructor(
         when (index) {
             0 -> orgId ?: ""
             1 -> type
-            2 -> resourceGroupId
+            2 -> resourceGroupId ?: ""
             else -> ""
         }
 

@@ -103,7 +103,7 @@ internal class UserServiceTest {
                     .orgId("orgId")
                     .id("id")
                     .nextToken("nextToken")
-                    .pageSize(1L)
+                    .pageSize(1)
                     .build()
             )
 
@@ -128,7 +128,7 @@ internal class UserServiceTest {
                     .orgId("orgId")
                     .id("id")
                     .nextToken("nextToken")
-                    .pageSize(1L)
+                    .pageSize(1)
                     .build()
             )
 

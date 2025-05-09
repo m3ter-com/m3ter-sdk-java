@@ -35,8 +35,20 @@ interface PricingService {
     ): PricingResponse
 
     /** Retrieve the Pricing with the given UUID. */
-    fun retrieve(params: PricingRetrieveParams): PricingResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): PricingResponse = retrieve(id, PricingRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PricingRetrieveParams = PricingRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PricingResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: PricingRetrieveParams = PricingRetrieveParams.none(),
+    ): PricingResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -44,12 +56,31 @@ interface PricingService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
 
+    /** @see [retrieve] */
+    fun retrieve(params: PricingRetrieveParams): PricingResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): PricingResponse =
+        retrieve(id, PricingRetrieveParams.none(), requestOptions)
+
     /**
      * Update Pricing for the given UUID.
      *
      * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
      * to be valid. If you omit both, then you will receive a validation error.
      */
+    fun update(id: String, params: PricingUpdateParams): PricingResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: PricingUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PricingResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: PricingUpdateParams): PricingResponse = update(params, RequestOptions.none())
 
     /** @see [update] */
@@ -76,13 +107,33 @@ interface PricingService {
         list(PricingListParams.none(), requestOptions)
 
     /** Delete the Pricing with the given UUID. */
-    fun delete(params: PricingDeleteParams): PricingResponse = delete(params, RequestOptions.none())
+    fun delete(id: String): PricingResponse = delete(id, PricingDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PricingDeleteParams = PricingDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PricingResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: PricingDeleteParams = PricingDeleteParams.none(),
+    ): PricingResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
+
+    /** @see [delete] */
+    fun delete(params: PricingDeleteParams): PricingResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): PricingResponse =
+        delete(id, PricingDeleteParams.none(), requestOptions)
 
     /** A view of [PricingService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -107,8 +158,24 @@ interface PricingService {
          * otherwise the same as [PricingService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: PricingRetrieveParams): HttpResponseFor<PricingResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<PricingResponse> =
+            retrieve(id, PricingRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PricingRetrieveParams = PricingRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PricingResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: PricingRetrieveParams = PricingRetrieveParams.none(),
+        ): HttpResponseFor<PricingResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -117,10 +184,34 @@ interface PricingService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: PricingRetrieveParams): HttpResponseFor<PricingResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<PricingResponse> =
+            retrieve(id, PricingRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingService.update].
          */
+        @MustBeClosed
+        fun update(id: String, params: PricingUpdateParams): HttpResponseFor<PricingResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: PricingUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PricingResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: PricingUpdateParams): HttpResponseFor<PricingResponse> =
             update(params, RequestOptions.none())
@@ -161,8 +252,24 @@ interface PricingService {
          * otherwise the same as [PricingService.delete].
          */
         @MustBeClosed
-        fun delete(params: PricingDeleteParams): HttpResponseFor<PricingResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<PricingResponse> =
+            delete(id, PricingDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PricingDeleteParams = PricingDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PricingResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: PricingDeleteParams = PricingDeleteParams.none(),
+        ): HttpResponseFor<PricingResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -170,5 +277,15 @@ interface PricingService {
             params: PricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: PricingDeleteParams): HttpResponseFor<PricingResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<PricingResponse> =
+            delete(id, PricingDeleteParams.none(), requestOptions)
     }
 }

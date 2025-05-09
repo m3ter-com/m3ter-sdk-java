@@ -34,15 +34,16 @@ import kotlin.jvm.optionals.getOrNull
 class AccountUpdateParams
 private constructor(
     private val orgId: String?,
-    private val id: String,
+    private val id: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun id(): String = id
+    fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
      * Code of the Account. This is a unique short code used for the Account.
@@ -181,7 +182,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun daysBeforeBillDue(): Optional<Long> = body.daysBeforeBillDue()
+    fun daysBeforeBillDue(): Optional<Int> = body.daysBeforeBillDue()
 
     /**
      * Parent Account ID, or null if this Account does not have a parent.
@@ -315,7 +316,7 @@ private constructor(
      * Unlike [daysBeforeBillDue], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
-    fun _daysBeforeBillDue(): JsonField<Long> = body._daysBeforeBillDue()
+    fun _daysBeforeBillDue(): JsonField<Int> = body._daysBeforeBillDue()
 
     /**
      * Returns the raw JSON value of [parentAccountId].
@@ -362,7 +363,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .code()
          * .emailAddress()
          * .name()
@@ -389,12 +389,17 @@ private constructor(
             additionalQueryParams = accountUpdateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun id(id: String) = apply { this.id = id }
+        fun id(id: String?) = apply { this.id = id }
+
+        /** Alias for calling [Builder.id] with `id.orElse(null)`. */
+        fun id(id: Optional<String>) = id(id.getOrNull())
 
         /**
          * Sets the entire request body.
@@ -612,18 +617,18 @@ private constructor(
          * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will take
          * precedence over any `daysBeforeBillDue` setting defined at Organization level.
          */
-        fun daysBeforeBillDue(daysBeforeBillDue: Long) = apply {
+        fun daysBeforeBillDue(daysBeforeBillDue: Int) = apply {
             body.daysBeforeBillDue(daysBeforeBillDue)
         }
 
         /**
          * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+         * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
+        fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Int>) = apply {
             body.daysBeforeBillDue(daysBeforeBillDue)
         }
 
@@ -836,7 +841,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .id()
          * .code()
          * .emailAddress()
          * .name()
@@ -847,7 +851,7 @@ private constructor(
         fun build(): AccountUpdateParams =
             AccountUpdateParams(
                 orgId,
-                checkRequired("id", id),
+                id,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -859,7 +863,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id
+            1 -> id ?: ""
             else -> ""
         }
 
@@ -880,7 +884,7 @@ private constructor(
         private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
         private val currency: JsonField<String>,
         private val customFields: JsonField<CustomFields>,
-        private val daysBeforeBillDue: JsonField<Long>,
+        private val daysBeforeBillDue: JsonField<Int>,
         private val parentAccountId: JsonField<String>,
         private val purchaseOrderNumber: JsonField<String>,
         private val statementDefinitionId: JsonField<String>,
@@ -916,7 +920,7 @@ private constructor(
             customFields: JsonField<CustomFields> = JsonMissing.of(),
             @JsonProperty("daysBeforeBillDue")
             @ExcludeMissing
-            daysBeforeBillDue: JsonField<Long> = JsonMissing.of(),
+            daysBeforeBillDue: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("parentAccountId")
             @ExcludeMissing
             parentAccountId: JsonField<String> = JsonMissing.of(),
@@ -1083,7 +1087,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun daysBeforeBillDue(): Optional<Long> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
+        fun daysBeforeBillDue(): Optional<Int> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
         /**
          * Parent Account ID, or null if this Account does not have a parent.
@@ -1235,7 +1239,7 @@ private constructor(
          */
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
-        fun _daysBeforeBillDue(): JsonField<Long> = daysBeforeBillDue
+        fun _daysBeforeBillDue(): JsonField<Int> = daysBeforeBillDue
 
         /**
          * Returns the raw JSON value of [parentAccountId].
@@ -1316,7 +1320,7 @@ private constructor(
                 null
             private var currency: JsonField<String> = JsonMissing.of()
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
-            private var daysBeforeBillDue: JsonField<Long> = JsonMissing.of()
+            private var daysBeforeBillDue: JsonField<Int> = JsonMissing.of()
             private var parentAccountId: JsonField<String> = JsonMissing.of()
             private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
             private var statementDefinitionId: JsonField<String> = JsonMissing.of()
@@ -1556,17 +1560,17 @@ private constructor(
              * **Note:** If you define `daysBeforeBillDue` at individual Account level, this will
              * take precedence over any `daysBeforeBillDue` setting defined at Organization level.
              */
-            fun daysBeforeBillDue(daysBeforeBillDue: Long) =
+            fun daysBeforeBillDue(daysBeforeBillDue: Int) =
                 daysBeforeBillDue(JsonField.of(daysBeforeBillDue))
 
             /**
              * Sets [Builder.daysBeforeBillDue] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Long] value
+             * You should usually call [Builder.daysBeforeBillDue] with a well-typed [Int] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Long>) = apply {
+            fun daysBeforeBillDue(daysBeforeBillDue: JsonField<Int>) = apply {
                 this.daysBeforeBillDue = daysBeforeBillDue
             }
 

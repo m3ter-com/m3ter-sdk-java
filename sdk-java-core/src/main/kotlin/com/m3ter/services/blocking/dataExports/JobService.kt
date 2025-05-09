@@ -26,14 +26,35 @@ interface JobService {
      * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
      * - The status of the Export Job.
      */
-    fun retrieve(params: DataExportJobRetrieveParams): DataExportJobResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): DataExportJobResponse =
+        retrieve(id, DataExportJobRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportJobResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+    ): DataExportJobResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: DataExportJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportJobResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: DataExportJobRetrieveParams): DataExportJobResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): DataExportJobResponse =
+        retrieve(id, DataExportJobRetrieveParams.none(), requestOptions)
 
     /** Retrieve a list of Export Job entities. */
     fun list(): DataExportJobListPage = list(DataExportJobListParams.none())
@@ -70,15 +91,40 @@ interface JobService {
      * features are functional but may be incomplete, and there is no commitment at this stage to
      * particular functionality or timelines.
      */
+    fun getDownloadUrl(jobId: String): DataExportJobGetDownloadUrlResponse =
+        getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none())
+
+    /** @see [getDownloadUrl] */
     fun getDownloadUrl(
-        params: DataExportJobGetDownloadUrlParams
-    ): DataExportJobGetDownloadUrlResponse = getDownloadUrl(params, RequestOptions.none())
+        jobId: String,
+        params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DataExportJobGetDownloadUrlResponse =
+        getDownloadUrl(params.toBuilder().jobId(jobId).build(), requestOptions)
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        jobId: String,
+        params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+    ): DataExportJobGetDownloadUrlResponse = getDownloadUrl(jobId, params, RequestOptions.none())
 
     /** @see [getDownloadUrl] */
     fun getDownloadUrl(
         params: DataExportJobGetDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportJobGetDownloadUrlResponse
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        params: DataExportJobGetDownloadUrlParams
+    ): DataExportJobGetDownloadUrlResponse = getDownloadUrl(params, RequestOptions.none())
+
+    /** @see [getDownloadUrl] */
+    fun getDownloadUrl(
+        jobId: String,
+        requestOptions: RequestOptions,
+    ): DataExportJobGetDownloadUrlResponse =
+        getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none(), requestOptions)
 
     /** A view of [JobService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -88,8 +134,24 @@ interface JobService {
          * is otherwise the same as [JobService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: DataExportJobRetrieveParams): HttpResponseFor<DataExportJobResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<DataExportJobResponse> =
+            retrieve(id, DataExportJobRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJobResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: DataExportJobRetrieveParams = DataExportJobRetrieveParams.none(),
+        ): HttpResponseFor<DataExportJobResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -97,6 +159,19 @@ interface JobService {
             params: DataExportJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportJobResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: DataExportJobRetrieveParams): HttpResponseFor<DataExportJobResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportJobResponse> =
+            retrieve(id, DataExportJobRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs`, but is
@@ -129,6 +204,35 @@ interface JobService {
          * same as [JobService.getDownloadUrl].
          */
         @MustBeClosed
+        fun getDownloadUrl(jobId: String): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
+            getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none())
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            jobId: String,
+            params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
+            getDownloadUrl(params.toBuilder().jobId(jobId).build(), requestOptions)
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            jobId: String,
+            params: DataExportJobGetDownloadUrlParams = DataExportJobGetDownloadUrlParams.none(),
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
+            getDownloadUrl(jobId, params, RequestOptions.none())
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
+        fun getDownloadUrl(
+            params: DataExportJobGetDownloadUrlParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse>
+
+        /** @see [getDownloadUrl] */
+        @MustBeClosed
         fun getDownloadUrl(
             params: DataExportJobGetDownloadUrlParams
         ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
@@ -137,8 +241,9 @@ interface JobService {
         /** @see [getDownloadUrl] */
         @MustBeClosed
         fun getDownloadUrl(
-            params: DataExportJobGetDownloadUrlParams,
-            requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse>
+            jobId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DataExportJobGetDownloadUrlResponse> =
+            getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none(), requestOptions)
     }
 }

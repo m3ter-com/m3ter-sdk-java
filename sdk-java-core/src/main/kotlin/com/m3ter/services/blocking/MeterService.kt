@@ -57,14 +57,34 @@ interface MeterService {
     ): MeterResponse
 
     /** Retrieve the Meter with the given UUID. */
-    fun retrieve(params: MeterRetrieveParams): MeterResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): MeterResponse = retrieve(id, MeterRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: MeterRetrieveParams = MeterRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): MeterResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: MeterRetrieveParams = MeterRetrieveParams.none(),
+    ): MeterResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: MeterRetrieveParams): MeterResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): MeterResponse =
+        retrieve(id, MeterRetrieveParams.none(), requestOptions)
 
     /**
      * Update the Meter with the given UUID.
@@ -73,6 +93,17 @@ interface MeterService {
      * the Meter use the `customFields` parameter to preserve those Custom Fields. If you omit them
      * from the update request, they will be lost.
      */
+    fun update(id: String, params: MeterUpdateParams): MeterResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: MeterUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): MeterResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: MeterUpdateParams): MeterResponse = update(params, RequestOptions.none())
 
     /** @see [update] */
@@ -99,13 +130,31 @@ interface MeterService {
         list(MeterListParams.none(), requestOptions)
 
     /** Delete the Meter with the given UUID. */
-    fun delete(params: MeterDeleteParams): MeterResponse = delete(params, RequestOptions.none())
+    fun delete(id: String): MeterResponse = delete(id, MeterDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: MeterDeleteParams = MeterDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): MeterResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(id: String, params: MeterDeleteParams = MeterDeleteParams.none()): MeterResponse =
+        delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
+
+    /** @see [delete] */
+    fun delete(params: MeterDeleteParams): MeterResponse = delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): MeterResponse =
+        delete(id, MeterDeleteParams.none(), requestOptions)
 
     /** A view of [MeterService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -130,8 +179,24 @@ interface MeterService {
          * otherwise the same as [MeterService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: MeterRetrieveParams): HttpResponseFor<MeterResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<MeterResponse> =
+            retrieve(id, MeterRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: MeterRetrieveParams = MeterRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: MeterRetrieveParams = MeterRetrieveParams.none(),
+        ): HttpResponseFor<MeterResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -140,10 +205,34 @@ interface MeterService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: MeterRetrieveParams): HttpResponseFor<MeterResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<MeterResponse> =
+            retrieve(id, MeterRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/meters/{id}`, but is
          * otherwise the same as [MeterService.update].
          */
+        @MustBeClosed
+        fun update(id: String, params: MeterUpdateParams): HttpResponseFor<MeterResponse> =
+            update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: MeterUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: MeterUpdateParams): HttpResponseFor<MeterResponse> =
             update(params, RequestOptions.none())
@@ -183,8 +272,24 @@ interface MeterService {
          * otherwise the same as [MeterService.delete].
          */
         @MustBeClosed
-        fun delete(params: MeterDeleteParams): HttpResponseFor<MeterResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<MeterResponse> =
+            delete(id, MeterDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: MeterDeleteParams = MeterDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MeterResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: MeterDeleteParams = MeterDeleteParams.none(),
+        ): HttpResponseFor<MeterResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -192,5 +297,15 @@ interface MeterService {
             params: MeterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: MeterDeleteParams): HttpResponseFor<MeterResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<MeterResponse> =
+            delete(id, MeterDeleteParams.none(), requestOptions)
     }
 }

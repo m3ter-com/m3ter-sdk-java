@@ -16,13 +16,14 @@ private constructor(
     private val orgId: String?,
     private val ids: List<String>?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val plan: String?,
     private val planGroup: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /** list of IDs to retrieve */
@@ -32,7 +33,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of PlanGroupLinks to retrieve per page */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /** UUID of the Plan to retrieve PlanGroupLinks for */
     fun plan(): Optional<String> = Optional.ofNullable(plan)
@@ -60,7 +61,7 @@ private constructor(
         private var orgId: String? = null
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var plan: String? = null
         private var planGroup: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -78,9 +79,11 @@ private constructor(
             additionalQueryParams = planGroupLinkListParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /** list of IDs to retrieve */
@@ -103,17 +106,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of PlanGroupLinks to retrieve per page */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /** UUID of the Plan to retrieve PlanGroupLinks for */
         fun plan(plan: String?) = apply { this.plan = plan }

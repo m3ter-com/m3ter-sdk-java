@@ -35,13 +35,31 @@ interface UserService {
      * Retrieves detailed information for a specific user within an Organization, using their unique
      * identifier (UUID).
      */
-    fun retrieve(params: UserRetrieveParams): UserResponse = retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): UserResponse = retrieve(id, UserRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: UserRetrieveParams = UserRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): UserResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, params: UserRetrieveParams = UserRetrieveParams.none()): UserResponse =
+        retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: UserRetrieveParams): UserResponse = retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): UserResponse =
+        retrieve(id, UserRetrieveParams.none(), requestOptions)
 
     /**
      * Update the OrgUser with the given UUID.
@@ -50,13 +68,31 @@ interface UserService {
      * (UUID). Use this endpoint when you need to modify user information such as their permission
      * policy.
      */
-    fun update(params: UserUpdateParams): UserResponse = update(params, RequestOptions.none())
+    fun update(id: String): UserResponse = update(id, UserUpdateParams.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: UserUpdateParams = UserUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): UserResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
+    fun update(id: String, params: UserUpdateParams = UserUpdateParams.none()): UserResponse =
+        update(id, params, RequestOptions.none())
 
     /** @see [update] */
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserResponse
+
+    /** @see [update] */
+    fun update(params: UserUpdateParams): UserResponse = update(params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(id: String, requestOptions: RequestOptions): UserResponse =
+        update(id, UserUpdateParams.none(), requestOptions)
 
     /**
      * Retrieve a list of OrgUsers.
@@ -87,14 +123,35 @@ interface UserService {
      * Retrieves a list of all permissions associated with a specific user in an Organization using
      * their UUID. The list can be paginated for easier management.
      */
-    fun getPermissions(params: UserGetPermissionsParams): PermissionPolicyResponse =
-        getPermissions(params, RequestOptions.none())
+    fun getPermissions(id: String): PermissionPolicyResponse =
+        getPermissions(id, UserGetPermissionsParams.none())
+
+    /** @see [getPermissions] */
+    fun getPermissions(
+        id: String,
+        params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PermissionPolicyResponse = getPermissions(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [getPermissions] */
+    fun getPermissions(
+        id: String,
+        params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+    ): PermissionPolicyResponse = getPermissions(id, params, RequestOptions.none())
 
     /** @see [getPermissions] */
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse
+
+    /** @see [getPermissions] */
+    fun getPermissions(params: UserGetPermissionsParams): PermissionPolicyResponse =
+        getPermissions(params, RequestOptions.none())
+
+    /** @see [getPermissions] */
+    fun getPermissions(id: String, requestOptions: RequestOptions): PermissionPolicyResponse =
+        getPermissions(id, UserGetPermissionsParams.none(), requestOptions)
 
     /**
      * Retrieve a list of User Groups for an OrgUser.
@@ -119,14 +176,35 @@ interface UserService {
      *     - If `inherited = FALSE`, then only those User Resource Groups to which the user belongs
      *       are returned.
      */
-    fun getUserGroups(params: UserGetUserGroupsParams): ResourceGroupResponse =
-        getUserGroups(params, RequestOptions.none())
+    fun getUserGroups(id: String): ResourceGroupResponse =
+        getUserGroups(id, UserGetUserGroupsParams.none())
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(
+        id: String,
+        params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ResourceGroupResponse = getUserGroups(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(
+        id: String,
+        params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+    ): ResourceGroupResponse = getUserGroups(id, params, RequestOptions.none())
 
     /** @see [getUserGroups] */
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResourceGroupResponse
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(params: UserGetUserGroupsParams): ResourceGroupResponse =
+        getUserGroups(params, RequestOptions.none())
+
+    /** @see [getUserGroups] */
+    fun getUserGroups(id: String, requestOptions: RequestOptions): ResourceGroupResponse =
+        getUserGroups(id, UserGetUserGroupsParams.none(), requestOptions)
 
     /** Retrieve information about the current user */
     fun me(): UserMeResponse = me(UserMeParams.none())
@@ -145,14 +223,34 @@ interface UserService {
     fun me(requestOptions: RequestOptions): UserMeResponse = me(UserMeParams.none(), requestOptions)
 
     /** Resend temporary password for user */
-    fun resendPassword(params: UserResendPasswordParams) =
-        resendPassword(params, RequestOptions.none())
+    fun resendPassword(id: String) = resendPassword(id, UserResendPasswordParams.none())
+
+    /** @see [resendPassword] */
+    fun resendPassword(
+        id: String,
+        params: UserResendPasswordParams = UserResendPasswordParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = resendPassword(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [resendPassword] */
+    fun resendPassword(
+        id: String,
+        params: UserResendPasswordParams = UserResendPasswordParams.none(),
+    ) = resendPassword(id, params, RequestOptions.none())
 
     /** @see [resendPassword] */
     fun resendPassword(
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
+
+    /** @see [resendPassword] */
+    fun resendPassword(params: UserResendPasswordParams) =
+        resendPassword(params, RequestOptions.none())
+
+    /** @see [resendPassword] */
+    fun resendPassword(id: String, requestOptions: RequestOptions) =
+        resendPassword(id, UserResendPasswordParams.none(), requestOptions)
 
     /** A view of [UserService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -164,8 +262,24 @@ interface UserService {
          * the same as [UserService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: UserRetrieveParams): HttpResponseFor<UserResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<UserResponse> =
+            retrieve(id, UserRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserRetrieveParams = UserRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UserResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: UserRetrieveParams = UserRetrieveParams.none(),
+        ): HttpResponseFor<UserResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -174,13 +288,37 @@ interface UserService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: UserRetrieveParams): HttpResponseFor<UserResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<UserResponse> =
+            retrieve(id, UserRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserService.update].
          */
         @MustBeClosed
-        fun update(params: UserUpdateParams): HttpResponseFor<UserResponse> =
-            update(params, RequestOptions.none())
+        fun update(id: String): HttpResponseFor<UserResponse> = update(id, UserUpdateParams.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: UserUpdateParams = UserUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<UserResponse> = update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: UserUpdateParams = UserUpdateParams.none(),
+        ): HttpResponseFor<UserResponse> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
         @MustBeClosed
@@ -188,6 +326,16 @@ interface UserService {
             params: UserUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserResponse>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(params: UserUpdateParams): HttpResponseFor<UserResponse> =
+            update(params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(id: String, requestOptions: RequestOptions): HttpResponseFor<UserResponse> =
+            update(id, UserUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
@@ -217,9 +365,25 @@ interface UserService {
          * is otherwise the same as [UserService.getPermissions].
          */
         @MustBeClosed
+        fun getPermissions(id: String): HttpResponseFor<PermissionPolicyResponse> =
+            getPermissions(id, UserGetPermissionsParams.none())
+
+        /** @see [getPermissions] */
+        @MustBeClosed
         fun getPermissions(
-            params: UserGetPermissionsParams
-        ): HttpResponseFor<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
+            id: String,
+            params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PermissionPolicyResponse> =
+            getPermissions(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            id: String,
+            params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
+        ): HttpResponseFor<PermissionPolicyResponse> =
+            getPermissions(id, params, RequestOptions.none())
 
         /** @see [getPermissions] */
         @MustBeClosed
@@ -228,13 +392,43 @@ interface UserService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyResponse>
 
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            params: UserGetPermissionsParams
+        ): HttpResponseFor<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
+
+        /** @see [getPermissions] */
+        @MustBeClosed
+        fun getPermissions(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PermissionPolicyResponse> =
+            getPermissions(id, UserGetPermissionsParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
          * is otherwise the same as [UserService.getUserGroups].
          */
         @MustBeClosed
-        fun getUserGroups(params: UserGetUserGroupsParams): HttpResponseFor<ResourceGroupResponse> =
-            getUserGroups(params, RequestOptions.none())
+        fun getUserGroups(id: String): HttpResponseFor<ResourceGroupResponse> =
+            getUserGroups(id, UserGetUserGroupsParams.none())
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            id: String,
+            params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ResourceGroupResponse> =
+            getUserGroups(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            id: String,
+            params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
+        ): HttpResponseFor<ResourceGroupResponse> = getUserGroups(id, params, RequestOptions.none())
 
         /** @see [getUserGroups] */
         @MustBeClosed
@@ -242,6 +436,19 @@ interface UserService {
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ResourceGroupResponse>
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(params: UserGetUserGroupsParams): HttpResponseFor<ResourceGroupResponse> =
+            getUserGroups(params, RequestOptions.none())
+
+        /** @see [getUserGroups] */
+        @MustBeClosed
+        fun getUserGroups(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ResourceGroupResponse> =
+            getUserGroups(id, UserGetUserGroupsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
@@ -271,8 +478,23 @@ interface UserService {
          * but is otherwise the same as [UserService.resendPassword].
          */
         @MustBeClosed
-        fun resendPassword(params: UserResendPasswordParams): HttpResponse =
-            resendPassword(params, RequestOptions.none())
+        fun resendPassword(id: String): HttpResponse =
+            resendPassword(id, UserResendPasswordParams.none())
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(
+            id: String,
+            params: UserResendPasswordParams = UserResendPasswordParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse = resendPassword(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(
+            id: String,
+            params: UserResendPasswordParams = UserResendPasswordParams.none(),
+        ): HttpResponse = resendPassword(id, params, RequestOptions.none())
 
         /** @see [resendPassword] */
         @MustBeClosed
@@ -280,5 +502,15 @@ interface UserService {
             params: UserResendPasswordParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(params: UserResendPasswordParams): HttpResponse =
+            resendPassword(params, RequestOptions.none())
+
+        /** @see [resendPassword] */
+        @MustBeClosed
+        fun resendPassword(id: String, requestOptions: RequestOptions): HttpResponse =
+            resendPassword(id, UserResendPasswordParams.none(), requestOptions)
     }
 }

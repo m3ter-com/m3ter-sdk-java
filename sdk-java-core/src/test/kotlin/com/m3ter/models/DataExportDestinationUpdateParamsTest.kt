@@ -12,13 +12,16 @@ internal class DataExportDestinationUpdateParamsTest {
         DataExportDestinationUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .bucketName("xxx")
-            .code("JS!?Q0]r] ]\$]")
-            .iamRoleArn("arn:aws:iam::321669910225:role/z")
-            .name("x")
-            .partitionOrder(DataExportDestinationUpdateParams.PartitionOrder.TYPE_FIRST)
-            .prefix("prefix")
-            .version(0L)
+            .body(
+                DataExportDestinationS3Request.builder()
+                    .bucketName("xxx")
+                    .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                    .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                    .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
+                    .prefix("prefix")
+                    .version(0L)
+                    .build()
+            )
             .build()
     }
 
@@ -27,10 +30,13 @@ internal class DataExportDestinationUpdateParamsTest {
         val params =
             DataExportDestinationUpdateParams.builder()
                 .id("id")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
+                .body(
+                    DataExportDestinationS3Request.builder()
+                        .bucketName("xxx")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                        .build()
+                )
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
@@ -45,25 +51,33 @@ internal class DataExportDestinationUpdateParamsTest {
             DataExportDestinationUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
-                .partitionOrder(DataExportDestinationUpdateParams.PartitionOrder.TYPE_FIRST)
-                .prefix("prefix")
-                .version(0L)
+                .body(
+                    DataExportDestinationS3Request.builder()
+                        .bucketName("xxx")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                        .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
+                        .prefix("prefix")
+                        .version(0L)
+                        .build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.bucketName()).isEqualTo("xxx")
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
-        assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
-        assertThat(body.name()).isEqualTo("x")
-        assertThat(body.partitionOrder())
-            .contains(DataExportDestinationUpdateParams.PartitionOrder.TYPE_FIRST)
-        assertThat(body.prefix()).contains("prefix")
-        assertThat(body.version()).contains(0L)
+        assertThat(body)
+            .isEqualTo(
+                DataExportDestinationUpdateParams.Body.ofDataExportDestinationS3Request(
+                    DataExportDestinationS3Request.builder()
+                        .bucketName("xxx")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                        .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
+                        .prefix("prefix")
+                        .version(0L)
+                        .build()
+                )
+            )
     }
 
     @Test
@@ -71,17 +85,26 @@ internal class DataExportDestinationUpdateParamsTest {
         val params =
             DataExportDestinationUpdateParams.builder()
                 .id("id")
-                .bucketName("xxx")
-                .code("JS!?Q0]r] ]\$]")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                .name("x")
+                .body(
+                    DataExportDestinationS3Request.builder()
+                        .bucketName("xxx")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                        .build()
+                )
                 .build()
 
         val body = params._body()
 
-        assertThat(body.bucketName()).isEqualTo("xxx")
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
-        assertThat(body.iamRoleArn()).isEqualTo("arn:aws:iam::321669910225:role/z")
-        assertThat(body.name()).isEqualTo("x")
+        assertThat(body)
+            .isEqualTo(
+                DataExportDestinationUpdateParams.Body.ofDataExportDestinationS3Request(
+                    DataExportDestinationS3Request.builder()
+                        .bucketName("xxx")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                        .build()
+                )
+            )
     }
 }

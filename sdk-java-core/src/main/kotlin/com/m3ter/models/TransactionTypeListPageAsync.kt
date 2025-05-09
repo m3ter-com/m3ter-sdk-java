@@ -2,22 +2,24 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.AutoPagerAsync
+import com.m3ter.core.PageAsync
 import com.m3ter.core.checkRequired
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import java.util.Objects
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
-import java.util.function.Predicate
 import kotlin.jvm.optionals.getOrNull
 
 /** @see [TransactionTypeServiceAsync.list] */
 class TransactionTypeListPageAsync
 private constructor(
     private val service: TransactionTypeServiceAsync,
+    private val streamHandlerExecutor: Executor,
     private val params: TransactionTypeListParams,
     private val response: TransactionTypeListPageResponse,
-) {
+) : PageAsync<TransactionTypeResponse> {
 
     /**
      * Delegates to [TransactionTypeListPageResponse], but gracefully handles missing data.
@@ -34,24 +36,22 @@ private constructor(
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty() && nextToken().isPresent
+    override fun items(): List<TransactionTypeResponse> = data()
 
-    fun getNextPageParams(): Optional<TransactionTypeListParams> {
-        if (!hasNextPage()) {
-            return Optional.empty()
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty() && nextToken().isPresent
 
-        return Optional.of(
-            params.toBuilder().apply { nextToken().ifPresent { nextToken(it) } }.build()
-        )
+    fun nextPageParams(): TransactionTypeListParams {
+        val nextCursor =
+            nextToken().getOrNull()
+                ?: throw IllegalStateException("Cannot construct next page params")
+        return params.toBuilder().nextToken(nextCursor).build()
     }
 
-    fun getNextPage(): CompletableFuture<Optional<TransactionTypeListPageAsync>> =
-        getNextPageParams()
-            .map { service.list(it).thenApply { Optional.of(it) } }
-            .orElseGet { CompletableFuture.completedFuture(Optional.empty()) }
+    override fun nextPage(): CompletableFuture<TransactionTypeListPageAsync> =
+        service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<TransactionTypeResponse> =
+        AutoPagerAsync.from(this, streamHandlerExecutor)
 
     /** The parameters that were used to request this page. */
     fun params(): TransactionTypeListParams = params
@@ -69,6 +69,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -80,17 +81,23 @@ private constructor(
     class Builder internal constructor() {
 
         private var service: TransactionTypeServiceAsync? = null
+        private var streamHandlerExecutor: Executor? = null
         private var params: TransactionTypeListParams? = null
         private var response: TransactionTypeListPageResponse? = null
 
         @JvmSynthetic
         internal fun from(transactionTypeListPageAsync: TransactionTypeListPageAsync) = apply {
             service = transactionTypeListPageAsync.service
+            streamHandlerExecutor = transactionTypeListPageAsync.streamHandlerExecutor
             params = transactionTypeListPageAsync.params
             response = transactionTypeListPageAsync.response
         }
 
         fun service(service: TransactionTypeServiceAsync) = apply { this.service = service }
+
+        fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
+            this.streamHandlerExecutor = streamHandlerExecutor
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: TransactionTypeListParams) = apply { this.params = params }
@@ -106,6 +113,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .service()
+         * .streamHandlerExecutor()
          * .params()
          * .response()
          * ```
@@ -115,38 +123,10 @@ private constructor(
         fun build(): TransactionTypeListPageAsync =
             TransactionTypeListPageAsync(
                 checkRequired("service", service),
+                checkRequired("streamHandlerExecutor", streamHandlerExecutor),
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: TransactionTypeListPageAsync) {
-
-        fun forEach(
-            action: Predicate<TransactionTypeResponse>,
-            executor: Executor,
-        ): CompletableFuture<Void> {
-            fun CompletableFuture<Optional<TransactionTypeListPageAsync>>.forEach(
-                action: (TransactionTypeResponse) -> Boolean,
-                executor: Executor,
-            ): CompletableFuture<Void> =
-                thenComposeAsync(
-                    { page ->
-                        page
-                            .filter { it.data().all(action) }
-                            .map { it.getNextPage().forEach(action, executor) }
-                            .orElseGet { CompletableFuture.completedFuture(null) }
-                    },
-                    executor,
-                )
-            return CompletableFuture.completedFuture(Optional.of(firstPage))
-                .forEach(action::test, executor)
-        }
-
-        fun toList(executor: Executor): CompletableFuture<List<TransactionTypeResponse>> {
-            val values = mutableListOf<TransactionTypeResponse>()
-            return forEach(values::add, executor).thenApply { values }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -154,11 +134,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransactionTypeListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return /* spotless:off */ other is TransactionTypeListPageAsync && service == other.service && streamHandlerExecutor == other.streamHandlerExecutor && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, streamHandlerExecutor, params, response) /* spotless:on */
 
     override fun toString() =
-        "TransactionTypeListPageAsync{service=$service, params=$params, response=$response}"
+        "TransactionTypeListPageAsync{service=$service, streamHandlerExecutor=$streamHandlerExecutor, params=$params, response=$response}"
 }

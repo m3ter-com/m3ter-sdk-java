@@ -36,6 +36,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
@@ -106,7 +107,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billFrequencyInterval(): Optional<Long> = body.billFrequencyInterval()
+    fun billFrequencyInterval(): Optional<Int> = body.billFrequencyInterval()
 
     /**
      * A unique, short code reference for the PlanTemplate. This code should not contain control
@@ -204,7 +205,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun standingChargeInterval(): Optional<Long> = body.standingChargeInterval()
+    fun standingChargeInterval(): Optional<Int> = body.standingChargeInterval()
 
     /**
      * Defines an offset for when the standing charge is first applied. For example, if the bill is
@@ -215,7 +216,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun standingChargeOffset(): Optional<Long> = body.standingChargeOffset()
+    fun standingChargeOffset(): Optional<Int> = body.standingChargeOffset()
 
     /**
      * The version number of the entity:
@@ -271,7 +272,7 @@ private constructor(
      * Unlike [billFrequencyInterval], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
-    fun _billFrequencyInterval(): JsonField<Long> = body._billFrequencyInterval()
+    fun _billFrequencyInterval(): JsonField<Int> = body._billFrequencyInterval()
 
     /**
      * Returns the raw JSON value of [code].
@@ -339,7 +340,7 @@ private constructor(
      * Unlike [standingChargeInterval], this method doesn't throw if the JSON field has an
      * unexpected type.
      */
-    fun _standingChargeInterval(): JsonField<Long> = body._standingChargeInterval()
+    fun _standingChargeInterval(): JsonField<Int> = body._standingChargeInterval()
 
     /**
      * Returns the raw JSON value of [standingChargeOffset].
@@ -347,7 +348,7 @@ private constructor(
      * Unlike [standingChargeOffset], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
-    fun _standingChargeOffset(): JsonField<Long> = body._standingChargeOffset()
+    fun _standingChargeOffset(): JsonField<Int> = body._standingChargeOffset()
 
     /**
      * Returns the raw JSON value of [version].
@@ -397,9 +398,11 @@ private constructor(
             additionalQueryParams = planTemplateCreateParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
@@ -513,18 +516,18 @@ private constructor(
          * How often bills are issued. For example, if `billFrequency` is Monthly and
          * `billFrequencyInterval` is 3, bills are issued every three months.
          */
-        fun billFrequencyInterval(billFrequencyInterval: Long) = apply {
+        fun billFrequencyInterval(billFrequencyInterval: Int) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
         }
 
         /**
          * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long] value
+         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
+        fun billFrequencyInterval(billFrequencyInterval: JsonField<Int>) = apply {
             body.billFrequencyInterval(billFrequencyInterval)
         }
 
@@ -684,18 +687,18 @@ private constructor(
          * months and `standingChargeInterval` is 2, then the standing charge is applied every six
          * months.
          */
-        fun standingChargeInterval(standingChargeInterval: Long) = apply {
+        fun standingChargeInterval(standingChargeInterval: Int) = apply {
             body.standingChargeInterval(standingChargeInterval)
         }
 
         /**
          * Sets [Builder.standingChargeInterval] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.standingChargeInterval] with a well-typed [Long] value
+         * You should usually call [Builder.standingChargeInterval] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun standingChargeInterval(standingChargeInterval: JsonField<Long>) = apply {
+        fun standingChargeInterval(standingChargeInterval: JsonField<Int>) = apply {
             body.standingChargeInterval(standingChargeInterval)
         }
 
@@ -705,18 +708,18 @@ private constructor(
          * applied to the first bill _(at three months)_; if 1, it would be applied to the second
          * bill _(at six months)_, and so on.
          */
-        fun standingChargeOffset(standingChargeOffset: Long) = apply {
+        fun standingChargeOffset(standingChargeOffset: Int) = apply {
             body.standingChargeOffset(standingChargeOffset)
         }
 
         /**
          * Sets [Builder.standingChargeOffset] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.standingChargeOffset] with a well-typed [Long] value
+         * You should usually call [Builder.standingChargeOffset] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun standingChargeOffset(standingChargeOffset: JsonField<Long>) = apply {
+        fun standingChargeOffset(standingChargeOffset: JsonField<Int>) = apply {
             body.standingChargeOffset(standingChargeOffset)
         }
 
@@ -899,7 +902,7 @@ private constructor(
         private val name: JsonField<String>,
         private val productId: JsonField<String>,
         private val standingCharge: JsonField<Double>,
-        private val billFrequencyInterval: JsonField<Long>,
+        private val billFrequencyInterval: JsonField<Int>,
         private val code: JsonField<String>,
         private val customFields: JsonField<CustomFields>,
         private val minimumSpend: JsonField<Double>,
@@ -908,8 +911,8 @@ private constructor(
         private val ordinal: JsonField<Long>,
         private val standingChargeBillInAdvance: JsonField<Boolean>,
         private val standingChargeDescription: JsonField<String>,
-        private val standingChargeInterval: JsonField<Long>,
-        private val standingChargeOffset: JsonField<Long>,
+        private val standingChargeInterval: JsonField<Int>,
+        private val standingChargeOffset: JsonField<Int>,
         private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -931,7 +934,7 @@ private constructor(
             standingCharge: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("billFrequencyInterval")
             @ExcludeMissing
-            billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
+            billFrequencyInterval: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
             @JsonProperty("customFields")
             @ExcludeMissing
@@ -954,10 +957,10 @@ private constructor(
             standingChargeDescription: JsonField<String> = JsonMissing.of(),
             @JsonProperty("standingChargeInterval")
             @ExcludeMissing
-            standingChargeInterval: JsonField<Long> = JsonMissing.of(),
+            standingChargeInterval: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("standingChargeOffset")
             @ExcludeMissing
-            standingChargeOffset: JsonField<Long> = JsonMissing.of(),
+            standingChargeOffset: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(
             billFrequency,
@@ -1050,7 +1053,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun billFrequencyInterval(): Optional<Long> =
+        fun billFrequencyInterval(): Optional<Int> =
             billFrequencyInterval.getOptional("billFrequencyInterval")
 
         /**
@@ -1154,7 +1157,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun standingChargeInterval(): Optional<Long> =
+        fun standingChargeInterval(): Optional<Int> =
             standingChargeInterval.getOptional("standingChargeInterval")
 
         /**
@@ -1166,7 +1169,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun standingChargeOffset(): Optional<Long> =
+        fun standingChargeOffset(): Optional<Int> =
             standingChargeOffset.getOptional("standingChargeOffset")
 
         /**
@@ -1231,7 +1234,7 @@ private constructor(
          */
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
-        fun _billFrequencyInterval(): JsonField<Long> = billFrequencyInterval
+        fun _billFrequencyInterval(): JsonField<Int> = billFrequencyInterval
 
         /**
          * Returns the raw JSON value of [code].
@@ -1315,7 +1318,7 @@ private constructor(
          */
         @JsonProperty("standingChargeInterval")
         @ExcludeMissing
-        fun _standingChargeInterval(): JsonField<Long> = standingChargeInterval
+        fun _standingChargeInterval(): JsonField<Int> = standingChargeInterval
 
         /**
          * Returns the raw JSON value of [standingChargeOffset].
@@ -1325,7 +1328,7 @@ private constructor(
          */
         @JsonProperty("standingChargeOffset")
         @ExcludeMissing
-        fun _standingChargeOffset(): JsonField<Long> = standingChargeOffset
+        fun _standingChargeOffset(): JsonField<Int> = standingChargeOffset
 
         /**
          * Returns the raw JSON value of [version].
@@ -1371,7 +1374,7 @@ private constructor(
             private var name: JsonField<String>? = null
             private var productId: JsonField<String>? = null
             private var standingCharge: JsonField<Double>? = null
-            private var billFrequencyInterval: JsonField<Long> = JsonMissing.of()
+            private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var customFields: JsonField<CustomFields> = JsonMissing.of()
             private var minimumSpend: JsonField<Double> = JsonMissing.of()
@@ -1380,8 +1383,8 @@ private constructor(
             private var ordinal: JsonField<Long> = JsonMissing.of()
             private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
             private var standingChargeDescription: JsonField<String> = JsonMissing.of()
-            private var standingChargeInterval: JsonField<Long> = JsonMissing.of()
-            private var standingChargeOffset: JsonField<Long> = JsonMissing.of()
+            private var standingChargeInterval: JsonField<Int> = JsonMissing.of()
+            private var standingChargeOffset: JsonField<Int> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1507,17 +1510,17 @@ private constructor(
              * How often bills are issued. For example, if `billFrequency` is Monthly and
              * `billFrequencyInterval` is 3, bills are issued every three months.
              */
-            fun billFrequencyInterval(billFrequencyInterval: Long) =
+            fun billFrequencyInterval(billFrequencyInterval: Int) =
                 billFrequencyInterval(JsonField.of(billFrequencyInterval))
 
             /**
              * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
+             * You should usually call [Builder.billFrequencyInterval] with a well-typed [Int] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
-            fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
+            fun billFrequencyInterval(billFrequencyInterval: JsonField<Int>) = apply {
                 this.billFrequencyInterval = billFrequencyInterval
             }
 
@@ -1676,17 +1679,17 @@ private constructor(
              * three months and `standingChargeInterval` is 2, then the standing charge is applied
              * every six months.
              */
-            fun standingChargeInterval(standingChargeInterval: Long) =
+            fun standingChargeInterval(standingChargeInterval: Int) =
                 standingChargeInterval(JsonField.of(standingChargeInterval))
 
             /**
              * Sets [Builder.standingChargeInterval] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.standingChargeInterval] with a well-typed [Long]
+             * You should usually call [Builder.standingChargeInterval] with a well-typed [Int]
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun standingChargeInterval(standingChargeInterval: JsonField<Long>) = apply {
+            fun standingChargeInterval(standingChargeInterval: JsonField<Int>) = apply {
                 this.standingChargeInterval = standingChargeInterval
             }
 
@@ -1696,17 +1699,17 @@ private constructor(
              * is applied to the first bill _(at three months)_; if 1, it would be applied to the
              * second bill _(at six months)_, and so on.
              */
-            fun standingChargeOffset(standingChargeOffset: Long) =
+            fun standingChargeOffset(standingChargeOffset: Int) =
                 standingChargeOffset(JsonField.of(standingChargeOffset))
 
             /**
              * Sets [Builder.standingChargeOffset] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.standingChargeOffset] with a well-typed [Long] value
+             * You should usually call [Builder.standingChargeOffset] with a well-typed [Int] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun standingChargeOffset(standingChargeOffset: JsonField<Long>) = apply {
+            fun standingChargeOffset(standingChargeOffset: JsonField<Int>) = apply {
                 this.standingChargeOffset = standingChargeOffset
             }
 

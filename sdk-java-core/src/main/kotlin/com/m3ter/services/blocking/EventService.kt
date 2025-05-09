@@ -28,14 +28,34 @@ interface EventService {
      * corresponds to a unique instance of a state change within the system, classified under a
      * specific Event Type.
      */
-    fun retrieve(params: EventRetrieveParams): EventResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): EventResponse = retrieve(id, EventRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: EventRetrieveParams = EventRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: EventRetrieveParams = EventRetrieveParams.none(),
+    ): EventResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventResponse
+
+    /** @see [retrieve] */
+    fun retrieve(params: EventRetrieveParams): EventResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): EventResponse =
+        retrieve(id, EventRetrieveParams.none(), requestOptions)
 
     /**
      * List all Events.
@@ -136,8 +156,24 @@ interface EventService {
          * otherwise the same as [EventService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: EventRetrieveParams): HttpResponseFor<EventResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<EventResponse> =
+            retrieve(id, EventRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+        ): HttpResponseFor<EventResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -145,6 +181,16 @@ interface EventService {
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: EventRetrieveParams): HttpResponseFor<EventResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<EventResponse> =
+            retrieve(id, EventRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the

@@ -20,7 +20,8 @@ internal class CounterAdjustmentListParamsTest {
             .endDateEnd("endDateEnd")
             .endDateStart("endDateStart")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
+            .sortOrder("sortOrder")
             .build()
     }
 
@@ -46,7 +47,8 @@ internal class CounterAdjustmentListParamsTest {
                 .endDateEnd("endDateEnd")
                 .endDateStart("endDateStart")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
+                .sortOrder("sortOrder")
                 .build()
 
         val queryParams = params._queryParams()
@@ -63,6 +65,7 @@ internal class CounterAdjustmentListParamsTest {
                     .put("endDateStart", "endDateStart")
                     .put("nextToken", "nextToken")
                     .put("pageSize", "1")
+                    .put("sortOrder", "sortOrder")
                     .build()
             )
     }

@@ -36,7 +36,7 @@ internal class ScheduleServiceTest {
                             .addOperationalDataType(
                                 OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                             .version(0L)
                             .build()
                     )
@@ -88,7 +88,7 @@ internal class ScheduleServiceTest {
                             .addOperationalDataType(
                                 OperationalDataExportScheduleRequest.OperationalDataType.BILLS
                             )
-                            .sourceType(OperationalDataExportScheduleRequest.SourceType.USAGE)
+                            .sourceType(OperationalDataExportScheduleRequest.SourceType.OPERATIONAL)
                             .version(0L)
                             .build()
                     )

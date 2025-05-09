@@ -14,14 +14,14 @@ internal class AdHocOperationalDataRequestTest {
         val adHocOperationalDataRequest =
             AdHocOperationalDataRequest.builder()
                 .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
-                .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                 .version(0L)
                 .build()
 
         assertThat(adHocOperationalDataRequest.operationalDataTypes())
             .containsExactly(AdHocOperationalDataRequest.OperationalDataType.BILLS)
         assertThat(adHocOperationalDataRequest.sourceType())
-            .isEqualTo(AdHocOperationalDataRequest.SourceType.USAGE)
+            .isEqualTo(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
         assertThat(adHocOperationalDataRequest.version()).contains(0L)
     }
 
@@ -31,7 +31,7 @@ internal class AdHocOperationalDataRequestTest {
         val adHocOperationalDataRequest =
             AdHocOperationalDataRequest.builder()
                 .addOperationalDataType(AdHocOperationalDataRequest.OperationalDataType.BILLS)
-                .sourceType(AdHocOperationalDataRequest.SourceType.USAGE)
+                .sourceType(AdHocOperationalDataRequest.SourceType.OPERATIONAL)
                 .version(0L)
                 .build()
 

@@ -25,7 +25,7 @@ internal class CounterAdjustmentResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .purchaseOrderNumber("purchaseOrderNumber")
-                .value(0L)
+                .value(0)
                 .build()
 
         assertThat(counterAdjustmentResponse.id()).isEqualTo("id")
@@ -40,7 +40,7 @@ internal class CounterAdjustmentResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(counterAdjustmentResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(counterAdjustmentResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
-        assertThat(counterAdjustmentResponse.value()).contains(0L)
+        assertThat(counterAdjustmentResponse.value()).contains(0)
     }
 
     @Test
@@ -58,7 +58,7 @@ internal class CounterAdjustmentResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .purchaseOrderNumber("purchaseOrderNumber")
-                .value(0L)
+                .value(0)
                 .build()
 
         val roundtrippedCounterAdjustmentResponse =

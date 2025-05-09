@@ -30,7 +30,7 @@ private constructor(
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val lastModifiedBy: JsonField<String>,
     private val purchaseOrderNumber: JsonField<String>,
-    private val value: JsonField<Long>,
+    private val value: JsonField<Int>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -54,7 +54,7 @@ private constructor(
         @JsonProperty("purchaseOrderNumber")
         @ExcludeMissing
         purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("value") @ExcludeMissing value: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("value") @ExcludeMissing value: JsonField<Int> = JsonMissing.of(),
     ) : this(
         id,
         version,
@@ -160,7 +160,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun value(): Optional<Long> = value.getOptional("value")
+    fun value(): Optional<Int> = value.getOptional("value")
 
     /**
      * Returns the raw JSON value of [id].
@@ -246,7 +246,7 @@ private constructor(
      *
      * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Long> = value
+    @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Int> = value
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -287,7 +287,7 @@ private constructor(
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
-        private var value: JsonField<Long> = JsonMissing.of()
+        private var value: JsonField<Int> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -439,15 +439,15 @@ private constructor(
         }
 
         /** Integer Value of the Counter that was used to make the CounterAdjustment. */
-        fun value(value: Long) = value(JsonField.of(value))
+        fun value(value: Int) = value(JsonField.of(value))
 
         /**
          * Sets [Builder.value] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.value] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.value] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun value(value: JsonField<Long>) = apply { this.value = value }
+        fun value(value: JsonField<Int>) = apply { this.value = value }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()

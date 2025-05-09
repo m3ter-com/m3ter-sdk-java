@@ -7,6 +7,7 @@ import com.m3ter.client.okhttp.M3terOkHttpClientAsync
 import com.m3ter.models.DataExportDestinationCreateParams
 import com.m3ter.models.DataExportDestinationDeleteParams
 import com.m3ter.models.DataExportDestinationRetrieveParams
+import com.m3ter.models.DataExportDestinationS3Request
 import com.m3ter.models.DataExportDestinationUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -30,13 +31,18 @@ internal class DestinationServiceAsyncTest {
             destinationServiceAsync.create(
                 DataExportDestinationCreateParams.builder()
                     .orgId("orgId")
-                    .bucketName("xxx")
-                    .code("JS!?Q0]r] ]\$]")
-                    .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                    .name("x")
-                    .partitionOrder(DataExportDestinationCreateParams.PartitionOrder.TYPE_FIRST)
-                    .prefix("prefix")
-                    .version(0L)
+                    .body(
+                        DataExportDestinationS3Request.builder()
+                            .bucketName("xxx")
+                            .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                            .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                            .partitionOrder(
+                                DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST
+                            )
+                            .prefix("prefix")
+                            .version(0L)
+                            .build()
+                    )
                     .build()
             )
 
@@ -82,13 +88,18 @@ internal class DestinationServiceAsyncTest {
                 DataExportDestinationUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .bucketName("xxx")
-                    .code("JS!?Q0]r] ]\$]")
-                    .iamRoleArn("arn:aws:iam::321669910225:role/z")
-                    .name("x")
-                    .partitionOrder(DataExportDestinationUpdateParams.PartitionOrder.TYPE_FIRST)
-                    .prefix("prefix")
-                    .version(0L)
+                    .body(
+                        DataExportDestinationS3Request.builder()
+                            .bucketName("xxx")
+                            .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                            .destinationType(DataExportDestinationS3Request.DestinationType.S3)
+                            .partitionOrder(
+                                DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST
+                            )
+                            .prefix("prefix")
+                            .version(0L)
+                            .build()
+                    )
                     .build()
             )
 

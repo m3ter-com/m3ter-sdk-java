@@ -5,6 +5,7 @@ package com.m3ter.services.async.dataExports
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -27,6 +28,7 @@ import com.m3ter.models.DataExportDestinationRetrieveResponse
 import com.m3ter.models.DataExportDestinationUpdateParams
 import com.m3ter.models.DataExportDestinationUpdateResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class DestinationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DestinationServiceAsync {
@@ -121,6 +123,9 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
             params: DataExportDestinationRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportDestinationRetrieveResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -157,6 +162,9 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
             params: DataExportDestinationUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportDestinationUpdateResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -220,6 +228,7 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
                             .let {
                                 DataExportDestinationListPageAsync.builder()
                                     .service(DestinationServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -236,6 +245,9 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
             params: DataExportDestinationDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DataExportDestinationDeleteResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

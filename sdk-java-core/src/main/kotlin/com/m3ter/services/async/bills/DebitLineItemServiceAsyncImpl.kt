@@ -5,6 +5,7 @@ package com.m3ter.services.async.bills
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
 import com.m3ter.models.DebitLineItemResponse
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DebitLineItemServiceAsync {
@@ -82,6 +84,9 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -119,6 +124,9 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -156,6 +164,9 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -194,6 +205,9 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
             params: BillDebitLineItemListParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("billId", params.billId().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -221,6 +235,7 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
                             .let {
                                 BillDebitLineItemListPageAsync.builder()
                                     .service(DebitLineItemServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -237,6 +252,9 @@ class DebitLineItemServiceAsyncImpl internal constructor(private val clientOptio
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

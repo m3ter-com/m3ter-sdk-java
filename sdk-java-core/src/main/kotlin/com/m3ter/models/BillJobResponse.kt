@@ -28,7 +28,7 @@ private constructor(
     private val version: JsonField<Long>,
     private val accountIds: JsonField<List<String>>,
     private val billDate: JsonField<LocalDate>,
-    private val billFrequencyInterval: JsonField<Long>,
+    private val billFrequencyInterval: JsonField<Int>,
     private val billIds: JsonField<List<String>>,
     private val billingFrequency: JsonField<BillingFrequency>,
     private val createdBy: JsonField<String>,
@@ -62,7 +62,7 @@ private constructor(
         @JsonProperty("billDate") @ExcludeMissing billDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
-        billFrequencyInterval: JsonField<Long> = JsonMissing.of(),
+        billFrequencyInterval: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("billIds")
         @ExcludeMissing
         billIds: JsonField<List<String>> = JsonMissing.of(),
@@ -182,7 +182,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun billFrequencyInterval(): Optional<Long> =
+    fun billFrequencyInterval(): Optional<Int> =
         billFrequencyInterval.getOptional("billFrequencyInterval")
 
     /**
@@ -420,7 +420,7 @@ private constructor(
      */
     @JsonProperty("billFrequencyInterval")
     @ExcludeMissing
-    fun _billFrequencyInterval(): JsonField<Long> = billFrequencyInterval
+    fun _billFrequencyInterval(): JsonField<Int> = billFrequencyInterval
 
     /**
      * Returns the raw JSON value of [billIds].
@@ -615,7 +615,7 @@ private constructor(
         private var version: JsonField<Long>? = null
         private var accountIds: JsonField<MutableList<String>>? = null
         private var billDate: JsonField<LocalDate> = JsonMissing.of()
-        private var billFrequencyInterval: JsonField<Long> = JsonMissing.of()
+        private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
         private var billIds: JsonField<MutableList<String>>? = null
         private var billingFrequency: JsonField<BillingFrequency> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -744,17 +744,17 @@ private constructor(
          * For example, if `billingFrequency` is set to Monthly and `billFrequencyInterval` is set
          * to 3, Bills are issued every three months.
          */
-        fun billFrequencyInterval(billFrequencyInterval: Long) =
+        fun billFrequencyInterval(billFrequencyInterval: Int) =
             billFrequencyInterval(JsonField.of(billFrequencyInterval))
 
         /**
          * Sets [Builder.billFrequencyInterval] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Long] value
+         * You should usually call [Builder.billFrequencyInterval] with a well-typed [Int] value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun billFrequencyInterval(billFrequencyInterval: JsonField<Long>) = apply {
+        fun billFrequencyInterval(billFrequencyInterval: JsonField<Int>) = apply {
             this.billFrequencyInterval = billFrequencyInterval
         }
 

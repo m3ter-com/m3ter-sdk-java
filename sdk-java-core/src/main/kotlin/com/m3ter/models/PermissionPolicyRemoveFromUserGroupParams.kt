@@ -15,15 +15,16 @@ import kotlin.jvm.optionals.getOrNull
 class PermissionPolicyRemoveFromUserGroupParams
 private constructor(
     private val orgId: String?,
-    private val permissionPolicyId: String,
+    private val permissionPolicyId: String?,
     private val principalPermissionRequest: PrincipalPermissionRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
-    fun permissionPolicyId(): String = permissionPolicyId
+    fun permissionPolicyId(): Optional<String> = Optional.ofNullable(permissionPolicyId)
 
     fun principalPermissionRequest(): PrincipalPermissionRequest = principalPermissionRequest
 
@@ -44,7 +45,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .permissionPolicyId()
          * .principalPermissionRequest()
          * ```
          */
@@ -74,14 +74,22 @@ private constructor(
                 permissionPolicyRemoveFromUserGroupParams.additionalQueryParams.toBuilder()
         }
 
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: String?) = apply { this.orgId = orgId }
 
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
+        @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
-        fun permissionPolicyId(permissionPolicyId: String) = apply {
+        fun permissionPolicyId(permissionPolicyId: String?) = apply {
             this.permissionPolicyId = permissionPolicyId
         }
+
+        /**
+         * Alias for calling [Builder.permissionPolicyId] with `permissionPolicyId.orElse(null)`.
+         */
+        fun permissionPolicyId(permissionPolicyId: Optional<String>) =
+            permissionPolicyId(permissionPolicyId.getOrNull())
 
         fun principalPermissionRequest(principalPermissionRequest: PrincipalPermissionRequest) =
             apply {
@@ -193,7 +201,6 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .permissionPolicyId()
          * .principalPermissionRequest()
          * ```
          *
@@ -202,7 +209,7 @@ private constructor(
         fun build(): PermissionPolicyRemoveFromUserGroupParams =
             PermissionPolicyRemoveFromUserGroupParams(
                 orgId,
-                checkRequired("permissionPolicyId", permissionPolicyId),
+                permissionPolicyId,
                 checkRequired("principalPermissionRequest", principalPermissionRequest),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -214,7 +221,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> permissionPolicyId
+            1 -> permissionPolicyId ?: ""
             else -> ""
         }
 

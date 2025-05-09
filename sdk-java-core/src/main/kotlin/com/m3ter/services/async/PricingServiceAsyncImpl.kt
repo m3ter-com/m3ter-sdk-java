@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
 import com.m3ter.core.handlers.withErrorHandler
@@ -24,6 +25,7 @@ import com.m3ter.models.PricingResponse
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
+import kotlin.jvm.optionals.getOrNull
 
 class PricingServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PricingServiceAsync {
@@ -115,6 +117,9 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: PricingRetrieveParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PricingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -149,6 +154,9 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: PricingUpdateParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PricingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
@@ -210,6 +218,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .let {
                                 PricingListPageAsync.builder()
                                     .service(PricingServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
                                     .params(params)
                                     .response(it)
                                     .build()
@@ -225,6 +234,9 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: PricingDeleteParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<PricingResponse>> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)

@@ -35,8 +35,20 @@ interface CreditReasonService {
     ): CreditReasonResponse
 
     /** Retrieve the Credit Reason with the given UUID. */
-    fun retrieve(params: CreditReasonRetrieveParams): CreditReasonResponse =
-        retrieve(params, RequestOptions.none())
+    fun retrieve(id: String): CreditReasonResponse = retrieve(id, CreditReasonRetrieveParams.none())
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditReasonResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
+        id: String,
+        params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
+    ): CreditReasonResponse = retrieve(id, params, RequestOptions.none())
 
     /** @see [retrieve] */
     fun retrieve(
@@ -44,7 +56,26 @@ interface CreditReasonService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonResponse
 
+    /** @see [retrieve] */
+    fun retrieve(params: CreditReasonRetrieveParams): CreditReasonResponse =
+        retrieve(params, RequestOptions.none())
+
+    /** @see [retrieve] */
+    fun retrieve(id: String, requestOptions: RequestOptions): CreditReasonResponse =
+        retrieve(id, CreditReasonRetrieveParams.none(), requestOptions)
+
     /** Update the Credit Reason with the given UUID. */
+    fun update(id: String, params: CreditReasonUpdateParams): CreditReasonResponse =
+        update(id, params, RequestOptions.none())
+
+    /** @see [update] */
+    fun update(
+        id: String,
+        params: CreditReasonUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditReasonResponse = update(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [update] */
     fun update(params: CreditReasonUpdateParams): CreditReasonResponse =
         update(params, RequestOptions.none())
 
@@ -76,14 +107,34 @@ interface CreditReasonService {
         list(CreditReasonListParams.none(), requestOptions)
 
     /** Delete the Credit Reason with the given UUID. */
-    fun delete(params: CreditReasonDeleteParams): CreditReasonResponse =
-        delete(params, RequestOptions.none())
+    fun delete(id: String): CreditReasonResponse = delete(id, CreditReasonDeleteParams.none())
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditReasonResponse = delete(params.toBuilder().id(id).build(), requestOptions)
+
+    /** @see [delete] */
+    fun delete(
+        id: String,
+        params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
+    ): CreditReasonResponse = delete(id, params, RequestOptions.none())
 
     /** @see [delete] */
     fun delete(
         params: CreditReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditReasonResponse
+
+    /** @see [delete] */
+    fun delete(params: CreditReasonDeleteParams): CreditReasonResponse =
+        delete(params, RequestOptions.none())
+
+    /** @see [delete] */
+    fun delete(id: String, requestOptions: RequestOptions): CreditReasonResponse =
+        delete(id, CreditReasonDeleteParams.none(), requestOptions)
 
     /**
      * A view of [CreditReasonService] that provides access to raw HTTP responses for each method.
@@ -111,8 +162,24 @@ interface CreditReasonService {
          * [CreditReasonService.retrieve].
          */
         @MustBeClosed
-        fun retrieve(params: CreditReasonRetrieveParams): HttpResponseFor<CreditReasonResponse> =
-            retrieve(params, RequestOptions.none())
+        fun retrieve(id: String): HttpResponseFor<CreditReasonResponse> =
+            retrieve(id, CreditReasonRetrieveParams.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditReasonResponse> =
+            retrieve(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
+        ): HttpResponseFor<CreditReasonResponse> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
         @MustBeClosed
@@ -121,11 +188,40 @@ interface CreditReasonService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditReasonResponse>
 
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(params: CreditReasonRetrieveParams): HttpResponseFor<CreditReasonResponse> =
+            retrieve(params, RequestOptions.none())
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditReasonResponse> =
+            retrieve(id, CreditReasonRetrieveParams.none(), requestOptions)
+
         /**
          * Returns a raw HTTP response for `put
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonService.update].
          */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CreditReasonUpdateParams,
+        ): HttpResponseFor<CreditReasonResponse> = update(id, params, RequestOptions.none())
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            id: String,
+            params: CreditReasonUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditReasonResponse> =
+            update(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [update] */
         @MustBeClosed
         fun update(params: CreditReasonUpdateParams): HttpResponseFor<CreditReasonResponse> =
             update(params, RequestOptions.none())
@@ -168,8 +264,24 @@ interface CreditReasonService {
          * [CreditReasonService.delete].
          */
         @MustBeClosed
-        fun delete(params: CreditReasonDeleteParams): HttpResponseFor<CreditReasonResponse> =
-            delete(params, RequestOptions.none())
+        fun delete(id: String): HttpResponseFor<CreditReasonResponse> =
+            delete(id, CreditReasonDeleteParams.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditReasonResponse> =
+            delete(params.toBuilder().id(id).build(), requestOptions)
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
+        ): HttpResponseFor<CreditReasonResponse> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
         @MustBeClosed
@@ -177,5 +289,18 @@ interface CreditReasonService {
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditReasonResponse>
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(params: CreditReasonDeleteParams): HttpResponseFor<CreditReasonResponse> =
+            delete(params, RequestOptions.none())
+
+        /** @see [delete] */
+        @MustBeClosed
+        fun delete(
+            id: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditReasonResponse> =
+            delete(id, CreditReasonDeleteParams.none(), requestOptions)
     }
 }
