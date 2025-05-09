@@ -71,7 +71,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun offset(): Long = body.offset()
+    fun offset(): Int = body.offset()
 
     /**
      * The version number of the scheduled event configuration:
@@ -112,7 +112,7 @@ private constructor(
      *
      * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _offset(): JsonField<Long> = body._offset()
+    fun _offset(): JsonField<Int> = body._offset()
 
     /**
      * Returns the raw JSON value of [version].
@@ -238,15 +238,15 @@ private constructor(
          * The offset in days from the specified DateTime field on the referenced entity when the
          * scheduled Event will trigger.
          */
-        fun offset(offset: Long) = apply { body.offset(offset) }
+        fun offset(offset: Int) = apply { body.offset(offset) }
 
         /**
          * Sets [Builder.offset] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.offset] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun offset(offset: JsonField<Long>) = apply { body.offset(offset) }
+        fun offset(offset: JsonField<Int>) = apply { body.offset(offset) }
 
         /**
          * The version number of the scheduled event configuration:
@@ -425,7 +425,7 @@ private constructor(
         private val entity: JsonField<String>,
         private val field: JsonField<String>,
         private val name: JsonField<String>,
-        private val offset: JsonField<Long>,
+        private val offset: JsonField<Int>,
         private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -435,7 +435,7 @@ private constructor(
             @JsonProperty("entity") @ExcludeMissing entity: JsonField<String> = JsonMissing.of(),
             @JsonProperty("field") @ExcludeMissing field: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("offset") @ExcludeMissing offset: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("offset") @ExcludeMissing offset: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(entity, field, name, offset, version, mutableMapOf())
 
@@ -478,7 +478,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun offset(): Long = offset.getRequired("offset")
+        fun offset(): Int = offset.getRequired("offset")
 
         /**
          * The version number of the scheduled event configuration:
@@ -519,7 +519,7 @@ private constructor(
          *
          * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Long> = offset
+        @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Int> = offset
 
         /**
          * Returns the raw JSON value of [version].
@@ -562,7 +562,7 @@ private constructor(
             private var entity: JsonField<String>? = null
             private var field: JsonField<String>? = null
             private var name: JsonField<String>? = null
-            private var offset: JsonField<Long>? = null
+            private var offset: JsonField<Int>? = null
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -630,16 +630,16 @@ private constructor(
              * The offset in days from the specified DateTime field on the referenced entity when
              * the scheduled Event will trigger.
              */
-            fun offset(offset: Long) = offset(JsonField.of(offset))
+            fun offset(offset: Int) = offset(JsonField.of(offset))
 
             /**
              * Sets [Builder.offset] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.offset] with a well-typed [Long] value instead. This
+             * You should usually call [Builder.offset] with a well-typed [Int] value instead. This
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun offset(offset: JsonField<Long>) = apply { this.offset = offset }
+            fun offset(offset: JsonField<Int>) = apply { this.offset = offset }
 
             /**
              * The version number of the scheduled event configuration:

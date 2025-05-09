@@ -20,7 +20,7 @@ internal class EventListParamsTest {
             .nextToken("nextToken")
             .notificationCode("notificationCode")
             .notificationId("notificationId")
-            .pageSize(1L)
+            .pageSize(1)
             .resourceId("resourceId")
             .build()
     }
@@ -47,7 +47,7 @@ internal class EventListParamsTest {
                 .nextToken("nextToken")
                 .notificationCode("notificationCode")
                 .notificationId("notificationId")
-                .pageSize(1L)
+                .pageSize(1)
                 .resourceId("resourceId")
                 .build()
 

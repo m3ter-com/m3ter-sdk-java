@@ -20,7 +20,7 @@ private constructor(
     private val date: String?,
     private val ids: List<String>?,
     private val nextToken: String?,
-    private val pageSize: Long?,
+    private val pageSize: Int?,
     private val planId: String?,
     private val planTemplateId: String?,
     private val additionalHeaders: Headers,
@@ -40,7 +40,7 @@ private constructor(
     fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
 
     /** Number of CounterPricings to retrieve per page. */
-    fun pageSize(): Optional<Long> = Optional.ofNullable(pageSize)
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /** UUID of the Plan to retrieve CounterPricings for. */
     fun planId(): Optional<String> = Optional.ofNullable(planId)
@@ -69,7 +69,7 @@ private constructor(
         private var date: String? = null
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
-        private var pageSize: Long? = null
+        private var pageSize: Int? = null
         private var planId: String? = null
         private var planTemplateId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -121,17 +121,17 @@ private constructor(
         fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
 
         /** Number of CounterPricings to retrieve per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
 
         /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Long>) = pageSize(pageSize.getOrNull())
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /** UUID of the Plan to retrieve CounterPricings for. */
         fun planId(planId: String?) = apply { this.planId = planId }

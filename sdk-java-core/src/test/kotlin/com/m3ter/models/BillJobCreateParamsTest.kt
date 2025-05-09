@@ -15,7 +15,7 @@ internal class BillJobCreateParamsTest {
             .orgId("orgId")
             .addAccountId("string")
             .billDate(LocalDate.parse("2019-12-27"))
-            .billFrequencyInterval(0L)
+            .billFrequencyInterval(0)
             .billingFrequency(BillJobCreateParams.BillingFrequency.DAILY)
             .addCurrencyConversion(
                 CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
@@ -49,7 +49,7 @@ internal class BillJobCreateParamsTest {
                 .orgId("orgId")
                 .addAccountId("string")
                 .billDate(LocalDate.parse("2019-12-27"))
-                .billFrequencyInterval(0L)
+                .billFrequencyInterval(0)
                 .billingFrequency(BillJobCreateParams.BillingFrequency.DAILY)
                 .addCurrencyConversion(
                     CurrencyConversion.builder().from("EUR").to("USD").multiplier(1.12).build()
@@ -70,7 +70,7 @@ internal class BillJobCreateParamsTest {
 
         assertThat(body.accountIds().getOrNull()).containsExactly("string")
         assertThat(body.billDate()).contains(LocalDate.parse("2019-12-27"))
-        assertThat(body.billFrequencyInterval()).contains(0L)
+        assertThat(body.billFrequencyInterval()).contains(0)
         assertThat(body.billingFrequency()).contains(BillJobCreateParams.BillingFrequency.DAILY)
         assertThat(body.currencyConversions().getOrNull())
             .containsExactly(

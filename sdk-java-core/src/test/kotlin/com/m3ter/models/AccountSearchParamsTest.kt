@@ -12,9 +12,9 @@ internal class AccountSearchParamsTest {
     fun create() {
         AccountSearchParams.builder()
             .orgId("orgId")
-            .fromDocument(0L)
+            .fromDocument(0)
             .operator(AccountSearchParams.Operator.AND)
-            .pageSize(1L)
+            .pageSize(1)
             .searchQuery("searchQuery")
             .sortBy("sortBy")
             .sortOrder(AccountSearchParams.SortOrder.ASC)
@@ -35,9 +35,9 @@ internal class AccountSearchParamsTest {
         val params =
             AccountSearchParams.builder()
                 .orgId("orgId")
-                .fromDocument(0L)
+                .fromDocument(0)
                 .operator(AccountSearchParams.Operator.AND)
-                .pageSize(1L)
+                .pageSize(1)
                 .searchQuery("searchQuery")
                 .sortBy("sortBy")
                 .sortOrder(AccountSearchParams.SortOrder.ASC)

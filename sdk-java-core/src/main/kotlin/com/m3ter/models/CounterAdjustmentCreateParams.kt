@@ -80,7 +80,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun value(): Long = body.value()
+    fun value(): Int = body.value()
 
     /**
      * Purchase Order Number for the Counter Adjustment. _(Optional)_
@@ -129,7 +129,7 @@ private constructor(
      *
      * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _value(): JsonField<Long> = body._value()
+    fun _value(): JsonField<Int> = body._value()
 
     /**
      * Returns the raw JSON value of [purchaseOrderNumber].
@@ -256,15 +256,15 @@ private constructor(
          * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
          * not enter_ the plus or minus value relative to the previous Counter value on the Account.
          */
-        fun value(value: Long) = apply { body.value(value) }
+        fun value(value: Int) = apply { body.value(value) }
 
         /**
          * Sets [Builder.value] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.value] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.value] with a well-typed [Int] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun value(value: JsonField<Long>) = apply { body.value(value) }
+        fun value(value: JsonField<Int>) = apply { body.value(value) }
 
         /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
         fun purchaseOrderNumber(purchaseOrderNumber: String) = apply {
@@ -458,7 +458,7 @@ private constructor(
         private val accountId: JsonField<String>,
         private val counterId: JsonField<String>,
         private val date: JsonField<String>,
-        private val value: JsonField<Long>,
+        private val value: JsonField<Int>,
         private val purchaseOrderNumber: JsonField<String>,
         private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -473,7 +473,7 @@ private constructor(
             @ExcludeMissing
             counterId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("date") @ExcludeMissing date: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("value") @ExcludeMissing value: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("value") @ExcludeMissing value: JsonField<Int> = JsonMissing.of(),
             @JsonProperty("purchaseOrderNumber")
             @ExcludeMissing
             purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
@@ -518,7 +518,7 @@ private constructor(
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun value(): Long = value.getRequired("value")
+        fun value(): Int = value.getRequired("value")
 
         /**
          * Purchase Order Number for the Counter Adjustment. _(Optional)_
@@ -568,7 +568,7 @@ private constructor(
          *
          * Unlike [value], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Long> = value
+        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Int> = value
 
         /**
          * Returns the raw JSON value of [purchaseOrderNumber].
@@ -621,7 +621,7 @@ private constructor(
             private var accountId: JsonField<String>? = null
             private var counterId: JsonField<String>? = null
             private var date: JsonField<String>? = null
-            private var value: JsonField<Long>? = null
+            private var value: JsonField<Int>? = null
             private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -688,16 +688,16 @@ private constructor(
              * enter 10. _Do not enter_ the plus or minus value relative to the previous Counter
              * value on the Account.
              */
-            fun value(value: Long) = value(JsonField.of(value))
+            fun value(value: Int) = value(JsonField.of(value))
 
             /**
              * Sets [Builder.value] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.value] with a well-typed [Long] value instead. This
+             * You should usually call [Builder.value] with a well-typed [Int] value instead. This
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun value(value: JsonField<Long>) = apply { this.value = value }
+            fun value(value: JsonField<Int>) = apply { this.value = value }
 
             /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
             fun purchaseOrderNumber(purchaseOrderNumber: String) =

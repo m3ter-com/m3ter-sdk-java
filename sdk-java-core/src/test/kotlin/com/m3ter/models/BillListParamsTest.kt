@@ -24,7 +24,7 @@ internal class BillListParamsTest {
             .includeBillTotal(true)
             .locked(true)
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .status(BillListParams.Status.PENDING)
             .build()
     }
@@ -55,7 +55,7 @@ internal class BillListParamsTest {
                 .includeBillTotal(true)
                 .locked(true)
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .status(BillListParams.Status.PENDING)
                 .build()
 

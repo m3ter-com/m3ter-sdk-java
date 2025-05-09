@@ -15,7 +15,7 @@ internal class CounterListParamsTest {
             .addCode("string")
             .addId("string")
             .nextToken("nextToken")
-            .pageSize(1L)
+            .pageSize(1)
             .addProductId("string")
             .build()
     }
@@ -37,7 +37,7 @@ internal class CounterListParamsTest {
                 .addCode("string")
                 .addId("string")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .addProductId("string")
                 .build()
 

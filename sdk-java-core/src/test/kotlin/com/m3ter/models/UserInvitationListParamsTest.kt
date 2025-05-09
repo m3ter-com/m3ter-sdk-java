@@ -10,11 +10,7 @@ internal class UserInvitationListParamsTest {
 
     @Test
     fun create() {
-        UserInvitationListParams.builder()
-            .orgId("orgId")
-            .nextToken("nextToken")
-            .pageSize(1L)
-            .build()
+        UserInvitationListParams.builder().orgId("orgId").nextToken("nextToken").pageSize(1).build()
     }
 
     @Test
@@ -32,7 +28,7 @@ internal class UserInvitationListParamsTest {
             UserInvitationListParams.builder()
                 .orgId("orgId")
                 .nextToken("nextToken")
-                .pageSize(1L)
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()

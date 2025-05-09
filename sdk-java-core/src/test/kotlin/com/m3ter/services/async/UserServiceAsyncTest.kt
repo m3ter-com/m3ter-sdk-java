@@ -106,7 +106,7 @@ internal class UserServiceAsyncTest {
                     .orgId("orgId")
                     .id("id")
                     .nextToken("nextToken")
-                    .pageSize(1L)
+                    .pageSize(1)
                     .build()
             )
 
@@ -132,7 +132,7 @@ internal class UserServiceAsyncTest {
                     .orgId("orgId")
                     .id("id")
                     .nextToken("nextToken")
-                    .pageSize(1L)
+                    .pageSize(1)
                     .build()
             )
 
