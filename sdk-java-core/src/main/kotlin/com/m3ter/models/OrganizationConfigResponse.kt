@@ -15,7 +15,6 @@ import com.m3ter.core.checkKnown
 import com.m3ter.core.checkRequired
 import com.m3ter.core.toImmutable
 import com.m3ter.errors.M3terInvalidDataException
-import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
@@ -36,7 +35,7 @@ private constructor(
     private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
     private val currency: JsonField<String>,
     private val currencyConversions: JsonField<List<CurrencyConversion>>,
-    private val dayEpoch: JsonField<LocalDate>,
+    private val dayEpoch: JsonField<String>,
     private val daysBeforeBillDue: JsonField<Int>,
     private val defaultStatementDefinitionId: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
@@ -44,14 +43,14 @@ private constructor(
     private val externalInvoiceDate: JsonField<ExternalInvoiceDate>,
     private val lastModifiedBy: JsonField<String>,
     private val minimumSpendBillInAdvance: JsonField<Boolean>,
-    private val monthEpoch: JsonField<LocalDate>,
+    private val monthEpoch: JsonField<String>,
     private val scheduledBillInterval: JsonField<Double>,
     private val sequenceStartNumber: JsonField<Int>,
     private val standingChargeBillInAdvance: JsonField<Boolean>,
     private val suppressedEmptyBills: JsonField<Boolean>,
     private val timezone: JsonField<String>,
-    private val weekEpoch: JsonField<LocalDate>,
-    private val yearEpoch: JsonField<LocalDate>,
+    private val weekEpoch: JsonField<String>,
+    private val yearEpoch: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -86,7 +85,7 @@ private constructor(
         @JsonProperty("currencyConversions")
         @ExcludeMissing
         currencyConversions: JsonField<List<CurrencyConversion>> = JsonMissing.of(),
-        @JsonProperty("dayEpoch") @ExcludeMissing dayEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("dayEpoch") @ExcludeMissing dayEpoch: JsonField<String> = JsonMissing.of(),
         @JsonProperty("daysBeforeBillDue")
         @ExcludeMissing
         daysBeforeBillDue: JsonField<Int> = JsonMissing.of(),
@@ -110,7 +109,7 @@ private constructor(
         minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("monthEpoch")
         @ExcludeMissing
-        monthEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        monthEpoch: JsonField<String> = JsonMissing.of(),
         @JsonProperty("scheduledBillInterval")
         @ExcludeMissing
         scheduledBillInterval: JsonField<Double> = JsonMissing.of(),
@@ -124,12 +123,8 @@ private constructor(
         @ExcludeMissing
         suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("weekEpoch")
-        @ExcludeMissing
-        weekEpoch: JsonField<LocalDate> = JsonMissing.of(),
-        @JsonProperty("yearEpoch")
-        @ExcludeMissing
-        yearEpoch: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("weekEpoch") @ExcludeMissing weekEpoch: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("yearEpoch") @ExcludeMissing yearEpoch: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
         version,
@@ -292,7 +287,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun dayEpoch(): Optional<LocalDate> = dayEpoch.getOptional("dayEpoch")
+    fun dayEpoch(): Optional<String> = dayEpoch.getOptional("dayEpoch")
 
     /**
      * The number of days after the Bill generation date shown on Bills as the due date.
@@ -364,7 +359,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun monthEpoch(): Optional<LocalDate> = monthEpoch.getOptional("monthEpoch")
+    fun monthEpoch(): Optional<String> = monthEpoch.getOptional("monthEpoch")
 
     /**
      * Specifies the required interval for updating bills.
@@ -427,7 +422,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun weekEpoch(): Optional<LocalDate> = weekEpoch.getOptional("weekEpoch")
+    fun weekEpoch(): Optional<String> = weekEpoch.getOptional("weekEpoch")
 
     /**
      * The first bill date _(in ISO-8601 format)_ for yearly billing periods.
@@ -435,7 +430,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun yearEpoch(): Optional<LocalDate> = yearEpoch.getOptional("yearEpoch")
+    fun yearEpoch(): Optional<String> = yearEpoch.getOptional("yearEpoch")
 
     /**
      * Returns the raw JSON value of [id].
@@ -549,7 +544,7 @@ private constructor(
      *
      * Unlike [dayEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("dayEpoch") @ExcludeMissing fun _dayEpoch(): JsonField<LocalDate> = dayEpoch
+    @JsonProperty("dayEpoch") @ExcludeMissing fun _dayEpoch(): JsonField<String> = dayEpoch
 
     /**
      * Returns the raw JSON value of [daysBeforeBillDue].
@@ -623,7 +618,7 @@ private constructor(
      *
      * Unlike [monthEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("monthEpoch") @ExcludeMissing fun _monthEpoch(): JsonField<LocalDate> = monthEpoch
+    @JsonProperty("monthEpoch") @ExcludeMissing fun _monthEpoch(): JsonField<String> = monthEpoch
 
     /**
      * Returns the raw JSON value of [scheduledBillInterval].
@@ -677,14 +672,14 @@ private constructor(
      *
      * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("weekEpoch") @ExcludeMissing fun _weekEpoch(): JsonField<LocalDate> = weekEpoch
+    @JsonProperty("weekEpoch") @ExcludeMissing fun _weekEpoch(): JsonField<String> = weekEpoch
 
     /**
      * Returns the raw JSON value of [yearEpoch].
      *
      * Unlike [yearEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("yearEpoch") @ExcludeMissing fun _yearEpoch(): JsonField<LocalDate> = yearEpoch
+    @JsonProperty("yearEpoch") @ExcludeMissing fun _yearEpoch(): JsonField<String> = yearEpoch
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -729,7 +724,7 @@ private constructor(
         private var creditApplicationOrder: JsonField<MutableList<CreditApplicationOrder>>? = null
         private var currency: JsonField<String> = JsonMissing.of()
         private var currencyConversions: JsonField<MutableList<CurrencyConversion>>? = null
-        private var dayEpoch: JsonField<LocalDate> = JsonMissing.of()
+        private var dayEpoch: JsonField<String> = JsonMissing.of()
         private var daysBeforeBillDue: JsonField<Int> = JsonMissing.of()
         private var defaultStatementDefinitionId: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -737,14 +732,14 @@ private constructor(
         private var externalInvoiceDate: JsonField<ExternalInvoiceDate> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of()
-        private var monthEpoch: JsonField<LocalDate> = JsonMissing.of()
+        private var monthEpoch: JsonField<String> = JsonMissing.of()
         private var scheduledBillInterval: JsonField<Double> = JsonMissing.of()
         private var sequenceStartNumber: JsonField<Int> = JsonMissing.of()
         private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of()
         private var timezone: JsonField<String> = JsonMissing.of()
-        private var weekEpoch: JsonField<LocalDate> = JsonMissing.of()
-        private var yearEpoch: JsonField<LocalDate> = JsonMissing.of()
+        private var weekEpoch: JsonField<String> = JsonMissing.of()
+        private var yearEpoch: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -1016,16 +1011,15 @@ private constructor(
         }
 
         /** The first bill date _(in ISO-8601 format)_ for daily billing periods. */
-        fun dayEpoch(dayEpoch: LocalDate) = dayEpoch(JsonField.of(dayEpoch))
+        fun dayEpoch(dayEpoch: String) = dayEpoch(JsonField.of(dayEpoch))
 
         /**
          * Sets [Builder.dayEpoch] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.dayEpoch] with a well-typed [LocalDate] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.dayEpoch] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun dayEpoch(dayEpoch: JsonField<LocalDate>) = apply { this.dayEpoch = dayEpoch }
+        fun dayEpoch(dayEpoch: JsonField<String>) = apply { this.dayEpoch = dayEpoch }
 
         /** The number of days after the Bill generation date shown on Bills as the due date. */
         fun daysBeforeBillDue(daysBeforeBillDue: Int) =
@@ -1139,16 +1133,16 @@ private constructor(
         }
 
         /** The first bill date _(in ISO-8601 format)_ for monthly billing periods. */
-        fun monthEpoch(monthEpoch: LocalDate) = monthEpoch(JsonField.of(monthEpoch))
+        fun monthEpoch(monthEpoch: String) = monthEpoch(JsonField.of(monthEpoch))
 
         /**
          * Sets [Builder.monthEpoch] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.monthEpoch] with a well-typed [LocalDate] value instead.
+         * You should usually call [Builder.monthEpoch] with a well-typed [String] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun monthEpoch(monthEpoch: JsonField<LocalDate>) = apply { this.monthEpoch = monthEpoch }
+        fun monthEpoch(monthEpoch: JsonField<String>) = apply { this.monthEpoch = monthEpoch }
 
         /**
          * Specifies the required interval for updating bills.
@@ -1241,28 +1235,28 @@ private constructor(
         fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
         /** The first bill date _(in ISO-8601 format)_ for weekly billing periods. */
-        fun weekEpoch(weekEpoch: LocalDate) = weekEpoch(JsonField.of(weekEpoch))
+        fun weekEpoch(weekEpoch: String) = weekEpoch(JsonField.of(weekEpoch))
 
         /**
          * Sets [Builder.weekEpoch] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.weekEpoch] with a well-typed [LocalDate] value instead.
+         * You should usually call [Builder.weekEpoch] with a well-typed [String] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun weekEpoch(weekEpoch: JsonField<LocalDate>) = apply { this.weekEpoch = weekEpoch }
+        fun weekEpoch(weekEpoch: JsonField<String>) = apply { this.weekEpoch = weekEpoch }
 
         /** The first bill date _(in ISO-8601 format)_ for yearly billing periods. */
-        fun yearEpoch(yearEpoch: LocalDate) = yearEpoch(JsonField.of(yearEpoch))
+        fun yearEpoch(yearEpoch: String) = yearEpoch(JsonField.of(yearEpoch))
 
         /**
          * Sets [Builder.yearEpoch] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.yearEpoch] with a well-typed [LocalDate] value instead.
+         * You should usually call [Builder.yearEpoch] with a well-typed [String] value instead.
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun yearEpoch(yearEpoch: JsonField<LocalDate>) = apply { this.yearEpoch = yearEpoch }
+        fun yearEpoch(yearEpoch: JsonField<String>) = apply { this.yearEpoch = yearEpoch }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()

@@ -88,7 +88,7 @@ internal class DataExportScheduleCreateResponseTest {
                         .build()
                 )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                 .build()
 
         val dataExportScheduleCreateResponse =
@@ -132,7 +132,7 @@ internal class DataExportScheduleCreateResponseTest {
                             .build()
                     )
                     .addMeterId("string")
-                    .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
+                    .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                     .build()
             )
 

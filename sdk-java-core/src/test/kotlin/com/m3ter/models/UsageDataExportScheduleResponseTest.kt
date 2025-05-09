@@ -39,7 +39,7 @@ internal class UsageDataExportScheduleResponseTest {
                         .build()
                 )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                 .build()
 
         assertThat(usageDataExportScheduleResponse.id()).isEqualTo("id")
@@ -74,7 +74,7 @@ internal class UsageDataExportScheduleResponseTest {
             )
         assertThat(usageDataExportScheduleResponse.meterIds().getOrNull()).containsExactly("string")
         assertThat(usageDataExportScheduleResponse.timePeriod())
-            .contains(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
+            .contains(UsageDataExportScheduleResponse.TimePeriod.TODAY)
     }
 
     @Test
@@ -107,7 +107,7 @@ internal class UsageDataExportScheduleResponseTest {
                         .build()
                 )
                 .addMeterId("string")
-                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.LAST_12_HOURS)
+                .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
                 .build()
 
         val roundtrippedUsageDataExportScheduleResponse =

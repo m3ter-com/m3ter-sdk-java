@@ -11,16 +11,20 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
     fun create() {
         UsageFileUploadGenerateUploadUrlParams.builder()
             .orgId("orgId")
-            .contentType("x")
-            .fileName("x")
             .contentLength(1L)
+            .contentType(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
+            .fileName("x")
             .build()
     }
 
     @Test
     fun pathParams() {
         val params =
-            UsageFileUploadGenerateUploadUrlParams.builder().contentType("x").fileName("x").build()
+            UsageFileUploadGenerateUploadUrlParams.builder()
+                .contentLength(1L)
+                .contentType(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
+                .fileName("x")
+                .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
@@ -32,26 +36,33 @@ internal class UsageFileUploadGenerateUploadUrlParamsTest {
         val params =
             UsageFileUploadGenerateUploadUrlParams.builder()
                 .orgId("orgId")
-                .contentType("x")
-                .fileName("x")
                 .contentLength(1L)
+                .contentType(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
+                .fileName("x")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.contentType()).isEqualTo("x")
+        assertThat(body.contentLength()).isEqualTo(1L)
+        assertThat(body.contentType())
+            .isEqualTo(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
         assertThat(body.fileName()).isEqualTo("x")
-        assertThat(body.contentLength()).contains(1L)
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
         val params =
-            UsageFileUploadGenerateUploadUrlParams.builder().contentType("x").fileName("x").build()
+            UsageFileUploadGenerateUploadUrlParams.builder()
+                .contentLength(1L)
+                .contentType(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
+                .fileName("x")
+                .build()
 
         val body = params._body()
 
-        assertThat(body.contentType()).isEqualTo("x")
+        assertThat(body.contentLength()).isEqualTo(1L)
+        assertThat(body.contentType())
+            .isEqualTo(UsageFileUploadGenerateUploadUrlParams.ContentType.APPLICATION_JSON)
         assertThat(body.fileName()).isEqualTo("x")
     }
 }
