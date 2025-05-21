@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1-alpha (2025-05-21)
+
+Full Changelog: [v0.3.0-alpha...v0.3.1-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.3.0-alpha...v0.3.1-alpha)
+
+### Chores
+
+* **docs:** grammar improvements ([e090c4b](https://github.com/m3ter-com/m3ter-sdk-java/commit/e090c4b7d2cc8612bea53ff3dc6ebfcc3c59dbd6))
+
 ## 0.3.0-alpha (2025-05-09)
 
 Full Changelog: [v0.2.0-alpha...v0.3.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.2.0-alpha...v0.3.0-alpha)
