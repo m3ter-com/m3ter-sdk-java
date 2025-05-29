@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AdHocResponse
@@ -100,14 +99,12 @@ interface DataExportServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/adhoc`, but is
          * otherwise the same as [DataExportServiceAsync.createAdhoc].
          */
-        @MustBeClosed
         fun createAdhoc(
             params: DataExportCreateAdhocParams
         ): CompletableFuture<HttpResponseFor<AdHocResponse>> =
             createAdhoc(params, RequestOptions.none())
 
         /** @see [createAdhoc] */
-        @MustBeClosed
         fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions = RequestOptions.none(),

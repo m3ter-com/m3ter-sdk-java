@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillConfigResponse
@@ -70,26 +69,22 @@ interface BillConfigServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(BillConfigRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
@@ -99,26 +94,22 @@ interface BillConfigServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigServiceAsync.update].
          */
-        @MustBeClosed
         fun update(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(BillConfigUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =

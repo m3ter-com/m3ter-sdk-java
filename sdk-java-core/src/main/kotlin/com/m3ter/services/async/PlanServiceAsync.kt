@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.PlanCreateParams
@@ -143,12 +142,10 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: PlanCreateParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: PlanCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -158,12 +155,10 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PlanResponse>> =
             retrieve(id, PlanRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PlanRetrieveParams = PlanRetrieveParams.none(),
@@ -172,7 +167,6 @@ interface PlanServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PlanRetrieveParams = PlanRetrieveParams.none(),
@@ -180,19 +174,16 @@ interface PlanServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: PlanRetrieveParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -203,7 +194,6 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/plans/{id}`, but is otherwise
          * the same as [PlanServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: PlanUpdateParams,
@@ -211,7 +201,6 @@ interface PlanServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: PlanUpdateParams,
@@ -220,12 +209,10 @@ interface PlanServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(params: PlanUpdateParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -235,26 +222,22 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/plans`, but is otherwise the
          * same as [PlanServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
             list(PlanListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PlanListParams = PlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PlanListParams = PlanListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PlanListPageAsync>> =
@@ -264,12 +247,10 @@ interface PlanServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/plans/{id}`, but is
          * otherwise the same as [PlanServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<PlanResponse>> =
             delete(id, PlanDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: PlanDeleteParams = PlanDeleteParams.none(),
@@ -278,7 +259,6 @@ interface PlanServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: PlanDeleteParams = PlanDeleteParams.none(),
@@ -286,19 +266,16 @@ interface PlanServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: PlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: PlanDeleteParams): CompletableFuture<HttpResponseFor<PlanResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CreditReasonCreateParams
@@ -161,14 +160,12 @@ interface CreditReasonServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/creditreasons`,
          * but is otherwise the same as [CreditReasonServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CreditReasonCreateParams
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CreditReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -179,12 +176,10 @@ interface CreditReasonServiceAsync {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             retrieve(id, CreditReasonRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
@@ -193,7 +188,6 @@ interface CreditReasonServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CreditReasonRetrieveParams = CreditReasonRetrieveParams.none(),
@@ -201,21 +195,18 @@ interface CreditReasonServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CreditReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CreditReasonRetrieveParams
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -227,7 +218,6 @@ interface CreditReasonServiceAsync {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: CreditReasonUpdateParams,
@@ -235,7 +225,6 @@ interface CreditReasonServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CreditReasonUpdateParams,
@@ -244,14 +233,12 @@ interface CreditReasonServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CreditReasonUpdateParams
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CreditReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -261,26 +248,22 @@ interface CreditReasonServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/creditreasons`, but
          * is otherwise the same as [CreditReasonServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
             list(CreditReasonListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CreditReasonListParams = CreditReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CreditReasonListParams = CreditReasonListParams.none()
         ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CreditReasonListPageAsync>> =
@@ -291,12 +274,10 @@ interface CreditReasonServiceAsync {
          * /organizations/{orgId}/picklists/creditreasons/{id}`, but is otherwise the same as
          * [CreditReasonServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             delete(id, CreditReasonDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
@@ -305,7 +286,6 @@ interface CreditReasonServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CreditReasonDeleteParams = CreditReasonDeleteParams.none(),
@@ -313,21 +293,18 @@ interface CreditReasonServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CreditReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CreditReasonDeleteParams
         ): CompletableFuture<HttpResponseFor<CreditReasonResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

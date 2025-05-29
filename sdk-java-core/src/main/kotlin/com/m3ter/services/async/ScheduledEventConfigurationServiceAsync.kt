@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.ScheduledEventConfigurationCreateParams
@@ -174,14 +173,12 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: ScheduledEventConfigurationCreateParams
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ScheduledEventConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -192,14 +189,12 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             retrieve(id, ScheduledEventConfigurationRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ScheduledEventConfigurationRetrieveParams =
@@ -209,7 +204,6 @@ interface ScheduledEventConfigurationServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ScheduledEventConfigurationRetrieveParams =
@@ -218,21 +212,18 @@ interface ScheduledEventConfigurationServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -244,7 +235,6 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: ScheduledEventConfigurationUpdateParams,
@@ -252,7 +242,6 @@ interface ScheduledEventConfigurationServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ScheduledEventConfigurationUpdateParams,
@@ -261,14 +250,12 @@ interface ScheduledEventConfigurationServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ScheduledEventConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -279,12 +266,10 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
             list(ScheduledEventConfigurationListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ScheduledEventConfigurationListParams =
                 ScheduledEventConfigurationListParams.none(),
@@ -292,7 +277,6 @@ interface ScheduledEventConfigurationServiceAsync {
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ScheduledEventConfigurationListParams =
                 ScheduledEventConfigurationListParams.none()
@@ -300,7 +284,6 @@ interface ScheduledEventConfigurationServiceAsync {
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationListPageAsync>> =
@@ -311,14 +294,12 @@ interface ScheduledEventConfigurationServiceAsync {
          * /organizations/{orgId}/scheduledevents/configurations/{id}`, but is otherwise the same as
          * [ScheduledEventConfigurationServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(
             id: String
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             delete(id, ScheduledEventConfigurationDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ScheduledEventConfigurationDeleteParams =
@@ -328,7 +309,6 @@ interface ScheduledEventConfigurationServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ScheduledEventConfigurationDeleteParams =
@@ -337,21 +317,18 @@ interface ScheduledEventConfigurationServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ScheduledEventConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ScheduledEventConfigurationDeleteParams
         ): CompletableFuture<HttpResponseFor<ScheduledEventConfigurationResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

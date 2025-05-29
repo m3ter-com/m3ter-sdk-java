@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async.bills
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillLineItemListPageAsync
@@ -98,7 +97,6 @@ interface LineItemServiceAsync {
          * /organizations/{orgId}/bills/{billId}/lineitems/{id}`, but is otherwise the same as
          * [LineItemServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BillLineItemRetrieveParams,
@@ -106,7 +104,6 @@ interface LineItemServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BillLineItemRetrieveParams,
@@ -115,14 +112,12 @@ interface LineItemServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillLineItemRetrieveParams
         ): CompletableFuture<HttpResponseFor<LineItemResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -132,12 +127,10 @@ interface LineItemServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/bills/{billId}/lineitems`,
          * but is otherwise the same as [LineItemServiceAsync.list].
          */
-        @MustBeClosed
         fun list(billId: String): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(billId, BillLineItemListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             billId: String,
             params: BillLineItemListParams = BillLineItemListParams.none(),
@@ -146,7 +139,6 @@ interface LineItemServiceAsync {
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             billId: String,
             params: BillLineItemListParams = BillLineItemListParams.none(),
@@ -154,21 +146,18 @@ interface LineItemServiceAsync {
             list(billId, params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BillLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BillLineItemListParams
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             billId: String,
             requestOptions: RequestOptions,

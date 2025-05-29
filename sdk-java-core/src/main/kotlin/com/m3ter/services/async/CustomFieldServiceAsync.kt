@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CustomFieldRetrieveParams
@@ -66,26 +65,22 @@ interface CustomFieldServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/customfields`, but is
          * otherwise the same as [CustomFieldServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(CustomFieldRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
@@ -95,26 +90,22 @@ interface CustomFieldServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/customfields`, but is
          * otherwise the same as [CustomFieldServiceAsync.update].
          */
-        @MustBeClosed
         fun update(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(CustomFieldUpdateParams.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =

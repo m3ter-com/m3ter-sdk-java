@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AccountPlanCreateParams
@@ -187,14 +186,12 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/accountplans`, but is
          * otherwise the same as [AccountPlanServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: AccountPlanCreateParams
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: AccountPlanCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -204,12 +201,10 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             retrieve(id, AccountPlanRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountPlanRetrieveParams = AccountPlanRetrieveParams.none(),
@@ -218,7 +213,6 @@ interface AccountPlanServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountPlanRetrieveParams = AccountPlanRetrieveParams.none(),
@@ -226,21 +220,18 @@ interface AccountPlanServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountPlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountPlanRetrieveParams
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -251,7 +242,6 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: AccountPlanUpdateParams,
@@ -259,7 +249,6 @@ interface AccountPlanServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: AccountPlanUpdateParams,
@@ -268,14 +257,12 @@ interface AccountPlanServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: AccountPlanUpdateParams
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: AccountPlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -285,26 +272,22 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accountplans`, but is
          * otherwise the same as [AccountPlanServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
             list(AccountPlanListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountPlanListParams = AccountPlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountPlanListParams = AccountPlanListParams.none()
         ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<AccountPlanListPageAsync>> =
@@ -314,12 +297,10 @@ interface AccountPlanServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accountplans/{id}`, but is
          * otherwise the same as [AccountPlanServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             delete(id, AccountPlanDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: AccountPlanDeleteParams = AccountPlanDeleteParams.none(),
@@ -328,7 +309,6 @@ interface AccountPlanServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: AccountPlanDeleteParams = AccountPlanDeleteParams.none(),
@@ -336,21 +316,18 @@ interface AccountPlanServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: AccountPlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: AccountPlanDeleteParams
         ): CompletableFuture<HttpResponseFor<AccountPlanResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

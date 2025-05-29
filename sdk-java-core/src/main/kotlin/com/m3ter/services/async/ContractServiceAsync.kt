@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.ContractCreateParams
@@ -208,14 +207,12 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: ContractCreateParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: ContractCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -225,12 +222,10 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(id, ContractRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ContractRetrieveParams = ContractRetrieveParams.none(),
@@ -239,7 +234,6 @@ interface ContractServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: ContractRetrieveParams = ContractRetrieveParams.none(),
@@ -247,21 +241,18 @@ interface ContractServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: ContractRetrieveParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -272,7 +263,6 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: ContractUpdateParams,
@@ -280,7 +270,6 @@ interface ContractServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: ContractUpdateParams,
@@ -289,14 +278,12 @@ interface ContractServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ContractUpdateParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: ContractUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -306,26 +293,22 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/contracts`, but is otherwise
          * the same as [ContractServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
             list(ContractListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ContractListParams = ContractListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: ContractListParams = ContractListParams.none()
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
@@ -335,12 +318,10 @@ interface ContractServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/contracts/{id}`, but is
          * otherwise the same as [ContractServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(id, ContractDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ContractDeleteParams = ContractDeleteParams.none(),
@@ -349,7 +330,6 @@ interface ContractServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: ContractDeleteParams = ContractDeleteParams.none(),
@@ -357,21 +337,18 @@ interface ContractServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: ContractDeleteParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -383,7 +360,6 @@ interface ContractServiceAsync {
          * /organizations/{orgId}/contracts/{id}/enddatebillingentities`, but is otherwise the same
          * as [ContractServiceAsync.endDateBillingEntities].
          */
-        @MustBeClosed
         fun endDateBillingEntities(
             id: String,
             params: ContractEndDateBillingEntitiesParams,
@@ -391,7 +367,6 @@ interface ContractServiceAsync {
             endDateBillingEntities(id, params, RequestOptions.none())
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             id: String,
             params: ContractEndDateBillingEntitiesParams,
@@ -400,14 +375,12 @@ interface ContractServiceAsync {
             endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams
         ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> =
             endDateBillingEntities(params, RequestOptions.none())
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,
             requestOptions: RequestOptions = RequestOptions.none(),

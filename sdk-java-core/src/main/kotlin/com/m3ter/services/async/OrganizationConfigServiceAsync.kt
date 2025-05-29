@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.OrganizationConfigResponse
@@ -57,26 +56,22 @@ interface OrganizationConfigServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/organizationconfig`, but is
          * otherwise the same as [OrganizationConfigServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             retrieve(OrganizationConfigRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
@@ -86,14 +81,12 @@ interface OrganizationConfigServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/organizationconfig`, but is
          * otherwise the same as [OrganizationConfigServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             params: OrganizationConfigUpdateParams
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

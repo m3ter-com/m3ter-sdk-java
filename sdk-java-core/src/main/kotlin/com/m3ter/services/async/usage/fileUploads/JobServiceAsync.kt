@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async.usage.fileUploads
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.FileUploadJobResponse
@@ -147,12 +146,10 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
          * [JobServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<FileUploadJobResponse>> =
             retrieve(id, UsageFileUploadJobRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: UsageFileUploadJobRetrieveParams = UsageFileUploadJobRetrieveParams.none(),
@@ -161,7 +158,6 @@ interface JobServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: UsageFileUploadJobRetrieveParams = UsageFileUploadJobRetrieveParams.none(),
@@ -169,21 +165,18 @@ interface JobServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<FileUploadJobResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams
         ): CompletableFuture<HttpResponseFor<FileUploadJobResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -195,26 +188,22 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs`, but is otherwise the same as
          * [JobServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
             list(UsageFileUploadJobListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobListPageAsync>> =
@@ -225,14 +214,12 @@ interface JobServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}/original`, but is otherwise the
          * same as [JobServiceAsync.getOriginalDownloadUrl].
          */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>> =
             getOriginalDownloadUrl(id, UsageFileUploadJobGetOriginalDownloadUrlParams.none())
 
         /** @see [getOriginalDownloadUrl] */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,
             params: UsageFileUploadJobGetOriginalDownloadUrlParams =
@@ -242,7 +229,6 @@ interface JobServiceAsync {
             getOriginalDownloadUrl(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [getOriginalDownloadUrl] */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,
             params: UsageFileUploadJobGetOriginalDownloadUrlParams =
@@ -251,21 +237,18 @@ interface JobServiceAsync {
             getOriginalDownloadUrl(id, params, RequestOptions.none())
 
         /** @see [getOriginalDownloadUrl] */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>>
 
         /** @see [getOriginalDownloadUrl] */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams
         ): CompletableFuture<HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>> =
             getOriginalDownloadUrl(params, RequestOptions.none())
 
         /** @see [getOriginalDownloadUrl] */
-        @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,
             requestOptions: RequestOptions,

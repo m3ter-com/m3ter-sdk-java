@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async.usage
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.UsageFileUploadGenerateUploadUrlParams
@@ -58,14 +57,12 @@ interface FileUploadServiceAsync {
          * /organizations/{orgId}/fileuploads/measurements/generateUploadUrl`, but is otherwise the
          * same as [FileUploadServiceAsync.generateUploadUrl].
          */
-        @MustBeClosed
         fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams
         ): CompletableFuture<HttpResponseFor<UsageFileUploadGenerateUploadUrlResponse>> =
             generateUploadUrl(params, RequestOptions.none())
 
         /** @see [generateUploadUrl] */
-        @MustBeClosed
         fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async.dataExports
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DataExportDestinationCreateParams
@@ -189,14 +188,12 @@ interface DestinationServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/destinations`,
          * but is otherwise the same as [DestinationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: DataExportDestinationCreateParams
         ): CompletableFuture<HttpResponseFor<DataExportDestinationCreateResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: DataExportDestinationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -207,14 +204,12 @@ interface DestinationServiceAsync {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String
         ): CompletableFuture<HttpResponseFor<DataExportDestinationRetrieveResponse>> =
             retrieve(id, DataExportDestinationRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DataExportDestinationRetrieveParams =
@@ -224,7 +219,6 @@ interface DestinationServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DataExportDestinationRetrieveParams = DataExportDestinationRetrieveParams.none(),
@@ -232,21 +226,18 @@ interface DestinationServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: DataExportDestinationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportDestinationRetrieveResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: DataExportDestinationRetrieveParams
         ): CompletableFuture<HttpResponseFor<DataExportDestinationRetrieveResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -258,7 +249,6 @@ interface DestinationServiceAsync {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: DataExportDestinationUpdateParams,
@@ -266,7 +256,6 @@ interface DestinationServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: DataExportDestinationUpdateParams,
@@ -275,14 +264,12 @@ interface DestinationServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: DataExportDestinationUpdateParams
         ): CompletableFuture<HttpResponseFor<DataExportDestinationUpdateResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: DataExportDestinationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -292,26 +279,22 @@ interface DestinationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/destinations`,
          * but is otherwise the same as [DestinationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
             list(DataExportDestinationListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DataExportDestinationListParams = DataExportDestinationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DataExportDestinationListParams = DataExportDestinationListParams.none()
         ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DataExportDestinationListPageAsync>> =
@@ -322,14 +305,12 @@ interface DestinationServiceAsync {
          * /organizations/{orgId}/dataexports/destinations/{id}`, but is otherwise the same as
          * [DestinationServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(
             id: String
         ): CompletableFuture<HttpResponseFor<DataExportDestinationDeleteResponse>> =
             delete(id, DataExportDestinationDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
@@ -338,7 +319,6 @@ interface DestinationServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: DataExportDestinationDeleteParams = DataExportDestinationDeleteParams.none(),
@@ -346,21 +326,18 @@ interface DestinationServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: DataExportDestinationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DataExportDestinationDeleteResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: DataExportDestinationDeleteParams
         ): CompletableFuture<HttpResponseFor<DataExportDestinationDeleteResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

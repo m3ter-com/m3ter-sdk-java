@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterCreateParams
@@ -146,14 +145,12 @@ interface CounterServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise
          * the same as [CounterServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CounterCreateParams
         ): CompletableFuture<HttpResponseFor<CounterResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CounterCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -163,12 +160,10 @@ interface CounterServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CounterResponse>> =
             retrieve(id, CounterRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterRetrieveParams = CounterRetrieveParams.none(),
@@ -177,7 +172,6 @@ interface CounterServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterRetrieveParams = CounterRetrieveParams.none(),
@@ -185,21 +179,18 @@ interface CounterServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterRetrieveParams
         ): CompletableFuture<HttpResponseFor<CounterResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -210,7 +201,6 @@ interface CounterServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterUpdateParams,
@@ -218,7 +208,6 @@ interface CounterServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterUpdateParams,
@@ -227,14 +216,12 @@ interface CounterServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterUpdateParams
         ): CompletableFuture<HttpResponseFor<CounterResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -244,26 +231,22 @@ interface CounterServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counters`, but is otherwise
          * the same as [CounterServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
             list(CounterListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterListParams = CounterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterListParams = CounterListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CounterListPageAsync>> =
@@ -273,12 +256,10 @@ interface CounterServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counters/{id}`, but is
          * otherwise the same as [CounterServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<CounterResponse>> =
             delete(id, CounterDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterDeleteParams = CounterDeleteParams.none(),
@@ -287,7 +268,6 @@ interface CounterServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterDeleteParams = CounterDeleteParams.none(),
@@ -295,21 +275,18 @@ interface CounterServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CounterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CounterDeleteParams
         ): CompletableFuture<HttpResponseFor<CounterResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
