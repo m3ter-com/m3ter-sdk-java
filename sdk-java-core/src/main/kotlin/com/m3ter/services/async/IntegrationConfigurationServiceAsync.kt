@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.IntegrationConfigurationCreateParams
@@ -275,14 +274,12 @@ interface IntegrationConfigurationServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/integrationconfigs`, but is
          * otherwise the same as [IntegrationConfigurationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: IntegrationConfigurationCreateParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationCreateResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: IntegrationConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -292,14 +289,12 @@ interface IntegrationConfigurationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs/{id}`, but
          * is otherwise the same as [IntegrationConfigurationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> =
             retrieve(id, IntegrationConfigurationRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: IntegrationConfigurationRetrieveParams =
@@ -309,7 +304,6 @@ interface IntegrationConfigurationServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: IntegrationConfigurationRetrieveParams =
@@ -318,21 +312,18 @@ interface IntegrationConfigurationServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -343,7 +334,6 @@ interface IntegrationConfigurationServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/integrationconfigs/{id}`, but
          * is otherwise the same as [IntegrationConfigurationServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: IntegrationConfigurationUpdateParams,
@@ -351,7 +341,6 @@ interface IntegrationConfigurationServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: IntegrationConfigurationUpdateParams,
@@ -360,14 +349,12 @@ interface IntegrationConfigurationServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: IntegrationConfigurationUpdateParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationUpdateResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: IntegrationConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -377,26 +364,22 @@ interface IntegrationConfigurationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/integrationconfigs`, but is
          * otherwise the same as [IntegrationConfigurationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
             list(IntegrationConfigurationListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationListPageAsync>> =
@@ -406,14 +389,12 @@ interface IntegrationConfigurationServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/integrationconfigs/{id}`,
          * but is otherwise the same as [IntegrationConfigurationServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(
             id: String
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationDeleteResponse>> =
             delete(id, IntegrationConfigurationDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: IntegrationConfigurationDeleteParams =
@@ -423,7 +404,6 @@ interface IntegrationConfigurationServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: IntegrationConfigurationDeleteParams =
@@ -432,21 +412,18 @@ interface IntegrationConfigurationServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: IntegrationConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationDeleteResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: IntegrationConfigurationDeleteParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationDeleteResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -458,14 +435,12 @@ interface IntegrationConfigurationServiceAsync {
          * /organizations/{orgId}/integrationconfigs/{id}/enable`, but is otherwise the same as
          * [IntegrationConfigurationServiceAsync.enable].
          */
-        @MustBeClosed
         fun enable(
             id: String
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationEnableResponse>> =
             enable(id, IntegrationConfigurationEnableParams.none())
 
         /** @see [enable] */
-        @MustBeClosed
         fun enable(
             id: String,
             params: IntegrationConfigurationEnableParams =
@@ -475,7 +450,6 @@ interface IntegrationConfigurationServiceAsync {
             enable(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [enable] */
-        @MustBeClosed
         fun enable(
             id: String,
             params: IntegrationConfigurationEnableParams =
@@ -484,21 +458,18 @@ interface IntegrationConfigurationServiceAsync {
             enable(id, params, RequestOptions.none())
 
         /** @see [enable] */
-        @MustBeClosed
         fun enable(
             params: IntegrationConfigurationEnableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationEnableResponse>>
 
         /** @see [enable] */
-        @MustBeClosed
         fun enable(
             params: IntegrationConfigurationEnableParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationEnableResponse>> =
             enable(params, RequestOptions.none())
 
         /** @see [enable] */
-        @MustBeClosed
         fun enable(
             id: String,
             requestOptions: RequestOptions,
@@ -510,14 +481,12 @@ interface IntegrationConfigurationServiceAsync {
          * /organizations/{orgId}/integrationconfigs/entity/{entityType}`, but is otherwise the same
          * as [IntegrationConfigurationServiceAsync.getByEntity].
          */
-        @MustBeClosed
         fun getByEntity(
             entityType: String
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> =
             getByEntity(entityType, IntegrationConfigurationGetByEntityParams.none())
 
         /** @see [getByEntity] */
-        @MustBeClosed
         fun getByEntity(
             entityType: String,
             params: IntegrationConfigurationGetByEntityParams =
@@ -527,7 +496,6 @@ interface IntegrationConfigurationServiceAsync {
             getByEntity(params.toBuilder().entityType(entityType).build(), requestOptions)
 
         /** @see [getByEntity] */
-        @MustBeClosed
         fun getByEntity(
             entityType: String,
             params: IntegrationConfigurationGetByEntityParams =
@@ -536,21 +504,18 @@ interface IntegrationConfigurationServiceAsync {
             getByEntity(entityType, params, RequestOptions.none())
 
         /** @see [getByEntity] */
-        @MustBeClosed
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>>
 
         /** @see [getByEntity] */
-        @MustBeClosed
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams
         ): CompletableFuture<HttpResponseFor<IntegrationConfigurationResponse>> =
             getByEntity(params, RequestOptions.none())
 
         /** @see [getByEntity] */
-        @MustBeClosed
         fun getByEntity(
             entityType: String,
             requestOptions: RequestOptions,

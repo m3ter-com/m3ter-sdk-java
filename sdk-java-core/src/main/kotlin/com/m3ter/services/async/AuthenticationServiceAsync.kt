@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AuthenticationGetBearerTokenParams
@@ -38,14 +37,12 @@ interface AuthenticationServiceAsync {
          * Returns a raw HTTP response for `post /oauth/token`, but is otherwise the same as
          * [AuthenticationServiceAsync.getBearerToken].
          */
-        @MustBeClosed
         fun getBearerToken(
             params: AuthenticationGetBearerTokenParams
         ): CompletableFuture<HttpResponseFor<AuthenticationGetBearerTokenResponse>> =
             getBearerToken(params, RequestOptions.none())
 
         /** @see [getBearerToken] */
-        @MustBeClosed
         fun getBearerToken(
             params: AuthenticationGetBearerTokenParams,
             requestOptions: RequestOptions = RequestOptions.none(),

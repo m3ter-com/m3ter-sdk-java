@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.PricingCreateParams
@@ -154,14 +153,12 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: PricingCreateParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: PricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,12 +168,10 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(id, PricingRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PricingRetrieveParams = PricingRetrieveParams.none(),
@@ -185,7 +180,6 @@ interface PricingServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: PricingRetrieveParams = PricingRetrieveParams.none(),
@@ -193,21 +187,18 @@ interface PricingServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: PricingRetrieveParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -218,7 +209,6 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: PricingUpdateParams,
@@ -226,7 +216,6 @@ interface PricingServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: PricingUpdateParams,
@@ -235,14 +224,12 @@ interface PricingServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: PricingUpdateParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: PricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -252,26 +239,22 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/pricings`, but is otherwise
          * the same as [PricingServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
             list(PricingListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PricingListParams = PricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: PricingListParams = PricingListParams.none()
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
@@ -281,12 +264,10 @@ interface PricingServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/pricings/{id}`, but is
          * otherwise the same as [PricingServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(id, PricingDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: PricingDeleteParams = PricingDeleteParams.none(),
@@ -295,7 +276,6 @@ interface PricingServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: PricingDeleteParams = PricingDeleteParams.none(),
@@ -303,21 +283,18 @@ interface PricingServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: PricingDeleteParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

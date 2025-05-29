@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.NotificationConfigurationCreateParams
@@ -195,14 +194,12 @@ interface NotificationConfigurationServiceAsync {
          * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
          * [NotificationConfigurationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: NotificationConfigurationCreateParams
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: NotificationConfigurationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -213,14 +210,12 @@ interface NotificationConfigurationServiceAsync {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(
             id: String
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             retrieve(id, NotificationConfigurationRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: NotificationConfigurationRetrieveParams =
@@ -230,7 +225,6 @@ interface NotificationConfigurationServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: NotificationConfigurationRetrieveParams =
@@ -239,21 +233,18 @@ interface NotificationConfigurationServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: NotificationConfigurationRetrieveParams
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -265,7 +256,6 @@ interface NotificationConfigurationServiceAsync {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: NotificationConfigurationUpdateParams,
@@ -273,7 +263,6 @@ interface NotificationConfigurationServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: NotificationConfigurationUpdateParams,
@@ -282,14 +271,12 @@ interface NotificationConfigurationServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -300,12 +287,10 @@ interface NotificationConfigurationServiceAsync {
          * /organizations/{orgId}/notifications/configurations`, but is otherwise the same as
          * [NotificationConfigurationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
             list(NotificationConfigurationListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: NotificationConfigurationListParams =
                 NotificationConfigurationListParams.none(),
@@ -313,14 +298,12 @@ interface NotificationConfigurationServiceAsync {
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationListPageAsync>> =
@@ -331,14 +314,12 @@ interface NotificationConfigurationServiceAsync {
          * /organizations/{orgId}/notifications/configurations/{id}`, but is otherwise the same as
          * [NotificationConfigurationServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(
             id: String
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             delete(id, NotificationConfigurationDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: NotificationConfigurationDeleteParams =
@@ -348,7 +329,6 @@ interface NotificationConfigurationServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: NotificationConfigurationDeleteParams =
@@ -357,21 +337,18 @@ interface NotificationConfigurationServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams
         ): CompletableFuture<HttpResponseFor<NotificationConfigurationResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.EventGetFieldsParams
@@ -161,12 +160,10 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/{id}`, but is
          * otherwise the same as [EventServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<EventResponse>> =
             retrieve(id, EventRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
@@ -175,7 +172,6 @@ interface EventServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
@@ -183,21 +179,18 @@ interface EventServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams
         ): CompletableFuture<HttpResponseFor<EventResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -208,26 +201,22 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events`, but is otherwise the
          * same as [EventServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
             list(EventListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none()
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<EventListPageAsync>> =
@@ -237,26 +226,22 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/fields`, but is
          * otherwise the same as [EventServiceAsync.getFields].
          */
-        @MustBeClosed
         fun getFields(): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
             getFields(EventGetFieldsParams.none())
 
         /** @see [getFields] */
-        @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams = EventGetFieldsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>>
 
         /** @see [getFields] */
-        @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams = EventGetFieldsParams.none()
         ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
             getFields(params, RequestOptions.none())
 
         /** @see [getFields] */
-        @MustBeClosed
         fun getFields(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<EventGetFieldsResponse>> =
@@ -266,26 +251,22 @@ interface EventServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/types`, but is
          * otherwise the same as [EventServiceAsync.getTypes].
          */
-        @MustBeClosed
         fun getTypes(): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
             getTypes(EventGetTypesParams.none())
 
         /** @see [getTypes] */
-        @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams = EventGetTypesParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>>
 
         /** @see [getTypes] */
-        @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams = EventGetTypesParams.none()
         ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =
             getTypes(params, RequestOptions.none())
 
         /** @see [getTypes] */
-        @MustBeClosed
         fun getTypes(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<EventGetTypesResponse>> =

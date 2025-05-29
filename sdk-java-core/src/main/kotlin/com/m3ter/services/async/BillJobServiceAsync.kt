@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillJobCancelParams
@@ -187,26 +186,22 @@ interface BillJobServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise
          * the same as [BillJobServiceAsync.create].
          */
-        @MustBeClosed
         fun create(): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             create(BillJobCreateParams.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BillJobCreateParams = BillJobCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillJobResponse>>
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BillJobCreateParams = BillJobCreateParams.none()
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
@@ -216,12 +211,10 @@ interface BillJobServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs/{id}`, but is
          * otherwise the same as [BillJobServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             retrieve(id, BillJobRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
@@ -230,7 +223,6 @@ interface BillJobServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
@@ -238,21 +230,18 @@ interface BillJobServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillJobResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BillJobRetrieveParams
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -263,26 +252,22 @@ interface BillJobServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/billjobs`, but is otherwise
          * the same as [BillJobServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
             list(BillJobListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BillJobListParams = BillJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BillJobListParams = BillJobListParams.none()
         ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillJobListPageAsync>> =
@@ -292,12 +277,10 @@ interface BillJobServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/{id}/cancel`, but
          * is otherwise the same as [BillJobServiceAsync.cancel].
          */
-        @MustBeClosed
         fun cancel(id: String): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             cancel(id, BillJobCancelParams.none())
 
         /** @see [cancel] */
-        @MustBeClosed
         fun cancel(
             id: String,
             params: BillJobCancelParams = BillJobCancelParams.none(),
@@ -306,7 +289,6 @@ interface BillJobServiceAsync {
             cancel(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [cancel] */
-        @MustBeClosed
         fun cancel(
             id: String,
             params: BillJobCancelParams = BillJobCancelParams.none(),
@@ -314,21 +296,18 @@ interface BillJobServiceAsync {
             cancel(id, params, RequestOptions.none())
 
         /** @see [cancel] */
-        @MustBeClosed
         fun cancel(
             params: BillJobCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillJobResponse>>
 
         /** @see [cancel] */
-        @MustBeClosed
         fun cancel(
             params: BillJobCancelParams
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             cancel(params, RequestOptions.none())
 
         /** @see [cancel] */
-        @MustBeClosed
         fun cancel(
             id: String,
             requestOptions: RequestOptions,
@@ -339,14 +318,12 @@ interface BillJobServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs/recalculate`, but
          * is otherwise the same as [BillJobServiceAsync.recalculate].
          */
-        @MustBeClosed
         fun recalculate(
             params: BillJobRecalculateParams
         ): CompletableFuture<HttpResponseFor<BillJobResponse>> =
             recalculate(params, RequestOptions.none())
 
         /** @see [recalculate] */
-        @MustBeClosed
         fun recalculate(
             params: BillJobRecalculateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

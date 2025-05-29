@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AccountCreateParams
@@ -250,14 +249,12 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/accounts`, but is otherwise
          * the same as [AccountServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: AccountCreateParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: AccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -267,12 +264,10 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
             retrieve(id, AccountRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountRetrieveParams = AccountRetrieveParams.none(),
@@ -281,7 +276,6 @@ interface AccountServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountRetrieveParams = AccountRetrieveParams.none(),
@@ -289,21 +283,18 @@ interface AccountServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: AccountRetrieveParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -314,7 +305,6 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: AccountUpdateParams,
@@ -322,7 +312,6 @@ interface AccountServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: AccountUpdateParams,
@@ -331,14 +320,12 @@ interface AccountServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: AccountUpdateParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -348,26 +335,22 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts`, but is otherwise
          * the same as [AccountServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
             list(AccountListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountListParams = AccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: AccountListParams = AccountListParams.none()
         ): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<AccountListPageAsync>> =
@@ -377,12 +360,10 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/accounts/{id}`, but is
          * otherwise the same as [AccountServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
             delete(id, AccountDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: AccountDeleteParams = AccountDeleteParams.none(),
@@ -391,7 +372,6 @@ interface AccountServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: AccountDeleteParams = AccountDeleteParams.none(),
@@ -399,21 +379,18 @@ interface AccountServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: AccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: AccountDeleteParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -425,7 +402,6 @@ interface AccountServiceAsync {
          * /organizations/{orgId}/accounts/{id}/enddatebillingentities`, but is otherwise the same
          * as [AccountServiceAsync.endDateBillingEntities].
          */
-        @MustBeClosed
         fun endDateBillingEntities(
             id: String,
             params: AccountEndDateBillingEntitiesParams,
@@ -433,7 +409,6 @@ interface AccountServiceAsync {
             endDateBillingEntities(id, params, RequestOptions.none())
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             id: String,
             params: AccountEndDateBillingEntitiesParams,
@@ -442,14 +417,12 @@ interface AccountServiceAsync {
             endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams
         ): CompletableFuture<HttpResponseFor<AccountEndDateBillingEntitiesResponse>> =
             endDateBillingEntities(params, RequestOptions.none())
 
         /** @see [endDateBillingEntities] */
-        @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -459,12 +432,10 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}/children`, but
          * is otherwise the same as [AccountServiceAsync.getChildren].
          */
-        @MustBeClosed
         fun getChildren(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
             getChildren(id, AccountGetChildrenParams.none())
 
         /** @see [getChildren] */
-        @MustBeClosed
         fun getChildren(
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
@@ -473,7 +444,6 @@ interface AccountServiceAsync {
             getChildren(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [getChildren] */
-        @MustBeClosed
         fun getChildren(
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
@@ -481,21 +451,18 @@ interface AccountServiceAsync {
             getChildren(id, params, RequestOptions.none())
 
         /** @see [getChildren] */
-        @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountResponse>>
 
         /** @see [getChildren] */
-        @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams
         ): CompletableFuture<HttpResponseFor<AccountResponse>> =
             getChildren(params, RequestOptions.none())
 
         /** @see [getChildren] */
-        @MustBeClosed
         fun getChildren(
             id: String,
             requestOptions: RequestOptions,
@@ -506,26 +473,22 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is
          * otherwise the same as [AccountServiceAsync.search].
          */
-        @MustBeClosed
         fun search(): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =
             search(AccountSearchParams.none())
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             params: AccountSearchParams = AccountSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<AccountSearchResponse>>
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             params: AccountSearchParams = AccountSearchParams.none()
         ): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =
             search(params, RequestOptions.none())
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<AccountSearchResponse>> =

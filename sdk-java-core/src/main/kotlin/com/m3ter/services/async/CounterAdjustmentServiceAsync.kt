@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterAdjustmentCreateParams
@@ -177,14 +176,12 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CounterAdjustmentCreateParams
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CounterAdjustmentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -194,12 +191,10 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             retrieve(id, CounterAdjustmentRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
@@ -208,7 +203,6 @@ interface CounterAdjustmentServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
@@ -216,21 +210,18 @@ interface CounterAdjustmentServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -241,7 +232,6 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/counteradjustments/{id}`, but
          * is otherwise the same as [CounterAdjustmentServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterAdjustmentUpdateParams,
@@ -249,7 +239,6 @@ interface CounterAdjustmentServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CounterAdjustmentUpdateParams,
@@ -258,14 +247,12 @@ interface CounterAdjustmentServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -275,26 +262,22 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
             list(CounterAdjustmentListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentListPageAsync>> =
@@ -304,12 +287,10 @@ interface CounterAdjustmentServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/counteradjustments/{id}`,
          * but is otherwise the same as [CounterAdjustmentServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             delete(id, CounterAdjustmentDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
@@ -318,7 +299,6 @@ interface CounterAdjustmentServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
@@ -326,21 +306,18 @@ interface CounterAdjustmentServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams
         ): CompletableFuture<HttpResponseFor<CounterAdjustmentResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AggregationResponse
@@ -190,14 +189,12 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but
          * is otherwise the same as [CompoundAggregationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CompoundAggregationCreateParams
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CompoundAggregationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -207,12 +204,10 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
             retrieve(id, CompoundAggregationRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
@@ -221,7 +216,6 @@ interface CompoundAggregationServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
@@ -229,21 +223,18 @@ interface CompoundAggregationServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams
         ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -254,7 +245,6 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/compoundaggregations/{id}`,
          * but is otherwise the same as [CompoundAggregationServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: CompoundAggregationUpdateParams,
@@ -262,7 +252,6 @@ interface CompoundAggregationServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CompoundAggregationUpdateParams,
@@ -271,14 +260,12 @@ interface CompoundAggregationServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CompoundAggregationUpdateParams
         ): CompletableFuture<HttpResponseFor<AggregationResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CompoundAggregationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -288,26 +275,22 @@ interface CompoundAggregationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/compoundaggregations`, but is
          * otherwise the same as [CompoundAggregationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
             list(CompoundAggregationListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CompoundAggregationListParams = CompoundAggregationListParams.none()
         ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CompoundAggregationListPageAsync>> =
@@ -318,12 +301,10 @@ interface CompoundAggregationServiceAsync {
          * /organizations/{orgId}/compoundaggregations/{id}`, but is otherwise the same as
          * [CompoundAggregationServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
             delete(id, CompoundAggregationDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
@@ -332,7 +313,6 @@ interface CompoundAggregationServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
@@ -340,21 +320,18 @@ interface CompoundAggregationServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams
         ): CompletableFuture<HttpResponseFor<CompoundAggregationResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

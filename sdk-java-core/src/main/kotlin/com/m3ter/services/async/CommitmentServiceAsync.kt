@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CommitmentCreateParams
@@ -212,14 +211,12 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/commitments`, but is
          * otherwise the same as [CommitmentServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: CommitmentCreateParams
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: CommitmentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -229,12 +226,10 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             retrieve(id, CommitmentRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
@@ -243,7 +238,6 @@ interface CommitmentServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
@@ -251,21 +245,18 @@ interface CommitmentServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: CommitmentRetrieveParams
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -276,7 +267,6 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: CommitmentUpdateParams,
@@ -284,7 +274,6 @@ interface CommitmentServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: CommitmentUpdateParams,
@@ -293,14 +282,12 @@ interface CommitmentServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CommitmentUpdateParams
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: CommitmentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -310,26 +297,22 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments`, but is
          * otherwise the same as [CommitmentServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
             list(CommitmentListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CommitmentListParams = CommitmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: CommitmentListParams = CommitmentListParams.none()
         ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CommitmentListPageAsync>> =
@@ -339,12 +322,10 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/commitments/{id}`, but is
          * otherwise the same as [CommitmentServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             delete(id, CommitmentDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
@@ -353,7 +334,6 @@ interface CommitmentServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
@@ -361,21 +341,18 @@ interface CommitmentServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: CommitmentDeleteParams
         ): CompletableFuture<HttpResponseFor<CommitmentResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -386,26 +363,22 @@ interface CommitmentServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/commitments/search`, but is
          * otherwise the same as [CommitmentServiceAsync.search].
          */
-        @MustBeClosed
         fun search(): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
             search(CommitmentSearchParams.none())
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             params: CommitmentSearchParams = CommitmentSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>>
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             params: CommitmentSearchParams = CommitmentSearchParams.none()
         ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =
             search(params, RequestOptions.none())
 
         /** @see [search] */
-        @MustBeClosed
         fun search(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CommitmentSearchResponse>> =

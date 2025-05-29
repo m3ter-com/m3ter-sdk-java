@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.Webhook
@@ -189,14 +188,12 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
          * [WebhookServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: WebhookCreateParams
         ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: WebhookCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -207,12 +204,10 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Webhook>> =
             retrieve(id, WebhookRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
@@ -221,26 +216,22 @@ interface WebhookServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: WebhookRetrieveParams = WebhookRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Webhook>> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: WebhookRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Webhook>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: WebhookRetrieveParams): CompletableFuture<HttpResponseFor<Webhook>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -252,7 +243,6 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: WebhookUpdateParams,
@@ -260,7 +250,6 @@ interface WebhookServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: WebhookUpdateParams,
@@ -269,14 +258,12 @@ interface WebhookServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: WebhookUpdateParams
         ): CompletableFuture<HttpResponseFor<WebhookUpdateResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: WebhookUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -287,26 +274,22 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks`, but is otherwise the same as
          * [WebhookServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
             list(WebhookListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: WebhookListParams = WebhookListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: WebhookListParams = WebhookListParams.none()
         ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<WebhookListPageAsync>> =
@@ -317,12 +300,10 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}`, but is otherwise the same
          * as [WebhookServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<Webhook>> =
             delete(id, WebhookDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: WebhookDeleteParams = WebhookDeleteParams.none(),
@@ -331,26 +312,22 @@ interface WebhookServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: WebhookDeleteParams = WebhookDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<Webhook>> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: WebhookDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Webhook>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: WebhookDeleteParams): CompletableFuture<HttpResponseFor<Webhook>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -362,12 +339,10 @@ interface WebhookServiceAsync {
          * /organizations/{orgId}/integrationdestinations/webhooks/{id}/active`, but is otherwise
          * the same as [WebhookServiceAsync.setActive].
          */
-        @MustBeClosed
         fun setActive(id: String): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>> =
             setActive(id, WebhookSetActiveParams.none())
 
         /** @see [setActive] */
-        @MustBeClosed
         fun setActive(
             id: String,
             params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
@@ -376,7 +351,6 @@ interface WebhookServiceAsync {
             setActive(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [setActive] */
-        @MustBeClosed
         fun setActive(
             id: String,
             params: WebhookSetActiveParams = WebhookSetActiveParams.none(),
@@ -384,21 +358,18 @@ interface WebhookServiceAsync {
             setActive(id, params, RequestOptions.none())
 
         /** @see [setActive] */
-        @MustBeClosed
         fun setActive(
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>>
 
         /** @see [setActive] */
-        @MustBeClosed
         fun setActive(
             params: WebhookSetActiveParams
         ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>> =
             setActive(params, RequestOptions.none())
 
         /** @see [setActive] */
-        @MustBeClosed
         fun setActive(
             id: String,
             requestOptions: RequestOptions,

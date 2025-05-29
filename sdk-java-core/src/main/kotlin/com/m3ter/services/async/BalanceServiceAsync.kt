@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.Balance
@@ -169,12 +168,10 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise
          * the same as [BalanceServiceAsync.create].
          */
-        @MustBeClosed
         fun create(params: BalanceCreateParams): CompletableFuture<HttpResponseFor<Balance>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: BalanceCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -184,12 +181,10 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Balance>> =
             retrieve(id, BalanceRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
@@ -198,26 +193,22 @@ interface BalanceServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Balance>> = retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: BalanceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Balance>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(params: BalanceRetrieveParams): CompletableFuture<HttpResponseFor<Balance>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -228,14 +219,12 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: BalanceUpdateParams,
         ): CompletableFuture<HttpResponseFor<Balance>> = update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: BalanceUpdateParams,
@@ -244,12 +233,10 @@ interface BalanceServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(params: BalanceUpdateParams): CompletableFuture<HttpResponseFor<Balance>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: BalanceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -259,26 +246,22 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/balances`, but is otherwise
          * the same as [BalanceServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
             list(BalanceListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BalanceListParams = BalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: BalanceListParams = BalanceListParams.none()
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
@@ -288,12 +271,10 @@ interface BalanceServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/balances/{id}`, but is
          * otherwise the same as [BalanceServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<Balance>> =
             delete(id, BalanceDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: BalanceDeleteParams = BalanceDeleteParams.none(),
@@ -302,26 +283,22 @@ interface BalanceServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: BalanceDeleteParams = BalanceDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<Balance>> = delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: BalanceDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Balance>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(params: BalanceDeleteParams): CompletableFuture<HttpResponseFor<Balance>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,

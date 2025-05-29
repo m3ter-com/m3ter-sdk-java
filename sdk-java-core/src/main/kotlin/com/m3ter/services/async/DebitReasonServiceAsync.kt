@@ -2,7 +2,6 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DebitReasonCreateParams
@@ -158,14 +157,12 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: DebitReasonCreateParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             create(params, RequestOptions.none())
 
         /** @see [create] */
-        @MustBeClosed
         fun create(
             params: DebitReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -175,12 +172,10 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(id, DebitReasonRetrieveParams.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
@@ -189,7 +184,6 @@ interface DebitReasonServiceAsync {
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
@@ -197,21 +191,18 @@ interface DebitReasonServiceAsync {
             retrieve(id, params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             params: DebitReasonRetrieveParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(params, RequestOptions.none())
 
         /** @see [retrieve] */
-        @MustBeClosed
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -222,7 +213,6 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/picklists/debitreasons/{id}`,
          * but is otherwise the same as [DebitReasonServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: DebitReasonUpdateParams,
@@ -230,7 +220,6 @@ interface DebitReasonServiceAsync {
             update(id, params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             id: String,
             params: DebitReasonUpdateParams,
@@ -239,14 +228,12 @@ interface DebitReasonServiceAsync {
             update(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: DebitReasonUpdateParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             update(params, RequestOptions.none())
 
         /** @see [update] */
-        @MustBeClosed
         fun update(
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -256,26 +243,22 @@ interface DebitReasonServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
             list(DebitReasonListParams.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>>
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none()
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
             list(params, RequestOptions.none())
 
         /** @see [list] */
-        @MustBeClosed
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
@@ -286,12 +269,10 @@ interface DebitReasonServiceAsync {
          * /organizations/{orgId}/picklists/debitreasons/{id}`, but is otherwise the same as
          * [DebitReasonServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(id, DebitReasonDeleteParams.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
@@ -300,7 +281,6 @@ interface DebitReasonServiceAsync {
             delete(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
@@ -308,21 +288,18 @@ interface DebitReasonServiceAsync {
             delete(id, params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             params: DebitReasonDeleteParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(params, RequestOptions.none())
 
         /** @see [delete] */
-        @MustBeClosed
         fun delete(
             id: String,
             requestOptions: RequestOptions,
