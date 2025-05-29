@@ -761,6 +761,8 @@ private constructor(
 
             @JvmField val SERVICE_USER = of("SERVICE_USER")
 
+            @JvmField val SCHEDULER = of("SCHEDULER")
+
             @JvmStatic fun of(value: String) = EntityType(JsonField.of(value))
         }
 
@@ -770,6 +772,7 @@ private constructor(
             COMMITMENT,
             USER,
             SERVICE_USER,
+            SCHEDULER,
         }
 
         /**
@@ -786,6 +789,7 @@ private constructor(
             COMMITMENT,
             USER,
             SERVICE_USER,
+            SCHEDULER,
             /**
              * An enum member indicating that [EntityType] was instantiated with an unknown value.
              */
@@ -805,6 +809,7 @@ private constructor(
                 COMMITMENT -> Value.COMMITMENT
                 USER -> Value.USER
                 SERVICE_USER -> Value.SERVICE_USER
+                SCHEDULER -> Value.SCHEDULER
                 else -> Value._UNKNOWN
             }
 
@@ -822,6 +827,7 @@ private constructor(
                 COMMITMENT -> Known.COMMITMENT
                 USER -> Known.USER
                 SERVICE_USER -> Known.SERVICE_USER
+                SCHEDULER -> Known.SCHEDULER
                 else -> throw M3terInvalidDataException("Unknown EntityType: $value")
             }
 

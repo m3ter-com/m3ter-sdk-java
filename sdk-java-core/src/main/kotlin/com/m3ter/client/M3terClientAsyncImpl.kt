@@ -72,6 +72,8 @@ import com.m3ter.services.async.ResourceGroupServiceAsync
 import com.m3ter.services.async.ResourceGroupServiceAsyncImpl
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsync
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsyncImpl
+import com.m3ter.services.async.StatementServiceAsync
+import com.m3ter.services.async.StatementServiceAsyncImpl
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import com.m3ter.services.async.TransactionTypeServiceAsyncImpl
 import com.m3ter.services.async.UsageServiceAsync
@@ -230,6 +232,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         ScheduledEventConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val statements: StatementServiceAsync by lazy {
+        StatementServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val transactionTypes: TransactionTypeServiceAsync by lazy {
         TransactionTypeServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -318,6 +324,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync =
         scheduledEventConfigurations
+
+    override fun statements(): StatementServiceAsync = statements
 
     override fun transactionTypes(): TransactionTypeServiceAsync = transactionTypes
 
@@ -471,6 +479,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
             ScheduledEventConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val statements: StatementServiceAsync.WithRawResponse by lazy {
+            StatementServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val transactionTypes: TransactionTypeServiceAsync.WithRawResponse by lazy {
             TransactionTypeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -562,6 +574,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
         override fun scheduledEventConfigurations():
             ScheduledEventConfigurationServiceAsync.WithRawResponse = scheduledEventConfigurations
+
+        override fun statements(): StatementServiceAsync.WithRawResponse = statements
 
         override fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse =
             transactionTypes

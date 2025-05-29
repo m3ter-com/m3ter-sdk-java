@@ -168,7 +168,7 @@ private constructor(
     fun name(): Optional<String> = name.getOptional("name")
 
     /**
-     * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
+     * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes. Used in
      * conjunction with the `scheduleType` parameter.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -503,8 +503,8 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
-         * conjunction with the `scheduleType` parameter.
+         * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes.
+         * Used in conjunction with the `scheduleType` parameter.
          */
         fun period(period: Int) = period(JsonField.of(period))
 
@@ -786,9 +786,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val HOURLY = of("HOURLY")
+            @JvmField val HOUR = of("HOUR")
 
-            @JvmField val DAILY = of("DAILY")
+            @JvmField val DAY = of("DAY")
+
+            @JvmField val MINUTE = of("MINUTE")
 
             @JvmField val AD_HOC = of("AD_HOC")
 
@@ -797,8 +799,9 @@ private constructor(
 
         /** An enum containing [ScheduleType]'s known values. */
         enum class Known {
-            HOURLY,
-            DAILY,
+            HOUR,
+            DAY,
+            MINUTE,
             AD_HOC,
         }
 
@@ -812,8 +815,9 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            HOURLY,
-            DAILY,
+            HOUR,
+            DAY,
+            MINUTE,
             AD_HOC,
             /**
              * An enum member indicating that [ScheduleType] was instantiated with an unknown value.
@@ -830,8 +834,9 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                HOURLY -> Value.HOURLY
-                DAILY -> Value.DAILY
+                HOUR -> Value.HOUR
+                DAY -> Value.DAY
+                MINUTE -> Value.MINUTE
                 AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
@@ -846,8 +851,9 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                HOURLY -> Known.HOURLY
-                DAILY -> Known.DAILY
+                HOUR -> Known.HOUR
+                DAY -> Known.DAY
+                MINUTE -> Known.MINUTE
                 AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown ScheduleType: $value")
             }

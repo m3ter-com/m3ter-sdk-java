@@ -36,6 +36,7 @@ import com.m3ter.services.blocking.PricingService
 import com.m3ter.services.blocking.ProductService
 import com.m3ter.services.blocking.ResourceGroupService
 import com.m3ter.services.blocking.ScheduledEventConfigurationService
+import com.m3ter.services.blocking.StatementService
 import com.m3ter.services.blocking.TransactionTypeService
 import com.m3ter.services.blocking.UsageService
 import com.m3ter.services.blocking.UserService
@@ -138,6 +139,8 @@ interface M3terClient {
 
     fun scheduledEventConfigurations(): ScheduledEventConfigurationService
 
+    fun statements(): StatementService
+
     fun transactionTypes(): TransactionTypeService
 
     fun usage(): UsageService
@@ -229,6 +232,8 @@ interface M3terClient {
         fun resourceGroups(): ResourceGroupService.WithRawResponse
 
         fun scheduledEventConfigurations(): ScheduledEventConfigurationService.WithRawResponse
+
+        fun statements(): StatementService.WithRawResponse
 
         fun transactionTypes(): TransactionTypeService.WithRawResponse
 

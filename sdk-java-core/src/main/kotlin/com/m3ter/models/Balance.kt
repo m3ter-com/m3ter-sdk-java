@@ -30,6 +30,7 @@ private constructor(
     private val balanceDrawDownDescription: JsonField<String>,
     private val code: JsonField<String>,
     private val consumptionsAccountingProductId: JsonField<String>,
+    private val contractId: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val currency: JsonField<String>,
     private val description: JsonField<String>,
@@ -62,6 +63,9 @@ private constructor(
         @JsonProperty("consumptionsAccountingProductId")
         @ExcludeMissing
         consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("contractId")
+        @ExcludeMissing
+        contractId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("description")
@@ -112,6 +116,7 @@ private constructor(
         balanceDrawDownDescription,
         code,
         consumptionsAccountingProductId,
+        contractId,
         createdBy,
         currency,
         description,
@@ -189,6 +194,12 @@ private constructor(
      */
     fun consumptionsAccountingProductId(): Optional<String> =
         consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
     /**
      * The unique identifier (UUID) for the user who created the Balance.
@@ -380,6 +391,13 @@ private constructor(
     fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
 
     /**
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("contractId") @ExcludeMissing fun _contractId(): JsonField<String> = contractId
+
+    /**
      * Returns the raw JSON value of [createdBy].
      *
      * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
@@ -552,6 +570,7 @@ private constructor(
         private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
+        private var contractId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var description: JsonField<String> = JsonMissing.of()
@@ -579,6 +598,7 @@ private constructor(
             balanceDrawDownDescription = balance.balanceDrawDownDescription
             code = balance.code
             consumptionsAccountingProductId = balance.consumptionsAccountingProductId
+            contractId = balance.contractId
             createdBy = balance.createdBy
             currency = balance.currency
             description = balance.description
@@ -688,6 +708,17 @@ private constructor(
             apply {
                 this.consumptionsAccountingProductId = consumptionsAccountingProductId
             }
+
+        fun contractId(contractId: String) = contractId(JsonField.of(contractId))
+
+        /**
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
         /** The unique identifier (UUID) for the user who created the Balance. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
@@ -981,6 +1012,7 @@ private constructor(
                 balanceDrawDownDescription,
                 code,
                 consumptionsAccountingProductId,
+                contractId,
                 createdBy,
                 currency,
                 description,
@@ -1015,6 +1047,7 @@ private constructor(
         balanceDrawDownDescription()
         code()
         consumptionsAccountingProductId()
+        contractId()
         createdBy()
         currency()
         description()
@@ -1056,6 +1089,7 @@ private constructor(
             (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (consumptionsAccountingProductId.asKnown().isPresent) 1 else 0) +
+            (if (contractId.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (currency.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
@@ -1224,15 +1258,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && createdBy == other.createdBy && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, createdBy, currency, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, createdBy=$createdBy, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

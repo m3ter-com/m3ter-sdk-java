@@ -36,6 +36,7 @@ import com.m3ter.services.async.PricingServiceAsync
 import com.m3ter.services.async.ProductServiceAsync
 import com.m3ter.services.async.ResourceGroupServiceAsync
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsync
+import com.m3ter.services.async.StatementServiceAsync
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import com.m3ter.services.async.UsageServiceAsync
 import com.m3ter.services.async.UserServiceAsync
@@ -138,6 +139,8 @@ interface M3terClientAsync {
 
     fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync
 
+    fun statements(): StatementServiceAsync
+
     fun transactionTypes(): TransactionTypeServiceAsync
 
     fun usage(): UsageServiceAsync
@@ -229,6 +232,8 @@ interface M3terClientAsync {
         fun resourceGroups(): ResourceGroupServiceAsync.WithRawResponse
 
         fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync.WithRawResponse
+
+        fun statements(): StatementServiceAsync.WithRawResponse
 
         fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse
 

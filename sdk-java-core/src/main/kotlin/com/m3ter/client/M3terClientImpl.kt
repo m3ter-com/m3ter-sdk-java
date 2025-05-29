@@ -72,6 +72,8 @@ import com.m3ter.services.blocking.ResourceGroupService
 import com.m3ter.services.blocking.ResourceGroupServiceImpl
 import com.m3ter.services.blocking.ScheduledEventConfigurationService
 import com.m3ter.services.blocking.ScheduledEventConfigurationServiceImpl
+import com.m3ter.services.blocking.StatementService
+import com.m3ter.services.blocking.StatementServiceImpl
 import com.m3ter.services.blocking.TransactionTypeService
 import com.m3ter.services.blocking.TransactionTypeServiceImpl
 import com.m3ter.services.blocking.UsageService
@@ -214,6 +216,10 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
         ScheduledEventConfigurationServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val statements: StatementService by lazy {
+        StatementServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val transactionTypes: TransactionTypeService by lazy {
         TransactionTypeServiceImpl(clientOptionsWithUserAgent)
     }
@@ -298,6 +304,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     override fun scheduledEventConfigurations(): ScheduledEventConfigurationService =
         scheduledEventConfigurations
+
+    override fun statements(): StatementService = statements
 
     override fun transactionTypes(): TransactionTypeService = transactionTypes
 
@@ -451,6 +459,10 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
             ScheduledEventConfigurationServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val statements: StatementService.WithRawResponse by lazy {
+            StatementServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val transactionTypes: TransactionTypeService.WithRawResponse by lazy {
             TransactionTypeServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -541,6 +553,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
         override fun scheduledEventConfigurations():
             ScheduledEventConfigurationService.WithRawResponse = scheduledEventConfigurations
+
+        override fun statements(): StatementService.WithRawResponse = statements
 
         override fun transactionTypes(): TransactionTypeService.WithRawResponse = transactionTypes
 

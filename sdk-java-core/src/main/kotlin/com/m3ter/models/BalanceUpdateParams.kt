@@ -107,6 +107,12 @@ private constructor(
     fun consumptionsAccountingProductId(): Optional<String> = body.consumptionsAccountingProductId()
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun contractId(): Optional<String> = body.contractId()
+
+    /**
      * A description of the Balance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -273,6 +279,13 @@ private constructor(
      */
     fun _consumptionsAccountingProductId(): JsonField<String> =
         body._consumptionsAccountingProductId()
+
+    /**
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _contractId(): JsonField<String> = body._contractId()
 
     /**
      * Returns the raw JSON value of [description].
@@ -518,6 +531,17 @@ private constructor(
             apply {
                 body.consumptionsAccountingProductId(consumptionsAccountingProductId)
             }
+
+        fun contractId(contractId: String) = apply { body.contractId(contractId) }
+
+        /**
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
 
         /** A description of the Balance. */
         fun description(description: String) = apply { body.description(description) }
@@ -890,6 +914,7 @@ private constructor(
         private val balanceDrawDownDescription: JsonField<String>,
         private val code: JsonField<String>,
         private val consumptionsAccountingProductId: JsonField<String>,
+        private val contractId: JsonField<String>,
         private val description: JsonField<String>,
         private val feesAccountingProductId: JsonField<String>,
         private val lineItemTypes: JsonField<List<LineItemType>>,
@@ -924,6 +949,9 @@ private constructor(
             @JsonProperty("consumptionsAccountingProductId")
             @ExcludeMissing
             consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("contractId")
+            @ExcludeMissing
+            contractId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
@@ -958,6 +986,7 @@ private constructor(
             balanceDrawDownDescription,
             code,
             consumptionsAccountingProductId,
+            contractId,
             description,
             feesAccountingProductId,
             lineItemTypes,
@@ -1035,6 +1064,12 @@ private constructor(
          */
         fun consumptionsAccountingProductId(): Optional<String> =
             consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
          * A description of the Balance.
@@ -1218,6 +1253,15 @@ private constructor(
         fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
 
         /**
+         * Returns the raw JSON value of [contractId].
+         *
+         * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("contractId")
+        @ExcludeMissing
+        fun _contractId(): JsonField<String> = contractId
+
+        /**
          * Returns the raw JSON value of [description].
          *
          * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -1347,6 +1391,7 @@ private constructor(
             private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
+            private var contractId: JsonField<String> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
             private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
@@ -1368,6 +1413,7 @@ private constructor(
                 balanceDrawDownDescription = body.balanceDrawDownDescription
                 code = body.code
                 consumptionsAccountingProductId = body.consumptionsAccountingProductId
+                contractId = body.contractId
                 description = body.description
                 feesAccountingProductId = body.feesAccountingProductId
                 lineItemTypes = body.lineItemTypes.map { it.toMutableList() }
@@ -1485,6 +1531,17 @@ private constructor(
             fun consumptionsAccountingProductId(
                 consumptionsAccountingProductId: JsonField<String>
             ) = apply { this.consumptionsAccountingProductId = consumptionsAccountingProductId }
+
+            fun contractId(contractId: String) = contractId(JsonField.of(contractId))
+
+            /**
+             * Sets [Builder.contractId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contractId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
             /** A description of the Balance. */
             fun description(description: String) = description(JsonField.of(description))
@@ -1749,6 +1806,7 @@ private constructor(
                     balanceDrawDownDescription,
                     code,
                     consumptionsAccountingProductId,
+                    contractId,
                     description,
                     feesAccountingProductId,
                     (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1777,6 +1835,7 @@ private constructor(
             balanceDrawDownDescription()
             code()
             consumptionsAccountingProductId()
+            contractId()
             description()
             feesAccountingProductId()
             lineItemTypes().ifPresent { it.forEach { it.validate() } }
@@ -1813,6 +1872,7 @@ private constructor(
                 (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
                 (if (code.asKnown().isPresent) 1 else 0) +
                 (if (consumptionsAccountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (contractId.asKnown().isPresent) 1 else 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (if (feesAccountingProductId.asKnown().isPresent) 1 else 0) +
                 (lineItemTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -1829,17 +1889,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /** Available line item types for Balances */
