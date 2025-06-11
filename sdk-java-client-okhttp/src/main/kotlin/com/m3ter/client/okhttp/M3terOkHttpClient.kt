@@ -177,13 +177,7 @@ class M3terOkHttpClient private constructor() {
         fun build(): M3terClient =
             M3terClientImpl(
                 clientOptions
-                    .httpClient(
-                        OkHttpClient.builder()
-                            .baseUrl(clientOptions.baseUrl())
-                            .timeout(timeout)
-                            .proxy(proxy)
-                            .build()
-                    )
+                    .httpClient(OkHttpClient.builder().timeout(timeout).proxy(proxy).build())
                     .build()
             )
     }

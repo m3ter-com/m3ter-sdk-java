@@ -85,6 +85,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -120,6 +121,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -156,6 +158,10 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(
+                        if (clientOptions.baseUrlOverridden()) clientOptions.baseUrl()
+                        else "https://ingest.m3ter.com"
+                    )
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
