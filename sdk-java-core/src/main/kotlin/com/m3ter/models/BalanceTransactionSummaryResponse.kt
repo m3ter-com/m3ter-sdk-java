@@ -17,7 +17,10 @@ import java.util.Optional
 
 class BalanceTransactionSummaryResponse
 private constructor(
+    private val balanceConsumed: JsonField<Double>,
+    private val expiredBalanceAmount: JsonField<Double>,
     private val initialCreditAmount: JsonField<Double>,
+    private val rolloverConsumed: JsonField<Double>,
     private val totalCreditAmount: JsonField<Double>,
     private val totalDebitAmount: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -25,16 +28,50 @@ private constructor(
 
     @JsonCreator
     private constructor(
+        @JsonProperty("balanceConsumed")
+        @ExcludeMissing
+        balanceConsumed: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("expiredBalanceAmount")
+        @ExcludeMissing
+        expiredBalanceAmount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("initialCreditAmount")
         @ExcludeMissing
         initialCreditAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("rolloverConsumed")
+        @ExcludeMissing
+        rolloverConsumed: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("totalCreditAmount")
         @ExcludeMissing
         totalCreditAmount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("totalDebitAmount")
         @ExcludeMissing
         totalDebitAmount: JsonField<Double> = JsonMissing.of(),
-    ) : this(initialCreditAmount, totalCreditAmount, totalDebitAmount, mutableMapOf())
+    ) : this(
+        balanceConsumed,
+        expiredBalanceAmount,
+        initialCreditAmount,
+        rolloverConsumed,
+        totalCreditAmount,
+        totalDebitAmount,
+        mutableMapOf(),
+    )
+
+    /**
+     * Amount consumed from the original balance
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun balanceConsumed(): Optional<Double> = balanceConsumed.getOptional("balanceConsumed")
+
+    /**
+     * Amount of the balance that expired without being used
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun expiredBalanceAmount(): Optional<Double> =
+        expiredBalanceAmount.getOptional("expiredBalanceAmount")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -42,6 +79,14 @@ private constructor(
      */
     fun initialCreditAmount(): Optional<Double> =
         initialCreditAmount.getOptional("initialCreditAmount")
+
+    /**
+     * Amount consumed from rollover credit
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun rolloverConsumed(): Optional<Double> = rolloverConsumed.getOptional("rolloverConsumed")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -56,6 +101,25 @@ private constructor(
     fun totalDebitAmount(): Optional<Double> = totalDebitAmount.getOptional("totalDebitAmount")
 
     /**
+     * Returns the raw JSON value of [balanceConsumed].
+     *
+     * Unlike [balanceConsumed], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("balanceConsumed")
+    @ExcludeMissing
+    fun _balanceConsumed(): JsonField<Double> = balanceConsumed
+
+    /**
+     * Returns the raw JSON value of [expiredBalanceAmount].
+     *
+     * Unlike [expiredBalanceAmount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("expiredBalanceAmount")
+    @ExcludeMissing
+    fun _expiredBalanceAmount(): JsonField<Double> = expiredBalanceAmount
+
+    /**
      * Returns the raw JSON value of [initialCreditAmount].
      *
      * Unlike [initialCreditAmount], this method doesn't throw if the JSON field has an unexpected
@@ -64,6 +128,16 @@ private constructor(
     @JsonProperty("initialCreditAmount")
     @ExcludeMissing
     fun _initialCreditAmount(): JsonField<Double> = initialCreditAmount
+
+    /**
+     * Returns the raw JSON value of [rolloverConsumed].
+     *
+     * Unlike [rolloverConsumed], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("rolloverConsumed")
+    @ExcludeMissing
+    fun _rolloverConsumed(): JsonField<Double> = rolloverConsumed
 
     /**
      * Returns the raw JSON value of [totalCreditAmount].
@@ -109,7 +183,10 @@ private constructor(
     /** A builder for [BalanceTransactionSummaryResponse]. */
     class Builder internal constructor() {
 
+        private var balanceConsumed: JsonField<Double> = JsonMissing.of()
+        private var expiredBalanceAmount: JsonField<Double> = JsonMissing.of()
         private var initialCreditAmount: JsonField<Double> = JsonMissing.of()
+        private var rolloverConsumed: JsonField<Double> = JsonMissing.of()
         private var totalCreditAmount: JsonField<Double> = JsonMissing.of()
         private var totalDebitAmount: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -117,12 +194,45 @@ private constructor(
         @JvmSynthetic
         internal fun from(balanceTransactionSummaryResponse: BalanceTransactionSummaryResponse) =
             apply {
+                balanceConsumed = balanceTransactionSummaryResponse.balanceConsumed
+                expiredBalanceAmount = balanceTransactionSummaryResponse.expiredBalanceAmount
                 initialCreditAmount = balanceTransactionSummaryResponse.initialCreditAmount
+                rolloverConsumed = balanceTransactionSummaryResponse.rolloverConsumed
                 totalCreditAmount = balanceTransactionSummaryResponse.totalCreditAmount
                 totalDebitAmount = balanceTransactionSummaryResponse.totalDebitAmount
                 additionalProperties =
                     balanceTransactionSummaryResponse.additionalProperties.toMutableMap()
             }
+
+        /** Amount consumed from the original balance */
+        fun balanceConsumed(balanceConsumed: Double) =
+            balanceConsumed(JsonField.of(balanceConsumed))
+
+        /**
+         * Sets [Builder.balanceConsumed] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.balanceConsumed] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun balanceConsumed(balanceConsumed: JsonField<Double>) = apply {
+            this.balanceConsumed = balanceConsumed
+        }
+
+        /** Amount of the balance that expired without being used */
+        fun expiredBalanceAmount(expiredBalanceAmount: Double) =
+            expiredBalanceAmount(JsonField.of(expiredBalanceAmount))
+
+        /**
+         * Sets [Builder.expiredBalanceAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expiredBalanceAmount] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun expiredBalanceAmount(expiredBalanceAmount: JsonField<Double>) = apply {
+            this.expiredBalanceAmount = expiredBalanceAmount
+        }
 
         fun initialCreditAmount(initialCreditAmount: Double) =
             initialCreditAmount(JsonField.of(initialCreditAmount))
@@ -136,6 +246,21 @@ private constructor(
          */
         fun initialCreditAmount(initialCreditAmount: JsonField<Double>) = apply {
             this.initialCreditAmount = initialCreditAmount
+        }
+
+        /** Amount consumed from rollover credit */
+        fun rolloverConsumed(rolloverConsumed: Double) =
+            rolloverConsumed(JsonField.of(rolloverConsumed))
+
+        /**
+         * Sets [Builder.rolloverConsumed] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.rolloverConsumed] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun rolloverConsumed(rolloverConsumed: JsonField<Double>) = apply {
+            this.rolloverConsumed = rolloverConsumed
         }
 
         fun totalCreditAmount(totalCreditAmount: Double) =
@@ -192,7 +317,10 @@ private constructor(
          */
         fun build(): BalanceTransactionSummaryResponse =
             BalanceTransactionSummaryResponse(
+                balanceConsumed,
+                expiredBalanceAmount,
                 initialCreditAmount,
+                rolloverConsumed,
                 totalCreditAmount,
                 totalDebitAmount,
                 additionalProperties.toMutableMap(),
@@ -206,7 +334,10 @@ private constructor(
             return@apply
         }
 
+        balanceConsumed()
+        expiredBalanceAmount()
         initialCreditAmount()
+        rolloverConsumed()
         totalCreditAmount()
         totalDebitAmount()
         validated = true
@@ -227,7 +358,10 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (initialCreditAmount.asKnown().isPresent) 1 else 0) +
+        (if (balanceConsumed.asKnown().isPresent) 1 else 0) +
+            (if (expiredBalanceAmount.asKnown().isPresent) 1 else 0) +
+            (if (initialCreditAmount.asKnown().isPresent) 1 else 0) +
+            (if (rolloverConsumed.asKnown().isPresent) 1 else 0) +
             (if (totalCreditAmount.asKnown().isPresent) 1 else 0) +
             (if (totalDebitAmount.asKnown().isPresent) 1 else 0)
 
@@ -236,15 +370,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionSummaryResponse && initialCreditAmount == other.initialCreditAmount && totalCreditAmount == other.totalCreditAmount && totalDebitAmount == other.totalDebitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BalanceTransactionSummaryResponse && balanceConsumed == other.balanceConsumed && expiredBalanceAmount == other.expiredBalanceAmount && initialCreditAmount == other.initialCreditAmount && rolloverConsumed == other.rolloverConsumed && totalCreditAmount == other.totalCreditAmount && totalDebitAmount == other.totalDebitAmount && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(initialCreditAmount, totalCreditAmount, totalDebitAmount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(balanceConsumed, expiredBalanceAmount, initialCreditAmount, rolloverConsumed, totalCreditAmount, totalDebitAmount, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BalanceTransactionSummaryResponse{initialCreditAmount=$initialCreditAmount, totalCreditAmount=$totalCreditAmount, totalDebitAmount=$totalDebitAmount, additionalProperties=$additionalProperties}"
+        "BalanceTransactionSummaryResponse{balanceConsumed=$balanceConsumed, expiredBalanceAmount=$expiredBalanceAmount, initialCreditAmount=$initialCreditAmount, rolloverConsumed=$rolloverConsumed, totalCreditAmount=$totalCreditAmount, totalDebitAmount=$totalDebitAmount, additionalProperties=$additionalProperties}"
 }

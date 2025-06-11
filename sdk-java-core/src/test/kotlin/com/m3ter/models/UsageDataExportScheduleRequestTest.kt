@@ -33,9 +33,8 @@ internal class UsageDataExportScheduleRequestTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleRequest.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
@@ -67,12 +66,7 @@ internal class UsageDataExportScheduleRequestTest {
             )
         assertThat(usageDataExportScheduleRequest.groups().getOrNull())
             .containsExactly(
-                UsageDataExportScheduleRequest.Group.ofDataExportsDataExplorerAccount(
-                    UsageDataExportScheduleRequest.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
-                        .build()
-                )
+                DataExplorerGroup.builder().groupType(DataExplorerGroup.GroupType.ACCOUNT).build()
             )
         assertThat(usageDataExportScheduleRequest.meterIds().getOrNull()).containsExactly("string")
         assertThat(usageDataExportScheduleRequest.version()).contains(0L)
@@ -102,9 +96,8 @@ internal class UsageDataExportScheduleRequestTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleRequest.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")

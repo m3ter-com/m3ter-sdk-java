@@ -3,6 +3,7 @@
 package com.m3ter.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.core.JsonValue
 import com.m3ter.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
@@ -25,6 +26,11 @@ internal class BalanceTest {
                 .contractId("contractId")
                 .createdBy("createdBy")
                 .currency("currency")
+                .customFields(
+                    Balance.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .description("description")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -52,6 +58,12 @@ internal class BalanceTest {
         assertThat(balance.contractId()).contains("contractId")
         assertThat(balance.createdBy()).contains("createdBy")
         assertThat(balance.currency()).contains("currency")
+        assertThat(balance.customFields())
+            .contains(
+                Balance.CustomFields.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(balance.description()).contains("description")
         assertThat(balance.dtCreated()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balance.dtLastModified())
@@ -86,6 +98,11 @@ internal class BalanceTest {
                 .contractId("contractId")
                 .createdBy("createdBy")
                 .currency("currency")
+                .customFields(
+                    Balance.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .description("description")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

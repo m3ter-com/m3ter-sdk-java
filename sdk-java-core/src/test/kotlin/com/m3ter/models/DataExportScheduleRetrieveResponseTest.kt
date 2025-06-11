@@ -82,9 +82,8 @@ internal class DataExportScheduleRetrieveResponseTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
@@ -126,9 +125,8 @@ internal class DataExportScheduleRetrieveResponseTest {
                             .build()
                     )
                     .addGroup(
-                        UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                            .builder()
-                            .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        DataExplorerGroup.builder()
+                            .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                             .build()
                     )
                     .addMeterId("string")

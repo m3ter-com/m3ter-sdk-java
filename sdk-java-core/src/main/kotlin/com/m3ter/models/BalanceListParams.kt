@@ -20,6 +20,7 @@ class BalanceListParams
 private constructor(
     private val orgId: String?,
     private val accountId: String?,
+    private val contract: String?,
     private val endDateEnd: String?,
     private val endDateStart: String?,
     private val nextToken: String?,
@@ -33,6 +34,8 @@ private constructor(
 
     /** The unique identifier (UUID) for the end customer's account. */
     fun accountId(): Optional<String> = Optional.ofNullable(accountId)
+
+    fun contract(): Optional<String> = Optional.ofNullable(contract)
 
     /** Only include Balances with end dates earlier than this date. */
     fun endDateEnd(): Optional<String> = Optional.ofNullable(endDateEnd)
@@ -68,6 +71,7 @@ private constructor(
 
         private var orgId: String? = null
         private var accountId: String? = null
+        private var contract: String? = null
         private var endDateEnd: String? = null
         private var endDateStart: String? = null
         private var nextToken: String? = null
@@ -79,6 +83,7 @@ private constructor(
         internal fun from(balanceListParams: BalanceListParams) = apply {
             orgId = balanceListParams.orgId
             accountId = balanceListParams.accountId
+            contract = balanceListParams.contract
             endDateEnd = balanceListParams.endDateEnd
             endDateStart = balanceListParams.endDateStart
             nextToken = balanceListParams.nextToken
@@ -99,6 +104,11 @@ private constructor(
 
         /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
+
+        fun contract(contract: String?) = apply { this.contract = contract }
+
+        /** Alias for calling [Builder.contract] with `contract.orElse(null)`. */
+        fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
         /** Only include Balances with end dates earlier than this date. */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
@@ -241,6 +251,7 @@ private constructor(
             BalanceListParams(
                 orgId,
                 accountId,
+                contract,
                 endDateEnd,
                 endDateStart,
                 nextToken,
@@ -262,6 +273,7 @@ private constructor(
         QueryParams.builder()
             .apply {
                 accountId?.let { put("accountId", it) }
+                contract?.let { put("contract", it) }
                 endDateEnd?.let { put("endDateEnd", it) }
                 endDateStart?.let { put("endDateStart", it) }
                 nextToken?.let { put("nextToken", it) }
@@ -275,11 +287,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceListParams && orgId == other.orgId && accountId == other.accountId && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BalanceListParams && orgId == other.orgId && accountId == other.accountId && contract == other.contract && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, endDateEnd, endDateStart, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, contract, endDateEnd, endDateStart, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BalanceListParams{orgId=$orgId, accountId=$accountId, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceListParams{orgId=$orgId, accountId=$accountId, contract=$contract, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

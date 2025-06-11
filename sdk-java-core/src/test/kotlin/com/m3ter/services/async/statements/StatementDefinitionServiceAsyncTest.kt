@@ -31,14 +31,12 @@ internal class StatementDefinitionServiceAsyncTest {
                 StatementStatementDefinitionCreateParams.builder()
                     .orgId("orgId")
                     .aggregationFrequency(
-                        StatementStatementDefinitionCreateParams.AggregationFrequency.DAY
+                        StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL
                     )
                     .addDimension(
                         StatementStatementDefinitionCreateParams.Dimension.builder()
-                            .addFilter("string")
-                            .name("x")
-                            .addAttribute("string")
-                            .meterId("meterId")
+                            .addDimensionAttribute("string")
+                            .dimensionName("dimensionName")
                             .build()
                     )
                     .includePricePerUnit(true)
@@ -99,14 +97,12 @@ internal class StatementDefinitionServiceAsyncTest {
                     .orgId("orgId")
                     .id("id")
                     .aggregationFrequency(
-                        StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY
+                        StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL
                     )
                     .addDimension(
                         StatementStatementDefinitionUpdateParams.Dimension.builder()
-                            .addFilter("string")
-                            .name("x")
-                            .addAttribute("string")
-                            .meterId("meterId")
+                            .addDimensionAttribute("string")
+                            .dimensionName("dimensionName")
                             .build()
                     )
                     .includePricePerUnit(true)

@@ -13,11 +13,11 @@ internal class DataExplorerAccountGroupTest {
     fun create() {
         val dataExplorerAccountGroup =
             DataExplorerAccountGroup.builder()
-                .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .build()
 
         assertThat(dataExplorerAccountGroup.groupType())
-            .contains(DataExplorerAccountGroup.GroupType.ACCOUNT)
+            .contains(DataExplorerGroup.GroupType.ACCOUNT)
     }
 
     @Test
@@ -25,7 +25,7 @@ internal class DataExplorerAccountGroupTest {
         val jsonMapper = jsonMapper()
         val dataExplorerAccountGroup =
             DataExplorerAccountGroup.builder()
-                .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .build()
 
         val roundtrippedDataExplorerAccountGroup =

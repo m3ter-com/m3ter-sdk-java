@@ -24,7 +24,6 @@ internal class StatementJobResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .orgId("orgId")
                 .presignedJsonStatementUrl("presignedJsonStatementUrl")
-                .statementId("statementId")
                 .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
                 .build()
 
@@ -41,7 +40,6 @@ internal class StatementJobResponseTest {
         assertThat(statementJobResponse.orgId()).contains("orgId")
         assertThat(statementJobResponse.presignedJsonStatementUrl())
             .contains("presignedJsonStatementUrl")
-        assertThat(statementJobResponse.statementId()).contains("statementId")
         assertThat(statementJobResponse.statementJobStatus())
             .contains(StatementJobResponse.StatementJobStatus.PENDING)
     }
@@ -61,7 +59,6 @@ internal class StatementJobResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .orgId("orgId")
                 .presignedJsonStatementUrl("presignedJsonStatementUrl")
-                .statementId("statementId")
                 .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
                 .build()
 

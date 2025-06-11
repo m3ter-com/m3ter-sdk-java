@@ -13,6 +13,7 @@ internal class BalanceListParamsTest {
         BalanceListParams.builder()
             .orgId("orgId")
             .accountId("accountId")
+            .contract("contract")
             .endDateEnd("endDateEnd")
             .endDateStart("endDateStart")
             .nextToken("nextToken")
@@ -35,6 +36,7 @@ internal class BalanceListParamsTest {
             BalanceListParams.builder()
                 .orgId("orgId")
                 .accountId("accountId")
+                .contract("contract")
                 .endDateEnd("endDateEnd")
                 .endDateStart("endDateStart")
                 .nextToken("nextToken")
@@ -47,6 +49,7 @@ internal class BalanceListParamsTest {
             .isEqualTo(
                 QueryParams.builder()
                     .put("accountId", "accountId")
+                    .put("contract", "contract")
                     .put("endDateEnd", "endDateEnd")
                     .put("endDateStart", "endDateStart")
                     .put("nextToken", "nextToken")

@@ -13,15 +13,15 @@ internal class DataExplorerDimensionGroupTest {
     fun create() {
         val dataExplorerDimensionGroup =
             DataExplorerDimensionGroup.builder()
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .fieldCode("x")
                 .meterId("x")
-                .groupType(DataExplorerDimensionGroup.GroupType.ACCOUNT)
                 .build()
 
+        assertThat(dataExplorerDimensionGroup.groupType())
+            .contains(DataExplorerGroup.GroupType.ACCOUNT)
         assertThat(dataExplorerDimensionGroup.fieldCode()).isEqualTo("x")
         assertThat(dataExplorerDimensionGroup.meterId()).isEqualTo("x")
-        assertThat(dataExplorerDimensionGroup.groupType())
-            .contains(DataExplorerDimensionGroup.GroupType.ACCOUNT)
     }
 
     @Test
@@ -29,9 +29,9 @@ internal class DataExplorerDimensionGroupTest {
         val jsonMapper = jsonMapper()
         val dataExplorerDimensionGroup =
             DataExplorerDimensionGroup.builder()
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .fieldCode("x")
                 .meterId("x")
-                .groupType(DataExplorerDimensionGroup.GroupType.ACCOUNT)
                 .build()
 
         val roundtrippedDataExplorerDimensionGroup =

@@ -52,15 +52,12 @@ interface DataExportService {
      *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
      *
      * **Date Range for Operational Data Exports**. To restrict the operational data included in the
-     * export by a date/time range, use the `startDate` and `endDate` date/time request parameters
-     * to specify the period. Constraints:
-     * - `startDate` with no `endDate` is valid.
-     * - `endDate` with no `startDate` is valid.
-     * - If both are set,`startDate` must be before `endDate`.
-     * - `endDate` must be before now UTC.
+     * ad-hoc export by a date/time range, use the `startDate` date/time request parameter to
+     * specify the start of the time period. The export will include all operational data from the
+     * specified `startDate` up until the date/time the export job runs.
      *
-     * **Date Range for Usage Data Exports**. To restrict the usage data included in the export by
-     * date/time range, use the `startDate` and `endDate` date/time parameters:
+     * **Date Range for Usage Data Exports**. To restrict the usage data included in the ad-hoc
+     * export by date/time range, use the `startDate` and `endDate` date/time parameters:
      * - Both `startDate` and `endDate` are required.
      * - `endDate` must be after `startDate`.
      * - `endDate` cannot be after tomorrow at midnight UTC. For example if today is May 20th 2025,
