@@ -21,20 +21,29 @@ import kotlin.jvm.optionals.getOrNull
 /** Group by dimension */
 class DataExplorerDimensionGroup
 private constructor(
+    private val groupType: JsonField<DataExplorerGroup.GroupType>,
     private val fieldCode: JsonField<String>,
     private val meterId: JsonField<String>,
-    private val groupType: JsonField<GroupType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
-        @JsonProperty("fieldCode") @ExcludeMissing fieldCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("groupType")
         @ExcludeMissing
-        groupType: JsonField<GroupType> = JsonMissing.of(),
-    ) : this(fieldCode, meterId, groupType, mutableMapOf())
+        groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of(),
+        @JsonProperty("fieldCode") @ExcludeMissing fieldCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
+    ) : this(groupType, fieldCode, meterId, mutableMapOf())
+
+    fun toDataExplorerGroup(): DataExplorerGroup =
+        DataExplorerGroup.builder().groupType(groupType).build()
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun groupType(): Optional<DataExplorerGroup.GroupType> = groupType.getOptional("groupType")
 
     /**
      * Field code to group by
@@ -53,10 +62,13 @@ private constructor(
     fun meterId(): String = meterId.getRequired("meterId")
 
     /**
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * Returns the raw JSON value of [groupType].
+     *
+     * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+    @JsonProperty("groupType")
+    @ExcludeMissing
+    fun _groupType(): JsonField<DataExplorerGroup.GroupType> = groupType
 
     /**
      * Returns the raw JSON value of [fieldCode].
@@ -71,13 +83,6 @@ private constructor(
      * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
-
-    /**
-     * Returns the raw JSON value of [groupType].
-     *
-     * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("groupType") @ExcludeMissing fun _groupType(): JsonField<GroupType> = groupType
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -108,17 +113,30 @@ private constructor(
     /** A builder for [DataExplorerDimensionGroup]. */
     class Builder internal constructor() {
 
+        private var groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of()
         private var fieldCode: JsonField<String>? = null
         private var meterId: JsonField<String>? = null
-        private var groupType: JsonField<GroupType> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(dataExplorerDimensionGroup: DataExplorerDimensionGroup) = apply {
+            groupType = dataExplorerDimensionGroup.groupType
             fieldCode = dataExplorerDimensionGroup.fieldCode
             meterId = dataExplorerDimensionGroup.meterId
-            groupType = dataExplorerDimensionGroup.groupType
             additionalProperties = dataExplorerDimensionGroup.additionalProperties.toMutableMap()
+        }
+
+        fun groupType(groupType: DataExplorerGroup.GroupType) = groupType(JsonField.of(groupType))
+
+        /**
+         * Sets [Builder.groupType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groupType] with a well-typed
+         * [DataExplorerGroup.GroupType] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
+        fun groupType(groupType: JsonField<DataExplorerGroup.GroupType>) = apply {
+            this.groupType = groupType
         }
 
         /** Field code to group by */
@@ -143,17 +161,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
-
-        fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
-
-        /**
-         * Sets [Builder.groupType] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.groupType] with a well-typed [GroupType] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun groupType(groupType: JsonField<GroupType>) = apply { this.groupType = groupType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -189,9 +196,9 @@ private constructor(
          */
         fun build(): DataExplorerDimensionGroup =
             DataExplorerDimensionGroup(
+                groupType,
                 checkRequired("fieldCode", fieldCode),
                 checkRequired("meterId", meterId),
-                groupType,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -203,9 +210,9 @@ private constructor(
             return@apply
         }
 
+        groupType().ifPresent { it.validate() }
         fieldCode()
         meterId()
-        groupType().ifPresent { it.validate() }
         validated = true
     }
 
@@ -224,9 +231,9 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (fieldCode.asKnown().isPresent) 1 else 0) +
-            (if (meterId.asKnown().isPresent) 1 else 0) +
-            (groupType.asKnown().getOrNull()?.validity() ?: 0)
+        (groupType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (fieldCode.asKnown().isPresent) 1 else 0) +
+            (if (meterId.asKnown().isPresent) 1 else 0)
 
     class GroupType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -365,15 +372,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExplorerDimensionGroup && fieldCode == other.fieldCode && meterId == other.meterId && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is DataExplorerDimensionGroup && groupType == other.groupType && fieldCode == other.fieldCode && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(fieldCode, meterId, groupType, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(groupType, fieldCode, meterId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DataExplorerDimensionGroup{fieldCode=$fieldCode, meterId=$meterId, groupType=$groupType, additionalProperties=$additionalProperties}"
+        "DataExplorerDimensionGroup{groupType=$groupType, fieldCode=$fieldCode, meterId=$meterId, additionalProperties=$additionalProperties}"
 }

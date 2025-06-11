@@ -13,14 +13,20 @@ internal class BalanceTransactionSummaryResponseTest {
     fun create() {
         val balanceTransactionSummaryResponse =
             BalanceTransactionSummaryResponse.builder()
-                .initialCreditAmount(0.0)
-                .totalCreditAmount(0.0)
-                .totalDebitAmount(0.0)
+                .balanceConsumed(100.0)
+                .expiredBalanceAmount(50.0)
+                .initialCreditAmount(300.0)
+                .rolloverConsumed(75.0)
+                .totalCreditAmount(250.0)
+                .totalDebitAmount(125.5)
                 .build()
 
-        assertThat(balanceTransactionSummaryResponse.initialCreditAmount()).contains(0.0)
-        assertThat(balanceTransactionSummaryResponse.totalCreditAmount()).contains(0.0)
-        assertThat(balanceTransactionSummaryResponse.totalDebitAmount()).contains(0.0)
+        assertThat(balanceTransactionSummaryResponse.balanceConsumed()).contains(100.0)
+        assertThat(balanceTransactionSummaryResponse.expiredBalanceAmount()).contains(50.0)
+        assertThat(balanceTransactionSummaryResponse.initialCreditAmount()).contains(300.0)
+        assertThat(balanceTransactionSummaryResponse.rolloverConsumed()).contains(75.0)
+        assertThat(balanceTransactionSummaryResponse.totalCreditAmount()).contains(250.0)
+        assertThat(balanceTransactionSummaryResponse.totalDebitAmount()).contains(125.5)
     }
 
     @Test
@@ -28,9 +34,12 @@ internal class BalanceTransactionSummaryResponseTest {
         val jsonMapper = jsonMapper()
         val balanceTransactionSummaryResponse =
             BalanceTransactionSummaryResponse.builder()
-                .initialCreditAmount(0.0)
-                .totalCreditAmount(0.0)
-                .totalDebitAmount(0.0)
+                .balanceConsumed(100.0)
+                .expiredBalanceAmount(50.0)
+                .initialCreditAmount(300.0)
+                .rolloverConsumed(75.0)
+                .totalCreditAmount(250.0)
+                .totalDebitAmount(125.5)
                 .build()
 
         val roundtrippedBalanceTransactionSummaryResponse =

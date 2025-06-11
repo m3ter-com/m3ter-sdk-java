@@ -906,6 +906,10 @@ private constructor(
 
         companion object {
 
+            @JvmField val ORIGINAL = of("ORIGINAL")
+
+            @JvmField val HOUR = of("HOUR")
+
             @JvmField val DAY = of("DAY")
 
             @JvmField val WEEK = of("WEEK")
@@ -923,6 +927,8 @@ private constructor(
 
         /** An enum containing [AggregationFrequency]'s known values. */
         enum class Known {
+            ORIGINAL,
+            HOUR,
             DAY,
             WEEK,
             MONTH,
@@ -942,6 +948,8 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            ORIGINAL,
+            HOUR,
             DAY,
             WEEK,
             MONTH,
@@ -964,6 +972,8 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                ORIGINAL -> Value.ORIGINAL
+                HOUR -> Value.HOUR
                 DAY -> Value.DAY
                 WEEK -> Value.WEEK
                 MONTH -> Value.MONTH
@@ -983,6 +993,8 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                ORIGINAL -> Known.ORIGINAL
+                HOUR -> Known.HOUR
                 DAY -> Known.DAY
                 WEEK -> Known.WEEK
                 MONTH -> Known.MONTH
@@ -1047,87 +1059,57 @@ private constructor(
     /** A Dimension belonging to a Meter. */
     class Dimension
     private constructor(
-        private val filter: JsonField<List<String>>,
-        private val name: JsonField<String>,
-        private val attributes: JsonField<List<String>>,
-        private val meterId: JsonField<String>,
+        private val dimensionAttributes: JsonField<List<String>>,
+        private val dimensionName: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("filter")
+            @JsonProperty("dimensionAttributes")
             @ExcludeMissing
-            filter: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("attributes")
+            dimensionAttributes: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("dimensionName")
             @ExcludeMissing
-            attributes: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
-        ) : this(filter, name, attributes, meterId, mutableMapOf())
+            dimensionName: JsonField<String> = JsonMissing.of(),
+        ) : this(dimensionAttributes, dimensionName, mutableMapOf())
 
         /**
-         * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
-         * Dimension values.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun filter(): List<String> = filter.getRequired("filter")
-
-        /**
-         * The name of the Dimension to target in the Meter.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun name(): String = name.getRequired("name")
-
-        /**
-         * The Dimension attribute to target.
+         * Attributes belonging to the dimension
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun attributes(): Optional<List<String>> = attributes.getOptional("attributes")
+        fun dimensionAttributes(): Optional<List<String>> =
+            dimensionAttributes.getOptional("dimensionAttributes")
 
         /**
-         * The unique identifier (UUID) of the Meter containing this Dimension.
+         * The name of a dimension
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun meterId(): Optional<String> = meterId.getOptional("meterId")
+        fun dimensionName(): Optional<String> = dimensionName.getOptional("dimensionName")
 
         /**
-         * Returns the raw JSON value of [filter].
+         * Returns the raw JSON value of [dimensionAttributes].
          *
-         * Unlike [filter], this method doesn't throw if the JSON field has an unexpected type.
+         * Unlike [dimensionAttributes], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
-        @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<List<String>> = filter
-
-        /**
-         * Returns the raw JSON value of [name].
-         *
-         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-        /**
-         * Returns the raw JSON value of [attributes].
-         *
-         * Unlike [attributes], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("attributes")
+        @JsonProperty("dimensionAttributes")
         @ExcludeMissing
-        fun _attributes(): JsonField<List<String>> = attributes
+        fun _dimensionAttributes(): JsonField<List<String>> = dimensionAttributes
 
         /**
-         * Returns the raw JSON value of [meterId].
+         * Returns the raw JSON value of [dimensionName].
          *
-         * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+         * Unlike [dimensionName], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
-        @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
+        @JsonProperty("dimensionName")
+        @ExcludeMissing
+        fun _dimensionName(): JsonField<String> = dimensionName
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1143,114 +1125,64 @@ private constructor(
 
         companion object {
 
-            /**
-             * Returns a mutable builder for constructing an instance of [Dimension].
-             *
-             * The following fields are required:
-             * ```java
-             * .filter()
-             * .name()
-             * ```
-             */
+            /** Returns a mutable builder for constructing an instance of [Dimension]. */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [Dimension]. */
         class Builder internal constructor() {
 
-            private var filter: JsonField<MutableList<String>>? = null
-            private var name: JsonField<String>? = null
-            private var attributes: JsonField<MutableList<String>>? = null
-            private var meterId: JsonField<String> = JsonMissing.of()
+            private var dimensionAttributes: JsonField<MutableList<String>>? = null
+            private var dimensionName: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(dimension: Dimension) = apply {
-                filter = dimension.filter.map { it.toMutableList() }
-                name = dimension.name
-                attributes = dimension.attributes.map { it.toMutableList() }
-                meterId = dimension.meterId
+                dimensionAttributes = dimension.dimensionAttributes.map { it.toMutableList() }
+                dimensionName = dimension.dimensionName
                 additionalProperties = dimension.additionalProperties.toMutableMap()
             }
 
-            /**
-             * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
-             * Dimension values.
-             */
-            fun filter(filter: List<String>) = filter(JsonField.of(filter))
+            /** Attributes belonging to the dimension */
+            fun dimensionAttributes(dimensionAttributes: List<String>) =
+                dimensionAttributes(JsonField.of(dimensionAttributes))
 
             /**
-             * Sets [Builder.filter] to an arbitrary JSON value.
+             * Sets [Builder.dimensionAttributes] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.filter] with a well-typed `List<String>` value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
+             * You should usually call [Builder.dimensionAttributes] with a well-typed
+             * `List<String>` value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
              */
-            fun filter(filter: JsonField<List<String>>) = apply {
-                this.filter = filter.map { it.toMutableList() }
+            fun dimensionAttributes(dimensionAttributes: JsonField<List<String>>) = apply {
+                this.dimensionAttributes = dimensionAttributes.map { it.toMutableList() }
             }
 
             /**
-             * Adds a single [String] to [Builder.filter].
+             * Adds a single [String] to [dimensionAttributes].
              *
              * @throws IllegalStateException if the field was previously set to a non-list.
              */
-            fun addFilter(filter: String) = apply {
-                this.filter =
-                    (this.filter ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("filter", it).add(filter)
+            fun addDimensionAttribute(dimensionAttribute: String) = apply {
+                dimensionAttributes =
+                    (dimensionAttributes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dimensionAttributes", it).add(dimensionAttribute)
                     }
             }
 
-            /** The name of the Dimension to target in the Meter. */
-            fun name(name: String) = name(JsonField.of(name))
+            /** The name of a dimension */
+            fun dimensionName(dimensionName: String) = dimensionName(JsonField.of(dimensionName))
 
             /**
-             * Sets [Builder.name] to an arbitrary JSON value.
+             * Sets [Builder.dimensionName] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.name] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            /** The Dimension attribute to target. */
-            fun attributes(attributes: List<String>) = attributes(JsonField.of(attributes))
-
-            /**
-             * Sets [Builder.attributes] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.attributes] with a well-typed `List<String>` value
+             * You should usually call [Builder.dimensionName] with a well-typed [String] value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun attributes(attributes: JsonField<List<String>>) = apply {
-                this.attributes = attributes.map { it.toMutableList() }
+            fun dimensionName(dimensionName: JsonField<String>) = apply {
+                this.dimensionName = dimensionName
             }
-
-            /**
-             * Adds a single [String] to [attributes].
-             *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addAttribute(attribute: String) = apply {
-                attributes =
-                    (attributes ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("attributes", it).add(attribute)
-                    }
-            }
-
-            /** The unique identifier (UUID) of the Meter containing this Dimension. */
-            fun meterId(meterId: String) = meterId(JsonField.of(meterId))
-
-            /**
-             * Sets [Builder.meterId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.meterId] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1275,21 +1207,11 @@ private constructor(
              * Returns an immutable instance of [Dimension].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```java
-             * .filter()
-             * .name()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Dimension =
                 Dimension(
-                    checkRequired("filter", filter).map { it.toImmutable() },
-                    checkRequired("name", name),
-                    (attributes ?: JsonMissing.of()).map { it.toImmutable() },
-                    meterId,
+                    (dimensionAttributes ?: JsonMissing.of()).map { it.toImmutable() },
+                    dimensionName,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1301,10 +1223,8 @@ private constructor(
                 return@apply
             }
 
-            filter()
-            name()
-            attributes()
-            meterId()
+            dimensionAttributes()
+            dimensionName()
             validated = true
         }
 
@@ -1324,27 +1244,25 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (filter.asKnown().getOrNull()?.size ?: 0) +
-                (if (name.asKnown().isPresent) 1 else 0) +
-                (attributes.asKnown().getOrNull()?.size ?: 0) +
-                (if (meterId.asKnown().isPresent) 1 else 0)
+            (dimensionAttributes.asKnown().getOrNull()?.size ?: 0) +
+                (if (dimensionName.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Dimension && filter == other.filter && name == other.name && attributes == other.attributes && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Dimension && dimensionAttributes == other.dimensionAttributes && dimensionName == other.dimensionName && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(filter, name, attributes, meterId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(dimensionAttributes, dimensionName, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Dimension{filter=$filter, name=$name, attributes=$attributes, meterId=$meterId, additionalProperties=$additionalProperties}"
+            "Dimension{dimensionAttributes=$dimensionAttributes, dimensionName=$dimensionName, additionalProperties=$additionalProperties}"
     }
 
     class Measure
@@ -1617,8 +1535,6 @@ private constructor(
 
                 @JvmField val UNIQUE = of("UNIQUE")
 
-                @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
-
                 @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
             }
 
@@ -1631,7 +1547,6 @@ private constructor(
                 LATEST,
                 MEAN,
                 UNIQUE,
-                CUSTOM_SQL,
             }
 
             /**
@@ -1651,7 +1566,6 @@ private constructor(
                 LATEST,
                 MEAN,
                 UNIQUE,
-                CUSTOM_SQL,
                 /**
                  * An enum member indicating that [Aggregation] was instantiated with an unknown
                  * value.
@@ -1675,7 +1589,6 @@ private constructor(
                     LATEST -> Value.LATEST
                     MEAN -> Value.MEAN
                     UNIQUE -> Value.UNIQUE
-                    CUSTOM_SQL -> Value.CUSTOM_SQL
                     else -> Value._UNKNOWN
                 }
 
@@ -1697,7 +1610,6 @@ private constructor(
                     LATEST -> Known.LATEST
                     MEAN -> Known.MEAN
                     UNIQUE -> Known.UNIQUE
-                    CUSTOM_SQL -> Known.CUSTOM_SQL
                     else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
                 }
 

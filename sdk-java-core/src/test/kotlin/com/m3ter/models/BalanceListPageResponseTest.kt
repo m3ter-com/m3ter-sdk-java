@@ -3,6 +3,7 @@
 package com.m3ter.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.core.JsonValue
 import com.m3ter.core.jsonMapper
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
@@ -27,6 +28,11 @@ internal class BalanceListPageResponseTest {
                         .contractId("contractId")
                         .createdBy("createdBy")
                         .currency("currency")
+                        .customFields(
+                            Balance.CustomFields.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .description("description")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -59,6 +65,11 @@ internal class BalanceListPageResponseTest {
                     .contractId("contractId")
                     .createdBy("createdBy")
                     .currency("currency")
+                    .customFields(
+                        Balance.CustomFields.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .description("description")
                     .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -95,6 +106,11 @@ internal class BalanceListPageResponseTest {
                         .contractId("contractId")
                         .createdBy("createdBy")
                         .currency("currency")
+                        .customFields(
+                            Balance.CustomFields.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .description("description")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

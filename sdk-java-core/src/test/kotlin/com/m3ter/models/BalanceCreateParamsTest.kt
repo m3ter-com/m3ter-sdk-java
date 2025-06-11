@@ -2,6 +2,7 @@
 
 package com.m3ter.models
 
+import com.m3ter.core.JsonValue
 import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
@@ -21,6 +22,11 @@ internal class BalanceCreateParamsTest {
             .code("JS!?Q0]r] ]\$]")
             .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .contractId("contractId")
+            .customFields(
+                BalanceCreateParams.CustomFields.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .description("description")
             .feesAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .addLineItemType(BalanceCreateParams.LineItemType.STANDING_CHARGE)
@@ -62,6 +68,11 @@ internal class BalanceCreateParamsTest {
                 .code("JS!?Q0]r] ]\$]")
                 .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .contractId("contractId")
+                .customFields(
+                    BalanceCreateParams.CustomFields.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .description("description")
                 .feesAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .addLineItemType(BalanceCreateParams.LineItemType.STANDING_CHARGE)
@@ -85,6 +96,12 @@ internal class BalanceCreateParamsTest {
         assertThat(body.consumptionsAccountingProductId())
             .contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.contractId()).contains("contractId")
+        assertThat(body.customFields())
+            .contains(
+                BalanceCreateParams.CustomFields.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.description()).contains("description")
         assertThat(body.feesAccountingProductId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.lineItemTypes().getOrNull())

@@ -33,6 +33,7 @@ private constructor(
     private val contractId: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val currency: JsonField<String>,
+    private val customFields: JsonField<CustomFields>,
     private val description: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
@@ -68,6 +69,9 @@ private constructor(
         contractId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        customFields: JsonField<CustomFields> = JsonMissing.of(),
         @JsonProperty("description")
         @ExcludeMissing
         description: JsonField<String> = JsonMissing.of(),
@@ -119,6 +123,7 @@ private constructor(
         contractId,
         createdBy,
         currency,
+        customFields,
         description,
         dtCreated,
         dtLastModified,
@@ -216,6 +221,23 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun currency(): Optional<String> = currency.getOptional("currency")
+
+    /**
+     * User defined fields enabling you to attach custom data. The value for a custom field can be
+     * either a string or a number.
+     *
+     * If `customFields` can also be defined for this entity at the Organizational
+     * level,`customField` values defined at individual level override values of `customFields` with
+     * the same name defined at Organization level.
+     *
+     * See
+     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+     * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
      * A description of the Balance.
@@ -412,6 +434,15 @@ private constructor(
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /**
+     * Returns the raw JSON value of [customFields].
+     *
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("customFields")
+    @ExcludeMissing
+    fun _customFields(): JsonField<CustomFields> = customFields
+
+    /**
      * Returns the raw JSON value of [description].
      *
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -573,6 +604,7 @@ private constructor(
         private var contractId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
+        private var customFields: JsonField<CustomFields> = JsonMissing.of()
         private var description: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -601,6 +633,7 @@ private constructor(
             contractId = balance.contractId
             createdBy = balance.createdBy
             currency = balance.currency
+            customFields = balance.customFields
             description = balance.description
             dtCreated = balance.dtCreated
             dtLastModified = balance.dtLastModified
@@ -742,6 +775,31 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+        /**
+         * User defined fields enabling you to attach custom data. The value for a custom field can
+         * be either a string or a number.
+         *
+         * If `customFields` can also be defined for this entity at the Organizational
+         * level,`customField` values defined at individual level override values of `customFields`
+         * with the same name defined at Organization level.
+         *
+         * See
+         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+         * in the m3ter documentation for more information.
+         */
+        fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
+
+        /**
+         * Sets [Builder.customFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun customFields(customFields: JsonField<CustomFields>) = apply {
+            this.customFields = customFields
+        }
 
         /** A description of the Balance. */
         fun description(description: String) = description(JsonField.of(description))
@@ -1015,6 +1073,7 @@ private constructor(
                 contractId,
                 createdBy,
                 currency,
+                customFields,
                 description,
                 dtCreated,
                 dtLastModified,
@@ -1050,6 +1109,7 @@ private constructor(
         contractId()
         createdBy()
         currency()
+        customFields().ifPresent { it.validate() }
         description()
         dtCreated()
         dtLastModified()
@@ -1092,6 +1152,7 @@ private constructor(
             (if (contractId.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (currency.asKnown().isPresent) 1 else 0) +
+            (customFields.asKnown().getOrNull()?.validity() ?: 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
@@ -1106,6 +1167,119 @@ private constructor(
             (if (rolloverAmount.asKnown().isPresent) 1 else 0) +
             (if (rolloverEndDate.asKnown().isPresent) 1 else 0) +
             (if (startDate.asKnown().isPresent) 1 else 0)
+
+    /**
+     * User defined fields enabling you to attach custom data. The value for a custom field can be
+     * either a string or a number.
+     *
+     * If `customFields` can also be defined for this entity at the Organizational
+     * level,`customField` values defined at individual level override values of `customFields` with
+     * the same name defined at Organization level.
+     *
+     * See
+     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+     * in the m3ter documentation for more information.
+     */
+    class CustomFields
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [CustomFields]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(customFields: CustomFields) = apply {
+                additionalProperties = customFields.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "CustomFields{additionalProperties=$additionalProperties}"
+    }
 
     /** Available line item types for Balances */
     class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1258,15 +1432,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, customFields, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

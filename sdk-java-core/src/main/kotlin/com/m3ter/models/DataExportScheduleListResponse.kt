@@ -662,6 +662,8 @@ private constructor(
 
             @JvmField val JSON = of("JSON")
 
+            @JvmField val JSONL = of("JSONL")
+
             @JvmStatic fun of(value: String) = ExportFileFormat(JsonField.of(value))
         }
 
@@ -669,6 +671,7 @@ private constructor(
         enum class Known {
             CSV,
             JSON,
+            JSONL,
         }
 
         /**
@@ -683,6 +686,7 @@ private constructor(
         enum class Value {
             CSV,
             JSON,
+            JSONL,
             /**
              * An enum member indicating that [ExportFileFormat] was instantiated with an unknown
              * value.
@@ -701,6 +705,7 @@ private constructor(
             when (this) {
                 CSV -> Value.CSV
                 JSON -> Value.JSON
+                JSONL -> Value.JSONL
                 else -> Value._UNKNOWN
             }
 
@@ -716,6 +721,7 @@ private constructor(
             when (this) {
                 CSV -> Known.CSV
                 JSON -> Known.JSON
+                JSONL -> Known.JSONL
                 else -> throw M3terInvalidDataException("Unknown ExportFileFormat: $value")
             }
 
