@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.EventGetFieldsParams
@@ -13,6 +14,7 @@ import com.m3ter.models.EventListPage
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
+import java.util.function.Consumer
 
 interface EventService {
 
@@ -20,6 +22,13 @@ interface EventService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService
 
     /**
      * Retrieve a specific Event.
@@ -150,6 +159,13 @@ interface EventService {
 
     /** A view of [EventService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/{id}`, but is

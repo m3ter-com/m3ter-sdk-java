@@ -2,6 +2,7 @@
 
 package com.m3ter.services.async.bills
 
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillCreditLineItemCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import com.m3ter.models.CreditLineItemResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface CreditLineItemServiceAsync {
 
@@ -19,6 +21,13 @@ interface CreditLineItemServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditLineItemServiceAsync
 
     /**
      * Create a new Credit line item for the given Bill.
@@ -164,6 +173,15 @@ interface CreditLineItemServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditLineItemServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post

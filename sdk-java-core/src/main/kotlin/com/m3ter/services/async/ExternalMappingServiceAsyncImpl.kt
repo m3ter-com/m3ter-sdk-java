@@ -31,6 +31,7 @@ import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExternalMappingServiceAsyncImpl
@@ -41,6 +42,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
     }
 
     override fun withRawResponse(): ExternalMappingServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ExternalMappingServiceAsync =
+        ExternalMappingServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExternalMappingCreateParams,
@@ -96,6 +102,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalMapping
         ExternalMappingServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalMappingServiceAsync.WithRawResponse =
+            ExternalMappingServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExternalMappingResponse> =
             jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)

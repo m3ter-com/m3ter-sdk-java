@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DownloadUrlResponse
@@ -12,6 +13,7 @@ import com.m3ter.models.UsageQueryParams
 import com.m3ter.models.UsageQueryResponse
 import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.blocking.usage.FileUploadService
+import java.util.function.Consumer
 
 interface UsageService {
 
@@ -19,6 +21,13 @@ interface UsageService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageService
 
     fun fileUploads(): FileUploadService
 
@@ -143,6 +152,13 @@ interface UsageService {
 
     /** A view of [UsageService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageService.WithRawResponse
 
         fun fileUploads(): FileUploadService.WithRawResponse
 

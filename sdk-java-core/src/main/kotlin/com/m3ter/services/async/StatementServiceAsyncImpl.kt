@@ -25,6 +25,7 @@ import com.m3ter.services.async.statements.StatementDefinitionServiceAsyncImpl
 import com.m3ter.services.async.statements.StatementJobServiceAsync
 import com.m3ter.services.async.statements.StatementJobServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -43,6 +44,9 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
     }
 
     override fun withRawResponse(): StatementServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StatementServiceAsync =
+        StatementServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun statementJobs(): StatementJobServiceAsync = statementJobs
 
@@ -81,6 +85,13 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
         private val statementDefinitions: StatementDefinitionServiceAsync.WithRawResponse by lazy {
             StatementDefinitionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementServiceAsync.WithRawResponse =
+            StatementServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun statementJobs(): StatementJobServiceAsync.WithRawResponse = statementJobs
 

@@ -25,6 +25,7 @@ import com.m3ter.models.PlanGroupLinkResponse
 import com.m3ter.models.PlanGroupLinkRetrieveParams
 import com.m3ter.models.PlanGroupLinkUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): PlanGroupLinkServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanGroupLinkServiceAsync =
+        PlanGroupLinkServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PlanGroupLinkCreateParams,
@@ -75,6 +79,13 @@ class PlanGroupLinkServiceAsyncImpl internal constructor(private val clientOptio
         PlanGroupLinkServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanGroupLinkServiceAsync.WithRawResponse =
+            PlanGroupLinkServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PlanGroupLinkResponse> =
             jsonHandler<PlanGroupLinkResponse>(clientOptions.jsonMapper)

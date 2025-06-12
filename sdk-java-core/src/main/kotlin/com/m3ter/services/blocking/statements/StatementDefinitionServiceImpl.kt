@@ -24,6 +24,7 @@ import com.m3ter.models.StatementStatementDefinitionListPageResponse
 import com.m3ter.models.StatementStatementDefinitionListParams
 import com.m3ter.models.StatementStatementDefinitionRetrieveParams
 import com.m3ter.models.StatementStatementDefinitionUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementDefinitionServiceImpl
@@ -34,6 +35,11 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
     }
 
     override fun withRawResponse(): StatementDefinitionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): StatementDefinitionService =
+        StatementDefinitionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: StatementStatementDefinitionCreateParams,
@@ -74,6 +80,13 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
         StatementDefinitionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementDefinitionService.WithRawResponse =
+            StatementDefinitionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)

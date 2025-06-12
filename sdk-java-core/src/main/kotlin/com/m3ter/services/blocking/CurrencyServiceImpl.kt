@@ -24,6 +24,7 @@ import com.m3ter.models.CurrencyListParams
 import com.m3ter.models.CurrencyResponse
 import com.m3ter.models.CurrencyRetrieveParams
 import com.m3ter.models.CurrencyUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CurrencyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): CurrencyService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CurrencyService =
+        CurrencyServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CurrencyCreateParams,
@@ -74,6 +78,13 @@ class CurrencyServiceImpl internal constructor(private val clientOptions: Client
         CurrencyService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CurrencyService.WithRawResponse =
+            CurrencyServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CurrencyResponse> =
             jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

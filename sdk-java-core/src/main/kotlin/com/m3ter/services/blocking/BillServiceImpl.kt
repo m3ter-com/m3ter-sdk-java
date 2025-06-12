@@ -35,6 +35,7 @@ import com.m3ter.services.blocking.bills.DebitLineItemService
 import com.m3ter.services.blocking.bills.DebitLineItemServiceImpl
 import com.m3ter.services.blocking.bills.LineItemService
 import com.m3ter.services.blocking.bills.LineItemServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillServiceImpl internal constructor(private val clientOptions: ClientOptions) : BillService {
@@ -54,6 +55,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
     private val lineItems: LineItemService by lazy { LineItemServiceImpl(clientOptions) }
 
     override fun withRawResponse(): BillService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillService =
+        BillServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun creditLineItems(): CreditLineItemService = creditLineItems
 
@@ -124,6 +128,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val lineItems: LineItemService.WithRawResponse by lazy {
             LineItemServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillService.WithRawResponse =
+            BillServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun creditLineItems(): CreditLineItemService.WithRawResponse = creditLineItems
 

@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponseFor
@@ -19,6 +20,7 @@ import com.m3ter.models.UserResponse
 import com.m3ter.models.UserRetrieveParams
 import com.m3ter.models.UserUpdateParams
 import com.m3ter.services.blocking.users.InvitationService
+import java.util.function.Consumer
 
 interface UserService {
 
@@ -26,6 +28,13 @@ interface UserService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): UserService
 
     fun invitations(): InvitationService
 
@@ -254,6 +263,13 @@ interface UserService {
 
     /** A view of [UserService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): UserService.WithRawResponse
 
         fun invitations(): InvitationService.WithRawResponse
 

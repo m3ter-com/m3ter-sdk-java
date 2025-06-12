@@ -23,6 +23,7 @@ import com.m3ter.services.blocking.dataExports.JobService
 import com.m3ter.services.blocking.dataExports.JobServiceImpl
 import com.m3ter.services.blocking.dataExports.ScheduleService
 import com.m3ter.services.blocking.dataExports.ScheduleServiceImpl
+import java.util.function.Consumer
 
 class DataExportServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     DataExportService {
@@ -38,6 +39,9 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
     private val schedules: ScheduleService by lazy { ScheduleServiceImpl(clientOptions) }
 
     override fun withRawResponse(): DataExportService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DataExportService =
+        DataExportServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun destinations(): DestinationService = destinations
 
@@ -68,6 +72,13 @@ class DataExportServiceImpl internal constructor(private val clientOptions: Clie
         private val schedules: ScheduleService.WithRawResponse by lazy {
             ScheduleServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DataExportService.WithRawResponse =
+            DataExportServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun destinations(): DestinationService.WithRawResponse = destinations
 

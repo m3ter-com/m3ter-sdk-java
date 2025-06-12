@@ -33,6 +33,7 @@ import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.ResourceGroupRetrieveParams
 import com.m3ter.models.ResourceGroupUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -43,6 +44,9 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
     }
 
     override fun withRawResponse(): ResourceGroupServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ResourceGroupServiceAsync =
+        ResourceGroupServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ResourceGroupCreateParams,
@@ -111,6 +115,13 @@ class ResourceGroupServiceAsyncImpl internal constructor(private val clientOptio
         ResourceGroupServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ResourceGroupServiceAsync.WithRawResponse =
+            ResourceGroupServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)

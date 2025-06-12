@@ -19,6 +19,7 @@ import com.m3ter.models.BillConfigResponse
 import com.m3ter.models.BillConfigRetrieveParams
 import com.m3ter.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class BillConfigServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BillConfigServiceAsync {
@@ -28,6 +29,9 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): BillConfigServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillConfigServiceAsync =
+        BillConfigServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BillConfigRetrieveParams,
@@ -47,6 +51,13 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
         BillConfigServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillConfigServiceAsync.WithRawResponse =
+            BillConfigServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<BillConfigResponse> =
             jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -17,6 +17,7 @@ import com.m3ter.core.http.parseable
 import com.m3ter.core.prepare
 import com.m3ter.models.AuthenticationGetBearerTokenParams
 import com.m3ter.models.AuthenticationGetBearerTokenResponse
+import java.util.function.Consumer
 
 class AuthenticationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     AuthenticationService {
@@ -26,6 +27,9 @@ class AuthenticationServiceImpl internal constructor(private val clientOptions: 
     }
 
     override fun withRawResponse(): AuthenticationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AuthenticationService =
+        AuthenticationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
@@ -38,6 +42,13 @@ class AuthenticationServiceImpl internal constructor(private val clientOptions: 
         AuthenticationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AuthenticationService.WithRawResponse =
+            AuthenticationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val getBearerTokenHandler: Handler<AuthenticationGetBearerTokenResponse> =
             jsonHandler<AuthenticationGetBearerTokenResponse>(clientOptions.jsonMapper)

@@ -25,6 +25,7 @@ import com.m3ter.models.StatementStatementJobListPageResponse
 import com.m3ter.models.StatementStatementJobListParams
 import com.m3ter.models.StatementStatementJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementJobServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class StatementJobServiceAsyncImpl internal constructor(private val clientOption
     }
 
     override fun withRawResponse(): StatementJobServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StatementJobServiceAsync =
+        StatementJobServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: StatementStatementJobCreateParams,
@@ -75,6 +79,13 @@ class StatementJobServiceAsyncImpl internal constructor(private val clientOption
         StatementJobServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementJobServiceAsync.WithRawResponse =
+            StatementJobServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<StatementJobResponse> =
             jsonHandler<StatementJobResponse>(clientOptions.jsonMapper)

@@ -24,6 +24,7 @@ import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterResponse
 import com.m3ter.models.CounterRetrieveParams
 import com.m3ter.models.CounterUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CounterServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): CounterService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterService =
+        CounterServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CounterCreateParams,
@@ -71,6 +75,13 @@ class CounterServiceImpl internal constructor(private val clientOptions: ClientO
         CounterService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterService.WithRawResponse =
+            CounterServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CounterResponse> =
             jsonHandler<CounterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -27,6 +27,7 @@ import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ContractServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,9 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): ContractServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ContractServiceAsync =
+        ContractServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ContractCreateParams,
@@ -84,6 +88,13 @@ class ContractServiceAsyncImpl internal constructor(private val clientOptions: C
         ContractServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ContractServiceAsync.WithRawResponse =
+            ContractServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ContractResponse> =
             jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

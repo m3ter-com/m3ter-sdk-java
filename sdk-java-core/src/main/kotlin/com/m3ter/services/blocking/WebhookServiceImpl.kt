@@ -28,6 +28,7 @@ import com.m3ter.models.WebhookSetActiveParams
 import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
 import com.m3ter.models.WebhookUpdateResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): WebhookService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookService =
+        WebhookServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: WebhookCreateParams,
@@ -76,6 +80,13 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
         WebhookService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): WebhookService.WithRawResponse =
+            WebhookServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<WebhookCreateResponse> =
             jsonHandler<WebhookCreateResponse>(clientOptions.jsonMapper)

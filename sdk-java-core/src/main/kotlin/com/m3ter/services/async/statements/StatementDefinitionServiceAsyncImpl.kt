@@ -25,6 +25,7 @@ import com.m3ter.models.StatementStatementDefinitionListParams
 import com.m3ter.models.StatementStatementDefinitionRetrieveParams
 import com.m3ter.models.StatementStatementDefinitionUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementDefinitionServiceAsyncImpl
@@ -36,6 +37,13 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
     override fun withRawResponse(): StatementDefinitionServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): StatementDefinitionServiceAsync =
+        StatementDefinitionServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: StatementStatementDefinitionCreateParams,
@@ -76,6 +84,13 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
         StatementDefinitionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementDefinitionServiceAsync.WithRawResponse =
+            StatementDefinitionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)

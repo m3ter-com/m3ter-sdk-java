@@ -24,6 +24,7 @@ import com.m3ter.models.CounterAdjustmentListParams
 import com.m3ter.models.CounterAdjustmentResponse
 import com.m3ter.models.CounterAdjustmentRetrieveParams
 import com.m3ter.models.CounterAdjustmentUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CounterAdjustmentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
     }
 
     override fun withRawResponse(): CounterAdjustmentService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterAdjustmentService =
+        CounterAdjustmentServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CounterAdjustmentCreateParams,
@@ -74,6 +78,13 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
         CounterAdjustmentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterAdjustmentService.WithRawResponse =
+            CounterAdjustmentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CounterAdjustmentResponse> =
             jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)

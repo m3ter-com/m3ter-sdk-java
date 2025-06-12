@@ -25,6 +25,7 @@ import com.m3ter.models.PlanGroupResponse
 import com.m3ter.models.PlanGroupRetrieveParams
 import com.m3ter.models.PlanGroupUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
     }
 
     override fun withRawResponse(): PlanGroupServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanGroupServiceAsync =
+        PlanGroupServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PlanGroupCreateParams,
@@ -75,6 +79,13 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
         PlanGroupServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanGroupServiceAsync.WithRawResponse =
+            PlanGroupServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PlanGroupResponse> =
             jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

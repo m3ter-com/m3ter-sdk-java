@@ -41,6 +41,7 @@ import com.m3ter.models.PermissionPolicyResponse
 import com.m3ter.models.PermissionPolicyRetrieveParams
 import com.m3ter.models.PermissionPolicyUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionPolicyServiceAsyncImpl
@@ -51,6 +52,11 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
     }
 
     override fun withRawResponse(): PermissionPolicyServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): PermissionPolicyServiceAsync =
+        PermissionPolicyServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PermissionPolicyCreateParams,
@@ -148,6 +154,13 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
         PermissionPolicyServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PermissionPolicyServiceAsync.WithRawResponse =
+            PermissionPolicyServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)

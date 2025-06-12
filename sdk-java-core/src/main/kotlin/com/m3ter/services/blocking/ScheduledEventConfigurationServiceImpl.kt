@@ -24,6 +24,7 @@ import com.m3ter.models.ScheduledEventConfigurationListParams
 import com.m3ter.models.ScheduledEventConfigurationResponse
 import com.m3ter.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.models.ScheduledEventConfigurationUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ScheduledEventConfigurationServiceImpl
@@ -36,6 +37,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): ScheduledEventConfigurationService.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ScheduledEventConfigurationService =
+        ScheduledEventConfigurationServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: ScheduledEventConfigurationCreateParams,
@@ -76,6 +84,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         ScheduledEventConfigurationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ScheduledEventConfigurationService.WithRawResponse =
+            ScheduledEventConfigurationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ScheduledEventConfigurationResponse> =
             jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)

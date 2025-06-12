@@ -82,6 +82,7 @@ import com.m3ter.services.blocking.UserService
 import com.m3ter.services.blocking.UserServiceImpl
 import com.m3ter.services.blocking.WebhookService
 import com.m3ter.services.blocking.WebhookServiceImpl
+import java.util.function.Consumer
 
 class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
@@ -233,6 +234,9 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
     override fun async(): M3terClientAsync = async
 
     override fun withRawResponse(): M3terClient.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClient =
+        M3terClientImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun authentication(): AuthenticationService = authentication
 
@@ -478,6 +482,13 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
         private val webhooks: WebhookService.WithRawResponse by lazy {
             WebhookServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): M3terClient.WithRawResponse =
+            M3terClientImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun authentication(): AuthenticationService.WithRawResponse = authentication
 

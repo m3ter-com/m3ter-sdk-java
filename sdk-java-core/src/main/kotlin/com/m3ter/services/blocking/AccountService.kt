@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AccountCreateParams
@@ -17,6 +18,7 @@ import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountSearchResponse
 import com.m3ter.models.AccountUpdateParams
+import java.util.function.Consumer
 
 interface AccountService {
 
@@ -24,6 +26,13 @@ interface AccountService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountService
 
     /** Create a new Account within the Organization. */
     fun create(params: AccountCreateParams): AccountResponse = create(params, RequestOptions.none())
@@ -226,6 +235,13 @@ interface AccountService {
 
     /** A view of [AccountService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/accounts`, but is otherwise

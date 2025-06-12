@@ -24,6 +24,7 @@ import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillJobServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): BillJobService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobService =
+        BillJobServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillJobCreateParams,
@@ -71,6 +75,13 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
         BillJobService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillJobService.WithRawResponse =
+            BillJobServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<BillJobResponse> =
             jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

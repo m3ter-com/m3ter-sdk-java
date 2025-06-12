@@ -18,6 +18,7 @@ import com.m3ter.core.prepareAsync
 import com.m3ter.models.AuthenticationGetBearerTokenParams
 import com.m3ter.models.AuthenticationGetBearerTokenResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class AuthenticationServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : AuthenticationServiceAsync {
@@ -27,6 +28,11 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
     }
 
     override fun withRawResponse(): AuthenticationServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): AuthenticationServiceAsync =
+        AuthenticationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
@@ -39,6 +45,13 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
         AuthenticationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AuthenticationServiceAsync.WithRawResponse =
+            AuthenticationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val getBearerTokenHandler: Handler<AuthenticationGetBearerTokenResponse> =
             jsonHandler<AuthenticationGetBearerTokenResponse>(clientOptions.jsonMapper)

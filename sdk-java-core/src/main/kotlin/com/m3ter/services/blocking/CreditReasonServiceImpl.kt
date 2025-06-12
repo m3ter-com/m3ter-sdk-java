@@ -24,6 +24,7 @@ import com.m3ter.models.CreditReasonListParams
 import com.m3ter.models.CreditReasonResponse
 import com.m3ter.models.CreditReasonRetrieveParams
 import com.m3ter.models.CreditReasonUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CreditReasonServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): CreditReasonService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditReasonService =
+        CreditReasonServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CreditReasonCreateParams,
@@ -74,6 +78,13 @@ class CreditReasonServiceImpl internal constructor(private val clientOptions: Cl
         CreditReasonService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditReasonService.WithRawResponse =
+            CreditReasonServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)

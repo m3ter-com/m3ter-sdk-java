@@ -36,6 +36,7 @@ import com.m3ter.services.async.bills.DebitLineItemServiceAsyncImpl
 import com.m3ter.services.async.bills.LineItemServiceAsync
 import com.m3ter.services.async.bills.LineItemServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -56,6 +57,9 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
     private val lineItems: LineItemServiceAsync by lazy { LineItemServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): BillServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillServiceAsync =
+        BillServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun creditLineItems(): CreditLineItemServiceAsync = creditLineItems
 
@@ -135,6 +139,13 @@ class BillServiceAsyncImpl internal constructor(private val clientOptions: Clien
         private val lineItems: LineItemServiceAsync.WithRawResponse by lazy {
             LineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillServiceAsync.WithRawResponse =
+            BillServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun creditLineItems(): CreditLineItemServiceAsync.WithRawResponse = creditLineItems
 

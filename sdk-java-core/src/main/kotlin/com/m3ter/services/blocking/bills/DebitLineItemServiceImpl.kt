@@ -24,6 +24,7 @@ import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
 import com.m3ter.models.DebitLineItemResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class DebitLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): DebitLineItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DebitLineItemService =
+        DebitLineItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillDebitLineItemCreateParams,
@@ -74,6 +78,13 @@ class DebitLineItemServiceImpl internal constructor(private val clientOptions: C
         DebitLineItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DebitLineItemService.WithRawResponse =
+            DebitLineItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<DebitLineItemResponse> =
             jsonHandler<DebitLineItemResponse>(clientOptions.jsonMapper)

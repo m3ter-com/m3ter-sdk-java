@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DataExportJobGetDownloadUrlParams
@@ -11,6 +12,7 @@ import com.m3ter.models.DataExportJobListPage
 import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
+import java.util.function.Consumer
 
 interface JobService {
 
@@ -18,6 +20,13 @@ interface JobService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService
 
     /**
      * Retrieve an Export Job for the given UUID.
@@ -128,6 +137,13 @@ interface JobService {
 
     /** A view of [JobService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/dataexports/jobs/{id}`, but

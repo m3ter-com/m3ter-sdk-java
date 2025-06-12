@@ -24,6 +24,7 @@ import com.m3ter.models.ProductListParams
 import com.m3ter.models.ProductResponse
 import com.m3ter.models.ProductRetrieveParams
 import com.m3ter.models.ProductUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ProductServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): ProductService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ProductService =
+        ProductServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ProductCreateParams,
@@ -71,6 +75,13 @@ class ProductServiceImpl internal constructor(private val clientOptions: ClientO
         ProductService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ProductService.WithRawResponse =
+            ProductServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ProductResponse> =
             jsonHandler<ProductResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

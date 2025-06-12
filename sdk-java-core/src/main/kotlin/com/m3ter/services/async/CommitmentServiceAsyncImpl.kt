@@ -27,6 +27,7 @@ import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentSearchResponse
 import com.m3ter.models.CommitmentUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CommitmentServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,9 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): CommitmentServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CommitmentServiceAsync =
+        CommitmentServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CommitmentCreateParams,
@@ -84,6 +88,13 @@ class CommitmentServiceAsyncImpl internal constructor(private val clientOptions:
         CommitmentServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CommitmentServiceAsync.WithRawResponse =
+            CommitmentServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CommitmentResponse> =
             jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -23,6 +23,7 @@ import com.m3ter.models.UsageQueryResponse
 import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.blocking.usage.FileUploadService
 import com.m3ter.services.blocking.usage.FileUploadServiceImpl
+import java.util.function.Consumer
 
 class UsageServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     UsageService {
@@ -34,6 +35,9 @@ class UsageServiceImpl internal constructor(private val clientOptions: ClientOpt
     private val fileUploads: FileUploadService by lazy { FileUploadServiceImpl(clientOptions) }
 
     override fun withRawResponse(): UsageService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageService =
+        UsageServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun fileUploads(): FileUploadService = fileUploads
 
@@ -66,6 +70,13 @@ class UsageServiceImpl internal constructor(private val clientOptions: ClientOpt
         private val fileUploads: FileUploadService.WithRawResponse by lazy {
             FileUploadServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): UsageService.WithRawResponse =
+            UsageServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun fileUploads(): FileUploadService.WithRawResponse = fileUploads
 

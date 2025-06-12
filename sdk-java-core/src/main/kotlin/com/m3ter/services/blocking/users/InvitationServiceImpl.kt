@@ -22,6 +22,7 @@ import com.m3ter.models.UserInvitationListPage
 import com.m3ter.models.UserInvitationListPageResponse
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InvitationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -32,6 +33,9 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): InvitationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvitationService =
+        InvitationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: UserInvitationCreateParams,
@@ -58,6 +62,13 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
         InvitationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvitationService.WithRawResponse =
+            InvitationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<InvitationResponse> =
             jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

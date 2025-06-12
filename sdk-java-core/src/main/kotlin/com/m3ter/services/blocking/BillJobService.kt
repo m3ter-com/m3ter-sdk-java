@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillJobCancelParams
@@ -12,6 +13,7 @@ import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
+import java.util.function.Consumer
 
 interface BillJobService {
 
@@ -19,6 +21,13 @@ interface BillJobService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobService
 
     /**
      * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -172,6 +181,13 @@ interface BillJobService {
 
     /** A view of [BillJobService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise

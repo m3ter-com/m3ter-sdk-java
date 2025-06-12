@@ -23,6 +23,7 @@ import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class JobServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): JobServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobServiceAsync =
+        JobServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: DataExportJobRetrieveParams,
@@ -59,6 +63,13 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
         JobServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): JobServiceAsync.WithRawResponse =
+            JobServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<DataExportJobResponse> =
             jsonHandler<DataExportJobResponse>(clientOptions.jsonMapper)

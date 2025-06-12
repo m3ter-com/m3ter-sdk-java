@@ -21,6 +21,7 @@ import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import com.m3ter.models.LineItemResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -31,6 +32,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): LineItemServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemServiceAsync =
+        LineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BillLineItemRetrieveParams,
@@ -50,6 +54,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
         LineItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LineItemServiceAsync.WithRawResponse =
+            LineItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<LineItemResponse> =
             jsonHandler<LineItemResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -26,6 +26,7 @@ import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ContractServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -36,6 +37,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): ContractService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ContractService =
+        ContractServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ContractCreateParams,
@@ -83,6 +87,13 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         ContractService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ContractService.WithRawResponse =
+            ContractServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ContractResponse> =
             jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

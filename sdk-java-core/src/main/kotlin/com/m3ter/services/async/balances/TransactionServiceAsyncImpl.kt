@@ -24,6 +24,7 @@ import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
 import com.m3ter.models.TransactionResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class TransactionServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): TransactionServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionServiceAsync =
+        TransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BalanceTransactionCreateParams,
@@ -60,6 +64,13 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
         TransactionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionServiceAsync.WithRawResponse =
+            TransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionResponse> =
             jsonHandler<TransactionResponse>(clientOptions.jsonMapper)

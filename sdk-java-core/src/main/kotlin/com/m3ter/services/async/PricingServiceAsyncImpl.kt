@@ -25,6 +25,7 @@ import com.m3ter.models.PricingResponse
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PricingServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): PricingServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PricingServiceAsync =
+        PricingServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PricingCreateParams,
@@ -75,6 +79,13 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
         PricingServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PricingServiceAsync.WithRawResponse =
+            PricingServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PricingResponse> =
             jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

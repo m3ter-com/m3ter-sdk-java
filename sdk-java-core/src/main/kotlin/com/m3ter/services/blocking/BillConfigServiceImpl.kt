@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.BillConfigResponse
 import com.m3ter.models.BillConfigRetrieveParams
 import com.m3ter.models.BillConfigUpdateParams
+import java.util.function.Consumer
 
 class BillConfigServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     BillConfigService {
@@ -27,6 +28,9 @@ class BillConfigServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): BillConfigService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillConfigService =
+        BillConfigServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BillConfigRetrieveParams,
@@ -46,6 +50,13 @@ class BillConfigServiceImpl internal constructor(private val clientOptions: Clie
         BillConfigService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillConfigService.WithRawResponse =
+            BillConfigServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<BillConfigResponse> =
             jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -24,6 +24,7 @@ import com.m3ter.models.EventListPageResponse
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
     }
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService =
+        EventServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: EventRetrieveParams,
@@ -64,6 +68,13 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
         EventService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): EventService.WithRawResponse =
+            EventServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<EventResponse> =
             jsonHandler<EventResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

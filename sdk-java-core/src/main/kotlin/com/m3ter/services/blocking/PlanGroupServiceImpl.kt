@@ -24,6 +24,7 @@ import com.m3ter.models.PlanGroupListParams
 import com.m3ter.models.PlanGroupResponse
 import com.m3ter.models.PlanGroupRetrieveParams
 import com.m3ter.models.PlanGroupUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PlanGroupServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
     }
 
     override fun withRawResponse(): PlanGroupService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanGroupService =
+        PlanGroupServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PlanGroupCreateParams,
@@ -74,6 +78,13 @@ class PlanGroupServiceImpl internal constructor(private val clientOptions: Clien
         PlanGroupService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanGroupService.WithRawResponse =
+            PlanGroupServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PlanGroupResponse> =
             jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

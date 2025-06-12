@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.PlanGroupLinkCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.PlanGroupLinkListParams
 import com.m3ter.models.PlanGroupLinkResponse
 import com.m3ter.models.PlanGroupLinkRetrieveParams
 import com.m3ter.models.PlanGroupLinkUpdateParams
+import java.util.function.Consumer
 
 interface PlanGroupLinkService {
 
@@ -19,6 +21,13 @@ interface PlanGroupLinkService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanGroupLinkService
 
     /** Create a new PlanGroupLink. */
     fun create(params: PlanGroupLinkCreateParams): PlanGroupLinkResponse =
@@ -134,6 +143,15 @@ interface PlanGroupLinkService {
      * A view of [PlanGroupLinkService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanGroupLinkService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/plangrouplinks`, but is

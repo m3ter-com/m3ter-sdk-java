@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.users
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.InvitationResponse
@@ -10,6 +11,7 @@ import com.m3ter.models.UserInvitationCreateParams
 import com.m3ter.models.UserInvitationListPage
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
+import java.util.function.Consumer
 
 interface InvitationService {
 
@@ -17,6 +19,13 @@ interface InvitationService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvitationService
 
     /**
      * Invite a new user to your Organization.
@@ -82,6 +91,15 @@ interface InvitationService {
 
     /** A view of [InvitationService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvitationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/invitations`, but is

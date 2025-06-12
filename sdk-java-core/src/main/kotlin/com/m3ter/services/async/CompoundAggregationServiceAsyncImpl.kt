@@ -26,6 +26,7 @@ import com.m3ter.models.CompoundAggregationResponse
 import com.m3ter.models.CompoundAggregationRetrieveParams
 import com.m3ter.models.CompoundAggregationUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CompoundAggregationServiceAsyncImpl
@@ -37,6 +38,13 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
     override fun withRawResponse(): CompoundAggregationServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): CompoundAggregationServiceAsync =
+        CompoundAggregationServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: CompoundAggregationCreateParams,
@@ -77,6 +85,13 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
         CompoundAggregationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CompoundAggregationServiceAsync.WithRawResponse =
+            CompoundAggregationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AggregationResponse> =
             jsonHandler<AggregationResponse>(clientOptions.jsonMapper)

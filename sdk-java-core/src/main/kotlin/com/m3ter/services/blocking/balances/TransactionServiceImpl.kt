@@ -23,6 +23,7 @@ import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
 import com.m3ter.models.TransactionResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class TransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): TransactionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionService =
+        TransactionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BalanceTransactionCreateParams,
@@ -59,6 +63,13 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         TransactionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionService.WithRawResponse =
+            TransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionResponse> =
             jsonHandler<TransactionResponse>(clientOptions.jsonMapper)

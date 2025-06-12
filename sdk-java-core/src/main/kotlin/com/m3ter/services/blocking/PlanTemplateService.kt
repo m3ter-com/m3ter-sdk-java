@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.PlanTemplateCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.PlanTemplateListParams
 import com.m3ter.models.PlanTemplateResponse
 import com.m3ter.models.PlanTemplateRetrieveParams
 import com.m3ter.models.PlanTemplateUpdateParams
+import java.util.function.Consumer
 
 interface PlanTemplateService {
 
@@ -19,6 +21,13 @@ interface PlanTemplateService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanTemplateService
 
     /**
      * Create a new PlanTemplate.
@@ -164,6 +173,15 @@ interface PlanTemplateService {
      * A view of [PlanTemplateService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanTemplateService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/plantemplates`, but is
