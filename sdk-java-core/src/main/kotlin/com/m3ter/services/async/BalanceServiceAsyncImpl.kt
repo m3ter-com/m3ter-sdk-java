@@ -27,6 +27,7 @@ import com.m3ter.models.BalanceUpdateParams
 import com.m3ter.services.async.balances.TransactionServiceAsync
 import com.m3ter.services.async.balances.TransactionServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BalanceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -41,6 +42,9 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): BalanceServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceServiceAsync =
+        BalanceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun transactions(): TransactionServiceAsync = transactions
 
@@ -87,6 +91,13 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         private val transactions: TransactionServiceAsync.WithRawResponse by lazy {
             TransactionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceServiceAsync.WithRawResponse =
+            BalanceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun transactions(): TransactionServiceAsync.WithRawResponse = transactions
 

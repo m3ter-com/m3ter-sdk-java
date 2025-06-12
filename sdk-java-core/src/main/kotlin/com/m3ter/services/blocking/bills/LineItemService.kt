@@ -3,12 +3,14 @@
 package com.m3ter.services.blocking.bills
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillLineItemListPage
 import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import com.m3ter.models.LineItemResponse
+import java.util.function.Consumer
 
 interface LineItemService {
 
@@ -16,6 +18,13 @@ interface LineItemService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService
 
     /**
      * Retrieves a specific line item within a Bill.
@@ -81,6 +90,13 @@ interface LineItemService {
 
     /** A view of [LineItemService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get

@@ -30,6 +30,7 @@ import com.m3ter.models.IntegrationConfigurationResponse
 import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import com.m3ter.models.IntegrationConfigurationUpdateResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationServiceImpl
@@ -41,6 +42,13 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
 
     override fun withRawResponse(): IntegrationConfigurationService.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): IntegrationConfigurationService =
+        IntegrationConfigurationServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: IntegrationConfigurationCreateParams,
@@ -95,6 +103,13 @@ internal constructor(private val clientOptions: ClientOptions) : IntegrationConf
         IntegrationConfigurationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IntegrationConfigurationService.WithRawResponse =
+            IntegrationConfigurationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<IntegrationConfigurationCreateResponse> =
             jsonHandler<IntegrationConfigurationCreateResponse>(clientOptions.jsonMapper)

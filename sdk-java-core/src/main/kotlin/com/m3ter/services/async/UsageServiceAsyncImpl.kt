@@ -24,6 +24,7 @@ import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.async.usage.FileUploadServiceAsync
 import com.m3ter.services.async.usage.FileUploadServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class UsageServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     UsageServiceAsync {
@@ -37,6 +38,9 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): UsageServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageServiceAsync =
+        UsageServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun fileUploads(): FileUploadServiceAsync = fileUploads
 
@@ -71,6 +75,13 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
         private val fileUploads: FileUploadServiceAsync.WithRawResponse by lazy {
             FileUploadServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): UsageServiceAsync.WithRawResponse =
+            UsageServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun fileUploads(): FileUploadServiceAsync.WithRawResponse = fileUploads
 

@@ -25,6 +25,7 @@ import com.m3ter.models.CurrencyResponse
 import com.m3ter.models.CurrencyRetrieveParams
 import com.m3ter.models.CurrencyUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): CurrencyServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CurrencyServiceAsync =
+        CurrencyServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CurrencyCreateParams,
@@ -75,6 +79,13 @@ class CurrencyServiceAsyncImpl internal constructor(private val clientOptions: C
         CurrencyServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CurrencyServiceAsync.WithRawResponse =
+            CurrencyServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CurrencyResponse> =
             jsonHandler<CurrencyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

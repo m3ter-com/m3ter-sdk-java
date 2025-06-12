@@ -29,6 +29,7 @@ import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
 import com.m3ter.models.WebhookUpdateResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class WebhookServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -39,6 +40,9 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): WebhookServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookServiceAsync =
+        WebhookServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: WebhookCreateParams,
@@ -86,6 +90,13 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
         WebhookServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): WebhookServiceAsync.WithRawResponse =
+            WebhookServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<WebhookCreateResponse> =
             jsonHandler<WebhookCreateResponse>(clientOptions.jsonMapper)

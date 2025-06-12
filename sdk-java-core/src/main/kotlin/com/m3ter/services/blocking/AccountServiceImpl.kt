@@ -29,6 +29,7 @@ import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountSearchResponse
 import com.m3ter.models.AccountUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -39,6 +40,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): AccountService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountService =
+        AccountServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: AccountCreateParams,
@@ -97,6 +101,13 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
         AccountService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountService.WithRawResponse =
+            AccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountResponse> =
             jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

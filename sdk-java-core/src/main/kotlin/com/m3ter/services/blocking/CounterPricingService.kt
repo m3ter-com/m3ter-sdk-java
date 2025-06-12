@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterPricingCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CounterPricingListParams
 import com.m3ter.models.CounterPricingResponse
 import com.m3ter.models.CounterPricingRetrieveParams
 import com.m3ter.models.CounterPricingUpdateParams
+import java.util.function.Consumer
 
 interface CounterPricingService {
 
@@ -19,6 +21,13 @@ interface CounterPricingService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterPricingService
 
     /**
      * Create a new CounterPricing.
@@ -147,6 +156,15 @@ interface CounterPricingService {
      * A view of [CounterPricingService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterPricingService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/counterpricings`, but is

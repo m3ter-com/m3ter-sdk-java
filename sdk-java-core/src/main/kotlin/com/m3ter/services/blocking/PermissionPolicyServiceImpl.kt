@@ -40,6 +40,7 @@ import com.m3ter.models.PermissionPolicyRemoveFromUserResponse
 import com.m3ter.models.PermissionPolicyResponse
 import com.m3ter.models.PermissionPolicyRetrieveParams
 import com.m3ter.models.PermissionPolicyUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionPolicyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -50,6 +51,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): PermissionPolicyService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PermissionPolicyService =
+        PermissionPolicyServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PermissionPolicyCreateParams,
@@ -147,6 +151,13 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
         PermissionPolicyService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PermissionPolicyService.WithRawResponse =
+            PermissionPolicyServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)

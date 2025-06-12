@@ -2,6 +2,7 @@
 
 package com.m3ter.services.async
 
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AdHocResponse
@@ -10,6 +11,7 @@ import com.m3ter.services.async.dataExports.DestinationServiceAsync
 import com.m3ter.services.async.dataExports.JobServiceAsync
 import com.m3ter.services.async.dataExports.ScheduleServiceAsync
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface DataExportServiceAsync {
 
@@ -17,6 +19,13 @@ interface DataExportServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): DataExportServiceAsync
 
     fun destinations(): DestinationServiceAsync
 
@@ -81,6 +90,15 @@ interface DataExportServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DataExportServiceAsync.WithRawResponse
 
         fun destinations(): DestinationServiceAsync.WithRawResponse
 

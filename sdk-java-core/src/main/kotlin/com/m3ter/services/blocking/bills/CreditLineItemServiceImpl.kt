@@ -24,6 +24,7 @@ import com.m3ter.models.BillCreditLineItemListParams
 import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import com.m3ter.models.CreditLineItemResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CreditLineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
     }
 
     override fun withRawResponse(): CreditLineItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditLineItemService =
+        CreditLineItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillCreditLineItemCreateParams,
@@ -74,6 +78,13 @@ class CreditLineItemServiceImpl internal constructor(private val clientOptions: 
         CreditLineItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditLineItemService.WithRawResponse =
+            CreditLineItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CreditLineItemResponse> =
             jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)

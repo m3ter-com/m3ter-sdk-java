@@ -24,6 +24,7 @@ import com.m3ter.services.async.dataExports.JobServiceAsyncImpl
 import com.m3ter.services.async.dataExports.ScheduleServiceAsync
 import com.m3ter.services.async.dataExports.ScheduleServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class DataExportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DataExportServiceAsync {
@@ -41,6 +42,9 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
     private val schedules: ScheduleServiceAsync by lazy { ScheduleServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): DataExportServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DataExportServiceAsync =
+        DataExportServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun destinations(): DestinationServiceAsync = destinations
 
@@ -71,6 +75,13 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
         private val schedules: ScheduleServiceAsync.WithRawResponse by lazy {
             ScheduleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DataExportServiceAsync.WithRawResponse =
+            DataExportServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun destinations(): DestinationServiceAsync.WithRawResponse = destinations
 

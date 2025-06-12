@@ -25,6 +25,7 @@ import com.m3ter.models.DebitReasonResponse
 import com.m3ter.models.DebitReasonRetrieveParams
 import com.m3ter.models.DebitReasonUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): DebitReasonServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DebitReasonServiceAsync =
+        DebitReasonServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: DebitReasonCreateParams,
@@ -75,6 +79,13 @@ class DebitReasonServiceAsyncImpl internal constructor(private val clientOptions
         DebitReasonServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DebitReasonServiceAsync.WithRawResponse =
+            DebitReasonServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<DebitReasonResponse> =
             jsonHandler<DebitReasonResponse>(clientOptions.jsonMapper)

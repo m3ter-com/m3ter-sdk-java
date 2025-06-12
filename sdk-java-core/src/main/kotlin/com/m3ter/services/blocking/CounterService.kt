@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterResponse
 import com.m3ter.models.CounterRetrieveParams
 import com.m3ter.models.CounterUpdateParams
+import java.util.function.Consumer
 
 interface CounterService {
 
@@ -19,6 +21,13 @@ interface CounterService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterService
 
     /** Create a new Counter. */
     fun create(params: CounterCreateParams): CounterResponse = create(params, RequestOptions.none())
@@ -129,6 +138,13 @@ interface CounterService {
 
     /** A view of [CounterService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise

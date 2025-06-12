@@ -26,6 +26,7 @@ import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
 import com.m3ter.services.blocking.balances.TransactionService
 import com.m3ter.services.blocking.balances.TransactionServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BalanceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
     private val transactions: TransactionService by lazy { TransactionServiceImpl(clientOptions) }
 
     override fun withRawResponse(): BalanceService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceService =
+        BalanceServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun transactions(): TransactionService = transactions
 
@@ -69,6 +73,13 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
         private val transactions: TransactionService.WithRawResponse by lazy {
             TransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BalanceService.WithRawResponse =
+            BalanceServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun transactions(): TransactionService.WithRawResponse = transactions
 

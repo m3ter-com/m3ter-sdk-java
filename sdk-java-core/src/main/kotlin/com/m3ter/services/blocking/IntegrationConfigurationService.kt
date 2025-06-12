@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.IntegrationConfigurationCreateParams
@@ -18,6 +19,7 @@ import com.m3ter.models.IntegrationConfigurationResponse
 import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import com.m3ter.models.IntegrationConfigurationUpdateResponse
+import java.util.function.Consumer
 
 interface IntegrationConfigurationService {
 
@@ -25,6 +27,13 @@ interface IntegrationConfigurationService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): IntegrationConfigurationService
 
     /** Set the integration configuration for the entity. */
     fun create(
@@ -245,6 +254,15 @@ interface IntegrationConfigurationService {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IntegrationConfigurationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/integrationconfigs`, but is

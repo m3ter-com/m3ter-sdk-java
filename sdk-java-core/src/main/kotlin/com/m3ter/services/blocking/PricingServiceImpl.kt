@@ -24,6 +24,7 @@ import com.m3ter.models.PricingListParams
 import com.m3ter.models.PricingResponse
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PricingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): PricingService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PricingService =
+        PricingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PricingCreateParams,
@@ -71,6 +75,13 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
         PricingService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PricingService.WithRawResponse =
+            PricingServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PricingResponse> =
             jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

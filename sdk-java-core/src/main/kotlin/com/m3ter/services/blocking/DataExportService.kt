@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AdHocResponse
@@ -10,6 +11,7 @@ import com.m3ter.models.DataExportCreateAdhocParams
 import com.m3ter.services.blocking.dataExports.DestinationService
 import com.m3ter.services.blocking.dataExports.JobService
 import com.m3ter.services.blocking.dataExports.ScheduleService
+import java.util.function.Consumer
 
 interface DataExportService {
 
@@ -17,6 +19,13 @@ interface DataExportService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): DataExportService
 
     fun destinations(): DestinationService
 
@@ -78,6 +87,15 @@ interface DataExportService {
 
     /** A view of [DataExportService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DataExportService.WithRawResponse
 
         fun destinations(): DestinationService.WithRawResponse
 

@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.bills
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillCreditLineItemCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.BillCreditLineItemListParams
 import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import com.m3ter.models.CreditLineItemResponse
+import java.util.function.Consumer
 
 interface CreditLineItemService {
 
@@ -19,6 +21,13 @@ interface CreditLineItemService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditLineItemService
 
     /**
      * Create a new Credit line item for the given Bill.
@@ -144,6 +153,15 @@ interface CreditLineItemService {
      * A view of [CreditLineItemService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditLineItemService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post

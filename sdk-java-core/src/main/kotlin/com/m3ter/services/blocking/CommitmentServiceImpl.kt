@@ -26,6 +26,7 @@ import com.m3ter.models.CommitmentRetrieveParams
 import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentSearchResponse
 import com.m3ter.models.CommitmentUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CommitmentServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -36,6 +37,9 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): CommitmentService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CommitmentService =
+        CommitmentServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CommitmentCreateParams,
@@ -83,6 +87,13 @@ class CommitmentServiceImpl internal constructor(private val clientOptions: Clie
         CommitmentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CommitmentService.WithRawResponse =
+            CommitmentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CommitmentResponse> =
             jsonHandler<CommitmentResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

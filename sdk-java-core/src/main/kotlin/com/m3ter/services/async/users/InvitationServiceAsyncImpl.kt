@@ -23,6 +23,7 @@ import com.m3ter.models.UserInvitationListPageResponse
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class InvitationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): InvitationServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvitationServiceAsync =
+        InvitationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: UserInvitationCreateParams,
@@ -59,6 +63,13 @@ class InvitationServiceAsyncImpl internal constructor(private val clientOptions:
         InvitationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvitationServiceAsync.WithRawResponse =
+            InvitationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<InvitationResponse> =
             jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

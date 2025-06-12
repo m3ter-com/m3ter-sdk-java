@@ -18,6 +18,7 @@ import com.m3ter.core.prepare
 import com.m3ter.models.CustomFieldRetrieveParams
 import com.m3ter.models.CustomFieldUpdateParams
 import com.m3ter.models.CustomFieldsResponse
+import java.util.function.Consumer
 
 class CustomFieldServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CustomFieldService {
@@ -27,6 +28,9 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): CustomFieldService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CustomFieldService =
+        CustomFieldServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: CustomFieldRetrieveParams,
@@ -46,6 +50,13 @@ class CustomFieldServiceImpl internal constructor(private val clientOptions: Cli
         CustomFieldService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CustomFieldService.WithRawResponse =
+            CustomFieldServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<CustomFieldsResponse> =
             jsonHandler<CustomFieldsResponse>(clientOptions.jsonMapper)

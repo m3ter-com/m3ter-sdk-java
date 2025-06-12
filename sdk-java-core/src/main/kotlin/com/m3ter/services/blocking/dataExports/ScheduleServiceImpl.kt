@@ -27,6 +27,7 @@ import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleRetrieveResponse
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.DataExportScheduleUpdateResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ScheduleServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,9 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): ScheduleService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ScheduleService =
+        ScheduleServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: DataExportScheduleCreateParams,
@@ -77,6 +81,13 @@ class ScheduleServiceImpl internal constructor(private val clientOptions: Client
         ScheduleService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ScheduleService.WithRawResponse =
+            ScheduleServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<DataExportScheduleCreateResponse> =
             jsonHandler<DataExportScheduleCreateResponse>(clientOptions.jsonMapper)

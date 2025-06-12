@@ -24,6 +24,7 @@ import com.m3ter.services.blocking.statements.StatementDefinitionService
 import com.m3ter.services.blocking.statements.StatementDefinitionServiceImpl
 import com.m3ter.services.blocking.statements.StatementJobService
 import com.m3ter.services.blocking.statements.StatementJobServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -42,6 +43,9 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
     }
 
     override fun withRawResponse(): StatementService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StatementService =
+        StatementServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun statementJobs(): StatementJobService = statementJobs
 
@@ -80,6 +84,13 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
         private val statementDefinitions: StatementDefinitionService.WithRawResponse by lazy {
             StatementDefinitionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementService.WithRawResponse =
+            StatementServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun statementJobs(): StatementJobService.WithRawResponse = statementJobs
 

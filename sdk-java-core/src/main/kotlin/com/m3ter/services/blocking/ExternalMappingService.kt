@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.ExternalMappingCreateParams
@@ -16,6 +17,7 @@ import com.m3ter.models.ExternalMappingListParams
 import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
+import java.util.function.Consumer
 
 interface ExternalMappingService {
 
@@ -23,6 +25,13 @@ interface ExternalMappingService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExternalMappingService
 
     /**
      * Creates a new External Mapping.
@@ -222,6 +231,15 @@ interface ExternalMappingService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalMappingService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/externalmappings`, but is

@@ -33,6 +33,7 @@ import com.m3ter.models.UserRetrieveParams
 import com.m3ter.models.UserUpdateParams
 import com.m3ter.services.blocking.users.InvitationService
 import com.m3ter.services.blocking.users.InvitationServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class UserServiceImpl internal constructor(private val clientOptions: ClientOptions) : UserService {
@@ -44,6 +45,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
     private val invitations: InvitationService by lazy { InvitationServiceImpl(clientOptions) }
 
     override fun withRawResponse(): UserService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): UserService =
+        UserServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun invitations(): InvitationService = invitations
 
@@ -93,6 +97,13 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val invitations: InvitationService.WithRawResponse by lazy {
             InvitationServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): UserService.WithRawResponse =
+            UserServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun invitations(): InvitationService.WithRawResponse = invitations
 

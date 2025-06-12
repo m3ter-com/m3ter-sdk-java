@@ -25,6 +25,7 @@ import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventServiceAsync =
+        EventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: EventRetrieveParams,
@@ -68,6 +72,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
         EventServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): EventServiceAsync.WithRawResponse =
+            EventServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<EventResponse> =
             jsonHandler<EventResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

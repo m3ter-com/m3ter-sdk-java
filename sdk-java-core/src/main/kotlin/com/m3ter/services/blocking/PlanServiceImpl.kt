@@ -24,6 +24,7 @@ import com.m3ter.models.PlanListParams
 import com.m3ter.models.PlanResponse
 import com.m3ter.models.PlanRetrieveParams
 import com.m3ter.models.PlanUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PlanServiceImpl internal constructor(private val clientOptions: ClientOptions) : PlanService {
@@ -33,6 +34,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
     }
 
     override fun withRawResponse(): PlanService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PlanService =
+        PlanServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(params: PlanCreateParams, requestOptions: RequestOptions): PlanResponse =
         // post /organizations/{orgId}/plans
@@ -61,6 +65,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         PlanService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PlanService.WithRawResponse =
+            PlanServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PlanResponse> =
             jsonHandler<PlanResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

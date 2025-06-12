@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CreditReasonCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CreditReasonListParams
 import com.m3ter.models.CreditReasonResponse
 import com.m3ter.models.CreditReasonRetrieveParams
 import com.m3ter.models.CreditReasonUpdateParams
+import java.util.function.Consumer
 
 interface CreditReasonService {
 
@@ -19,6 +21,13 @@ interface CreditReasonService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditReasonService
 
     /**
      * Create a new Credit Reason for your Organization. When you've created a Credit Reason, it
@@ -140,6 +149,15 @@ interface CreditReasonService {
      * A view of [CreditReasonService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditReasonService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/creditreasons`,

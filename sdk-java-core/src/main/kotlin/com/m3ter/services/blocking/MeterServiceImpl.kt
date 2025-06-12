@@ -24,6 +24,7 @@ import com.m3ter.models.MeterListParams
 import com.m3ter.models.MeterResponse
 import com.m3ter.models.MeterRetrieveParams
 import com.m3ter.models.MeterUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class MeterServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
     }
 
     override fun withRawResponse(): MeterService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): MeterService =
+        MeterServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(params: MeterCreateParams, requestOptions: RequestOptions): MeterResponse =
         // post /organizations/{orgId}/meters
@@ -62,6 +66,13 @@ class MeterServiceImpl internal constructor(private val clientOptions: ClientOpt
         MeterService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): MeterService.WithRawResponse =
+            MeterServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<MeterResponse> =
             jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

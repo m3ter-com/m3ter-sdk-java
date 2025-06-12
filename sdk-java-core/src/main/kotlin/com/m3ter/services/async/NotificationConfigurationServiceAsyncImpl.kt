@@ -25,6 +25,7 @@ import com.m3ter.models.NotificationConfigurationResponse
 import com.m3ter.models.NotificationConfigurationRetrieveParams
 import com.m3ter.models.NotificationConfigurationUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class NotificationConfigurationServiceAsyncImpl
@@ -37,6 +38,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): NotificationConfigurationServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): NotificationConfigurationServiceAsync =
+        NotificationConfigurationServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: NotificationConfigurationCreateParams,
@@ -77,6 +85,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         NotificationConfigurationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): NotificationConfigurationServiceAsync.WithRawResponse =
+            NotificationConfigurationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<NotificationConfigurationResponse> =
             jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)

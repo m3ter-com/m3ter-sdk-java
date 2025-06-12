@@ -28,6 +28,7 @@ import com.m3ter.models.DataExportDestinationRetrieveResponse
 import com.m3ter.models.DataExportDestinationUpdateParams
 import com.m3ter.models.DataExportDestinationUpdateResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class DestinationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,6 +39,9 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): DestinationServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DestinationServiceAsync =
+        DestinationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: DataExportDestinationCreateParams,
@@ -78,6 +82,13 @@ class DestinationServiceAsyncImpl internal constructor(private val clientOptions
         DestinationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DestinationServiceAsync.WithRawResponse =
+            DestinationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<DataExportDestinationCreateResponse> =
             jsonHandler<DataExportDestinationCreateResponse>(clientOptions.jsonMapper)

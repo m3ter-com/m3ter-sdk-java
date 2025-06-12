@@ -32,6 +32,7 @@ import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.ResourceGroupRetrieveParams
 import com.m3ter.models.ResourceGroupUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -42,6 +43,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): ResourceGroupService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ResourceGroupService =
+        ResourceGroupServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ResourceGroupCreateParams,
@@ -110,6 +114,13 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
         ResourceGroupService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ResourceGroupService.WithRawResponse =
+            ResourceGroupServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)

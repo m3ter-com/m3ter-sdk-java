@@ -25,6 +25,7 @@ import com.m3ter.models.BillCreditLineItemRetrieveParams
 import com.m3ter.models.BillCreditLineItemUpdateParams
 import com.m3ter.models.CreditLineItemResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CreditLineItemServiceAsyncImpl
@@ -35,6 +36,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
     }
 
     override fun withRawResponse(): CreditLineItemServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): CreditLineItemServiceAsync =
+        CreditLineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillCreditLineItemCreateParams,
@@ -75,6 +81,13 @@ internal constructor(private val clientOptions: ClientOptions) : CreditLineItemS
         CreditLineItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditLineItemServiceAsync.WithRawResponse =
+            CreditLineItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CreditLineItemResponse> =
             jsonHandler<CreditLineItemResponse>(clientOptions.jsonMapper)

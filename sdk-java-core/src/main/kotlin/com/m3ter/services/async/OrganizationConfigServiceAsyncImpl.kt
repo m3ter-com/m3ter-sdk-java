@@ -19,6 +19,7 @@ import com.m3ter.models.OrganizationConfigResponse
 import com.m3ter.models.OrganizationConfigRetrieveParams
 import com.m3ter.models.OrganizationConfigUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class OrganizationConfigServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : OrganizationConfigServiceAsync {
@@ -28,6 +29,13 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
     }
 
     override fun withRawResponse(): OrganizationConfigServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): OrganizationConfigServiceAsync =
+        OrganizationConfigServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun retrieve(
         params: OrganizationConfigRetrieveParams,
@@ -47,6 +55,13 @@ internal constructor(private val clientOptions: ClientOptions) : OrganizationCon
         OrganizationConfigServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): OrganizationConfigServiceAsync.WithRawResponse =
+            OrganizationConfigServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<OrganizationConfigResponse> =
             jsonHandler<OrganizationConfigResponse>(clientOptions.jsonMapper)

@@ -24,6 +24,7 @@ import com.m3ter.models.StatementStatementJobListPage
 import com.m3ter.models.StatementStatementJobListPageResponse
 import com.m3ter.models.StatementStatementJobListParams
 import com.m3ter.models.StatementStatementJobRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class StatementJobServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): StatementJobService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): StatementJobService =
+        StatementJobServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: StatementStatementJobCreateParams,
@@ -74,6 +78,13 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
         StatementJobService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): StatementJobService.WithRawResponse =
+            StatementJobServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<StatementJobResponse> =
             jsonHandler<StatementJobResponse>(clientOptions.jsonMapper)

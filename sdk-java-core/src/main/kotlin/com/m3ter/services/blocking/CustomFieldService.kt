@@ -3,11 +3,13 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CustomFieldRetrieveParams
 import com.m3ter.models.CustomFieldUpdateParams
 import com.m3ter.models.CustomFieldsResponse
+import java.util.function.Consumer
 
 interface CustomFieldService {
 
@@ -15,6 +17,13 @@ interface CustomFieldService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CustomFieldService
 
     /**
      * Retrieve all Custom Fields added at Organizational level for the entities that support them.
@@ -58,6 +67,15 @@ interface CustomFieldService {
      * A view of [CustomFieldService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CustomFieldService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/customfields`, but is

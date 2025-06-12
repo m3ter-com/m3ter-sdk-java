@@ -22,6 +22,7 @@ import com.m3ter.models.DataExportJobListPageResponse
 import com.m3ter.models.DataExportJobListParams
 import com.m3ter.models.DataExportJobResponse
 import com.m3ter.models.DataExportJobRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class JobServiceImpl internal constructor(private val clientOptions: ClientOptions) : JobService {
@@ -31,6 +32,9 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     }
 
     override fun withRawResponse(): JobService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService =
+        JobServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: DataExportJobRetrieveParams,
@@ -57,6 +61,13 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
         JobService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): JobService.WithRawResponse =
+            JobServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<DataExportJobResponse> =
             jsonHandler<DataExportJobResponse>(clientOptions.jsonMapper)

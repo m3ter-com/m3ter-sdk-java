@@ -20,6 +20,7 @@ import com.m3ter.models.BillLineItemListPageResponse
 import com.m3ter.models.BillLineItemListParams
 import com.m3ter.models.BillLineItemRetrieveParams
 import com.m3ter.models.LineItemResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -30,6 +31,9 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): LineItemService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): LineItemService =
+        LineItemServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BillLineItemRetrieveParams,
@@ -49,6 +53,13 @@ class LineItemServiceImpl internal constructor(private val clientOptions: Client
         LineItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): LineItemService.WithRawResponse =
+            LineItemServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<LineItemResponse> =
             jsonHandler<LineItemResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

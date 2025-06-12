@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterAdjustmentCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CounterAdjustmentListParams
 import com.m3ter.models.CounterAdjustmentResponse
 import com.m3ter.models.CounterAdjustmentRetrieveParams
 import com.m3ter.models.CounterAdjustmentUpdateParams
+import java.util.function.Consumer
 
 interface CounterAdjustmentService {
 
@@ -19,6 +21,13 @@ interface CounterAdjustmentService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterAdjustmentService
 
     /**
      * Create a new CounterAdjustment for an Account using a Counter.
@@ -155,6 +164,15 @@ interface CounterAdjustmentService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterAdjustmentService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is

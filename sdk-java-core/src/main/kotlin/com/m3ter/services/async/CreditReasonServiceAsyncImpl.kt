@@ -25,6 +25,7 @@ import com.m3ter.models.CreditReasonResponse
 import com.m3ter.models.CreditReasonRetrieveParams
 import com.m3ter.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CreditReasonServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
     }
 
     override fun withRawResponse(): CreditReasonServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditReasonServiceAsync =
+        CreditReasonServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CreditReasonCreateParams,
@@ -75,6 +79,13 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
         CreditReasonServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditReasonServiceAsync.WithRawResponse =
+            CreditReasonServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)

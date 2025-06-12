@@ -31,6 +31,7 @@ import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import com.m3ter.models.IntegrationConfigurationUpdateResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationServiceAsyncImpl
@@ -43,6 +44,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): IntegrationConfigurationServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): IntegrationConfigurationServiceAsync =
+        IntegrationConfigurationServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: IntegrationConfigurationCreateParams,
@@ -97,6 +105,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         IntegrationConfigurationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IntegrationConfigurationServiceAsync.WithRawResponse =
+            IntegrationConfigurationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<IntegrationConfigurationCreateResponse> =
             jsonHandler<IntegrationConfigurationCreateResponse>(clientOptions.jsonMapper)

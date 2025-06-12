@@ -25,6 +25,7 @@ import com.m3ter.models.CounterPricingResponse
 import com.m3ter.models.CounterPricingRetrieveParams
 import com.m3ter.models.CounterPricingUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CounterPricingServiceAsyncImpl
@@ -35,6 +36,11 @@ internal constructor(private val clientOptions: ClientOptions) : CounterPricingS
     }
 
     override fun withRawResponse(): CounterPricingServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): CounterPricingServiceAsync =
+        CounterPricingServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CounterPricingCreateParams,
@@ -75,6 +81,13 @@ internal constructor(private val clientOptions: ClientOptions) : CounterPricingS
         CounterPricingServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterPricingServiceAsync.WithRawResponse =
+            CounterPricingServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CounterPricingResponse> =
             jsonHandler<CounterPricingResponse>(clientOptions.jsonMapper)

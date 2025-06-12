@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AggregationResponse
@@ -13,6 +14,7 @@ import com.m3ter.models.CompoundAggregationListParams
 import com.m3ter.models.CompoundAggregationResponse
 import com.m3ter.models.CompoundAggregationRetrieveParams
 import com.m3ter.models.CompoundAggregationUpdateParams
+import java.util.function.Consumer
 
 interface CompoundAggregationService {
 
@@ -20,6 +22,13 @@ interface CompoundAggregationService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CompoundAggregationService
 
     /**
      * Create a new CompoundAggregation.
@@ -170,6 +179,15 @@ interface CompoundAggregationService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CompoundAggregationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/compoundaggregations`, but

@@ -24,6 +24,7 @@ import com.m3ter.models.AccountPlanListParams
 import com.m3ter.models.AccountPlanResponse
 import com.m3ter.models.AccountPlanRetrieveParams
 import com.m3ter.models.AccountPlanUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class AccountPlanServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class AccountPlanServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): AccountPlanService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountPlanService =
+        AccountPlanServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: AccountPlanCreateParams,
@@ -74,6 +78,13 @@ class AccountPlanServiceImpl internal constructor(private val clientOptions: Cli
         AccountPlanService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountPlanService.WithRawResponse =
+            AccountPlanServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AccountPlanResponse> =
             jsonHandler<AccountPlanResponse>(clientOptions.jsonMapper)

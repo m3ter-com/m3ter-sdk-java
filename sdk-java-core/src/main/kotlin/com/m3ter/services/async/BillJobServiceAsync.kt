@@ -2,6 +2,7 @@
 
 package com.m3ter.services.async
 
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillJobCancelParams
@@ -12,6 +13,7 @@ import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface BillJobServiceAsync {
 
@@ -19,6 +21,13 @@ interface BillJobServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobServiceAsync
 
     /**
      * Create a new BillJob to handle asynchronous bill calculations for a specific Organization.
@@ -181,6 +190,15 @@ interface BillJobServiceAsync {
      * A view of [BillJobServiceAsync] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillJobServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/billjobs`, but is otherwise

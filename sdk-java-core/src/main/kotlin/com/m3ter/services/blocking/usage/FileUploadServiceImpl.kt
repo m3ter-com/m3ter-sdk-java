@@ -19,6 +19,7 @@ import com.m3ter.models.UsageFileUploadGenerateUploadUrlParams
 import com.m3ter.models.UsageFileUploadGenerateUploadUrlResponse
 import com.m3ter.services.blocking.usage.fileUploads.JobService
 import com.m3ter.services.blocking.usage.fileUploads.JobServiceImpl
+import java.util.function.Consumer
 
 class FileUploadServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     FileUploadService {
@@ -30,6 +31,9 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
     private val jobs: JobService by lazy { JobServiceImpl(clientOptions) }
 
     override fun withRawResponse(): FileUploadService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): FileUploadService =
+        FileUploadServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun jobs(): JobService = jobs
 
@@ -48,6 +52,13 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
         private val jobs: JobService.WithRawResponse by lazy {
             JobServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): FileUploadService.WithRawResponse =
+            FileUploadServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun jobs(): JobService.WithRawResponse = jobs
 

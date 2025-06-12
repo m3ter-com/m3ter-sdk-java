@@ -82,6 +82,7 @@ import com.m3ter.services.async.UserServiceAsync
 import com.m3ter.services.async.UserServiceAsyncImpl
 import com.m3ter.services.async.WebhookServiceAsync
 import com.m3ter.services.async.WebhookServiceAsyncImpl
+import java.util.function.Consumer
 
 class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClientAsync {
 
@@ -253,6 +254,9 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
     override fun sync(): M3terClient = sync
 
     override fun withRawResponse(): M3terClientAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClientAsync =
+        M3terClientAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun authentication(): AuthenticationServiceAsync = authentication
 
@@ -498,6 +502,13 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         private val webhooks: WebhookServiceAsync.WithRawResponse by lazy {
             WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): M3terClientAsync.WithRawResponse =
+            M3terClientAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun authentication(): AuthenticationServiceAsync.WithRawResponse = authentication
 
