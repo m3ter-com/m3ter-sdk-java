@@ -39,7 +39,7 @@ internal class CustomFieldsResponseTest {
                 )
                 .contract(
                     CustomFieldsResponse.Contract.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .createdBy("createdBy")
@@ -102,7 +102,7 @@ internal class CustomFieldsResponseTest {
         assertThat(customFieldsResponse.contract())
             .contains(
                 CustomFieldsResponse.Contract.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
         assertThat(customFieldsResponse.createdBy()).contains("createdBy")
@@ -172,7 +172,7 @@ internal class CustomFieldsResponseTest {
                 )
                 .contract(
                     CustomFieldsResponse.Contract.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .createdBy("createdBy")
