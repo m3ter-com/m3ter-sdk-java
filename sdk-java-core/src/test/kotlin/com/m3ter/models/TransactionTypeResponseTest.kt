@@ -15,7 +15,6 @@ internal class TransactionTypeResponseTest {
         val transactionTypeResponse =
             TransactionTypeResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -23,10 +22,10 @@ internal class TransactionTypeResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         assertThat(transactionTypeResponse.id()).isEqualTo("id")
-        assertThat(transactionTypeResponse.version()).isEqualTo(0L)
         assertThat(transactionTypeResponse.archived()).contains(true)
         assertThat(transactionTypeResponse.code()).contains("code")
         assertThat(transactionTypeResponse.createdBy()).contains("createdBy")
@@ -36,6 +35,7 @@ internal class TransactionTypeResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transactionTypeResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(transactionTypeResponse.name()).contains("name")
+        assertThat(transactionTypeResponse.version()).contains(0L)
     }
 
     @Test
@@ -44,7 +44,6 @@ internal class TransactionTypeResponseTest {
         val transactionTypeResponse =
             TransactionTypeResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -52,6 +51,7 @@ internal class TransactionTypeResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         val roundtrippedTransactionTypeResponse =

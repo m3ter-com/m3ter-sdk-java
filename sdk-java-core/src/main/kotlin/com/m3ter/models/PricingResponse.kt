@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class PricingResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountingProductId: JsonField<String>,
     private val aggregationId: JsonField<String>,
     private val aggregationType: JsonField<AggregationType>,
@@ -49,13 +48,13 @@ private constructor(
     private val startDate: JsonField<OffsetDateTime>,
     private val tiersSpanPlan: JsonField<Boolean>,
     private val type: JsonField<Type>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         accountingProductId: JsonField<String> = JsonMissing.of(),
@@ -118,9 +117,9 @@ private constructor(
         @ExcludeMissing
         tiersSpanPlan: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountingProductId,
         aggregationId,
         aggregationType,
@@ -145,6 +144,7 @@ private constructor(
         startDate,
         tiersSpanPlan,
         type,
+        version,
         mutableMapOf(),
     )
 
@@ -155,17 +155,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -390,18 +379,22 @@ private constructor(
     fun type(): Optional<Type> = type.getOptional("type")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountingProductId].
@@ -608,6 +601,13 @@ private constructor(
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -628,7 +628,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -638,7 +637,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var aggregationId: JsonField<String> = JsonMissing.of()
         private var aggregationType: JsonField<AggregationType> = JsonMissing.of()
@@ -663,12 +661,12 @@ private constructor(
         private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var tiersSpanPlan: JsonField<Boolean> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(pricingResponse: PricingResponse) = apply {
             id = pricingResponse.id
-            version = pricingResponse.version
             accountingProductId = pricingResponse.accountingProductId
             aggregationId = pricingResponse.aggregationId
             aggregationType = pricingResponse.aggregationType
@@ -693,6 +691,7 @@ private constructor(
             startDate = pricingResponse.startDate
             tiersSpanPlan = pricingResponse.tiersSpanPlan
             type = pricingResponse.type
+            version = pricingResponse.version
             additionalProperties = pricingResponse.additionalProperties.toMutableMap()
         }
 
@@ -706,22 +705,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
@@ -1114,6 +1097,22 @@ private constructor(
          */
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1141,7 +1140,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1149,7 +1147,6 @@ private constructor(
         fun build(): PricingResponse =
             PricingResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountingProductId,
                 aggregationId,
                 aggregationType,
@@ -1174,6 +1171,7 @@ private constructor(
                 startDate,
                 tiersSpanPlan,
                 type,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1186,7 +1184,6 @@ private constructor(
         }
 
         id()
-        version()
         accountingProductId()
         aggregationId()
         aggregationType().ifPresent { it.validate() }
@@ -1211,6 +1208,7 @@ private constructor(
         startDate()
         tiersSpanPlan()
         type().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -1230,7 +1228,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountingProductId.asKnown().isPresent) 1 else 0) +
             (if (aggregationId.asKnown().isPresent) 1 else 0) +
             (aggregationType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1254,7 +1251,8 @@ private constructor(
             (if (segmentString.asKnown().isPresent) 1 else 0) +
             (if (startDate.asKnown().isPresent) 1 else 0) +
             (if (tiersSpanPlan.asKnown().isPresent) 1 else 0) +
-            (type.asKnown().getOrNull()?.validity() ?: 0)
+            (type.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class AggregationType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -1637,15 +1635,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingResponse && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && aggregationType == other.aggregationType && code == other.code && compoundAggregationId == other.compoundAggregationId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && segment == other.segment && segmentString == other.segmentString && startDate == other.startDate && tiersSpanPlan == other.tiersSpanPlan && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PricingResponse && id == other.id && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && aggregationType == other.aggregationType && code == other.code && compoundAggregationId == other.compoundAggregationId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && segment == other.segment && segmentString == other.segmentString && startDate == other.startDate && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, aggregationId, aggregationType, code, compoundAggregationId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, pricingBands, segment, segmentString, startDate, tiersSpanPlan, type, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, aggregationId, aggregationType, code, compoundAggregationId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, pricingBands, segment, segmentString, startDate, tiersSpanPlan, type, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PricingResponse{id=$id, version=$version, accountingProductId=$accountingProductId, aggregationId=$aggregationId, aggregationType=$aggregationType, code=$code, compoundAggregationId=$compoundAggregationId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, segment=$segment, segmentString=$segmentString, startDate=$startDate, tiersSpanPlan=$tiersSpanPlan, type=$type, additionalProperties=$additionalProperties}"
+        "PricingResponse{id=$id, accountingProductId=$accountingProductId, aggregationId=$aggregationId, aggregationType=$aggregationType, code=$code, compoundAggregationId=$compoundAggregationId, createdBy=$createdBy, cumulative=$cumulative, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, overagePricingBands=$overagePricingBands, planId=$planId, planTemplateId=$planTemplateId, pricingBands=$pricingBands, segment=$segment, segmentString=$segmentString, startDate=$startDate, tiersSpanPlan=$tiersSpanPlan, type=$type, version=$version, additionalProperties=$additionalProperties}"
 }

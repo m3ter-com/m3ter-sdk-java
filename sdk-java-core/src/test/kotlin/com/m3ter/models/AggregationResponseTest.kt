@@ -17,7 +17,6 @@ internal class AggregationResponseTest {
         val aggregationResponse =
             AggregationResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .aggregation(AggregationResponse.Aggregation.SUM)
                 .code("code")
@@ -44,10 +43,10 @@ internal class AggregationResponseTest {
                 )
                 .targetField("targetField")
                 .unit("unit")
+                .version(0L)
                 .build()
 
         assertThat(aggregationResponse.id()).isEqualTo("id")
-        assertThat(aggregationResponse.version()).isEqualTo(0L)
         assertThat(aggregationResponse.accountingProductId()).contains("accountingProductId")
         assertThat(aggregationResponse.aggregation()).contains(AggregationResponse.Aggregation.SUM)
         assertThat(aggregationResponse.code()).contains("code")
@@ -78,6 +77,7 @@ internal class AggregationResponseTest {
             )
         assertThat(aggregationResponse.targetField()).contains("targetField")
         assertThat(aggregationResponse.unit()).contains("unit")
+        assertThat(aggregationResponse.version()).contains(0L)
     }
 
     @Test
@@ -86,7 +86,6 @@ internal class AggregationResponseTest {
         val aggregationResponse =
             AggregationResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .aggregation(AggregationResponse.Aggregation.SUM)
                 .code("code")
@@ -113,6 +112,7 @@ internal class AggregationResponseTest {
                 )
                 .targetField("targetField")
                 .unit("unit")
+                .version(0L)
                 .build()
 
         val roundtrippedAggregationResponse =

@@ -19,7 +19,6 @@ internal class CounterAdjustmentListPageResponseTest {
                 .addData(
                     CounterAdjustmentResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .counterId("counterId")
                         .createdBy("createdBy")
@@ -29,6 +28,7 @@ internal class CounterAdjustmentListPageResponseTest {
                         .lastModifiedBy("lastModifiedBy")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .value(0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -38,7 +38,6 @@ internal class CounterAdjustmentListPageResponseTest {
             .containsExactly(
                 CounterAdjustmentResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountId("accountId")
                     .counterId("counterId")
                     .createdBy("createdBy")
@@ -48,6 +47,7 @@ internal class CounterAdjustmentListPageResponseTest {
                     .lastModifiedBy("lastModifiedBy")
                     .purchaseOrderNumber("purchaseOrderNumber")
                     .value(0)
+                    .version(0L)
                     .build()
             )
         assertThat(counterAdjustmentListPageResponse.nextToken()).contains("nextToken")
@@ -61,7 +61,6 @@ internal class CounterAdjustmentListPageResponseTest {
                 .addData(
                     CounterAdjustmentResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .counterId("counterId")
                         .createdBy("createdBy")
@@ -71,6 +70,7 @@ internal class CounterAdjustmentListPageResponseTest {
                         .lastModifiedBy("lastModifiedBy")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .value(0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

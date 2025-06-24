@@ -16,7 +16,6 @@ internal class DataExportScheduleListResponseTest {
         val dataExportScheduleListResponse =
             DataExportScheduleListResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .addDestinationId("string")
@@ -28,10 +27,10 @@ internal class DataExportScheduleListResponseTest {
                 .period(0)
                 .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                 .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                .version(0L)
                 .build()
 
         assertThat(dataExportScheduleListResponse.id()).isEqualTo("id")
-        assertThat(dataExportScheduleListResponse.version()).isEqualTo(0L)
         assertThat(dataExportScheduleListResponse.code()).contains("code")
         assertThat(dataExportScheduleListResponse.createdBy()).contains("createdBy")
         assertThat(dataExportScheduleListResponse.destinationIds().getOrNull())
@@ -49,6 +48,7 @@ internal class DataExportScheduleListResponseTest {
             .contains(DataExportScheduleListResponse.ScheduleType.HOUR)
         assertThat(dataExportScheduleListResponse.sourceType())
             .contains(DataExportScheduleListResponse.SourceType.USAGE)
+        assertThat(dataExportScheduleListResponse.version()).contains(0L)
     }
 
     @Test
@@ -57,7 +57,6 @@ internal class DataExportScheduleListResponseTest {
         val dataExportScheduleListResponse =
             DataExportScheduleListResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .addDestinationId("string")
@@ -69,6 +68,7 @@ internal class DataExportScheduleListResponseTest {
                 .period(0)
                 .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                 .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                .version(0L)
                 .build()
 
         val roundtrippedDataExportScheduleListResponse =

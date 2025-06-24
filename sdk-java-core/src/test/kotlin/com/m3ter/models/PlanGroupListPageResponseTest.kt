@@ -19,7 +19,6 @@ internal class PlanGroupListPageResponseTest {
                 .addData(
                     PlanGroupResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .code("code")
                         .createdBy("createdBy")
@@ -41,6 +40,7 @@ internal class PlanGroupListPageResponseTest {
                         .standingChargeAccountingProductId("standingChargeAccountingProductId")
                         .standingChargeBillInAdvance(true)
                         .standingChargeDescription("standingChargeDescription")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -50,7 +50,6 @@ internal class PlanGroupListPageResponseTest {
             .containsExactly(
                 PlanGroupResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountId("accountId")
                     .code("code")
                     .createdBy("createdBy")
@@ -72,6 +71,7 @@ internal class PlanGroupListPageResponseTest {
                     .standingChargeAccountingProductId("standingChargeAccountingProductId")
                     .standingChargeBillInAdvance(true)
                     .standingChargeDescription("standingChargeDescription")
+                    .version(0L)
                     .build()
             )
         assertThat(planGroupListPageResponse.nextToken()).contains("nextToken")
@@ -85,7 +85,6 @@ internal class PlanGroupListPageResponseTest {
                 .addData(
                     PlanGroupResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .code("code")
                         .createdBy("createdBy")
@@ -107,6 +106,7 @@ internal class PlanGroupListPageResponseTest {
                         .standingChargeAccountingProductId("standingChargeAccountingProductId")
                         .standingChargeBillInAdvance(true)
                         .standingChargeDescription("standingChargeDescription")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

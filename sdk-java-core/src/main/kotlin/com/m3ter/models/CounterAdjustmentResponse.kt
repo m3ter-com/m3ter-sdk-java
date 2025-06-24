@@ -21,7 +21,6 @@ import java.util.Optional
 class CounterAdjustmentResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountId: JsonField<String>,
     private val counterId: JsonField<String>,
     private val createdBy: JsonField<String>,
@@ -31,13 +30,13 @@ private constructor(
     private val lastModifiedBy: JsonField<String>,
     private val purchaseOrderNumber: JsonField<String>,
     private val value: JsonField<Int>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("counterId") @ExcludeMissing counterId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
@@ -55,9 +54,9 @@ private constructor(
         @ExcludeMissing
         purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
         @JsonProperty("value") @ExcludeMissing value: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountId,
         counterId,
         createdBy,
@@ -67,6 +66,7 @@ private constructor(
         lastModifiedBy,
         purchaseOrderNumber,
         value,
+        version,
         mutableMapOf(),
     )
 
@@ -77,17 +77,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The Account ID the CounterAdjustment was created for.
@@ -163,18 +152,22 @@ private constructor(
     fun value(): Optional<Int> = value.getOptional("value")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountId].
@@ -248,6 +241,13 @@ private constructor(
      */
     @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Int> = value
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -268,7 +268,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -278,7 +277,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
         private var counterId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -288,12 +286,12 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
         private var value: JsonField<Int> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(counterAdjustmentResponse: CounterAdjustmentResponse) = apply {
             id = counterAdjustmentResponse.id
-            version = counterAdjustmentResponse.version
             accountId = counterAdjustmentResponse.accountId
             counterId = counterAdjustmentResponse.counterId
             createdBy = counterAdjustmentResponse.createdBy
@@ -303,6 +301,7 @@ private constructor(
             lastModifiedBy = counterAdjustmentResponse.lastModifiedBy
             purchaseOrderNumber = counterAdjustmentResponse.purchaseOrderNumber
             value = counterAdjustmentResponse.value
+            version = counterAdjustmentResponse.version
             additionalProperties = counterAdjustmentResponse.additionalProperties.toMutableMap()
         }
 
@@ -316,22 +315,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The Account ID the CounterAdjustment was created for. */
         fun accountId(accountId: String) = accountId(JsonField.of(accountId))
@@ -449,6 +432,22 @@ private constructor(
          */
         fun value(value: JsonField<Int>) = apply { this.value = value }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -476,7 +475,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -484,7 +482,6 @@ private constructor(
         fun build(): CounterAdjustmentResponse =
             CounterAdjustmentResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountId,
                 counterId,
                 createdBy,
@@ -494,6 +491,7 @@ private constructor(
                 lastModifiedBy,
                 purchaseOrderNumber,
                 value,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -506,7 +504,6 @@ private constructor(
         }
 
         id()
-        version()
         accountId()
         counterId()
         createdBy()
@@ -516,6 +513,7 @@ private constructor(
         lastModifiedBy()
         purchaseOrderNumber()
         value()
+        version()
         validated = true
     }
 
@@ -535,7 +533,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
             (if (counterId.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
@@ -544,22 +541,23 @@ private constructor(
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (purchaseOrderNumber.asKnown().isPresent) 1 else 0) +
-            (if (value.asKnown().isPresent) 1 else 0)
+            (if (value.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentResponse && id == other.id && version == other.version && accountId == other.accountId && counterId == other.counterId && createdBy == other.createdBy && date == other.date && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && purchaseOrderNumber == other.purchaseOrderNumber && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CounterAdjustmentResponse && id == other.id && accountId == other.accountId && counterId == other.counterId && createdBy == other.createdBy && date == other.date && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && purchaseOrderNumber == other.purchaseOrderNumber && value == other.value && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, counterId, createdBy, date, dtCreated, dtLastModified, lastModifiedBy, purchaseOrderNumber, value, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountId, counterId, createdBy, date, dtCreated, dtLastModified, lastModifiedBy, purchaseOrderNumber, value, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CounterAdjustmentResponse{id=$id, version=$version, accountId=$accountId, counterId=$counterId, createdBy=$createdBy, date=$date, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, purchaseOrderNumber=$purchaseOrderNumber, value=$value, additionalProperties=$additionalProperties}"
+        "CounterAdjustmentResponse{id=$id, accountId=$accountId, counterId=$counterId, createdBy=$createdBy, date=$date, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, purchaseOrderNumber=$purchaseOrderNumber, value=$value, version=$version, additionalProperties=$additionalProperties}"
 }

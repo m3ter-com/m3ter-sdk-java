@@ -20,7 +20,6 @@ internal class AccountPlanListPageResponseTest {
                 .addData(
                     AccountPlanResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .childBillingMode(AccountPlanResponse.ChildBillingMode.PARENT_SUMMARY)
@@ -40,6 +39,7 @@ internal class AccountPlanListPageResponseTest {
                         .planId("planId")
                         .productId("productId")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -49,7 +49,6 @@ internal class AccountPlanListPageResponseTest {
             .containsExactly(
                 AccountPlanResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountId("accountId")
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .childBillingMode(AccountPlanResponse.ChildBillingMode.PARENT_SUMMARY)
@@ -69,6 +68,7 @@ internal class AccountPlanListPageResponseTest {
                     .planId("planId")
                     .productId("productId")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .version(0L)
                     .build()
             )
         assertThat(accountPlanListPageResponse.nextToken()).contains("nextToken")
@@ -82,7 +82,6 @@ internal class AccountPlanListPageResponseTest {
                 .addData(
                     AccountPlanResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .childBillingMode(AccountPlanResponse.ChildBillingMode.PARENT_SUMMARY)
@@ -102,6 +101,7 @@ internal class AccountPlanListPageResponseTest {
                         .planId("planId")
                         .productId("productId")
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

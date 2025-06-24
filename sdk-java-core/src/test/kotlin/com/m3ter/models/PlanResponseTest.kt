@@ -16,7 +16,6 @@ internal class PlanResponseTest {
         val planResponse =
             PlanResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .bespoke(true)
                 .code("code")
@@ -41,10 +40,10 @@ internal class PlanResponseTest {
                 .standingChargeAccountingProductId("standingChargeAccountingProductId")
                 .standingChargeBillInAdvance(true)
                 .standingChargeDescription("standingChargeDescription")
+                .version(0L)
                 .build()
 
         assertThat(planResponse.id()).isEqualTo("id")
-        assertThat(planResponse.version()).isEqualTo(0L)
         assertThat(planResponse.accountId()).contains("accountId")
         assertThat(planResponse.bespoke()).contains(true)
         assertThat(planResponse.code()).contains("code")
@@ -74,6 +73,7 @@ internal class PlanResponseTest {
             .contains("standingChargeAccountingProductId")
         assertThat(planResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(planResponse.standingChargeDescription()).contains("standingChargeDescription")
+        assertThat(planResponse.version()).contains(0L)
     }
 
     @Test
@@ -82,7 +82,6 @@ internal class PlanResponseTest {
         val planResponse =
             PlanResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .bespoke(true)
                 .code("code")
@@ -107,6 +106,7 @@ internal class PlanResponseTest {
                 .standingChargeAccountingProductId("standingChargeAccountingProductId")
                 .standingChargeBillInAdvance(true)
                 .standingChargeDescription("standingChargeDescription")
+                .version(0L)
                 .build()
 
         val roundtrippedPlanResponse =

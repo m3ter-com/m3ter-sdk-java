@@ -34,16 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * An array containing the Meter information.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<MeterResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for multi-page retrievals.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -95,7 +91,6 @@ private constructor(
             additionalProperties = meterListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /** An array containing the Meter information. */
         fun data(data: List<MeterResponse>) = data(JsonField.of(data))
 
         /**
@@ -121,7 +116,6 @@ private constructor(
                 }
         }
 
-        /** The `nextToken` for multi-page retrievals. */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

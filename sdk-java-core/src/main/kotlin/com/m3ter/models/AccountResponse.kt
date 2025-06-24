@@ -25,7 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 class AccountResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val address: JsonField<Address>,
     private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
     private val billEpoch: JsonField<LocalDate>,
@@ -44,13 +43,13 @@ private constructor(
     private val parentAccountId: JsonField<String>,
     private val purchaseOrderNumber: JsonField<String>,
     private val statementDefinitionId: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("address") @ExcludeMissing address: JsonField<Address> = JsonMissing.of(),
         @JsonProperty("autoGenerateStatementMode")
         @ExcludeMissing
@@ -95,9 +94,9 @@ private constructor(
         @JsonProperty("statementDefinitionId")
         @ExcludeMissing
         statementDefinitionId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         address,
         autoGenerateStatementMode,
         billEpoch,
@@ -116,6 +115,7 @@ private constructor(
         parentAccountId,
         purchaseOrderNumber,
         statementDefinitionId,
+        version,
         mutableMapOf(),
     )
 
@@ -126,17 +126,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * Contact address.
@@ -333,18 +322,22 @@ private constructor(
         statementDefinitionId.getOptional("statementDefinitionId")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [address].
@@ -502,6 +495,13 @@ private constructor(
     @ExcludeMissing
     fun _statementDefinitionId(): JsonField<String> = statementDefinitionId
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -522,7 +522,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -532,7 +531,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var address: JsonField<Address> = JsonMissing.of()
         private var autoGenerateStatementMode: JsonField<AutoGenerateStatementMode> =
             JsonMissing.of()
@@ -552,12 +550,12 @@ private constructor(
         private var parentAccountId: JsonField<String> = JsonMissing.of()
         private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
         private var statementDefinitionId: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(accountResponse: AccountResponse) = apply {
             id = accountResponse.id
-            version = accountResponse.version
             address = accountResponse.address
             autoGenerateStatementMode = accountResponse.autoGenerateStatementMode
             billEpoch = accountResponse.billEpoch
@@ -577,6 +575,7 @@ private constructor(
             parentAccountId = accountResponse.parentAccountId
             purchaseOrderNumber = accountResponse.purchaseOrderNumber
             statementDefinitionId = accountResponse.statementDefinitionId
+            version = accountResponse.version
             additionalProperties = accountResponse.additionalProperties.toMutableMap()
         }
 
@@ -590,22 +589,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Contact address. */
         fun address(address: Address) = address(JsonField.of(address))
@@ -920,6 +903,22 @@ private constructor(
             this.statementDefinitionId = statementDefinitionId
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -947,7 +946,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -955,7 +953,6 @@ private constructor(
         fun build(): AccountResponse =
             AccountResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 address,
                 autoGenerateStatementMode,
                 billEpoch,
@@ -974,6 +971,7 @@ private constructor(
                 parentAccountId,
                 purchaseOrderNumber,
                 statementDefinitionId,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -986,7 +984,6 @@ private constructor(
         }
 
         id()
-        version()
         address().ifPresent { it.validate() }
         autoGenerateStatementMode().ifPresent { it.validate() }
         billEpoch()
@@ -1005,6 +1002,7 @@ private constructor(
         parentAccountId()
         purchaseOrderNumber()
         statementDefinitionId()
+        version()
         validated = true
     }
 
@@ -1024,7 +1022,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (address.asKnown().getOrNull()?.validity() ?: 0) +
             (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
             (if (billEpoch.asKnown().isPresent) 1 else 0) +
@@ -1042,7 +1039,8 @@ private constructor(
             (if (name.asKnown().isPresent) 1 else 0) +
             (if (parentAccountId.asKnown().isPresent) 1 else 0) +
             (if (purchaseOrderNumber.asKnown().isPresent) 1 else 0) +
-            (if (statementDefinitionId.asKnown().isPresent) 1 else 0)
+            (if (statementDefinitionId.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * Specify whether to auto-generate statements once Bills are approved or locked.
@@ -1538,15 +1536,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountResponse && id == other.id && version == other.version && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && code == other.code && configData == other.configData && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && emailAddress == other.emailAddress && lastModifiedBy == other.lastModifiedBy && name == other.name && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AccountResponse && id == other.id && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && code == other.code && configData == other.configData && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && emailAddress == other.emailAddress && lastModifiedBy == other.lastModifiedBy && name == other.name && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, address, autoGenerateStatementMode, billEpoch, code, configData, createdBy, creditApplicationOrder, currency, customFields, daysBeforeBillDue, dtCreated, dtLastModified, emailAddress, lastModifiedBy, name, parentAccountId, purchaseOrderNumber, statementDefinitionId, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, address, autoGenerateStatementMode, billEpoch, code, configData, createdBy, creditApplicationOrder, currency, customFields, daysBeforeBillDue, dtCreated, dtLastModified, emailAddress, lastModifiedBy, name, parentAccountId, purchaseOrderNumber, statementDefinitionId, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountResponse{id=$id, version=$version, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, code=$code, configData=$configData, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, emailAddress=$emailAddress, lastModifiedBy=$lastModifiedBy, name=$name, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, additionalProperties=$additionalProperties}"
+        "AccountResponse{id=$id, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, code=$code, configData=$configData, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, emailAddress=$emailAddress, lastModifiedBy=$lastModifiedBy, name=$name, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
 }

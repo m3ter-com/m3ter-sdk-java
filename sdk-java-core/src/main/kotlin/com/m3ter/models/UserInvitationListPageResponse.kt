@@ -40,8 +40,6 @@ private constructor(
     fun data(): Optional<List<InvitationResponse>> = data.getOptional("data")
 
     /**
-     * `nextToken` for multi page retrievals.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -122,7 +120,6 @@ private constructor(
                 }
         }
 
-        /** `nextToken` for multi page retrievals. */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

@@ -18,7 +18,6 @@ internal class CounterListPageResponseTest {
                 .addData(
                     CounterResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -27,6 +26,7 @@ internal class CounterListPageResponseTest {
                         .name("name")
                         .productId("productId")
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -36,7 +36,6 @@ internal class CounterListPageResponseTest {
             .containsExactly(
                 CounterResponse.builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -45,6 +44,7 @@ internal class CounterListPageResponseTest {
                     .name("name")
                     .productId("productId")
                     .unit("unit")
+                    .version(0L)
                     .build()
             )
         assertThat(counterListPageResponse.nextToken()).contains("nextToken")
@@ -58,7 +58,6 @@ internal class CounterListPageResponseTest {
                 .addData(
                     CounterResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -67,6 +66,7 @@ internal class CounterListPageResponseTest {
                         .name("name")
                         .productId("productId")
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

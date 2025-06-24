@@ -16,13 +16,14 @@ internal class StatementDefinitionResponseTest {
         val statementDefinitionResponse =
             StatementDefinitionResponse.builder()
                 .id("id")
-                .version(0L)
-                .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.ORIGINAL)
+                .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.DAY)
                 .createdBy("createdBy")
                 .addDimension(
                     StatementDefinitionResponse.Dimension.builder()
-                        .addDimensionAttribute("string")
-                        .dimensionName("dimensionName")
+                        .addFilter("string")
+                        .name("x")
+                        .addAttribute("string")
+                        .meterId("meterId")
                         .build()
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -37,18 +38,20 @@ internal class StatementDefinitionResponseTest {
                         .build()
                 )
                 .name("name")
+                .version(0L)
                 .build()
 
         assertThat(statementDefinitionResponse.id()).isEqualTo("id")
-        assertThat(statementDefinitionResponse.version()).isEqualTo(0L)
         assertThat(statementDefinitionResponse.aggregationFrequency())
-            .contains(StatementDefinitionResponse.AggregationFrequency.ORIGINAL)
+            .contains(StatementDefinitionResponse.AggregationFrequency.DAY)
         assertThat(statementDefinitionResponse.createdBy()).contains("createdBy")
         assertThat(statementDefinitionResponse.dimensions().getOrNull())
             .containsExactly(
                 StatementDefinitionResponse.Dimension.builder()
-                    .addDimensionAttribute("string")
-                    .dimensionName("dimensionName")
+                    .addFilter("string")
+                    .name("x")
+                    .addAttribute("string")
+                    .meterId("meterId")
                     .build()
             )
         assertThat(statementDefinitionResponse.dtCreated())
@@ -66,6 +69,7 @@ internal class StatementDefinitionResponseTest {
                     .build()
             )
         assertThat(statementDefinitionResponse.name()).contains("name")
+        assertThat(statementDefinitionResponse.version()).contains(0L)
     }
 
     @Test
@@ -74,13 +78,14 @@ internal class StatementDefinitionResponseTest {
         val statementDefinitionResponse =
             StatementDefinitionResponse.builder()
                 .id("id")
-                .version(0L)
-                .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.ORIGINAL)
+                .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.DAY)
                 .createdBy("createdBy")
                 .addDimension(
                     StatementDefinitionResponse.Dimension.builder()
-                        .addDimensionAttribute("string")
-                        .dimensionName("dimensionName")
+                        .addFilter("string")
+                        .name("x")
+                        .addAttribute("string")
+                        .meterId("meterId")
                         .build()
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -95,6 +100,7 @@ internal class StatementDefinitionResponseTest {
                         .build()
                 )
                 .name("name")
+                .version(0L)
                 .build()
 
         val roundtrippedStatementDefinitionResponse =

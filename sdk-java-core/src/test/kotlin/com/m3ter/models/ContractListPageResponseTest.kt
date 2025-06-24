@@ -20,7 +20,6 @@ internal class ContractListPageResponseTest {
                 .addData(
                     ContractResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .code("code")
                         .createdBy("createdBy")
@@ -37,6 +36,7 @@ internal class ContractListPageResponseTest {
                         .name("name")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .startDate(LocalDate.parse("2019-12-27"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -46,7 +46,6 @@ internal class ContractListPageResponseTest {
             .containsExactly(
                 ContractResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountId("accountId")
                     .code("code")
                     .createdBy("createdBy")
@@ -63,6 +62,7 @@ internal class ContractListPageResponseTest {
                     .name("name")
                     .purchaseOrderNumber("purchaseOrderNumber")
                     .startDate(LocalDate.parse("2019-12-27"))
+                    .version(0L)
                     .build()
             )
         assertThat(contractListPageResponse.nextToken()).contains("nextToken")
@@ -76,7 +76,6 @@ internal class ContractListPageResponseTest {
                 .addData(
                     ContractResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .code("code")
                         .createdBy("createdBy")
@@ -93,6 +92,7 @@ internal class ContractListPageResponseTest {
                         .name("name")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .startDate(LocalDate.parse("2019-12-27"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

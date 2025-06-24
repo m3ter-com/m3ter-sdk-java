@@ -16,7 +16,6 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
-                .version(0L)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES
@@ -51,12 +50,12 @@ internal class OrganizationConfigResponseTest {
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)
                 .timezone("UTC")
+                .version(0L)
                 .weekEpoch("2022-01-04")
                 .yearEpoch("2022-01-01")
                 .build()
 
         assertThat(organizationConfigResponse.id()).isEqualTo("id")
-        assertThat(organizationConfigResponse.version()).isEqualTo(0L)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriod()).contains(0)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriodUnit())
             .contains(OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES)
@@ -91,6 +90,7 @@ internal class OrganizationConfigResponseTest {
         assertThat(organizationConfigResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(organizationConfigResponse.suppressedEmptyBills()).contains(true)
         assertThat(organizationConfigResponse.timezone()).contains("UTC")
+        assertThat(organizationConfigResponse.version()).contains(0L)
         assertThat(organizationConfigResponse.weekEpoch()).contains("2022-01-04")
         assertThat(organizationConfigResponse.yearEpoch()).contains("2022-01-01")
     }
@@ -101,7 +101,6 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
-                .version(0L)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES
@@ -136,6 +135,7 @@ internal class OrganizationConfigResponseTest {
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)
                 .timezone("UTC")
+                .version(0L)
                 .weekEpoch("2022-01-04")
                 .yearEpoch("2022-01-01")
                 .build()

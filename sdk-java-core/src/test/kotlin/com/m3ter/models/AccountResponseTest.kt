@@ -18,7 +18,6 @@ internal class AccountResponseTest {
         val accountResponse =
             AccountResponse.builder()
                 .id("id")
-                .version(0L)
                 .address(
                     Address.builder()
                         .addressLine1("addressLine1")
@@ -56,10 +55,10 @@ internal class AccountResponseTest {
                 .parentAccountId("parentAccountId")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .statementDefinitionId("statementDefinitionId")
+                .version(0L)
                 .build()
 
         assertThat(accountResponse.id()).isEqualTo("id")
-        assertThat(accountResponse.version()).isEqualTo(0L)
         assertThat(accountResponse.address())
             .contains(
                 Address.builder()
@@ -104,6 +103,7 @@ internal class AccountResponseTest {
         assertThat(accountResponse.parentAccountId()).contains("parentAccountId")
         assertThat(accountResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(accountResponse.statementDefinitionId()).contains("statementDefinitionId")
+        assertThat(accountResponse.version()).contains(0L)
     }
 
     @Test
@@ -112,7 +112,6 @@ internal class AccountResponseTest {
         val accountResponse =
             AccountResponse.builder()
                 .id("id")
-                .version(0L)
                 .address(
                     Address.builder()
                         .addressLine1("addressLine1")
@@ -150,6 +149,7 @@ internal class AccountResponseTest {
                 .parentAccountId("parentAccountId")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .statementDefinitionId("statementDefinitionId")
+                .version(0L)
                 .build()
 
         val roundtrippedAccountResponse =

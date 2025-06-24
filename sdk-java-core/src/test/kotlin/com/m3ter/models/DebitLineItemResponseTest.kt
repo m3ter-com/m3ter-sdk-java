@@ -22,12 +22,12 @@ internal class DebitLineItemResponseTest {
                 .referencedLineItemId("referencedLineItemId")
                 .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .version(0L)
                 .createdBy("createdBy")
                 .debitReasonId("debitReasonId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         assertThat(debitLineItemResponse.id()).isEqualTo("id")
@@ -40,7 +40,6 @@ internal class DebitLineItemResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(debitLineItemResponse.servicePeriodStartDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(debitLineItemResponse.version()).isEqualTo(0L)
         assertThat(debitLineItemResponse.createdBy()).contains("createdBy")
         assertThat(debitLineItemResponse.debitReasonId()).contains("debitReasonId")
         assertThat(debitLineItemResponse.dtCreated())
@@ -48,6 +47,7 @@ internal class DebitLineItemResponseTest {
         assertThat(debitLineItemResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(debitLineItemResponse.lastModifiedBy()).contains("lastModifiedBy")
+        assertThat(debitLineItemResponse.version()).contains(0L)
     }
 
     @Test
@@ -63,12 +63,12 @@ internal class DebitLineItemResponseTest {
                 .referencedLineItemId("referencedLineItemId")
                 .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .version(0L)
                 .createdBy("createdBy")
                 .debitReasonId("debitReasonId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         val roundtrippedDebitLineItemResponse =

@@ -16,7 +16,6 @@ internal class CounterAdjustmentResponseTest {
         val counterAdjustmentResponse =
             CounterAdjustmentResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .counterId("counterId")
                 .createdBy("createdBy")
@@ -26,10 +25,10 @@ internal class CounterAdjustmentResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .value(0)
+                .version(0L)
                 .build()
 
         assertThat(counterAdjustmentResponse.id()).isEqualTo("id")
-        assertThat(counterAdjustmentResponse.version()).isEqualTo(0L)
         assertThat(counterAdjustmentResponse.accountId()).contains("accountId")
         assertThat(counterAdjustmentResponse.counterId()).contains("counterId")
         assertThat(counterAdjustmentResponse.createdBy()).contains("createdBy")
@@ -41,6 +40,7 @@ internal class CounterAdjustmentResponseTest {
         assertThat(counterAdjustmentResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(counterAdjustmentResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(counterAdjustmentResponse.value()).contains(0)
+        assertThat(counterAdjustmentResponse.version()).contains(0L)
     }
 
     @Test
@@ -49,7 +49,6 @@ internal class CounterAdjustmentResponseTest {
         val counterAdjustmentResponse =
             CounterAdjustmentResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .counterId("counterId")
                 .createdBy("createdBy")
@@ -59,6 +58,7 @@ internal class CounterAdjustmentResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .value(0)
+                .version(0L)
                 .build()
 
         val roundtrippedCounterAdjustmentResponse =

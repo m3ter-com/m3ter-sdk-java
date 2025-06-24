@@ -22,7 +22,6 @@ import kotlin.jvm.optionals.getOrNull
 class CurrencyResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val archived: JsonField<Boolean>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
@@ -32,13 +31,13 @@ private constructor(
     private val maxDecimalPlaces: JsonField<Int>,
     private val name: JsonField<String>,
     private val roundingMode: JsonField<RoundingMode>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("archived") @ExcludeMissing archived: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
@@ -58,9 +57,9 @@ private constructor(
         @JsonProperty("roundingMode")
         @ExcludeMissing
         roundingMode: JsonField<RoundingMode> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         archived,
         code,
         createdBy,
@@ -70,6 +69,7 @@ private constructor(
         maxDecimalPlaces,
         name,
         roundingMode,
+        version,
         mutableMapOf(),
     )
 
@@ -80,17 +80,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * TRUE / FALSE flag indicating whether the data entity is archived. An entity can be archived
@@ -164,18 +153,22 @@ private constructor(
     fun roundingMode(): Optional<RoundingMode> = roundingMode.getOptional("roundingMode")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [archived].
@@ -251,6 +244,13 @@ private constructor(
     @ExcludeMissing
     fun _roundingMode(): JsonField<RoundingMode> = roundingMode
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -271,7 +271,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -281,7 +280,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var archived: JsonField<Boolean> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -291,12 +289,12 @@ private constructor(
         private var maxDecimalPlaces: JsonField<Int> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var roundingMode: JsonField<RoundingMode> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(currencyResponse: CurrencyResponse) = apply {
             id = currencyResponse.id
-            version = currencyResponse.version
             archived = currencyResponse.archived
             code = currencyResponse.code
             createdBy = currencyResponse.createdBy
@@ -306,6 +304,7 @@ private constructor(
             maxDecimalPlaces = currencyResponse.maxDecimalPlaces
             name = currencyResponse.name
             roundingMode = currencyResponse.roundingMode
+            version = currencyResponse.version
             additionalProperties = currencyResponse.additionalProperties.toMutableMap()
         }
 
@@ -319,22 +318,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * TRUE / FALSE flag indicating whether the data entity is archived. An entity can be
@@ -454,6 +437,22 @@ private constructor(
             this.roundingMode = roundingMode
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -481,7 +480,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -489,7 +487,6 @@ private constructor(
         fun build(): CurrencyResponse =
             CurrencyResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 archived,
                 code,
                 createdBy,
@@ -499,6 +496,7 @@ private constructor(
                 maxDecimalPlaces,
                 name,
                 roundingMode,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -511,7 +509,6 @@ private constructor(
         }
 
         id()
-        version()
         archived()
         code()
         createdBy()
@@ -521,6 +518,7 @@ private constructor(
         maxDecimalPlaces()
         name()
         roundingMode().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -540,7 +538,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (archived.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
@@ -549,7 +546,8 @@ private constructor(
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (maxDecimalPlaces.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (roundingMode.asKnown().getOrNull()?.validity() ?: 0)
+            (roundingMode.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class RoundingMode @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -719,15 +717,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CurrencyResponse && id == other.id && version == other.version && archived == other.archived && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && maxDecimalPlaces == other.maxDecimalPlaces && name == other.name && roundingMode == other.roundingMode && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CurrencyResponse && id == other.id && archived == other.archived && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && maxDecimalPlaces == other.maxDecimalPlaces && name == other.name && roundingMode == other.roundingMode && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, archived, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, maxDecimalPlaces, name, roundingMode, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, archived, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, maxDecimalPlaces, name, roundingMode, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CurrencyResponse{id=$id, version=$version, archived=$archived, code=$code, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, maxDecimalPlaces=$maxDecimalPlaces, name=$name, roundingMode=$roundingMode, additionalProperties=$additionalProperties}"
+        "CurrencyResponse{id=$id, archived=$archived, code=$code, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, maxDecimalPlaces=$maxDecimalPlaces, name=$name, roundingMode=$roundingMode, version=$version, additionalProperties=$additionalProperties}"
 }

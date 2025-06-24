@@ -16,7 +16,6 @@ internal class CustomFieldsResponseTest {
         val customFieldsResponse =
             CustomFieldsResponse.builder()
                 .id("id")
-                .version(0L)
                 .account(
                     CustomFieldsResponse.Account.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -71,10 +70,10 @@ internal class CustomFieldsResponseTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .version(0L)
                 .build()
 
         assertThat(customFieldsResponse.id()).isEqualTo("id")
-        assertThat(customFieldsResponse.version()).isEqualTo(0L)
         assertThat(customFieldsResponse.account())
             .contains(
                 CustomFieldsResponse.Account.builder()
@@ -141,6 +140,7 @@ internal class CustomFieldsResponseTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(customFieldsResponse.version()).contains(0L)
     }
 
     @Test
@@ -149,7 +149,6 @@ internal class CustomFieldsResponseTest {
         val customFieldsResponse =
             CustomFieldsResponse.builder()
                 .id("id")
-                .version(0L)
                 .account(
                     CustomFieldsResponse.Account.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -204,6 +203,7 @@ internal class CustomFieldsResponseTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .version(0L)
                 .build()
 
         val roundtrippedCustomFieldsResponse =

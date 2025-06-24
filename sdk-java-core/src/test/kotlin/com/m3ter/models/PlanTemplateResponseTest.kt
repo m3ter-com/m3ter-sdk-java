@@ -16,7 +16,6 @@ internal class PlanTemplateResponseTest {
         val planTemplateResponse =
             PlanTemplateResponse.builder()
                 .id("id")
-                .version(0L)
                 .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
                 .billFrequencyInterval(0)
                 .code("code")
@@ -41,10 +40,10 @@ internal class PlanTemplateResponseTest {
                 .standingChargeDescription("standingChargeDescription")
                 .standingChargeInterval(0)
                 .standingChargeOffset(0)
+                .version(0L)
                 .build()
 
         assertThat(planTemplateResponse.id()).isEqualTo("id")
-        assertThat(planTemplateResponse.version()).isEqualTo(0L)
         assertThat(planTemplateResponse.billFrequency())
             .contains(PlanTemplateResponse.BillFrequency.DAILY)
         assertThat(planTemplateResponse.billFrequencyInterval()).contains(0)
@@ -75,6 +74,7 @@ internal class PlanTemplateResponseTest {
             .contains("standingChargeDescription")
         assertThat(planTemplateResponse.standingChargeInterval()).contains(0)
         assertThat(planTemplateResponse.standingChargeOffset()).contains(0)
+        assertThat(planTemplateResponse.version()).contains(0L)
     }
 
     @Test
@@ -83,7 +83,6 @@ internal class PlanTemplateResponseTest {
         val planTemplateResponse =
             PlanTemplateResponse.builder()
                 .id("id")
-                .version(0L)
                 .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
                 .billFrequencyInterval(0)
                 .code("code")
@@ -108,6 +107,7 @@ internal class PlanTemplateResponseTest {
                 .standingChargeDescription("standingChargeDescription")
                 .standingChargeInterval(0)
                 .standingChargeOffset(0)
+                .version(0L)
                 .build()
 
         val roundtrippedPlanTemplateResponse =

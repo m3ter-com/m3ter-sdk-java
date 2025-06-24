@@ -19,7 +19,6 @@ internal class BillJobListPageResponseTest {
                 .addData(
                     BillJobResponse.builder()
                         .id("id")
-                        .version(0L)
                         .addAccountId("string")
                         .billDate(LocalDate.parse("2019-12-27"))
                         .billFrequencyInterval(0)
@@ -47,6 +46,7 @@ internal class BillJobListPageResponseTest {
                         .timezone("UTC")
                         .total(0L)
                         .type(BillJobResponse.Type.CREATE)
+                        .version(0L)
                         .weekEpoch(LocalDate.parse("2019-12-27"))
                         .yearEpoch(LocalDate.parse("2019-12-27"))
                         .build()
@@ -58,7 +58,6 @@ internal class BillJobListPageResponseTest {
             .containsExactly(
                 BillJobResponse.builder()
                     .id("id")
-                    .version(0L)
                     .addAccountId("string")
                     .billDate(LocalDate.parse("2019-12-27"))
                     .billFrequencyInterval(0)
@@ -82,6 +81,7 @@ internal class BillJobListPageResponseTest {
                     .timezone("UTC")
                     .total(0L)
                     .type(BillJobResponse.Type.CREATE)
+                    .version(0L)
                     .weekEpoch(LocalDate.parse("2019-12-27"))
                     .yearEpoch(LocalDate.parse("2019-12-27"))
                     .build()
@@ -97,7 +97,6 @@ internal class BillJobListPageResponseTest {
                 .addData(
                     BillJobResponse.builder()
                         .id("id")
-                        .version(0L)
                         .addAccountId("string")
                         .billDate(LocalDate.parse("2019-12-27"))
                         .billFrequencyInterval(0)
@@ -125,6 +124,7 @@ internal class BillJobListPageResponseTest {
                         .timezone("UTC")
                         .total(0L)
                         .type(BillJobResponse.Type.CREATE)
+                        .version(0L)
                         .weekEpoch(LocalDate.parse("2019-12-27"))
                         .yearEpoch(LocalDate.parse("2019-12-27"))
                         .build()

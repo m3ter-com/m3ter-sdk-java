@@ -18,7 +18,6 @@ internal class StatementStatementJobListPageResponseTest {
                 .addData(
                     StatementJobResponse.builder()
                         .id("id")
-                        .version(0L)
                         .billId("billId")
                         .createdBy("createdBy")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -28,6 +27,7 @@ internal class StatementStatementJobListPageResponseTest {
                         .orgId("orgId")
                         .presignedJsonStatementUrl("presignedJsonStatementUrl")
                         .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -37,7 +37,6 @@ internal class StatementStatementJobListPageResponseTest {
             .containsExactly(
                 StatementJobResponse.builder()
                     .id("id")
-                    .version(0L)
                     .billId("billId")
                     .createdBy("createdBy")
                     .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -47,6 +46,7 @@ internal class StatementStatementJobListPageResponseTest {
                     .orgId("orgId")
                     .presignedJsonStatementUrl("presignedJsonStatementUrl")
                     .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
+                    .version(0L)
                     .build()
             )
         assertThat(statementStatementJobListPageResponse.nextToken()).contains("nextToken")
@@ -60,7 +60,6 @@ internal class StatementStatementJobListPageResponseTest {
                 .addData(
                     StatementJobResponse.builder()
                         .id("id")
-                        .version(0L)
                         .billId("billId")
                         .createdBy("createdBy")
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -70,6 +69,7 @@ internal class StatementStatementJobListPageResponseTest {
                         .orgId("orgId")
                         .presignedJsonStatementUrl("presignedJsonStatementUrl")
                         .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

@@ -15,16 +15,16 @@ internal class OperationalDataExportScheduleResponseTest {
         val operationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addOperationalDataType(
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
+                .version(0L)
                 .build()
 
         assertThat(operationalDataExportScheduleResponse.id()).isEqualTo("id")
-        assertThat(operationalDataExportScheduleResponse.version()).isEqualTo(0L)
         assertThat(operationalDataExportScheduleResponse.operationalDataTypes().getOrNull())
             .containsExactly(OperationalDataExportScheduleResponse.OperationalDataType.BILLS)
+        assertThat(operationalDataExportScheduleResponse.version()).contains(0L)
     }
 
     @Test
@@ -33,10 +33,10 @@ internal class OperationalDataExportScheduleResponseTest {
         val operationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addOperationalDataType(
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
+                .version(0L)
                 .build()
 
         val roundtrippedOperationalDataExportScheduleResponse =

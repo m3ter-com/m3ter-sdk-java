@@ -15,7 +15,6 @@ internal class CreditReasonResponseTest {
         val creditReasonResponse =
             CreditReasonResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -23,10 +22,10 @@ internal class CreditReasonResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         assertThat(creditReasonResponse.id()).isEqualTo("id")
-        assertThat(creditReasonResponse.version()).isEqualTo(0L)
         assertThat(creditReasonResponse.archived()).contains(true)
         assertThat(creditReasonResponse.code()).contains("code")
         assertThat(creditReasonResponse.createdBy()).contains("createdBy")
@@ -36,6 +35,7 @@ internal class CreditReasonResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(creditReasonResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(creditReasonResponse.name()).contains("name")
+        assertThat(creditReasonResponse.version()).contains(0L)
     }
 
     @Test
@@ -44,7 +44,6 @@ internal class CreditReasonResponseTest {
         val creditReasonResponse =
             CreditReasonResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -52,6 +51,7 @@ internal class CreditReasonResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         val roundtrippedCreditReasonResponse =

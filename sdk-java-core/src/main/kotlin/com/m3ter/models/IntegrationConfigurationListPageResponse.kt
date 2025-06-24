@@ -18,7 +18,6 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** A paginated response structure containing a list of integration configurations. */
 class IntegrationConfigurationListPageResponse
 private constructor(
     private val data: JsonField<List<IntegrationConfigurationListResponse>>,
@@ -35,18 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * An array of `IntegrationConfigResponse` objects. Each object represent an individual
-     * integration configuration.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<IntegrationConfigurationListResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for multi-page retrievals. It is used to fetch the next page of integration
-     * configurations in a paginated list.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -106,10 +99,6 @@ private constructor(
                 integrationConfigurationListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /**
-         * An array of `IntegrationConfigResponse` objects. Each object represent an individual
-         * integration configuration.
-         */
         fun data(data: List<IntegrationConfigurationListResponse>) = data(JsonField.of(data))
 
         /**
@@ -135,10 +124,6 @@ private constructor(
                 }
         }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * integration configurations in a paginated list.
-         */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

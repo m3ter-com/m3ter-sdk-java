@@ -19,7 +19,6 @@ internal class PlanTemplateListPageResponseTest {
                 .addData(
                     PlanTemplateResponse.builder()
                         .id("id")
-                        .version(0L)
                         .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
                         .billFrequencyInterval(0)
                         .code("code")
@@ -44,6 +43,7 @@ internal class PlanTemplateListPageResponseTest {
                         .standingChargeDescription("standingChargeDescription")
                         .standingChargeInterval(0)
                         .standingChargeOffset(0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -53,7 +53,6 @@ internal class PlanTemplateListPageResponseTest {
             .containsExactly(
                 PlanTemplateResponse.builder()
                     .id("id")
-                    .version(0L)
                     .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
                     .billFrequencyInterval(0)
                     .code("code")
@@ -78,6 +77,7 @@ internal class PlanTemplateListPageResponseTest {
                     .standingChargeDescription("standingChargeDescription")
                     .standingChargeInterval(0)
                     .standingChargeOffset(0)
+                    .version(0L)
                     .build()
             )
         assertThat(planTemplateListPageResponse.nextToken()).contains("nextToken")
@@ -91,7 +91,6 @@ internal class PlanTemplateListPageResponseTest {
                 .addData(
                     PlanTemplateResponse.builder()
                         .id("id")
-                        .version(0L)
                         .billFrequency(PlanTemplateResponse.BillFrequency.DAILY)
                         .billFrequencyInterval(0)
                         .code("code")
@@ -116,6 +115,7 @@ internal class PlanTemplateListPageResponseTest {
                         .standingChargeDescription("standingChargeDescription")
                         .standingChargeInterval(0)
                         .standingChargeOffset(0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

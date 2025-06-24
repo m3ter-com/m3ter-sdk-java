@@ -18,7 +18,6 @@ internal class DataExportDestinationListPageResponseTest {
                 .addData(
                     DataExportDestinationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -26,6 +25,7 @@ internal class DataExportDestinationListPageResponseTest {
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -35,7 +35,6 @@ internal class DataExportDestinationListPageResponseTest {
             .containsExactly(
                 DataExportDestinationResponse.builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -43,6 +42,7 @@ internal class DataExportDestinationListPageResponseTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
+                    .version(0L)
                     .build()
             )
         assertThat(dataExportDestinationListPageResponse.nextToken()).contains("nextToken")
@@ -56,7 +56,6 @@ internal class DataExportDestinationListPageResponseTest {
                 .addData(
                     DataExportDestinationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -64,6 +63,7 @@ internal class DataExportDestinationListPageResponseTest {
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

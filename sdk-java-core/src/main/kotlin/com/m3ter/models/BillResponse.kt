@@ -25,7 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 class BillResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountCode: JsonField<String>,
     private val accountId: JsonField<String>,
     private val billDate: JsonField<LocalDate>,
@@ -56,13 +55,13 @@ private constructor(
     private val startDateTimeUtc: JsonField<OffsetDateTime>,
     private val status: JsonField<Status>,
     private val timezone: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountCode")
         @ExcludeMissing
         accountCode: JsonField<String> = JsonMissing.of(),
@@ -131,9 +130,9 @@ private constructor(
         startDateTimeUtc: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountCode,
         accountId,
         billDate,
@@ -164,6 +163,7 @@ private constructor(
         startDateTimeUtc,
         status,
         timezone,
+        version,
         mutableMapOf(),
     )
 
@@ -174,17 +174,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -421,18 +410,22 @@ private constructor(
     fun timezone(): Optional<String> = timezone.getOptional("timezone")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountCode].
@@ -689,6 +682,13 @@ private constructor(
      */
     @JsonProperty("timezone") @ExcludeMissing fun _timezone(): JsonField<String> = timezone
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -709,7 +709,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -719,7 +718,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountCode: JsonField<String> = JsonMissing.of()
         private var accountId: JsonField<String> = JsonMissing.of()
         private var billDate: JsonField<LocalDate> = JsonMissing.of()
@@ -750,12 +748,12 @@ private constructor(
         private var startDateTimeUtc: JsonField<OffsetDateTime> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var timezone: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(billResponse: BillResponse) = apply {
             id = billResponse.id
-            version = billResponse.version
             accountCode = billResponse.accountCode
             accountId = billResponse.accountId
             billDate = billResponse.billDate
@@ -786,6 +784,7 @@ private constructor(
             startDateTimeUtc = billResponse.startDateTimeUtc
             status = billResponse.status
             timezone = billResponse.timezone
+            version = billResponse.version
             additionalProperties = billResponse.additionalProperties.toMutableMap()
         }
 
@@ -799,22 +798,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun accountCode(accountCode: String) = accountCode(JsonField.of(accountCode))
 
@@ -1251,6 +1234,22 @@ private constructor(
          */
         fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1278,7 +1277,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1286,7 +1284,6 @@ private constructor(
         fun build(): BillResponse =
             BillResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountCode,
                 accountId,
                 billDate,
@@ -1317,6 +1314,7 @@ private constructor(
                 startDateTimeUtc,
                 status,
                 timezone,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1329,7 +1327,6 @@ private constructor(
         }
 
         id()
-        version()
         accountCode()
         accountId()
         billDate()
@@ -1360,6 +1357,7 @@ private constructor(
         startDateTimeUtc()
         status().ifPresent { it.validate() }
         timezone()
+        version()
         validated = true
     }
 
@@ -1379,7 +1377,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountCode.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
             (if (billDate.asKnown().isPresent) 1 else 0) +
@@ -1409,7 +1406,8 @@ private constructor(
             (if (startDate.asKnown().isPresent) 1 else 0) +
             (if (startDateTimeUtc.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
-            (if (timezone.asKnown().isPresent) 1 else 0)
+            (if (timezone.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class BillingFrequency @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -4255,15 +4253,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillResponse && id == other.id && version == other.version && accountCode == other.accountCode && accountId == other.accountId && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BillResponse && id == other.id && accountCode == other.accountCode && accountId == other.accountId && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountCode, accountId, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtCreated, dtLastModified, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountCode, accountId, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtCreated, dtLastModified, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillResponse{id=$id, version=$version, accountCode=$accountCode, accountId=$accountId, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, status=$status, timezone=$timezone, additionalProperties=$additionalProperties}"
+        "BillResponse{id=$id, accountCode=$accountCode, accountId=$accountId, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, status=$status, timezone=$timezone, version=$version, additionalProperties=$additionalProperties}"
 }

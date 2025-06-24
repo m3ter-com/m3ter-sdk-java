@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class LineItemResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val aggregationId: JsonField<String>,
     private val averageUnitPrice: JsonField<Double>,
     private val balanceId: JsonField<String>,
@@ -65,13 +64,13 @@ private constructor(
     private val subtotal: JsonField<Double>,
     private val unit: JsonField<String>,
     private val units: JsonField<Double>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("aggregationId")
         @ExcludeMissing
         aggregationId: JsonField<String> = JsonMissing.of(),
@@ -158,9 +157,9 @@ private constructor(
         @JsonProperty("subtotal") @ExcludeMissing subtotal: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
         @JsonProperty("units") @ExcludeMissing units: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         aggregationId,
         averageUnitPrice,
         balanceId,
@@ -201,6 +200,7 @@ private constructor(
         subtotal,
         unit,
         units,
+        version,
         mutableMapOf(),
     )
 
@@ -211,17 +211,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
@@ -556,18 +545,22 @@ private constructor(
     fun units(): Optional<Double> = units.getOptional("units")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [aggregationId].
@@ -893,6 +886,13 @@ private constructor(
      */
     @JsonProperty("units") @ExcludeMissing fun _units(): JsonField<Double> = units
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -913,7 +913,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -923,7 +922,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var aggregationId: JsonField<String> = JsonMissing.of()
         private var averageUnitPrice: JsonField<Double> = JsonMissing.of()
         private var balanceId: JsonField<String> = JsonMissing.of()
@@ -964,12 +962,12 @@ private constructor(
         private var subtotal: JsonField<Double> = JsonMissing.of()
         private var unit: JsonField<String> = JsonMissing.of()
         private var units: JsonField<Double> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(lineItemResponse: LineItemResponse) = apply {
             id = lineItemResponse.id
-            version = lineItemResponse.version
             aggregationId = lineItemResponse.aggregationId
             averageUnitPrice = lineItemResponse.averageUnitPrice
             balanceId = lineItemResponse.balanceId
@@ -1010,6 +1008,7 @@ private constructor(
             subtotal = lineItemResponse.subtotal
             unit = lineItemResponse.unit
             units = lineItemResponse.units
+            version = lineItemResponse.version
             additionalProperties = lineItemResponse.additionalProperties.toMutableMap()
         }
 
@@ -1023,22 +1022,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
@@ -1602,6 +1585,22 @@ private constructor(
          */
         fun units(units: JsonField<Double>) = apply { this.units = units }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1629,7 +1628,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1637,7 +1635,6 @@ private constructor(
         fun build(): LineItemResponse =
             LineItemResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 aggregationId,
                 averageUnitPrice,
                 balanceId,
@@ -1678,6 +1675,7 @@ private constructor(
                 subtotal,
                 unit,
                 units,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1690,7 +1688,6 @@ private constructor(
         }
 
         id()
-        version()
         aggregationId()
         averageUnitPrice()
         balanceId()
@@ -1731,6 +1728,7 @@ private constructor(
         subtotal()
         unit()
         units()
+        version()
         validated = true
     }
 
@@ -1750,7 +1748,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (aggregationId.asKnown().isPresent) 1 else 0) +
             (if (averageUnitPrice.asKnown().isPresent) 1 else 0) +
             (if (balanceId.asKnown().isPresent) 1 else 0) +
@@ -1790,7 +1787,8 @@ private constructor(
             (if (servicePeriodStartDate.asKnown().isPresent) 1 else 0) +
             (if (subtotal.asKnown().isPresent) 1 else 0) +
             (if (unit.asKnown().isPresent) 1 else 0) +
-            (if (units.asKnown().isPresent) 1 else 0)
+            (if (units.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * Array containing the pricing band information, which shows the details for each pricing band
@@ -2710,15 +2708,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && version == other.version && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LineItemResponse && id == other.id && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LineItemResponse{id=$id, version=$version, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, additionalProperties=$additionalProperties}"
+        "LineItemResponse{id=$id, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, version=$version, additionalProperties=$additionalProperties}"
 }

@@ -19,7 +19,6 @@ internal class IntegrationConfigurationResponseTest {
                 .entityId("x")
                 .entityType("x")
                 .status(IntegrationConfigurationResponse.Status.WAITING)
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCompleted(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -29,6 +28,7 @@ internal class IntegrationConfigurationResponseTest {
                 .externalId("externalId")
                 .lastModifiedBy("lastModifiedBy")
                 .url("url")
+                .version(0L)
                 .build()
 
         assertThat(integrationConfigurationResponse.id()).isEqualTo("id")
@@ -37,7 +37,6 @@ internal class IntegrationConfigurationResponseTest {
         assertThat(integrationConfigurationResponse.entityType()).isEqualTo("x")
         assertThat(integrationConfigurationResponse.status())
             .isEqualTo(IntegrationConfigurationResponse.Status.WAITING)
-        assertThat(integrationConfigurationResponse.version()).isEqualTo(0L)
         assertThat(integrationConfigurationResponse.createdBy()).contains("createdBy")
         assertThat(integrationConfigurationResponse.dtCompleted())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -51,6 +50,7 @@ internal class IntegrationConfigurationResponseTest {
         assertThat(integrationConfigurationResponse.externalId()).contains("externalId")
         assertThat(integrationConfigurationResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(integrationConfigurationResponse.url()).contains("url")
+        assertThat(integrationConfigurationResponse.version()).contains(0L)
     }
 
     @Test
@@ -63,7 +63,6 @@ internal class IntegrationConfigurationResponseTest {
                 .entityId("x")
                 .entityType("x")
                 .status(IntegrationConfigurationResponse.Status.WAITING)
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCompleted(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -73,6 +72,7 @@ internal class IntegrationConfigurationResponseTest {
                 .externalId("externalId")
                 .lastModifiedBy("lastModifiedBy")
                 .url("url")
+                .version(0L)
                 .build()
 
         val roundtrippedIntegrationConfigurationResponse =

@@ -15,7 +15,6 @@ internal class StatementJobResponseTest {
         val statementJobResponse =
             StatementJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .billId("billId")
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -25,10 +24,10 @@ internal class StatementJobResponseTest {
                 .orgId("orgId")
                 .presignedJsonStatementUrl("presignedJsonStatementUrl")
                 .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
+                .version(0L)
                 .build()
 
         assertThat(statementJobResponse.id()).isEqualTo("id")
-        assertThat(statementJobResponse.version()).isEqualTo(0L)
         assertThat(statementJobResponse.billId()).contains("billId")
         assertThat(statementJobResponse.createdBy()).contains("createdBy")
         assertThat(statementJobResponse.dtCreated())
@@ -42,6 +41,7 @@ internal class StatementJobResponseTest {
             .contains("presignedJsonStatementUrl")
         assertThat(statementJobResponse.statementJobStatus())
             .contains(StatementJobResponse.StatementJobStatus.PENDING)
+        assertThat(statementJobResponse.version()).contains(0L)
     }
 
     @Test
@@ -50,7 +50,6 @@ internal class StatementJobResponseTest {
         val statementJobResponse =
             StatementJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .billId("billId")
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -60,6 +59,7 @@ internal class StatementJobResponseTest {
                 .orgId("orgId")
                 .presignedJsonStatementUrl("presignedJsonStatementUrl")
                 .statementJobStatus(StatementJobResponse.StatementJobStatus.PENDING)
+                .version(0L)
                 .build()
 
         val roundtrippedStatementJobResponse =
