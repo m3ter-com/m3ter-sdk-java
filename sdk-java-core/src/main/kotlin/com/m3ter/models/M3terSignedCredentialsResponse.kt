@@ -22,7 +22,6 @@ private constructor(
     private val id: JsonField<String>,
     private val destination: JsonField<String>,
     private val type: JsonField<String>,
-    private val version: JsonField<Long>,
     private val apiKey: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val destinationId: JsonField<String>,
@@ -31,6 +30,7 @@ private constructor(
     private val lastModifiedBy: JsonField<String>,
     private val name: JsonField<String>,
     private val secret: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -41,7 +41,6 @@ private constructor(
         @ExcludeMissing
         destination: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("apiKey") @ExcludeMissing apiKey: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("destinationId")
@@ -58,11 +57,11 @@ private constructor(
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("secret") @ExcludeMissing secret: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         destination,
         type,
-        version,
         apiKey,
         createdBy,
         destinationId,
@@ -71,6 +70,7 @@ private constructor(
         lastModifiedBy,
         name,
         secret,
+        version,
         mutableMapOf(),
     )
 
@@ -97,17 +97,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun type(): String = type.getRequired("type")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The API key provided by m3ter. This key is part of the credential set required for signing
@@ -176,6 +165,17 @@ private constructor(
     fun secret(): Optional<String> = secret.getOptional("secret")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -195,13 +195,6 @@ private constructor(
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<String> = type
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [apiKey].
@@ -267,6 +260,13 @@ private constructor(
      */
     @JsonProperty("secret") @ExcludeMissing fun _secret(): JsonField<String> = secret
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -290,7 +290,6 @@ private constructor(
          * .id()
          * .destination()
          * .type()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -302,7 +301,6 @@ private constructor(
         private var id: JsonField<String>? = null
         private var destination: JsonField<String>? = null
         private var type: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var apiKey: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var destinationId: JsonField<String> = JsonMissing.of()
@@ -311,6 +309,7 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var secret: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -318,7 +317,6 @@ private constructor(
             id = m3terSignedCredentialsResponse.id
             destination = m3terSignedCredentialsResponse.destination
             type = m3terSignedCredentialsResponse.type
-            version = m3terSignedCredentialsResponse.version
             apiKey = m3terSignedCredentialsResponse.apiKey
             createdBy = m3terSignedCredentialsResponse.createdBy
             destinationId = m3terSignedCredentialsResponse.destinationId
@@ -327,6 +325,7 @@ private constructor(
             lastModifiedBy = m3terSignedCredentialsResponse.lastModifiedBy
             name = m3terSignedCredentialsResponse.name
             secret = m3terSignedCredentialsResponse.secret
+            version = m3terSignedCredentialsResponse.version
             additionalProperties =
                 m3terSignedCredentialsResponse.additionalProperties.toMutableMap()
         }
@@ -364,22 +363,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun type(type: JsonField<String>) = apply { this.type = type }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * The API key provided by m3ter. This key is part of the credential set required for
@@ -487,6 +470,22 @@ private constructor(
          */
         fun secret(secret: JsonField<String>) = apply { this.secret = secret }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -516,7 +515,6 @@ private constructor(
          * .id()
          * .destination()
          * .type()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -526,7 +524,6 @@ private constructor(
                 checkRequired("id", id),
                 checkRequired("destination", destination),
                 checkRequired("type", type),
-                checkRequired("version", version),
                 apiKey,
                 createdBy,
                 destinationId,
@@ -535,6 +532,7 @@ private constructor(
                 lastModifiedBy,
                 name,
                 secret,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -549,7 +547,6 @@ private constructor(
         id()
         destination()
         type()
-        version()
         apiKey()
         createdBy()
         destinationId()
@@ -558,6 +555,7 @@ private constructor(
         lastModifiedBy()
         name()
         secret()
+        version()
         validated = true
     }
 
@@ -579,7 +577,6 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (destination.asKnown().isPresent) 1 else 0) +
             (if (type.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (apiKey.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (destinationId.asKnown().isPresent) 1 else 0) +
@@ -587,22 +584,23 @@ private constructor(
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (if (secret.asKnown().isPresent) 1 else 0)
+            (if (secret.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is M3terSignedCredentialsResponse && id == other.id && destination == other.destination && type == other.type && version == other.version && apiKey == other.apiKey && createdBy == other.createdBy && destinationId == other.destinationId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && secret == other.secret && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is M3terSignedCredentialsResponse && id == other.id && destination == other.destination && type == other.type && apiKey == other.apiKey && createdBy == other.createdBy && destinationId == other.destinationId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && secret == other.secret && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, type, version, apiKey, createdBy, destinationId, dtCreated, dtLastModified, lastModifiedBy, name, secret, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, destination, type, apiKey, createdBy, destinationId, dtCreated, dtLastModified, lastModifiedBy, name, secret, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "M3terSignedCredentialsResponse{id=$id, destination=$destination, type=$type, version=$version, apiKey=$apiKey, createdBy=$createdBy, destinationId=$destinationId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, secret=$secret, additionalProperties=$additionalProperties}"
+        "M3terSignedCredentialsResponse{id=$id, destination=$destination, type=$type, apiKey=$apiKey, createdBy=$createdBy, destinationId=$destinationId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, secret=$secret, version=$version, additionalProperties=$additionalProperties}"
 }

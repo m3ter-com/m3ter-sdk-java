@@ -25,7 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 class CommitmentResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountId: JsonField<String>,
     private val accountingProductId: JsonField<String>,
     private val amount: JsonField<Double>,
@@ -56,13 +55,13 @@ private constructor(
     private val productIds: JsonField<List<String>>,
     private val separateOverageUsage: JsonField<Boolean>,
     private val startDate: JsonField<LocalDate>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("accountingProductId")
         @ExcludeMissing
@@ -143,9 +142,9 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         startDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountId,
         accountingProductId,
         amount,
@@ -176,6 +175,7 @@ private constructor(
         productIds,
         separateOverageUsage,
         startDate,
+        version,
         mutableMapOf(),
     )
 
@@ -186,17 +186,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The unique identifier (UUID) for the end customer Account the Commitment is added to.
@@ -482,18 +471,22 @@ private constructor(
     fun startDate(): Optional<LocalDate> = startDate.getOptional("startDate")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountId].
@@ -757,6 +750,13 @@ private constructor(
      */
     @JsonProperty("startDate") @ExcludeMissing fun _startDate(): JsonField<LocalDate> = startDate
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -777,7 +777,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -787,7 +786,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
         private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var amount: JsonField<Double> = JsonMissing.of()
@@ -818,12 +816,12 @@ private constructor(
         private var productIds: JsonField<MutableList<String>>? = null
         private var separateOverageUsage: JsonField<Boolean> = JsonMissing.of()
         private var startDate: JsonField<LocalDate> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(commitmentResponse: CommitmentResponse) = apply {
             id = commitmentResponse.id
-            version = commitmentResponse.version
             accountId = commitmentResponse.accountId
             accountingProductId = commitmentResponse.accountingProductId
             amount = commitmentResponse.amount
@@ -854,6 +852,7 @@ private constructor(
             productIds = commitmentResponse.productIds.map { it.toMutableList() }
             separateOverageUsage = commitmentResponse.separateOverageUsage
             startDate = commitmentResponse.startDate
+            version = commitmentResponse.version
             additionalProperties = commitmentResponse.additionalProperties.toMutableMap()
         }
 
@@ -867,22 +866,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The unique identifier (UUID) for the end customer Account the Commitment is added to. */
         fun accountId(accountId: String) = accountId(JsonField.of(accountId))
@@ -1395,6 +1378,22 @@ private constructor(
          */
         fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1422,7 +1421,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1430,7 +1428,6 @@ private constructor(
         fun build(): CommitmentResponse =
             CommitmentResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountId,
                 accountingProductId,
                 amount,
@@ -1461,6 +1458,7 @@ private constructor(
                 (productIds ?: JsonMissing.of()).map { it.toImmutable() },
                 separateOverageUsage,
                 startDate,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1473,7 +1471,6 @@ private constructor(
         }
 
         id()
-        version()
         accountId()
         accountingProductId()
         amount()
@@ -1504,6 +1501,7 @@ private constructor(
         productIds()
         separateOverageUsage()
         startDate()
+        version()
         validated = true
     }
 
@@ -1523,7 +1521,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
             (if (accountingProductId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
@@ -1553,7 +1550,8 @@ private constructor(
             (if (overageSurchargePercent.asKnown().isPresent) 1 else 0) +
             (productIds.asKnown().getOrNull()?.size ?: 0) +
             (if (separateOverageUsage.asKnown().isPresent) 1 else 0) +
-            (if (startDate.asKnown().isPresent) 1 else 0)
+            (if (startDate.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
@@ -1848,15 +1846,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentResponse && id == other.id && version == other.version && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && drawdownsAccountingProductId == other.drawdownsAccountingProductId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CommitmentResponse && id == other.id && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && drawdownsAccountingProductId == other.drawdownsAccountingProductId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, drawdownsAccountingProductId, dtCreated, dtLastModified, endDate, feeDates, feesAccountingProductId, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, drawdownsAccountingProductId, dtCreated, dtLastModified, endDate, feeDates, feesAccountingProductId, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CommitmentResponse{id=$id, version=$version, accountId=$accountId, accountingProductId=$accountingProductId, amount=$amount, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, amountSpent=$amountSpent, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, createdBy=$createdBy, currency=$currency, drawdownsAccountingProductId=$drawdownsAccountingProductId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "CommitmentResponse{id=$id, accountId=$accountId, accountingProductId=$accountingProductId, amount=$amount, amountFirstBill=$amountFirstBill, amountPrePaid=$amountPrePaid, amountSpent=$amountSpent, billEpoch=$billEpoch, billingInterval=$billingInterval, billingOffset=$billingOffset, billingPlanId=$billingPlanId, childBillingMode=$childBillingMode, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, commitmentFeeDescription=$commitmentFeeDescription, commitmentUsageDescription=$commitmentUsageDescription, contractId=$contractId, createdBy=$createdBy, currency=$currency, drawdownsAccountingProductId=$drawdownsAccountingProductId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feeDates=$feeDates, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, separateOverageUsage=$separateOverageUsage, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
 }

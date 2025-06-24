@@ -17,7 +17,6 @@ internal class CompoundAggregationResponseTest {
         val compoundAggregationResponse =
             CompoundAggregationResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .calculation("calculation")
                 .code("code")
@@ -41,10 +40,10 @@ internal class CompoundAggregationResponseTest {
                         .build()
                 )
                 .unit("unit")
+                .version(0L)
                 .build()
 
         assertThat(compoundAggregationResponse.id()).isEqualTo("id")
-        assertThat(compoundAggregationResponse.version()).isEqualTo(0L)
         assertThat(compoundAggregationResponse.accountingProductId())
             .contains("accountingProductId")
         assertThat(compoundAggregationResponse.calculation()).contains("calculation")
@@ -74,6 +73,7 @@ internal class CompoundAggregationResponseTest {
                     .build()
             )
         assertThat(compoundAggregationResponse.unit()).contains("unit")
+        assertThat(compoundAggregationResponse.version()).contains(0L)
     }
 
     @Test
@@ -82,7 +82,6 @@ internal class CompoundAggregationResponseTest {
         val compoundAggregationResponse =
             CompoundAggregationResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .calculation("calculation")
                 .code("code")
@@ -106,6 +105,7 @@ internal class CompoundAggregationResponseTest {
                         .build()
                 )
                 .unit("unit")
+                .version(0L)
                 .build()
 
         val roundtrippedCompoundAggregationResponse =

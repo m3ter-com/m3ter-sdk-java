@@ -20,7 +20,6 @@ internal class DataExportDestinationRetrieveResponseTest {
         val exportDestinationS3 =
             DataExportDestinationRetrieveResponse.ExportDestinationS3Response.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -28,6 +27,7 @@ internal class DataExportDestinationRetrieveResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .bucketName("bucketName")
                 .iamRoleArn("iamRoleArn")
                 .partitionOrder(
@@ -53,7 +53,6 @@ internal class DataExportDestinationRetrieveResponseTest {
             DataExportDestinationRetrieveResponse.ofExportDestinationS3(
                 DataExportDestinationRetrieveResponse.ExportDestinationS3Response.builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -61,6 +60,7 @@ internal class DataExportDestinationRetrieveResponseTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
+                    .version(0L)
                     .bucketName("bucketName")
                     .iamRoleArn("iamRoleArn")
                     .partitionOrder(
@@ -88,7 +88,6 @@ internal class DataExportDestinationRetrieveResponseTest {
             DataExportDestinationRetrieveResponse.ExportDestinationGoogleCloudStorageResponse
                 .builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -96,6 +95,7 @@ internal class DataExportDestinationRetrieveResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .bucketName("bucketName")
                 .partitionOrder(
                     DataExportDestinationRetrieveResponse
@@ -128,7 +128,6 @@ internal class DataExportDestinationRetrieveResponseTest {
                 DataExportDestinationRetrieveResponse.ExportDestinationGoogleCloudStorageResponse
                     .builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -136,6 +135,7 @@ internal class DataExportDestinationRetrieveResponseTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
+                    .version(0L)
                     .bucketName("bucketName")
                     .partitionOrder(
                         DataExportDestinationRetrieveResponse

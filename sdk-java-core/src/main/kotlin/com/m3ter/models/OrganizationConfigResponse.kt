@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class OrganizationConfigResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val autoApproveBillsGracePeriod: JsonField<Int>,
     private val autoApproveBillsGracePeriodUnit: JsonField<AutoApproveBillsGracePeriodUnit>,
     private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
@@ -49,6 +48,7 @@ private constructor(
     private val standingChargeBillInAdvance: JsonField<Boolean>,
     private val suppressedEmptyBills: JsonField<Boolean>,
     private val timezone: JsonField<String>,
+    private val version: JsonField<Long>,
     private val weekEpoch: JsonField<String>,
     private val yearEpoch: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -57,7 +57,6 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("autoApproveBillsGracePeriod")
         @ExcludeMissing
         autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of(),
@@ -123,11 +122,11 @@ private constructor(
         @ExcludeMissing
         suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("weekEpoch") @ExcludeMissing weekEpoch: JsonField<String> = JsonMissing.of(),
         @JsonProperty("yearEpoch") @ExcludeMissing yearEpoch: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         autoApproveBillsGracePeriod,
         autoApproveBillsGracePeriodUnit,
         autoGenerateStatementMode,
@@ -152,6 +151,7 @@ private constructor(
         standingChargeBillInAdvance,
         suppressedEmptyBills,
         timezone,
+        version,
         weekEpoch,
         yearEpoch,
         mutableMapOf(),
@@ -164,17 +164,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * Grace period before bills are auto-approved. Used in combination with the field
@@ -417,6 +406,17 @@ private constructor(
     fun timezone(): Optional<String> = timezone.getOptional("timezone")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * The first bill date _(in ISO-8601 format)_ for weekly billing periods.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -438,13 +438,6 @@ private constructor(
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [autoApproveBillsGracePeriod].
@@ -668,6 +661,13 @@ private constructor(
     @JsonProperty("timezone") @ExcludeMissing fun _timezone(): JsonField<String> = timezone
 
     /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+    /**
      * Returns the raw JSON value of [weekEpoch].
      *
      * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
@@ -701,7 +701,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -711,7 +710,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of()
         private var autoApproveBillsGracePeriodUnit: JsonField<AutoApproveBillsGracePeriodUnit> =
             JsonMissing.of()
@@ -738,6 +736,7 @@ private constructor(
         private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of()
         private var timezone: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var weekEpoch: JsonField<String> = JsonMissing.of()
         private var yearEpoch: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -745,7 +744,6 @@ private constructor(
         @JvmSynthetic
         internal fun from(organizationConfigResponse: OrganizationConfigResponse) = apply {
             id = organizationConfigResponse.id
-            version = organizationConfigResponse.version
             autoApproveBillsGracePeriod = organizationConfigResponse.autoApproveBillsGracePeriod
             autoApproveBillsGracePeriodUnit =
                 organizationConfigResponse.autoApproveBillsGracePeriodUnit
@@ -773,6 +771,7 @@ private constructor(
             standingChargeBillInAdvance = organizationConfigResponse.standingChargeBillInAdvance
             suppressedEmptyBills = organizationConfigResponse.suppressedEmptyBills
             timezone = organizationConfigResponse.timezone
+            version = organizationConfigResponse.version
             weekEpoch = organizationConfigResponse.weekEpoch
             yearEpoch = organizationConfigResponse.yearEpoch
             additionalProperties = organizationConfigResponse.additionalProperties.toMutableMap()
@@ -788,22 +787,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * Grace period before bills are auto-approved. Used in combination with the field
@@ -1234,6 +1217,22 @@ private constructor(
          */
         fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         /** The first bill date _(in ISO-8601 format)_ for weekly billing periods. */
         fun weekEpoch(weekEpoch: String) = weekEpoch(JsonField.of(weekEpoch))
 
@@ -1285,7 +1284,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1293,7 +1291,6 @@ private constructor(
         fun build(): OrganizationConfigResponse =
             OrganizationConfigResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 autoApproveBillsGracePeriod,
                 autoApproveBillsGracePeriodUnit,
                 autoGenerateStatementMode,
@@ -1318,6 +1315,7 @@ private constructor(
                 standingChargeBillInAdvance,
                 suppressedEmptyBills,
                 timezone,
+                version,
                 weekEpoch,
                 yearEpoch,
                 additionalProperties.toMutableMap(),
@@ -1332,7 +1330,6 @@ private constructor(
         }
 
         id()
-        version()
         autoApproveBillsGracePeriod()
         autoApproveBillsGracePeriodUnit().ifPresent { it.validate() }
         autoGenerateStatementMode().ifPresent { it.validate() }
@@ -1357,6 +1354,7 @@ private constructor(
         standingChargeBillInAdvance()
         suppressedEmptyBills()
         timezone()
+        version()
         weekEpoch()
         yearEpoch()
         validated = true
@@ -1378,7 +1376,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (autoApproveBillsGracePeriod.asKnown().isPresent) 1 else 0) +
             (autoApproveBillsGracePeriodUnit.asKnown().getOrNull()?.validity() ?: 0) +
             (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1403,6 +1400,7 @@ private constructor(
             (if (standingChargeBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (suppressedEmptyBills.asKnown().isPresent) 1 else 0) +
             (if (timezone.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
             (if (weekEpoch.asKnown().isPresent) 1 else 0) +
             (if (yearEpoch.asKnown().isPresent) 1 else 0)
 
@@ -1958,15 +1956,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is OrganizationConfigResponse && id == other.id && version == other.version && autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod && autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit && autoGenerateStatementMode == other.autoGenerateStatementMode && billPrefix == other.billPrefix && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && consolidateBills == other.consolidateBills && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && daysBeforeBillDue == other.daysBeforeBillDue && defaultStatementDefinitionId == other.defaultStatementDefinitionId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && externalInvoiceDate == other.externalInvoiceDate && lastModifiedBy == other.lastModifiedBy && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && monthEpoch == other.monthEpoch && scheduledBillInterval == other.scheduledBillInterval && sequenceStartNumber == other.sequenceStartNumber && standingChargeBillInAdvance == other.standingChargeBillInAdvance && suppressedEmptyBills == other.suppressedEmptyBills && timezone == other.timezone && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is OrganizationConfigResponse && id == other.id && autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod && autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit && autoGenerateStatementMode == other.autoGenerateStatementMode && billPrefix == other.billPrefix && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && consolidateBills == other.consolidateBills && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && daysBeforeBillDue == other.daysBeforeBillDue && defaultStatementDefinitionId == other.defaultStatementDefinitionId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && externalInvoiceDate == other.externalInvoiceDate && lastModifiedBy == other.lastModifiedBy && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && monthEpoch == other.monthEpoch && scheduledBillInterval == other.scheduledBillInterval && sequenceStartNumber == other.sequenceStartNumber && standingChargeBillInAdvance == other.standingChargeBillInAdvance && suppressedEmptyBills == other.suppressedEmptyBills && timezone == other.timezone && version == other.version && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit, autoGenerateStatementMode, billPrefix, commitmentFeeBillInAdvance, consolidateBills, createdBy, creditApplicationOrder, currency, currencyConversions, dayEpoch, daysBeforeBillDue, defaultStatementDefinitionId, dtCreated, dtLastModified, externalInvoiceDate, lastModifiedBy, minimumSpendBillInAdvance, monthEpoch, scheduledBillInterval, sequenceStartNumber, standingChargeBillInAdvance, suppressedEmptyBills, timezone, weekEpoch, yearEpoch, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit, autoGenerateStatementMode, billPrefix, commitmentFeeBillInAdvance, consolidateBills, createdBy, creditApplicationOrder, currency, currencyConversions, dayEpoch, daysBeforeBillDue, defaultStatementDefinitionId, dtCreated, dtLastModified, externalInvoiceDate, lastModifiedBy, minimumSpendBillInAdvance, monthEpoch, scheduledBillInterval, sequenceStartNumber, standingChargeBillInAdvance, suppressedEmptyBills, timezone, version, weekEpoch, yearEpoch, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OrganizationConfigResponse{id=$id, version=$version, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
+        "OrganizationConfigResponse{id=$id, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
 }

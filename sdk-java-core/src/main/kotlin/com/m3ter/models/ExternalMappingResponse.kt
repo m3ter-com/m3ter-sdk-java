@@ -25,12 +25,12 @@ private constructor(
     private val externalTable: JsonField<String>,
     private val m3terEntity: JsonField<String>,
     private val m3terId: JsonField<String>,
-    private val version: JsonField<Long>,
     private val createdBy: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val integrationConfigId: JsonField<String>,
     private val lastModifiedBy: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -50,7 +50,6 @@ private constructor(
         @ExcludeMissing
         m3terEntity: JsonField<String> = JsonMissing.of(),
         @JsonProperty("m3terId") @ExcludeMissing m3terId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
@@ -64,6 +63,7 @@ private constructor(
         @JsonProperty("lastModifiedBy")
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         externalId,
@@ -71,12 +71,12 @@ private constructor(
         externalTable,
         m3terEntity,
         m3terId,
-        version,
         createdBy,
         dtCreated,
         dtLastModified,
         integrationConfigId,
         lastModifiedBy,
+        version,
         mutableMapOf(),
     )
 
@@ -130,17 +130,6 @@ private constructor(
     fun m3terId(): String = m3terId.getRequired("m3terId")
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
-
-    /**
      * The ID of the user who created this item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -180,6 +169,17 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
 
     /**
      * Returns the raw JSON value of [id].
@@ -228,13 +228,6 @@ private constructor(
     @JsonProperty("m3terId") @ExcludeMissing fun _m3terId(): JsonField<String> = m3terId
 
     /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-    /**
      * Returns the raw JSON value of [createdBy].
      *
      * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
@@ -278,6 +271,13 @@ private constructor(
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -303,7 +303,6 @@ private constructor(
          * .externalTable()
          * .m3terEntity()
          * .m3terId()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -318,12 +317,12 @@ private constructor(
         private var externalTable: JsonField<String>? = null
         private var m3terEntity: JsonField<String>? = null
         private var m3terId: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var integrationConfigId: JsonField<String> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -334,12 +333,12 @@ private constructor(
             externalTable = externalMappingResponse.externalTable
             m3terEntity = externalMappingResponse.m3terEntity
             m3terId = externalMappingResponse.m3terId
-            version = externalMappingResponse.version
             createdBy = externalMappingResponse.createdBy
             dtCreated = externalMappingResponse.dtCreated
             dtLastModified = externalMappingResponse.dtLastModified
             integrationConfigId = externalMappingResponse.integrationConfigId
             lastModifiedBy = externalMappingResponse.lastModifiedBy
+            version = externalMappingResponse.version
             additionalProperties = externalMappingResponse.additionalProperties.toMutableMap()
         }
 
@@ -420,22 +419,6 @@ private constructor(
          */
         fun m3terId(m3terId: JsonField<String>) = apply { this.m3terId = m3terId }
 
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
         /** The ID of the user who created this item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
@@ -504,6 +487,22 @@ private constructor(
             this.lastModifiedBy = lastModifiedBy
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -536,7 +535,6 @@ private constructor(
          * .externalTable()
          * .m3terEntity()
          * .m3terId()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -549,12 +547,12 @@ private constructor(
                 checkRequired("externalTable", externalTable),
                 checkRequired("m3terEntity", m3terEntity),
                 checkRequired("m3terId", m3terId),
-                checkRequired("version", version),
                 createdBy,
                 dtCreated,
                 dtLastModified,
                 integrationConfigId,
                 lastModifiedBy,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -572,12 +570,12 @@ private constructor(
         externalTable()
         m3terEntity()
         m3terId()
-        version()
         createdBy()
         dtCreated()
         dtLastModified()
         integrationConfigId()
         lastModifiedBy()
+        version()
         validated = true
     }
 
@@ -602,27 +600,27 @@ private constructor(
             (if (externalTable.asKnown().isPresent) 1 else 0) +
             (if (m3terEntity.asKnown().isPresent) 1 else 0) +
             (if (m3terId.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (integrationConfigId.asKnown().isPresent) 1 else 0) +
-            (if (lastModifiedBy.asKnown().isPresent) 1 else 0)
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingResponse && id == other.id && externalId == other.externalId && externalSystem == other.externalSystem && externalTable == other.externalTable && m3terEntity == other.m3terEntity && m3terId == other.m3terId && version == other.version && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && integrationConfigId == other.integrationConfigId && lastModifiedBy == other.lastModifiedBy && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is ExternalMappingResponse && id == other.id && externalId == other.externalId && externalSystem == other.externalSystem && externalTable == other.externalTable && m3terEntity == other.m3terEntity && m3terId == other.m3terId && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && integrationConfigId == other.integrationConfigId && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, externalId, externalSystem, externalTable, m3terEntity, m3terId, version, createdBy, dtCreated, dtLastModified, integrationConfigId, lastModifiedBy, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, externalId, externalSystem, externalTable, m3terEntity, m3terId, createdBy, dtCreated, dtLastModified, integrationConfigId, lastModifiedBy, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ExternalMappingResponse{id=$id, externalId=$externalId, externalSystem=$externalSystem, externalTable=$externalTable, m3terEntity=$m3terEntity, m3terId=$m3terId, version=$version, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, integrationConfigId=$integrationConfigId, lastModifiedBy=$lastModifiedBy, additionalProperties=$additionalProperties}"
+        "ExternalMappingResponse{id=$id, externalId=$externalId, externalSystem=$externalSystem, externalTable=$externalTable, m3terEntity=$m3terEntity, m3terId=$m3terId, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, integrationConfigId=$integrationConfigId, lastModifiedBy=$lastModifiedBy, version=$version, additionalProperties=$additionalProperties}"
 }

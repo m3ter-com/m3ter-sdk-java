@@ -19,7 +19,6 @@ internal class AggregationListPageResponseTest {
                 .addData(
                     AggregationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .aggregation(AggregationResponse.Aggregation.SUM)
                         .code("code")
@@ -46,6 +45,7 @@ internal class AggregationListPageResponseTest {
                         )
                         .targetField("targetField")
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -55,7 +55,6 @@ internal class AggregationListPageResponseTest {
             .containsExactly(
                 AggregationResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountingProductId("accountingProductId")
                     .aggregation(AggregationResponse.Aggregation.SUM)
                     .code("code")
@@ -82,6 +81,7 @@ internal class AggregationListPageResponseTest {
                     )
                     .targetField("targetField")
                     .unit("unit")
+                    .version(0L)
                     .build()
             )
         assertThat(aggregationListPageResponse.nextToken()).contains("nextToken")
@@ -95,7 +95,6 @@ internal class AggregationListPageResponseTest {
                 .addData(
                     AggregationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .aggregation(AggregationResponse.Aggregation.SUM)
                         .code("code")
@@ -122,6 +121,7 @@ internal class AggregationListPageResponseTest {
                         )
                         .targetField("targetField")
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

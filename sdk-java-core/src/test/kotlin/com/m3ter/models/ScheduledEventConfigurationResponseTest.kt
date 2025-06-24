@@ -19,11 +19,11 @@ internal class ScheduledEventConfigurationResponseTest {
                 .field("x")
                 .name("x")
                 .offset(0)
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         assertThat(scheduledEventConfigurationResponse.id()).isEqualTo("id")
@@ -31,13 +31,13 @@ internal class ScheduledEventConfigurationResponseTest {
         assertThat(scheduledEventConfigurationResponse.field()).isEqualTo("x")
         assertThat(scheduledEventConfigurationResponse.name()).isEqualTo("x")
         assertThat(scheduledEventConfigurationResponse.offset()).isEqualTo(0)
-        assertThat(scheduledEventConfigurationResponse.version()).isEqualTo(0L)
         assertThat(scheduledEventConfigurationResponse.createdBy()).contains("createdBy")
         assertThat(scheduledEventConfigurationResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(scheduledEventConfigurationResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(scheduledEventConfigurationResponse.lastModifiedBy()).contains("lastModifiedBy")
+        assertThat(scheduledEventConfigurationResponse.version()).contains(0L)
     }
 
     @Test
@@ -50,11 +50,11 @@ internal class ScheduledEventConfigurationResponseTest {
                 .field("x")
                 .name("x")
                 .offset(0)
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         val roundtrippedScheduledEventConfigurationResponse =

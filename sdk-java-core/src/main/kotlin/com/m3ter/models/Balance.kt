@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class Balance
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountId: JsonField<String>,
     private val amount: JsonField<Double>,
     private val balanceDrawDownDescription: JsonField<String>,
@@ -48,13 +47,13 @@ private constructor(
     private val rolloverAmount: JsonField<Double>,
     private val rolloverEndDate: JsonField<OffsetDateTime>,
     private val startDate: JsonField<OffsetDateTime>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("balanceDrawDownDescription")
@@ -112,9 +111,9 @@ private constructor(
         @JsonProperty("startDate")
         @ExcludeMissing
         startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountId,
         amount,
         balanceDrawDownDescription,
@@ -138,6 +137,7 @@ private constructor(
         rolloverAmount,
         rolloverEndDate,
         startDate,
+        version,
         mutableMapOf(),
     )
 
@@ -148,17 +148,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The unique identifier (UUID) for the end customer Account the Balance belongs to.
@@ -358,18 +347,22 @@ private constructor(
     fun startDate(): Optional<OffsetDateTime> = startDate.getOptional("startDate")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountId].
@@ -565,6 +558,13 @@ private constructor(
     @ExcludeMissing
     fun _startDate(): JsonField<OffsetDateTime> = startDate
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -585,7 +585,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -595,7 +594,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
         private var amount: JsonField<Double> = JsonMissing.of()
         private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
@@ -619,12 +617,12 @@ private constructor(
         private var rolloverAmount: JsonField<Double> = JsonMissing.of()
         private var rolloverEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(balance: Balance) = apply {
             id = balance.id
-            version = balance.version
             accountId = balance.accountId
             amount = balance.amount
             balanceDrawDownDescription = balance.balanceDrawDownDescription
@@ -648,6 +646,7 @@ private constructor(
             rolloverAmount = balance.rolloverAmount
             rolloverEndDate = balance.rolloverEndDate
             startDate = balance.startDate
+            version = balance.version
             additionalProperties = balance.additionalProperties.toMutableMap()
         }
 
@@ -661,22 +660,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The unique identifier (UUID) for the end customer Account the Balance belongs to. */
         fun accountId(accountId: String) = accountId(JsonField.of(accountId))
@@ -1029,6 +1012,22 @@ private constructor(
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1056,7 +1055,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1064,7 +1062,6 @@ private constructor(
         fun build(): Balance =
             Balance(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountId,
                 amount,
                 balanceDrawDownDescription,
@@ -1088,6 +1085,7 @@ private constructor(
                 rolloverAmount,
                 rolloverEndDate,
                 startDate,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1100,7 +1098,6 @@ private constructor(
         }
 
         id()
-        version()
         accountId()
         amount()
         balanceDrawDownDescription()
@@ -1124,6 +1121,7 @@ private constructor(
         rolloverAmount()
         rolloverEndDate()
         startDate()
+        version()
         validated = true
     }
 
@@ -1143,7 +1141,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
@@ -1166,7 +1163,8 @@ private constructor(
             (productIds.asKnown().getOrNull()?.size ?: 0) +
             (if (rolloverAmount.asKnown().isPresent) 1 else 0) +
             (if (rolloverEndDate.asKnown().isPresent) 1 else 0) +
-            (if (startDate.asKnown().isPresent) 1 else 0)
+            (if (startDate.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * User defined fields enabling you to attach custom data. The value for a custom field can be
@@ -1432,15 +1430,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && version == other.version && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Balance && id == other.id && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, customFields, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, customFields, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, version=$version, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
 }

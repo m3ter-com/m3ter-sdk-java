@@ -34,17 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * Array of the Balance Transactions.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<TransactionResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for retrieving the next page of Transactions. It is used to fetch the next
-     * page of Transactions in a paginated list.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -101,7 +96,6 @@ private constructor(
                     balanceTransactionListPageResponse.additionalProperties.toMutableMap()
             }
 
-        /** Array of the Balance Transactions. */
         fun data(data: List<TransactionResponse>) = data(JsonField.of(data))
 
         /**
@@ -127,10 +121,6 @@ private constructor(
                 }
         }
 
-        /**
-         * The `nextToken` for retrieving the next page of Transactions. It is used to fetch the
-         * next page of Transactions in a paginated list.
-         */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

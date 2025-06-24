@@ -19,7 +19,6 @@ internal class MeterListPageResponseTest {
                 .addData(
                     MeterResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .customFields(
@@ -50,6 +49,7 @@ internal class MeterListPageResponseTest {
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
                         .productId("productId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -59,7 +59,6 @@ internal class MeterListPageResponseTest {
             .containsExactly(
                 MeterResponse.builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .customFields(
@@ -90,6 +89,7 @@ internal class MeterListPageResponseTest {
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
                     .productId("productId")
+                    .version(0L)
                     .build()
             )
         assertThat(meterListPageResponse.nextToken()).contains("nextToken")
@@ -103,7 +103,6 @@ internal class MeterListPageResponseTest {
                 .addData(
                     MeterResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .customFields(
@@ -134,6 +133,7 @@ internal class MeterListPageResponseTest {
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
                         .productId("productId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

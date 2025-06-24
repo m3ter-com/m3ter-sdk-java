@@ -22,7 +22,6 @@ import kotlin.jvm.optionals.getOrNull
 class CustomFieldsResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val account: JsonField<Account>,
     private val accountPlan: JsonField<AccountPlan>,
     private val aggregation: JsonField<Aggregation>,
@@ -37,13 +36,13 @@ private constructor(
     private val plan: JsonField<Plan>,
     private val planTemplate: JsonField<PlanTemplate>,
     private val product: JsonField<Product>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("account") @ExcludeMissing account: JsonField<Account> = JsonMissing.of(),
         @JsonProperty("accountPlan")
         @ExcludeMissing
@@ -74,9 +73,9 @@ private constructor(
         @ExcludeMissing
         planTemplate: JsonField<PlanTemplate> = JsonMissing.of(),
         @JsonProperty("product") @ExcludeMissing product: JsonField<Product> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         account,
         accountPlan,
         aggregation,
@@ -91,6 +90,7 @@ private constructor(
         plan,
         planTemplate,
         product,
+        version,
         mutableMapOf(),
     )
 
@@ -101,17 +101,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * CustomFields added to Account entities.
@@ -228,18 +217,22 @@ private constructor(
     fun product(): Optional<Product> = product.getOptional("product")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [account].
@@ -356,6 +349,13 @@ private constructor(
      */
     @JsonProperty("product") @ExcludeMissing fun _product(): JsonField<Product> = product
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -376,7 +376,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -386,7 +385,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var account: JsonField<Account> = JsonMissing.of()
         private var accountPlan: JsonField<AccountPlan> = JsonMissing.of()
         private var aggregation: JsonField<Aggregation> = JsonMissing.of()
@@ -401,12 +399,12 @@ private constructor(
         private var plan: JsonField<Plan> = JsonMissing.of()
         private var planTemplate: JsonField<PlanTemplate> = JsonMissing.of()
         private var product: JsonField<Product> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(customFieldsResponse: CustomFieldsResponse) = apply {
             id = customFieldsResponse.id
-            version = customFieldsResponse.version
             account = customFieldsResponse.account
             accountPlan = customFieldsResponse.accountPlan
             aggregation = customFieldsResponse.aggregation
@@ -421,6 +419,7 @@ private constructor(
             plan = customFieldsResponse.plan
             planTemplate = customFieldsResponse.planTemplate
             product = customFieldsResponse.product
+            version = customFieldsResponse.version
             additionalProperties = customFieldsResponse.additionalProperties.toMutableMap()
         }
 
@@ -434,22 +433,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** CustomFields added to Account entities. */
         fun account(account: Account) = account(JsonField.of(account))
@@ -634,6 +617,22 @@ private constructor(
          */
         fun product(product: JsonField<Product>) = apply { this.product = product }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -661,7 +660,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -669,7 +667,6 @@ private constructor(
         fun build(): CustomFieldsResponse =
             CustomFieldsResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 account,
                 accountPlan,
                 aggregation,
@@ -684,6 +681,7 @@ private constructor(
                 plan,
                 planTemplate,
                 product,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -696,7 +694,6 @@ private constructor(
         }
 
         id()
-        version()
         account().ifPresent { it.validate() }
         accountPlan().ifPresent { it.validate() }
         aggregation().ifPresent { it.validate() }
@@ -711,6 +708,7 @@ private constructor(
         plan().ifPresent { it.validate() }
         planTemplate().ifPresent { it.validate() }
         product().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -730,7 +728,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (account.asKnown().getOrNull()?.validity() ?: 0) +
             (accountPlan.asKnown().getOrNull()?.validity() ?: 0) +
             (aggregation.asKnown().getOrNull()?.validity() ?: 0) +
@@ -744,7 +741,8 @@ private constructor(
             (organization.asKnown().getOrNull()?.validity() ?: 0) +
             (plan.asKnown().getOrNull()?.validity() ?: 0) +
             (planTemplate.asKnown().getOrNull()?.validity() ?: 0) +
-            (product.asKnown().getOrNull()?.validity() ?: 0)
+            (product.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /** CustomFields added to Account entities. */
     class Account
@@ -1772,15 +1770,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomFieldsResponse && id == other.id && version == other.version && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomFieldsResponse && id == other.id && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, account, accountPlan, aggregation, compoundAggregation, contract, createdBy, dtCreated, dtLastModified, lastModifiedBy, meter, organization, plan, planTemplate, product, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, account, accountPlan, aggregation, compoundAggregation, contract, createdBy, dtCreated, dtLastModified, lastModifiedBy, meter, organization, plan, planTemplate, product, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CustomFieldsResponse{id=$id, version=$version, account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, contract=$contract, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, additionalProperties=$additionalProperties}"
+        "CustomFieldsResponse{id=$id, account=$account, accountPlan=$accountPlan, aggregation=$aggregation, compoundAggregation=$compoundAggregation, contract=$contract, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meter=$meter, organization=$organization, plan=$plan, planTemplate=$planTemplate, product=$product, version=$version, additionalProperties=$additionalProperties}"
 }

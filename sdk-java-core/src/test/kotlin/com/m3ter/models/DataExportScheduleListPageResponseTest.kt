@@ -18,7 +18,6 @@ internal class DataExportScheduleListPageResponseTest {
                 .addData(
                     DataExportScheduleListResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .addDestinationId("string")
@@ -30,6 +29,7 @@ internal class DataExportScheduleListPageResponseTest {
                         .period(0)
                         .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                         .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -39,7 +39,6 @@ internal class DataExportScheduleListPageResponseTest {
             .containsExactly(
                 DataExportScheduleListResponse.builder()
                     .id("id")
-                    .version(0L)
                     .code("code")
                     .createdBy("createdBy")
                     .addDestinationId("string")
@@ -51,6 +50,7 @@ internal class DataExportScheduleListPageResponseTest {
                     .period(0)
                     .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                     .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                    .version(0L)
                     .build()
             )
         assertThat(dataExportScheduleListPageResponse.nextToken()).contains("nextToken")
@@ -64,7 +64,6 @@ internal class DataExportScheduleListPageResponseTest {
                 .addData(
                     DataExportScheduleListResponse.builder()
                         .id("id")
-                        .version(0L)
                         .code("code")
                         .createdBy("createdBy")
                         .addDestinationId("string")
@@ -76,6 +75,7 @@ internal class DataExportScheduleListPageResponseTest {
                         .period(0)
                         .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                         .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

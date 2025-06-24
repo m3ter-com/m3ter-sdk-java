@@ -34,17 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * An array containing the list of requested PlanGroups.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<PlanGroupResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for multi-page retrievals. It is used to fetch the next page of PlanGroups in
-     * a paginated list.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -98,7 +93,6 @@ private constructor(
             additionalProperties = planGroupListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /** An array containing the list of requested PlanGroups. */
         fun data(data: List<PlanGroupResponse>) = data(JsonField.of(data))
 
         /**
@@ -124,10 +118,6 @@ private constructor(
                 }
         }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
-         * PlanGroups in a paginated list.
-         */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

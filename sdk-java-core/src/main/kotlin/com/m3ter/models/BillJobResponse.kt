@@ -25,7 +25,6 @@ import kotlin.jvm.optionals.getOrNull
 class BillJobResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountIds: JsonField<List<String>>,
     private val billDate: JsonField<LocalDate>,
     private val billFrequencyInterval: JsonField<Int>,
@@ -47,6 +46,7 @@ private constructor(
     private val timezone: JsonField<String>,
     private val total: JsonField<Long>,
     private val type: JsonField<Type>,
+    private val version: JsonField<Long>,
     private val weekEpoch: JsonField<LocalDate>,
     private val yearEpoch: JsonField<LocalDate>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -55,7 +55,6 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountIds")
         @ExcludeMissing
         accountIds: JsonField<List<String>> = JsonMissing.of(),
@@ -101,6 +100,7 @@ private constructor(
         @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
         @JsonProperty("total") @ExcludeMissing total: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("weekEpoch")
         @ExcludeMissing
         weekEpoch: JsonField<LocalDate> = JsonMissing.of(),
@@ -109,7 +109,6 @@ private constructor(
         yearEpoch: JsonField<LocalDate> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountIds,
         billDate,
         billFrequencyInterval,
@@ -131,6 +130,7 @@ private constructor(
         timezone,
         total,
         type,
+        version,
         weekEpoch,
         yearEpoch,
         mutableMapOf(),
@@ -143,17 +143,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * An array of UUIDs representing the end customer Accounts associated with the BillJob.
@@ -365,6 +354,17 @@ private constructor(
     fun type(): Optional<Type> = type.getOptional("type")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_, determining
      * the first Bill date for weekly Bills.
      *
@@ -388,13 +388,6 @@ private constructor(
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountIds].
@@ -569,6 +562,13 @@ private constructor(
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
     /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+    /**
      * Returns the raw JSON value of [weekEpoch].
      *
      * Unlike [weekEpoch], this method doesn't throw if the JSON field has an unexpected type.
@@ -602,7 +602,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -612,7 +611,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountIds: JsonField<MutableList<String>>? = null
         private var billDate: JsonField<LocalDate> = JsonMissing.of()
         private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
@@ -634,6 +632,7 @@ private constructor(
         private var timezone: JsonField<String> = JsonMissing.of()
         private var total: JsonField<Long> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var weekEpoch: JsonField<LocalDate> = JsonMissing.of()
         private var yearEpoch: JsonField<LocalDate> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -641,7 +640,6 @@ private constructor(
         @JvmSynthetic
         internal fun from(billJobResponse: BillJobResponse) = apply {
             id = billJobResponse.id
-            version = billJobResponse.version
             accountIds = billJobResponse.accountIds.map { it.toMutableList() }
             billDate = billJobResponse.billDate
             billFrequencyInterval = billJobResponse.billFrequencyInterval
@@ -663,6 +661,7 @@ private constructor(
             timezone = billJobResponse.timezone
             total = billJobResponse.total
             type = billJobResponse.type
+            version = billJobResponse.version
             weekEpoch = billJobResponse.weekEpoch
             yearEpoch = billJobResponse.yearEpoch
             additionalProperties = billJobResponse.additionalProperties.toMutableMap()
@@ -678,22 +677,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** An array of UUIDs representing the end customer Accounts associated with the BillJob. */
         fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
@@ -1067,6 +1050,22 @@ private constructor(
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
+        /**
          * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
          * determining the first Bill date for weekly Bills.
          */
@@ -1123,7 +1122,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1131,7 +1129,6 @@ private constructor(
         fun build(): BillJobResponse =
             BillJobResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
                 billDate,
                 billFrequencyInterval,
@@ -1153,6 +1150,7 @@ private constructor(
                 timezone,
                 total,
                 type,
+                version,
                 weekEpoch,
                 yearEpoch,
                 additionalProperties.toMutableMap(),
@@ -1167,7 +1165,6 @@ private constructor(
         }
 
         id()
-        version()
         accountIds()
         billDate()
         billFrequencyInterval()
@@ -1189,6 +1186,7 @@ private constructor(
         timezone()
         total()
         type().ifPresent { it.validate() }
+        version()
         weekEpoch()
         yearEpoch()
         validated = true
@@ -1210,7 +1208,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (accountIds.asKnown().getOrNull()?.size ?: 0) +
             (if (billDate.asKnown().isPresent) 1 else 0) +
             (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
@@ -1232,6 +1229,7 @@ private constructor(
             (if (timezone.asKnown().isPresent) 1 else 0) +
             (if (total.asKnown().isPresent) 1 else 0) +
             (type.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0) +
             (if (weekEpoch.asKnown().isPresent) 1 else 0) +
             (if (yearEpoch.asKnown().isPresent) 1 else 0)
 
@@ -1670,15 +1668,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillJobResponse && id == other.id && version == other.version && accountIds == other.accountIds && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billIds == other.billIds && billingFrequency == other.billingFrequency && createdBy == other.createdBy && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && externalInvoiceDate == other.externalInvoiceDate && lastDateInBillingPeriod == other.lastDateInBillingPeriod && lastModifiedBy == other.lastModifiedBy && monthEpoch == other.monthEpoch && pending == other.pending && status == other.status && targetCurrency == other.targetCurrency && timezone == other.timezone && total == other.total && type == other.type && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BillJobResponse && id == other.id && accountIds == other.accountIds && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billIds == other.billIds && billingFrequency == other.billingFrequency && createdBy == other.createdBy && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && externalInvoiceDate == other.externalInvoiceDate && lastDateInBillingPeriod == other.lastDateInBillingPeriod && lastModifiedBy == other.lastModifiedBy && monthEpoch == other.monthEpoch && pending == other.pending && status == other.status && targetCurrency == other.targetCurrency && timezone == other.timezone && total == other.total && type == other.type && version == other.version && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountIds, billDate, billFrequencyInterval, billIds, billingFrequency, createdBy, currencyConversions, dayEpoch, dtCreated, dtLastModified, dueDate, externalInvoiceDate, lastDateInBillingPeriod, lastModifiedBy, monthEpoch, pending, status, targetCurrency, timezone, total, type, weekEpoch, yearEpoch, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountIds, billDate, billFrequencyInterval, billIds, billingFrequency, createdBy, currencyConversions, dayEpoch, dtCreated, dtLastModified, dueDate, externalInvoiceDate, lastDateInBillingPeriod, lastModifiedBy, monthEpoch, pending, status, targetCurrency, timezone, total, type, version, weekEpoch, yearEpoch, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillJobResponse{id=$id, version=$version, accountIds=$accountIds, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billIds=$billIds, billingFrequency=$billingFrequency, createdBy=$createdBy, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dueDate=$dueDate, externalInvoiceDate=$externalInvoiceDate, lastDateInBillingPeriod=$lastDateInBillingPeriod, lastModifiedBy=$lastModifiedBy, monthEpoch=$monthEpoch, pending=$pending, status=$status, targetCurrency=$targetCurrency, timezone=$timezone, total=$total, type=$type, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
+        "BillJobResponse{id=$id, accountIds=$accountIds, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billIds=$billIds, billingFrequency=$billingFrequency, createdBy=$createdBy, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dueDate=$dueDate, externalInvoiceDate=$externalInvoiceDate, lastDateInBillingPeriod=$lastDateInBillingPeriod, lastModifiedBy=$lastModifiedBy, monthEpoch=$monthEpoch, pending=$pending, status=$status, targetCurrency=$targetCurrency, timezone=$timezone, total=$total, type=$type, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
 }

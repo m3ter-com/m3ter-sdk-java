@@ -114,6 +114,10 @@ interface BalanceServiceAsync {
      * This endpoint returns a list of all Balances associated with your organization. You can
      * filter the Balances by the end customer's Account UUID and end dates, and paginate through
      * them using the `pageSize` and `nextToken` parameters.
+     *
+     * **NOTE:** If a Balance has a rollover amount configured and you want to use the
+     * `endDateStart` or `endDateEnd` query parameters, the `rolloverEndDate` is used as the end
+     * date for the Balance.
      */
     fun list(): CompletableFuture<BalanceListPageAsync> = list(BalanceListParams.none())
 

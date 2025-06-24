@@ -17,7 +17,6 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
-                .version(0L)
                 .aggregationId("aggregationId")
                 .averageUnitPrice(0.0)
                 .balanceId("balanceId")
@@ -78,10 +77,10 @@ internal class LineItemResponseTest {
                 .subtotal(0.0)
                 .unit("unit")
                 .units(0.0)
+                .version(0L)
                 .build()
 
         assertThat(lineItemResponse.id()).isEqualTo("id")
-        assertThat(lineItemResponse.version()).isEqualTo(0L)
         assertThat(lineItemResponse.aggregationId()).contains("aggregationId")
         assertThat(lineItemResponse.averageUnitPrice()).contains(0.0)
         assertThat(lineItemResponse.balanceId()).contains("balanceId")
@@ -150,6 +149,7 @@ internal class LineItemResponseTest {
         assertThat(lineItemResponse.subtotal()).contains(0.0)
         assertThat(lineItemResponse.unit()).contains("unit")
         assertThat(lineItemResponse.units()).contains(0.0)
+        assertThat(lineItemResponse.version()).contains(0L)
     }
 
     @Test
@@ -158,7 +158,6 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
-                .version(0L)
                 .aggregationId("aggregationId")
                 .averageUnitPrice(0.0)
                 .balanceId("balanceId")
@@ -219,6 +218,7 @@ internal class LineItemResponseTest {
                 .subtotal(0.0)
                 .unit("unit")
                 .units(0.0)
+                .version(0L)
                 .build()
 
         val roundtrippedLineItemResponse =

@@ -16,7 +16,6 @@ internal class CounterPricingResponseTest {
         val counterPricingResponse =
             CounterPricingResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .code("code")
                 .counterId("counterId")
@@ -43,10 +42,10 @@ internal class CounterPricingResponseTest {
                 .proRateRunningTotal(true)
                 .runningTotalBillInAdvance(true)
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         assertThat(counterPricingResponse.id()).isEqualTo("id")
-        assertThat(counterPricingResponse.version()).isEqualTo(0L)
         assertThat(counterPricingResponse.accountingProductId()).contains("accountingProductId")
         assertThat(counterPricingResponse.code()).contains("code")
         assertThat(counterPricingResponse.counterId()).contains("counterId")
@@ -78,6 +77,7 @@ internal class CounterPricingResponseTest {
         assertThat(counterPricingResponse.runningTotalBillInAdvance()).contains(true)
         assertThat(counterPricingResponse.startDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(counterPricingResponse.version()).contains(0L)
     }
 
     @Test
@@ -86,7 +86,6 @@ internal class CounterPricingResponseTest {
         val counterPricingResponse =
             CounterPricingResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .code("code")
                 .counterId("counterId")
@@ -113,6 +112,7 @@ internal class CounterPricingResponseTest {
                 .proRateRunningTotal(true)
                 .runningTotalBillInAdvance(true)
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         val roundtrippedCounterPricingResponse =

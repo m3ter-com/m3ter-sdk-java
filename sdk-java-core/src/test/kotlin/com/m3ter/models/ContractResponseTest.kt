@@ -17,7 +17,6 @@ internal class ContractResponseTest {
         val contractResponse =
             ContractResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .code("code")
                 .createdBy("createdBy")
@@ -34,10 +33,10 @@ internal class ContractResponseTest {
                 .name("name")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
+                .version(0L)
                 .build()
 
         assertThat(contractResponse.id()).isEqualTo("id")
-        assertThat(contractResponse.version()).isEqualTo(0L)
         assertThat(contractResponse.accountId()).contains("accountId")
         assertThat(contractResponse.code()).contains("code")
         assertThat(contractResponse.createdBy()).contains("createdBy")
@@ -57,6 +56,7 @@ internal class ContractResponseTest {
         assertThat(contractResponse.name()).contains("name")
         assertThat(contractResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(contractResponse.startDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(contractResponse.version()).contains(0L)
     }
 
     @Test
@@ -65,7 +65,6 @@ internal class ContractResponseTest {
         val contractResponse =
             ContractResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .code("code")
                 .createdBy("createdBy")
@@ -82,6 +81,7 @@ internal class ContractResponseTest {
                 .name("name")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
+                .version(0L)
                 .build()
 
         val roundtrippedContractResponse =

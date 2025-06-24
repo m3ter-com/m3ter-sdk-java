@@ -22,7 +22,6 @@ import kotlin.jvm.optionals.getOrNull
 class StatementJobResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val billId: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
@@ -32,13 +31,13 @@ private constructor(
     private val orgId: JsonField<String>,
     private val presignedJsonStatementUrl: JsonField<String>,
     private val statementJobStatus: JsonField<StatementJobStatus>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("billId") @ExcludeMissing billId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dtCreated")
@@ -60,9 +59,9 @@ private constructor(
         @JsonProperty("statementJobStatus")
         @ExcludeMissing
         statementJobStatus: JsonField<StatementJobStatus> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         billId,
         createdBy,
         dtCreated,
@@ -72,6 +71,7 @@ private constructor(
         orgId,
         presignedJsonStatementUrl,
         statementJobStatus,
+        version,
         mutableMapOf(),
     )
 
@@ -82,17 +82,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The unique identifier (UUID) of the bill associated with the StatementJob.
@@ -174,18 +163,22 @@ private constructor(
         statementJobStatus.getOptional("statementJobStatus")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [billId].
@@ -265,6 +258,13 @@ private constructor(
     @ExcludeMissing
     fun _statementJobStatus(): JsonField<StatementJobStatus> = statementJobStatus
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -285,7 +285,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -295,7 +294,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var billId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -305,12 +303,12 @@ private constructor(
         private var orgId: JsonField<String> = JsonMissing.of()
         private var presignedJsonStatementUrl: JsonField<String> = JsonMissing.of()
         private var statementJobStatus: JsonField<StatementJobStatus> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(statementJobResponse: StatementJobResponse) = apply {
             id = statementJobResponse.id
-            version = statementJobResponse.version
             billId = statementJobResponse.billId
             createdBy = statementJobResponse.createdBy
             dtCreated = statementJobResponse.dtCreated
@@ -320,6 +318,7 @@ private constructor(
             orgId = statementJobResponse.orgId
             presignedJsonStatementUrl = statementJobResponse.presignedJsonStatementUrl
             statementJobStatus = statementJobResponse.statementJobStatus
+            version = statementJobResponse.version
             additionalProperties = statementJobResponse.additionalProperties.toMutableMap()
         }
 
@@ -333,22 +332,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The unique identifier (UUID) of the bill associated with the StatementJob. */
         fun billId(billId: String) = billId(JsonField.of(billId))
@@ -483,6 +466,22 @@ private constructor(
             this.statementJobStatus = statementJobStatus
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -510,7 +509,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -518,7 +516,6 @@ private constructor(
         fun build(): StatementJobResponse =
             StatementJobResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 billId,
                 createdBy,
                 dtCreated,
@@ -528,6 +525,7 @@ private constructor(
                 orgId,
                 presignedJsonStatementUrl,
                 statementJobStatus,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -540,7 +538,6 @@ private constructor(
         }
 
         id()
-        version()
         billId()
         createdBy()
         dtCreated()
@@ -550,6 +547,7 @@ private constructor(
         orgId()
         presignedJsonStatementUrl()
         statementJobStatus().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -569,7 +567,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (billId.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
@@ -578,7 +575,8 @@ private constructor(
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (orgId.asKnown().isPresent) 1 else 0) +
             (if (presignedJsonStatementUrl.asKnown().isPresent) 1 else 0) +
-            (statementJobStatus.asKnown().getOrNull()?.validity() ?: 0)
+            (statementJobStatus.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * The current status of the StatementJob. The status helps track the progress and outcome of a
@@ -736,15 +734,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementJobResponse && id == other.id && version == other.version && billId == other.billId && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && includeCsvFormat == other.includeCsvFormat && lastModifiedBy == other.lastModifiedBy && orgId == other.orgId && presignedJsonStatementUrl == other.presignedJsonStatementUrl && statementJobStatus == other.statementJobStatus && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is StatementJobResponse && id == other.id && billId == other.billId && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && includeCsvFormat == other.includeCsvFormat && lastModifiedBy == other.lastModifiedBy && orgId == other.orgId && presignedJsonStatementUrl == other.presignedJsonStatementUrl && statementJobStatus == other.statementJobStatus && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, billId, createdBy, dtCreated, dtLastModified, includeCsvFormat, lastModifiedBy, orgId, presignedJsonStatementUrl, statementJobStatus, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, billId, createdBy, dtCreated, dtLastModified, includeCsvFormat, lastModifiedBy, orgId, presignedJsonStatementUrl, statementJobStatus, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "StatementJobResponse{id=$id, version=$version, billId=$billId, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, includeCsvFormat=$includeCsvFormat, lastModifiedBy=$lastModifiedBy, orgId=$orgId, presignedJsonStatementUrl=$presignedJsonStatementUrl, statementJobStatus=$statementJobStatus, additionalProperties=$additionalProperties}"
+        "StatementJobResponse{id=$id, billId=$billId, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, includeCsvFormat=$includeCsvFormat, lastModifiedBy=$lastModifiedBy, orgId=$orgId, presignedJsonStatementUrl=$presignedJsonStatementUrl, statementJobStatus=$statementJobStatus, version=$version, additionalProperties=$additionalProperties}"
 }

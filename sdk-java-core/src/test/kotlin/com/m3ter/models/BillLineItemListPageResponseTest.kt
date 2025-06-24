@@ -19,7 +19,6 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
-                        .version(0L)
                         .aggregationId("aggregationId")
                         .averageUnitPrice(0.0)
                         .balanceId("balanceId")
@@ -80,6 +79,7 @@ internal class BillLineItemListPageResponseTest {
                         .subtotal(0.0)
                         .unit("unit")
                         .units(0.0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -89,7 +89,6 @@ internal class BillLineItemListPageResponseTest {
             .containsExactly(
                 LineItemResponse.builder()
                     .id("id")
-                    .version(0L)
                     .aggregationId("aggregationId")
                     .averageUnitPrice(0.0)
                     .balanceId("balanceId")
@@ -150,6 +149,7 @@ internal class BillLineItemListPageResponseTest {
                     .subtotal(0.0)
                     .unit("unit")
                     .units(0.0)
+                    .version(0L)
                     .build()
             )
         assertThat(billLineItemListPageResponse.nextToken()).contains("nextToken")
@@ -163,7 +163,6 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
-                        .version(0L)
                         .aggregationId("aggregationId")
                         .averageUnitPrice(0.0)
                         .balanceId("balanceId")
@@ -224,6 +223,7 @@ internal class BillLineItemListPageResponseTest {
                         .subtotal(0.0)
                         .unit("unit")
                         .units(0.0)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

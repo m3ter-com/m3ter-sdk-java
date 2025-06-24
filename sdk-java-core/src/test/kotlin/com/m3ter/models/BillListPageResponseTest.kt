@@ -20,7 +20,6 @@ internal class BillListPageResponseTest {
                 .addData(
                     BillResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountCode("accountCode")
                         .accountId("accountId")
                         .billDate(LocalDate.parse("2019-12-27"))
@@ -121,6 +120,7 @@ internal class BillListPageResponseTest {
                         .startDateTimeUtc(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .status(BillResponse.Status.PENDING)
                         .timezone("UTC")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -130,7 +130,6 @@ internal class BillListPageResponseTest {
             .containsExactly(
                 BillResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountCode("accountCode")
                     .accountId("accountId")
                     .billDate(LocalDate.parse("2019-12-27"))
@@ -225,6 +224,7 @@ internal class BillListPageResponseTest {
                     .startDateTimeUtc(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .status(BillResponse.Status.PENDING)
                     .timezone("UTC")
+                    .version(0L)
                     .build()
             )
         assertThat(billListPageResponse.nextToken()).contains("nextToken")
@@ -238,7 +238,6 @@ internal class BillListPageResponseTest {
                 .addData(
                     BillResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountCode("accountCode")
                         .accountId("accountId")
                         .billDate(LocalDate.parse("2019-12-27"))
@@ -339,6 +338,7 @@ internal class BillListPageResponseTest {
                         .startDateTimeUtc(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .status(BillResponse.Status.PENDING)
                         .timezone("UTC")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

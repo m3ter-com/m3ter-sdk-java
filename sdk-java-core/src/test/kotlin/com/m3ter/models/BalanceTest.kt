@@ -17,7 +17,6 @@ internal class BalanceTest {
         val balance =
             Balance.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .amount(0.0)
                 .balanceDrawDownDescription("balanceDrawDownDescription")
@@ -45,10 +44,10 @@ internal class BalanceTest {
                 .rolloverAmount(0.0)
                 .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         assertThat(balance.id()).isEqualTo("id")
-        assertThat(balance.version()).isEqualTo(0L)
         assertThat(balance.accountId()).contains("accountId")
         assertThat(balance.amount()).contains(0.0)
         assertThat(balance.balanceDrawDownDescription()).contains("balanceDrawDownDescription")
@@ -81,6 +80,7 @@ internal class BalanceTest {
         assertThat(balance.rolloverEndDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(balance.startDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(balance.version()).contains(0L)
     }
 
     @Test
@@ -89,7 +89,6 @@ internal class BalanceTest {
         val balance =
             Balance.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .amount(0.0)
                 .balanceDrawDownDescription("balanceDrawDownDescription")
@@ -117,6 +116,7 @@ internal class BalanceTest {
                 .rolloverAmount(0.0)
                 .rolloverEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         val roundtrippedBalance =

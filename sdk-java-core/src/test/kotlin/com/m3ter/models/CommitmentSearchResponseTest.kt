@@ -19,7 +19,6 @@ internal class CommitmentSearchResponseTest {
                 .addData(
                     CommitmentResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .accountingProductId("accountingProductId")
                         .amount(0.0)
@@ -61,6 +60,7 @@ internal class CommitmentSearchResponseTest {
                         .addProductId("string")
                         .separateOverageUsage(true)
                         .startDate(LocalDate.parse("2019-12-27"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -70,7 +70,6 @@ internal class CommitmentSearchResponseTest {
             .containsExactly(
                 CommitmentResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountId("accountId")
                     .accountingProductId("accountingProductId")
                     .amount(0.0)
@@ -110,6 +109,7 @@ internal class CommitmentSearchResponseTest {
                     .addProductId("string")
                     .separateOverageUsage(true)
                     .startDate(LocalDate.parse("2019-12-27"))
+                    .version(0L)
                     .build()
             )
         assertThat(commitmentSearchResponse.nextToken()).contains("nextToken")
@@ -123,7 +123,6 @@ internal class CommitmentSearchResponseTest {
                 .addData(
                     CommitmentResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountId("accountId")
                         .accountingProductId("accountingProductId")
                         .amount(0.0)
@@ -165,6 +164,7 @@ internal class CommitmentSearchResponseTest {
                         .addProductId("string")
                         .separateOverageUsage(true)
                         .startDate(LocalDate.parse("2019-12-27"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

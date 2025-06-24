@@ -17,7 +17,6 @@ internal class CommitmentResponseTest {
         val commitmentResponse =
             CommitmentResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .accountingProductId("accountingProductId")
                 .amount(0.0)
@@ -55,10 +54,10 @@ internal class CommitmentResponseTest {
                 .addProductId("string")
                 .separateOverageUsage(true)
                 .startDate(LocalDate.parse("2019-12-27"))
+                .version(0L)
                 .build()
 
         assertThat(commitmentResponse.id()).isEqualTo("id")
-        assertThat(commitmentResponse.version()).isEqualTo(0L)
         assertThat(commitmentResponse.accountId()).contains("accountId")
         assertThat(commitmentResponse.accountingProductId()).contains("accountingProductId")
         assertThat(commitmentResponse.amount()).contains(0.0)
@@ -104,6 +103,7 @@ internal class CommitmentResponseTest {
         assertThat(commitmentResponse.productIds().getOrNull()).containsExactly("string")
         assertThat(commitmentResponse.separateOverageUsage()).contains(true)
         assertThat(commitmentResponse.startDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(commitmentResponse.version()).contains(0L)
     }
 
     @Test
@@ -112,7 +112,6 @@ internal class CommitmentResponseTest {
         val commitmentResponse =
             CommitmentResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .accountingProductId("accountingProductId")
                 .amount(0.0)
@@ -150,6 +149,7 @@ internal class CommitmentResponseTest {
                 .addProductId("string")
                 .separateOverageUsage(true)
                 .startDate(LocalDate.parse("2019-12-27"))
+                .version(0L)
                 .build()
 
         val roundtrippedCommitmentResponse =

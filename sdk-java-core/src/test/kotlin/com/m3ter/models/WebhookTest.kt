@@ -15,7 +15,6 @@ internal class WebhookTest {
         val webhook =
             Webhook.builder()
                 .id("id")
-                .version(0L)
                 .active(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -24,7 +23,6 @@ internal class WebhookTest {
                         .id("id")
                         .destination("x")
                         .type("x")
-                        .version(0L)
                         .apiKey("apiKey")
                         .createdBy("createdBy")
                         .destinationId("destinationId")
@@ -33,6 +31,7 @@ internal class WebhookTest {
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
                         .secret("secret")
+                        .version(0L)
                         .build()
                 )
                 .description("description")
@@ -41,10 +40,10 @@ internal class WebhookTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .url("url")
+                .version(0L)
                 .build()
 
         assertThat(webhook.id()).isEqualTo("id")
-        assertThat(webhook.version()).isEqualTo(0L)
         assertThat(webhook.active()).contains(true)
         assertThat(webhook.code()).contains("code")
         assertThat(webhook.createdBy()).contains("createdBy")
@@ -54,7 +53,6 @@ internal class WebhookTest {
                     .id("id")
                     .destination("x")
                     .type("x")
-                    .version(0L)
                     .apiKey("apiKey")
                     .createdBy("createdBy")
                     .destinationId("destinationId")
@@ -63,6 +61,7 @@ internal class WebhookTest {
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
                     .secret("secret")
+                    .version(0L)
                     .build()
             )
         assertThat(webhook.description()).contains("description")
@@ -72,6 +71,7 @@ internal class WebhookTest {
         assertThat(webhook.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(webhook.name()).contains("name")
         assertThat(webhook.url()).contains("url")
+        assertThat(webhook.version()).contains(0L)
     }
 
     @Test
@@ -80,7 +80,6 @@ internal class WebhookTest {
         val webhook =
             Webhook.builder()
                 .id("id")
-                .version(0L)
                 .active(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -89,7 +88,6 @@ internal class WebhookTest {
                         .id("id")
                         .destination("x")
                         .type("x")
-                        .version(0L)
                         .apiKey("apiKey")
                         .createdBy("createdBy")
                         .destinationId("destinationId")
@@ -98,6 +96,7 @@ internal class WebhookTest {
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
                         .secret("secret")
+                        .version(0L)
                         .build()
                 )
                 .description("description")
@@ -106,6 +105,7 @@ internal class WebhookTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .url("url")
+                .version(0L)
                 .build()
 
         val roundtrippedWebhook =

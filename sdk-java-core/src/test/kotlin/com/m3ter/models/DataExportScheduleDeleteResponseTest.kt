@@ -19,10 +19,10 @@ internal class DataExportScheduleDeleteResponseTest {
         val operationalDataExportSchedule =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addOperationalDataType(
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
+                .version(0L)
                 .build()
 
         val dataExportScheduleDeleteResponse =
@@ -42,10 +42,10 @@ internal class DataExportScheduleDeleteResponseTest {
             DataExportScheduleDeleteResponse.ofOperationalDataExportSchedule(
                 OperationalDataExportScheduleResponse.builder()
                     .id("id")
-                    .version(0L)
                     .addOperationalDataType(
                         OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                     )
+                    .version(0L)
                     .build()
             )
 
@@ -64,7 +64,6 @@ internal class DataExportScheduleDeleteResponseTest {
         val usageDataExportSchedule =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleResponse.Aggregation.builder()
@@ -88,6 +87,7 @@ internal class DataExportScheduleDeleteResponseTest {
                 )
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .version(0L)
                 .build()
 
         val dataExportScheduleDeleteResponse =
@@ -105,7 +105,6 @@ internal class DataExportScheduleDeleteResponseTest {
             DataExportScheduleDeleteResponse.ofUsageDataExportSchedule(
                 UsageDataExportScheduleResponse.builder()
                     .id("id")
-                    .version(0L)
                     .addAccountId("string")
                     .addAggregation(
                         UsageDataExportScheduleResponse.Aggregation.builder()
@@ -131,6 +130,7 @@ internal class DataExportScheduleDeleteResponseTest {
                     )
                     .addMeterId("string")
                     .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                    .version(0L)
                     .build()
             )
 

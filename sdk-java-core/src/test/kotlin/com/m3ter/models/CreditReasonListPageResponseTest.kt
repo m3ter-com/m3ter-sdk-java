@@ -18,7 +18,6 @@ internal class CreditReasonListPageResponseTest {
                 .addData(
                     CreditReasonResponse.builder()
                         .id("id")
-                        .version(0L)
                         .archived(true)
                         .code("code")
                         .createdBy("createdBy")
@@ -26,6 +25,7 @@ internal class CreditReasonListPageResponseTest {
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -35,7 +35,6 @@ internal class CreditReasonListPageResponseTest {
             .containsExactly(
                 CreditReasonResponse.builder()
                     .id("id")
-                    .version(0L)
                     .archived(true)
                     .code("code")
                     .createdBy("createdBy")
@@ -43,6 +42,7 @@ internal class CreditReasonListPageResponseTest {
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .lastModifiedBy("lastModifiedBy")
                     .name("name")
+                    .version(0L)
                     .build()
             )
         assertThat(creditReasonListPageResponse.nextToken()).contains("nextToken")
@@ -56,7 +56,6 @@ internal class CreditReasonListPageResponseTest {
                 .addData(
                     CreditReasonResponse.builder()
                         .id("id")
-                        .version(0L)
                         .archived(true)
                         .code("code")
                         .createdBy("createdBy")
@@ -64,6 +63,7 @@ internal class CreditReasonListPageResponseTest {
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .lastModifiedBy("lastModifiedBy")
                         .name("name")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

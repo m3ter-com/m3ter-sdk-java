@@ -18,7 +18,6 @@ internal class NotificationConfigurationResponseTest {
                 .code("x")
                 .description("x")
                 .name("x")
-                .version(0L)
                 .active(true)
                 .alwaysFireEvent(true)
                 .calculation("calculation")
@@ -27,13 +26,13 @@ internal class NotificationConfigurationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .eventName("eventName")
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         assertThat(notificationConfigurationResponse.id()).isEqualTo("id")
         assertThat(notificationConfigurationResponse.code()).isEqualTo("x")
         assertThat(notificationConfigurationResponse.description()).isEqualTo("x")
         assertThat(notificationConfigurationResponse.name()).isEqualTo("x")
-        assertThat(notificationConfigurationResponse.version()).isEqualTo(0L)
         assertThat(notificationConfigurationResponse.active()).contains(true)
         assertThat(notificationConfigurationResponse.alwaysFireEvent()).contains(true)
         assertThat(notificationConfigurationResponse.calculation()).contains("calculation")
@@ -44,6 +43,7 @@ internal class NotificationConfigurationResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(notificationConfigurationResponse.eventName()).contains("eventName")
         assertThat(notificationConfigurationResponse.lastModifiedBy()).contains("lastModifiedBy")
+        assertThat(notificationConfigurationResponse.version()).contains(0L)
     }
 
     @Test
@@ -55,7 +55,6 @@ internal class NotificationConfigurationResponseTest {
                 .code("x")
                 .description("x")
                 .name("x")
-                .version(0L)
                 .active(true)
                 .alwaysFireEvent(true)
                 .calculation("calculation")
@@ -64,6 +63,7 @@ internal class NotificationConfigurationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .eventName("eventName")
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         val roundtrippedNotificationConfigurationResponse =

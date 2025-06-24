@@ -64,17 +64,13 @@ internal class EventListPageResponseTest {
                                                     "dtLastModified" to
                                                         "2022-10-28T13:54:48.081781Z",
                                                 )
-                                        ),
-                                    "eventTime" to "2022-10-28T13:54:48.087Z",
-                                    "eventName" to "configuration.commitment.created",
+                                        )
                                 )
                             )
                         )
                         .build()
                 )
-                .nextToken(
-                    "MTY2MDMxNTYyNjQ1NCNERUxJTSNhNTIxMDQ0Zi0zMzA0LTQ0ZjEtYTBkYy05YzQyMjIzZGFhMWE="
-                )
+                .nextToken("nextToken")
                 .build()
 
         assertThat(eventListPageResponse.data().getOrNull())
@@ -122,18 +118,13 @@ internal class EventListPageResponseTest {
                                                 "startDate" to "2023-01-01",
                                                 "dtLastModified" to "2022-10-28T13:54:48.081781Z",
                                             )
-                                    ),
-                                "eventTime" to "2022-10-28T13:54:48.087Z",
-                                "eventName" to "configuration.commitment.created",
+                                    )
                             )
                         )
                     )
                     .build()
             )
-        assertThat(eventListPageResponse.nextToken())
-            .contains(
-                "MTY2MDMxNTYyNjQ1NCNERUxJTSNhNTIxMDQ0Zi0zMzA0LTQ0ZjEtYTBkYy05YzQyMjIzZGFhMWE="
-            )
+        assertThat(eventListPageResponse.nextToken()).contains("nextToken")
     }
 
     @Test
@@ -189,17 +180,13 @@ internal class EventListPageResponseTest {
                                                     "dtLastModified" to
                                                         "2022-10-28T13:54:48.081781Z",
                                                 )
-                                        ),
-                                    "eventTime" to "2022-10-28T13:54:48.087Z",
-                                    "eventName" to "configuration.commitment.created",
+                                        )
                                 )
                             )
                         )
                         .build()
                 )
-                .nextToken(
-                    "MTY2MDMxNTYyNjQ1NCNERUxJTSNhNTIxMDQ0Zi0zMzA0LTQ0ZjEtYTBkYy05YzQyMjIzZGFhMWE="
-                )
+                .nextToken("nextToken")
                 .build()
 
         val roundtrippedEventListPageResponse =

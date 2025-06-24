@@ -17,7 +17,6 @@ internal class PricingResponseTest {
         val pricingResponse =
             PricingResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .aggregationId("aggregationId")
                 .aggregationType(PricingResponse.AggregationType.SIMPLE)
@@ -62,10 +61,10 @@ internal class PricingResponseTest {
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .tiersSpanPlan(true)
                 .type(PricingResponse.Type.DEBIT)
+                .version(0L)
                 .build()
 
         assertThat(pricingResponse.id()).isEqualTo("id")
-        assertThat(pricingResponse.version()).isEqualTo(0L)
         assertThat(pricingResponse.accountingProductId()).contains("accountingProductId")
         assertThat(pricingResponse.aggregationId()).contains("aggregationId")
         assertThat(pricingResponse.aggregationType())
@@ -118,6 +117,7 @@ internal class PricingResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(pricingResponse.tiersSpanPlan()).contains(true)
         assertThat(pricingResponse.type()).contains(PricingResponse.Type.DEBIT)
+        assertThat(pricingResponse.version()).contains(0L)
     }
 
     @Test
@@ -126,7 +126,6 @@ internal class PricingResponseTest {
         val pricingResponse =
             PricingResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountingProductId("accountingProductId")
                 .aggregationId("aggregationId")
                 .aggregationType(PricingResponse.AggregationType.SIMPLE)
@@ -171,6 +170,7 @@ internal class PricingResponseTest {
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .tiersSpanPlan(true)
                 .type(PricingResponse.Type.DEBIT)
+                .version(0L)
                 .build()
 
         val roundtrippedPricingResponse =

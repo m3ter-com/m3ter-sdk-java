@@ -18,7 +18,6 @@ internal class CounterPricingListPageResponseTest {
                 .addData(
                     CounterPricingResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .code("code")
                         .counterId("counterId")
@@ -45,6 +44,7 @@ internal class CounterPricingListPageResponseTest {
                         .proRateRunningTotal(true)
                         .runningTotalBillInAdvance(true)
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -54,7 +54,6 @@ internal class CounterPricingListPageResponseTest {
             .containsExactly(
                 CounterPricingResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountingProductId("accountingProductId")
                     .code("code")
                     .counterId("counterId")
@@ -81,6 +80,7 @@ internal class CounterPricingListPageResponseTest {
                     .proRateRunningTotal(true)
                     .runningTotalBillInAdvance(true)
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .version(0L)
                     .build()
             )
         assertThat(counterPricingListPageResponse.nextToken()).contains("nextToken")
@@ -94,7 +94,6 @@ internal class CounterPricingListPageResponseTest {
                 .addData(
                     CounterPricingResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .code("code")
                         .counterId("counterId")
@@ -121,6 +120,7 @@ internal class CounterPricingListPageResponseTest {
                         .proRateRunningTotal(true)
                         .runningTotalBillInAdvance(true)
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

@@ -216,7 +216,6 @@ private constructor(
     class Organization
     private constructor(
         private val id: JsonField<String>,
-        private val version: JsonField<Long>,
         private val addressLine1: JsonField<String>,
         private val addressLine2: JsonField<String>,
         private val addressLine3: JsonField<String>,
@@ -241,13 +240,13 @@ private constructor(
         private val status: JsonField<Status>,
         private val taxId: JsonField<String>,
         private val type: JsonField<Type>,
+        private val version: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
             @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("addressLine1")
             @ExcludeMissing
             addressLine1: JsonField<String> = JsonMissing.of(),
@@ -308,9 +307,9 @@ private constructor(
             @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
             @JsonProperty("taxId") @ExcludeMissing taxId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(
             id,
-            version,
             addressLine1,
             addressLine2,
             addressLine3,
@@ -335,6 +334,7 @@ private constructor(
             status,
             taxId,
             type,
+            version,
             mutableMapOf(),
         )
 
@@ -345,17 +345,6 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun id(): String = id.getRequired("id")
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun version(): Long = version.getRequired("version")
 
         /**
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -516,18 +505,22 @@ private constructor(
         fun type(): Optional<Type> = type.getOptional("type")
 
         /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = version.getOptional("version")
+
+        /**
          * Returns the raw JSON value of [id].
          *
          * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         /**
          * Returns the raw JSON value of [addressLine1].
@@ -737,6 +730,13 @@ private constructor(
          */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -757,7 +757,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              */
             @JvmStatic fun builder() = Builder()
@@ -767,7 +766,6 @@ private constructor(
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
-            private var version: JsonField<Long>? = null
             private var addressLine1: JsonField<String> = JsonMissing.of()
             private var addressLine2: JsonField<String> = JsonMissing.of()
             private var addressLine3: JsonField<String> = JsonMissing.of()
@@ -792,12 +790,12 @@ private constructor(
             private var status: JsonField<Status> = JsonMissing.of()
             private var taxId: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(organization: Organization) = apply {
                 id = organization.id
-                version = organization.version
                 addressLine1 = organization.addressLine1
                 addressLine2 = organization.addressLine2
                 addressLine3 = organization.addressLine3
@@ -822,6 +820,7 @@ private constructor(
                 status = organization.status
                 taxId = organization.taxId
                 type = organization.type
+                version = organization.version
                 additionalProperties = organization.additionalProperties.toMutableMap()
             }
 
@@ -836,23 +835,6 @@ private constructor(
              * value.
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /**
-             * The version number:
-             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
-             *   the response.
-             * - **Update:** On successful Update, the version is incremented by 1 in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
 
             fun addressLine1(addressLine1: String) = addressLine1(JsonField.of(addressLine1))
 
@@ -1156,6 +1138,23 @@ private constructor(
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
+            /**
+             * The version number:
+             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
+             *   the response.
+             * - **Update:** On successful Update, the version is incremented by 1 in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1183,7 +1182,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -1191,7 +1189,6 @@ private constructor(
             fun build(): Organization =
                 Organization(
                     checkRequired("id", id),
-                    checkRequired("version", version),
                     addressLine1,
                     addressLine2,
                     addressLine3,
@@ -1216,6 +1213,7 @@ private constructor(
                     status,
                     taxId,
                     type,
+                    version,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1228,7 +1226,6 @@ private constructor(
             }
 
             id()
-            version()
             addressLine1()
             addressLine2()
             addressLine3()
@@ -1253,6 +1250,7 @@ private constructor(
             status().ifPresent { it.validate() }
             taxId()
             type().ifPresent { it.validate() }
+            version()
             validated = true
         }
 
@@ -1273,7 +1271,6 @@ private constructor(
         @JvmSynthetic
         internal fun validity(): Int =
             (if (id.asKnown().isPresent) 1 else 0) +
-                (if (version.asKnown().isPresent) 1 else 0) +
                 (if (addressLine1.asKnown().isPresent) 1 else 0) +
                 (if (addressLine2.asKnown().isPresent) 1 else 0) +
                 (if (addressLine3.asKnown().isPresent) 1 else 0) +
@@ -1297,7 +1294,8 @@ private constructor(
                 (if (shortName.asKnown().isPresent) 1 else 0) +
                 (status.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (taxId.asKnown().isPresent) 1 else 0) +
-                (type.asKnown().getOrNull()?.validity() ?: 0)
+                (type.asKnown().getOrNull()?.validity() ?: 0) +
+                (if (version.asKnown().isPresent) 1 else 0)
 
         class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1560,17 +1558,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && id == other.id && version == other.version && addressLine1 == other.addressLine1 && addressLine2 == other.addressLine2 && addressLine3 == other.addressLine3 && addressLine4 == other.addressLine4 && billingContactUserId1 == other.billingContactUserId1 && billingContactUserId2 == other.billingContactUserId2 && billingContactUserId3 == other.billingContactUserId3 && country == other.country && createdBy == other.createdBy && customerId == other.customerId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && invoiceGeneralReference == other.invoiceGeneralReference && lastModifiedBy == other.lastModifiedBy && locality == other.locality && organizationName == other.organizationName && orgId == other.orgId && postCode == other.postCode && purchaseOrderNumber == other.purchaseOrderNumber && region == other.region && shortName == other.shortName && status == other.status && taxId == other.taxId && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Organization && id == other.id && addressLine1 == other.addressLine1 && addressLine2 == other.addressLine2 && addressLine3 == other.addressLine3 && addressLine4 == other.addressLine4 && billingContactUserId1 == other.billingContactUserId1 && billingContactUserId2 == other.billingContactUserId2 && billingContactUserId3 == other.billingContactUserId3 && country == other.country && createdBy == other.createdBy && customerId == other.customerId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && invoiceGeneralReference == other.invoiceGeneralReference && lastModifiedBy == other.lastModifiedBy && locality == other.locality && organizationName == other.organizationName && orgId == other.orgId && postCode == other.postCode && purchaseOrderNumber == other.purchaseOrderNumber && region == other.region && shortName == other.shortName && status == other.status && taxId == other.taxId && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, version, addressLine1, addressLine2, addressLine3, addressLine4, billingContactUserId1, billingContactUserId2, billingContactUserId3, country, createdBy, customerId, dtCreated, dtLastModified, invoiceGeneralReference, lastModifiedBy, locality, organizationName, orgId, postCode, purchaseOrderNumber, region, shortName, status, taxId, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, addressLine1, addressLine2, addressLine3, addressLine4, billingContactUserId1, billingContactUserId2, billingContactUserId3, country, createdBy, customerId, dtCreated, dtLastModified, invoiceGeneralReference, lastModifiedBy, locality, organizationName, orgId, postCode, purchaseOrderNumber, region, shortName, status, taxId, type, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Organization{id=$id, version=$version, addressLine1=$addressLine1, addressLine2=$addressLine2, addressLine3=$addressLine3, addressLine4=$addressLine4, billingContactUserId1=$billingContactUserId1, billingContactUserId2=$billingContactUserId2, billingContactUserId3=$billingContactUserId3, country=$country, createdBy=$createdBy, customerId=$customerId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, invoiceGeneralReference=$invoiceGeneralReference, lastModifiedBy=$lastModifiedBy, locality=$locality, organizationName=$organizationName, orgId=$orgId, postCode=$postCode, purchaseOrderNumber=$purchaseOrderNumber, region=$region, shortName=$shortName, status=$status, taxId=$taxId, type=$type, additionalProperties=$additionalProperties}"
+            "Organization{id=$id, addressLine1=$addressLine1, addressLine2=$addressLine2, addressLine3=$addressLine3, addressLine4=$addressLine4, billingContactUserId1=$billingContactUserId1, billingContactUserId2=$billingContactUserId2, billingContactUserId3=$billingContactUserId3, country=$country, createdBy=$createdBy, customerId=$customerId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, invoiceGeneralReference=$invoiceGeneralReference, lastModifiedBy=$lastModifiedBy, locality=$locality, organizationName=$organizationName, orgId=$orgId, postCode=$postCode, purchaseOrderNumber=$purchaseOrderNumber, region=$region, shortName=$shortName, status=$status, taxId=$taxId, type=$type, version=$version, additionalProperties=$additionalProperties}"
     }
 
     class ServiceUser

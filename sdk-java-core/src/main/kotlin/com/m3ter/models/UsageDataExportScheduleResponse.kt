@@ -23,20 +23,19 @@ import kotlin.jvm.optionals.getOrNull
 class UsageDataExportScheduleResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountIds: JsonField<List<String>>,
     private val aggregations: JsonField<List<Aggregation>>,
     private val dimensionFilters: JsonField<List<DimensionFilter>>,
     private val groups: JsonField<List<DataExplorerGroup>>,
     private val meterIds: JsonField<List<String>>,
     private val timePeriod: JsonField<TimePeriod>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountIds")
         @ExcludeMissing
         accountIds: JsonField<List<String>> = JsonMissing.of(),
@@ -55,15 +54,16 @@ private constructor(
         @JsonProperty("timePeriod")
         @ExcludeMissing
         timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountIds,
         aggregations,
         dimensionFilters,
         groups,
         meterIds,
         timePeriod,
+        version,
         mutableMapOf(),
     )
 
@@ -74,17 +74,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * List of account IDs for which the usage data will be exported.
@@ -162,18 +151,22 @@ private constructor(
     fun timePeriod(): Optional<TimePeriod> = timePeriod.getOptional("timePeriod")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountIds].
@@ -228,6 +221,13 @@ private constructor(
     @ExcludeMissing
     fun _timePeriod(): JsonField<TimePeriod> = timePeriod
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -249,7 +249,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -259,20 +258,19 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountIds: JsonField<MutableList<String>>? = null
         private var aggregations: JsonField<MutableList<Aggregation>>? = null
         private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
         private var groups: JsonField<MutableList<DataExplorerGroup>>? = null
         private var meterIds: JsonField<MutableList<String>>? = null
         private var timePeriod: JsonField<TimePeriod> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(usageDataExportScheduleResponse: UsageDataExportScheduleResponse) =
             apply {
                 id = usageDataExportScheduleResponse.id
-                version = usageDataExportScheduleResponse.version
                 accountIds = usageDataExportScheduleResponse.accountIds.map { it.toMutableList() }
                 aggregations =
                     usageDataExportScheduleResponse.aggregations.map { it.toMutableList() }
@@ -281,6 +279,7 @@ private constructor(
                 groups = usageDataExportScheduleResponse.groups.map { it.toMutableList() }
                 meterIds = usageDataExportScheduleResponse.meterIds.map { it.toMutableList() }
                 timePeriod = usageDataExportScheduleResponse.timePeriod
+                version = usageDataExportScheduleResponse.version
                 additionalProperties =
                     usageDataExportScheduleResponse.additionalProperties.toMutableMap()
             }
@@ -295,22 +294,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** List of account IDs for which the usage data will be exported. */
         fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
@@ -484,6 +467,22 @@ private constructor(
          */
         fun timePeriod(timePeriod: JsonField<TimePeriod>) = apply { this.timePeriod = timePeriod }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -511,7 +510,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -519,13 +517,13 @@ private constructor(
         fun build(): UsageDataExportScheduleResponse =
             UsageDataExportScheduleResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
                 (aggregations ?: JsonMissing.of()).map { it.toImmutable() },
                 (dimensionFilters ?: JsonMissing.of()).map { it.toImmutable() },
                 (groups ?: JsonMissing.of()).map { it.toImmutable() },
                 (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
                 timePeriod,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -538,13 +536,13 @@ private constructor(
         }
 
         id()
-        version()
         accountIds()
         aggregations().ifPresent { it.forEach { it.validate() } }
         dimensionFilters().ifPresent { it.forEach { it.validate() } }
         groups().ifPresent { it.forEach { it.validate() } }
         meterIds()
         timePeriod().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -564,13 +562,13 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (accountIds.asKnown().getOrNull()?.size ?: 0) +
             (aggregations.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (dimensionFilters.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (groups.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (meterIds.asKnown().getOrNull()?.size ?: 0) +
-            (timePeriod.asKnown().getOrNull()?.validity() ?: 0)
+            (timePeriod.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class Aggregation
     private constructor(
@@ -1635,15 +1633,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageDataExportScheduleResponse && id == other.id && version == other.version && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && timePeriod == other.timePeriod && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is UsageDataExportScheduleResponse && id == other.id && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && timePeriod == other.timePeriod && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountIds, aggregations, dimensionFilters, groups, meterIds, timePeriod, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountIds, aggregations, dimensionFilters, groups, meterIds, timePeriod, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "UsageDataExportScheduleResponse{id=$id, version=$version, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, meterIds=$meterIds, timePeriod=$timePeriod, additionalProperties=$additionalProperties}"
+        "UsageDataExportScheduleResponse{id=$id, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, meterIds=$meterIds, timePeriod=$timePeriod, version=$version, additionalProperties=$additionalProperties}"
 }

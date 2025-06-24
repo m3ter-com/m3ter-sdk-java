@@ -17,7 +17,6 @@ internal class UserMeResponseTest {
                 .organization(
                     UserMeResponse.Organization.builder()
                         .id("id")
-                        .version(0L)
                         .addressLine1("addressLine1")
                         .addressLine2("addressLine2")
                         .addressLine3("addressLine3")
@@ -42,6 +41,7 @@ internal class UserMeResponseTest {
                         .status(UserMeResponse.Organization.Status.ACTIVE)
                         .taxId("taxId")
                         .type(UserMeResponse.Organization.Type.PRODUCTION)
+                        .version(0L)
                         .build()
                 )
                 .serviceUser(
@@ -83,7 +83,6 @@ internal class UserMeResponseTest {
             .contains(
                 UserMeResponse.Organization.builder()
                     .id("id")
-                    .version(0L)
                     .addressLine1("addressLine1")
                     .addressLine2("addressLine2")
                     .addressLine3("addressLine3")
@@ -108,6 +107,7 @@ internal class UserMeResponseTest {
                     .status(UserMeResponse.Organization.Status.ACTIVE)
                     .taxId("taxId")
                     .type(UserMeResponse.Organization.Type.PRODUCTION)
+                    .version(0L)
                     .build()
             )
         assertThat(userMeResponse.serviceUser())
@@ -155,7 +155,6 @@ internal class UserMeResponseTest {
                 .organization(
                     UserMeResponse.Organization.builder()
                         .id("id")
-                        .version(0L)
                         .addressLine1("addressLine1")
                         .addressLine2("addressLine2")
                         .addressLine3("addressLine3")
@@ -180,6 +179,7 @@ internal class UserMeResponseTest {
                         .status(UserMeResponse.Organization.Status.ACTIVE)
                         .taxId("taxId")
                         .type(UserMeResponse.Organization.Type.PRODUCTION)
+                        .version(0L)
                         .build()
                 )
                 .serviceUser(

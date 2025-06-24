@@ -15,6 +15,9 @@ import kotlin.jvm.optionals.getOrNull
  * This endpoint returns a list of all Balances associated with your organization. You can filter
  * the Balances by the end customer's Account UUID and end dates, and paginate through them using
  * the `pageSize` and `nextToken` parameters.
+ *
+ * **NOTE:** If a Balance has a rollover amount configured and you want to use the `endDateStart` or
+ * `endDateEnd` query parameters, the `rolloverEndDate` is used as the end date for the Balance.
  */
 class BalanceListParams
 private constructor(
@@ -37,10 +40,16 @@ private constructor(
 
     fun contract(): Optional<String> = Optional.ofNullable(contract)
 
-    /** Only include Balances with end dates earlier than this date. */
+    /**
+     * Only include Balances with end dates earlier than this date. If a Balance has a rollover
+     * amount configured, then the `rolloverEndDate` will be used as the end date.
+     */
     fun endDateEnd(): Optional<String> = Optional.ofNullable(endDateEnd)
 
-    /** Only include Balances with end dates equal to or later than this date. */
+    /**
+     * Only include Balances with end dates equal to or later than this date. If a Balance has a
+     * rollover amount configured, then the `rolloverEndDate` will be used as the end date.
+     */
     fun endDateStart(): Optional<String> = Optional.ofNullable(endDateStart)
 
     /**
@@ -110,13 +119,19 @@ private constructor(
         /** Alias for calling [Builder.contract] with `contract.orElse(null)`. */
         fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
-        /** Only include Balances with end dates earlier than this date. */
+        /**
+         * Only include Balances with end dates earlier than this date. If a Balance has a rollover
+         * amount configured, then the `rolloverEndDate` will be used as the end date.
+         */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
 
         /** Alias for calling [Builder.endDateEnd] with `endDateEnd.orElse(null)`. */
         fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
-        /** Only include Balances with end dates equal to or later than this date. */
+        /**
+         * Only include Balances with end dates equal to or later than this date. If a Balance has a
+         * rollover amount configured, then the `rolloverEndDate` will be used as the end date.
+         */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
 
         /** Alias for calling [Builder.endDateStart] with `endDateStart.orElse(null)`. */

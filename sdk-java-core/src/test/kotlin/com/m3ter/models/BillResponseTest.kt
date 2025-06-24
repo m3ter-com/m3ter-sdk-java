@@ -18,7 +18,6 @@ internal class BillResponseTest {
         val billResponse =
             BillResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountCode("accountCode")
                 .accountId("accountId")
                 .billDate(LocalDate.parse("2019-12-27"))
@@ -111,10 +110,10 @@ internal class BillResponseTest {
                 .startDateTimeUtc(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(BillResponse.Status.PENDING)
                 .timezone("UTC")
+                .version(0L)
                 .build()
 
         assertThat(billResponse.id()).isEqualTo("id")
-        assertThat(billResponse.version()).isEqualTo(0L)
         assertThat(billResponse.accountCode()).contains("accountCode")
         assertThat(billResponse.accountId()).contains("accountId")
         assertThat(billResponse.billDate()).contains(LocalDate.parse("2019-12-27"))
@@ -215,6 +214,7 @@ internal class BillResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(billResponse.status()).contains(BillResponse.Status.PENDING)
         assertThat(billResponse.timezone()).contains("UTC")
+        assertThat(billResponse.version()).contains(0L)
     }
 
     @Test
@@ -223,7 +223,6 @@ internal class BillResponseTest {
         val billResponse =
             BillResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountCode("accountCode")
                 .accountId("accountId")
                 .billDate(LocalDate.parse("2019-12-27"))
@@ -316,6 +315,7 @@ internal class BillResponseTest {
                 .startDateTimeUtc(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(BillResponse.Status.PENDING)
                 .timezone("UTC")
+                .version(0L)
                 .build()
 
         val roundtrippedBillResponse =

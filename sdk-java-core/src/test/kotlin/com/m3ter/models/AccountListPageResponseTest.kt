@@ -20,7 +20,6 @@ internal class AccountListPageResponseTest {
                 .addData(
                     AccountResponse.builder()
                         .id("id")
-                        .version(0L)
                         .address(
                             Address.builder()
                                 .addressLine1("addressLine1")
@@ -60,6 +59,7 @@ internal class AccountListPageResponseTest {
                         .parentAccountId("parentAccountId")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .statementDefinitionId("statementDefinitionId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -69,7 +69,6 @@ internal class AccountListPageResponseTest {
             .containsExactly(
                 AccountResponse.builder()
                     .id("id")
-                    .version(0L)
                     .address(
                         Address.builder()
                             .addressLine1("addressLine1")
@@ -107,6 +106,7 @@ internal class AccountListPageResponseTest {
                     .parentAccountId("parentAccountId")
                     .purchaseOrderNumber("purchaseOrderNumber")
                     .statementDefinitionId("statementDefinitionId")
+                    .version(0L)
                     .build()
             )
         assertThat(accountListPageResponse.nextToken()).contains("nextToken")
@@ -120,7 +120,6 @@ internal class AccountListPageResponseTest {
                 .addData(
                     AccountResponse.builder()
                         .id("id")
-                        .version(0L)
                         .address(
                             Address.builder()
                                 .addressLine1("addressLine1")
@@ -160,6 +159,7 @@ internal class AccountListPageResponseTest {
                         .parentAccountId("parentAccountId")
                         .purchaseOrderNumber("purchaseOrderNumber")
                         .statementDefinitionId("statementDefinitionId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

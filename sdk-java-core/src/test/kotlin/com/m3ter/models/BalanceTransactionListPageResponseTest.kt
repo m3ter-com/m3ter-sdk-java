@@ -18,7 +18,6 @@ internal class BalanceTransactionListPageResponseTest {
                 .addData(
                     TransactionResponse.builder()
                         .id("id")
-                        .version(0L)
                         .amount(0.0)
                         .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .createdBy("createdBy")
@@ -32,6 +31,7 @@ internal class BalanceTransactionListPageResponseTest {
                         .paid(0.0)
                         .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .transactionTypeId("transactionTypeId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -41,7 +41,6 @@ internal class BalanceTransactionListPageResponseTest {
             .containsExactly(
                 TransactionResponse.builder()
                     .id("id")
-                    .version(0L)
                     .amount(0.0)
                     .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .createdBy("createdBy")
@@ -55,6 +54,7 @@ internal class BalanceTransactionListPageResponseTest {
                     .paid(0.0)
                     .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .transactionTypeId("transactionTypeId")
+                    .version(0L)
                     .build()
             )
         assertThat(balanceTransactionListPageResponse.nextToken()).contains("nextToken")
@@ -68,7 +68,6 @@ internal class BalanceTransactionListPageResponseTest {
                 .addData(
                     TransactionResponse.builder()
                         .id("id")
-                        .version(0L)
                         .amount(0.0)
                         .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .createdBy("createdBy")
@@ -82,6 +81,7 @@ internal class BalanceTransactionListPageResponseTest {
                         .paid(0.0)
                         .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .transactionTypeId("transactionTypeId")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
