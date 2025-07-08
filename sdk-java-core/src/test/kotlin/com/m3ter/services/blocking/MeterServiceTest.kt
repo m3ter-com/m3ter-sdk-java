@@ -33,7 +33,7 @@ internal class MeterServiceTest {
             meterService.create(
                 MeterCreateParams.builder()
                     .orgId("orgId")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .addDataField(
                         DataField.builder()
                             .category(DataField.Category.WHO)
@@ -101,7 +101,7 @@ internal class MeterServiceTest {
                 MeterUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .addDataField(
                         DataField.builder()
                             .category(DataField.Category.WHO)

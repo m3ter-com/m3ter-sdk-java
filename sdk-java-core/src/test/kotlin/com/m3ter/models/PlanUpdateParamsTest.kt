@@ -13,7 +13,7 @@ internal class PlanUpdateParamsTest {
         PlanUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .name("x")
             .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -41,7 +41,7 @@ internal class PlanUpdateParamsTest {
         val params =
             PlanUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .name("x")
                 .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .build()
@@ -58,7 +58,7 @@ internal class PlanUpdateParamsTest {
             PlanUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .name("x")
                 .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -82,7 +82,7 @@ internal class PlanUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.planTemplateId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.accountId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -112,14 +112,14 @@ internal class PlanUpdateParamsTest {
         val params =
             PlanUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .name("x")
                 .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.planTemplateId()).isEqualTo("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     }

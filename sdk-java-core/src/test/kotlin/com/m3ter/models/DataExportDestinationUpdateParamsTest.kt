@@ -15,7 +15,7 @@ internal class DataExportDestinationUpdateParamsTest {
             .body(
                 DataExportDestinationS3Request.builder()
                     .bucketName("xxx")
-                    .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                    .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                     .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                     .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
                     .prefix("prefix")
@@ -33,7 +33,7 @@ internal class DataExportDestinationUpdateParamsTest {
                 .body(
                     DataExportDestinationS3Request.builder()
                         .bucketName("xxx")
-                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                         .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                         .build()
                 )
@@ -54,7 +54,7 @@ internal class DataExportDestinationUpdateParamsTest {
                 .body(
                     DataExportDestinationS3Request.builder()
                         .bucketName("xxx")
-                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                         .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                         .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
                         .prefix("prefix")
@@ -70,7 +70,7 @@ internal class DataExportDestinationUpdateParamsTest {
                 DataExportDestinationUpdateParams.Body.ofDataExportDestinationS3Request(
                     DataExportDestinationS3Request.builder()
                         .bucketName("xxx")
-                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                         .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                         .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
                         .prefix("prefix")
@@ -88,7 +88,7 @@ internal class DataExportDestinationUpdateParamsTest {
                 .body(
                     DataExportDestinationS3Request.builder()
                         .bucketName("xxx")
-                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                         .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                         .build()
                 )
@@ -101,7 +101,7 @@ internal class DataExportDestinationUpdateParamsTest {
                 DataExportDestinationUpdateParams.Body.ofDataExportDestinationS3Request(
                     DataExportDestinationS3Request.builder()
                         .bucketName("xxx")
-                        .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                        .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                         .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                         .build()
                 )

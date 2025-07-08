@@ -19,7 +19,7 @@ internal class AccountPlanUpdateParamsTest {
             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .billEpoch(LocalDate.parse("2019-12-27"))
             .childBillingMode(AccountPlanUpdateParams.ChildBillingMode.PARENT_SUMMARY)
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .customFields(
                 AccountPlanUpdateParams.CustomFields.builder()
@@ -58,7 +58,7 @@ internal class AccountPlanUpdateParamsTest {
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .billEpoch(LocalDate.parse("2019-12-27"))
                 .childBillingMode(AccountPlanUpdateParams.ChildBillingMode.PARENT_SUMMARY)
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .customFields(
                     AccountPlanUpdateParams.CustomFields.builder()
@@ -78,7 +78,7 @@ internal class AccountPlanUpdateParamsTest {
         assertThat(body.billEpoch()).contains(LocalDate.parse("2019-12-27"))
         assertThat(body.childBillingMode())
             .contains(AccountPlanUpdateParams.ChildBillingMode.PARENT_SUMMARY)
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.contractId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.customFields())
             .contains(

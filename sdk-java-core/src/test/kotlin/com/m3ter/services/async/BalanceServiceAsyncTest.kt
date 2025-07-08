@@ -37,7 +37,7 @@ internal class BalanceServiceAsyncTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .balanceDrawDownDescription("balanceDrawDownDescription")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .contractId("contractId")
                     .customFields(
@@ -105,7 +105,7 @@ internal class BalanceServiceAsyncTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .balanceDrawDownDescription("balanceDrawDownDescription")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .contractId("contractId")
                     .customFields(

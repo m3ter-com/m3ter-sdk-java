@@ -31,7 +31,7 @@ internal class ProductServiceAsyncTest {
             productServiceAsync.create(
                 ProductCreateParams.builder()
                     .orgId("orgId")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .name("x")
                     .customFields(
                         ProductCreateParams.CustomFields.builder()
@@ -84,7 +84,7 @@ internal class ProductServiceAsyncTest {
                 ProductUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .name("x")
                     .customFields(
                         ProductUpdateParams.CustomFields.builder()

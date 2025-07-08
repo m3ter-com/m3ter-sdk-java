@@ -37,7 +37,7 @@ internal class AccountServiceAsyncTest {
             accountServiceAsync.create(
                 AccountCreateParams.builder()
                     .orgId("orgId")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(
@@ -118,7 +118,7 @@ internal class AccountServiceAsyncTest {
                 AccountUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(
