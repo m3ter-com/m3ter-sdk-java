@@ -14,7 +14,7 @@ internal class DataExportDestinationS3RequestTest {
         val dataExportDestinationS3Request =
             DataExportDestinationS3Request.builder()
                 .bucketName("xxx")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                 .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                 .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
                 .prefix("prefix")
@@ -23,7 +23,7 @@ internal class DataExportDestinationS3RequestTest {
 
         assertThat(dataExportDestinationS3Request.bucketName()).isEqualTo("xxx")
         assertThat(dataExportDestinationS3Request.iamRoleArn())
-            .isEqualTo("arn:aws:iam::321669910225:role/z")
+            .isEqualTo("arn:aws:iam::321669910225:role/\"")
         assertThat(dataExportDestinationS3Request.destinationType())
             .contains(DataExportDestinationS3Request.DestinationType.S3)
         assertThat(dataExportDestinationS3Request.partitionOrder())
@@ -38,7 +38,7 @@ internal class DataExportDestinationS3RequestTest {
         val dataExportDestinationS3Request =
             DataExportDestinationS3Request.builder()
                 .bucketName("xxx")
-                .iamRoleArn("arn:aws:iam::321669910225:role/z")
+                .iamRoleArn("arn:aws:iam::321669910225:role/\"")
                 .destinationType(DataExportDestinationS3Request.DestinationType.S3)
                 .partitionOrder(DataExportDestinationS3Request.PartitionOrder.TYPE_FIRST)
                 .prefix("prefix")

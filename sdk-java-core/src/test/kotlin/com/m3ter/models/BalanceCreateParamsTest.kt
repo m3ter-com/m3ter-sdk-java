@@ -19,7 +19,7 @@ internal class BalanceCreateParamsTest {
             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .balanceDrawDownDescription("balanceDrawDownDescription")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .contractId("contractId")
             .customFields(
@@ -65,7 +65,7 @@ internal class BalanceCreateParamsTest {
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .balanceDrawDownDescription("balanceDrawDownDescription")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .contractId("contractId")
                 .customFields(
@@ -92,7 +92,7 @@ internal class BalanceCreateParamsTest {
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.balanceDrawDownDescription()).contains("balanceDrawDownDescription")
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.consumptionsAccountingProductId())
             .contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.contractId()).contains("contractId")

@@ -17,7 +17,7 @@ internal class ContractCreateParamsTest {
             .endDate(LocalDate.parse("2019-12-27"))
             .name("x")
             .startDate(LocalDate.parse("2019-12-27"))
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .customFields(
                 ContractCreateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -53,7 +53,7 @@ internal class ContractCreateParamsTest {
                 .endDate(LocalDate.parse("2019-12-27"))
                 .name("x")
                 .startDate(LocalDate.parse("2019-12-27"))
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .customFields(
                     ContractCreateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -70,7 +70,7 @@ internal class ContractCreateParamsTest {
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2019-12-27"))
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.customFields())
             .contains(
                 ContractCreateParams.CustomFields.builder()

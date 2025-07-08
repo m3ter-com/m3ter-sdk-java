@@ -37,7 +37,7 @@ internal class AccountServiceTest {
             accountService.create(
                 AccountCreateParams.builder()
                     .orgId("orgId")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(
@@ -114,7 +114,7 @@ internal class AccountServiceTest {
                 AccountUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .emailAddress("dev@stainless.com")
                     .name("x")
                     .address(

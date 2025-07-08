@@ -14,7 +14,7 @@ internal class AccountCreateParamsTest {
     fun create() {
         AccountCreateParams.builder()
             .orgId("orgId")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .emailAddress("dev@stainless.com")
             .name("x")
             .address(
@@ -55,7 +55,7 @@ internal class AccountCreateParamsTest {
     fun pathParams() {
         val params =
             AccountCreateParams.builder()
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
@@ -70,7 +70,7 @@ internal class AccountCreateParamsTest {
         val params =
             AccountCreateParams.builder()
                 .orgId("orgId")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .address(
@@ -108,7 +108,7 @@ internal class AccountCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.address())
@@ -153,14 +153,14 @@ internal class AccountCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             AccountCreateParams.builder()
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
     }

@@ -13,7 +13,7 @@ internal class ProductUpdateParamsTest {
         ProductUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .name("x")
             .customFields(
                 ProductUpdateParams.CustomFields.builder()
@@ -26,7 +26,8 @@ internal class ProductUpdateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = ProductUpdateParams.builder().id("id").code("JS!?Q0]r] ]\$]").name("x").build()
+        val params =
+            ProductUpdateParams.builder().id("id").code("S?oC\"\$]C] ]]]]]5]").name("x").build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
         assertThat(params._pathParam(1)).isEqualTo("id")
@@ -40,7 +41,7 @@ internal class ProductUpdateParamsTest {
             ProductUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .name("x")
                 .customFields(
                     ProductUpdateParams.CustomFields.builder()
@@ -52,7 +53,7 @@ internal class ProductUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.customFields())
             .contains(
@@ -65,11 +66,12 @@ internal class ProductUpdateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = ProductUpdateParams.builder().id("id").code("JS!?Q0]r] ]\$]").name("x").build()
+        val params =
+            ProductUpdateParams.builder().id("id").code("S?oC\"\$]C] ]]]]]5]").name("x").build()
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
     }
 }

@@ -12,7 +12,7 @@ internal class ProductCreateParamsTest {
     fun create() {
         ProductCreateParams.builder()
             .orgId("orgId")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .name("x")
             .customFields(
                 ProductCreateParams.CustomFields.builder()
@@ -25,7 +25,7 @@ internal class ProductCreateParamsTest {
 
     @Test
     fun pathParams() {
-        val params = ProductCreateParams.builder().code("JS!?Q0]r] ]\$]").name("x").build()
+        val params = ProductCreateParams.builder().code("S?oC\"\$]C] ]]]]]5]").name("x").build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
         // out-of-bound path param
@@ -37,7 +37,7 @@ internal class ProductCreateParamsTest {
         val params =
             ProductCreateParams.builder()
                 .orgId("orgId")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .name("x")
                 .customFields(
                     ProductCreateParams.CustomFields.builder()
@@ -49,7 +49,7 @@ internal class ProductCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.customFields())
             .contains(
@@ -62,11 +62,11 @@ internal class ProductCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = ProductCreateParams.builder().code("JS!?Q0]r] ]\$]").name("x").build()
+        val params = ProductCreateParams.builder().code("S?oC\"\$]C] ]]]]]5]").name("x").build()
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.name()).isEqualTo("x")
     }
 }

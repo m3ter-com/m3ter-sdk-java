@@ -16,7 +16,7 @@ internal class PlanGroupUpdateParamsTest {
             .currency("xxx")
             .name("x")
             .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .customFields(
                 PlanGroupUpdateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -53,7 +53,7 @@ internal class PlanGroupUpdateParamsTest {
                 .currency("xxx")
                 .name("x")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .customFields(
                     PlanGroupUpdateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -75,7 +75,7 @@ internal class PlanGroupUpdateParamsTest {
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.customFields())
             .contains(
                 PlanGroupUpdateParams.CustomFields.builder()

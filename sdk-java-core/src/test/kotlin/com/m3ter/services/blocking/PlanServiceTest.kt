@@ -31,7 +31,7 @@ internal class PlanServiceTest {
             planService.create(
                 PlanCreateParams.builder()
                     .orgId("orgId")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .name("x")
                     .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -92,7 +92,7 @@ internal class PlanServiceTest {
                 PlanUpdateParams.builder()
                     .orgId("orgId")
                     .id("id")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .name("x")
                     .planTemplateId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")

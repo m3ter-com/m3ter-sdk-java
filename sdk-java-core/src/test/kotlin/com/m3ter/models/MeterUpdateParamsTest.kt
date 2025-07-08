@@ -13,7 +13,7 @@ internal class MeterUpdateParamsTest {
         MeterUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .addDataField(
                 DataField.builder()
                     .category(DataField.Category.WHO)
@@ -48,7 +48,7 @@ internal class MeterUpdateParamsTest {
         val params =
             MeterUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .addDataField(
                     DataField.builder()
                         .category(DataField.Category.WHO)
@@ -79,7 +79,7 @@ internal class MeterUpdateParamsTest {
             MeterUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .addDataField(
                     DataField.builder()
                         .category(DataField.Category.WHO)
@@ -110,7 +110,7 @@ internal class MeterUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.dataFields())
             .containsExactly(
                 DataField.builder()
@@ -147,7 +147,7 @@ internal class MeterUpdateParamsTest {
         val params =
             MeterUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .addDataField(
                     DataField.builder()
                         .category(DataField.Category.WHO)
@@ -168,7 +168,7 @@ internal class MeterUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.dataFields())
             .containsExactly(
                 DataField.builder()
