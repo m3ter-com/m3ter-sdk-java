@@ -122,14 +122,9 @@ interface AccountPlanServiceAsync {
     ): CompletableFuture<AccountPlanResponse>
 
     /**
-     * Retrieve a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
-     *
-     * This endpoint retrieves a list of AccountPlans and AccountPlanGroups for a specific
-     * Organization. The list can be paginated for easier management, and supports filtering with
-     * various parameters.
-     *
-     * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
-     * always use it in combination with the `account` query parameter.
+     * Retrieves a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
+     * The list can be paginated for easier management, and supports filtering with various query
+     * parameters.
      */
     fun list(): CompletableFuture<AccountPlanListPageAsync> = list(AccountPlanListParams.none())
 

@@ -30,7 +30,9 @@ internal class BillServiceAsyncTest {
         val billServiceAsync = client.bills()
 
         val billResponseFuture =
-            billServiceAsync.retrieve(BillRetrieveParams.builder().orgId("orgId").id("id").build())
+            billServiceAsync.retrieve(
+                BillRetrieveParams.builder().orgId("orgId").id("id").addAdditional("string").build()
+            )
 
         val billResponse = billResponseFuture.get()
         billResponse.validate()
@@ -114,7 +116,11 @@ internal class BillServiceAsyncTest {
 
         val billResponseFuture =
             billServiceAsync.latestByAccount(
-                BillLatestByAccountParams.builder().orgId("orgId").accountId("accountId").build()
+                BillLatestByAccountParams.builder()
+                    .orgId("orgId")
+                    .accountId("accountId")
+                    .addAdditional("string")
+                    .build()
             )
 
         val billResponse = billResponseFuture.get()
