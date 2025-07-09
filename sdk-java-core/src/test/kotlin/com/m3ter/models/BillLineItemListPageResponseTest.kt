@@ -19,6 +19,11 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
+                        .additional(
+                            LineItemResponse.Additional.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .aggregationId("aggregationId")
                         .averageUnitPrice(0.0)
                         .balanceId("balanceId")
@@ -27,6 +32,7 @@ internal class BillLineItemListPageResponseTest {
                                 .bandQuantity(0.0)
                                 .bandSubtotal(0.0)
                                 .bandUnits(0.0)
+                                .convertedBandSubtotal(0.0)
                                 .creditTypeId("creditTypeId")
                                 .fixedPrice(0.0)
                                 .lowerLimit(0.0)
@@ -89,6 +95,11 @@ internal class BillLineItemListPageResponseTest {
             .containsExactly(
                 LineItemResponse.builder()
                     .id("id")
+                    .additional(
+                        LineItemResponse.Additional.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .aggregationId("aggregationId")
                     .averageUnitPrice(0.0)
                     .balanceId("balanceId")
@@ -97,6 +108,7 @@ internal class BillLineItemListPageResponseTest {
                             .bandQuantity(0.0)
                             .bandSubtotal(0.0)
                             .bandUnits(0.0)
+                            .convertedBandSubtotal(0.0)
                             .creditTypeId("creditTypeId")
                             .fixedPrice(0.0)
                             .lowerLimit(0.0)
@@ -163,6 +175,11 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
+                        .additional(
+                            LineItemResponse.Additional.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .aggregationId("aggregationId")
                         .averageUnitPrice(0.0)
                         .balanceId("balanceId")
@@ -171,6 +188,7 @@ internal class BillLineItemListPageResponseTest {
                                 .bandQuantity(0.0)
                                 .bandSubtotal(0.0)
                                 .bandUnits(0.0)
+                                .convertedBandSubtotal(0.0)
                                 .creditTypeId("creditTypeId")
                                 .fixedPrice(0.0)
                                 .lowerLimit(0.0)

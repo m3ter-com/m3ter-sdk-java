@@ -5,6 +5,7 @@ package com.m3ter.models
 import com.m3ter.core.Params
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
+import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -19,6 +20,7 @@ class BillLatestByAccountParams
 private constructor(
     private val orgId: String?,
     private val accountId: String?,
+    private val additional: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -27,6 +29,9 @@ private constructor(
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     fun accountId(): Optional<String> = Optional.ofNullable(accountId)
+
+    /** Comma separated list of additional fields. */
+    fun additional(): Optional<List<String>> = Optional.ofNullable(additional)
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -49,6 +54,7 @@ private constructor(
 
         private var orgId: String? = null
         private var accountId: String? = null
+        private var additional: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -56,6 +62,7 @@ private constructor(
         internal fun from(billLatestByAccountParams: BillLatestByAccountParams) = apply {
             orgId = billLatestByAccountParams.orgId
             accountId = billLatestByAccountParams.accountId
+            additional = billLatestByAccountParams.additional?.toMutableList()
             additionalHeaders = billLatestByAccountParams.additionalHeaders.toBuilder()
             additionalQueryParams = billLatestByAccountParams.additionalQueryParams.toBuilder()
         }
@@ -71,6 +78,23 @@ private constructor(
 
         /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
+
+        /** Comma separated list of additional fields. */
+        fun additional(additional: List<String>?) = apply {
+            this.additional = additional?.toMutableList()
+        }
+
+        /** Alias for calling [Builder.additional] with `additional.orElse(null)`. */
+        fun additional(additional: Optional<List<String>>) = additional(additional.getOrNull())
+
+        /**
+         * Adds a single [String] to [Builder.additional].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAdditional(additional: String) = apply {
+            this.additional = (this.additional ?: mutableListOf()).apply { add(additional) }
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -179,6 +203,7 @@ private constructor(
             BillLatestByAccountParams(
                 orgId,
                 accountId,
+                additional?.toImmutable(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -193,18 +218,24 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                additional?.let { put("additional", it.joinToString(",")) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is BillLatestByAccountParams && orgId == other.orgId && accountId == other.accountId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BillLatestByAccountParams && orgId == other.orgId && accountId == other.accountId && additional == other.additional && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additional, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BillLatestByAccountParams{orgId=$orgId, accountId=$accountId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BillLatestByAccountParams{orgId=$orgId, accountId=$accountId, additional=$additional, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

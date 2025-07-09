@@ -24,6 +24,7 @@ import kotlin.jvm.optionals.getOrNull
 class LineItemResponse
 private constructor(
     private val id: JsonField<String>,
+    private val additional: JsonField<Additional>,
     private val aggregationId: JsonField<String>,
     private val averageUnitPrice: JsonField<Double>,
     private val balanceId: JsonField<String>,
@@ -71,6 +72,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("additional")
+        @ExcludeMissing
+        additional: JsonField<Additional> = JsonMissing.of(),
         @JsonProperty("aggregationId")
         @ExcludeMissing
         aggregationId: JsonField<String> = JsonMissing.of(),
@@ -160,6 +164,7 @@ private constructor(
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
+        additional,
         aggregationId,
         averageUnitPrice,
         balanceId,
@@ -211,6 +216,12 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun additional(): Optional<Additional> = additional.getOptional("additional")
 
     /**
      * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
@@ -561,6 +572,15 @@ private constructor(
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+    /**
+     * Returns the raw JSON value of [additional].
+     *
+     * Unlike [additional], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("additional")
+    @ExcludeMissing
+    fun _additional(): JsonField<Additional> = additional
 
     /**
      * Returns the raw JSON value of [aggregationId].
@@ -922,6 +942,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
+        private var additional: JsonField<Additional> = JsonMissing.of()
         private var aggregationId: JsonField<String> = JsonMissing.of()
         private var averageUnitPrice: JsonField<Double> = JsonMissing.of()
         private var balanceId: JsonField<String> = JsonMissing.of()
@@ -968,6 +989,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(lineItemResponse: LineItemResponse) = apply {
             id = lineItemResponse.id
+            additional = lineItemResponse.additional
             aggregationId = lineItemResponse.aggregationId
             averageUnitPrice = lineItemResponse.averageUnitPrice
             balanceId = lineItemResponse.balanceId
@@ -1022,6 +1044,17 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        fun additional(additional: Additional) = additional(JsonField.of(additional))
+
+        /**
+         * Sets [Builder.additional] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.additional] with a well-typed [Additional] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun additional(additional: JsonField<Additional>) = apply { this.additional = additional }
 
         /**
          * A unique identifier (UUID) for the Aggregation that contributes to this Bill line item.
@@ -1635,6 +1668,7 @@ private constructor(
         fun build(): LineItemResponse =
             LineItemResponse(
                 checkRequired("id", id),
+                additional,
                 aggregationId,
                 averageUnitPrice,
                 balanceId,
@@ -1688,6 +1722,7 @@ private constructor(
         }
 
         id()
+        additional().ifPresent { it.validate() }
         aggregationId()
         averageUnitPrice()
         balanceId()
@@ -1748,6 +1783,7 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
+            (additional.asKnown().getOrNull()?.validity() ?: 0) +
             (if (aggregationId.asKnown().isPresent) 1 else 0) +
             (if (averageUnitPrice.asKnown().isPresent) 1 else 0) +
             (if (balanceId.asKnown().isPresent) 1 else 0) +
@@ -1790,6 +1826,107 @@ private constructor(
             (if (units.asKnown().isPresent) 1 else 0) +
             (if (version.asKnown().isPresent) 1 else 0)
 
+    class Additional
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Additional]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [Additional]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(additional: Additional) = apply {
+                additionalProperties = additional.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Additional].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Additional = Additional(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Additional = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Additional{additionalProperties=$additionalProperties}"
+    }
+
     /**
      * Array containing the pricing band information, which shows the details for each pricing band
      * or tier.
@@ -1799,6 +1936,7 @@ private constructor(
         private val bandQuantity: JsonField<Double>,
         private val bandSubtotal: JsonField<Double>,
         private val bandUnits: JsonField<Double>,
+        private val convertedBandSubtotal: JsonField<Double>,
         private val creditTypeId: JsonField<String>,
         private val fixedPrice: JsonField<Double>,
         private val lowerLimit: JsonField<Double>,
@@ -1819,6 +1957,9 @@ private constructor(
             @JsonProperty("bandUnits")
             @ExcludeMissing
             bandUnits: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("convertedBandSubtotal")
+            @ExcludeMissing
+            convertedBandSubtotal: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("creditTypeId")
             @ExcludeMissing
             creditTypeId: JsonField<String> = JsonMissing.of(),
@@ -1841,6 +1982,7 @@ private constructor(
             bandQuantity,
             bandSubtotal,
             bandUnits,
+            convertedBandSubtotal,
             creditTypeId,
             fixedPrice,
             lowerLimit,
@@ -1873,6 +2015,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun bandUnits(): Optional<Double> = bandUnits.getOptional("bandUnits")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun convertedBandSubtotal(): Optional<Double> =
+            convertedBandSubtotal.getOptional("convertedBandSubtotal")
 
         /**
          * The UUID of the credit type.
@@ -1949,6 +2098,16 @@ private constructor(
          * Unlike [bandUnits], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("bandUnits") @ExcludeMissing fun _bandUnits(): JsonField<Double> = bandUnits
+
+        /**
+         * Returns the raw JSON value of [convertedBandSubtotal].
+         *
+         * Unlike [convertedBandSubtotal], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("convertedBandSubtotal")
+        @ExcludeMissing
+        fun _convertedBandSubtotal(): JsonField<Double> = convertedBandSubtotal
 
         /**
          * Returns the raw JSON value of [creditTypeId].
@@ -2029,6 +2188,7 @@ private constructor(
             private var bandQuantity: JsonField<Double> = JsonMissing.of()
             private var bandSubtotal: JsonField<Double> = JsonMissing.of()
             private var bandUnits: JsonField<Double> = JsonMissing.of()
+            private var convertedBandSubtotal: JsonField<Double> = JsonMissing.of()
             private var creditTypeId: JsonField<String> = JsonMissing.of()
             private var fixedPrice: JsonField<Double> = JsonMissing.of()
             private var lowerLimit: JsonField<Double> = JsonMissing.of()
@@ -2042,6 +2202,7 @@ private constructor(
                 bandQuantity = bandUsage.bandQuantity
                 bandSubtotal = bandUsage.bandSubtotal
                 bandUnits = bandUsage.bandUnits
+                convertedBandSubtotal = bandUsage.convertedBandSubtotal
                 creditTypeId = bandUsage.creditTypeId
                 fixedPrice = bandUsage.fixedPrice
                 lowerLimit = bandUsage.lowerLimit
@@ -2090,6 +2251,20 @@ private constructor(
              * supported value.
              */
             fun bandUnits(bandUnits: JsonField<Double>) = apply { this.bandUnits = bandUnits }
+
+            fun convertedBandSubtotal(convertedBandSubtotal: Double) =
+                convertedBandSubtotal(JsonField.of(convertedBandSubtotal))
+
+            /**
+             * Sets [Builder.convertedBandSubtotal] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.convertedBandSubtotal] with a well-typed [Double]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun convertedBandSubtotal(convertedBandSubtotal: JsonField<Double>) = apply {
+                this.convertedBandSubtotal = convertedBandSubtotal
+            }
 
             /** The UUID of the credit type. */
             fun creditTypeId(creditTypeId: String) = creditTypeId(JsonField.of(creditTypeId))
@@ -2201,6 +2376,7 @@ private constructor(
                     bandQuantity,
                     bandSubtotal,
                     bandUnits,
+                    convertedBandSubtotal,
                     creditTypeId,
                     fixedPrice,
                     lowerLimit,
@@ -2221,6 +2397,7 @@ private constructor(
             bandQuantity()
             bandSubtotal()
             bandUnits()
+            convertedBandSubtotal()
             creditTypeId()
             fixedPrice()
             lowerLimit()
@@ -2249,6 +2426,7 @@ private constructor(
             (if (bandQuantity.asKnown().isPresent) 1 else 0) +
                 (if (bandSubtotal.asKnown().isPresent) 1 else 0) +
                 (if (bandUnits.asKnown().isPresent) 1 else 0) +
+                (if (convertedBandSubtotal.asKnown().isPresent) 1 else 0) +
                 (if (creditTypeId.asKnown().isPresent) 1 else 0) +
                 (if (fixedPrice.asKnown().isPresent) 1 else 0) +
                 (if (lowerLimit.asKnown().isPresent) 1 else 0) +
@@ -2261,17 +2439,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BandUsage && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BandUsage && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BandUsage{bandQuantity=$bandQuantity, bandSubtotal=$bandSubtotal, bandUnits=$bandUnits, creditTypeId=$creditTypeId, fixedPrice=$fixedPrice, lowerLimit=$lowerLimit, pricingBandId=$pricingBandId, unitPrice=$unitPrice, unitSubtotal=$unitSubtotal, additionalProperties=$additionalProperties}"
+            "BandUsage{bandQuantity=$bandQuantity, bandSubtotal=$bandSubtotal, bandUnits=$bandUnits, convertedBandSubtotal=$convertedBandSubtotal, creditTypeId=$creditTypeId, fixedPrice=$fixedPrice, lowerLimit=$lowerLimit, pricingBandId=$pricingBandId, unitPrice=$unitPrice, unitSubtotal=$unitSubtotal, additionalProperties=$additionalProperties}"
     }
 
     class Group
@@ -2708,15 +2886,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LineItemResponse && id == other.id && additional == other.additional && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, additional, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LineItemResponse{id=$id, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, version=$version, additionalProperties=$additionalProperties}"
+        "LineItemResponse{id=$id, additional=$additional, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, version=$version, additionalProperties=$additionalProperties}"
 }

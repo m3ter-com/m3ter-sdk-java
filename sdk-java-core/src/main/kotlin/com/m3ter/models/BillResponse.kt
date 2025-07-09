@@ -27,6 +27,7 @@ private constructor(
     private val id: JsonField<String>,
     private val accountCode: JsonField<String>,
     private val accountId: JsonField<String>,
+    private val approvedBy: JsonField<String>,
     private val billDate: JsonField<LocalDate>,
     private val billFrequencyInterval: JsonField<Int>,
     private val billingFrequency: JsonField<BillingFrequency>,
@@ -37,8 +38,10 @@ private constructor(
     private val csvStatementGenerated: JsonField<Boolean>,
     private val currency: JsonField<String>,
     private val currencyConversions: JsonField<List<CurrencyConversion>>,
+    private val dtApproved: JsonField<OffsetDateTime>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
+    private val dtLocked: JsonField<OffsetDateTime>,
     private val dueDate: JsonField<LocalDate>,
     private val endDate: JsonField<LocalDate>,
     private val endDateTimeUtc: JsonField<OffsetDateTime>,
@@ -49,6 +52,7 @@ private constructor(
     private val lastModifiedBy: JsonField<String>,
     private val lineItems: JsonField<List<LineItem>>,
     private val locked: JsonField<Boolean>,
+    private val lockedBy: JsonField<String>,
     private val purchaseOrderNumber: JsonField<String>,
     private val sequentialInvoiceNumber: JsonField<String>,
     private val startDate: JsonField<LocalDate>,
@@ -66,6 +70,9 @@ private constructor(
         @ExcludeMissing
         accountCode: JsonField<String> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("approvedBy")
+        @ExcludeMissing
+        approvedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("billDate") @ExcludeMissing billDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("billFrequencyInterval")
         @ExcludeMissing
@@ -86,12 +93,18 @@ private constructor(
         @JsonProperty("currencyConversions")
         @ExcludeMissing
         currencyConversions: JsonField<List<CurrencyConversion>> = JsonMissing.of(),
+        @JsonProperty("dtApproved")
+        @ExcludeMissing
+        dtApproved: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
         dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("dtLastModified")
         @ExcludeMissing
         dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLocked")
+        @ExcludeMissing
+        dtLocked: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("dueDate") @ExcludeMissing dueDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("endDate") @ExcludeMissing endDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("endDateTimeUTC")
@@ -116,6 +129,7 @@ private constructor(
         @ExcludeMissing
         lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
         @JsonProperty("locked") @ExcludeMissing locked: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("lockedBy") @ExcludeMissing lockedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("purchaseOrderNumber")
         @ExcludeMissing
         purchaseOrderNumber: JsonField<String> = JsonMissing.of(),
@@ -135,6 +149,7 @@ private constructor(
         id,
         accountCode,
         accountId,
+        approvedBy,
         billDate,
         billFrequencyInterval,
         billingFrequency,
@@ -145,8 +160,10 @@ private constructor(
         csvStatementGenerated,
         currency,
         currencyConversions,
+        dtApproved,
         dtCreated,
         dtLastModified,
+        dtLocked,
         dueDate,
         endDate,
         endDateTimeUtc,
@@ -157,6 +174,7 @@ private constructor(
         lastModifiedBy,
         lineItems,
         locked,
+        lockedBy,
         purchaseOrderNumber,
         sequentialInvoiceNumber,
         startDate,
@@ -186,6 +204,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
+
+    /**
+     * The id of the user who approved this bill.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun approvedBy(): Optional<String> = approvedBy.getOptional("approvedBy")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -260,6 +286,14 @@ private constructor(
         currencyConversions.getOptional("currencyConversions")
 
     /**
+     * The DateTime when the bill was approved.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun dtApproved(): Optional<OffsetDateTime> = dtApproved.getOptional("dtApproved")
+
+    /**
      * The date and time _(in ISO 8601 format)_ when the Bill was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -274,6 +308,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
+
+    /**
+     * The DateTime when the bill was locked.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun dtLocked(): Optional<OffsetDateTime> = dtLocked.getOptional("dtLocked")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -363,6 +405,14 @@ private constructor(
     fun locked(): Optional<Boolean> = locked.getOptional("locked")
 
     /**
+     * The id of the user who locked this bill.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun lockedBy(): Optional<String> = lockedBy.getOptional("lockedBy")
+
+    /**
      * Purchase Order number linked to the Account the Bill is for.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -440,6 +490,13 @@ private constructor(
      * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
+
+    /**
+     * Returns the raw JSON value of [approvedBy].
+     *
+     * Unlike [approvedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("approvedBy") @ExcludeMissing fun _approvedBy(): JsonField<String> = approvedBy
 
     /**
      * Returns the raw JSON value of [billDate].
@@ -526,6 +583,15 @@ private constructor(
     fun _currencyConversions(): JsonField<List<CurrencyConversion>> = currencyConversions
 
     /**
+     * Returns the raw JSON value of [dtApproved].
+     *
+     * Unlike [dtApproved], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("dtApproved")
+    @ExcludeMissing
+    fun _dtApproved(): JsonField<OffsetDateTime> = dtApproved
+
+    /**
      * Returns the raw JSON value of [dtCreated].
      *
      * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
@@ -542,6 +608,13 @@ private constructor(
     @JsonProperty("dtLastModified")
     @ExcludeMissing
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
+
+    /**
+     * Returns the raw JSON value of [dtLocked].
+     *
+     * Unlike [dtLocked], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("dtLocked") @ExcludeMissing fun _dtLocked(): JsonField<OffsetDateTime> = dtLocked
 
     /**
      * Returns the raw JSON value of [dueDate].
@@ -632,6 +705,13 @@ private constructor(
     @JsonProperty("locked") @ExcludeMissing fun _locked(): JsonField<Boolean> = locked
 
     /**
+     * Returns the raw JSON value of [lockedBy].
+     *
+     * Unlike [lockedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("lockedBy") @ExcludeMissing fun _lockedBy(): JsonField<String> = lockedBy
+
+    /**
      * Returns the raw JSON value of [purchaseOrderNumber].
      *
      * Unlike [purchaseOrderNumber], this method doesn't throw if the JSON field has an unexpected
@@ -720,6 +800,7 @@ private constructor(
         private var id: JsonField<String>? = null
         private var accountCode: JsonField<String> = JsonMissing.of()
         private var accountId: JsonField<String> = JsonMissing.of()
+        private var approvedBy: JsonField<String> = JsonMissing.of()
         private var billDate: JsonField<LocalDate> = JsonMissing.of()
         private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
         private var billingFrequency: JsonField<BillingFrequency> = JsonMissing.of()
@@ -730,8 +811,10 @@ private constructor(
         private var csvStatementGenerated: JsonField<Boolean> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var currencyConversions: JsonField<MutableList<CurrencyConversion>>? = null
+        private var dtApproved: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var dtLocked: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dueDate: JsonField<LocalDate> = JsonMissing.of()
         private var endDate: JsonField<LocalDate> = JsonMissing.of()
         private var endDateTimeUtc: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -742,6 +825,7 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var lineItems: JsonField<MutableList<LineItem>>? = null
         private var locked: JsonField<Boolean> = JsonMissing.of()
+        private var lockedBy: JsonField<String> = JsonMissing.of()
         private var purchaseOrderNumber: JsonField<String> = JsonMissing.of()
         private var sequentialInvoiceNumber: JsonField<String> = JsonMissing.of()
         private var startDate: JsonField<LocalDate> = JsonMissing.of()
@@ -756,6 +840,7 @@ private constructor(
             id = billResponse.id
             accountCode = billResponse.accountCode
             accountId = billResponse.accountId
+            approvedBy = billResponse.approvedBy
             billDate = billResponse.billDate
             billFrequencyInterval = billResponse.billFrequencyInterval
             billingFrequency = billResponse.billingFrequency
@@ -766,8 +851,10 @@ private constructor(
             csvStatementGenerated = billResponse.csvStatementGenerated
             currency = billResponse.currency
             currencyConversions = billResponse.currencyConversions.map { it.toMutableList() }
+            dtApproved = billResponse.dtApproved
             dtCreated = billResponse.dtCreated
             dtLastModified = billResponse.dtLastModified
+            dtLocked = billResponse.dtLocked
             dueDate = billResponse.dueDate
             endDate = billResponse.endDate
             endDateTimeUtc = billResponse.endDateTimeUtc
@@ -778,6 +865,7 @@ private constructor(
             lastModifiedBy = billResponse.lastModifiedBy
             lineItems = billResponse.lineItems.map { it.toMutableList() }
             locked = billResponse.locked
+            lockedBy = billResponse.lockedBy
             purchaseOrderNumber = billResponse.purchaseOrderNumber
             sequentialInvoiceNumber = billResponse.sequentialInvoiceNumber
             startDate = billResponse.startDate
@@ -820,6 +908,18 @@ private constructor(
          * value.
          */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
+
+        /** The id of the user who approved this bill. */
+        fun approvedBy(approvedBy: String) = approvedBy(JsonField.of(approvedBy))
+
+        /**
+         * Sets [Builder.approvedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.approvedBy] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun approvedBy(approvedBy: JsonField<String>) = apply { this.approvedBy = approvedBy }
 
         fun billDate(billDate: LocalDate) = billDate(JsonField.of(billDate))
 
@@ -963,6 +1063,20 @@ private constructor(
                 }
         }
 
+        /** The DateTime when the bill was approved. */
+        fun dtApproved(dtApproved: OffsetDateTime) = dtApproved(JsonField.of(dtApproved))
+
+        /**
+         * Sets [Builder.dtApproved] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtApproved] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun dtApproved(dtApproved: JsonField<OffsetDateTime>) = apply {
+            this.dtApproved = dtApproved
+        }
+
         /** The date and time _(in ISO 8601 format)_ when the Bill was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
@@ -989,6 +1103,18 @@ private constructor(
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
         }
+
+        /** The DateTime when the bill was locked. */
+        fun dtLocked(dtLocked: OffsetDateTime) = dtLocked(JsonField.of(dtLocked))
+
+        /**
+         * Sets [Builder.dtLocked] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dtLocked] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun dtLocked(dtLocked: JsonField<OffsetDateTime>) = apply { this.dtLocked = dtLocked }
 
         fun dueDate(dueDate: LocalDate) = dueDate(JsonField.of(dueDate))
 
@@ -1153,6 +1279,17 @@ private constructor(
          */
         fun locked(locked: JsonField<Boolean>) = apply { this.locked = locked }
 
+        /** The id of the user who locked this bill. */
+        fun lockedBy(lockedBy: String) = lockedBy(JsonField.of(lockedBy))
+
+        /**
+         * Sets [Builder.lockedBy] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lockedBy] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun lockedBy(lockedBy: JsonField<String>) = apply { this.lockedBy = lockedBy }
+
         /** Purchase Order number linked to the Account the Bill is for. */
         fun purchaseOrderNumber(purchaseOrderNumber: String) =
             purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
@@ -1286,6 +1423,7 @@ private constructor(
                 checkRequired("id", id),
                 accountCode,
                 accountId,
+                approvedBy,
                 billDate,
                 billFrequencyInterval,
                 billingFrequency,
@@ -1296,8 +1434,10 @@ private constructor(
                 csvStatementGenerated,
                 currency,
                 (currencyConversions ?: JsonMissing.of()).map { it.toImmutable() },
+                dtApproved,
                 dtCreated,
                 dtLastModified,
+                dtLocked,
                 dueDate,
                 endDate,
                 endDateTimeUtc,
@@ -1308,6 +1448,7 @@ private constructor(
                 lastModifiedBy,
                 (lineItems ?: JsonMissing.of()).map { it.toImmutable() },
                 locked,
+                lockedBy,
                 purchaseOrderNumber,
                 sequentialInvoiceNumber,
                 startDate,
@@ -1329,6 +1470,7 @@ private constructor(
         id()
         accountCode()
         accountId()
+        approvedBy()
         billDate()
         billFrequencyInterval()
         billingFrequency().ifPresent { it.validate() }
@@ -1339,8 +1481,10 @@ private constructor(
         csvStatementGenerated()
         currency()
         currencyConversions().ifPresent { it.forEach { it.validate() } }
+        dtApproved()
         dtCreated()
         dtLastModified()
+        dtLocked()
         dueDate()
         endDate()
         endDateTimeUtc()
@@ -1351,6 +1495,7 @@ private constructor(
         lastModifiedBy()
         lineItems().ifPresent { it.forEach { it.validate() } }
         locked()
+        lockedBy()
         purchaseOrderNumber()
         sequentialInvoiceNumber()
         startDate()
@@ -1379,6 +1524,7 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (accountCode.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
+            (if (approvedBy.asKnown().isPresent) 1 else 0) +
             (if (billDate.asKnown().isPresent) 1 else 0) +
             (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
             (billingFrequency.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1389,8 +1535,10 @@ private constructor(
             (if (csvStatementGenerated.asKnown().isPresent) 1 else 0) +
             (if (currency.asKnown().isPresent) 1 else 0) +
             (currencyConversions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (dtApproved.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (dtLocked.asKnown().isPresent) 1 else 0) +
             (if (dueDate.asKnown().isPresent) 1 else 0) +
             (if (endDate.asKnown().isPresent) 1 else 0) +
             (if (endDateTimeUtc.asKnown().isPresent) 1 else 0) +
@@ -1401,6 +1549,7 @@ private constructor(
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (lineItems.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (locked.asKnown().isPresent) 1 else 0) +
+            (if (lockedBy.asKnown().isPresent) 1 else 0) +
             (if (purchaseOrderNumber.asKnown().isPresent) 1 else 0) +
             (if (sequentialInvoiceNumber.asKnown().isPresent) 1 else 0) +
             (if (startDate.asKnown().isPresent) 1 else 0) +
@@ -1574,6 +1723,7 @@ private constructor(
         private val unit: JsonField<String>,
         private val units: JsonField<Double>,
         private val id: JsonField<String>,
+        private val additional: JsonField<Additional>,
         private val aggregationId: JsonField<String>,
         private val balanceId: JsonField<String>,
         private val chargeId: JsonField<String>,
@@ -1632,6 +1782,9 @@ private constructor(
             @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
             @JsonProperty("units") @ExcludeMissing units: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("additional")
+            @ExcludeMissing
+            additional: JsonField<Additional> = JsonMissing.of(),
             @JsonProperty("aggregationId")
             @ExcludeMissing
             aggregationId: JsonField<String> = JsonMissing.of(),
@@ -1714,6 +1867,7 @@ private constructor(
             unit,
             units,
             id,
+            additional,
             aggregationId,
             balanceId,
             chargeId,
@@ -1828,6 +1982,12 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun id(): Optional<String> = id.getOptional("id")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun additional(): Optional<Additional> = additional.getOptional("additional")
 
         /**
          * The Aggregation ID used for the line item.
@@ -2118,6 +2278,15 @@ private constructor(
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
+         * Returns the raw JSON value of [additional].
+         *
+         * Unlike [additional], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("additional")
+        @ExcludeMissing
+        fun _additional(): JsonField<Additional> = additional
+
+        /**
          * Returns the raw JSON value of [aggregationId].
          *
          * Unlike [aggregationId], this method doesn't throw if the JSON field has an unexpected
@@ -2391,6 +2560,7 @@ private constructor(
             private var unit: JsonField<String>? = null
             private var units: JsonField<Double>? = null
             private var id: JsonField<String> = JsonMissing.of()
+            private var additional: JsonField<Additional> = JsonMissing.of()
             private var aggregationId: JsonField<String> = JsonMissing.of()
             private var balanceId: JsonField<String> = JsonMissing.of()
             private var chargeId: JsonField<String> = JsonMissing.of()
@@ -2432,6 +2602,7 @@ private constructor(
                 unit = lineItem.unit
                 units = lineItem.units
                 id = lineItem.id
+                additional = lineItem.additional
                 aggregationId = lineItem.aggregationId
                 balanceId = lineItem.balanceId
                 chargeId = lineItem.chargeId
@@ -2612,6 +2783,19 @@ private constructor(
              * value.
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun additional(additional: Additional) = additional(JsonField.of(additional))
+
+            /**
+             * Sets [Builder.additional] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.additional] with a well-typed [Additional] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun additional(additional: JsonField<Additional>) = apply {
+                this.additional = additional
+            }
 
             /** The Aggregation ID used for the line item. */
             fun aggregationId(aggregationId: String) = aggregationId(JsonField.of(aggregationId))
@@ -3034,6 +3218,7 @@ private constructor(
                     checkRequired("unit", unit),
                     checkRequired("units", units),
                     id,
+                    additional,
                     aggregationId,
                     balanceId,
                     chargeId,
@@ -3082,6 +3267,7 @@ private constructor(
             unit()
             units()
             id()
+            additional().ifPresent { it.validate() }
             aggregationId()
             balanceId()
             chargeId()
@@ -3138,6 +3324,7 @@ private constructor(
                 (if (unit.asKnown().isPresent) 1 else 0) +
                 (if (units.asKnown().isPresent) 1 else 0) +
                 (if (id.asKnown().isPresent) 1 else 0) +
+                (additional.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (aggregationId.asKnown().isPresent) 1 else 0) +
                 (if (balanceId.asKnown().isPresent) 1 else 0) +
                 (if (chargeId.asKnown().isPresent) 1 else 0) +
@@ -3392,6 +3579,110 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        class Additional
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [Additional]. */
+                @JvmStatic fun builder() = Builder()
+            }
+
+            /** A builder for [Additional]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                @JvmSynthetic
+                internal fun from(additional: Additional) = apply {
+                    additionalProperties = additional.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Additional].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): Additional = Additional(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Additional = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: M3terInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            @JvmSynthetic
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() = "Additional{additionalProperties=$additionalProperties}"
+        }
+
         class Group
         @JsonCreator
         private constructor(
@@ -3613,6 +3904,7 @@ private constructor(
             private val bandQuantity: JsonField<Double>,
             private val bandSubtotal: JsonField<Double>,
             private val bandUnits: JsonField<Double>,
+            private val convertedBandSubtotal: JsonField<Double>,
             private val creditTypeId: JsonField<String>,
             private val fixedPrice: JsonField<Double>,
             private val lowerLimit: JsonField<Double>,
@@ -3633,6 +3925,9 @@ private constructor(
                 @JsonProperty("bandUnits")
                 @ExcludeMissing
                 bandUnits: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("convertedBandSubtotal")
+                @ExcludeMissing
+                convertedBandSubtotal: JsonField<Double> = JsonMissing.of(),
                 @JsonProperty("creditTypeId")
                 @ExcludeMissing
                 creditTypeId: JsonField<String> = JsonMissing.of(),
@@ -3655,6 +3950,7 @@ private constructor(
                 bandQuantity,
                 bandSubtotal,
                 bandUnits,
+                convertedBandSubtotal,
                 creditTypeId,
                 fixedPrice,
                 lowerLimit,
@@ -3687,6 +3983,13 @@ private constructor(
              *   the server responded with an unexpected value).
              */
             fun bandUnits(): Optional<Double> = bandUnits.getOptional("bandUnits")
+
+            /**
+             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun convertedBandSubtotal(): Optional<Double> =
+                convertedBandSubtotal.getOptional("convertedBandSubtotal")
 
             /**
              * The UUID of the credit type.
@@ -3766,6 +4069,16 @@ private constructor(
             @JsonProperty("bandUnits")
             @ExcludeMissing
             fun _bandUnits(): JsonField<Double> = bandUnits
+
+            /**
+             * Returns the raw JSON value of [convertedBandSubtotal].
+             *
+             * Unlike [convertedBandSubtotal], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("convertedBandSubtotal")
+            @ExcludeMissing
+            fun _convertedBandSubtotal(): JsonField<Double> = convertedBandSubtotal
 
             /**
              * Returns the raw JSON value of [creditTypeId].
@@ -3853,6 +4166,7 @@ private constructor(
                 private var bandQuantity: JsonField<Double> = JsonMissing.of()
                 private var bandSubtotal: JsonField<Double> = JsonMissing.of()
                 private var bandUnits: JsonField<Double> = JsonMissing.of()
+                private var convertedBandSubtotal: JsonField<Double> = JsonMissing.of()
                 private var creditTypeId: JsonField<String> = JsonMissing.of()
                 private var fixedPrice: JsonField<Double> = JsonMissing.of()
                 private var lowerLimit: JsonField<Double> = JsonMissing.of()
@@ -3866,6 +4180,7 @@ private constructor(
                     bandQuantity = usagePerPricingBand.bandQuantity
                     bandSubtotal = usagePerPricingBand.bandSubtotal
                     bandUnits = usagePerPricingBand.bandUnits
+                    convertedBandSubtotal = usagePerPricingBand.convertedBandSubtotal
                     creditTypeId = usagePerPricingBand.creditTypeId
                     fixedPrice = usagePerPricingBand.fixedPrice
                     lowerLimit = usagePerPricingBand.lowerLimit
@@ -3914,6 +4229,20 @@ private constructor(
                  * yet supported value.
                  */
                 fun bandUnits(bandUnits: JsonField<Double>) = apply { this.bandUnits = bandUnits }
+
+                fun convertedBandSubtotal(convertedBandSubtotal: Double) =
+                    convertedBandSubtotal(JsonField.of(convertedBandSubtotal))
+
+                /**
+                 * Sets [Builder.convertedBandSubtotal] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.convertedBandSubtotal] with a well-typed
+                 * [Double] value instead. This method is primarily for setting the field to an
+                 * undocumented or not yet supported value.
+                 */
+                fun convertedBandSubtotal(convertedBandSubtotal: JsonField<Double>) = apply {
+                    this.convertedBandSubtotal = convertedBandSubtotal
+                }
 
                 /** The UUID of the credit type. */
                 fun creditTypeId(creditTypeId: String) = creditTypeId(JsonField.of(creditTypeId))
@@ -4033,6 +4362,7 @@ private constructor(
                         bandQuantity,
                         bandSubtotal,
                         bandUnits,
+                        convertedBandSubtotal,
                         creditTypeId,
                         fixedPrice,
                         lowerLimit,
@@ -4053,6 +4383,7 @@ private constructor(
                 bandQuantity()
                 bandSubtotal()
                 bandUnits()
+                convertedBandSubtotal()
                 creditTypeId()
                 fixedPrice()
                 lowerLimit()
@@ -4081,6 +4412,7 @@ private constructor(
                 (if (bandQuantity.asKnown().isPresent) 1 else 0) +
                     (if (bandSubtotal.asKnown().isPresent) 1 else 0) +
                     (if (bandUnits.asKnown().isPresent) 1 else 0) +
+                    (if (convertedBandSubtotal.asKnown().isPresent) 1 else 0) +
                     (if (creditTypeId.asKnown().isPresent) 1 else 0) +
                     (if (fixedPrice.asKnown().isPresent) 1 else 0) +
                     (if (lowerLimit.asKnown().isPresent) 1 else 0) +
@@ -4093,17 +4425,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UsagePerPricingBand && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is UsagePerPricingBand && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "UsagePerPricingBand{bandQuantity=$bandQuantity, bandSubtotal=$bandSubtotal, bandUnits=$bandUnits, creditTypeId=$creditTypeId, fixedPrice=$fixedPrice, lowerLimit=$lowerLimit, pricingBandId=$pricingBandId, unitPrice=$unitPrice, unitSubtotal=$unitSubtotal, additionalProperties=$additionalProperties}"
+                "UsagePerPricingBand{bandQuantity=$bandQuantity, bandSubtotal=$bandSubtotal, bandUnits=$bandUnits, convertedBandSubtotal=$convertedBandSubtotal, creditTypeId=$creditTypeId, fixedPrice=$fixedPrice, lowerLimit=$lowerLimit, pricingBandId=$pricingBandId, unitPrice=$unitPrice, unitSubtotal=$unitSubtotal, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -4111,17 +4443,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && averageUnitPrice == other.averageUnitPrice && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && currency == other.currency && description == other.description && lineItemType == other.lineItemType && quantity == other.quantity && subtotal == other.subtotal && unit == other.unit && units == other.units && id == other.id && aggregationId == other.aggregationId && balanceId == other.balanceId && chargeId == other.chargeId && childAccountCode == other.childAccountCode && childAccountId == other.childAccountId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && counterId == other.counterId && creditTypeId == other.creditTypeId && group == other.group && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && usagePerPricingBand == other.usagePerPricingBand && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && averageUnitPrice == other.averageUnitPrice && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && currency == other.currency && description == other.description && lineItemType == other.lineItemType && quantity == other.quantity && subtotal == other.subtotal && unit == other.unit && units == other.units && id == other.id && additional == other.additional && aggregationId == other.aggregationId && balanceId == other.balanceId && chargeId == other.chargeId && childAccountCode == other.childAccountCode && childAccountId == other.childAccountId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && counterId == other.counterId && creditTypeId == other.creditTypeId && group == other.group && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && usagePerPricingBand == other.usagePerPricingBand && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(averageUnitPrice, conversionRate, convertedSubtotal, currency, description, lineItemType, quantity, subtotal, unit, units, id, aggregationId, balanceId, chargeId, childAccountCode, childAccountId, commitmentId, compoundAggregationId, contractId, counterId, creditTypeId, group, meterId, planGroupId, planId, pricingId, productCode, productId, productName, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, usagePerPricingBand, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(averageUnitPrice, conversionRate, convertedSubtotal, currency, description, lineItemType, quantity, subtotal, unit, units, id, additional, aggregationId, balanceId, chargeId, childAccountCode, childAccountId, commitmentId, compoundAggregationId, contractId, counterId, creditTypeId, group, meterId, planGroupId, planId, pricingId, productCode, productId, productName, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, usagePerPricingBand, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{averageUnitPrice=$averageUnitPrice, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, currency=$currency, description=$description, lineItemType=$lineItemType, quantity=$quantity, subtotal=$subtotal, unit=$unit, units=$units, id=$id, aggregationId=$aggregationId, balanceId=$balanceId, chargeId=$chargeId, childAccountCode=$childAccountCode, childAccountId=$childAccountId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, counterId=$counterId, creditTypeId=$creditTypeId, group=$group, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, usagePerPricingBand=$usagePerPricingBand, additionalProperties=$additionalProperties}"
+            "LineItem{averageUnitPrice=$averageUnitPrice, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, currency=$currency, description=$description, lineItemType=$lineItemType, quantity=$quantity, subtotal=$subtotal, unit=$unit, units=$units, id=$id, additional=$additional, aggregationId=$aggregationId, balanceId=$balanceId, chargeId=$chargeId, childAccountCode=$childAccountCode, childAccountId=$childAccountId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, counterId=$counterId, creditTypeId=$creditTypeId, group=$group, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, usagePerPricingBand=$usagePerPricingBand, additionalProperties=$additionalProperties}"
     }
 
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -4253,15 +4585,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillResponse && id == other.id && accountCode == other.accountCode && accountId == other.accountId && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BillResponse && id == other.id && accountCode == other.accountCode && accountId == other.accountId && approvedBy == other.approvedBy && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtApproved == other.dtApproved && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dtLocked == other.dtLocked && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && lockedBy == other.lockedBy && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountCode, accountId, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtCreated, dtLastModified, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountCode, accountId, approvedBy, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtApproved, dtCreated, dtLastModified, dtLocked, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, lockedBy, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillResponse{id=$id, accountCode=$accountCode, accountId=$accountId, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, status=$status, timezone=$timezone, version=$version, additionalProperties=$additionalProperties}"
+        "BillResponse{id=$id, accountCode=$accountCode, accountId=$accountId, approvedBy=$approvedBy, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtApproved=$dtApproved, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dtLocked=$dtLocked, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, lockedBy=$lockedBy, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, status=$status, timezone=$timezone, version=$version, additionalProperties=$additionalProperties}"
 }
