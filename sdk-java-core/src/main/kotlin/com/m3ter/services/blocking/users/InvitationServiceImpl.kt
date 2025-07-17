@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking.users
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -61,7 +61,8 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         InvitationService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -71,7 +72,7 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
             )
 
         private val createHandler: Handler<InvitationResponse> =
-            jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<InvitationResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: UserInvitationCreateParams,
@@ -91,7 +92,7 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -103,7 +104,7 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
         }
 
         private val retrieveHandler: Handler<InvitationResponse> =
-            jsonHandler<InvitationResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<InvitationResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: UserInvitationRetrieveParams,
@@ -126,7 +127,7 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -139,7 +140,6 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
 
         private val listHandler: Handler<UserInvitationListPageResponse> =
             jsonHandler<UserInvitationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: UserInvitationListParams,
@@ -158,7 +158,7 @@ class InvitationServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {

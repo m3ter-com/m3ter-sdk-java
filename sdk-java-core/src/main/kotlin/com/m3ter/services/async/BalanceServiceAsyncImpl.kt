@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -86,7 +86,8 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BalanceServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val transactions: TransactionServiceAsync.WithRawResponse by lazy {
             TransactionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -101,8 +102,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         override fun transactions(): TransactionServiceAsync.WithRawResponse = transactions
 
-        private val createHandler: Handler<Balance> =
-            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Balance> = jsonHandler<Balance>(clientOptions.jsonMapper)
 
         override fun create(
             params: BalanceCreateParams,
@@ -124,7 +124,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -137,7 +137,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<Balance> =
-            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Balance>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: BalanceRetrieveParams,
@@ -162,7 +162,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -174,8 +174,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<Balance> =
-            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Balance> = jsonHandler<Balance>(clientOptions.jsonMapper)
 
         override fun update(
             params: BalanceUpdateParams,
@@ -201,7 +200,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -215,7 +214,6 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<BalanceListPageResponse> =
             jsonHandler<BalanceListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: BalanceListParams,
@@ -236,7 +234,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -256,8 +254,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val deleteHandler: Handler<Balance> =
-            jsonHandler<Balance>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Balance> = jsonHandler<Balance>(clientOptions.jsonMapper)
 
         override fun delete(
             params: BalanceDeleteParams,
@@ -283,7 +280,7 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

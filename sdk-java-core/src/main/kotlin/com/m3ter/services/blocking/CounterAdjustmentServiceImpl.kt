@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -77,7 +77,8 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CounterAdjustmentService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -88,7 +89,6 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
 
         private val createHandler: Handler<CounterAdjustmentResponse> =
             jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CounterAdjustmentCreateParams,
@@ -108,7 +108,7 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -121,7 +121,6 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
 
         private val retrieveHandler: Handler<CounterAdjustmentResponse> =
             jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CounterAdjustmentRetrieveParams,
@@ -144,7 +143,7 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -157,7 +156,6 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
 
         private val updateHandler: Handler<CounterAdjustmentResponse> =
             jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CounterAdjustmentUpdateParams,
@@ -181,7 +179,7 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -194,7 +192,6 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
 
         private val listHandler: Handler<CounterAdjustmentListPageResponse> =
             jsonHandler<CounterAdjustmentListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CounterAdjustmentListParams,
@@ -213,7 +210,7 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -233,7 +230,6 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
 
         private val deleteHandler: Handler<CounterAdjustmentResponse> =
             jsonHandler<CounterAdjustmentResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CounterAdjustmentDeleteParams,
@@ -257,7 +253,7 @@ class CounterAdjustmentServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

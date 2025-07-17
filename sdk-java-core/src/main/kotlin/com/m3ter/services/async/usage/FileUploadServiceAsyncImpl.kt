@@ -3,13 +3,13 @@
 package com.m3ter.services.async.usage
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -48,7 +48,8 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         FileUploadServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val jobs: JobServiceAsync.WithRawResponse by lazy {
             JobServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -65,7 +66,6 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
 
         private val generateUploadUrlHandler: Handler<UsageFileUploadGenerateUploadUrlResponse> =
             jsonHandler<UsageFileUploadGenerateUploadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,
@@ -89,7 +89,7 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { generateUploadUrlHandler.handle(it) }
                             .also {

@@ -3,14 +3,14 @@
 package com.m3ter.services.async.usage.fileUploads
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.parseable
@@ -62,7 +62,8 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         JobServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -73,7 +74,6 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
 
         private val retrieveHandler: Handler<FileUploadJobResponse> =
             jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
@@ -100,7 +100,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -114,7 +114,6 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
 
         private val listHandler: Handler<UsageFileUploadJobListPageResponse> =
             jsonHandler<UsageFileUploadJobListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: UsageFileUploadJobListParams,
@@ -137,7 +136,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -160,7 +159,6 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
         private val getOriginalDownloadUrlHandler:
             Handler<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             jsonHandler<UsageFileUploadJobGetOriginalDownloadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,
@@ -188,7 +186,7 @@ class JobServiceAsyncImpl internal constructor(private val clientOptions: Client
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getOriginalDownloadUrlHandler.handle(it) }
                             .also {

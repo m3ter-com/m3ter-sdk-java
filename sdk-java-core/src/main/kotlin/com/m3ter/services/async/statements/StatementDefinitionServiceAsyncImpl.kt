@@ -3,14 +3,14 @@
 package com.m3ter.services.async.statements
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -83,7 +83,8 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         StatementDefinitionServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -94,7 +95,6 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
         private val createHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: StatementStatementDefinitionCreateParams,
@@ -116,7 +116,7 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -130,7 +130,6 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
         private val retrieveHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: StatementStatementDefinitionRetrieveParams,
@@ -155,7 +154,7 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -169,7 +168,6 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
         private val updateHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: StatementStatementDefinitionUpdateParams,
@@ -195,7 +193,7 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -209,7 +207,6 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
         private val listHandler: Handler<StatementStatementDefinitionListPageResponse> =
             jsonHandler<StatementStatementDefinitionListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: StatementStatementDefinitionListParams,
@@ -230,7 +227,7 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -252,7 +249,6 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
 
         private val deleteHandler: Handler<StatementDefinitionResponse> =
             jsonHandler<StatementDefinitionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: StatementStatementDefinitionDeleteParams,
@@ -278,7 +274,7 @@ internal constructor(private val clientOptions: ClientOptions) : StatementDefini
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

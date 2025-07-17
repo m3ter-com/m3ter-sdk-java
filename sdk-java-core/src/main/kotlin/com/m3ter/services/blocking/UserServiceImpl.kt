@@ -3,13 +3,12 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
 import com.m3ter.core.handlers.emptyHandler
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
 import com.m3ter.core.http.HttpResponse
@@ -92,7 +91,8 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         UserService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val invitations: InvitationService.WithRawResponse by lazy {
             InvitationServiceImpl.WithRawResponseImpl(clientOptions)
@@ -108,7 +108,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
         override fun invitations(): InvitationService.WithRawResponse = invitations
 
         private val retrieveHandler: Handler<UserResponse> =
-            jsonHandler<UserResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<UserResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: UserRetrieveParams,
@@ -131,7 +131,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -143,7 +143,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val updateHandler: Handler<UserResponse> =
-            jsonHandler<UserResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<UserResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: UserUpdateParams,
@@ -167,7 +167,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -180,7 +180,6 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val listHandler: Handler<UserListPageResponse> =
             jsonHandler<UserListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: UserListParams,
@@ -199,7 +198,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -219,7 +218,6 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val getPermissionsHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getPermissions(
             params: UserGetPermissionsParams,
@@ -243,7 +241,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getPermissionsHandler.handle(it) }
                     .also {
@@ -256,7 +254,6 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val getUserGroupsHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getUserGroups(
             params: UserGetUserGroupsParams,
@@ -280,7 +277,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getUserGroupsHandler.handle(it) }
                     .also {
@@ -292,7 +289,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val meHandler: Handler<UserMeResponse> =
-            jsonHandler<UserMeResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<UserMeResponse>(clientOptions.jsonMapper)
 
         override fun me(
             params: UserMeParams,
@@ -312,7 +309,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { meHandler.handle(it) }
                     .also {
@@ -323,8 +320,7 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
             }
         }
 
-        private val resendPasswordHandler: Handler<Void?> =
-            emptyHandler().withErrorHandler(errorHandler)
+        private val resendPasswordHandler: Handler<Void?> = emptyHandler()
 
         override fun resendPassword(
             params: UserResendPasswordParams,
@@ -350,7 +346,9 @@ class UserServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { resendPasswordHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { resendPasswordHandler.handle(it) }
+            }
         }
     }
 }

@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.parseable
@@ -67,7 +67,8 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         EventService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -77,7 +78,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             )
 
         private val retrieveHandler: Handler<EventResponse> =
-            jsonHandler<EventResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<EventResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: EventRetrieveParams,
@@ -100,7 +101,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -113,7 +114,6 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val listHandler: Handler<EventListPageResponse> =
             jsonHandler<EventListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: EventListParams,
@@ -132,7 +132,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -152,7 +152,6 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val getFieldsHandler: Handler<EventGetFieldsResponse> =
             jsonHandler<EventGetFieldsResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getFields(
             params: EventGetFieldsParams,
@@ -172,7 +171,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getFieldsHandler.handle(it) }
                     .also {
@@ -185,7 +184,6 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val getTypesHandler: Handler<EventGetTypesResponse> =
             jsonHandler<EventGetTypesResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getTypes(
             params: EventGetTypesParams,
@@ -205,7 +203,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getTypesHandler.handle(it) }
                     .also {
