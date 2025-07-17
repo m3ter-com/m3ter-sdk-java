@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -64,7 +64,8 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PlanService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -74,7 +75,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             )
 
         private val createHandler: Handler<PlanResponse> =
-            jsonHandler<PlanResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: PlanCreateParams,
@@ -94,7 +95,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -106,7 +107,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val retrieveHandler: Handler<PlanResponse> =
-            jsonHandler<PlanResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PlanRetrieveParams,
@@ -129,7 +130,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -141,7 +142,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val updateHandler: Handler<PlanResponse> =
-            jsonHandler<PlanResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: PlanUpdateParams,
@@ -165,7 +166,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -178,7 +179,6 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val listHandler: Handler<PlanListPageResponse> =
             jsonHandler<PlanListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PlanListParams,
@@ -197,7 +197,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -216,7 +216,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val deleteHandler: Handler<PlanResponse> =
-            jsonHandler<PlanResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: PlanDeleteParams,
@@ -240,7 +240,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

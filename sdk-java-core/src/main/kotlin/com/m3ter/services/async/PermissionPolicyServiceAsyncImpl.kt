@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -153,7 +153,8 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PermissionPolicyServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -164,7 +165,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val createHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PermissionPolicyCreateParams,
@@ -186,7 +186,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -200,7 +200,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val retrieveHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PermissionPolicyRetrieveParams,
@@ -225,7 +224,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -239,7 +238,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val updateHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PermissionPolicyUpdateParams,
@@ -265,7 +263,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -279,7 +277,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val listHandler: Handler<PermissionPolicyListPageResponse> =
             jsonHandler<PermissionPolicyListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PermissionPolicyListParams,
@@ -300,7 +297,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -322,7 +319,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val deleteHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PermissionPolicyDeleteParams,
@@ -348,7 +344,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {
@@ -362,7 +358,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val addToServiceUserHandler: Handler<PermissionPolicyAddToServiceUserResponse> =
             jsonHandler<PermissionPolicyAddToServiceUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToServiceUser(
             params: PermissionPolicyAddToServiceUserParams,
@@ -389,7 +384,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { addToServiceUserHandler.handle(it) }
                             .also {
@@ -403,7 +398,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val addToSupportUserHandler: Handler<PermissionPolicyAddToSupportUserResponse> =
             jsonHandler<PermissionPolicyAddToSupportUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToSupportUser(
             params: PermissionPolicyAddToSupportUserParams,
@@ -430,7 +424,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { addToSupportUserHandler.handle(it) }
                             .also {
@@ -444,7 +438,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val addToUserHandler: Handler<PermissionPolicyAddToUserResponse> =
             jsonHandler<PermissionPolicyAddToUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToUser(
             params: PermissionPolicyAddToUserParams,
@@ -471,7 +464,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { addToUserHandler.handle(it) }
                             .also {
@@ -485,7 +478,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val addToUserGroupHandler: Handler<PermissionPolicyAddToUserGroupResponse> =
             jsonHandler<PermissionPolicyAddToUserGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToUserGroup(
             params: PermissionPolicyAddToUserGroupParams,
@@ -512,7 +504,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { addToUserGroupHandler.handle(it) }
                             .also {
@@ -527,7 +519,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
         private val removeFromServiceUserHandler:
             Handler<PermissionPolicyRemoveFromServiceUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromServiceUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromServiceUser(
             params: PermissionPolicyRemoveFromServiceUserParams,
@@ -554,7 +545,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { removeFromServiceUserHandler.handle(it) }
                             .also {
@@ -569,7 +560,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
         private val removeFromSupportUserHandler:
             Handler<PermissionPolicyRemoveFromSupportUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromSupportUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromSupportUser(
             params: PermissionPolicyRemoveFromSupportUserParams,
@@ -596,7 +586,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { removeFromSupportUserHandler.handle(it) }
                             .also {
@@ -610,7 +600,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
 
         private val removeFromUserHandler: Handler<PermissionPolicyRemoveFromUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromUser(
             params: PermissionPolicyRemoveFromUserParams,
@@ -637,7 +626,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { removeFromUserHandler.handle(it) }
                             .also {
@@ -652,7 +641,6 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
         private val removeFromUserGroupHandler:
             Handler<PermissionPolicyRemoveFromUserGroupResponse> =
             jsonHandler<PermissionPolicyRemoveFromUserGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromUserGroup(
             params: PermissionPolicyRemoveFromUserGroupParams,
@@ -679,7 +667,7 @@ internal constructor(private val clientOptions: ClientOptions) : PermissionPolic
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { removeFromUserGroupHandler.handle(it) }
                             .also {

@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking.statements
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -77,7 +77,8 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         StatementJobService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -88,7 +89,6 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
 
         private val createHandler: Handler<StatementJobResponse> =
             jsonHandler<StatementJobResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: StatementStatementJobCreateParams,
@@ -108,7 +108,7 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -121,7 +121,6 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
 
         private val retrieveHandler: Handler<StatementJobResponse> =
             jsonHandler<StatementJobResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: StatementStatementJobRetrieveParams,
@@ -144,7 +143,7 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -157,7 +156,6 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<StatementStatementJobListPageResponse> =
             jsonHandler<StatementStatementJobListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: StatementStatementJobListParams,
@@ -176,7 +174,7 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -196,7 +194,6 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
 
         private val cancelHandler: Handler<StatementJobResponse> =
             jsonHandler<StatementJobResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun cancel(
             params: StatementStatementJobCancelParams,
@@ -221,7 +218,7 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { cancelHandler.handle(it) }
                     .also {
@@ -234,7 +231,6 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
 
         private val createBatchHandler: Handler<List<StatementJobResponse>> =
             jsonHandler<List<StatementJobResponse>>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun createBatch(
             params: StatementStatementJobCreateBatchParams,
@@ -255,7 +251,7 @@ class StatementJobServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createBatchHandler.handle(it) }
                     .also {

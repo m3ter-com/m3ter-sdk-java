@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -104,7 +104,8 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         AccountServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -114,7 +115,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             )
 
         private val createHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: AccountCreateParams,
@@ -136,7 +137,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -149,7 +150,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: AccountRetrieveParams,
@@ -174,7 +175,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -187,7 +188,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val updateHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: AccountUpdateParams,
@@ -213,7 +214,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -227,7 +228,6 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<AccountListPageResponse> =
             jsonHandler<AccountListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: AccountListParams,
@@ -248,7 +248,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -269,7 +269,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val deleteHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: AccountDeleteParams,
@@ -295,7 +295,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {
@@ -309,7 +309,6 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val endDateBillingEntitiesHandler: Handler<AccountEndDateBillingEntitiesResponse> =
             jsonHandler<AccountEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams,
@@ -336,7 +335,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { endDateBillingEntitiesHandler.handle(it) }
                             .also {
@@ -349,7 +348,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val getChildrenHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
 
         override fun getChildren(
             params: AccountGetChildrenParams,
@@ -375,7 +374,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getChildrenHandler.handle(it) }
                             .also {
@@ -389,7 +388,6 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val searchHandler: Handler<AccountSearchResponse> =
             jsonHandler<AccountSearchResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun search(
             params: AccountSearchParams,
@@ -411,7 +409,7 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { searchHandler.handle(it) }
                             .also {

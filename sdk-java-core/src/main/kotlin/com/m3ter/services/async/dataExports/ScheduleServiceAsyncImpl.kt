@@ -3,14 +3,14 @@
 package com.m3ter.services.async.dataExports
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -81,7 +81,8 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ScheduleServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -92,7 +93,6 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val createHandler: Handler<DataExportScheduleCreateResponse> =
             jsonHandler<DataExportScheduleCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: DataExportScheduleCreateParams,
@@ -115,7 +115,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -129,7 +129,6 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val retrieveHandler: Handler<DataExportScheduleRetrieveResponse> =
             jsonHandler<DataExportScheduleRetrieveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DataExportScheduleRetrieveParams,
@@ -155,7 +154,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -169,7 +168,6 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val updateHandler: Handler<DataExportScheduleUpdateResponse> =
             jsonHandler<DataExportScheduleUpdateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: DataExportScheduleUpdateParams,
@@ -196,7 +194,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -210,7 +208,6 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val listHandler: Handler<DataExportScheduleListPageResponse> =
             jsonHandler<DataExportScheduleListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: DataExportScheduleListParams,
@@ -232,7 +229,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -254,7 +251,6 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val deleteHandler: Handler<DataExportScheduleDeleteResponse> =
             jsonHandler<DataExportScheduleDeleteResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: DataExportScheduleDeleteParams,
@@ -281,7 +277,7 @@ class ScheduleServiceAsyncImpl internal constructor(private val clientOptions: C
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

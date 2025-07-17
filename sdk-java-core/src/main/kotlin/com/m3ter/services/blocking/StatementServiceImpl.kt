@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -75,7 +75,8 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         StatementService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val statementJobs: StatementJobService.WithRawResponse by lazy {
             StatementJobServiceImpl.WithRawResponseImpl(clientOptions)
@@ -98,7 +99,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
             statementDefinitions
 
         private val createCsvHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun createCsv(
             params: StatementCreateCsvParams,
@@ -124,7 +125,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createCsvHandler.handle(it) }
                     .also {
@@ -136,7 +137,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
         }
 
         private val getCsvHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun getCsv(
             params: StatementGetCsvParams,
@@ -161,7 +162,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getCsvHandler.handle(it) }
                     .also {
@@ -173,7 +174,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
         }
 
         private val getJsonHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun getJson(
             params: StatementGetJsonParams,
@@ -198,7 +199,7 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getJsonHandler.handle(it) }
                     .also {

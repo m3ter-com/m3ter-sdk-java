@@ -3,13 +3,13 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -70,7 +70,8 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         UsageServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val fileUploads: FileUploadServiceAsync.WithRawResponse by lazy {
             FileUploadServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -87,7 +88,6 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val getFailedIngestDownloadUrlHandler: Handler<DownloadUrlResponse> =
             jsonHandler<DownloadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams,
@@ -110,7 +110,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getFailedIngestDownloadUrlHandler.handle(it) }
                             .also {
@@ -123,7 +123,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
         }
 
         private val queryHandler: Handler<UsageQueryResponse> =
-            jsonHandler<UsageQueryResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<UsageQueryResponse>(clientOptions.jsonMapper)
 
         override fun query(
             params: UsageQueryParams,
@@ -146,7 +146,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { queryHandler.handle(it) }
                             .also {
@@ -160,7 +160,6 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val submitHandler: Handler<SubmitMeasurementsResponse> =
             jsonHandler<SubmitMeasurementsResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun submit(
             params: UsageSubmitParams,
@@ -185,7 +184,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { submitHandler.handle(it) }
                             .also {

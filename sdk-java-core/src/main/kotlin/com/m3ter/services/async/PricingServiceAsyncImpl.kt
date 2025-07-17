@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -78,7 +78,8 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PricingServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -88,7 +89,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             )
 
         private val createHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: PricingCreateParams,
@@ -110,7 +111,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -123,7 +124,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PricingRetrieveParams,
@@ -148,7 +149,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -161,7 +162,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val updateHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: PricingUpdateParams,
@@ -187,7 +188,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -201,7 +202,6 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<PricingListPageResponse> =
             jsonHandler<PricingListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PricingListParams,
@@ -222,7 +222,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -243,7 +243,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val deleteHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: PricingDeleteParams,
@@ -269,7 +269,7 @@ class PricingServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

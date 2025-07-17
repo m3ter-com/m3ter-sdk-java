@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -84,7 +84,8 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CompoundAggregationServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -95,7 +96,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val createHandler: Handler<AggregationResponse> =
             jsonHandler<AggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CompoundAggregationCreateParams,
@@ -117,7 +117,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -131,7 +131,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val retrieveHandler: Handler<CompoundAggregationResponse> =
             jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CompoundAggregationRetrieveParams,
@@ -156,7 +155,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -170,7 +169,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val updateHandler: Handler<AggregationResponse> =
             jsonHandler<AggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CompoundAggregationUpdateParams,
@@ -196,7 +194,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -210,7 +208,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val listHandler: Handler<CompoundAggregationListPageResponse> =
             jsonHandler<CompoundAggregationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CompoundAggregationListParams,
@@ -231,7 +228,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -253,7 +250,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val deleteHandler: Handler<CompoundAggregationResponse> =
             jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CompoundAggregationDeleteParams,
@@ -279,7 +275,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

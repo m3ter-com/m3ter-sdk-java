@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -76,7 +76,8 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         StatementServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val statementJobs: StatementJobServiceAsync.WithRawResponse by lazy {
             StatementJobServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -99,7 +100,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
             statementDefinitions
 
         private val createCsvHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun createCsv(
             params: StatementCreateCsvParams,
@@ -127,7 +128,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createCsvHandler.handle(it) }
                             .also {
@@ -140,7 +141,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
         }
 
         private val getCsvHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun getCsv(
             params: StatementGetCsvParams,
@@ -167,7 +168,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getCsvHandler.handle(it) }
                             .also {
@@ -180,7 +181,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
         }
 
         private val getJsonHandler: Handler<ObjectUrlResponse> =
-            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ObjectUrlResponse>(clientOptions.jsonMapper)
 
         override fun getJson(
             params: StatementGetJsonParams,
@@ -207,7 +208,7 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getJsonHandler.handle(it) }
                             .also {

@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -78,7 +78,8 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PlanGroupServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
@@ -88,7 +89,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             )
 
         private val createHandler: Handler<PlanGroupResponse> =
-            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: PlanGroupCreateParams,
@@ -110,7 +111,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -123,7 +124,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
         }
 
         private val retrieveHandler: Handler<PlanGroupResponse> =
-            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PlanGroupRetrieveParams,
@@ -148,7 +149,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -161,7 +162,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
         }
 
         private val updateHandler: Handler<PlanGroupResponse> =
-            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: PlanGroupUpdateParams,
@@ -187,7 +188,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -201,7 +202,6 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
 
         private val listHandler: Handler<PlanGroupListPageResponse> =
             jsonHandler<PlanGroupListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PlanGroupListParams,
@@ -222,7 +222,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -243,7 +243,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
         }
 
         private val deleteHandler: Handler<PlanGroupResponse> =
-            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanGroupResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: PlanGroupDeleteParams,
@@ -269,7 +269,7 @@ class PlanGroupServiceAsyncImpl internal constructor(private val clientOptions: 
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {
