@@ -432,6 +432,27 @@ M3terClient client = M3terOkHttpClient.builder()
     .build();
 ```
 
+### HTTPS
+
+> [!NOTE]
+> Most applications should not call these methods, and instead use the system defaults. The defaults include
+> special optimizations that can be lost if the implementations are modified.
+
+To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`, `trustManager`, and `hostnameVerifier` methods:
+
+```java
+import com.m3ter.client.M3terClient;
+import com.m3ter.client.okhttp.M3terOkHttpClient;
+
+M3terClient client = M3terOkHttpClient.builder()
+    .fromEnv()
+    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.
+    .sslSocketFactory(yourSSLSocketFactory)
+    .trustManager(yourTrustManager)
+    .hostnameVerifier(yourHostnameVerifier)
+    .build();
+```
+
 ### Custom HTTP client
 
 The SDK consists of three artifacts:
