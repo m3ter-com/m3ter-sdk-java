@@ -28,6 +28,7 @@ internal class StatementDefinitionResponseTest {
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .generateSlimStatements(true)
                 .includePricePerUnit(true)
                 .lastModifiedBy("lastModifiedBy")
                 .addMeasure(
@@ -58,6 +59,7 @@ internal class StatementDefinitionResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(statementDefinitionResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(statementDefinitionResponse.generateSlimStatements()).contains(true)
         assertThat(statementDefinitionResponse.includePricePerUnit()).contains(true)
         assertThat(statementDefinitionResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(statementDefinitionResponse.measures().getOrNull())
@@ -90,6 +92,7 @@ internal class StatementDefinitionResponseTest {
                 )
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .generateSlimStatements(true)
                 .includePricePerUnit(true)
                 .lastModifiedBy("lastModifiedBy")
                 .addMeasure(

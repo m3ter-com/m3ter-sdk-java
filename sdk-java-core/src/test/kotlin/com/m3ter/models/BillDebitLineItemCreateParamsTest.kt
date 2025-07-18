@@ -13,6 +13,7 @@ internal class BillDebitLineItemCreateParamsTest {
         BillDebitLineItemCreateParams.builder()
             .orgId("orgId")
             .billId("billId")
+            .accountingProductId("accountingProductId")
             .amount(1.0)
             .description("x")
             .productId("productId")
@@ -32,6 +33,7 @@ internal class BillDebitLineItemCreateParamsTest {
         val params =
             BillDebitLineItemCreateParams.builder()
                 .billId("billId")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -53,6 +55,7 @@ internal class BillDebitLineItemCreateParamsTest {
             BillDebitLineItemCreateParams.builder()
                 .orgId("orgId")
                 .billId("billId")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -68,6 +71,7 @@ internal class BillDebitLineItemCreateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.accountingProductId()).isEqualTo("accountingProductId")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")
@@ -89,6 +93,7 @@ internal class BillDebitLineItemCreateParamsTest {
         val params =
             BillDebitLineItemCreateParams.builder()
                 .billId("billId")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -100,6 +105,7 @@ internal class BillDebitLineItemCreateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.accountingProductId()).isEqualTo("accountingProductId")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")

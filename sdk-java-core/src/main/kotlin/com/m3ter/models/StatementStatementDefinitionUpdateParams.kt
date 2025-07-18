@@ -62,6 +62,12 @@ private constructor(
     fun dimensions(): Optional<List<Dimension>> = body.dimensions()
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun generateSlimStatements(): Optional<Boolean> = body.generateSlimStatements()
+
+    /**
      * A Boolean indicating whether to include the price per unit in the Statement.
      * - TRUE - includes the price per unit.
      * - FALSE - excludes the price per unit.
@@ -114,6 +120,14 @@ private constructor(
      * Unlike [dimensions], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dimensions(): JsonField<List<Dimension>> = body._dimensions()
+
+    /**
+     * Returns the raw JSON value of [generateSlimStatements].
+     *
+     * Unlike [generateSlimStatements], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    fun _generateSlimStatements(): JsonField<Boolean> = body._generateSlimStatements()
 
     /**
      * Returns the raw JSON value of [includePricePerUnit].
@@ -207,9 +221,9 @@ private constructor(
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [aggregationFrequency]
          * - [dimensions]
+         * - [generateSlimStatements]
          * - [includePricePerUnit]
          * - [measures]
-         * - [name]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -253,6 +267,21 @@ private constructor(
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addDimension(dimension: Dimension) = apply { body.addDimension(dimension) }
+
+        fun generateSlimStatements(generateSlimStatements: Boolean) = apply {
+            body.generateSlimStatements(generateSlimStatements)
+        }
+
+        /**
+         * Sets [Builder.generateSlimStatements] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.generateSlimStatements] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun generateSlimStatements(generateSlimStatements: JsonField<Boolean>) = apply {
+            body.generateSlimStatements(generateSlimStatements)
+        }
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
@@ -478,6 +507,7 @@ private constructor(
     private constructor(
         private val aggregationFrequency: JsonField<AggregationFrequency>,
         private val dimensions: JsonField<List<Dimension>>,
+        private val generateSlimStatements: JsonField<Boolean>,
         private val includePricePerUnit: JsonField<Boolean>,
         private val measures: JsonField<List<Measure>>,
         private val name: JsonField<String>,
@@ -493,6 +523,9 @@ private constructor(
             @JsonProperty("dimensions")
             @ExcludeMissing
             dimensions: JsonField<List<Dimension>> = JsonMissing.of(),
+            @JsonProperty("generateSlimStatements")
+            @ExcludeMissing
+            generateSlimStatements: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("includePricePerUnit")
             @ExcludeMissing
             includePricePerUnit: JsonField<Boolean> = JsonMissing.of(),
@@ -504,6 +537,7 @@ private constructor(
         ) : this(
             aggregationFrequency,
             dimensions,
+            generateSlimStatements,
             includePricePerUnit,
             measures,
             name,
@@ -528,6 +562,13 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun dimensions(): Optional<List<Dimension>> = dimensions.getOptional("dimensions")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun generateSlimStatements(): Optional<Boolean> =
+            generateSlimStatements.getOptional("generateSlimStatements")
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
@@ -587,6 +628,16 @@ private constructor(
         @JsonProperty("dimensions")
         @ExcludeMissing
         fun _dimensions(): JsonField<List<Dimension>> = dimensions
+
+        /**
+         * Returns the raw JSON value of [generateSlimStatements].
+         *
+         * Unlike [generateSlimStatements], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("generateSlimStatements")
+        @ExcludeMissing
+        fun _generateSlimStatements(): JsonField<Boolean> = generateSlimStatements
 
         /**
          * Returns the raw JSON value of [includePricePerUnit].
@@ -651,6 +702,7 @@ private constructor(
 
             private var aggregationFrequency: JsonField<AggregationFrequency>? = null
             private var dimensions: JsonField<MutableList<Dimension>>? = null
+            private var generateSlimStatements: JsonField<Boolean> = JsonMissing.of()
             private var includePricePerUnit: JsonField<Boolean> = JsonMissing.of()
             private var measures: JsonField<MutableList<Measure>>? = null
             private var name: JsonField<String> = JsonMissing.of()
@@ -661,6 +713,7 @@ private constructor(
             internal fun from(body: Body) = apply {
                 aggregationFrequency = body.aggregationFrequency
                 dimensions = body.dimensions.map { it.toMutableList() }
+                generateSlimStatements = body.generateSlimStatements
                 includePricePerUnit = body.includePricePerUnit
                 measures = body.measures.map { it.toMutableList() }
                 name = body.name
@@ -711,6 +764,20 @@ private constructor(
                     (dimensions ?: JsonField.of(mutableListOf())).also {
                         checkKnown("dimensions", it).add(dimension)
                     }
+            }
+
+            fun generateSlimStatements(generateSlimStatements: Boolean) =
+                generateSlimStatements(JsonField.of(generateSlimStatements))
+
+            /**
+             * Sets [Builder.generateSlimStatements] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.generateSlimStatements] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun generateSlimStatements(generateSlimStatements: JsonField<Boolean>) = apply {
+                this.generateSlimStatements = generateSlimStatements
             }
 
             /**
@@ -824,6 +891,7 @@ private constructor(
                 Body(
                     checkRequired("aggregationFrequency", aggregationFrequency),
                     (dimensions ?: JsonMissing.of()).map { it.toImmutable() },
+                    generateSlimStatements,
                     includePricePerUnit,
                     (measures ?: JsonMissing.of()).map { it.toImmutable() },
                     name,
@@ -841,6 +909,7 @@ private constructor(
 
             aggregationFrequency().validate()
             dimensions().ifPresent { it.forEach { it.validate() } }
+            generateSlimStatements()
             includePricePerUnit()
             measures().ifPresent { it.forEach { it.validate() } }
             name()
@@ -866,6 +935,7 @@ private constructor(
         internal fun validity(): Int =
             (aggregationFrequency.asKnown().getOrNull()?.validity() ?: 0) +
                 (dimensions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (generateSlimStatements.asKnown().isPresent) 1 else 0) +
                 (if (includePricePerUnit.asKnown().isPresent) 1 else 0) +
                 (measures.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
@@ -876,17 +946,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && aggregationFrequency == other.aggregationFrequency && dimensions == other.dimensions && includePricePerUnit == other.includePricePerUnit && measures == other.measures && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && aggregationFrequency == other.aggregationFrequency && dimensions == other.dimensions && generateSlimStatements == other.generateSlimStatements && includePricePerUnit == other.includePricePerUnit && measures == other.measures && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregationFrequency, dimensions, includePricePerUnit, measures, name, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(aggregationFrequency, dimensions, generateSlimStatements, includePricePerUnit, measures, name, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{aggregationFrequency=$aggregationFrequency, dimensions=$dimensions, includePricePerUnit=$includePricePerUnit, measures=$measures, name=$name, version=$version, additionalProperties=$additionalProperties}"
+            "Body{aggregationFrequency=$aggregationFrequency, dimensions=$dimensions, generateSlimStatements=$generateSlimStatements, includePricePerUnit=$includePricePerUnit, measures=$measures, name=$name, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /** This specifies how often the Statement should aggregate data. */

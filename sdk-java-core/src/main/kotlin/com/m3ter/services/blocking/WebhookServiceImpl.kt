@@ -18,16 +18,13 @@ import com.m3ter.core.http.parseable
 import com.m3ter.core.prepare
 import com.m3ter.models.Webhook
 import com.m3ter.models.WebhookCreateParams
-import com.m3ter.models.WebhookCreateResponse
 import com.m3ter.models.WebhookDeleteParams
 import com.m3ter.models.WebhookListPage
 import com.m3ter.models.WebhookListPageResponse
 import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
-import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
-import com.m3ter.models.WebhookUpdateResponse
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
@@ -43,10 +40,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookService =
         WebhookServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
-    override fun create(
-        params: WebhookCreateParams,
-        requestOptions: RequestOptions,
-    ): WebhookCreateResponse =
+    override fun create(params: WebhookCreateParams, requestOptions: RequestOptions): Webhook =
         // post /organizations/{orgId}/integrationdestinations/webhooks
         withRawResponse().create(params, requestOptions).parse()
 
@@ -54,10 +48,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
         // get /organizations/{orgId}/integrationdestinations/webhooks/{id}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override fun update(
-        params: WebhookUpdateParams,
-        requestOptions: RequestOptions,
-    ): WebhookUpdateResponse =
+    override fun update(params: WebhookUpdateParams, requestOptions: RequestOptions): Webhook =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -72,7 +63,7 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     override fun setActive(
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions,
-    ): WebhookSetActiveResponse =
+    ): Webhook =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}/active
         withRawResponse().setActive(params, requestOptions).parse()
 
@@ -89,13 +80,12 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<WebhookCreateResponse> =
-            jsonHandler<WebhookCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun create(
             params: WebhookCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<WebhookCreateResponse> {
+        ): HttpResponseFor<Webhook> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -158,13 +148,12 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<WebhookUpdateResponse> =
-            jsonHandler<WebhookUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun update(
             params: WebhookUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<WebhookUpdateResponse> {
+        ): HttpResponseFor<Webhook> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -270,13 +259,13 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val setActiveHandler: Handler<WebhookSetActiveResponse> =
-            jsonHandler<WebhookSetActiveResponse>(clientOptions.jsonMapper)
+        private val setActiveHandler: Handler<Webhook> =
+            jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun setActive(
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<WebhookSetActiveResponse> {
+        ): HttpResponseFor<Webhook> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())

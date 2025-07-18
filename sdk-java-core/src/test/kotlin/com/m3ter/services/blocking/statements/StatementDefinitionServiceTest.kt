@@ -41,6 +41,7 @@ internal class StatementDefinitionServiceTest {
                             .meterId("meterId")
                             .build()
                     )
+                    .generateSlimStatements(true)
                     .includePricePerUnit(true)
                     .addMeasure(
                         StatementStatementDefinitionCreateParams.Measure.builder()
@@ -107,6 +108,7 @@ internal class StatementDefinitionServiceTest {
                             .meterId("meterId")
                             .build()
                     )
+                    .generateSlimStatements(true)
                     .includePricePerUnit(true)
                     .addMeasure(
                         StatementStatementDefinitionUpdateParams.Measure.builder()

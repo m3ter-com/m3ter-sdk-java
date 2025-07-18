@@ -19,6 +19,9 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
+                        .accountingProductCode("accountingProductCode")
+                        .accountingProductId("accountingProductId")
+                        .accountingProductName("accountingProductName")
                         .additional(
                             LineItemResponse.Additional.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -95,6 +98,9 @@ internal class BillLineItemListPageResponseTest {
             .containsExactly(
                 LineItemResponse.builder()
                     .id("id")
+                    .accountingProductCode("accountingProductCode")
+                    .accountingProductId("accountingProductId")
+                    .accountingProductName("accountingProductName")
                     .additional(
                         LineItemResponse.Additional.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -175,6 +181,9 @@ internal class BillLineItemListPageResponseTest {
                 .addData(
                     LineItemResponse.builder()
                         .id("id")
+                        .accountingProductCode("accountingProductCode")
+                        .accountingProductId("accountingProductId")
+                        .accountingProductName("accountingProductName")
                         .additional(
                             LineItemResponse.Additional.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("bar"))

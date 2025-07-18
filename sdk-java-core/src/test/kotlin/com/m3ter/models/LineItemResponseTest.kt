@@ -17,6 +17,9 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
+                .accountingProductCode("accountingProductCode")
+                .accountingProductId("accountingProductId")
+                .accountingProductName("accountingProductName")
                 .additional(
                     LineItemResponse.Additional.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -87,6 +90,9 @@ internal class LineItemResponseTest {
                 .build()
 
         assertThat(lineItemResponse.id()).isEqualTo("id")
+        assertThat(lineItemResponse.accountingProductCode()).contains("accountingProductCode")
+        assertThat(lineItemResponse.accountingProductId()).contains("accountingProductId")
+        assertThat(lineItemResponse.accountingProductName()).contains("accountingProductName")
         assertThat(lineItemResponse.additional())
             .contains(
                 LineItemResponse.Additional.builder()
@@ -171,6 +177,9 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
+                .accountingProductCode("accountingProductCode")
+                .accountingProductId("accountingProductId")
+                .accountingProductName("accountingProductName")
                 .additional(
                     LineItemResponse.Additional.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))

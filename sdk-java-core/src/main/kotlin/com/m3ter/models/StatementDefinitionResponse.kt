@@ -29,6 +29,7 @@ private constructor(
     private val dimensions: JsonField<List<Dimension>>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
+    private val generateSlimStatements: JsonField<Boolean>,
     private val includePricePerUnit: JsonField<Boolean>,
     private val lastModifiedBy: JsonField<String>,
     private val measures: JsonField<List<Measure>>,
@@ -53,6 +54,9 @@ private constructor(
         @JsonProperty("dtLastModified")
         @ExcludeMissing
         dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("generateSlimStatements")
+        @ExcludeMissing
+        generateSlimStatements: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("includePricePerUnit")
         @ExcludeMissing
         includePricePerUnit: JsonField<Boolean> = JsonMissing.of(),
@@ -71,6 +75,7 @@ private constructor(
         dimensions,
         dtCreated,
         dtLastModified,
+        generateSlimStatements,
         includePricePerUnit,
         lastModifiedBy,
         measures,
@@ -128,6 +133,13 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun generateSlimStatements(): Optional<Boolean> =
+        generateSlimStatements.getOptional("generateSlimStatements")
 
     /**
      * A Boolean indicating whether to include the price per unit in the Statement.
@@ -227,6 +239,16 @@ private constructor(
     fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
 
     /**
+     * Returns the raw JSON value of [generateSlimStatements].
+     *
+     * Unlike [generateSlimStatements], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("generateSlimStatements")
+    @ExcludeMissing
+    fun _generateSlimStatements(): JsonField<Boolean> = generateSlimStatements
+
+    /**
      * Returns the raw JSON value of [includePricePerUnit].
      *
      * Unlike [includePricePerUnit], this method doesn't throw if the JSON field has an unexpected
@@ -300,6 +322,7 @@ private constructor(
         private var dimensions: JsonField<MutableList<Dimension>>? = null
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var generateSlimStatements: JsonField<Boolean> = JsonMissing.of()
         private var includePricePerUnit: JsonField<Boolean> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var measures: JsonField<MutableList<Measure>>? = null
@@ -315,6 +338,7 @@ private constructor(
             dimensions = statementDefinitionResponse.dimensions.map { it.toMutableList() }
             dtCreated = statementDefinitionResponse.dtCreated
             dtLastModified = statementDefinitionResponse.dtLastModified
+            generateSlimStatements = statementDefinitionResponse.generateSlimStatements
             includePricePerUnit = statementDefinitionResponse.includePricePerUnit
             lastModifiedBy = statementDefinitionResponse.lastModifiedBy
             measures = statementDefinitionResponse.measures.map { it.toMutableList() }
@@ -417,6 +441,20 @@ private constructor(
          */
         fun dtLastModified(dtLastModified: JsonField<OffsetDateTime>) = apply {
             this.dtLastModified = dtLastModified
+        }
+
+        fun generateSlimStatements(generateSlimStatements: Boolean) =
+            generateSlimStatements(JsonField.of(generateSlimStatements))
+
+        /**
+         * Sets [Builder.generateSlimStatements] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.generateSlimStatements] with a well-typed [Boolean]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun generateSlimStatements(generateSlimStatements: JsonField<Boolean>) = apply {
+            this.generateSlimStatements = generateSlimStatements
         }
 
         /**
@@ -544,6 +582,7 @@ private constructor(
                 (dimensions ?: JsonMissing.of()).map { it.toImmutable() },
                 dtCreated,
                 dtLastModified,
+                generateSlimStatements,
                 includePricePerUnit,
                 lastModifiedBy,
                 (measures ?: JsonMissing.of()).map { it.toImmutable() },
@@ -566,6 +605,7 @@ private constructor(
         dimensions().ifPresent { it.forEach { it.validate() } }
         dtCreated()
         dtLastModified()
+        generateSlimStatements()
         includePricePerUnit()
         lastModifiedBy()
         measures().ifPresent { it.forEach { it.validate() } }
@@ -595,6 +635,7 @@ private constructor(
             (dimensions.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (generateSlimStatements.asKnown().isPresent) 1 else 0) +
             (if (includePricePerUnit.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (measures.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -1490,15 +1531,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementDefinitionResponse && id == other.id && aggregationFrequency == other.aggregationFrequency && createdBy == other.createdBy && dimensions == other.dimensions && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && includePricePerUnit == other.includePricePerUnit && lastModifiedBy == other.lastModifiedBy && measures == other.measures && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is StatementDefinitionResponse && id == other.id && aggregationFrequency == other.aggregationFrequency && createdBy == other.createdBy && dimensions == other.dimensions && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && generateSlimStatements == other.generateSlimStatements && includePricePerUnit == other.includePricePerUnit && lastModifiedBy == other.lastModifiedBy && measures == other.measures && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, aggregationFrequency, createdBy, dimensions, dtCreated, dtLastModified, includePricePerUnit, lastModifiedBy, measures, name, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, aggregationFrequency, createdBy, dimensions, dtCreated, dtLastModified, generateSlimStatements, includePricePerUnit, lastModifiedBy, measures, name, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "StatementDefinitionResponse{id=$id, aggregationFrequency=$aggregationFrequency, createdBy=$createdBy, dimensions=$dimensions, dtCreated=$dtCreated, dtLastModified=$dtLastModified, includePricePerUnit=$includePricePerUnit, lastModifiedBy=$lastModifiedBy, measures=$measures, name=$name, version=$version, additionalProperties=$additionalProperties}"
+        "StatementDefinitionResponse{id=$id, aggregationFrequency=$aggregationFrequency, createdBy=$createdBy, dimensions=$dimensions, dtCreated=$dtCreated, dtLastModified=$dtLastModified, generateSlimStatements=$generateSlimStatements, includePricePerUnit=$includePricePerUnit, lastModifiedBy=$lastModifiedBy, measures=$measures, name=$name, version=$version, additionalProperties=$additionalProperties}"
 }
