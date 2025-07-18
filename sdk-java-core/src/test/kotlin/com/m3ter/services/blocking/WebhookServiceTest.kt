@@ -156,11 +156,11 @@ internal class WebhookServiceTest {
                 .build()
         val webhookService = client.webhooks()
 
-        val response =
+        val webhook =
             webhookService.setActive(
                 WebhookSetActiveParams.builder().orgId("orgId").id("id").active(true).build()
             )
 
-        response.validate()
+        webhook.validate()
     }
 }

@@ -64,6 +64,9 @@ internal class BillListPageResponseTest {
                                 .unit("unit")
                                 .units(0.0)
                                 .id("id")
+                                .accountingProductCode("accountingProductCode")
+                                .accountingProductId("accountingProductId")
+                                .accountingProductName("accountingProductName")
                                 .additional(
                                     BillResponse.LineItem.Additional.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -180,6 +183,9 @@ internal class BillListPageResponseTest {
                             .unit("unit")
                             .units(0.0)
                             .id("id")
+                            .accountingProductCode("accountingProductCode")
+                            .accountingProductId("accountingProductId")
+                            .accountingProductName("accountingProductName")
                             .additional(
                                 BillResponse.LineItem.Additional.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -302,6 +308,9 @@ internal class BillListPageResponseTest {
                                 .unit("unit")
                                 .units(0.0)
                                 .id("id")
+                                .accountingProductCode("accountingProductCode")
+                                .accountingProductId("accountingProductId")
+                                .accountingProductName("accountingProductName")
                                 .additional(
                                     BillResponse.LineItem.Additional.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("bar"))

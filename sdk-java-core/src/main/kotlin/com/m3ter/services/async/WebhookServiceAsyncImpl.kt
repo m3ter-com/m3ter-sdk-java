@@ -18,16 +18,13 @@ import com.m3ter.core.http.parseable
 import com.m3ter.core.prepareAsync
 import com.m3ter.models.Webhook
 import com.m3ter.models.WebhookCreateParams
-import com.m3ter.models.WebhookCreateResponse
 import com.m3ter.models.WebhookDeleteParams
 import com.m3ter.models.WebhookListPageAsync
 import com.m3ter.models.WebhookListPageResponse
 import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
-import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
-import com.m3ter.models.WebhookUpdateResponse
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
@@ -47,7 +44,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun create(
         params: WebhookCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookCreateResponse> =
+    ): CompletableFuture<Webhook> =
         // post /organizations/{orgId}/integrationdestinations/webhooks
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
@@ -61,7 +58,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun update(
         params: WebhookUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookUpdateResponse> =
+    ): CompletableFuture<Webhook> =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -82,7 +79,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun setActive(
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookSetActiveResponse> =
+    ): CompletableFuture<Webhook> =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}/active
         withRawResponse().setActive(params, requestOptions).thenApply { it.parse() }
 
@@ -99,13 +96,12 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 clientOptions.toBuilder().apply(modifier::accept).build()
             )
 
-        private val createHandler: Handler<WebhookCreateResponse> =
-            jsonHandler<WebhookCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun create(
             params: WebhookCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -174,13 +170,12 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<WebhookUpdateResponse> =
-            jsonHandler<WebhookUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun update(
             params: WebhookUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookUpdateResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -296,13 +291,13 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val setActiveHandler: Handler<WebhookSetActiveResponse> =
-            jsonHandler<WebhookSetActiveResponse>(clientOptions.jsonMapper)
+        private val setActiveHandler: Handler<Webhook> =
+            jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun setActive(
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())

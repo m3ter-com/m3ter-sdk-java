@@ -21,6 +21,7 @@ internal class StatementStatementDefinitionCreateParamsTest {
                     .meterId("meterId")
                     .build()
             )
+            .generateSlimStatements(true)
             .includePricePerUnit(true)
             .addMeasure(
                 StatementStatementDefinitionCreateParams.Measure.builder()
@@ -66,6 +67,7 @@ internal class StatementStatementDefinitionCreateParamsTest {
                         .meterId("meterId")
                         .build()
                 )
+                .generateSlimStatements(true)
                 .includePricePerUnit(true)
                 .addMeasure(
                     StatementStatementDefinitionCreateParams.Measure.builder()
@@ -93,6 +95,7 @@ internal class StatementStatementDefinitionCreateParamsTest {
                     .meterId("meterId")
                     .build()
             )
+        assertThat(body.generateSlimStatements()).contains(true)
         assertThat(body.includePricePerUnit()).contains(true)
         assertThat(body.measures().getOrNull())
             .containsExactly(

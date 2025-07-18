@@ -30,6 +30,7 @@ internal class StatementStatementDefinitionListPageResponseTest {
                         )
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .generateSlimStatements(true)
                         .includePricePerUnit(true)
                         .lastModifiedBy("lastModifiedBy")
                         .addMeasure(
@@ -62,6 +63,7 @@ internal class StatementStatementDefinitionListPageResponseTest {
                     )
                     .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .generateSlimStatements(true)
                     .includePricePerUnit(true)
                     .lastModifiedBy("lastModifiedBy")
                     .addMeasure(
@@ -98,6 +100,7 @@ internal class StatementStatementDefinitionListPageResponseTest {
                         )
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .generateSlimStatements(true)
                         .includePricePerUnit(true)
                         .lastModifiedBy("lastModifiedBy")
                         .addMeasure(

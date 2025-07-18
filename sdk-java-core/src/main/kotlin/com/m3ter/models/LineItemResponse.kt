@@ -24,6 +24,9 @@ import kotlin.jvm.optionals.getOrNull
 class LineItemResponse
 private constructor(
     private val id: JsonField<String>,
+    private val accountingProductCode: JsonField<String>,
+    private val accountingProductId: JsonField<String>,
+    private val accountingProductName: JsonField<String>,
     private val additional: JsonField<Additional>,
     private val aggregationId: JsonField<String>,
     private val averageUnitPrice: JsonField<Double>,
@@ -72,6 +75,15 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductCode")
+        @ExcludeMissing
+        accountingProductCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        accountingProductId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("accountingProductName")
+        @ExcludeMissing
+        accountingProductName: JsonField<String> = JsonMissing.of(),
         @JsonProperty("additional")
         @ExcludeMissing
         additional: JsonField<Additional> = JsonMissing.of(),
@@ -164,6 +176,9 @@ private constructor(
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
+        accountingProductCode,
+        accountingProductId,
+        accountingProductName,
         additional,
         aggregationId,
         averageUnitPrice,
@@ -216,6 +231,27 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun accountingProductCode(): Optional<String> =
+        accountingProductCode.getOptional("accountingProductCode")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun accountingProductId(): Optional<String> =
+        accountingProductId.getOptional("accountingProductId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun accountingProductName(): Optional<String> =
+        accountingProductName.getOptional("accountingProductName")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -572,6 +608,36 @@ private constructor(
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+    /**
+     * Returns the raw JSON value of [accountingProductCode].
+     *
+     * Unlike [accountingProductCode], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("accountingProductCode")
+    @ExcludeMissing
+    fun _accountingProductCode(): JsonField<String> = accountingProductCode
+
+    /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("accountingProductId")
+    @ExcludeMissing
+    fun _accountingProductId(): JsonField<String> = accountingProductId
+
+    /**
+     * Returns the raw JSON value of [accountingProductName].
+     *
+     * Unlike [accountingProductName], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("accountingProductName")
+    @ExcludeMissing
+    fun _accountingProductName(): JsonField<String> = accountingProductName
 
     /**
      * Returns the raw JSON value of [additional].
@@ -942,6 +1008,9 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
+        private var accountingProductCode: JsonField<String> = JsonMissing.of()
+        private var accountingProductId: JsonField<String> = JsonMissing.of()
+        private var accountingProductName: JsonField<String> = JsonMissing.of()
         private var additional: JsonField<Additional> = JsonMissing.of()
         private var aggregationId: JsonField<String> = JsonMissing.of()
         private var averageUnitPrice: JsonField<Double> = JsonMissing.of()
@@ -989,6 +1058,9 @@ private constructor(
         @JvmSynthetic
         internal fun from(lineItemResponse: LineItemResponse) = apply {
             id = lineItemResponse.id
+            accountingProductCode = lineItemResponse.accountingProductCode
+            accountingProductId = lineItemResponse.accountingProductId
+            accountingProductName = lineItemResponse.accountingProductName
             additional = lineItemResponse.additional
             aggregationId = lineItemResponse.aggregationId
             averageUnitPrice = lineItemResponse.averageUnitPrice
@@ -1044,6 +1116,48 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        fun accountingProductCode(accountingProductCode: String) =
+            accountingProductCode(JsonField.of(accountingProductCode))
+
+        /**
+         * Sets [Builder.accountingProductCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductCode] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun accountingProductCode(accountingProductCode: JsonField<String>) = apply {
+            this.accountingProductCode = accountingProductCode
+        }
+
+        fun accountingProductId(accountingProductId: String) =
+            accountingProductId(JsonField.of(accountingProductId))
+
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            this.accountingProductId = accountingProductId
+        }
+
+        fun accountingProductName(accountingProductName: String) =
+            accountingProductName(JsonField.of(accountingProductName))
+
+        /**
+         * Sets [Builder.accountingProductName] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductName] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun accountingProductName(accountingProductName: JsonField<String>) = apply {
+            this.accountingProductName = accountingProductName
+        }
 
         fun additional(additional: Additional) = additional(JsonField.of(additional))
 
@@ -1668,6 +1782,9 @@ private constructor(
         fun build(): LineItemResponse =
             LineItemResponse(
                 checkRequired("id", id),
+                accountingProductCode,
+                accountingProductId,
+                accountingProductName,
                 additional,
                 aggregationId,
                 averageUnitPrice,
@@ -1722,6 +1839,9 @@ private constructor(
         }
 
         id()
+        accountingProductCode()
+        accountingProductId()
+        accountingProductName()
         additional().ifPresent { it.validate() }
         aggregationId()
         averageUnitPrice()
@@ -1783,6 +1903,9 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
+            (if (accountingProductCode.asKnown().isPresent) 1 else 0) +
+            (if (accountingProductId.asKnown().isPresent) 1 else 0) +
+            (if (accountingProductName.asKnown().isPresent) 1 else 0) +
             (additional.asKnown().getOrNull()?.validity() ?: 0) +
             (if (aggregationId.asKnown().isPresent) 1 else 0) +
             (if (averageUnitPrice.asKnown().isPresent) 1 else 0) +
@@ -2886,15 +3009,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && additional == other.additional && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is LineItemResponse && id == other.id && accountingProductCode == other.accountingProductCode && accountingProductId == other.accountingProductId && accountingProductName == other.accountingProductName && additional == other.additional && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, additional, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountingProductCode, accountingProductId, accountingProductName, additional, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LineItemResponse{id=$id, additional=$additional, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, version=$version, additionalProperties=$additionalProperties}"
+        "LineItemResponse{id=$id, accountingProductCode=$accountingProductCode, accountingProductId=$accountingProductId, accountingProductName=$accountingProductName, additional=$additional, aggregationId=$aggregationId, averageUnitPrice=$averageUnitPrice, balanceId=$balanceId, bandUsage=$bandUsage, billId=$billId, chargeId=$chargeId, commitmentId=$commitmentId, compoundAggregationId=$compoundAggregationId, contractId=$contractId, conversionRate=$conversionRate, convertedSubtotal=$convertedSubtotal, counterId=$counterId, createdBy=$createdBy, creditTypeId=$creditTypeId, currency=$currency, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, group=$group, jsonUsageGenerated=$jsonUsageGenerated, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, meterId=$meterId, planGroupId=$planGroupId, planId=$planId, pricingId=$pricingId, productCode=$productCode, productId=$productId, productName=$productName, quantity=$quantity, reasonId=$reasonId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, segment=$segment, sequenceNumber=$sequenceNumber, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, subtotal=$subtotal, unit=$unit, units=$units, version=$version, additionalProperties=$additionalProperties}"
 }
