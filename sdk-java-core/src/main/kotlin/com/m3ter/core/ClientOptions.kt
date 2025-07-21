@@ -255,11 +255,21 @@ private constructor(
         fun timeout(): Timeout = timeout
 
         fun fromEnv() = apply {
-            System.getenv("M3TER_BASE_URL")?.let { baseUrl(it) }
-            System.getenv("M3TER_API_KEY")?.let { apiKey(it) }
-            System.getenv("M3TER_API_SECRET")?.let { apiSecret(it) }
-            System.getenv("M3TER_API_TOKEN")?.let { token(it) }
-            System.getenv("M3TER_ORG_ID")?.let { orgId(it) }
+            (System.getProperty("m3ter.baseUrl") ?: System.getenv("M3TER_BASE_URL"))?.let {
+                baseUrl(it)
+            }
+            (System.getProperty("m3ter.m3TerApiKey") ?: System.getenv("M3TER_API_KEY"))?.let {
+                apiKey(it)
+            }
+            (System.getProperty("m3ter.m3TerApiSecret") ?: System.getenv("M3TER_API_SECRET"))?.let {
+                apiSecret(it)
+            }
+            (System.getProperty("m3ter.m3TerApiToken") ?: System.getenv("M3TER_API_TOKEN"))?.let {
+                token(it)
+            }
+            (System.getProperty("m3ter.m3TerOrgId") ?: System.getenv("M3TER_ORG_ID"))?.let {
+                orgId(it)
+            }
         }
 
         /**
