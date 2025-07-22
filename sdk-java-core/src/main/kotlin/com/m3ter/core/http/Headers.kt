@@ -1,5 +1,15 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.m3ter.core.http
 
+import com.m3ter.core.JsonArray
+import com.m3ter.core.JsonBoolean
+import com.m3ter.core.JsonMissing
+import com.m3ter.core.JsonNull
+import com.m3ter.core.JsonNumber
+import com.m3ter.core.JsonObject
+import com.m3ter.core.JsonString
+import com.m3ter.core.JsonValue
 import com.m3ter.core.toImmutable
 import java.util.TreeMap
 
@@ -28,6 +38,19 @@ private constructor(
             TreeMap(String.CASE_INSENSITIVE_ORDER)
         private var size: Int = 0
 
+        fun put(name: String, value: JsonValue): Builder = apply {
+            when (value) {
+                is JsonMissing,
+                is JsonNull -> {}
+                is JsonBoolean -> put(name, value.value.toString())
+                is JsonNumber -> put(name, value.value.toString())
+                is JsonString -> put(name, value.value)
+                is JsonArray -> value.values.forEach { put(name, it) }
+                is JsonObject ->
+                    value.values.forEach { (nestedName, value) -> put("$name.$nestedName", value) }
+            }
+        }
+
         fun put(name: String, value: String) = apply {
             map.getOrPut(name) { mutableListOf() }.add(value)
             size++
@@ -39,15 +62,6 @@ private constructor(
 
         fun putAll(headers: Headers) = apply {
             headers.names().forEach { put(it, headers.values(it)) }
-        }
-
-        fun remove(name: String) = apply { size -= map.remove(name).orEmpty().size }
-
-        fun removeAll(names: Set<String>) = apply { names.forEach(::remove) }
-
-        fun clear() = apply {
-            map.clear()
-            size = 0
         }
 
         fun replace(name: String, value: String) = apply {
@@ -66,6 +80,15 @@ private constructor(
 
         fun replaceAll(headers: Headers) = apply {
             headers.names().forEach { replace(it, headers.values(it)) }
+        }
+
+        fun remove(name: String) = apply { size -= map.remove(name).orEmpty().size }
+
+        fun removeAll(names: Set<String>) = apply { names.forEach(::remove) }
+
+        fun clear() = apply {
+            map.clear()
+            size = 0
         }
 
         fun build() =
