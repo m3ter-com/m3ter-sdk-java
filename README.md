@@ -96,7 +96,7 @@ import com.m3ter.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
     // Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
-    Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+    // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build();
