@@ -56,20 +56,20 @@ interface UsageServiceAsync {
     fun getFailedIngestDownloadUrl(): CompletableFuture<DownloadUrlResponse> =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams =
             UsageGetFailedIngestDownloadUrlParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DownloadUrlResponse>
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams = UsageGetFailedIngestDownloadUrlParams.none()
     ): CompletableFuture<DownloadUrlResponse> =
         getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         requestOptions: RequestOptions
     ): CompletableFuture<DownloadUrlResponse> =
@@ -96,18 +96,18 @@ interface UsageServiceAsync {
      */
     fun query(): CompletableFuture<UsageQueryResponse> = query(UsageQueryParams.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UsageQueryResponse>
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none()
     ): CompletableFuture<UsageQueryResponse> = query(params, RequestOptions.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(requestOptions: RequestOptions): CompletableFuture<UsageQueryResponse> =
         query(UsageQueryParams.none(), requestOptions)
 
@@ -148,7 +148,7 @@ interface UsageServiceAsync {
     fun submit(params: UsageSubmitParams): CompletableFuture<SubmitMeasurementsResponse> =
         submit(params, RequestOptions.none())
 
-    /** @see [submit] */
+    /** @see submit */
     fun submit(
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -176,21 +176,21 @@ interface UsageServiceAsync {
         fun getFailedIngestDownloadUrl(): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
             getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
                 UsageGetFailedIngestDownloadUrlParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>>
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
                 UsageGetFailedIngestDownloadUrlParams.none()
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
             getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
@@ -203,19 +203,19 @@ interface UsageServiceAsync {
         fun query(): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
             query(UsageQueryParams.none())
 
-        /** @see [query] */
+        /** @see query */
         fun query(
             params: UsageQueryParams = UsageQueryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>>
 
-        /** @see [query] */
+        /** @see query */
         fun query(
             params: UsageQueryParams = UsageQueryParams.none()
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
             query(params, RequestOptions.none())
 
-        /** @see [query] */
+        /** @see query */
         fun query(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
@@ -230,7 +230,7 @@ interface UsageServiceAsync {
         ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> =
             submit(params, RequestOptions.none())
 
-        /** @see [submit] */
+        /** @see submit */
         fun submit(
             params: UsageSubmitParams,
             requestOptions: RequestOptions = RequestOptions.none(),

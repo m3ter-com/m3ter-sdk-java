@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ResourceGroupService.listPermissions] */
+/** @see ResourceGroupService.listPermissions */
 class ResourceGroupListPermissionsPage
 private constructor(
     private val service: ResourceGroupService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListPermissionsPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListPermissionsPageResponse.data]
+     * @see ResourceGroupListPermissionsPageResponse.data
      */
     fun data(): List<PermissionPolicyResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListPermissionsPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListPermissionsPageResponse.nextToken]
+     * @see ResourceGroupListPermissionsPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

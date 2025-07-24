@@ -32,7 +32,7 @@ interface PlanService {
     /** Create a new Plan. */
     fun create(params: PlanCreateParams): PlanResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -41,27 +41,27 @@ interface PlanService {
     /** Retrieve the Plan with the given UUID. */
     fun retrieve(id: String): PlanResponse = retrieve(id, PlanRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanRetrieveParams = PlanRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, params: PlanRetrieveParams = PlanRetrieveParams.none()): PlanResponse =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PlanRetrieveParams): PlanResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PlanResponse =
         retrieve(id, PlanRetrieveParams.none(), requestOptions)
 
@@ -75,17 +75,17 @@ interface PlanService {
     fun update(id: String, params: PlanUpdateParams): PlanResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PlanUpdateParams): PlanResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -94,44 +94,44 @@ interface PlanService {
     /** Retrieve a list of Plans that can be filtered by Product, Account, or Plan ID. */
     fun list(): PlanListPage = list(PlanListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanListParams = PlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: PlanListParams = PlanListParams.none()): PlanListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PlanListPage =
         list(PlanListParams.none(), requestOptions)
 
     /** Delete the Plan with the given UUID. */
     fun delete(id: String): PlanResponse = delete(id, PlanDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanDeleteParams = PlanDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, params: PlanDeleteParams = PlanDeleteParams.none()): PlanResponse =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PlanDeleteParams): PlanResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): PlanResponse =
         delete(id, PlanDeleteParams.none(), requestOptions)
 
@@ -153,7 +153,7 @@ interface PlanService {
         fun create(params: PlanCreateParams): HttpResponseFor<PlanResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PlanCreateParams,
@@ -168,7 +168,7 @@ interface PlanService {
         fun retrieve(id: String): HttpResponseFor<PlanResponse> =
             retrieve(id, PlanRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -177,26 +177,26 @@ interface PlanService {
         ): HttpResponseFor<PlanResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PlanRetrieveParams = PlanRetrieveParams.none(),
         ): HttpResponseFor<PlanResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PlanRetrieveParams): HttpResponseFor<PlanResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<PlanResponse> =
             retrieve(id, PlanRetrieveParams.none(), requestOptions)
@@ -209,7 +209,7 @@ interface PlanService {
         fun update(id: String, params: PlanUpdateParams): HttpResponseFor<PlanResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -217,12 +217,12 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse> = update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: PlanUpdateParams): HttpResponseFor<PlanResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PlanUpdateParams,
@@ -235,19 +235,19 @@ interface PlanService {
          */
         @MustBeClosed fun list(): HttpResponseFor<PlanListPage> = list(PlanListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PlanListParams = PlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: PlanListParams = PlanListParams.none()): HttpResponseFor<PlanListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PlanListPage> =
             list(PlanListParams.none(), requestOptions)
@@ -259,7 +259,7 @@ interface PlanService {
         @MustBeClosed
         fun delete(id: String): HttpResponseFor<PlanResponse> = delete(id, PlanDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -267,26 +267,26 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: PlanDeleteParams = PlanDeleteParams.none(),
         ): HttpResponseFor<PlanResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: PlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: PlanDeleteParams): HttpResponseFor<PlanResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<PlanResponse> =
             delete(id, PlanDeleteParams.none(), requestOptions)

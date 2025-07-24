@@ -28,18 +28,18 @@ interface OrganizationConfigService {
     /** Retrieve the Organization-wide configuration details. */
     fun retrieve(): OrganizationConfigResponse = retrieve(OrganizationConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfigResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
     ): OrganizationConfigResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): OrganizationConfigResponse =
         retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
@@ -47,7 +47,7 @@ interface OrganizationConfigService {
     fun update(params: OrganizationConfigUpdateParams): OrganizationConfigResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -76,20 +76,20 @@ interface OrganizationConfigService {
         fun retrieve(): HttpResponseFor<OrganizationConfigResponse> =
             retrieve(OrganizationConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<OrganizationConfigResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
         ): HttpResponseFor<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(requestOptions: RequestOptions): HttpResponseFor<OrganizationConfigResponse> =
             retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
@@ -103,7 +103,7 @@ interface OrganizationConfigService {
             params: OrganizationConfigUpdateParams
         ): HttpResponseFor<OrganizationConfigResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: OrganizationConfigUpdateParams,

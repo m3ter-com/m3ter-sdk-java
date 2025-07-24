@@ -36,7 +36,7 @@ interface PlanGroupServiceAsync {
     fun create(params: PlanGroupCreateParams): CompletableFuture<PlanGroupResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PlanGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -51,7 +51,7 @@ interface PlanGroupServiceAsync {
     fun retrieve(id: String): CompletableFuture<PlanGroupResponse> =
         retrieve(id, PlanGroupRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
@@ -59,23 +59,23 @@ interface PlanGroupServiceAsync {
     ): CompletableFuture<PlanGroupResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
     ): CompletableFuture<PlanGroupResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PlanGroupRetrieveParams): CompletableFuture<PlanGroupResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PlanGroupResponse> =
         retrieve(id, PlanGroupRetrieveParams.none(), requestOptions)
 
@@ -92,7 +92,7 @@ interface PlanGroupServiceAsync {
     fun update(id: String, params: PlanGroupUpdateParams): CompletableFuture<PlanGroupResponse> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PlanGroupUpdateParams,
@@ -100,11 +100,11 @@ interface PlanGroupServiceAsync {
     ): CompletableFuture<PlanGroupResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PlanGroupUpdateParams): CompletableFuture<PlanGroupResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -118,18 +118,18 @@ interface PlanGroupServiceAsync {
      */
     fun list(): CompletableFuture<PlanGroupListPageAsync> = list(PlanGroupListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanGroupListParams = PlanGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanGroupListParams = PlanGroupListParams.none()
     ): CompletableFuture<PlanGroupListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PlanGroupListPageAsync> =
         list(PlanGroupListParams.none(), requestOptions)
 
@@ -143,7 +143,7 @@ interface PlanGroupServiceAsync {
     fun delete(id: String): CompletableFuture<PlanGroupResponse> =
         delete(id, PlanGroupDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
@@ -151,23 +151,23 @@ interface PlanGroupServiceAsync {
     ): CompletableFuture<PlanGroupResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
     ): CompletableFuture<PlanGroupResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PlanGroupDeleteParams): CompletableFuture<PlanGroupResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<PlanGroupResponse> =
         delete(id, PlanGroupDeleteParams.none(), requestOptions)
 
@@ -194,7 +194,7 @@ interface PlanGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PlanGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -207,7 +207,7 @@ interface PlanGroupServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             retrieve(id, PlanGroupRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
@@ -215,26 +215,26 @@ interface PlanGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanGroupRetrieveParams
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -251,7 +251,7 @@ interface PlanGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PlanGroupUpdateParams,
@@ -259,13 +259,13 @@ interface PlanGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanGroupUpdateParams
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanGroupUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -278,19 +278,19 @@ interface PlanGroupServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
             list(PlanGroupListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanGroupListParams = PlanGroupListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanGroupListParams = PlanGroupListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PlanGroupListPageAsync>> =
@@ -303,7 +303,7 @@ interface PlanGroupServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             delete(id, PlanGroupDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
@@ -311,26 +311,26 @@ interface PlanGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanGroupDeleteParams
         ): CompletableFuture<HttpResponseFor<PlanGroupResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

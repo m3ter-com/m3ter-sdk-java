@@ -56,47 +56,47 @@ interface BillJobService {
      */
     fun create(): BillJobResponse = create(BillJobCreateParams.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BillJobCreateParams = BillJobCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BillJobCreateParams = BillJobCreateParams.none()): BillJobResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(requestOptions: RequestOptions): BillJobResponse =
         create(BillJobCreateParams.none(), requestOptions)
 
     /** Retrieve a Bill Job for the given UUID. */
     fun retrieve(id: String): BillJobResponse = retrieve(id, BillJobRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
     ): BillJobResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillJobRetrieveParams): BillJobResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): BillJobResponse =
         retrieve(id, BillJobRetrieveParams.none(), requestOptions)
 
@@ -109,17 +109,17 @@ interface BillJobService {
      */
     fun list(): BillJobListPage = list(BillJobListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillJobListParams = BillJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillJobListParams = BillJobListParams.none()): BillJobListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BillJobListPage =
         list(BillJobListParams.none(), requestOptions)
 
@@ -131,29 +131,29 @@ interface BillJobService {
      */
     fun cancel(id: String): BillJobResponse = cancel(id, BillJobCancelParams.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: BillJobCancelParams = BillJobCancelParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse = cancel(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: BillJobCancelParams = BillJobCancelParams.none(),
     ): BillJobResponse = cancel(id, params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         params: BillJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillJobResponse
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(params: BillJobCancelParams): BillJobResponse = cancel(params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(id: String, requestOptions: RequestOptions): BillJobResponse =
         cancel(id, BillJobCancelParams.none(), requestOptions)
 
@@ -173,7 +173,7 @@ interface BillJobService {
     fun recalculate(params: BillJobRecalculateParams): BillJobResponse =
         recalculate(params, RequestOptions.none())
 
-    /** @see [recalculate] */
+    /** @see recalculate */
     fun recalculate(
         params: BillJobRecalculateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -196,20 +196,20 @@ interface BillJobService {
         @MustBeClosed
         fun create(): HttpResponseFor<BillJobResponse> = create(BillJobCreateParams.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BillJobCreateParams = BillJobCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BillJobCreateParams = BillJobCreateParams.none()
         ): HttpResponseFor<BillJobResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
             create(BillJobCreateParams.none(), requestOptions)
@@ -222,7 +222,7 @@ interface BillJobService {
         fun retrieve(id: String): HttpResponseFor<BillJobResponse> =
             retrieve(id, BillJobRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -231,26 +231,26 @@ interface BillJobService {
         ): HttpResponseFor<BillJobResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: BillJobRetrieveParams = BillJobRetrieveParams.none(),
         ): HttpResponseFor<BillJobResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BillJobRetrieveParams): HttpResponseFor<BillJobResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
             retrieve(id, BillJobRetrieveParams.none(), requestOptions)
@@ -261,20 +261,20 @@ interface BillJobService {
          */
         @MustBeClosed fun list(): HttpResponseFor<BillJobListPage> = list(BillJobListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillJobListParams = BillJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillJobListParams = BillJobListParams.none()
         ): HttpResponseFor<BillJobListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BillJobListPage> =
             list(BillJobListParams.none(), requestOptions)
@@ -287,7 +287,7 @@ interface BillJobService {
         fun cancel(id: String): HttpResponseFor<BillJobResponse> =
             cancel(id, BillJobCancelParams.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             id: String,
@@ -296,26 +296,26 @@ interface BillJobService {
         ): HttpResponseFor<BillJobResponse> =
             cancel(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             id: String,
             params: BillJobCancelParams = BillJobCancelParams.none(),
         ): HttpResponseFor<BillJobResponse> = cancel(id, params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             params: BillJobCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillJobResponse>
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(params: BillJobCancelParams): HttpResponseFor<BillJobResponse> =
             cancel(params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(id: String, requestOptions: RequestOptions): HttpResponseFor<BillJobResponse> =
             cancel(id, BillJobCancelParams.none(), requestOptions)
@@ -328,7 +328,7 @@ interface BillJobService {
         fun recalculate(params: BillJobRecalculateParams): HttpResponseFor<BillJobResponse> =
             recalculate(params, RequestOptions.none())
 
-        /** @see [recalculate] */
+        /** @see recalculate */
         @MustBeClosed
         fun recalculate(
             params: BillJobRecalculateParams,

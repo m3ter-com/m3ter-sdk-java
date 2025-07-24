@@ -38,7 +38,7 @@ interface StatementDefinitionService {
     fun create(params: StatementStatementDefinitionCreateParams): StatementDefinitionResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: StatementStatementDefinitionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,7 +54,7 @@ interface StatementDefinitionService {
     fun retrieve(id: String): StatementDefinitionResponse =
         retrieve(id, StatementStatementDefinitionRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementDefinitionRetrieveParams =
@@ -62,24 +62,24 @@ interface StatementDefinitionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementDefinitionResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementDefinitionRetrieveParams =
             StatementStatementDefinitionRetrieveParams.none(),
     ): StatementDefinitionResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementDefinitionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementDefinitionResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: StatementStatementDefinitionRetrieveParams): StatementDefinitionResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): StatementDefinitionResponse =
         retrieve(id, StatementStatementDefinitionRetrieveParams.none(), requestOptions)
 
@@ -95,18 +95,18 @@ interface StatementDefinitionService {
         params: StatementStatementDefinitionUpdateParams,
     ): StatementDefinitionResponse = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: StatementStatementDefinitionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementDefinitionResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: StatementStatementDefinitionUpdateParams): StatementDefinitionResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: StatementStatementDefinitionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -121,20 +121,20 @@ interface StatementDefinitionService {
     fun list(): StatementStatementDefinitionListPage =
         list(StatementStatementDefinitionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementDefinitionListParams =
             StatementStatementDefinitionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementStatementDefinitionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementDefinitionListParams =
             StatementStatementDefinitionListParams.none()
     ): StatementStatementDefinitionListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): StatementStatementDefinitionListPage =
         list(StatementStatementDefinitionListParams.none(), requestOptions)
 
@@ -147,7 +147,7 @@ interface StatementDefinitionService {
     fun delete(id: String): StatementDefinitionResponse =
         delete(id, StatementStatementDefinitionDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: StatementStatementDefinitionDeleteParams =
@@ -155,24 +155,24 @@ interface StatementDefinitionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementDefinitionResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: StatementStatementDefinitionDeleteParams =
             StatementStatementDefinitionDeleteParams.none(),
     ): StatementDefinitionResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: StatementStatementDefinitionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementDefinitionResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: StatementStatementDefinitionDeleteParams): StatementDefinitionResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): StatementDefinitionResponse =
         delete(id, StatementStatementDefinitionDeleteParams.none(), requestOptions)
 
@@ -200,7 +200,7 @@ interface StatementDefinitionService {
             params: StatementStatementDefinitionCreateParams
         ): HttpResponseFor<StatementDefinitionResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: StatementStatementDefinitionCreateParams,
@@ -215,7 +215,7 @@ interface StatementDefinitionService {
         fun retrieve(id: String): HttpResponseFor<StatementDefinitionResponse> =
             retrieve(id, StatementStatementDefinitionRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -225,7 +225,7 @@ interface StatementDefinitionService {
         ): HttpResponseFor<StatementDefinitionResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -234,20 +234,20 @@ interface StatementDefinitionService {
         ): HttpResponseFor<StatementDefinitionResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: StatementStatementDefinitionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementDefinitionResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: StatementStatementDefinitionRetrieveParams
         ): HttpResponseFor<StatementDefinitionResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -265,7 +265,7 @@ interface StatementDefinitionService {
             params: StatementStatementDefinitionUpdateParams,
         ): HttpResponseFor<StatementDefinitionResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -274,13 +274,13 @@ interface StatementDefinitionService {
         ): HttpResponseFor<StatementDefinitionResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: StatementStatementDefinitionUpdateParams
         ): HttpResponseFor<StatementDefinitionResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: StatementStatementDefinitionUpdateParams,
@@ -295,7 +295,7 @@ interface StatementDefinitionService {
         fun list(): HttpResponseFor<StatementStatementDefinitionListPage> =
             list(StatementStatementDefinitionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: StatementStatementDefinitionListParams =
@@ -303,7 +303,7 @@ interface StatementDefinitionService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementStatementDefinitionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: StatementStatementDefinitionListParams =
@@ -311,7 +311,7 @@ interface StatementDefinitionService {
         ): HttpResponseFor<StatementStatementDefinitionListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -327,7 +327,7 @@ interface StatementDefinitionService {
         fun delete(id: String): HttpResponseFor<StatementDefinitionResponse> =
             delete(id, StatementStatementDefinitionDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -337,7 +337,7 @@ interface StatementDefinitionService {
         ): HttpResponseFor<StatementDefinitionResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -345,20 +345,20 @@ interface StatementDefinitionService {
                 StatementStatementDefinitionDeleteParams.none(),
         ): HttpResponseFor<StatementDefinitionResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: StatementStatementDefinitionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementDefinitionResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: StatementStatementDefinitionDeleteParams
         ): HttpResponseFor<StatementDefinitionResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

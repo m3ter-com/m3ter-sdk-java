@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [InvitationService.list] */
+/** @see InvitationService.list */
 class UserInvitationListPage
 private constructor(
     private val service: InvitationService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [UserInvitationListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserInvitationListPageResponse.data]
+     * @see UserInvitationListPageResponse.data
      */
     fun data(): List<InvitationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [UserInvitationListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserInvitationListPageResponse.nextToken]
+     * @see UserInvitationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

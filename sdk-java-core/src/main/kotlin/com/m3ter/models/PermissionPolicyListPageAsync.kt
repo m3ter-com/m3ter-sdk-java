@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PermissionPolicyServiceAsync.list] */
+/** @see PermissionPolicyServiceAsync.list */
 class PermissionPolicyListPageAsync
 private constructor(
     private val service: PermissionPolicyServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [PermissionPolicyListPageResponse], but gracefully handles missing data.
      *
-     * @see [PermissionPolicyListPageResponse.data]
+     * @see PermissionPolicyListPageResponse.data
      */
     fun data(): List<PermissionPolicyResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [PermissionPolicyListPageResponse], but gracefully handles missing data.
      *
-     * @see [PermissionPolicyListPageResponse.nextToken]
+     * @see PermissionPolicyListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

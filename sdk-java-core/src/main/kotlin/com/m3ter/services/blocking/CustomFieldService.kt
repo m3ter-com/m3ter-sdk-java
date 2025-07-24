@@ -30,36 +30,36 @@ interface CustomFieldService {
      */
     fun retrieve(): CustomFieldsResponse = retrieve(CustomFieldRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomFieldsResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
     ): CustomFieldsResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CustomFieldsResponse =
         retrieve(CustomFieldRetrieveParams.none(), requestOptions)
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     fun update(): CustomFieldsResponse = update(CustomFieldUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomFieldsResponse
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
     ): CustomFieldsResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CustomFieldsResponse =
         update(CustomFieldUpdateParams.none(), requestOptions)
 
@@ -85,20 +85,20 @@ interface CustomFieldService {
         fun retrieve(): HttpResponseFor<CustomFieldsResponse> =
             retrieve(CustomFieldRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomFieldsResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
         ): HttpResponseFor<CustomFieldsResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(requestOptions: RequestOptions): HttpResponseFor<CustomFieldsResponse> =
             retrieve(CustomFieldRetrieveParams.none(), requestOptions)
@@ -110,20 +110,20 @@ interface CustomFieldService {
         @MustBeClosed
         fun update(): HttpResponseFor<CustomFieldsResponse> = update(CustomFieldUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomFieldsResponse>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
         ): HttpResponseFor<CustomFieldsResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(requestOptions: RequestOptions): HttpResponseFor<CustomFieldsResponse> =
             update(CustomFieldUpdateParams.none(), requestOptions)

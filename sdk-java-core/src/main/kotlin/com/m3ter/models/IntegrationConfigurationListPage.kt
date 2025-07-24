@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [IntegrationConfigurationService.list] */
+/** @see IntegrationConfigurationService.list */
 class IntegrationConfigurationListPage
 private constructor(
     private val service: IntegrationConfigurationService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [IntegrationConfigurationListPageResponse], but gracefully handles missing data.
      *
-     * @see [IntegrationConfigurationListPageResponse.data]
+     * @see IntegrationConfigurationListPageResponse.data
      */
     fun data(): List<IntegrationConfigurationListResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [IntegrationConfigurationListPageResponse], but gracefully handles missing data.
      *
-     * @see [IntegrationConfigurationListPageResponse.nextToken]
+     * @see IntegrationConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [BillService.list] */
+/** @see BillService.list */
 class BillListPage
 private constructor(
     private val service: BillService,
@@ -21,14 +21,14 @@ private constructor(
     /**
      * Delegates to [BillListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillListPageResponse.data]
+     * @see BillListPageResponse.data
      */
     fun data(): List<BillResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [BillListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillListPageResponse.nextToken]
+     * @see BillListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

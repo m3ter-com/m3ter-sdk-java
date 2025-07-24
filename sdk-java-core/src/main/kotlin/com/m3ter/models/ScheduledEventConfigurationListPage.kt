@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ScheduledEventConfigurationService.list] */
+/** @see ScheduledEventConfigurationService.list */
 class ScheduledEventConfigurationListPage
 private constructor(
     private val service: ScheduledEventConfigurationService,
@@ -22,7 +22,7 @@ private constructor(
      * Delegates to [ScheduledEventConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ScheduledEventConfigurationListPageResponse.data]
+     * @see ScheduledEventConfigurationListPageResponse.data
      */
     fun data(): List<ScheduledEventConfigurationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -31,7 +31,7 @@ private constructor(
      * Delegates to [ScheduledEventConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ScheduledEventConfigurationListPageResponse.nextToken]
+     * @see ScheduledEventConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

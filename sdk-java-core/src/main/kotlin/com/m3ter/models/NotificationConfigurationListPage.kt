@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [NotificationConfigurationService.list] */
+/** @see NotificationConfigurationService.list */
 class NotificationConfigurationListPage
 private constructor(
     private val service: NotificationConfigurationService,
@@ -22,7 +22,7 @@ private constructor(
      * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [NotificationConfigurationListPageResponse.data]
+     * @see NotificationConfigurationListPageResponse.data
      */
     fun data(): List<NotificationConfigurationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -31,7 +31,7 @@ private constructor(
      * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [NotificationConfigurationListPageResponse.nextToken]
+     * @see NotificationConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

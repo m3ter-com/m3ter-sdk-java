@@ -36,7 +36,7 @@ interface PlanGroupService {
     fun create(params: PlanGroupCreateParams): PlanGroupResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PlanGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,30 +50,30 @@ interface PlanGroupService {
      */
     fun retrieve(id: String): PlanGroupResponse = retrieve(id, PlanGroupRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
     ): PlanGroupResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PlanGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PlanGroupRetrieveParams): PlanGroupResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PlanGroupResponse =
         retrieve(id, PlanGroupRetrieveParams.none(), requestOptions)
 
@@ -90,18 +90,18 @@ interface PlanGroupService {
     fun update(id: String, params: PlanGroupUpdateParams): PlanGroupResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PlanGroupUpdateParams): PlanGroupResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,17 +115,17 @@ interface PlanGroupService {
      */
     fun list(): PlanGroupListPage = list(PlanGroupListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanGroupListParams = PlanGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: PlanGroupListParams = PlanGroupListParams.none()): PlanGroupListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PlanGroupListPage =
         list(PlanGroupListParams.none(), requestOptions)
 
@@ -138,30 +138,30 @@ interface PlanGroupService {
      */
     fun delete(id: String): PlanGroupResponse = delete(id, PlanGroupDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
     ): PlanGroupResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PlanGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanGroupResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PlanGroupDeleteParams): PlanGroupResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): PlanGroupResponse =
         delete(id, PlanGroupDeleteParams.none(), requestOptions)
 
@@ -183,7 +183,7 @@ interface PlanGroupService {
         fun create(params: PlanGroupCreateParams): HttpResponseFor<PlanGroupResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PlanGroupCreateParams,
@@ -198,7 +198,7 @@ interface PlanGroupService {
         fun retrieve(id: String): HttpResponseFor<PlanGroupResponse> =
             retrieve(id, PlanGroupRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -207,26 +207,26 @@ interface PlanGroupService {
         ): HttpResponseFor<PlanGroupResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PlanGroupRetrieveParams = PlanGroupRetrieveParams.none(),
         ): HttpResponseFor<PlanGroupResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PlanGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PlanGroupRetrieveParams): HttpResponseFor<PlanGroupResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -242,7 +242,7 @@ interface PlanGroupService {
         fun update(id: String, params: PlanGroupUpdateParams): HttpResponseFor<PlanGroupResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -251,12 +251,12 @@ interface PlanGroupService {
         ): HttpResponseFor<PlanGroupResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: PlanGroupUpdateParams): HttpResponseFor<PlanGroupResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PlanGroupUpdateParams,
@@ -270,20 +270,20 @@ interface PlanGroupService {
         @MustBeClosed
         fun list(): HttpResponseFor<PlanGroupListPage> = list(PlanGroupListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PlanGroupListParams = PlanGroupListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PlanGroupListParams = PlanGroupListParams.none()
         ): HttpResponseFor<PlanGroupListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PlanGroupListPage> =
             list(PlanGroupListParams.none(), requestOptions)
@@ -296,7 +296,7 @@ interface PlanGroupService {
         fun delete(id: String): HttpResponseFor<PlanGroupResponse> =
             delete(id, PlanGroupDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -305,26 +305,26 @@ interface PlanGroupService {
         ): HttpResponseFor<PlanGroupResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: PlanGroupDeleteParams = PlanGroupDeleteParams.none(),
         ): HttpResponseFor<PlanGroupResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: PlanGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanGroupResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: PlanGroupDeleteParams): HttpResponseFor<PlanGroupResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<PlanGroupResponse> =
             delete(id, PlanGroupDeleteParams.none(), requestOptions)

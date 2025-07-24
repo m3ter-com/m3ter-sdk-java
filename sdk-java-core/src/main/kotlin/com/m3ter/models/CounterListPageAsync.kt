@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CounterServiceAsync.list] */
+/** @see CounterServiceAsync.list */
 class CounterListPageAsync
 private constructor(
     private val service: CounterServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [CounterListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterListPageResponse.data]
+     * @see CounterListPageResponse.data
      */
     fun data(): List<CounterResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [CounterListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterListPageResponse.nextToken]
+     * @see CounterListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

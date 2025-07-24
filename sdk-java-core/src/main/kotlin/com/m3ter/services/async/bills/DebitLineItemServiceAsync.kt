@@ -40,7 +40,7 @@ interface DebitLineItemServiceAsync {
         params: BillDebitLineItemCreateParams,
     ): CompletableFuture<DebitLineItemResponse> = create(billId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         billId: String,
         params: BillDebitLineItemCreateParams,
@@ -48,11 +48,11 @@ interface DebitLineItemServiceAsync {
     ): CompletableFuture<DebitLineItemResponse> =
         create(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BillDebitLineItemCreateParams): CompletableFuture<DebitLineItemResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +64,7 @@ interface DebitLineItemServiceAsync {
         params: BillDebitLineItemRetrieveParams,
     ): CompletableFuture<DebitLineItemResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillDebitLineItemRetrieveParams,
@@ -72,12 +72,12 @@ interface DebitLineItemServiceAsync {
     ): CompletableFuture<DebitLineItemResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillDebitLineItemRetrieveParams
     ): CompletableFuture<DebitLineItemResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -89,7 +89,7 @@ interface DebitLineItemServiceAsync {
         params: BillDebitLineItemUpdateParams,
     ): CompletableFuture<DebitLineItemResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: BillDebitLineItemUpdateParams,
@@ -97,11 +97,11 @@ interface DebitLineItemServiceAsync {
     ): CompletableFuture<DebitLineItemResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BillDebitLineItemUpdateParams): CompletableFuture<DebitLineItemResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +111,7 @@ interface DebitLineItemServiceAsync {
     fun list(billId: String): CompletableFuture<BillDebitLineItemListPageAsync> =
         list(billId, BillDebitLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
@@ -119,25 +119,25 @@ interface DebitLineItemServiceAsync {
     ): CompletableFuture<BillDebitLineItemListPageAsync> =
         list(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
     ): CompletableFuture<BillDebitLineItemListPageAsync> =
         list(billId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillDebitLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillDebitLineItemListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillDebitLineItemListParams
     ): CompletableFuture<BillDebitLineItemListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         requestOptions: RequestOptions,
@@ -150,7 +150,7 @@ interface DebitLineItemServiceAsync {
         params: BillDebitLineItemDeleteParams,
     ): CompletableFuture<DebitLineItemResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BillDebitLineItemDeleteParams,
@@ -158,11 +158,11 @@ interface DebitLineItemServiceAsync {
     ): CompletableFuture<DebitLineItemResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BillDebitLineItemDeleteParams): CompletableFuture<DebitLineItemResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -194,7 +194,7 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             create(billId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             billId: String,
             params: BillDebitLineItemCreateParams,
@@ -202,13 +202,13 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             create(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: BillDebitLineItemCreateParams
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: BillDebitLineItemCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -225,7 +225,7 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BillDebitLineItemRetrieveParams,
@@ -233,13 +233,13 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillDebitLineItemRetrieveParams
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -256,7 +256,7 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: BillDebitLineItemUpdateParams,
@@ -264,13 +264,13 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: BillDebitLineItemUpdateParams
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: BillDebitLineItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -286,7 +286,7 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> =
             list(billId, BillDebitLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
@@ -294,26 +294,26 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> =
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> =
             list(billId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BillDebitLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BillDebitLineItemListParams
         ): CompletableFuture<HttpResponseFor<BillDebitLineItemListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             requestOptions: RequestOptions,
@@ -331,7 +331,7 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: BillDebitLineItemDeleteParams,
@@ -339,13 +339,13 @@ interface DebitLineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: BillDebitLineItemDeleteParams
         ): CompletableFuture<HttpResponseFor<DebitLineItemResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: BillDebitLineItemDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [DebitReasonService.list] */
+/** @see DebitReasonService.list */
 class DebitReasonListPage
 private constructor(
     private val service: DebitReasonService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [DebitReasonListPageResponse], but gracefully handles missing data.
      *
-     * @see [DebitReasonListPageResponse.data]
+     * @see DebitReasonListPageResponse.data
      */
     fun data(): List<DebitReasonResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [DebitReasonListPageResponse], but gracefully handles missing data.
      *
-     * @see [DebitReasonListPageResponse.nextToken]
+     * @see DebitReasonListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

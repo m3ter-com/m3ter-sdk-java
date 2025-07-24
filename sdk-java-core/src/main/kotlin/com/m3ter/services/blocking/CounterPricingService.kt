@@ -38,7 +38,7 @@ interface CounterPricingService {
     fun create(params: CounterPricingCreateParams): CounterPricingResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,30 +48,30 @@ interface CounterPricingService {
     fun retrieve(id: String): CounterPricingResponse =
         retrieve(id, CounterPricingRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
     ): CounterPricingResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CounterPricingRetrieveParams): CounterPricingResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CounterPricingResponse =
         retrieve(id, CounterPricingRetrieveParams.none(), requestOptions)
 
@@ -84,18 +84,18 @@ interface CounterPricingService {
     fun update(id: String, params: CounterPricingUpdateParams): CounterPricingResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CounterPricingUpdateParams): CounterPricingResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -107,48 +107,48 @@ interface CounterPricingService {
      */
     fun list(): CounterPricingListPage = list(CounterPricingListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterPricingListParams = CounterPricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterPricingListParams = CounterPricingListParams.none()
     ): CounterPricingListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CounterPricingListPage =
         list(CounterPricingListParams.none(), requestOptions)
 
     /** Delete a CounterPricing for the given UUID. */
     fun delete(id: String): CounterPricingResponse = delete(id, CounterPricingDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
     ): CounterPricingResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterPricingResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CounterPricingDeleteParams): CounterPricingResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CounterPricingResponse =
         delete(id, CounterPricingDeleteParams.none(), requestOptions)
 
@@ -174,7 +174,7 @@ interface CounterPricingService {
         fun create(params: CounterPricingCreateParams): HttpResponseFor<CounterPricingResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CounterPricingCreateParams,
@@ -189,7 +189,7 @@ interface CounterPricingService {
         fun retrieve(id: String): HttpResponseFor<CounterPricingResponse> =
             retrieve(id, CounterPricingRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -198,27 +198,27 @@ interface CounterPricingService {
         ): HttpResponseFor<CounterPricingResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
         ): HttpResponseFor<CounterPricingResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CounterPricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterPricingResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CounterPricingRetrieveParams
         ): HttpResponseFor<CounterPricingResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -236,7 +236,7 @@ interface CounterPricingService {
             params: CounterPricingUpdateParams,
         ): HttpResponseFor<CounterPricingResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -245,12 +245,12 @@ interface CounterPricingService {
         ): HttpResponseFor<CounterPricingResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: CounterPricingUpdateParams): HttpResponseFor<CounterPricingResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CounterPricingUpdateParams,
@@ -264,20 +264,20 @@ interface CounterPricingService {
         @MustBeClosed
         fun list(): HttpResponseFor<CounterPricingListPage> = list(CounterPricingListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterPricingListParams = CounterPricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterPricingListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterPricingListParams = CounterPricingListParams.none()
         ): HttpResponseFor<CounterPricingListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CounterPricingListPage> =
             list(CounterPricingListParams.none(), requestOptions)
@@ -290,7 +290,7 @@ interface CounterPricingService {
         fun delete(id: String): HttpResponseFor<CounterPricingResponse> =
             delete(id, CounterPricingDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -299,26 +299,26 @@ interface CounterPricingService {
         ): HttpResponseFor<CounterPricingResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
         ): HttpResponseFor<CounterPricingResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CounterPricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterPricingResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: CounterPricingDeleteParams): HttpResponseFor<CounterPricingResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

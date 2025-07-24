@@ -35,18 +35,18 @@ interface LineItemService {
     fun retrieve(id: String, params: BillLineItemRetrieveParams): LineItemResponse =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LineItemResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillLineItemRetrieveParams): LineItemResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -61,30 +61,30 @@ interface LineItemService {
      */
     fun list(billId: String): BillLineItemListPage = list(billId, BillLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillLineItemListParams = BillLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillLineItemListPage = list(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillLineItemListParams = BillLineItemListParams.none(),
     ): BillLineItemListPage = list(billId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillLineItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillLineItemListParams): BillLineItemListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(billId: String, requestOptions: RequestOptions): BillLineItemListPage =
         list(billId, BillLineItemListParams.none(), requestOptions)
 
@@ -109,7 +109,7 @@ interface LineItemService {
             params: BillLineItemRetrieveParams,
         ): HttpResponseFor<LineItemResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -118,12 +118,12 @@ interface LineItemService {
         ): HttpResponseFor<LineItemResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BillLineItemRetrieveParams): HttpResponseFor<LineItemResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillLineItemRetrieveParams,
@@ -138,7 +138,7 @@ interface LineItemService {
         fun list(billId: String): HttpResponseFor<BillLineItemListPage> =
             list(billId, BillLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
@@ -147,26 +147,26 @@ interface LineItemService {
         ): HttpResponseFor<BillLineItemListPage> =
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
             params: BillLineItemListParams = BillLineItemListParams.none(),
         ): HttpResponseFor<BillLineItemListPage> = list(billId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillLineItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: BillLineItemListParams): HttpResponseFor<BillLineItemListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,

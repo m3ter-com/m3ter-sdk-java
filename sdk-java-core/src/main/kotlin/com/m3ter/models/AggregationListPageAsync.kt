@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [AggregationServiceAsync.list] */
+/** @see AggregationServiceAsync.list */
 class AggregationListPageAsync
 private constructor(
     private val service: AggregationServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [AggregationListPageResponse], but gracefully handles missing data.
      *
-     * @see [AggregationListPageResponse.data]
+     * @see AggregationListPageResponse.data
      */
     fun data(): List<AggregationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [AggregationListPageResponse], but gracefully handles missing data.
      *
-     * @see [AggregationListPageResponse.nextToken]
+     * @see AggregationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -45,7 +45,7 @@ interface StatementServiceAsync {
     fun createCsv(id: String): CompletableFuture<ObjectUrlResponse> =
         createCsv(id, StatementCreateCsvParams.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         id: String,
         params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
@@ -53,23 +53,23 @@ interface StatementServiceAsync {
     ): CompletableFuture<ObjectUrlResponse> =
         createCsv(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         id: String,
         params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
     ): CompletableFuture<ObjectUrlResponse> = createCsv(id, params, RequestOptions.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         params: StatementCreateCsvParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ObjectUrlResponse>
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(params: StatementCreateCsvParams): CompletableFuture<ObjectUrlResponse> =
         createCsv(params, RequestOptions.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         id: String,
         requestOptions: RequestOptions,
@@ -90,7 +90,7 @@ interface StatementServiceAsync {
     fun getCsv(id: String): CompletableFuture<ObjectUrlResponse> =
         getCsv(id, StatementGetCsvParams.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         id: String,
         params: StatementGetCsvParams = StatementGetCsvParams.none(),
@@ -98,23 +98,23 @@ interface StatementServiceAsync {
     ): CompletableFuture<ObjectUrlResponse> =
         getCsv(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         id: String,
         params: StatementGetCsvParams = StatementGetCsvParams.none(),
     ): CompletableFuture<ObjectUrlResponse> = getCsv(id, params, RequestOptions.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         params: StatementGetCsvParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ObjectUrlResponse>
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(params: StatementGetCsvParams): CompletableFuture<ObjectUrlResponse> =
         getCsv(params, RequestOptions.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(id: String, requestOptions: RequestOptions): CompletableFuture<ObjectUrlResponse> =
         getCsv(id, StatementGetCsvParams.none(), requestOptions)
 
@@ -131,7 +131,7 @@ interface StatementServiceAsync {
     fun getJson(id: String): CompletableFuture<ObjectUrlResponse> =
         getJson(id, StatementGetJsonParams.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         id: String,
         params: StatementGetJsonParams = StatementGetJsonParams.none(),
@@ -139,23 +139,23 @@ interface StatementServiceAsync {
     ): CompletableFuture<ObjectUrlResponse> =
         getJson(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         id: String,
         params: StatementGetJsonParams = StatementGetJsonParams.none(),
     ): CompletableFuture<ObjectUrlResponse> = getJson(id, params, RequestOptions.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         params: StatementGetJsonParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ObjectUrlResponse>
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(params: StatementGetJsonParams): CompletableFuture<ObjectUrlResponse> =
         getJson(params, RequestOptions.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(id: String, requestOptions: RequestOptions): CompletableFuture<ObjectUrlResponse> =
         getJson(id, StatementGetJsonParams.none(), requestOptions)
 
@@ -184,7 +184,7 @@ interface StatementServiceAsync {
         fun createCsv(id: String): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             createCsv(id, StatementCreateCsvParams.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         fun createCsv(
             id: String,
             params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
@@ -192,26 +192,26 @@ interface StatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             createCsv(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         fun createCsv(
             id: String,
             params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             createCsv(id, params, RequestOptions.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         fun createCsv(
             params: StatementCreateCsvParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>>
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         fun createCsv(
             params: StatementCreateCsvParams
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             createCsv(params, RequestOptions.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         fun createCsv(
             id: String,
             requestOptions: RequestOptions,
@@ -225,7 +225,7 @@ interface StatementServiceAsync {
         fun getCsv(id: String): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getCsv(id, StatementGetCsvParams.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         fun getCsv(
             id: String,
             params: StatementGetCsvParams = StatementGetCsvParams.none(),
@@ -233,26 +233,26 @@ interface StatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getCsv(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         fun getCsv(
             id: String,
             params: StatementGetCsvParams = StatementGetCsvParams.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getCsv(id, params, RequestOptions.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         fun getCsv(
             params: StatementGetCsvParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>>
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         fun getCsv(
             params: StatementGetCsvParams
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getCsv(params, RequestOptions.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         fun getCsv(
             id: String,
             requestOptions: RequestOptions,
@@ -266,7 +266,7 @@ interface StatementServiceAsync {
         fun getJson(id: String): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getJson(id, StatementGetJsonParams.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         fun getJson(
             id: String,
             params: StatementGetJsonParams = StatementGetJsonParams.none(),
@@ -274,26 +274,26 @@ interface StatementServiceAsync {
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getJson(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getJson] */
+        /** @see getJson */
         fun getJson(
             id: String,
             params: StatementGetJsonParams = StatementGetJsonParams.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getJson(id, params, RequestOptions.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         fun getJson(
             params: StatementGetJsonParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>>
 
-        /** @see [getJson] */
+        /** @see getJson */
         fun getJson(
             params: StatementGetJsonParams
         ): CompletableFuture<HttpResponseFor<ObjectUrlResponse>> =
             getJson(params, RequestOptions.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         fun getJson(
             id: String,
             requestOptions: RequestOptions,

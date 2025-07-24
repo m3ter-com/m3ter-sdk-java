@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [TransactionTypeServiceAsync.list] */
+/** @see TransactionTypeServiceAsync.list */
 class TransactionTypeListPageAsync
 private constructor(
     private val service: TransactionTypeServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [TransactionTypeListPageResponse], but gracefully handles missing data.
      *
-     * @see [TransactionTypeListPageResponse.data]
+     * @see TransactionTypeListPageResponse.data
      */
     fun data(): List<TransactionTypeResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [TransactionTypeListPageResponse], but gracefully handles missing data.
      *
-     * @see [TransactionTypeListPageResponse.nextToken]
+     * @see TransactionTypeListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

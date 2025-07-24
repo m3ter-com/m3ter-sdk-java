@@ -29,18 +29,18 @@ interface OrganizationConfigServiceAsync {
     fun retrieve(): CompletableFuture<OrganizationConfigResponse> =
         retrieve(OrganizationConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<OrganizationConfigResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
     ): CompletableFuture<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<OrganizationConfigResponse> =
         retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
@@ -49,7 +49,7 @@ interface OrganizationConfigServiceAsync {
         params: OrganizationConfigUpdateParams
     ): CompletableFuture<OrganizationConfigResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,19 +77,19 @@ interface OrganizationConfigServiceAsync {
         fun retrieve(): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             retrieve(OrganizationConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
@@ -104,7 +104,7 @@ interface OrganizationConfigServiceAsync {
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ProductService.list] */
+/** @see ProductService.list */
 class ProductListPage
 private constructor(
     private val service: ProductService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [ProductListPageResponse], but gracefully handles missing data.
      *
-     * @see [ProductListPageResponse.data]
+     * @see ProductListPageResponse.data
      */
     fun data(): List<ProductResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [ProductListPageResponse], but gracefully handles missing data.
      *
-     * @see [ProductListPageResponse.nextToken]
+     * @see ProductListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

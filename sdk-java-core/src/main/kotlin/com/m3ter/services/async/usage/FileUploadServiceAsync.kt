@@ -47,7 +47,7 @@ interface FileUploadServiceAsync {
     ): CompletableFuture<UsageFileUploadGenerateUploadUrlResponse> =
         generateUploadUrl(params, RequestOptions.none())
 
-    /** @see [generateUploadUrl] */
+    /** @see generateUploadUrl */
     fun generateUploadUrl(
         params: UsageFileUploadGenerateUploadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +80,7 @@ interface FileUploadServiceAsync {
         ): CompletableFuture<HttpResponseFor<UsageFileUploadGenerateUploadUrlResponse>> =
             generateUploadUrl(params, RequestOptions.none())
 
-        /** @see [generateUploadUrl] */
+        /** @see generateUploadUrl */
         fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,
             requestOptions: RequestOptions = RequestOptions.none(),

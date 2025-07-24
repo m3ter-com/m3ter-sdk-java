@@ -63,7 +63,7 @@ interface StatementJobServiceAsync {
     fun create(params: StatementStatementJobCreateParams): CompletableFuture<StatementJobResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: StatementStatementJobCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -86,7 +86,7 @@ interface StatementJobServiceAsync {
     fun retrieve(id: String): CompletableFuture<StatementJobResponse> =
         retrieve(id, StatementStatementJobRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
@@ -94,24 +94,24 @@ interface StatementJobServiceAsync {
     ): CompletableFuture<StatementJobResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
     ): CompletableFuture<StatementJobResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementJobResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementJobRetrieveParams
     ): CompletableFuture<StatementJobResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -137,18 +137,18 @@ interface StatementJobServiceAsync {
     fun list(): CompletableFuture<StatementStatementJobListPageAsync> =
         list(StatementStatementJobListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementJobListParams = StatementStatementJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementStatementJobListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementJobListParams = StatementStatementJobListParams.none()
     ): CompletableFuture<StatementStatementJobListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<StatementStatementJobListPageAsync> =
@@ -164,7 +164,7 @@ interface StatementJobServiceAsync {
     fun cancel(id: String): CompletableFuture<StatementJobResponse> =
         cancel(id, StatementStatementJobCancelParams.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
@@ -172,23 +172,23 @@ interface StatementJobServiceAsync {
     ): CompletableFuture<StatementJobResponse> =
         cancel(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
     ): CompletableFuture<StatementJobResponse> = cancel(id, params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         params: StatementStatementJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementJobResponse>
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(params: StatementStatementJobCancelParams): CompletableFuture<StatementJobResponse> =
         cancel(params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         requestOptions: RequestOptions,
@@ -230,7 +230,7 @@ interface StatementJobServiceAsync {
         params: StatementStatementJobCreateBatchParams
     ): CompletableFuture<List<StatementJobResponse>> = createBatch(params, RequestOptions.none())
 
-    /** @see [createBatch] */
+    /** @see createBatch */
     fun createBatch(
         params: StatementStatementJobCreateBatchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -260,7 +260,7 @@ interface StatementJobServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: StatementStatementJobCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -273,7 +273,7 @@ interface StatementJobServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             retrieve(id, StatementStatementJobRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: StatementStatementJobRetrieveParams =
@@ -282,26 +282,26 @@ interface StatementJobServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: StatementStatementJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: StatementStatementJobRetrieveParams
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -315,19 +315,19 @@ interface StatementJobServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<StatementStatementJobListPageAsync>> =
             list(StatementStatementJobListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: StatementStatementJobListParams = StatementStatementJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementStatementJobListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: StatementStatementJobListParams = StatementStatementJobListParams.none()
         ): CompletableFuture<HttpResponseFor<StatementStatementJobListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<StatementStatementJobListPageAsync>> =
@@ -340,7 +340,7 @@ interface StatementJobServiceAsync {
         fun cancel(id: String): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             cancel(id, StatementStatementJobCancelParams.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         fun cancel(
             id: String,
             params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
@@ -348,26 +348,26 @@ interface StatementJobServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             cancel(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [cancel] */
+        /** @see cancel */
         fun cancel(
             id: String,
             params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             cancel(id, params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         fun cancel(
             params: StatementStatementJobCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>>
 
-        /** @see [cancel] */
+        /** @see cancel */
         fun cancel(
             params: StatementStatementJobCancelParams
         ): CompletableFuture<HttpResponseFor<StatementJobResponse>> =
             cancel(params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         fun cancel(
             id: String,
             requestOptions: RequestOptions,
@@ -383,7 +383,7 @@ interface StatementJobServiceAsync {
         ): CompletableFuture<HttpResponseFor<List<StatementJobResponse>>> =
             createBatch(params, RequestOptions.none())
 
-        /** @see [createBatch] */
+        /** @see createBatch */
         fun createBatch(
             params: StatementStatementJobCreateBatchParams,
             requestOptions: RequestOptions = RequestOptions.none(),

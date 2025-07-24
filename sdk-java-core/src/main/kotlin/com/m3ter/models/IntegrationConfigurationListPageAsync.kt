@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [IntegrationConfigurationServiceAsync.list] */
+/** @see IntegrationConfigurationServiceAsync.list */
 class IntegrationConfigurationListPageAsync
 private constructor(
     private val service: IntegrationConfigurationServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [IntegrationConfigurationListPageResponse], but gracefully handles missing data.
      *
-     * @see [IntegrationConfigurationListPageResponse.data]
+     * @see IntegrationConfigurationListPageResponse.data
      */
     fun data(): List<IntegrationConfigurationListResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [IntegrationConfigurationListPageResponse], but gracefully handles missing data.
      *
-     * @see [IntegrationConfigurationListPageResponse.nextToken]
+     * @see IntegrationConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

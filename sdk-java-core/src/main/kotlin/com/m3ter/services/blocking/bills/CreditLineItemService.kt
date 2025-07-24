@@ -38,18 +38,18 @@ interface CreditLineItemService {
     fun create(billId: String, params: BillCreditLineItemCreateParams): CreditLineItemResponse =
         create(billId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         billId: String,
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse = create(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BillCreditLineItemCreateParams): CreditLineItemResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BillCreditLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,18 +59,18 @@ interface CreditLineItemService {
     fun retrieve(id: String, params: BillCreditLineItemRetrieveParams): CreditLineItemResponse =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillCreditLineItemRetrieveParams): CreditLineItemResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillCreditLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,18 +80,18 @@ interface CreditLineItemService {
     fun update(id: String, params: BillCreditLineItemUpdateParams): CreditLineItemResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BillCreditLineItemUpdateParams): CreditLineItemResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillCreditLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,30 +101,30 @@ interface CreditLineItemService {
     fun list(billId: String): BillCreditLineItemListPage =
         list(billId, BillCreditLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillCreditLineItemListPage = list(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
     ): BillCreditLineItemListPage = list(billId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillCreditLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillCreditLineItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillCreditLineItemListParams): BillCreditLineItemListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(billId: String, requestOptions: RequestOptions): BillCreditLineItemListPage =
         list(billId, BillCreditLineItemListParams.none(), requestOptions)
 
@@ -132,18 +132,18 @@ interface CreditLineItemService {
     fun delete(id: String, params: BillCreditLineItemDeleteParams): CreditLineItemResponse =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditLineItemResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BillCreditLineItemDeleteParams): CreditLineItemResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BillCreditLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -174,7 +174,7 @@ interface CreditLineItemService {
             params: BillCreditLineItemCreateParams,
         ): HttpResponseFor<CreditLineItemResponse> = create(billId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             billId: String,
@@ -183,13 +183,13 @@ interface CreditLineItemService {
         ): HttpResponseFor<CreditLineItemResponse> =
             create(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BillCreditLineItemCreateParams
         ): HttpResponseFor<CreditLineItemResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BillCreditLineItemCreateParams,
@@ -207,7 +207,7 @@ interface CreditLineItemService {
             params: BillCreditLineItemRetrieveParams,
         ): HttpResponseFor<CreditLineItemResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -216,13 +216,13 @@ interface CreditLineItemService {
         ): HttpResponseFor<CreditLineItemResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillCreditLineItemRetrieveParams
         ): HttpResponseFor<CreditLineItemResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillCreditLineItemRetrieveParams,
@@ -240,7 +240,7 @@ interface CreditLineItemService {
             params: BillCreditLineItemUpdateParams,
         ): HttpResponseFor<CreditLineItemResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -249,13 +249,13 @@ interface CreditLineItemService {
         ): HttpResponseFor<CreditLineItemResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BillCreditLineItemUpdateParams
         ): HttpResponseFor<CreditLineItemResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BillCreditLineItemUpdateParams,
@@ -271,7 +271,7 @@ interface CreditLineItemService {
         fun list(billId: String): HttpResponseFor<BillCreditLineItemListPage> =
             list(billId, BillCreditLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
@@ -280,27 +280,27 @@ interface CreditLineItemService {
         ): HttpResponseFor<BillCreditLineItemListPage> =
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
             params: BillCreditLineItemListParams = BillCreditLineItemListParams.none(),
         ): HttpResponseFor<BillCreditLineItemListPage> = list(billId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillCreditLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillCreditLineItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillCreditLineItemListParams
         ): HttpResponseFor<BillCreditLineItemListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
@@ -319,7 +319,7 @@ interface CreditLineItemService {
             params: BillCreditLineItemDeleteParams,
         ): HttpResponseFor<CreditLineItemResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -328,13 +328,13 @@ interface CreditLineItemService {
         ): HttpResponseFor<CreditLineItemResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: BillCreditLineItemDeleteParams
         ): HttpResponseFor<CreditLineItemResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: BillCreditLineItemDeleteParams,

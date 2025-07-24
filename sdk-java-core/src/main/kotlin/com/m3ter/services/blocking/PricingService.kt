@@ -37,7 +37,7 @@ interface PricingService {
      */
     fun create(params: PricingCreateParams): PricingResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,30 +46,30 @@ interface PricingService {
     /** Retrieve the Pricing with the given UUID. */
     fun retrieve(id: String): PricingResponse = retrieve(id, PricingRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PricingRetrieveParams = PricingRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PricingRetrieveParams = PricingRetrieveParams.none(),
     ): PricingResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PricingRetrieveParams): PricingResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PricingResponse =
         retrieve(id, PricingRetrieveParams.none(), requestOptions)
 
@@ -82,17 +82,17 @@ interface PricingService {
     fun update(id: String, params: PricingUpdateParams): PricingResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PricingUpdateParams): PricingResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,46 +101,46 @@ interface PricingService {
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     fun list(): PricingListPage = list(PricingListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PricingListParams = PricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: PricingListParams = PricingListParams.none()): PricingListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PricingListPage =
         list(PricingListParams.none(), requestOptions)
 
     /** Delete the Pricing with the given UUID. */
     fun delete(id: String): PricingResponse = delete(id, PricingDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PricingDeleteParams = PricingDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PricingDeleteParams = PricingDeleteParams.none(),
     ): PricingResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PricingResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PricingDeleteParams): PricingResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): PricingResponse =
         delete(id, PricingDeleteParams.none(), requestOptions)
 
@@ -162,7 +162,7 @@ interface PricingService {
         fun create(params: PricingCreateParams): HttpResponseFor<PricingResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PricingCreateParams,
@@ -177,7 +177,7 @@ interface PricingService {
         fun retrieve(id: String): HttpResponseFor<PricingResponse> =
             retrieve(id, PricingRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -186,26 +186,26 @@ interface PricingService {
         ): HttpResponseFor<PricingResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PricingRetrieveParams = PricingRetrieveParams.none(),
         ): HttpResponseFor<PricingResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: PricingRetrieveParams): HttpResponseFor<PricingResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<PricingResponse> =
             retrieve(id, PricingRetrieveParams.none(), requestOptions)
@@ -218,7 +218,7 @@ interface PricingService {
         fun update(id: String, params: PricingUpdateParams): HttpResponseFor<PricingResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -227,12 +227,12 @@ interface PricingService {
         ): HttpResponseFor<PricingResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: PricingUpdateParams): HttpResponseFor<PricingResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PricingUpdateParams,
@@ -245,20 +245,20 @@ interface PricingService {
          */
         @MustBeClosed fun list(): HttpResponseFor<PricingListPage> = list(PricingListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PricingListParams = PricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PricingListParams = PricingListParams.none()
         ): HttpResponseFor<PricingListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PricingListPage> =
             list(PricingListParams.none(), requestOptions)
@@ -271,7 +271,7 @@ interface PricingService {
         fun delete(id: String): HttpResponseFor<PricingResponse> =
             delete(id, PricingDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -280,26 +280,26 @@ interface PricingService {
         ): HttpResponseFor<PricingResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: PricingDeleteParams = PricingDeleteParams.none(),
         ): HttpResponseFor<PricingResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PricingResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: PricingDeleteParams): HttpResponseFor<PricingResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<PricingResponse> =
             delete(id, PricingDeleteParams.none(), requestOptions)

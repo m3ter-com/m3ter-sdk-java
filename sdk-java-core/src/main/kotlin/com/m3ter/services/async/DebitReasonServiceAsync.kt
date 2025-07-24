@@ -37,7 +37,7 @@ interface DebitReasonServiceAsync {
     fun create(params: DebitReasonCreateParams): CompletableFuture<DebitReasonResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -47,7 +47,7 @@ interface DebitReasonServiceAsync {
     fun retrieve(id: String): CompletableFuture<DebitReasonResponse> =
         retrieve(id, DebitReasonRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
@@ -55,23 +55,23 @@ interface DebitReasonServiceAsync {
     ): CompletableFuture<DebitReasonResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
     ): CompletableFuture<DebitReasonResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: DebitReasonRetrieveParams): CompletableFuture<DebitReasonResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -84,7 +84,7 @@ interface DebitReasonServiceAsync {
         params: DebitReasonUpdateParams,
     ): CompletableFuture<DebitReasonResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: DebitReasonUpdateParams,
@@ -92,11 +92,11 @@ interface DebitReasonServiceAsync {
     ): CompletableFuture<DebitReasonResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: DebitReasonUpdateParams): CompletableFuture<DebitReasonResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -109,18 +109,18 @@ interface DebitReasonServiceAsync {
      */
     fun list(): CompletableFuture<DebitReasonListPageAsync> = list(DebitReasonListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DebitReasonListParams = DebitReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DebitReasonListParams = DebitReasonListParams.none()
     ): CompletableFuture<DebitReasonListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<DebitReasonListPageAsync> =
         list(DebitReasonListParams.none(), requestOptions)
 
@@ -128,7 +128,7 @@ interface DebitReasonServiceAsync {
     fun delete(id: String): CompletableFuture<DebitReasonResponse> =
         delete(id, DebitReasonDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
@@ -136,23 +136,23 @@ interface DebitReasonServiceAsync {
     ): CompletableFuture<DebitReasonResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
     ): CompletableFuture<DebitReasonResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DebitReasonResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: DebitReasonDeleteParams): CompletableFuture<DebitReasonResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<DebitReasonResponse> =
         delete(id, DebitReasonDeleteParams.none(), requestOptions)
 
@@ -180,7 +180,7 @@ interface DebitReasonServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: DebitReasonCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -193,7 +193,7 @@ interface DebitReasonServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(id, DebitReasonRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
@@ -201,26 +201,26 @@ interface DebitReasonServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: DebitReasonRetrieveParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -237,7 +237,7 @@ interface DebitReasonServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: DebitReasonUpdateParams,
@@ -245,13 +245,13 @@ interface DebitReasonServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: DebitReasonUpdateParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: DebitReasonUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -264,19 +264,19 @@ interface DebitReasonServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
             list(DebitReasonListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none()
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DebitReasonListPageAsync>> =
@@ -290,7 +290,7 @@ interface DebitReasonServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(id, DebitReasonDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
@@ -298,26 +298,26 @@ interface DebitReasonServiceAsync {
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: DebitReasonDeleteParams
         ): CompletableFuture<HttpResponseFor<DebitReasonResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

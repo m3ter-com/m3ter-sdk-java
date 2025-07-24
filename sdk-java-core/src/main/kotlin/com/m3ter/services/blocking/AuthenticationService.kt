@@ -29,7 +29,7 @@ interface AuthenticationService {
         params: AuthenticationGetBearerTokenParams
     ): AuthenticationGetBearerTokenResponse = getBearerToken(params, RequestOptions.none())
 
-    /** @see [getBearerToken] */
+    /** @see getBearerToken */
     fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -59,7 +59,7 @@ interface AuthenticationService {
         ): HttpResponseFor<AuthenticationGetBearerTokenResponse> =
             getBearerToken(params, RequestOptions.none())
 
-        /** @see [getBearerToken] */
+        /** @see getBearerToken */
         @MustBeClosed
         fun getBearerToken(
             params: AuthenticationGetBearerTokenParams,

@@ -79,7 +79,7 @@ interface DataExportServiceAsync {
     fun createAdhoc(params: DataExportCreateAdhocParams): CompletableFuture<AdHocResponse> =
         createAdhoc(params, RequestOptions.none())
 
-    /** @see [createAdhoc] */
+    /** @see createAdhoc */
     fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,7 +115,7 @@ interface DataExportServiceAsync {
         ): CompletableFuture<HttpResponseFor<AdHocResponse>> =
             createAdhoc(params, RequestOptions.none())
 
-        /** @see [createAdhoc] */
+        /** @see createAdhoc */
         fun createAdhoc(
             params: DataExportCreateAdhocParams,
             requestOptions: RequestOptions = RequestOptions.none(),

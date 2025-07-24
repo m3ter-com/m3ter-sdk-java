@@ -31,36 +31,36 @@ interface CustomFieldServiceAsync {
     fun retrieve(): CompletableFuture<CustomFieldsResponse> =
         retrieve(CustomFieldRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CustomFieldsResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
     ): CompletableFuture<CustomFieldsResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<CustomFieldsResponse> =
         retrieve(CustomFieldRetrieveParams.none(), requestOptions)
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     fun update(): CompletableFuture<CustomFieldsResponse> = update(CustomFieldUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CustomFieldsResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
     ): CompletableFuture<CustomFieldsResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CompletableFuture<CustomFieldsResponse> =
         update(CustomFieldUpdateParams.none(), requestOptions)
 
@@ -86,19 +86,19 @@ interface CustomFieldServiceAsync {
         fun retrieve(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(CustomFieldRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
@@ -111,19 +111,19 @@ interface CustomFieldServiceAsync {
         fun update(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(CustomFieldUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =

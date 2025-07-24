@@ -79,7 +79,7 @@ interface DataExportService {
     fun createAdhoc(params: DataExportCreateAdhocParams): AdHocResponse =
         createAdhoc(params, RequestOptions.none())
 
-    /** @see [createAdhoc] */
+    /** @see createAdhoc */
     fun createAdhoc(
         params: DataExportCreateAdhocParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +111,7 @@ interface DataExportService {
         fun createAdhoc(params: DataExportCreateAdhocParams): HttpResponseFor<AdHocResponse> =
             createAdhoc(params, RequestOptions.none())
 
-        /** @see [createAdhoc] */
+        /** @see createAdhoc */
         @MustBeClosed
         fun createAdhoc(
             params: DataExportCreateAdhocParams,
