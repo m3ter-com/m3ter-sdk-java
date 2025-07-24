@@ -41,8 +41,10 @@ private constructor(
     /** UUID of the PlanGroup to retrieve PlanGroupLinks for */
     fun planGroup(): Optional<String> = Optional.ofNullable(planGroup)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
